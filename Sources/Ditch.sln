@@ -13,6 +13,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Ditch\Ditch.projitems*{4222ccb1-9d8a-40c7-9cee-4f3c0b0bb625}*SharedItemsImports = 13
 		..\..\Cryptography.ECDSA\Sources\Cryptography.ECDSA\Cryptography.ECDSA.projitems*{58c01553-9621-4267-82cf-6d02a79ffee1}*SharedItemsImports = 13
+		..\..\Cryptography.ECDSA\Sources\Cryptography.ECDSA\Cryptography.ECDSA.projitems*{6cfda37c-7567-45e5-83a6-5a007c2d55ae}*SharedItemsImports = 4
 		Ditch\Ditch.projitems*{6cfda37c-7567-45e5-83a6-5a007c2d55ae}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Logging;
+//using Common.Logging;
 using Cryptography.ECDSA;
 using Cryptography.ECDSA.Curves;
 using Ditch.JsonRpc;
@@ -15,7 +15,7 @@ namespace Ditch
         private readonly List<BaseOperation> _operations;
         private readonly ChainInfo _chainInfo;
 
-        protected static readonly ILog Log = LogManager.GetLogger(typeof(TransactionManager));
+        //protected static readonly ILog Log = LogManager.GetLogger(typeof(TransactionManager));
 
         public TransactionManager(string wif, ChainManager.KnownChains chain)
         {
@@ -60,15 +60,19 @@ namespace Ditch
 
         private void Broadcast()
         {
-            var msg = JsonRpcReques.GetDynamicGlobalProperties.ToString();
+            var msg = JsonRpcReques.GetDynamicGlobalProperties;
 
             using (var ws = new WebSocket(_chainInfo.Url))
             {
                 ws.OnMessage += OnMessage;
-                ws.OnError += (sender, e) => Log.Error(e.Message, e.Exception);
+                ws.OnError += (sender, e) =>
+                {
+                    var t = 0;
+                    //Log.Error(e.Message, e.Exception)
+                };
 
                 ws.Connect();
-                Log.Trace($"RESPONSE >>> {msg}");
+                //Log.Info($"RESPONSE >>> {msg}");
                 ws.Send(msg);
 
                 while (ws.ReadyState != WebSocketState.Closed)
@@ -79,7 +83,7 @@ namespace Ditch
 
         private void OnMessage(object sender, MessageEventArgs e)
         {
-            Log.Trace($"RESPONSE >>> {e.Data}");
+            //Log.Info($"RESPONSE >>> {e.Data}");
             try
             {
                 var ws = (WebSocket)sender;
@@ -87,7 +91,7 @@ namespace Ditch
                 var prop = JsonRpcResponse.FromString(e.Data);
                 if (prop.Error != null)
                 {
-                    Log.Error(prop.Error.ToString());
+                    //Log.Error(prop.Error.ToString());
                     ws.Close();
                     return;
                 }
@@ -99,8 +103,8 @@ namespace Ditch
                     var request = new JsonRpcReques("call", 1, 3, "broadcast_transaction", new[] { transaction });
                     var msg = request.ToString();
 
-                    Log.Trace($"REQUEST >>> {msg}");
-                    ws.Send(msg);
+                    //Log.Info($"REQUEST >>> {msg}");
+                    //ws.Send(msg);
                 }
                 else
                 {
@@ -109,7 +113,7 @@ namespace Ditch
             }
             catch (Exception ex)
             {
-                Log.Error(ex);
+                //Log.Error(ex);
             }
         }
     }

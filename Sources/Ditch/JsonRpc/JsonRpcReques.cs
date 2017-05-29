@@ -5,7 +5,7 @@ namespace Ditch.JsonRpc
     [JsonObject(MemberSerialization.OptIn)]
     public struct JsonRpcReques
     {
-        public static JsonRpcReques GetDynamicGlobalProperties = new JsonRpcReques("get_dynamic_global_properties", 0);
+        public const string GetDynamicGlobalProperties = "{\"method\":\"get_dynamic_global_properties\",\"params\":[],\"jsonrpc\":\"2.0\",\"id\":0}";
 
         [JsonProperty("method")]
         public string Method { get; set; }
