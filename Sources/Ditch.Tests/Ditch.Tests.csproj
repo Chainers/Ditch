@@ -64,6 +64,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\Ditch\Ditch.projitems" Label="Shared" />
-  <Import Project="..\..\..\Cryptography.ECDSA\Sources\Cryptography.ECDSA\Cryptography.ECDSA.projitems" Label="Shared" />
+  <Import Project="..\Cryptography.ECDSA\Cryptography.ECDSA.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

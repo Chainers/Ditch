@@ -4,23 +4,16 @@ namespace Ditch.Tests
 {
     public class BaseTest
     {
-        protected const string JosephName = "joseph.kalu";
-        protected const string JosephWif = "5JXCxj6YyyGUTJo9434ZrQ5gfxk59rE3yukN42WBA6t58yTPRTG";
-
-        #region xeroc\piston-lib\tests\test_transactions.py
-
-        protected const string TestWif = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3";
-        protected const ushort TestRefBlockNum = 34294;
-        protected const uint TestRefBlockPrefix = 3707022213;
-        protected const string TestExpiration = "2016-04-06T08:29:27";
-
-        #endregion xeroc\piston-lib\tests\test_transactions.py
-
+        protected const string TestWif = "5LPwrEbwdG6EhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFF3";
+        protected const ushort TestRefBlockNum = 12345;
+        protected const uint TestRefBlockPrefix = 1234567899;
+        protected const string TestExpiration = "2017-05-31T12:09:42";
+        
         protected readonly VoteOperation VoteOperation = new VoteOperation
         {
-            Voter = "xeroc",
-            Author = "xeroc",
-            Permlink = "piston",
+            Voter = "voter",
+            Author = "author",
+            Permlink = "permlink",
             Weight = 10000
         };
     }

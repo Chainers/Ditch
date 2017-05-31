@@ -19,7 +19,7 @@ namespace Ditch.Tests
                 RefBlockNum = refBlockNum,
                 RefBlockPrefix = refBlockPrefix,
                 Expiration = DateTime.Parse(expiration),
-                BaseOperations = new []
+                BaseOperations = new[]
                 {
                     new VoteOperation
                     {
@@ -39,8 +39,8 @@ namespace Ditch.Tests
 
 
         [Test]
-        [TestCase((ushort)42584, (uint)3436728375, "2017-05-18T11:51:56", JosephName, "timsaid", "myth-or-fact-17-cockroaches-can-survive-a-nuclear-catastrophe", (ushort)1000, JosephWif, "1f7756a69121e16532538d2124475a34f5249b3690d30a94a9dca99a8ecd71c8a0518b5c7b56a4b0cca8f3ad4bc24559990d96f39e96f25246cc27b080e5858a29")]
-        [TestCase((ushort)34294, (uint)3707022213, "2016-04-06T08:29:27", "foobara", "foobarc", "foobard", (ushort)1000, JosephWif, "20716d95af34005849f1b0b0aa4c093724c4692de37ae897f196b2637d02bde5ed71ca372f56ae04a63dcce7ff1ccbbe5e464f8762b063a4a6116b96274417bf79")]
+        [TestCase((ushort)42584, (uint)3436728375, "2017-05-18T11:51:56", "testName", "timsaid", "myth-or-fact-17-cockroaches-can-survive-a-nuclear-catastrophe", (ushort)1000, TestWif, "200543831ba7558a8c21e3e7b60e61d4c72cd864eee1024c545a18cd8474e539744844b6ef064b53abb9ba55e29cec2da2b16c2e8cc01c2043e0e9f5fecf6c23de")]
+        [TestCase((ushort)34294, (uint)3707022213, "2016-04-06T08:29:27", "foobara", "foobarc", "foobard", (ushort)1000, TestWif, "204336a7eb661cee8dae80f7442a52c5390b758616641349c4f86a550015102cf3535d7a3020775374914c5e18948a605f0d08bc13cfc24a194d3f5244e02215c7")]
         public void VoteTransactionTest(ushort refBlockNum, uint refBlockPrefix, string expiration, string voter, string author, string permlink, ushort weight, string wif, string tSig)
         {
             var tr = new Transaction
@@ -49,7 +49,7 @@ namespace Ditch.Tests
                 RefBlockNum = refBlockNum,
                 RefBlockPrefix = refBlockPrefix,
                 Expiration = DateTime.Parse(expiration),
-                BaseOperations = new []
+                BaseOperations = new[]
                 {
                     new VoteOperation
                     {
@@ -68,24 +68,25 @@ namespace Ditch.Tests
             var sig = curve.Sign(msg, key);
 
             var hs = Hex.ToString(sig);
-            Assert.IsTrue(tSig.Equals(hs));
+            Assert.IsTrue(tSig.Equals(hs), $"{tSig} != {hs}");
 
             Console.WriteLine(hs);
         }
 
         [Test]
-        [Ignore("broadcast to blockchain")]
-        public void SignTransactionTest()
+        [Ignore("broadcast to blockchain / set our own data for test")]
+        [TestCase("voter", "author", "permlink", (ushort)10000, "wif", ChainManager.KnownChains.Steem)]
+        public void SignTransactionTest(string voter, string author, string permlink, ushort weight, string wif, ChainManager.KnownChains chain)
         {
-            var manager = new TransactionManager(JosephWif, ChainManager.KnownChains.Steem);
-            var voteUp = new VoteOperation()
+            var manager = new TransactionManager(wif, chain);
+            var vote = new VoteOperation()
             {
-                Author = "xeroc",
-                Voter = JosephName,
-                Permlink = "meanwhile-bitcoin-full-ethereum-forked-unintended",
-                Weight = 10000
+                Author = author,
+                Voter = voter,
+                Permlink = permlink,
+                Weight = weight
             };
-            manager.AddOperation(voteUp);
+            manager.AddOperation(vote);
         }
     }
 }
