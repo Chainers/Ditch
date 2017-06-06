@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 //using Common.Logging;
 using Cryptography.ECDSA;
-using Cryptography.ECDSA.Curves;
 using Ditch.JsonRpc;
 using WebSocketSharp;
 
@@ -10,8 +9,7 @@ namespace Ditch
 {
     public class TransactionManager
     {
-        private readonly Base58 _key;
-        private readonly CurveBase _curve;
+        private readonly byte[] _key;
         private readonly List<BaseOperation> _operations;
         private readonly ChainInfo _chainInfo;
 
@@ -19,8 +17,7 @@ namespace Ditch
 
         public TransactionManager(string wif, ChainManager.KnownChains chain)
         {
-            _key = new Base58(wif);
-            _curve = new Secp256K1();
+            _key = Base58.GetBytes(wif);
             _operations = new List<BaseOperation>();
             _chainInfo = ChainManager.GetChainInfo(chain);
         }
@@ -51,10 +48,13 @@ namespace Ditch
                 _operations.Clear();
             }
 
-
             var msg = SerializeHelper.TransactionToMessage(transaction);
-            var sig = _curve.Sign(msg, _key);
-            transaction.Signatures.Add(sig);
+            var digest = Proxy.GetMessageHash(msg);
+            var recoveryId = 0;
+            var sig = Proxy.SignCompact(digest, _key, out recoveryId);
+            recoveryId = recoveryId + 4 + 27;
+
+            transaction.Signatures.Add(Hex.Join(new[] { (byte)recoveryId }, sig));
             return transaction;
         }
 
@@ -68,7 +68,7 @@ namespace Ditch
                 ws.OnError += (sender, e) =>
                 {
                     var t = 0;
-                    //Log.Error(e.Message, e.Exception)
+                    //Log.Error(e.Message, e.Exception);
                 };
 
                 ws.Connect();
@@ -84,10 +84,9 @@ namespace Ditch
         private void OnMessage(object sender, MessageEventArgs e)
         {
             //Log.Info($"RESPONSE >>> {e.Data}");
+            var ws = (WebSocket)sender;
             try
             {
-                var ws = (WebSocket)sender;
-
                 var prop = JsonRpcResponse.FromString(e.Data);
                 if (prop.Error != null)
                 {
@@ -104,7 +103,7 @@ namespace Ditch
                     var msg = request.ToString();
 
                     //Log.Info($"REQUEST >>> {msg}");
-                    //ws.Send(msg);
+                    ws.Send(msg);
                 }
                 else
                 {
@@ -114,6 +113,8 @@ namespace Ditch
             catch (Exception ex)
             {
                 //Log.Error(ex);
+                if (ws != null && ws.ReadyState != WebSocketState.Closed)
+                    ws.Close();
             }
         }
     }
