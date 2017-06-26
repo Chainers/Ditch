@@ -2,34 +2,45 @@
 
 namespace Ditch.JsonRpc
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public struct JsonRpcReques
+    public class JsonRpcReques
     {
-        public const string GetDynamicGlobalProperties = "{\"method\":\"get_dynamic_global_properties\",\"params\":[],\"jsonrpc\":\"2.0\",\"id\":0}";
-
-        [JsonProperty("method")]
-        public string Method { get; set; }
-
-        [JsonProperty("params")]
-        public object[] Params { get; set; }
+        private static readonly object _sync = new object();
+        private static int _id = 0;
 
         [JsonProperty("jsonrpc")]
-        public string JsonRpc => "2.0";
+        public const string JsonRpc = "2.0";
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public int Id { get; }
 
-        
-        public JsonRpcReques(string method, int id, params object[] data)
+
+        public static string GetReques(string method)
         {
-            Method = method;
-            Params = data;
-            Id = id;
+            int reqId = 0;
+            lock (_sync)
+            {
+                reqId = _id;
+                _id++;
+            }
+            return $"{{\"method\":\"{method}\",\"params\":[],\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}";
         }
 
-        public override string ToString()
+        public static string GetReques(string method, params object[] data)
         {
-            return JsonConvert.SerializeObject(this);
+            int reqId = 0;
+            lock (_sync)
+            {
+                reqId = _id;
+                _id++;
+            }
+
+            var paramData = JsonConvert.SerializeObject(data);
+            return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}";
+        }
+
+        public static void Clean()
+        {
+            _id = 0;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Cryptography.ECDSA
+namespace Ditch.Helpers
 {
     public static class Hex
     {

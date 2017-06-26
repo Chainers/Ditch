@@ -1,4 +1,4 @@
-﻿namespace Ditch
+﻿namespace Ditch.Operations
 {
     /// <summary>
     /// https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/operations.hpp

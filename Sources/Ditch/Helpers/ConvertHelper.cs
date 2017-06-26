@@ -1,4 +1,4 @@
-﻿namespace Ditch
+﻿namespace Ditch.Helpers
 {
     public class ConvertHelper
     {

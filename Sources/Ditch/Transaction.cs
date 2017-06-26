@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cryptography.ECDSA;
+using Ditch.Helpers;
+using Ditch.Operations;
 using Newtonsoft.Json;
 
 namespace Ditch

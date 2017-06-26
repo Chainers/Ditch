@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Helpers;
+using Newtonsoft.Json;
 
-namespace Ditch
+namespace Ditch.Operations
 {
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class BaseOperation

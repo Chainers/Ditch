@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Cryptography.ECDSA;
+using Ditch.Helpers;
 
 namespace Ditch
 {
