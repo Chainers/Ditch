@@ -2,8 +2,9 @@
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Ditch.Operations;
 
-namespace Ditch
+namespace Ditch.Helpers
 {
     public class SerializeHelper
     {
@@ -13,7 +14,7 @@ namespace Ditch
         {
             using (var ms = new MemoryStream())
             {
-                var props = typeof(Transaction).GetProperties();
+                var props = typeof(Transaction).GetRuntimeProperties();
                 foreach (var prop in props)
                 {
                     if (prop.GetCustomAttribute<IgnoreForMessageAttribute>() != null)
@@ -79,7 +80,7 @@ namespace Ditch
                         foreach (var operation in operations)
                         {
                             var chType = operation.GetType();
-                            var properties = chType.GetProperties();
+                            var properties = chType.GetRuntimeProperties();
                             foreach (var prop in properties)
                             {
                                 if (prop.GetCustomAttribute<IgnoreForMessageAttribute>() != null)

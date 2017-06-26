@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Chainers (ChainArtSoft)</Authors>
+    <Company>ChainArtSoft</Company>
+    <PackageProjectUrl>https://github.com/Chainers/Ditch</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Chainers/Ditch/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>Graphene Ditch Golos Steemet Steepshot</PackageTags>
+    <AssemblyVersion>0.0.2.0</AssemblyVersion>
+    <FileVersion>0.0.2.0</FileVersion>
+    <Version>0.2.0</Version>
+    <Description>Creat and broadcast transactions to blockchain</Description>
+    <PackageReleaseNotes>supported operations
+ * vote
+supported chains
+ * Golos
+ * Steemit</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cryptography.ECDSA.Secp256k1" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="WebSocket4Net" Version="0.15.0-beta9" />
+  </ItemGroup>
+
+</Project>

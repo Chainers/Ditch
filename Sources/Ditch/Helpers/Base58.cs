@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Numerics;
 
-namespace Cryptography.ECDSA
+namespace Ditch.Helpers
 {
     public class Base58
     {
