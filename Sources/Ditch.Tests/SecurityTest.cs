@@ -40,20 +40,10 @@ namespace Ditch.Tests
         [TestCase("voter", "author", "permlink", (ushort)10000, "wif", ChainManager.KnownChains.Steem)]
         public void SignTransactionTest(string voter, string author, string permlink, ushort weight, string wif, ChainManager.KnownChains chain)
         {
-            var manager = new TransactionManager();
-            manager.InitTransactionManager(wif, chain);
-            var vote = new VoteOperation()
-            {
-                Author = author,
-                Voter = voter,
-                Permlink = permlink,
-                Weight = weight
-            };
-            manager.AddOperation(vote);
-            manager.Broadcast();
-
-            manager.m_SendedEvent.WaitOne();
-            manager.Close();
+            var manager = new OperationManager();
+            manager.Init(chain, voter, wif);
+            var t = manager.Vote(author, permlink, weight);
+            Assert.IsFalse(t.Result.IsError);
         }
     }
 }

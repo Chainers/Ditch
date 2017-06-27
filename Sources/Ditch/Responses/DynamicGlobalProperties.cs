@@ -1,11 +1,13 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Ditch.JsonRpc
+namespace Ditch.Responses
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class DynamicGlobalProperties
     {
+        public const string Reques = "get_dynamic_global_properties";
+
         [JsonProperty("id")]
         public string Id { get; set; }
 

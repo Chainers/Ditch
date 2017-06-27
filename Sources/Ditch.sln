@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Tests", "Ditch.Tests\Ditch.Tests.csproj", "{6CFDA37C-7567-45E5-83A6-5A007C2D55AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch", "Ditch\Ditch.csproj", "{635ED759-254E-4ECF-B696-1669CD19C59D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch", "Ditch\Ditch.csproj", "{635ED759-254E-4ECF-B696-1669CD19C59D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

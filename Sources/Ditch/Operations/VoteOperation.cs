@@ -7,9 +7,11 @@ namespace Ditch.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class VoteOperation : BaseOperation
     {
+        private ushort _weight;
+
         [SerializeHelper.IgnoreForMessage]
         public override string TypeName => "vote";
-        
+
         public override OperationType Type => OperationType.Vote;
 
         [JsonProperty("voter")]
@@ -22,6 +24,10 @@ namespace Ditch.Operations
         public string Permlink { get; set; }
 
         [JsonProperty("weight")]
-        public UInt16 Weight { get; set; }
+        public UInt16 Weight
+        {
+            get => _weight;
+            set => _weight = Math.Min(value, (UInt16)10000);
+        }
     }
 }

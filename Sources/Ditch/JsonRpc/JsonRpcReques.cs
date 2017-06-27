@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Ditch.JsonRpc
 {
@@ -13,8 +14,7 @@ namespace Ditch.JsonRpc
         [JsonProperty("id")]
         public int Id { get; }
 
-
-        public static string GetReques(string method)
+        public static Tuple<int, string> GetReques(string method)
         {
             int reqId = 0;
             lock (_sync)
@@ -22,10 +22,11 @@ namespace Ditch.JsonRpc
                 reqId = _id;
                 _id++;
             }
-            return $"{{\"method\":\"{method}\",\"params\":[],\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}";
+
+            return new Tuple<int, string>(reqId, $"{{\"method\":\"{method}\",\"params\":[],\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}");
         }
 
-        public static string GetReques(string method, params object[] data)
+        public static Tuple<int, string> GetReques(string method, params object[] data)
         {
             int reqId = 0;
             lock (_sync)
@@ -35,7 +36,7 @@ namespace Ditch.JsonRpc
             }
 
             var paramData = JsonConvert.SerializeObject(data);
-            return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}";
+            return new Tuple<int, string>(reqId, $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}");
         }
 
         public static void Clean()
