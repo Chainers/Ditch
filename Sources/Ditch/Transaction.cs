@@ -10,6 +10,12 @@ namespace Ditch
     [JsonObject(MemberSerialization.OptIn)]
     public class Transaction
     {
+        [SerializeHelper.IgnoreForMessage]
+        public const string OperationName = "broadcast_transaction";
+        [SerializeHelper.IgnoreForMessage]
+        public const int Api = 0;
+
+
         public byte[] ChainId { get; set; } = new byte[0]; //64
 
         [JsonProperty("ref_block_num")]

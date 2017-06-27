@@ -1,4 +1,6 @@
-﻿namespace Ditch.Helpers
+﻿using System.Linq;
+
+namespace Ditch.Helpers
 {
     public class ConvertHelper
     {
@@ -29,6 +31,18 @@
 
             data[i] += (byte)n;
             return data;
+        }
+
+
+        public static double CurrencyToLong(string currency)
+        {
+            if (string.IsNullOrEmpty(currency))
+                return 0;
+
+            var num = currency.Split(' ').First();
+            double rez;
+            double.TryParse(num, out rez);
+            return rez;
         }
     }
 }

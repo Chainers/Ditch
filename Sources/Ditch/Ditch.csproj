@@ -21,9 +21,27 @@ supported chains
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Requests\**" />
+    <Compile Remove="Models\Responses\**" />
+    <EmbeddedResource Remove="Models\Requests\**" />
+    <EmbeddedResource Remove="Models\Responses\**" />
+    <None Remove="Models\Requests\**" />
+    <None Remove="Models\Responses\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Models\Responses\BaseResponses.cs" />
+    <Compile Include="Models\Responses\VoteResponse.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256k1" Version="1.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="WebSocket4Net" Version="0.15.0-beta9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Requests\" />
   </ItemGroup>
 
 </Project>
