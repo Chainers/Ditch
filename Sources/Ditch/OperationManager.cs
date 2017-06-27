@@ -3,8 +3,6 @@ using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.Operations;
 using SuperSocket.ClientEngine;
-using Ditch.Models;
-using Ditch.Models.Responses;
 using System.Threading.Tasks;
 using Ditch.JsonRpc;
 using Ditch.Responses;
@@ -94,9 +92,8 @@ namespace Ditch
         /// <param name="permlink">Post link</param>
         /// <param name="weight">An weignt from 0 to 10000</param>
         /// <returns>VoteResponse - contain NewTotalPayoutReward</returns>
-        public async Task<OperationResult<VoteResponse>> Vote(string autor, string permlink, ushort weight)
+        public async Task<JsonRpcResponse> Vote(string autor, string permlink, ushort weight)
         {
-            var rez = new OperationResult<VoteResponse>();
             var op = new VoteOperation
             {
                 Author = autor,
@@ -109,27 +106,13 @@ namespace Ditch
 
             if (prop.IsError)
             {
-                rez.Errors.Add(prop.GetErrorMessage());
-                return rez;
+                return prop;
             }
 
             var transaction = CreateTransaction(prop.Result, new BaseOperation[] { op });
             var resp = await WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
-
-            if (resp.IsError)
-            {
-                rez.Errors.Add(resp.GetErrorMessage());
-                return rez;
-            }
-
-            var cont = await GetContent(autor, permlink);
-            if (cont.IsError)
-            {
-                rez.Errors.Add(cont.GetErrorMessage());
-                return rez;
-            }
-            rez.Result = new VoteResponse { NewTotalPayoutReward = cont.Result.NewTotalPayoutReward };
-            return rez;
+            
+            return resp;
         }
 
         #endregion Operations

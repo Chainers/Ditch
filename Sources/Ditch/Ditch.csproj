@@ -21,17 +21,9 @@ supported chains
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\Requests\**" />
-    <Compile Remove="Models\Responses\**" />
-    <EmbeddedResource Remove="Models\Requests\**" />
-    <EmbeddedResource Remove="Models\Responses\**" />
-    <None Remove="Models\Requests\**" />
-    <None Remove="Models\Responses\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Models\Responses\BaseResponses.cs" />
-    <Compile Include="Models\Responses\VoteResponse.cs" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
 
   <ItemGroup>
