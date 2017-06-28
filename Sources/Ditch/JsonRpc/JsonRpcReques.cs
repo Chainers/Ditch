@@ -35,7 +35,7 @@ namespace Ditch.JsonRpc
                 _id++;
             }
 
-            var paramData = JsonConvert.SerializeObject(data, OperationManager.ChainInfo.JsonSerializerSettings);
+            var paramData = JsonConvert.SerializeObject(data, GlobalSettings.ChainInfo.JsonSerializerSettings);
             return new Tuple<int, string>(reqId, $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}");
         }
 

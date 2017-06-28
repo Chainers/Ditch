@@ -2,7 +2,6 @@
 using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.Operations;
-using SuperSocket.ClientEngine;
 using System.Threading.Tasks;
 using Ditch.JsonRpc;
 using Ditch.Responses;
@@ -11,9 +10,6 @@ namespace Ditch
 {
     public class OperationManager
     {
-        private static string _login;
-        private static byte[] _key;
-        internal static ChainInfo ChainInfo;
         private static readonly WebSocketManager WebSocketManager;
 
         static OperationManager()
@@ -21,51 +17,20 @@ namespace Ditch
             WebSocketManager = new WebSocketManager();
         }
 
-        public void Init(ChainManager.KnownChains chain)
-        {
-            ChainInfo = ChainManager.GetChainInfo(chain);
-            WebSocketManager.InitTransactionManager(ChainInfo.Url);
-        }
-
-        public void Init(ChainManager.KnownChains chain, string login, string wif)
-        {
-            _login = login;
-            _key = Base58.GetBytes(wif);
-            ChainInfo = ChainManager.GetChainInfo(chain);
-            WebSocketManager.InitTransactionManager(ChainInfo.Url);
-        }
-
-        public void Init(ChainManager.KnownChains chain, string login, string wif, EventHandler<ErrorEventArgs> websocketError)
-        {
-            _login = login;
-            _key = Base58.GetBytes(wif);
-            ChainInfo = ChainManager.GetChainInfo(chain);
-            WebSocketManager.InitTransactionManager(ChainInfo.Url, websocketError);
-        }
-
-        public void Init(ChainInfo chainInfo, string login, string wif, EventHandler<ErrorEventArgs> websocketError)
-        {
-            _login = login;
-            _key = Base58.GetBytes(wif);
-            ChainInfo = chainInfo;
-            WebSocketManager.InitTransactionManager(ChainInfo.Url, websocketError);
-        }
-
         private Transaction CreateTransaction(DynamicGlobalProperties properties, BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
-                ChainId = ChainInfo.ChainId,
-                RefBlockNum = (ushort)(properties.HeadBlockNumber & 0xffff),
-                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(properties.HeadBlockId), 4),
-                Expiration = properties.Time.AddSeconds(30)
+                ChainId = GlobalSettings.ChainInfo.ChainId,
+                RefBlockNum = (ushort) (properties.HeadBlockNumber & 0xffff),
+                RefBlockPrefix = (uint) BitConverter.ToInt32(Hex.HexToBytes(properties.HeadBlockId), 4),
+                Expiration = properties.Time.AddSeconds(30),
+                BaseOperations = operations
             };
-
-            transaction.BaseOperations = operations;
-
+            
             var msg = SerializeHelper.TransactionToMessage(transaction);
             var data = Secp256k1Manager.GetMessageHash(msg);
-            var sig = Secp256k1Manager.SignCompressedCompact(data, _key);
+            var sig = Secp256k1Manager.SignCompressedCompact(data, GlobalSettings.Key);
             transaction.Signatures.Add(sig);
 
             return transaction;
@@ -105,7 +70,7 @@ namespace Ditch
             var op = new VoteOperation
             {
                 Author = autor,
-                Voter = _login,
+                Voter = GlobalSettings.Login,
                 Permlink = permlink,
                 Weight = weight
             };
@@ -119,18 +84,10 @@ namespace Ditch
 
             var transaction = CreateTransaction(prop.Result, new BaseOperation[] { op });
             var resp = await WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
-            
+
             return resp;
         }
 
         #endregion Operations
-
-        public void Close()
-        {
-            _login = string.Empty;
-            _key = null;
-            ChainInfo = null;
-            WebSocketManager.Close();
-        }
     }
 }

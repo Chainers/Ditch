@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.JsonRpc;
@@ -23,24 +24,24 @@ namespace Ditch
             ManualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
             SocketOpenEvent = new ManualResetEvent(false);
             SocketCloseEvent = new ManualResetEvent(false);
+            GlobalSettings.SettingsChanged += SettingsChanged;
+            SettingsChanged();
         }
 
-        public void InitTransactionManager(string url, EventHandler<ErrorEventArgs> websocketError = null)
+
+
+        public static void SettingsChanged()
         {
             Close();
             _websocket?.Dispose();
-            _websocket = new WebSocket(url);
-            _websocket.EnableAutoSendPing = true;
+            _websocket = new WebSocket(GlobalSettings.ChainInfo.Url);
             _websocket.Opened += websocket_Opened;
             _websocket.Closed += websocket_Closed;
             _websocket.MessageReceived += websocket_MessageReceived;
-
-            if (websocketError != null)
-                _websocket.Error += websocketError;
-
+            _websocket.Error += WebsocketOnError;
+            _websocket.EnableAutoSendPing = true;
             _websocket.Open();
         }
-
 
         public Task<JsonRpcResponse> BroadcastTransaction(Transaction transaction)
         {
@@ -150,19 +151,24 @@ namespace Ditch
         }
 
 
-        private void websocket_Opened(object sender, EventArgs e)
+        private static void websocket_Opened(object sender, EventArgs e)
         {
             SocketOpenEvent.Set();
             SocketCloseEvent.Reset();
         }
 
-        private void websocket_Closed(object sender, EventArgs e)
+        private static void websocket_Closed(object sender, EventArgs e)
         {
             SocketOpenEvent.Reset();
             SocketCloseEvent.Set();
         }
 
-        private void websocket_MessageReceived(object sender, MessageReceivedEventArgs e)
+        private static void WebsocketOnError(object sender, ErrorEventArgs errorEventArgs)
+        {
+            Debug.WriteLine($"{errorEventArgs.Exception.Message} | {errorEventArgs.Exception.StackTrace}");
+        }
+
+        private static void websocket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             var prop = JsonRpcResponse.FromString(e.Message);
             lock (ResponceDictionary)
@@ -183,7 +189,7 @@ namespace Ditch
         }
 
 
-        public void Close()
+        public static void Close()
         {
             if (_websocket != null && _websocket.State == WebSocketState.Open)
             {
