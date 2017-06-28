@@ -42,5 +42,14 @@ namespace Ditch.Tests
             Assert.IsTrue(Math.Abs(money.Value - 277.126) < 0.00001);
             Assert.IsTrue(money.Currency == "SBD");
         }
+
+        [Test]
+        public void GetHelp()
+        {
+            var ws = new WebSocketManager();
+            var rez = ws.GetRequest<object>("help");
+            Console.WriteLine(rez.Error);
+        }
+
     }
 }
