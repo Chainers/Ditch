@@ -44,7 +44,7 @@ namespace Ditch.Tests
             var manager = new OperationManager();
 
             var t = manager.Vote(author, permlink, weight);
-            Assert.IsFalse(t.Result.IsError);
+            Assert.IsFalse(t.IsError, t.GetErrorMessage());
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using Ditch.JsonRpc;
 using SuperSocket.ClientEngine;
 using WebSocket4Net;
@@ -43,44 +42,24 @@ namespace Ditch
             _websocket.Open();
         }
 
-        public Task<JsonRpcResponse> BroadcastTransaction(Transaction transaction)
+        public JsonRpcResponse Call(int api, string operation, params object[] data)
         {
-            return new Task<JsonRpcResponse>(() =>
-            {
-                //{'follow': 5, 'account_by_key': 2, 'network_broadcast': 3, 'database': 0}
-                var msg = JsonRpcReques.GetReques("call", 3, "broadcast_transaction", new[] { transaction });
-                return Execute(msg);
-            });
+            var msg = JsonRpcReques.GetReques("call", api, operation, data);
+            return Execute(msg);
         }
 
-        public Task<JsonRpcResponse> Call(int api, string operation, params object[] data)
+        public JsonRpcResponse<T> Call<T>(int api, string operation, params object[] data)
         {
-            return new Task<JsonRpcResponse>(() =>
-            {
-                var msg = JsonRpcReques.GetReques("call", api, operation, data);
-                return Execute(msg);
-            });
+            var msg = JsonRpcReques.GetReques("call", api, operation, data);
+            var resp = Execute(msg);
+            return resp.ToTyped<T>();
         }
 
-        public Task<JsonRpcResponse<T>> Call<T>(int api, string operation, params object[] data)
+        public JsonRpcResponse<T> GetRequest<T>(string request)
         {
-            return new Task<JsonRpcResponse<T>>(() =>
-            {
-                var msg = JsonRpcReques.GetReques("call", api, operation, data);
-                var resp = Execute(msg);
-                return resp.ToTyped<T>();
-            });
-        }
-
-        public Task<JsonRpcResponse<T>> GetRequest<T>(string request)
-        {
-            return new Task<JsonRpcResponse<T>>(() =>
-            {
-                var msg = JsonRpcReques.GetReques(request);
-                var responce = Execute(msg);
-
-                return responce.ToTyped<T>();
-            });
+            var msg = JsonRpcReques.GetReques(request);
+            var responce = Execute(msg);
+            return responce.ToTyped<T>();
         }
 
 
