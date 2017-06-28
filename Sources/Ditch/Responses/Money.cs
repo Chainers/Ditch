@@ -7,12 +7,10 @@ namespace Ditch.Responses
         public double Value { get; set; }
         public string Currency { get; set; }
 
-
-
         public Money(string value)
         {
             var kv = value.Split(' ');
-            Value = double.Parse(kv[0], OperationManager.ChainInfo.ServerCultureInfo);
+            Value = double.Parse(kv[0], GlobalSettings.ChainInfo.ServerCultureInfo);
             Currency = kv[1].ToUpper();
         }
 

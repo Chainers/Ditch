@@ -5,26 +5,20 @@ using NUnit.Framework;
 namespace Ditch.Tests
 {
     [TestFixture]
-    public class OperationManagerTest : BaseTest, IDisposable
+    public class OperationManagerTest : BaseTest
     {
-        private OperationManager OperationManager;
+        private readonly OperationManager _operationManager;
 
         public OperationManagerTest()
         {
-            OperationManager = new OperationManager();
-            OperationManager.Init(ChainManager.KnownChains.Steem);
+            _operationManager = new OperationManager();
         }
 
-        public void Dispose()
-        {
-            if (OperationManager != null)
-                OperationManager.Close();
-        }
 
         [Test]
         public void GetDynamicGlobalPropertiesTest()
         {
-            var prop = OperationManager.GetDynamicGlobalProperties();
+            var prop = _operationManager.GetDynamicGlobalProperties();
             prop.Start();
             Assert.IsTrue(prop != null);
             Assert.IsTrue(prop.Result != null);
@@ -34,7 +28,7 @@ namespace Ditch.Tests
         [Test]
         public void GetContentTest()
         {
-            var prop = OperationManager.GetContent("steepshot", "c-lib-ditch-1-0-for-graphene-from-steepshot-team-under-the-mit-license");
+            var prop = _operationManager.GetContent("steepshot", "c-lib-ditch-1-0-for-graphene-from-steepshot-team-under-the-mit-license");
             prop.Start();
             Assert.IsTrue(prop != null);
             Assert.IsTrue(prop.Result != null);
@@ -47,7 +41,7 @@ namespace Ditch.Tests
         public void ParseTestTest(string test)
         {
             var money = new Money(test);
-            Assert.IsTrue(money.Value == 277.126);
+            Assert.IsTrue(Math.Abs(money.Value - 277.126) < 0.00001);
             Assert.IsTrue(money.Currency == "SBD");
         }
     }

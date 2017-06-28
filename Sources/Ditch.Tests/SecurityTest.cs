@@ -18,7 +18,7 @@ namespace Ditch.Tests
                 RefBlockNum = refBlockNum,
                 RefBlockPrefix = refBlockPrefix,
                 Expiration = DateTime.Parse(expiration),
-                BaseOperations = new[]
+                BaseOperations = new BaseOperation[]
                 {
                     new VoteOperation
                     {
@@ -40,8 +40,9 @@ namespace Ditch.Tests
         [TestCase("voter", "author", "permlink", (ushort)10000, "wif", ChainManager.KnownChains.Steem)]
         public void SignTransactionTest(string voter, string author, string permlink, ushort weight, string wif, ChainManager.KnownChains chain)
         {
+            GlobalSettings.Init(voter, wif, chain);
             var manager = new OperationManager();
-            manager.Init(chain, voter, wif);
+
             var t = manager.Vote(author, permlink, weight);
             Assert.IsFalse(t.Result.IsError);
         }
