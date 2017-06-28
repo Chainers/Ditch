@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Ditch.Helpers;
 using Newtonsoft.Json;
 
@@ -83,13 +84,10 @@ namespace Ditch.Responses
         public long RewardWeight { get; set; }
 
         [JsonProperty("total_payout_value")]
-        public string TotalPayoutValueStr { get; set; }
-
-        public double TotalPayoutValue => ConvertHelper.CurrencyToLong(TotalPayoutValueStr);
+        public Money TotalPayoutValue { get; set; }
 
         [JsonProperty("curator_payout_value")]
-        public string CuratorPayoutValueStr { get; set; }
-        public double CuratorPayoutValue => ConvertHelper.CurrencyToLong(CuratorPayoutValueStr);
+        public Money CuratorPayoutValue { get; set; }
 
         [JsonProperty("author_rewards")]
         public long AuthorRewards { get; set; }
@@ -124,8 +122,7 @@ namespace Ditch.Responses
         public string RootTitle { get; set; }
 
         [JsonProperty("pending_payout_value")]
-        public string PendingPayoutValueStr { get; set; }
-        public double PendingPayoutValue => ConvertHelper.CurrencyToLong(PendingPayoutValueStr);
+        public Money PendingPayoutValue { get; set; }
 
         [JsonProperty("total_pending_payout_value")]
         public string TotalPendingPayoutValue { get; set; }
@@ -152,6 +149,6 @@ namespace Ditch.Responses
         //public string Mode { get; set; } // "first_payout",
 
 
-        public double NewTotalPayoutReward => TotalPayoutValue + CuratorPayoutValue + PendingPayoutValue;
+        public Money NewTotalPayoutReward => TotalPayoutValue + CuratorPayoutValue + PendingPayoutValue;
     }
 }

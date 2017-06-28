@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Ditch.Helpers
 {
-    public static class Hex
+    internal static class Hex
     {
         public static int HexToInteger(byte[] hex)
         {

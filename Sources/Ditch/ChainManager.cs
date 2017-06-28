@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using Ditch.Helpers;
 
 namespace Ditch
@@ -27,7 +28,8 @@ namespace Ditch
                         SteemSymbol = "STEEM",
                         SbdSymbol = "SBD",
                         VestsSymbol = "VESTS",
-                        Url = "wss://steemd.steemit.com"
+                        Url = "wss://steemd.steemit.com",
+                        ServerCultureInfo = CultureInfo.InvariantCulture
                     }
                 },
                 {
@@ -38,7 +40,8 @@ namespace Ditch
                         SteemSymbol = "GOLOS",
                         SbdSymbol = "GBG",
                         VestsSymbol = "GESTS",
-                        Url = "wss://ws.golos.io"
+                        Url = "wss://ws.golos.io",
+                        ServerCultureInfo = CultureInfo.InvariantCulture
                     }
                 },
                 {
@@ -49,7 +52,8 @@ namespace Ditch
                         SteemSymbol = "CORE",
                         SbdSymbol = "TEST",
                         VestsSymbol = "CESTS",
-                        Url = "wss://localhost"
+                        Url = "wss://localhost",
+                        ServerCultureInfo = CultureInfo.InvariantCulture
                     }
                 }
             };

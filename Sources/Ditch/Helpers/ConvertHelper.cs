@@ -1,8 +1,7 @@
-﻿using System.Linq;
-
+﻿
 namespace Ditch.Helpers
 {
-    public class ConvertHelper
+    internal class ConvertHelper
     {
         /// <summary>
         /// https://github.com/xeroc/python-graphenelib/blob/master/graphenebase/types.py
@@ -31,18 +30,6 @@ namespace Ditch.Helpers
 
             data[i] += (byte)n;
             return data;
-        }
-
-
-        public static double CurrencyToLong(string currency)
-        {
-            if (string.IsNullOrEmpty(currency))
-                return 0;
-
-            var num = currency.Split(' ').First();
-            double rez;
-            double.TryParse(num, out rez);
-            return rez;
         }
     }
 }

@@ -8,7 +8,7 @@ using WebSocket4Net;
 
 namespace Ditch
 {
-    public class WebSocketManager
+    internal class WebSocketManager
     {
         private static readonly Dictionary<int, JsonRpcResponse> ResponceDictionary;
         private static readonly Dictionary<int, ManualResetEvent> ManualResetEventDictionary;
@@ -190,7 +190,7 @@ namespace Ditch
                 _websocket.Close();
                 SocketCloseEvent.WaitOne();
             }
-            JsonRpcReques.Clean();
+            JsonRpcReques.Init();
 
             lock (ManualResetEventDictionary)
             {

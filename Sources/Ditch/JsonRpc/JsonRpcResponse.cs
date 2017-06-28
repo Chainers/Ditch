@@ -18,7 +18,7 @@ namespace Ditch.JsonRpc
 
         public static JsonRpcResponse FromString(string obj)
         {
-            return JsonConvert.DeserializeObject<JsonRpcResponse>(obj);
+            return JsonConvert.DeserializeObject<JsonRpcResponse>(obj, OperationManager.ChainInfo.JsonSerializerSettings);
         }
 
         public string GetErrorMessage()
@@ -32,7 +32,7 @@ namespace Ditch.JsonRpc
             {
                 Id = Id,
                 Error = Error,
-                Result = JsonConvert.DeserializeObject<T>(Result.ToString())
+                Result = JsonConvert.DeserializeObject<T>(Result.ToString(), OperationManager.ChainInfo.JsonSerializerSettings)
             };
             return rez;
         }
@@ -46,7 +46,7 @@ namespace Ditch.JsonRpc
 
         public new static JsonRpcResponse<T> FromString(string obj)
         {
-            return JsonConvert.DeserializeObject<JsonRpcResponse<T>>(obj);
+            return JsonConvert.DeserializeObject<JsonRpcResponse<T>>(obj, OperationManager.ChainInfo.JsonSerializerSettings);
         }
     }
 }

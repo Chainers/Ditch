@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Responses;
 using NUnit.Framework;
 
 namespace Ditch.Tests
@@ -38,6 +39,16 @@ namespace Ditch.Tests
             Assert.IsTrue(prop != null);
             Assert.IsTrue(prop.Result != null);
             Assert.IsFalse(prop.Result.IsError);
+            Assert.IsTrue(prop.Result.Result.TotalPayoutValue.Value > 0);
+        }
+
+        [Test]
+        [TestCase("277.126 SBD")]
+        public void ParseTestTest(string test)
+        {
+            var money = new Money(test);
+            Assert.IsTrue(money.Value == 277.126);
+            Assert.IsTrue(money.Currency == "SBD");
         }
     }
 }

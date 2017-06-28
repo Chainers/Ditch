@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Globalization;
+using Newtonsoft.Json;
 
 namespace Ditch
 {
@@ -21,5 +22,22 @@ namespace Ditch
         public string VestsSymbol { get; set; }
 
         public string Url { get; internal set; }
+
+        public CultureInfo ServerCultureInfo
+        {
+            get { return _serverCultureInfo; }
+            set
+            {
+                if (value.IsReadOnly)
+                    _serverCultureInfo = new CultureInfo(value.Name);
+                else
+                    _serverCultureInfo = value;
+            }
+        }
+
+
+        private JsonSerializerSettings _jsonSerializerSettings;
+        private CultureInfo _serverCultureInfo;
+        public JsonSerializerSettings JsonSerializerSettings => _jsonSerializerSettings ?? (_jsonSerializerSettings = new JsonSerializerSettings() { Culture = ServerCultureInfo });
     }
 }
