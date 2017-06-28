@@ -15,7 +15,7 @@ namespace Ditch
         [SerializeHelper.IgnoreForMessage]
         public const string OperationName = "broadcast_transaction";
         [SerializeHelper.IgnoreForMessage]
-        public const int Api = 0;
+        public const int Api = 3;
 
 
         public byte[] ChainId { get; set; } = new byte[0]; //64

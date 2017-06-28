@@ -19,21 +19,19 @@ namespace Ditch.Tests
         public void GetDynamicGlobalPropertiesTest()
         {
             var prop = _operationManager.GetDynamicGlobalProperties();
-            prop.Start();
             Assert.IsTrue(prop != null);
             Assert.IsTrue(prop.Result != null);
-            Assert.IsFalse(prop.Result.IsError);
+            Assert.IsFalse(prop.IsError);
         }
 
         [Test]
         public void GetContentTest()
         {
             var prop = _operationManager.GetContent("steepshot", "c-lib-ditch-1-0-for-graphene-from-steepshot-team-under-the-mit-license");
-            prop.Start();
             Assert.IsTrue(prop != null);
             Assert.IsTrue(prop.Result != null);
-            Assert.IsFalse(prop.Result.IsError);
-            Assert.IsTrue(prop.Result.Result.TotalPayoutValue.Value > 0);
+            Assert.IsFalse(prop.IsError);
+            Assert.IsTrue(prop.Result.TotalPayoutValue.Value > 0);
         }
 
         [Test]

@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.Operations;
-using System.Threading.Tasks;
 using Ditch.JsonRpc;
 using Ditch.Responses;
 
@@ -22,12 +22,12 @@ namespace Ditch
             var transaction = new Transaction
             {
                 ChainId = GlobalSettings.ChainInfo.ChainId,
-                RefBlockNum = (ushort) (properties.HeadBlockNumber & 0xffff),
-                RefBlockPrefix = (uint) BitConverter.ToInt32(Hex.HexToBytes(properties.HeadBlockId), 4),
+                RefBlockNum = (ushort)(properties.HeadBlockNumber & 0xffff),
+                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(properties.HeadBlockId), 4),
                 Expiration = properties.Time.AddSeconds(30),
                 BaseOperations = operations
             };
-            
+
             var msg = SerializeHelper.TransactionToMessage(transaction);
             var data = Secp256k1Manager.GetMessageHash(msg);
             var sig = Secp256k1Manager.SignCompressedCompact(data, GlobalSettings.Key);
@@ -42,7 +42,7 @@ namespace Ditch
         /// Get global dinamic properties
         /// </summary>
         /// <returns></returns>
-        public Task<JsonRpcResponse<DynamicGlobalProperties>> GetDynamicGlobalProperties()
+        public JsonRpcResponse<DynamicGlobalProperties> GetDynamicGlobalProperties()
         {
             return WebSocketManager.GetRequest<DynamicGlobalProperties>(DynamicGlobalProperties.Reques);
         }
@@ -53,7 +53,7 @@ namespace Ditch
         /// <param name="author"></param>
         /// <param name="permlink"></param>
         /// <returns></returns>
-        public Task<JsonRpcResponse<Content>> GetContent(string author, string permlink)
+        public JsonRpcResponse<Content> GetContent(string author, string permlink)
         {
             return WebSocketManager.Call<Content>(Content.Api, Content.OperationName, author, permlink);
         }
@@ -65,7 +65,7 @@ namespace Ditch
         /// <param name="permlink">Post link</param>
         /// <param name="weight">An weignt from 0 to 10000</param>
         /// <returns>VoteResponse - contain NewTotalPayoutReward</returns>
-        public async Task<JsonRpcResponse> Vote(string autor, string permlink, ushort weight)
+        public JsonRpcResponse Vote(string autor, string permlink, ushort weight)
         {
             var op = new VoteOperation
             {
@@ -75,16 +75,13 @@ namespace Ditch
                 Weight = weight
             };
 
-            var prop = await GetDynamicGlobalProperties();
-
+            var prop = GetDynamicGlobalProperties();
             if (prop.IsError)
             {
                 return prop;
             }
-
             var transaction = CreateTransaction(prop.Result, new BaseOperation[] { op });
-            var resp = await WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
-
+            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
             return resp;
         }
 
