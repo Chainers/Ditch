@@ -23,17 +23,16 @@ namespace Ditch.JsonRpc
 
         public string GetErrorMessage()
         {
-            return Error?.ToString();
+            return Error == null ? string.Empty : Error.ToString();
         }
 
         public JsonRpcResponse<T> ToTyped<T>()
         {
-            var rez = new JsonRpcResponse<T>()
-            {
-                Id = Id,
-                Error = Error,
-                Result = JsonConvert.DeserializeObject<T>(Result.ToString(), GlobalSettings.ChainInfo.JsonSerializerSettings)
-            };
+            var rez = new JsonRpcResponse<T>();
+            rez.Id = Id;
+            rez.Error = Error;
+            if (Result != null)
+                rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), GlobalSettings.ChainInfo.JsonSerializerSettings);
             return rez;
         }
     }
