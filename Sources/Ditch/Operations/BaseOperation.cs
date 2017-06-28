@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Ditch.Operations
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public abstract class BaseOperation
+    internal abstract class BaseOperation
     {
         public abstract OperationType Type { get; }
         

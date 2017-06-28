@@ -6,7 +6,7 @@ using Ditch.Operations;
 
 namespace Ditch.Helpers
 {
-    public class SerializeHelper
+    internal class SerializeHelper
     {
         public class IgnoreForMessageAttribute : Attribute { }
 

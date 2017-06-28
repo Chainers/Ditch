@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Ditch.Operations
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class VoteOperation : BaseOperation
+    internal class VoteOperation : BaseOperation
     {
         private ushort _weight;
 

@@ -4,7 +4,7 @@
     /// https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/operations.hpp
     ///  NOTE:  do not change the order of any operations
     /// </summary>
-    public enum OperationType : byte
+    internal enum OperationType : byte
     {
         Vote = 0,
         Comment,

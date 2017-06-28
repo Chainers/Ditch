@@ -8,13 +8,5 @@ namespace Ditch.Tests
         protected const ushort TestRefBlockNum = 12345;
         protected const uint TestRefBlockPrefix = 1234567899;
         protected const string TestExpiration = "2017-05-31T12:09:42";
-        
-        protected readonly VoteOperation VoteOperation = new VoteOperation
-        {
-            Voter = "voter",
-            Author = "author",
-            Permlink = "permlink",
-            Weight = 10000
-        };
     }
 }

@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Ditch.Helpers
 {
-    public class Base58
+    internal class Base58
     {
         public const int CheckSumSizeInBytes = 4;
         protected const string Hexdigits = "0123456789abcdefABCDEF";

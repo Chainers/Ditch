@@ -13,7 +13,7 @@ namespace Ditch
     {
         private static string _login;
         private static byte[] _key;
-        private static ChainInfo _chainInfo;
+        internal static ChainInfo ChainInfo;
         private static readonly WebSocketManager WebSocketManager;
 
         static OperationManager()
@@ -23,31 +23,39 @@ namespace Ditch
 
         public void Init(ChainManager.KnownChains chain)
         {
-            _chainInfo = ChainManager.GetChainInfo(chain);
-            WebSocketManager.InitTransactionManager(_chainInfo.Url);
+            ChainInfo = ChainManager.GetChainInfo(chain);
+            WebSocketManager.InitTransactionManager(ChainInfo.Url);
         }
 
         public void Init(ChainManager.KnownChains chain, string login, string wif)
         {
             _login = login;
             _key = Base58.GetBytes(wif);
-            _chainInfo = ChainManager.GetChainInfo(chain);
-            WebSocketManager.InitTransactionManager(_chainInfo.Url);
+            ChainInfo = ChainManager.GetChainInfo(chain);
+            WebSocketManager.InitTransactionManager(ChainInfo.Url);
         }
 
         public void Init(ChainManager.KnownChains chain, string login, string wif, EventHandler<ErrorEventArgs> websocketError)
         {
             _login = login;
             _key = Base58.GetBytes(wif);
-            _chainInfo = ChainManager.GetChainInfo(chain);
-            WebSocketManager.InitTransactionManager(_chainInfo.Url, websocketError);
+            ChainInfo = ChainManager.GetChainInfo(chain);
+            WebSocketManager.InitTransactionManager(ChainInfo.Url, websocketError);
+        }
+
+        public void Init(ChainInfo chainInfo, string login, string wif, EventHandler<ErrorEventArgs> websocketError)
+        {
+            _login = login;
+            _key = Base58.GetBytes(wif);
+            ChainInfo = chainInfo;
+            WebSocketManager.InitTransactionManager(ChainInfo.Url, websocketError);
         }
 
         private Transaction CreateTransaction(DynamicGlobalProperties properties, BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
-                ChainId = _chainInfo.ChainId,
+                ChainId = ChainInfo.ChainId,
                 RefBlockNum = (ushort)(properties.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(properties.HeadBlockId), 4),
                 Expiration = properties.Time.AddSeconds(30)
@@ -63,7 +71,7 @@ namespace Ditch
             return transaction;
         }
 
-        #region
+        #region Operations
 
         /// <summary>
         /// Get global dinamic properties
@@ -121,7 +129,7 @@ namespace Ditch
         {
             _login = string.Empty;
             _key = null;
-            _chainInfo = null;
+            ChainInfo = null;
             WebSocketManager.Close();
         }
     }
