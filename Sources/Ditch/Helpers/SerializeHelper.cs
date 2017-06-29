@@ -90,6 +90,22 @@ namespace Ditch.Helpers
                         }
                         break;
                     }
+                case "String[]":
+                    {
+                        var typed = (string[])val;
+                        if (typed == null)
+                            break;
+                        var buf = ConvertHelper.VarInt(typed.Length);
+                        stream.Write(buf, 0, buf.Length);
+                        foreach (var value in typed)
+                        {
+                            buf = ConvertHelper.VarInt(value.Length);
+                            stream.Write(buf, 0, buf.Length);
+                            buf = Encoding.UTF8.GetBytes(value);
+                            stream.Write(buf, 0, buf.Length);
+                        }
+                        break;
+                    }
                 default:
                     {
                         throw new NotImplementedException();

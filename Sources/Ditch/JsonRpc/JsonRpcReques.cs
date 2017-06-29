@@ -5,8 +5,8 @@ namespace Ditch.JsonRpc
 {
     public class JsonRpcReques
     {
-        private static readonly object _sync = new object();
-        private static int _id = 0;
+        private static readonly object Sync = new object();
+        private static int _id;
 
         [JsonProperty("jsonrpc")]
         public const string JsonRpc = "2.0";
@@ -16,8 +16,8 @@ namespace Ditch.JsonRpc
 
         public static Tuple<int, string> GetReques(string method)
         {
-            int reqId = 0;
-            lock (_sync)
+            int reqId;
+            lock (Sync)
             {
                 reqId = _id;
                 _id++;
@@ -28,8 +28,8 @@ namespace Ditch.JsonRpc
 
         public static Tuple<int, string> GetReques(string method, params object[] data)
         {
-            int reqId = 0;
-            lock (_sync)
+            int reqId;
+            lock (Sync)
             {
                 reqId = _id;
                 _id++;
@@ -38,7 +38,7 @@ namespace Ditch.JsonRpc
             var paramData = JsonConvert.SerializeObject(data, GlobalSettings.ChainInfo.JsonSerializerSettings);
             return new Tuple<int, string>(reqId, $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}");
         }
-
+        
         public static void Init()
         {
             _id = 0;
