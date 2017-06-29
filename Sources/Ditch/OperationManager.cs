@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
@@ -38,6 +39,19 @@ namespace Ditch
 
         #region Operations
 
+        private JsonRpcResponse BroadcastOberation(BaseOperation op)
+        {
+            var prop = GetDynamicGlobalProperties();
+            if (prop.IsError)
+            {
+                return prop;
+            }
+
+            var transaction = CreateTransaction(prop.Result, new BaseOperation[] { op });
+            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
+            return resp;
+        }
+
         /// <summary>
         /// Get global dinamic properties
         /// </summary>
@@ -75,14 +89,32 @@ namespace Ditch
                 Weight = weight
             };
 
-            var prop = GetDynamicGlobalProperties();
-            if (prop.IsError)
-            {
-                return prop;
-            }
-            var transaction = CreateTransaction(prop.Result, new BaseOperation[] { op });
-            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
-            return resp;
+            return BroadcastOberation(op);
+        }
+
+
+        /// <summary>
+        /// Follow user
+        /// </summary>
+        /// <param name="name">User name</param>
+        /// <returns></returns>
+        public JsonRpcResponse Follow(string name)
+        {
+            var op = CustomJsonOperation.Follow(name, "blog");
+            op.RequiredPostingAuths = new[] { GlobalSettings.Login };
+            return BroadcastOberation(op);
+        }
+
+        /// <summary>
+        /// Unfollow user
+        /// </summary>
+        /// <param name="name">User name</param>
+        /// <returns></returns>
+        public JsonRpcResponse UnFollow(string name)
+        {
+            var op = CustomJsonOperation.Follow(name, string.Empty);
+            op.RequiredPostingAuths = new[] { GlobalSettings.Login };
+            return BroadcastOberation(op);
         }
 
         #endregion Operations

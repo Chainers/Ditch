@@ -8,9 +8,12 @@ namespace Ditch.Tests
     public class OperationManagerTest : BaseTest
     {
         private readonly OperationManager _operationManager;
+        private const string Name = "joseph.kalu";
+        private const string PostingKey = "5JXCxj6YyyGUTJo9434ZrQ5gfxk59rE3yukN42WBA6t58yTPRTG";
 
         public OperationManagerTest()
         {
+            GlobalSettings.Init(Name, PostingKey, ChainManager.KnownChains.Steem);
             _operationManager = new OperationManager();
         }
 
@@ -51,5 +54,20 @@ namespace Ditch.Tests
             Console.WriteLine(rez.Error);
         }
 
+        [Test]
+        [Ignore("make transaction")]
+        public void FollowTest()
+        {
+            var prop = _operationManager.Follow("korzunav");
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
+        [Ignore("make transaction")]
+        public void UnFollowTest()
+        {
+            var prop = _operationManager.UnFollow("korzunav");
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
     }
 }
