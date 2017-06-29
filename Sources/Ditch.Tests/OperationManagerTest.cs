@@ -69,5 +69,13 @@ namespace Ditch.Tests
             var prop = _operationManager.UnFollow("korzunav");
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
+
+        [Test]
+        [Ignore("make transaction")]
+        public void FlagTest()
+        {
+            var prop = _operationManager.Vote("joseph.kalu", "fkkl", -10000);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Ditch.Tests
     {
         [Test]
         [TestCase((ushort)36029, (uint)1164960351, "2016-08-08T12:24:17", "xeroc", "xeroc", "piston", (ushort)10000, "bd8c5fe26f45f179a8570100057865726f63057865726f6306706973746f6e102700")]
-        public void TransactionToMessageTest(ushort refBlockNum, uint refBlockPrefix, string expiration, string voter, string author, string permlink, ushort weight, string tSig)
+        public void TransactionToMessageTest(ushort refBlockNum, uint refBlockPrefix, string expiration, string voter, string author, string permlink, short weight, string tSig)
         {
             var tr = new Transaction
             {
@@ -38,7 +38,7 @@ namespace Ditch.Tests
 
         [Test]
         [TestCase("voter", "author", "permlink", (ushort)10000, "wif", ChainManager.KnownChains.Steem)]
-        public void SignTransactionTest(string voter, string author, string permlink, ushort weight, string wif, ChainManager.KnownChains chain)
+        public void SignTransactionTest(string voter, string author, string permlink, short weight, string wif, ChainManager.KnownChains chain)
         {
             GlobalSettings.Init(voter, wif, chain);
             var manager = new OperationManager();
