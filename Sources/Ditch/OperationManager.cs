@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.Operations;
@@ -47,7 +45,7 @@ namespace Ditch
                 return prop;
             }
 
-            var transaction = CreateTransaction(prop.Result, new BaseOperation[] { op });
+            var transaction = CreateTransaction(prop.Result, new[] { op });
             var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
             return resp;
         }

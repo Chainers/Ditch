@@ -58,6 +58,6 @@ namespace Ditch
 
         [SerializeHelper.IgnoreForMessage]
         [JsonProperty("signatures")]
-        public string[] SignaturesStr { get { return Signatures.Select(i => Hex.ToString(i)).ToArray(); } }
+        public string[] SignaturesStr => Signatures.Select(Hex.ToString).ToArray();
     }
 }

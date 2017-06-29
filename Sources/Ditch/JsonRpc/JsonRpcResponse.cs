@@ -14,7 +14,7 @@ namespace Ditch.JsonRpc
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
-        public bool IsError { get { return Error != null; } }
+        public bool IsError => Error != null;
 
         public static JsonRpcResponse FromString(string obj)
         {
@@ -28,9 +28,11 @@ namespace Ditch.JsonRpc
 
         public JsonRpcResponse<T> ToTyped<T>()
         {
-            var rez = new JsonRpcResponse<T>();
-            rez.Id = Id;
-            rez.Error = Error;
+            var rez = new JsonRpcResponse<T>
+            {
+                Id = Id,
+                Error = Error
+            };
             if (Result != null)
                 rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), GlobalSettings.ChainInfo.JsonSerializerSettings);
             return rez;
