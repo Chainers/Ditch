@@ -1,6 +1,4 @@
-﻿using Ditch.Operations;
-
-namespace Ditch.Tests
+﻿namespace Ditch.Tests
 {
     public class BaseTest
     {

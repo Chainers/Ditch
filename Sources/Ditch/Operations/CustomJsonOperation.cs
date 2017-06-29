@@ -6,8 +6,6 @@ namespace Ditch.Operations
     [JsonObject(MemberSerialization.OptIn)]
     internal class CustomJsonOperation : BaseOperation
     {
-        private readonly string _id;
-        private readonly string _json;
         private string[] _requiredAuths;
         private string[] _requiredPostingAuths;
 
@@ -30,15 +28,15 @@ namespace Ditch.Operations
         }
 
         [JsonProperty("id")]
-        public string Id => _id;
+        public string Id { get; }
 
         [JsonProperty("json")]
-        public string Json => _json;
+        public string Json { get; }
 
         public CustomJsonOperation(string id, string json)
         {
-            _id = id;
-            _json = json;
+            Id = id;
+            Json = json;
         }
 
 
