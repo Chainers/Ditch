@@ -32,9 +32,21 @@ namespace Ditch.Helpers
 
             switch (type.Name)
             {
+                case "Int16":
+                    {
+                        var buf = BitConverter.GetBytes((Int16)val);
+                        stream.Write(buf, 0, buf.Length);
+                        break;
+                    }
                 case "UInt16":
                     {
                         var buf = BitConverter.GetBytes((UInt16)val);
+                        stream.Write(buf, 0, buf.Length);
+                        break;
+                    }
+                case "Int32":
+                    {
+                        var buf = BitConverter.GetBytes((Int32)val);
                         stream.Write(buf, 0, buf.Length);
                         break;
                     }

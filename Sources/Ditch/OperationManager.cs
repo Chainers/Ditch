@@ -75,9 +75,9 @@ namespace Ditch
         /// </summary>
         /// <param name="autor">Post author</param>
         /// <param name="permlink">Post link</param>
-        /// <param name="weight">An weignt from 0 to 10000</param>
+        /// <param name="weight">An weignt from 0 to 10000. -10000 for flag</param>
         /// <returns>VoteResponse - contain NewTotalPayoutReward</returns>
-        public JsonRpcResponse Vote(string autor, string permlink, ushort weight)
+        public JsonRpcResponse Vote(string autor, string permlink, short weight)
         {
             var op = new VoteOperation
             {
@@ -114,7 +114,7 @@ namespace Ditch
             op.RequiredPostingAuths = new[] { GlobalSettings.Login };
             return BroadcastOberation(op);
         }
-
+ 
         #endregion Operations
     }
 }
