@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace Ditch.Responses
 {
+    /// <summary>
+    /// Shows an overview of various information regarding the current state of the STEEM network.
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class DynamicGlobalProperties
     {

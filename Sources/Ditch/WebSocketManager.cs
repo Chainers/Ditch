@@ -62,6 +62,12 @@ namespace Ditch
             return responce.ToTyped<T>();
         }
 
+        public JsonRpcResponse<T> GetRequest<T>(string request, params object[] data)
+        {
+            var msg = JsonRpcReques.GetReques(request, data);
+            var responce = Execute(msg);
+            return responce.ToTyped<T>();
+        }
 
         private JsonRpcResponse Execute(Tuple<int, string> msg)
         {
@@ -94,7 +100,7 @@ namespace Ditch
 
             if (responce == null)
             {
-                return new JsonRpcResponse { Error = "execution has timed-out" };
+                return new JsonRpcResponse { Error = new ErrorResponce("execution has timed-out") };
             }
 
             return responce;

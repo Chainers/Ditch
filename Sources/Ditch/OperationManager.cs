@@ -114,7 +114,41 @@ namespace Ditch
             op.RequiredPostingAuths = new[] { GlobalSettings.Login };
             return BroadcastOberation(op);
         }
- 
+
+        /// <summary>
+        /// Repost some post by author and permlink (loads all additional parameters from the blockchain)
+        /// </summary>
+        /// <param name="author">post author</param>
+        /// <param name="permlink">post permlink</param>
+        /// <returns></returns>
+        public JsonRpcResponse RePost(string author, string permlink)
+        {
+            var op = CustomJsonOperation.ReBlog(author, permlink);
+            op.RequiredPostingAuths = new[] { GlobalSettings.Login };
+            return BroadcastOberation(op);
+        }
+
+
+        public JsonRpcResponse AddPost(string permlink, string title, string body, string jsonMetadata, string parentPermlink)
+        {
+            return AddComment(permlink, title, body, jsonMetadata, string.Empty, parentPermlink);
+        }
+
+        public JsonRpcResponse AddComment(string permlink, string title, string body, string jsonMetadata, string parentAuthor, string parentPermlink)
+        {
+            var op = new CommentOperation
+            {
+                Author = GlobalSettings.Login,
+                ParentAuthor = parentAuthor,
+                ParentPermlink = parentPermlink,
+                Permlink = permlink,
+                Title = title,
+                Body = body,
+                JsonMetadata = jsonMetadata
+            };
+            return BroadcastOberation(op);
+        }
+
         #endregion Operations
     }
 }

@@ -76,6 +76,11 @@ namespace Ditch.Helpers
                 case "String":
                     {
                         var typed = (string)val;
+                        if (string.IsNullOrEmpty(typed))
+                        {
+                            stream.WriteByte(0);
+                            break;
+                        }
                         var buf = ConvertHelper.VarInt(typed.Length);
                         stream.Write(buf, 0, buf.Length);
                         buf = Encoding.UTF8.GetBytes(typed);
@@ -111,6 +116,12 @@ namespace Ditch.Helpers
                         stream.Write(buf, 0, buf.Length);
                         foreach (var value in typed)
                         {
+                            if (string.IsNullOrEmpty(value))
+                            {
+                                stream.WriteByte(0);
+                                continue;
+                            }
+
                             buf = ConvertHelper.VarInt(value.Length);
                             stream.Write(buf, 0, buf.Length);
                             buf = Encoding.UTF8.GetBytes(value);
