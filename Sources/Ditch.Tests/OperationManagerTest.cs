@@ -8,8 +8,8 @@ namespace Ditch.Tests
     public class OperationManagerTest : BaseTest
     {
         private readonly OperationManager _operationManager;
-        private const string Name = "joseph.kalu";
-        private const string PostingKey = "***REMOVED***";
+        private const string Name = "login";
+        private const string PostingKey = "wif";
 
         public OperationManagerTest()
         {
@@ -66,7 +66,7 @@ namespace Ditch.Tests
         [Ignore("make transaction")]
         public void UnFollowTest()
         {
-            var prop = _operationManager.UnFollow("korzunav");
+            var prop = _operationManager.UnFollow("joseph.kalu");
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -75,6 +75,24 @@ namespace Ditch.Tests
         public void FlagTest()
         {
             var prop = _operationManager.Vote("joseph.kalu", "fkkl", -10000);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
+        [Ignore("make transaction")]
+        [TestCase("steepshot", "testpermlink", "testtitle", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
+        public void PostTest(string parentPermlink, string permlink, string title, string body, string jsonMetadata)
+        {
+            var prop = _operationManager.AddPost(permlink, title, body, jsonMetadata, parentPermlink);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
+        [Ignore("make transaction")]
+        [TestCase("yanakorsak", "orchids")]
+        public void RepostTest(string author, string permlink)
+        {
+            var prop = _operationManager.RePost(author, permlink);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
     }

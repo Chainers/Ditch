@@ -9,7 +9,7 @@ namespace Ditch.JsonRpc
         public object Result { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
-        public object Error { get; set; }
+        public ErrorResponce Error { get; set; }
 
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }

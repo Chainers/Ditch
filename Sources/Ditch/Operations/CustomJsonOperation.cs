@@ -50,5 +50,10 @@ namespace Ditch.Operations
         {
             return new CustomJsonOperation("follow", $"[\"follow\", {{\"follower\": \"{GlobalSettings.Login}\", \"following\": \"{name}\", \"what\": [\"{what}\"]}}]");
         }
+
+        public static CustomJsonOperation ReBlog(string author, string permlink)
+        {
+            return new CustomJsonOperation("follow", $"[\"reblog\",{{\"account\":\"{GlobalSettings.Login}\",\"author\":\"{author}\",\"permlink\":\"{permlink}\"}}]");
+        }
     }
 }
