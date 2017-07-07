@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Ditch.Responses
+namespace Ditch.Operations.Get
 {
     /// <summary>
     /// Shows an overview of various information regarding the current state of the STEEM network.

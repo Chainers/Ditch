@@ -1,15 +1,12 @@
 ﻿using System;
-using Ditch.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Responses
+namespace Ditch.Operations.Get
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Content
     {
-        [SerializeHelper.IgnoreForMessage]
         public const string OperationName = "get_content";
-        [SerializeHelper.IgnoreForMessage]
         public const int Api = 0;
 
 

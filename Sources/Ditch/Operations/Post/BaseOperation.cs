@@ -1,14 +1,14 @@
 ﻿using Ditch.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Operations
+namespace Ditch.Operations.Post
 {
     [JsonObject(MemberSerialization.OptIn)]
-    internal abstract class BaseOperation
+    public abstract class BaseOperation
     {
+        [SerializeHelper.MessageOrder(10)]
         public abstract OperationType Type { get; }
         
-        [SerializeHelper.IgnoreForMessage]
         public abstract string TypeName { get; }
     }
 }
