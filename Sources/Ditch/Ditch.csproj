@@ -12,7 +12,7 @@
     <AssemblyVersion>0.0.2.2</AssemblyVersion>
     <FileVersion>0.0.2.2</FileVersion>
     <Version>0.2.2</Version>
-    <Description>Creat and broadcast transactions to blockchain</Description>
+    <Description>Creat and broadcast transactions to Graphete based blockchains</Description>
     <PackageReleaseNotes>supported operations
 * GetDynamicGlobalProperties
 * GetContent
@@ -36,10 +36,6 @@ supported chains
     <PackageReference Include="Cryptography.ECDSA.Secp256k1" Version="1.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="WebSocket4Net" Version="0.15.0-beta9" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Requests\" />
   </ItemGroup>
 
 </Project>

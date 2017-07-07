@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Ditch.Helpers;
 using Ditch.Operations;
+using Ditch.Operations.Post;
 using Newtonsoft.Json;
 
 [assembly: InternalsVisibleTo("Ditch.Tests")]
@@ -12,26 +13,27 @@ namespace Ditch
     [JsonObject(MemberSerialization.OptIn)]
     internal class Transaction
     {
-        [SerializeHelper.IgnoreForMessage]
         public const string OperationName = "broadcast_transaction";
-        [SerializeHelper.IgnoreForMessage]
         public const int Api = 3;
 
-
+        [SerializeHelper.MessageOrder(0)]
         public byte[] ChainId { get; set; } = new byte[0]; //64
 
+        [SerializeHelper.MessageOrder(1)]
         [JsonProperty("ref_block_num")]
         public UInt16 RefBlockNum { get; set; }
 
+        [SerializeHelper.MessageOrder(2)]
         [JsonProperty("ref_block_prefix")]
         public UInt32 RefBlockPrefix { get; set; }
 
+        [SerializeHelper.MessageOrder(3)]
         [JsonProperty("expiration")]
         public DateTime Expiration { get; set; }
 
+        [SerializeHelper.MessageOrder(4)]
         public BaseOperation[] BaseOperations { get; set; }
 
-        [SerializeHelper.IgnoreForMessage]
         [JsonProperty("operations")]
         public object[][] Operations
         {
@@ -47,16 +49,14 @@ namespace Ditch
             }
         }
 
+        [SerializeHelper.MessageOrder(5)]
         public string ExtensionsStr { get; set; } = string.Empty;
 
-        [SerializeHelper.IgnoreForMessage]
         [JsonProperty("extensions")]
         public List<byte[]> Extensions { get; set; } = new List<byte[]>();
 
-        [SerializeHelper.IgnoreForMessage]
         public List<byte[]> Signatures { get; set; } = new List<byte[]>();
 
-        [SerializeHelper.IgnoreForMessage]
         [JsonProperty("signatures")]
         public string[] SignaturesStr => Signatures.Select(Hex.ToString).ToArray();
     }
