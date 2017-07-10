@@ -151,9 +151,9 @@ namespace Ditch.Helpers
                     stream.WriteByte(0);
                     return;
                 }
-                var buf = ConvertHelper.VarInt(typed.Length);
-                stream.Write(buf, 0, buf.Length);
-                buf = Encoding.UTF8.GetBytes(typed);
+                var buf = Encoding.UTF8.GetBytes(typed);
+                var buflen = ConvertHelper.VarInt(buf.Length);
+                stream.Write(buflen, 0, buflen.Length);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
@@ -205,7 +205,7 @@ namespace Ditch.Helpers
                 }
                 return;
             }
-            
+
             throw new NotImplementedException();
 
         }
