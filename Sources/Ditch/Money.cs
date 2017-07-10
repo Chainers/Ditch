@@ -4,16 +4,16 @@ namespace Ditch
 {
     public struct Money
     {
-        public long Value { get; set; }
+        public long Value { get; private set; }
 
-        public string Currency { get; set; }
+        public string Currency { get; private set; }
 
-        public byte Precision { get; set; }
+        public byte Precision { get; private set; }
 
         public Money(string value)
         {
             var kv = value.Split(' ');
-            Precision = (byte)(kv[0].Length - kv[0].LastIndexOf(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator, StringComparison.OrdinalIgnoreCase));
+            Precision = (byte)(kv[0].Length - kv[0].LastIndexOf(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator, StringComparison.OrdinalIgnoreCase) - 1);
             var buf = kv[0]
                 .Replace(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator, string.Empty)
                 .Replace(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberGroupSeparator, string.Empty);
@@ -73,7 +73,7 @@ namespace Ditch
         }
 
 
-        public static implicit operator string (Money value)
+        public static implicit operator string(Money value)
         {
             return value.ToString();
         }

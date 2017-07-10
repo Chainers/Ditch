@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using Ditch.Helpers;
-using Ditch.Operations;
 using Ditch.Operations.Post;
 using NUnit.Framework;
 
@@ -32,11 +30,12 @@ namespace Ditch.Tests
         }
 
         [Test]
-        public void AddBeneficiaresOperationTest()
+        public void PostWithBeneficiaresOperationTest()
         {
             var ops = new BaseOperation[]
             {
-                new BeneficiaresOperation("xeroc", "piston", "SBD", new BeneficiaresOperation.Beneficiary("good-karma",2000), new BeneficiaresOperation.Beneficiary("null",5000))
+                new CommentOperation("parent_author_test1","parent_permlink_test2","author_test3","permlink_test4","title_test5","body_test6","{\"foo\": \"bar\"}"),
+                new BeneficiaresOperation("author_test7", "permlink_test8", "SBD", new Beneficiary("account_test9",2000), new Beneficiary("account_test10",5000))
             };
 
             var tr = new Transaction
@@ -49,8 +48,9 @@ namespace Ditch.Tests
             };
             var msg = SerializeHelper.TransactionToMessage(tr);
             var msgStr = Hex.ToString(msg);
-            var t = "0000000000000000000000000000000000000000000000000000000000000000f68585abf4dce7c804570113057865726f6306706973746f6e00ca9a3b000000000353424400000000102701010100020a676f6f642d6b61726d61d007046e756c6c881300";
+            var t = "0000000000000000000000000000000000000000000000000000000000000000f68585abf4dce7c80457020113706172656e745f617574686f725f746573743115706172656e745f7065726d6c696e6b5f74657374320c617574686f725f74657374330e7065726d6c696e6b5f74657374340b7469746c655f74657374350a626f64795f74657374360e7b22666f6f223a2022626172227d130c617574686f725f74657374370e7065726d6c696e6b5f746573743800ca9a3b000000000353424400000000102701010100020d6163636f756e745f7465737439d0070e6163636f756e745f746573743130881300";
             Assert.IsTrue(t.Equals(msgStr, StringComparison.OrdinalIgnoreCase), $"{msgStr} != {t}");
         }
+
     }
 }

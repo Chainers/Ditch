@@ -1,6 +1,5 @@
 ﻿using System;
-using Ditch.Operations;
-using Ditch.Responses;
+using Ditch.Operations.Post;
 using NUnit.Framework;
 
 namespace Ditch.Tests
@@ -139,11 +138,11 @@ namespace Ditch.Tests
 
         [Test]
         // [Ignore("make transaction")]
-        [TestCase("steepshot", (ushort)1000, "steepshot", "testpermlink", "testtitle", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
-        public void PostTest(string beneficiar, ushort value, string parentPermlink, string permlink, string title, string body, string jsonMetadata)
+        [TestCase("steepshot", "testpostwithbeneficiares", "test post with beneficiares", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
+        public void PostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
-            var op = new PostOperation(parentPermlink, GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new BeneficiaresOperation.Beneficiary(beneficiar, value));
+            var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
+            var popt = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
             var prop = _operationManager.BroadcastOberations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
