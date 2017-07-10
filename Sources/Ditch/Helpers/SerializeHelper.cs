@@ -157,7 +157,17 @@ namespace Ditch.Helpers
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-
+            if (val is KeyContainer)
+            {
+                var typed = (KeyContainer)val;
+                if (typed == null)
+                    return;
+                foreach (var value in typed)
+                {
+                    AddToMessageStream(stream, value.GetType(), value);
+                }
+                return;
+            }
             if (type.IsArray)
             {
                 var typed = (ICollection)val;
@@ -195,6 +205,7 @@ namespace Ditch.Helpers
                 }
                 return;
             }
+            
             throw new NotImplementedException();
 
         }
