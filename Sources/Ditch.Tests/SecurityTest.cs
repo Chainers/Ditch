@@ -52,5 +52,27 @@ namespace Ditch.Tests
             Assert.IsTrue(t.Equals(msgStr, StringComparison.OrdinalIgnoreCase), $"{msgStr} != {t}");
         }
 
+        [Test]
+        public void PostRuTest()
+        {
+            var ops = new BaseOperation[]
+            {
+                new CommentOperation("foobara","foobarb","foobarc","foobard","foobare","какой либо текст с русскими буквами!","{\"foo\": \"bar\"}"),
+            };
+
+            var tr = new Transaction
+            {
+                RefBlockNum = (ushort)34294,
+                RefBlockPrefix = (uint)3707022213,
+                Expiration = DateTime.Parse("2016-04-06T08:29:27"),
+                BaseOperations = ops,
+                ChainId = Hex.HexToBytes("0000000000000000000000000000000000000000000000000000000000000000")
+            };
+            var msg = SerializeHelper.TransactionToMessage(tr);
+            var msgStr = Hex.ToString(msg);
+            var t = "0000000000000000000000000000000000000000000000000000000000000000f68585abf4dce7c80457010107666f6f6261726107666f6f6261726207666f6f6261726307666f6f6261726407666f6f6261726542d0bad0b0d0bad0bed0b920d0bbd0b8d0b1d0be20d182d0b5d0bad181d18220d18120d180d183d181d181d0bad0b8d0bcd0b820d0b1d183d0bad0b2d0b0d0bcd0b8210e7b22666f6f223a2022626172227d00";
+            Assert.IsTrue(t.Equals(msgStr, StringComparison.OrdinalIgnoreCase), $"{msgStr} != {t}");
+        }
+
     }
 }
