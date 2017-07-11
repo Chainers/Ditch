@@ -81,6 +81,11 @@ namespace Ditch
         public override string ToString()
         {
             var dig = Value.ToString();
+            if (dig.Length <= Precision)
+            {
+                var prefix = new string('0', Precision - dig.Length + 1);
+                dig = prefix + dig;
+            }
             dig = dig.Insert(dig.Length - Precision, GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator);
             return $"{dig} {Currency}";
         }

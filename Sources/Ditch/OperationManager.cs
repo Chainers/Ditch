@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.Operations;
@@ -17,6 +18,10 @@ namespace Ditch
             WebSocketManager = new WebSocketManager();
         }
 
+        /// <summary>
+        /// Create and broadcast transaction
+        /// </summary>
+        /// <returns></returns>
         public JsonRpcResponse BroadcastOberations(params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties();
@@ -37,6 +42,24 @@ namespace Ditch
         public JsonRpcResponse<DynamicGlobalProperties> GetDynamicGlobalProperties()
         {
             return WebSocketManager.GetRequest<DynamicGlobalProperties>(DynamicGlobalProperties.Reques);
+        }
+
+        /// <summary>
+        /// Get user accounts by user names
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<List<Account>> GetAccounts(params string[] userList)
+        {
+            return WebSocketManager.GetRequest<List<Account>>(Account.OperationName, $"[[\"{string.Join("\",\"", userList)}\"]]");
+        }
+
+        /// <summary>
+        /// Execute custom user request
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<T> GetCustomRequest<T>(string request, params object[] data)
+        {
+            return WebSocketManager.GetRequest<T>(request, data);
         }
 
         /// <summary>
