@@ -6,6 +6,8 @@ The essence of the library is to generate a transaction according to the require
 Get:
 * DynamicGlobalProperties
 * Content
+* GetAccounts
+* GetCustomRequest
 
 Post:
 * VoteOperation (vote) 
