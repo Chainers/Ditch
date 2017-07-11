@@ -15,28 +15,20 @@ namespace Ditch.JsonRpc
         [JsonProperty("id")]
         public int Id { get; }
 
-        public static Tuple<int, string> GetReques(string method)
-        {
-            int reqId;
-            lock (Sync)
-            {
-                reqId = _id;
-                _id++;
-            }
-
-            return new Tuple<int, string>(reqId, $"{{\"method\":\"{method}\",\"params\":[],\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}");
-        }
-
         public static Tuple<int, string> GetReques(string method, params object[] data)
         {
+            var paramData = (data == null) ? "[]" : JsonConvert.SerializeObject(data, GlobalSettings.ChainInfo.JsonSerializerSettings);
+            return GetReques(method, paramData);
+        }
+
+        public static Tuple<int, string> GetReques(string method, string paramData)
+        {
             int reqId;
             lock (Sync)
             {
                 reqId = _id;
                 _id++;
             }
-
-            var paramData = JsonConvert.SerializeObject(data, GlobalSettings.ChainInfo.JsonSerializerSettings);
             return new Tuple<int, string>(reqId, $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"{JsonRpc}\",\"id\":{reqId}}}");
         }
 

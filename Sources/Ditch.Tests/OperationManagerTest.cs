@@ -55,6 +55,13 @@ namespace Ditch.Tests
         }
 
         [Test]
+        public void GetAccountsTest()
+        {
+            var rez = _operationManager.GetAccounts(GlobalSettings.Login);
+            Assert.IsFalse(rez.IsError, rez.GetErrorMessage());
+        }
+
+        [Test]
         public void GetChainPropertiesHelp()
         {
             var ws = new WebSocketManager();
