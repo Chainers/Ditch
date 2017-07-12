@@ -100,7 +100,7 @@ namespace Ditch
 
             if (responce == null)
             {
-                return new JsonRpcResponse { Error = new ErrorResponce("execution has timed-out") };
+                return new JsonRpcResponse { Error = new ErrorResponse("execution has timed-out") };
             }
 
             return responce;
