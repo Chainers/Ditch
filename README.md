@@ -8,6 +8,7 @@ Get:
 * Content
 * GetAccounts
 * GetCustomRequest
+* VerifyAuthority 
 
 Post:
 * VoteOperation (vote) 
