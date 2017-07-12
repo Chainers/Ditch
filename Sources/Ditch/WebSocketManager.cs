@@ -44,27 +44,27 @@ namespace Ditch
 
         public JsonRpcResponse Call(int api, string operation, params object[] data)
         {
-            var msg = JsonRpcReques.GetReques("call", api, operation, data);
+            var msg = JsonRpcRequest.GetRequest("call", api, operation, data);
             return Execute(msg);
         }
 
         public JsonRpcResponse<T> Call<T>(int api, string operation, params object[] data)
         {
-            var msg = JsonRpcReques.GetReques("call", api, operation, data);
+            var msg = JsonRpcRequest.GetRequest("call", api, operation, data);
             var resp = Execute(msg);
             return resp.ToTyped<T>();
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string request, params object[] data)
         {
-            var msg = JsonRpcReques.GetReques(request, data);
+            var msg = JsonRpcRequest.GetRequest(request, data);
             var responce = Execute(msg);
             return responce.ToTyped<T>();
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string request, string data)
         {
-            var msg = JsonRpcReques.GetReques(request, data);
+            var msg = JsonRpcRequest.GetRequest(request, data);
             var responce = Execute(msg);
             return responce.ToTyped<T>();
         }
@@ -181,7 +181,7 @@ namespace Ditch
                 _websocket.Close();
                 SocketCloseEvent.WaitOne();
             }
-            JsonRpcReques.Init();
+            JsonRpcRequest.Init();
 
             lock (ManualResetEventDictionary)
             {

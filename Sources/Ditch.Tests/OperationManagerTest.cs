@@ -90,7 +90,7 @@ namespace Ditch.Tests
         public void FollowTest()
         {
             var op = new FollowOperation(GlobalSettings.Login, "korzunav", "blog", new[] { GlobalSettings.Login });
-            var prop = _operationManager.BroadcastOberations(op);
+            var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -128,7 +128,7 @@ namespace Ditch.Tests
         public void UnFollowTest()
         {
             var op = new UnfollowOperation(GlobalSettings.Login, "korzunav", GlobalSettings.Login);
-            var prop = _operationManager.BroadcastOberations(op);
+            var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -137,7 +137,7 @@ namespace Ditch.Tests
         public void UpVoteOperationTest()
         {
             var op = new UpVoteOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = _operationManager.BroadcastOberations(op);
+            var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -146,7 +146,7 @@ namespace Ditch.Tests
         public void DownVoteOperationTest()
         {
             var op = new DownVoteOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = _operationManager.BroadcastOberations(op);
+            var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -155,7 +155,7 @@ namespace Ditch.Tests
         public void FlagTest()
         {
             var op = new FlagOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = _operationManager.BroadcastOberations(op);
+            var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -165,8 +165,8 @@ namespace Ditch.Tests
         public void PostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
             var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-            var prop = _operationManager.BroadcastOberations(op, popt);
+            var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
+            var prop = _operationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -176,8 +176,8 @@ namespace Ditch.Tests
         public void RuPostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
             var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-            var prop = _operationManager.BroadcastOberations(op, popt);
+            var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
+            var prop = _operationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -187,7 +187,7 @@ namespace Ditch.Tests
         public void RepostTest(string author, string permlink)
         {
             var op = new RePostOperation(GlobalSettings.Login, author, permlink, GlobalSettings.Login);
-            var prop = _operationManager.BroadcastOberations(op);
+            var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
     }

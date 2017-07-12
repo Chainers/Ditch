@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Ditch.JsonRpc
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class JsonRpcReques
+    public class JsonRpcRequest
     {
         private static readonly object Sync = new object();
         private static int _id;
@@ -15,13 +15,13 @@ namespace Ditch.JsonRpc
         [JsonProperty("id")]
         public int Id { get; }
 
-        public static Tuple<int, string> GetReques(string method, params object[] data)
+        public static Tuple<int, string> GetRequest(string method, params object[] data)
         {
             var paramData = (data == null) ? "[]" : JsonConvert.SerializeObject(data, GlobalSettings.ChainInfo.JsonSerializerSettings);
-            return GetReques(method, paramData);
+            return GetRequest(method, paramData);
         }
 
-        public static Tuple<int, string> GetReques(string method, string paramData)
+        public static Tuple<int, string> GetRequest(string method, string paramData)
         {
             int reqId;
             lock (Sync)

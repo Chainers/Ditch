@@ -21,7 +21,7 @@ namespace Ditch
         /// Create and broadcast transaction
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse BroadcastOberations(params BaseOperation[] operations)
+        public JsonRpcResponse BroadcastOperations(params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties();
             if (prop.IsError)
