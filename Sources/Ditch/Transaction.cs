@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Ditch.Helpers;
-using Ditch.Operations;
 using Ditch.Operations.Post;
 using Newtonsoft.Json;
 

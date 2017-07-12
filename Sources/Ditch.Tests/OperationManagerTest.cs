@@ -42,16 +42,33 @@ namespace Ditch.Tests
         public void ParseTestTest(string test)
         {
             var money = new Money(test);
-            Assert.IsTrue(Math.Abs(money.Value - 277.126) < 0.00001);
+            Assert.IsTrue(money.Value == 277126);
+            Assert.IsTrue(money.Precision == 3);
             Assert.IsTrue(money.Currency == "SBD");
         }
 
         [Test]
         public void GetHelp()
         {
-            var ws = new WebSocketManager();
-            var rez = ws.GetRequest<object>("help");
+            var rez = _operationManager.GetCustomRequest<object>("help");
             Console.WriteLine(rez.Error);
+        }
+
+        [Test]
+        public void VerifyAuthoritySuccessTest()
+        {
+            var op = new FollowOperation(GlobalSettings.Login, "steepshot", "blog", new[] { GlobalSettings.Login });
+            var rez = _operationManager.VerifyAuthority(op);
+            Assert.IsFalse(rez.IsError, rez.GetErrorMessage());
+            Assert.IsTrue(rez.Result);
+        }
+
+        [Test]
+        public void VerifyAuthorityFallTest()
+        {
+            var op = new FollowOperation(GlobalSettings.Login, "steepshot", "blog", new[] { "StubLogin" });
+            var rez = _operationManager.VerifyAuthority(op);
+            Assert.IsTrue(rez.IsError);
         }
 
         [Test]
@@ -64,8 +81,7 @@ namespace Ditch.Tests
         [Test]
         public void GetChainPropertiesHelp()
         {
-            var ws = new WebSocketManager();
-            var rez = ws.GetRequest<object>("get_chain_properties");
+            var rez = _operationManager.GetCustomRequest<object>("get_chain_properties");
             Console.WriteLine(rez.Error);
         }
 
