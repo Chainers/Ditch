@@ -9,6 +9,9 @@ namespace Ditch.Operations.Get
     [JsonObject(MemberSerialization.OptIn)]
     public class DynamicGlobalProperties
     {
+        public static readonly DynamicGlobalProperties Default = new DynamicGlobalProperties { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
+
+
         public const string Reques = "get_dynamic_global_properties";
 
         [JsonProperty("id")]

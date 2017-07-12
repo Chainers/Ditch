@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Ditch.JsonRpc
 {
@@ -34,7 +35,15 @@ namespace Ditch.JsonRpc
                 Error = Error
             };
             if (Result != null)
-                rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), GlobalSettings.ChainInfo.JsonSerializerSettings);
+            {
+                var t = typeof(T);
+                var ti = t.GetTypeInfo();
+
+                if (ti.IsValueType)
+                    rez.Result = (T)Result;
+                else
+                    rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), GlobalSettings.ChainInfo.JsonSerializerSettings);
+            }
             return rez;
         }
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
-using Ditch.Operations;
 using Ditch.JsonRpc;
 using Ditch.Operations.Get;
 using Ditch.Operations.Post;
@@ -51,6 +50,17 @@ namespace Ditch
         public JsonRpcResponse<List<Account>> GetAccounts(params string[] userList)
         {
             return WebSocketManager.GetRequest<List<Account>>(Account.OperationName, $"[[\"{string.Join("\",\"", userList)}\"]]");
+        }
+
+        /// <summary>
+        /// Execute custom user request
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<bool> VerifyAuthority(params BaseOperation[] testOps)
+        {
+            var prop = DynamicGlobalProperties.Default;
+            var transaction = CreateTransaction(prop, testOps);
+            return WebSocketManager.GetRequest<bool>("verify_authority", transaction);
         }
 
         /// <summary>
