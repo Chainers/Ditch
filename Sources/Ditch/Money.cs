@@ -4,11 +4,11 @@ namespace Ditch
 {
     public struct Money
     {
-        public long Value { get; private set; }
+        public long Value { get; }
 
-        public string Currency { get; private set; }
+        public string Currency { get; }
 
-        public byte Precision { get; private set; }
+        public byte Precision { get; }
 
         public Money(string value)
         {
