@@ -157,11 +157,10 @@ namespace Ditch.Helpers
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (val is KeyContainer)
+            var container = val as KeyContainer;
+            if (container != null)
             {
-                var typed = (KeyContainer)val;
-                if (typed == null)
-                    return;
+                var typed = container;
                 foreach (var value in typed)
                 {
                     AddToMessageStream(stream, value.GetType(), value);

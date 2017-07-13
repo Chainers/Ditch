@@ -10,7 +10,7 @@ namespace Ditch
 {
     internal class WebSocketManager
     {
-        private static readonly Dictionary<int, JsonRpcResponse> ResponceDictionary;
+        private static readonly Dictionary<int, JsonRpcResponse> ResponseDictionary;
         private static readonly Dictionary<int, ManualResetEvent> ManualResetEventDictionary;
         private static readonly ManualResetEvent SocketOpenEvent;
         private static readonly ManualResetEvent SocketCloseEvent;
@@ -19,7 +19,7 @@ namespace Ditch
 
         static WebSocketManager()
         {
-            ResponceDictionary = new Dictionary<int, JsonRpcResponse>();
+            ResponseDictionary = new Dictionary<int, JsonRpcResponse>();
             ManualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
             SocketOpenEvent = new ManualResetEvent(false);
             SocketCloseEvent = new ManualResetEvent(false);
@@ -58,15 +58,15 @@ namespace Ditch
         public JsonRpcResponse<T> GetRequest<T>(string request, params object[] data)
         {
             var msg = JsonRpcReques.GetReques(request, data);
-            var responce = Execute(msg);
-            return responce.ToTyped<T>();
+            var response = Execute(msg);
+            return response.ToTyped<T>();
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string request, string data)
         {
             var msg = JsonRpcReques.GetReques(request, data);
-            var responce = Execute(msg);
-            return responce.ToTyped<T>();
+            var response = Execute(msg);
+            return response.ToTyped<T>();
         }
 
         private JsonRpcResponse Execute(Tuple<int, string> msg)
@@ -88,22 +88,22 @@ namespace Ditch
                 vaiter.Dispose();
             }
 
-            JsonRpcResponse responce = null;
-            lock (ResponceDictionary)
+            JsonRpcResponse response = null;
+            lock (ResponseDictionary)
             {
-                if (ResponceDictionary.ContainsKey(msg.Item1))
+                if (ResponseDictionary.ContainsKey(msg.Item1))
                 {
-                    responce = ResponceDictionary[msg.Item1];
-                    ResponceDictionary.Remove(msg.Item1);
+                    response = ResponseDictionary[msg.Item1];
+                    ResponseDictionary.Remove(msg.Item1);
                 }
             }
 
-            if (responce == null)
+            if (response == null)
             {
                 return new JsonRpcResponse { Error = new ErrorResponse("execution has timed-out") };
             }
 
-            return responce;
+            return response;
         }
 
 
@@ -156,12 +156,12 @@ namespace Ditch
         private static void websocket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             var prop = JsonRpcResponse.FromString(e.Message);
-            lock (ResponceDictionary)
+            lock (ResponseDictionary)
             {
-                if (ResponceDictionary.ContainsKey(prop.Id))
-                    ResponceDictionary[prop.Id] = prop;
+                if (ResponseDictionary.ContainsKey(prop.Id))
+                    ResponseDictionary[prop.Id] = prop;
                 else
-                    ResponceDictionary.Add(prop.Id, prop);
+                    ResponseDictionary.Add(prop.Id, prop);
             }
 
             lock (ManualResetEventDictionary)
