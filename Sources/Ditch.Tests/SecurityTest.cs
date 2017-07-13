@@ -35,7 +35,7 @@ namespace Ditch.Tests
             var ops = new BaseOperation[]
             {
                 new CommentOperation("parent_author_test1","parent_permlink_test2","author_test3","permlink_test4","title_test5","body_test6","{\"foo\": \"bar\"}"),
-                new BeneficiaresOperation("author_test7", "permlink_test8", "SBD", new Beneficiary("account_test9",2000), new Beneficiary("account_test10",5000))
+                new BeneficiariesOperation("author_test7", "permlink_test8", "SBD", new Beneficiary("account_test9",2000), new Beneficiary("account_test10",5000))
             };
 
             var tr = new Transaction

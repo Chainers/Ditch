@@ -165,7 +165,7 @@ namespace Ditch.Tests
         public void PostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
             var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
+            var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
             var prop = _operationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -176,7 +176,7 @@ namespace Ditch.Tests
         public void RuPostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
             var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
+            var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
             var prop = _operationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }

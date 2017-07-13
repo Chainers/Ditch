@@ -44,27 +44,27 @@ namespace Ditch
 
         public JsonRpcResponse Call(int api, string operation, params object[] data)
         {
-            var msg = JsonRpcRequest.GetReques("call", api, operation, data);
+            var msg = JsonRpcRequest.GetRequest("call", api, operation, data);
             return Execute(msg);
         }
 
         public JsonRpcResponse<T> Call<T>(int api, string operation, params object[] data)
         {
-            var msg = JsonRpcRequest.GetReques("call", api, operation, data);
+            var msg = JsonRpcRequest.GetRequest("call", api, operation, data);
             var resp = Execute(msg);
             return resp.ToTyped<T>();
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string request, params object[] data)
         {
-            var msg = JsonRpcRequest.GetReques(request, data);
+            var msg = JsonRpcRequest.GetRequest(request, data);
             var response = Execute(msg);
             return response.ToTyped<T>();
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string request, string data)
         {
-            var msg = JsonRpcRequest.GetReques(request, data);
+            var msg = JsonRpcRequest.GetRequest(request, data);
             var response = Execute(msg);
             return response.ToTyped<T>();
         }
