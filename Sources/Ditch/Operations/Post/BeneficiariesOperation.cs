@@ -47,9 +47,9 @@ namespace Ditch.Operations.Post
     }
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class BeneficiaresOperation : CommentOptionsOperation
+    public class BeneficiariesOperation : CommentOptionsOperation
     {
-        public BeneficiaresOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
+        public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
             : base(author, permlink, new Money(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
         {
         }
