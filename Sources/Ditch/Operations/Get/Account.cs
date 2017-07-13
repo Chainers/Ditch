@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Ditch.Operations.Get
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class AccountPublickKey
+    public class AccountPublicKey
     {
         [JsonProperty("weight_threshold")]
         public int WeightThreshold { get; set; }
@@ -36,13 +36,13 @@ namespace Ditch.Operations.Get
         public string Name { get; set; }
 
         [JsonProperty("owner")]
-        public AccountPublickKey Owner { get; set; }
+        public AccountPublicKey Owner { get; set; }
 
         [JsonProperty("active")]
-        public AccountPublickKey Active { get; set; }
+        public AccountPublicKey Active { get; set; }
 
         [JsonProperty("posting")]
-        public AccountPublickKey Posting { get; set; }
+        public AccountPublicKey Posting { get; set; }
 
         [JsonProperty("memo_key")]
         public string MemoKey { get; set; }
