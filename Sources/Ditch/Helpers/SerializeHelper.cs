@@ -192,7 +192,7 @@ namespace Ditch.Helpers
                 }
                 return;
             }
-            if (val is INamedConteiner)
+            if (val is INamedContainer)
             {
                 var chType = val.GetType();
                 var properties = GetPropertiesForMessage(chType);

@@ -14,7 +14,7 @@ namespace Ditch.Operations.Post
     }
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class BeneficiaryContainer : INamedConteiner
+    public class BeneficiaryContainer : INamedContainer
     {
         public const byte Key = 0;
 
@@ -29,7 +29,7 @@ namespace Ditch.Operations.Post
     }
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class Beneficiary : INamedConteiner
+    public class Beneficiary : INamedContainer
     {
         [SerializeHelper.MessageOrder(10)]
         [JsonProperty("account")]
