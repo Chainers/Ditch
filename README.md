@@ -21,6 +21,7 @@ Post:
   * UnfollowOperation inherit FollowOperation
 * CommentOperation (comment)
   * PostOperation inherit CommentOperation
+  * ReplyOperation inherit CommentOperation
 * CommentOptionsOperation (comment_options) 
   * BeneficiaresOperation (beneficiaries) inherit CommentOptionsOperation
   

@@ -9,9 +9,9 @@
     <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Chainers/Ditch/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>Graphene Ditch Golos Steemet Steepshot</PackageTags>
-    <AssemblyVersion>2.0.6.0</AssemblyVersion>
-    <FileVersion>2.0.6.0</FileVersion>
-    <Version>2.0.6</Version>
+    <AssemblyVersion>2.0.7.0</AssemblyVersion>
+    <FileVersion>2.0.7.0</FileVersion>
+    <Version>2.0.7</Version>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
 </Description>
     <PackageReleaseNotes>## Supported operations
@@ -32,6 +32,7 @@ Post:
   * UnfollowOperation inherit FollowOperation
 * CommentOperation (comment)
   * PostOperation inherit CommentOperation
+  * ReplyOperation inherit CommentOperation
 * CommentOptionsOperation (comment_options)
   * BeneficiaresOperation (beneficiaries) inherit CommentOptionsOperation
   

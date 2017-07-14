@@ -171,6 +171,16 @@ namespace Ditch.Tests
         }
 
         [Test]
+        [TestCase("parentAuthorTest", "parentPermlinkTest", "bodytest", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
+        public void ReplyTest(string parentAuthor, string parentPermlink, string body, string jsonMetadata)
+        {
+            var op = new ReplyOperation(parentAuthor, parentPermlink, GlobalSettings.Login, body, jsonMetadata);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
         [TestCase("steepshot", "rutestpostwithbeneficiares", "test post with beneficiares and ru text", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
         public void RuPostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
