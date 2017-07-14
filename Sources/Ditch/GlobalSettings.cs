@@ -11,7 +11,7 @@ namespace Ditch
 
         internal static ChainInfo ChainInfo
         {
-            get => _chainInfo ?? (_chainInfo = ChainManager.GetChainInfo(ChainManager.KnownChains.Steem));
+            get => _chainInfo ?? (_chainInfo = ChainManager.GetChainInfo(KnownChains.Steem));
             set
             {
                 _chainInfo = value;
@@ -23,7 +23,7 @@ namespace Ditch
 
         public static byte[] Key { get; set; }
 
-        public static void Init(string login, string wif, ChainManager.KnownChains chain)
+        public static void Init(string login, string wif, KnownChains chain)
         {
             Init(login, wif, ChainManager.GetChainInfo(chain));
         }
