@@ -4,16 +4,15 @@ using Ditch.Helpers;
 
 namespace Ditch
 {
+    public enum KnownChains
+    {
+        Steem,
+        Golos,
+        Test
+    }
+
     public class ChainManager
     {
-        public enum KnownChains
-        {
-            Steem,
-            Golos,
-            Test
-        }
-
-
         private static readonly Dictionary<KnownChains, ChainInfo> ChainInfoDic;
 
         static ChainManager()
