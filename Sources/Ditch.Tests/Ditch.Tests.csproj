@@ -33,7 +33,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
-    <Compile Include="OperationManagerTest.cs" />
+    <Compile Include="SteemOperationManagerTest.cs" />
+    <Compile Include="GolosOperationManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityTest.cs" />
   </ItemGroup>

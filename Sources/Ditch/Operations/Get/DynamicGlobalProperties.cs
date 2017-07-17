@@ -11,88 +11,117 @@ namespace Ditch.Operations.Get
     {
         public static readonly DynamicGlobalProperties Default = new DynamicGlobalProperties { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
 
-
         public const string Reques = "get_dynamic_global_properties";
 
+        //id_type
         [JsonProperty("id")]
         public string Id { get; set; }
 
+        //uint32_t
         [JsonProperty("head_block_number")]
-        public int HeadBlockNumber { get; set; }
+        public UInt32 HeadBlockNumber { get; set; }
 
+        //block_id_type
         [JsonProperty("head_block_id")]
         public string HeadBlockId { get; set; }
 
+        //time_point_sec
         [JsonProperty("time")]
         public DateTime Time { get; set; }
 
+        //account_name_type
         [JsonProperty("current_witness")]
         public string CurrentWitness { get; set; }
 
+        //uint64_t
         [JsonProperty("total_pow")]
-        public int TotalPow { get; set; }
+        public UInt64 TotalPow { get; set; }
 
+        //uint32_t
         [JsonProperty("num_pow_witnessesv")]
-        public int NumPowWitnessesv { get; set; }
+        public UInt32 NumPowWitnessesv { get; set; }
 
+        //asset( 0, STEEM_SYMBOL )
         [JsonProperty("virtual_supply")]
         public string VirtualSupply { get; set; }
 
+        //asset( 0, STEEM_SYMBOL )
         [JsonProperty("current_supply")]
         public string CurrentSupply { get; set; }
 
+        //asset( 0, STEEM_SYMBOL )
         [JsonProperty("confidential_supply")]
         public string ConfidentialSupply { get; set; }
 
+        //asset( 0, SBD_SYMBOL )
         [JsonProperty("current_sbd_supply")]
         public string CurrentSbdSupply { get; set; }
 
+        //asset( 0, SBD_SYMBOL )
         [JsonProperty("confidential_sbd_supply")]
         public string ConfidentialSbdSupply { get; set; }
 
+        //asset( 0, STEEM_SYMBOL )
         [JsonProperty("total_vesting_fund_steem")]
         public string TotalVestingFundSteem { get; set; }
 
+        //asset( 0, VESTS_SYMBOL )
         [JsonProperty("total_vesting_shares")]
         public string TotalVestingShares { get; set; }
 
+        //asset( 0, STEEM_SYMBOL )
         [JsonProperty("total_reward_fund_steem")]
         public string TotalRewardFundSteem { get; set; }
 
+        //uint128
         [JsonProperty("total_reward_shares2")]
         public string TotalRewardShares2 { get; set; }
 
+        //asset pending_rewarded_vesting_shares = asset(0, VESTS_SYMBOL);
+        //asset pending_rewarded_vesting_steem = asset(0, STEEM_SYMBOL);
+
+        //uint16_t
         [JsonProperty("sbd_interest_rate")]
-        public int SbdInterestRate { get; set; }
+        public UInt16 SbdInterestRate { get; set; }
 
+        //uint16_t
         [JsonProperty("sbd_print_rate")]
-        public int SbdPrintRate { get; set; }
+        public UInt16 SbdPrintRate { get; set; }
 
+        //uint32_t
         [JsonProperty("average_block_size")]
-        public int AverageBlockSize { get; set; }
+        public UInt32 AverageBlockSize { get; set; }
 
+        //uint32_t
         [JsonProperty("maximum_block_size")]
-        public int MaximumBlockSize { get; set; }
+        public UInt32 MaximumBlockSize { get; set; }
 
+        //uint64_t
         [JsonProperty("current_aslot")]
-        public int CurrentAslot { get; set; }
+        public UInt64 CurrentAslot { get; set; }
 
+        //uint128_t
         [JsonProperty("recent_slots_filled")]
         public string RecentSlotsFilled { get; set; }
 
+        //uint8_t
         [JsonProperty("participation_count")]
-        public int ParticipationCount { get; set; }
+        public byte ParticipationCount { get; set; }
 
+        //uint32_t 
         [JsonProperty("last_irreversible_block_num")]
-        public int LastIrreversibleBlockNum { get; set; }
+        public UInt32 LastIrreversibleBlockNum { get; set; }
 
+        //uint64_t
         [JsonProperty("max_virtual_bandwidthv")]
-        public string MaxVirtualBandwidthv { get; set; }
+        public UInt64 MaxVirtualBandwidthv { get; set; }
 
+        //uint64_t
         [JsonProperty("current_reserve_ratio")]
-        public int CurrentReserveRatio { get; set; }
+        public UInt64 CurrentReserveRatio { get; set; }
 
+        //uint32_t
         [JsonProperty("vote_regeneration_per_day")]
-        public int VoteRegenerationPerDay { get; set; }
+        public UInt32 VoteRegenerationPerDay { get; set; }
     }
 }

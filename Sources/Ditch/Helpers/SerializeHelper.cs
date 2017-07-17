@@ -23,7 +23,7 @@ namespace Ditch.Helpers
             }
         }
 
-        public static IEnumerable<PropertyInfo> GetPropertiesForMessage(Type type)
+        private static IEnumerable<PropertyInfo> GetPropertiesForMessage(Type type)
         {
             var props = type.GetRuntimeProperties();
             var kvarray = new List<KeyValuePair<int, PropertyInfo>>();

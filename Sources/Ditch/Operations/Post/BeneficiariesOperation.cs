@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Ditch.Helpers;
 using Newtonsoft.Json;
 
@@ -37,9 +38,9 @@ namespace Ditch.Operations.Post
 
         [SerializeHelper.MessageOrder(20)]
         [JsonProperty("weight")]
-        public ushort Weight { get; set; }
+        public UInt16 Weight { get; set; }
 
-        public Beneficiary(string account, ushort weight)
+        public Beneficiary(string account, UInt16 weight)
         {
             Account = account;
             Weight = weight;
