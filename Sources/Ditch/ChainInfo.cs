@@ -25,7 +25,7 @@ namespace Ditch
 
         public CultureInfo ServerCultureInfo
         {
-            get => _serverCultureInfo;
+            get => _serverCultureInfo ?? (_serverCultureInfo = CultureInfo.InvariantCulture);
             set => _serverCultureInfo = value.IsReadOnly ? new CultureInfo(value.Name) : value;
         }
 
