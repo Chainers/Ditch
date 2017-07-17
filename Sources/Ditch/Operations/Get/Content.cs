@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Numerics;
 
 namespace Ditch.Operations.Get
 {
@@ -74,7 +75,7 @@ namespace Ditch.Operations.Get
         public DateTime MaxCashoutTime { get; set; }
 
         [JsonProperty("total_vote_weight")]
-        public long TotalVoteWeight { get; set; }
+        public BigInteger TotalVoteWeight { get; set; }
 
         [JsonProperty("reward_weight")]
         public long RewardWeight { get; set; }
