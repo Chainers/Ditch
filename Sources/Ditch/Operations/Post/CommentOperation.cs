@@ -1,4 +1,5 @@
-﻿using Ditch.Helpers;
+﻿using System.Text.RegularExpressions;
+using Ditch.Helpers;
 using Newtonsoft.Json;
 
 namespace Ditch.Operations.Post
@@ -6,6 +7,8 @@ namespace Ditch.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
+        private static readonly Regex convertRegex = new Regex(@"[\W]*");
+
         public override string TypeName => "comment";
 
         public override OperationType Type => OperationType.Comment;
@@ -43,7 +46,7 @@ namespace Ditch.Operations.Post
             ParentAuthor = parentAuthor;
             ParentPermlink = parentPermlink;
             Author = author;
-            Permlink = permlink;
+            Permlink = convertRegex.Replace(permlink, "-");
             Title = title;
             Body = body;
             JsonMetadata = jsonMetadata;

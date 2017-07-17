@@ -13,7 +13,7 @@ namespace Ditch.Tests
 
         public OperationManagerTest()
         {
-            GlobalSettings.Init(Name, PostingKey, ChainManager.KnownChains.Steem);
+            GlobalSettings.Init(Name, PostingKey, KnownChains.Steem);
             _operationManager = new OperationManager();
         }
 
@@ -57,7 +57,7 @@ namespace Ditch.Tests
         [Test]
         public void VerifyAuthoritySuccessTest()
         {
-            var op = new FollowOperation(GlobalSettings.Login, "steepshot", "blog", new[] { GlobalSettings.Login });
+            var op = new FollowOperation(GlobalSettings.Login, "steepshot", FollowType.Blog, GlobalSettings.Login);
             var rez = _operationManager.VerifyAuthority(op);
             Assert.IsFalse(rez.IsError, rez.GetErrorMessage());
             Assert.IsTrue(rez.Result);
@@ -66,7 +66,7 @@ namespace Ditch.Tests
         [Test]
         public void VerifyAuthorityFallTest()
         {
-            var op = new FollowOperation(GlobalSettings.Login, "steepshot", "blog", new[] { "StubLogin" });
+            var op = new FollowOperation(GlobalSettings.Login, "steepshot", FollowType.Blog, "StubLogin");
             var rez = _operationManager.VerifyAuthority(op);
             Assert.IsTrue(rez.IsError);
         }
@@ -86,11 +86,11 @@ namespace Ditch.Tests
         }
 
         [Test]
-        [Ignore("make transaction")]
         public void FollowTest()
         {
-            var op = new FollowOperation(GlobalSettings.Login, "korzunav", "blog", new[] { GlobalSettings.Login });
-            var prop = _operationManager.BroadcastOperations(op);
+            var op = new FollowOperation(GlobalSettings.Login, "joseph.kalu", FollowType.Blog | FollowType.Posts, GlobalSettings.Login);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -112,7 +112,7 @@ namespace Ditch.Tests
         ///                             "joseph.kalu"
         ///                         ],
         ///                         "id": "follow",
-        ///                         "json": "[\"follow\", {\"follower\": \"joseph.kalu\", \"following\": \"korzunav\", \"what\": [\"\"]}]"
+        ///                         "json": "[\"follow\", {\"follower\": \"joseph.kalu\", \"following\": \"joseph.kalu\", \"what\": [\"\"]}]"
         ///                     }
         ///                 ]
         ///             ],
@@ -124,70 +124,80 @@ namespace Ditch.Tests
         /// ],
         /// </summary>
         [Test]
-        [Ignore("make transaction")]
         public void UnFollowTest()
         {
-            var op = new UnfollowOperation(GlobalSettings.Login, "korzunav", GlobalSettings.Login);
-            var prop = _operationManager.BroadcastOperations(op);
+            var op = new UnfollowOperation(GlobalSettings.Login, "joseph.kalu", GlobalSettings.Login);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
-        [Ignore("make transaction")]
         public void UpVoteOperationTest()
         {
             var op = new UpVoteOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = _operationManager.BroadcastOperations(op);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
-        [Ignore("make transaction")]
         public void DownVoteOperationTest()
         {
             var op = new DownVoteOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = _operationManager.BroadcastOperations(op);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
-        [Ignore("make transaction")]
         public void FlagTest()
         {
             var op = new FlagOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = _operationManager.BroadcastOperations(op);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
-        [Ignore("make transaction")]
         [TestCase("steepshot", "testpostwithbeneficiares", "test post with beneficiares", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
         public void PostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
             var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
             var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-            var prop = _operationManager.BroadcastOperations(op, popt);
+            var prop = _operationManager.VerifyAuthority(op, popt);
+            //var prop = _operationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
-        [Ignore("make transaction")]
+        [TestCase("parentAuthorTest", "parentPermlinkTest", "bodytest", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
+        public void ReplyTest(string parentAuthor, string parentPermlink, string body, string jsonMetadata)
+        {
+            var op = new ReplyOperation(parentAuthor, parentPermlink, GlobalSettings.Login, body, jsonMetadata);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
         [TestCase("steepshot", "rutestpostwithbeneficiares", "test post with beneficiares and ru text", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
         public void RuPostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
             var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
             var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-            var prop = _operationManager.BroadcastOperations(op, popt);
+            var prop = _operationManager.VerifyAuthority(op, popt);
+            //var prop = _operationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
-        [Ignore("make transaction")]
-        [TestCase("yanakorsak", "orchids")]
+        [TestCase("joseph.kalu", "fkkl")]
         public void RepostTest(string author, string permlink)
         {
             var op = new RePostOperation(GlobalSettings.Login, author, permlink, GlobalSettings.Login);
-            var prop = _operationManager.BroadcastOperations(op);
+            var prop = _operationManager.VerifyAuthority(op);
+            //var prop = _operationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
     }

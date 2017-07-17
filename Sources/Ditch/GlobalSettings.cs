@@ -6,38 +6,29 @@ namespace Ditch
     {
         public delegate void SettingsChangedDelegate();
         public static event SettingsChangedDelegate SettingsChanged;
-        private static ChainInfo _chainInfo;
 
+        public static bool IsInited { get; set; }
 
-        internal static ChainInfo ChainInfo
-        {
-            get => _chainInfo ?? (_chainInfo = ChainManager.GetChainInfo(ChainManager.KnownChains.Steem));
-            set
-            {
-                _chainInfo = value;
-                SettingsChanged?.Invoke();
-            }
-        }
+        public static ChainInfo ChainInfo { get; set; }
 
         public static string Login { get; set; }
 
         public static byte[] Key { get; set; }
 
-        public static void Init(string login, string wif, ChainManager.KnownChains chain)
-        {
-            Init(login, wif, ChainManager.GetChainInfo(chain));
-        }
 
         public static void Init(string login, string wif, ChainInfo chainInfo)
         {
-            Init(login, wif);
             ChainInfo = chainInfo;
-        }
-
-        public static void Init(string login, string wif)
-        {
             Login = login;
             Key = Base58.GetBytes(wif);
+
+            SettingsChanged?.Invoke();
+            IsInited = true;
+        }
+
+        public static void Init(string login, string wif, KnownChains chain)
+        {
+            Init(login, wif, ChainManager.GetChainInfo(chain));
         }
     }
 }

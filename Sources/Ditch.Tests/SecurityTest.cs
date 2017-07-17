@@ -40,8 +40,8 @@ namespace Ditch.Tests
 
             var tr = new Transaction
             {
-                RefBlockNum = (ushort)34294,
-                RefBlockPrefix = (uint)3707022213,
+                RefBlockNum = 34294,
+                RefBlockPrefix = 3707022213,
                 Expiration = DateTime.Parse("2016-04-06T08:29:27"),
                 BaseOperations = ops,
                 ChainId = Hex.HexToBytes("0000000000000000000000000000000000000000000000000000000000000000")
@@ -62,8 +62,8 @@ namespace Ditch.Tests
 
             var tr = new Transaction
             {
-                RefBlockNum = (ushort)34294,
-                RefBlockPrefix = (uint)3707022213,
+                RefBlockNum = 34294,
+                RefBlockPrefix = 3707022213,
                 Expiration = DateTime.Parse("2016-04-06T08:29:27"),
                 BaseOperations = ops,
                 ChainId = Hex.HexToBytes("0000000000000000000000000000000000000000000000000000000000000000")

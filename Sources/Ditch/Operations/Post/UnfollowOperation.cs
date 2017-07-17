@@ -13,6 +13,6 @@
         /// <param name="requiredPostingAuths"></param>
         /// <returns></returns>
         public UnfollowOperation(string login, string author, params string[] requiredPostingAuths)
-            : base(login, author, string.Empty, requiredPostingAuths) { }
+            : base(login, author, FollowType.Unfollow, requiredPostingAuths) { }
     }
 }
