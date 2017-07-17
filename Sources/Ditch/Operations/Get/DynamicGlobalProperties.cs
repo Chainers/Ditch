@@ -43,35 +43,35 @@ namespace Ditch.Operations.Get
 
         //asset( 0, STEEM_SYMBOL )
         [JsonProperty("virtual_supply")]
-        public string VirtualSupply { get; set; }
+        public Money VirtualSupply { get; set; }
 
         //asset( 0, STEEM_SYMBOL )
         [JsonProperty("current_supply")]
-        public string CurrentSupply { get; set; }
+        public Money CurrentSupply { get; set; }
 
         //asset( 0, STEEM_SYMBOL )
         [JsonProperty("confidential_supply")]
-        public string ConfidentialSupply { get; set; }
+        public Money ConfidentialSupply { get; set; }
 
         //asset( 0, SBD_SYMBOL )
         [JsonProperty("current_sbd_supply")]
-        public string CurrentSbdSupply { get; set; }
+        public Money CurrentSbdSupply { get; set; }
 
         //asset( 0, SBD_SYMBOL )
         [JsonProperty("confidential_sbd_supply")]
-        public string ConfidentialSbdSupply { get; set; }
+        public Money ConfidentialSbdSupply { get; set; }
 
         //asset( 0, STEEM_SYMBOL )
         [JsonProperty("total_vesting_fund_steem")]
-        public string TotalVestingFundSteem { get; set; }
+        public Money TotalVestingFundSteem { get; set; }
 
         //asset( 0, VESTS_SYMBOL )
         [JsonProperty("total_vesting_shares")]
-        public string TotalVestingShares { get; set; }
+        public Money TotalVestingShares { get; set; }
 
         //asset( 0, STEEM_SYMBOL )
         [JsonProperty("total_reward_fund_steem")]
-        public string TotalRewardFundSteem { get; set; }
+        public Money TotalRewardFundSteem { get; set; }
 
         //uint128
         [JsonProperty("total_reward_shares2")]
