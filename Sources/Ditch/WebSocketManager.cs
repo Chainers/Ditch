@@ -15,7 +15,14 @@ namespace Ditch
         private static readonly ManualResetEvent SocketOpenEvent;
         private static readonly ManualResetEvent SocketCloseEvent;
 
-        private static WebSocket _websocket;
+      private static WebSocket webSocket;
+      private static WebSocket WebSocket {
+         get {
+            if (webSocket == null)
+               SettingsChanged();
+            return webSocket;
+         }
+      }
 
         static WebSocketManager()
         {
@@ -24,7 +31,6 @@ namespace Ditch
             SocketOpenEvent = new ManualResetEvent(false);
             SocketCloseEvent = new ManualResetEvent(false);
             GlobalSettings.SettingsChanged += SettingsChanged;
-            SettingsChanged();
         }
 
 
@@ -32,14 +38,14 @@ namespace Ditch
         public static void SettingsChanged()
         {
             Close();
-            _websocket?.Dispose();
-            _websocket = new WebSocket(GlobalSettings.ChainInfo.Url);
-            _websocket.Opened += websocket_Opened;
-            _websocket.Closed += websocket_Closed;
-            _websocket.MessageReceived += websocket_MessageReceived;
-            _websocket.Error += WebsocketOnError;
-            _websocket.EnableAutoSendPing = true;
-            _websocket.Open();
+            webSocket?.Dispose();
+            webSocket = new WebSocket(GlobalSettings.ChainInfo.Url);
+            webSocket.Opened += websocket_Opened;
+            webSocket.Closed += websocket_Closed;
+            webSocket.MessageReceived += websocket_MessageReceived;
+            webSocket.Error += WebsocketOnError;
+            webSocket.EnableAutoSendPing = true;
+            webSocket.Open();
         }
 
         public JsonRpcResponse Call(int api, string operation, params object[] data)
@@ -77,7 +83,7 @@ namespace Ditch
                 ManualResetEventDictionary.Add(msg.Item1, vaiter);
             }
             OpenIfClosed();
-            _websocket.Send(msg.Item2);
+            WebSocket.Send(msg.Item2);
 
             vaiter.WaitOne(30000);
 
@@ -109,13 +115,13 @@ namespace Ditch
 
         private void OpenIfClosed()
         {
-            switch (_websocket.State)
+            switch (WebSocket.State)
             {
                 case WebSocketState.Closing:
                     {
                         if (SocketCloseEvent.WaitOne(1000))
                         {
-                            _websocket.Open();
+                            WebSocket.Open();
                             SocketOpenEvent.WaitOne();
                         }
                         break;
@@ -128,7 +134,7 @@ namespace Ditch
                 case WebSocketState.None:
                 case WebSocketState.Closed:
                     {
-                        _websocket.Open();
+                        WebSocket.Open();
                         SocketOpenEvent.WaitOne();
                         break;
                     }
@@ -176,9 +182,9 @@ namespace Ditch
 
         public static void Close()
         {
-            if (_websocket != null && _websocket.State == WebSocketState.Open)
+            if (webSocket != null && webSocket.State == WebSocketState.Open)
             {
-                _websocket.Close();
+                webSocket.Close();
                 SocketCloseEvent.WaitOne();
             }
             JsonRpcRequest.Init();
