@@ -17,9 +17,9 @@ namespace Ditch.JsonRpc
 
         public bool IsError => Error != null;
 
-        public static JsonRpcResponse FromString(string obj)
+        public static JsonRpcResponse FromString(string obj, JsonSerializerSettings jsonSerializerSettings)
         {
-            return JsonConvert.DeserializeObject<JsonRpcResponse>(obj, GlobalSettings.ChainInfo.JsonSerializerSettings);
+            return JsonConvert.DeserializeObject<JsonRpcResponse>(obj, jsonSerializerSettings);
         }
 
         public string GetErrorMessage()
@@ -27,7 +27,7 @@ namespace Ditch.JsonRpc
             return Error == null ? string.Empty : Error.ToString();
         }
 
-        public JsonRpcResponse<T> ToTyped<T>()
+        public JsonRpcResponse<T> ToTyped<T>(JsonSerializerSettings serializerSettings)
         {
             var rez = new JsonRpcResponse<T>
             {
@@ -42,7 +42,7 @@ namespace Ditch.JsonRpc
                 if (ti.IsValueType)
                     rez.Result = (T)Result;
                 else
-                    rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), GlobalSettings.ChainInfo.JsonSerializerSettings);
+                    rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
             }
             return rez;
         }
@@ -54,9 +54,9 @@ namespace Ditch.JsonRpc
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
         public new T Result { get; set; }
 
-        public new static JsonRpcResponse<T> FromString(string obj)
+        public new static JsonRpcResponse<T> FromString(string obj, JsonSerializerSettings serializerSettings)
         {
-            return JsonConvert.DeserializeObject<JsonRpcResponse<T>>(obj, GlobalSettings.ChainInfo.JsonSerializerSettings);
+            return JsonConvert.DeserializeObject<JsonRpcResponse<T>>(obj, serializerSettings);
         }
     }
 }

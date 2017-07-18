@@ -3,98 +3,126 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Ditch.JsonRpc;
+using Newtonsoft.Json;
 using SuperSocket.ClientEngine;
 using WebSocket4Net;
 
 namespace Ditch
 {
-    internal class WebSocketManager
+    internal class WebSocketManager : IDisposable
     {
-        private static readonly Dictionary<int, JsonRpcResponse> ResponseDictionary;
-        private static readonly Dictionary<int, ManualResetEvent> ManualResetEventDictionary;
-        private static readonly ManualResetEvent SocketOpenEvent;
-        private static readonly ManualResetEvent SocketCloseEvent;
+        private readonly Dictionary<int, JsonRpcResponse> _responseDictionary;
+        private readonly Dictionary<int, ManualResetEvent> _manualResetEventDictionary;
+        private readonly ManualResetEvent _socketOpenEvent;
+        private readonly ManualResetEvent _socketCloseEvent;
+        private readonly WebSocket _webSocket;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        private static WebSocket _websocket;
+        private readonly object _sync;
+        private int _id;
 
-        static WebSocketManager()
+
+        private int JsonRpsId
         {
-            ResponseDictionary = new Dictionary<int, JsonRpcResponse>();
-            ManualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
-            SocketOpenEvent = new ManualResetEvent(false);
-            SocketCloseEvent = new ManualResetEvent(false);
-            GlobalSettings.SettingsChanged += SettingsChanged;
-            SettingsChanged();
+            get
+            {
+                int reqId;
+                lock (_sync)
+                {
+                    reqId = _id;
+                    _id++;
+                }
+                return reqId;
+            }
         }
 
-
-
-        public static void SettingsChanged()
+        public WebSocketManager(string url, JsonSerializerSettings jsonSerializerSettings)
         {
-            Close();
-            _websocket?.Dispose();
-            _websocket = new WebSocket(GlobalSettings.ChainInfo.Url);
-            _websocket.Opened += websocket_Opened;
-            _websocket.Closed += websocket_Closed;
-            _websocket.MessageReceived += websocket_MessageReceived;
-            _websocket.Error += WebsocketOnError;
-            _websocket.EnableAutoSendPing = true;
-            _websocket.Open();
+            _sync = new object();
+            _id = 0;
+            _jsonSerializerSettings = jsonSerializerSettings;
+            _responseDictionary = new Dictionary<int, JsonRpcResponse>();
+            _manualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
+            _socketOpenEvent = new ManualResetEvent(false);
+            _socketCloseEvent = new ManualResetEvent(false);
+
+            _webSocket = new WebSocket(url);
+            _webSocket.Opened += WebSocketOpened;
+            _webSocket.Closed += WebSocketClosed;
+            _webSocket.MessageReceived += WebSocketMessageReceived;
+            _webSocket.Error += WebSocketOnError;
+            _webSocket.EnableAutoSendPing = true;
+            _webSocket.Open();
+        }
+
+        private string ToJsonRpc(int reqId, string method, params object[] data)
+        {
+            var paramData = (data == null) ? "[]" : JsonConvert.SerializeObject(data, _jsonSerializerSettings);
+            return ToJsonRpc(reqId, method, paramData);
+        }
+
+        private string ToJsonRpc(int reqId, string method, string paramData)
+        {
+            return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
         }
 
         public JsonRpcResponse Call(int api, string operation, params object[] data)
         {
-            var msg = JsonRpcRequest.GetRequest("call", api, operation, data);
-            return Execute(msg);
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, "call", api, operation, data);
+            return Execute(id, msg);
         }
 
         public JsonRpcResponse<T> Call<T>(int api, string operation, params object[] data)
         {
-            var msg = JsonRpcRequest.GetRequest("call", api, operation, data);
-            var resp = Execute(msg);
-            return resp.ToTyped<T>();
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, "call", api, operation, data);
+            var resp = Execute(id, msg);
+            return resp.ToTyped<T>(_jsonSerializerSettings);
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string method, params object[] data)
         {
-            var msg = JsonRpcRequest.GetRequest(method, data);
-            var response = Execute(msg);
-            return response.ToTyped<T>();
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, method, data);
+            var response = Execute(id, msg);
+            return response.ToTyped<T>(_jsonSerializerSettings);
         }
 
         public JsonRpcResponse<T> GetRequest<T>(string method, string data)
         {
-            var msg = JsonRpcRequest.GetRequest(method, data);
-            var response = Execute(msg);
-            return response.ToTyped<T>();
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, method, data);
+            var response = Execute(id, msg);
+            return response.ToTyped<T>(_jsonSerializerSettings);
         }
 
-        private JsonRpcResponse Execute(Tuple<int, string> msg)
+        private JsonRpcResponse Execute(int id, string msg)
         {
             var vaiter = new ManualResetEvent(false);
-            lock (ManualResetEventDictionary)
+            lock (_manualResetEventDictionary)
             {
-                ManualResetEventDictionary.Add(msg.Item1, vaiter);
+                _manualResetEventDictionary.Add(id, vaiter);
             }
             OpenIfClosed();
-            _websocket.Send(msg.Item2);
+            _webSocket.Send(msg);
 
             vaiter.WaitOne(30000);
 
-            lock (ManualResetEventDictionary)
+            lock (_manualResetEventDictionary)
             {
-                if (ManualResetEventDictionary.ContainsKey(msg.Item1))
-                    ManualResetEventDictionary.Remove(msg.Item1);
+                if (_manualResetEventDictionary.ContainsKey(id))
+                    _manualResetEventDictionary.Remove(id);
                 vaiter.Dispose();
             }
 
             JsonRpcResponse response = null;
-            lock (ResponseDictionary)
+            lock (_responseDictionary)
             {
-                if (ResponseDictionary.ContainsKey(msg.Item1))
+                if (_responseDictionary.ContainsKey(id))
                 {
-                    response = ResponseDictionary[msg.Item1];
-                    ResponseDictionary.Remove(msg.Item1);
+                    response = _responseDictionary[id];
+                    _responseDictionary.Remove(id);
                 }
             }
 
@@ -109,87 +137,110 @@ namespace Ditch
 
         private void OpenIfClosed()
         {
-            switch (_websocket.State)
+            switch (_webSocket.State)
             {
                 case WebSocketState.Closing:
                     {
-                        if (SocketCloseEvent.WaitOne(1000))
+                        if (_socketCloseEvent.WaitOne(1000))
                         {
-                            _websocket.Open();
-                            SocketOpenEvent.WaitOne();
+                            _webSocket.Open();
+                            _socketOpenEvent.WaitOne();
                         }
                         break;
                     }
                 case WebSocketState.Connecting:
                     {
-                        SocketOpenEvent.WaitOne();
+                        _socketOpenEvent.WaitOne();
                         break;
                     }
                 case WebSocketState.None:
                 case WebSocketState.Closed:
                     {
-                        _websocket.Open();
-                        SocketOpenEvent.WaitOne();
+                        _webSocket.Open();
+                        _socketOpenEvent.WaitOne();
                         break;
                     }
             }
         }
 
 
-        private static void websocket_Opened(object sender, EventArgs e)
+        private void WebSocketOpened(object sender, EventArgs e)
         {
-            SocketOpenEvent.Set();
-            SocketCloseEvent.Reset();
+            _socketOpenEvent.Set();
+            _socketCloseEvent.Reset();
         }
 
-        private static void websocket_Closed(object sender, EventArgs e)
+        private void WebSocketClosed(object sender, EventArgs e)
         {
-            SocketOpenEvent.Reset();
-            SocketCloseEvent.Set();
+            _socketOpenEvent.Reset();
+            _socketCloseEvent.Set();
         }
 
-        private static void WebsocketOnError(object sender, ErrorEventArgs errorEventArgs)
+        private void WebSocketOnError(object sender, ErrorEventArgs errorEventArgs)
         {
             Debug.WriteLine($"{errorEventArgs.Exception.Message} | {errorEventArgs.Exception.StackTrace}");
         }
 
-        private static void websocket_MessageReceived(object sender, MessageReceivedEventArgs e)
+        private void WebSocketMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            var prop = JsonRpcResponse.FromString(e.Message);
-            lock (ResponseDictionary)
+            var prop = JsonRpcResponse.FromString(e.Message, _jsonSerializerSettings);
+            lock (_responseDictionary)
             {
-                if (ResponseDictionary.ContainsKey(prop.Id))
-                    ResponseDictionary[prop.Id] = prop;
+                if (_responseDictionary.ContainsKey(prop.Id))
+                    _responseDictionary[prop.Id] = prop;
                 else
-                    ResponseDictionary.Add(prop.Id, prop);
+                    _responseDictionary.Add(prop.Id, prop);
             }
 
-            lock (ManualResetEventDictionary)
+            lock (_manualResetEventDictionary)
             {
-                if (ManualResetEventDictionary.ContainsKey(prop.Id))
+                if (_manualResetEventDictionary.ContainsKey(prop.Id))
                 {
-                    ManualResetEventDictionary[prop.Id].Set();
+                    _manualResetEventDictionary[prop.Id].Set();
                 }
             }
         }
 
+        #region IDisposable
 
-        public static void Close()
+        private bool _disposed;
+
+        public void Dispose()
         {
-            if (_websocket != null && _websocket.State == WebSocketState.Open)
-            {
-                _websocket.Close();
-                SocketCloseEvent.WaitOne();
-            }
-            JsonRpcRequest.Init();
-
-            lock (ManualResetEventDictionary)
-            {
-                foreach (var resetEvent in ManualResetEventDictionary)
-                {
-                    resetEvent.Value.Set();
-                }
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                if (_webSocket != null && _webSocket.State == WebSocketState.Open)
+                {
+                    _webSocket.Close();
+                    _socketCloseEvent.WaitOne();
+                }
+
+                lock (_manualResetEventDictionary)
+                {
+                    foreach (var resetEvent in _manualResetEventDictionary)
+                    {
+                        resetEvent.Value.Set();
+                    }
+                }
+                // Free any other managed objects here.
+                //
+            }
+
+            // Free any unmanaged objects here.
+            //
+            _disposed = true;
+        }
+
+        #endregion IDisposable
     }
 }

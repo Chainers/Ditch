@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Ditch.Helpers;
 using Ditch.Operations.Post;
 using NUnit.Framework;
 
@@ -7,23 +10,28 @@ namespace Ditch.Tests
     [TestFixture]
     public class SteemOperationManagerTest : BaseTest
     {
-        private const string Name = "login";
-        private const string PostingKey = "wif";
+        private const string Login = "login";
+        private const string WIF = "wif";
         protected OperationManager OperationManager;
-        
+        protected ChainInfo Chain;
+
+        protected List<byte[]> userPrivateKeys;
+
         [SetUp]
         public virtual void SetUp()
         {
             if (OperationManager == null)
             {
-                Assert.IsFalse(string.IsNullOrEmpty(Name) || Name.Equals("login"), "Please setup login before start!");
-                Assert.IsFalse(string.IsNullOrEmpty(PostingKey) || PostingKey.Equals("wif"), "Please setup user private posting key before start!");
-
-                GlobalSettings.Init(Name, PostingKey, KnownChains.Steem);
-                OperationManager = new OperationManager();
+                Assert.IsFalse(string.IsNullOrEmpty(Login) || Login.Equals("login"), "Please setup login before start!");
+                Assert.IsFalse(string.IsNullOrEmpty(WIF) || WIF.Equals("wif"), "Please setup user private posting key before start!");
+                Chain = ChainManager.GetChainInfo(KnownChains.Steem);
+                OperationManager = new OperationManager(Chain.Url, Chain.ChainId, Chain.JsonSerializerSettings);
+                userPrivateKeys = new List<byte[]>
+                {
+                    Base58.GetBytes(WIF)
+                };
             }
         }
-
 
 
         [Test]
@@ -49,7 +57,7 @@ namespace Ditch.Tests
         [TestCase("277.126 SBD")]
         public void ParseTestTest(string test)
         {
-            var money = new Money(test);
+            var money = new Money(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
             Assert.IsTrue(money.Value == 277126);
             Assert.IsTrue(money.Precision == 3);
             Assert.IsTrue(money.Currency == "SBD");
@@ -65,8 +73,8 @@ namespace Ditch.Tests
         [Test]
         public void VerifyAuthoritySuccessTest()
         {
-            var op = new FollowOperation(GlobalSettings.Login, "steepshot", FollowType.Blog, GlobalSettings.Login);
-            var rez = OperationManager.VerifyAuthority(op);
+            var op = new FollowOperation(Login, "steepshot", FollowType.Blog, Login);
+            var rez = OperationManager.VerifyAuthority(userPrivateKeys, op);
             Assert.IsFalse(rez.IsError, rez.GetErrorMessage());
             Assert.IsTrue(rez.Result);
         }
@@ -74,15 +82,15 @@ namespace Ditch.Tests
         [Test]
         public void VerifyAuthorityFallTest()
         {
-            var op = new FollowOperation(GlobalSettings.Login, "steepshot", FollowType.Blog, "StubLogin");
-            var rez = OperationManager.VerifyAuthority(op);
+            var op = new FollowOperation(Login, "steepshot", FollowType.Blog, "StubLogin");
+            var rez = OperationManager.VerifyAuthority(userPrivateKeys, op);
             Assert.IsTrue(rez.IsError);
         }
 
         [Test]
         public void GetAccountsTest()
         {
-            var rez = OperationManager.GetAccounts(GlobalSettings.Login);
+            var rez = OperationManager.GetAccounts(Login);
             Assert.IsFalse(rez.IsError, rez.GetErrorMessage());
         }
 
@@ -96,8 +104,8 @@ namespace Ditch.Tests
         [Test]
         public void FollowTest()
         {
-            var op = new FollowOperation(GlobalSettings.Login, "joseph.kalu", FollowType.Blog | FollowType.Posts, GlobalSettings.Login);
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new FollowOperation(Login, "joseph.kalu", FollowType.Blog | FollowType.Posts, Login);
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -134,8 +142,8 @@ namespace Ditch.Tests
         [Test]
         public void UnFollowTest()
         {
-            var op = new UnfollowOperation(GlobalSettings.Login, "joseph.kalu", GlobalSettings.Login);
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new UnfollowOperation(Login, "joseph.kalu", Login);
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -143,8 +151,8 @@ namespace Ditch.Tests
         [Test]
         public void UpVoteOperationTest()
         {
-            var op = new UpVoteOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new UpVoteOperation(Login, "joseph.kalu", "fkkl");
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -152,8 +160,8 @@ namespace Ditch.Tests
         [Test]
         public void DownVoteOperationTest()
         {
-            var op = new DownVoteOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new DownVoteOperation(Login, "joseph.kalu", "fkkl");
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -161,8 +169,8 @@ namespace Ditch.Tests
         [Test]
         public void FlagTest()
         {
-            var op = new FlagOperation(GlobalSettings.Login, "joseph.kalu", "fkkl");
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new FlagOperation(Login, "joseph.kalu", "fkkl");
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -171,9 +179,9 @@ namespace Ditch.Tests
         [TestCase("steepshot", "testpostwithbeneficiares", "test post with beneficiares", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
         public virtual void PostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
-            var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-            var prop = OperationManager.VerifyAuthority(op, popt);
+            var op = new PostOperation("test", Login, permlink, title, body, jsonMetadata);
+            var popt = new BeneficiariesOperation(Login, permlink, Chain.SbdSymbol, new Beneficiary(beneficiar, 1000));
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op, popt);
             //var prop = OperationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -182,8 +190,8 @@ namespace Ditch.Tests
         [TestCase("parentAuthorTest", "parentPermlinkTest", "bodytest", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
         public void ReplyTest(string parentAuthor, string parentPermlink, string body, string jsonMetadata)
         {
-            var op = new ReplyOperation(parentAuthor, parentPermlink, GlobalSettings.Login, body, jsonMetadata);
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new ReplyOperation(parentAuthor, parentPermlink, Login, body, jsonMetadata);
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -192,9 +200,9 @@ namespace Ditch.Tests
         [TestCase("steepshot", "rutestpostwithbeneficiares", "test post with beneficiares and ru text", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}")]
         public virtual void RuPostTest(string beneficiar, string permlink, string title, string body, string jsonMetadata)
         {
-            var op = new PostOperation("test", GlobalSettings.Login, permlink, title, body, jsonMetadata);
-            var popt = new BeneficiariesOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-            var prop = OperationManager.VerifyAuthority(op, popt);
+            var op = new PostOperation("test", Login, permlink, title, body, jsonMetadata);
+            var popt = new BeneficiariesOperation(Login, permlink, Chain.SbdSymbol, new Beneficiary(beneficiar, 1000));
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op, popt);
             //var prop = OperationManager.BroadcastOperations(op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
@@ -203,8 +211,8 @@ namespace Ditch.Tests
         [TestCase("joseph.kalu", "fkkl")]
         public void RepostTest(string author, string permlink)
         {
-            var op = new RePostOperation(GlobalSettings.Login, author, permlink, GlobalSettings.Login);
-            var prop = OperationManager.VerifyAuthority(op);
+            var op = new RePostOperation(Login, author, permlink, Login);
+            var prop = OperationManager.VerifyAuthority(userPrivateKeys, op);
             //var prop = OperationManager.BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
