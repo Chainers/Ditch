@@ -55,16 +55,16 @@ namespace Ditch
             return resp.ToTyped<T>();
         }
 
-        public JsonRpcResponse<T> GetRequest<T>(string request, params object[] data)
+        public JsonRpcResponse<T> GetRequest<T>(string method, params object[] data)
         {
-            var msg = JsonRpcRequest.GetRequest(request, data);
+            var msg = JsonRpcRequest.GetRequest(method, data);
             var response = Execute(msg);
             return response.ToTyped<T>();
         }
 
-        public JsonRpcResponse<T> GetRequest<T>(string request, string data)
+        public JsonRpcResponse<T> GetRequest<T>(string method, string data)
         {
-            var msg = JsonRpcRequest.GetRequest(request, data);
+            var msg = JsonRpcRequest.GetRequest(method, data);
             var response = Execute(msg);
             return response.ToTyped<T>();
         }
