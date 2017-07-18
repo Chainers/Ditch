@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Ditch.Tests")]
 namespace Ditch.Helpers
 {
     internal static class Hex

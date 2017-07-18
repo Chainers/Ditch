@@ -58,7 +58,7 @@ namespace Ditch.Tests
         [Test]
         public void GetHelp()
         {
-            var rez = OperationManager.GetCustomRequest<object>("help");
+            var rez = OperationManager.CustomGetRequest<object>("help");
             Console.WriteLine(rez.Error);
         }
 
@@ -89,7 +89,7 @@ namespace Ditch.Tests
         [Test]
         public void GetChainPropertiesHelp()
         {
-            var rez = OperationManager.GetCustomRequest<object>("get_chain_properties");
+            var rez = OperationManager.CustomGetRequest<object>("get_chain_properties");
             Console.WriteLine(rez.Error);
         }
 

@@ -7,7 +7,7 @@ namespace Ditch.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
-        private static readonly Regex convertRegex = new Regex(@"[\W]*");
+        private static readonly Regex ConvertRegex = new Regex(@"[\W]*");
 
         public override string TypeName => "comment";
 
@@ -46,7 +46,7 @@ namespace Ditch.Operations.Post
             ParentAuthor = parentAuthor;
             ParentPermlink = parentPermlink;
             Author = author;
-            Permlink = convertRegex.Replace(permlink, "-");
+            Permlink = ConvertRegex.Replace(permlink, "-");
             Title = title;
             Body = body;
             JsonMetadata = jsonMetadata;

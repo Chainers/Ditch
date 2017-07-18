@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Ditch.Helpers;
 using Ditch.Operations.Post;
 using Newtonsoft.Json;
 
-[assembly: InternalsVisibleTo("Ditch.Tests")]
 namespace Ditch
 {
     [JsonObject(MemberSerialization.OptIn)]
-    internal class Transaction
+    public class Transaction
     {
         public const string OperationName = "broadcast_transaction";
         public const int Api = 3;

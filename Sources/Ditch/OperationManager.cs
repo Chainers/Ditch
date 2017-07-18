@@ -53,7 +53,7 @@ namespace Ditch
         }
 
         /// <summary>
-        /// Execute custom user request
+        /// Execute custom user method
         /// </summary>
         /// <returns></returns>
         public JsonRpcResponse<bool> VerifyAuthority(params BaseOperation[] testOps)
@@ -64,12 +64,27 @@ namespace Ditch
         }
 
         /// <summary>
-        /// Execute custom user request
+        /// Create and execute custom json-rpc method
         /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="transaction">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
-        public JsonRpcResponse<T> GetCustomRequest<T>(string request, params object[] data)
+        public JsonRpcResponse<T> CustomPostRequest<T>(string method, Transaction transaction)
         {
-            return WebSocketManager.GetRequest<T>(request, data);
+            return WebSocketManager.GetRequest<T>(method, transaction);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        public JsonRpcResponse<T> CustomGetRequest<T>(string method, params object[] data)
+        {
+            return WebSocketManager.GetRequest<T>(method, data);
         }
 
         /// <summary>
@@ -83,7 +98,7 @@ namespace Ditch
             return WebSocketManager.Call<Content>(Content.Api, Content.OperationName, author, permlink);
         }
 
-        private Transaction CreateTransaction(DynamicGlobalProperties properties, BaseOperation[] operations)
+        public Transaction CreateTransaction(DynamicGlobalProperties properties, BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
