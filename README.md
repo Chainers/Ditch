@@ -28,6 +28,10 @@ Post:
 ## Supported chains:
  * Golos
  * Steemit
+ 
+## Additional features:
+ * Transliteration (Cyrillic to Latin)
+ * Base58 converter
 
 ## Usage
     //set global properties
