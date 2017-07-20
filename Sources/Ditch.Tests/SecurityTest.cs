@@ -28,6 +28,5 @@ namespace Ditch.Tests
             var t = chainId + tSig;
             Assert.IsTrue(t.Equals(msgStr, StringComparison.OrdinalIgnoreCase), $"{msgStr} != {t}");
         }
-
     }
 }
