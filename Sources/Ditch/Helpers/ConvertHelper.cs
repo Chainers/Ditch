@@ -1,10 +1,13 @@
-﻿
+﻿using System;
+using System.Text.RegularExpressions;
+
 namespace Ditch.Helpers
 {
     internal class ConvertHelper
     {
         /// <summary>
-        /// https://github.com/xeroc/python-graphenelib/blob/master/graphenebase/types.py
+        /// Сonverts a number to a minimal byte array
+        /// *peeped  https://github.com/xeroc/python-graphenelib/blob/master/graphenebase/types.py
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
@@ -30,6 +33,28 @@ namespace Ditch.Helpers
 
             data[i] += (byte)n;
             return data;
+        }
+
+
+        private static readonly Regex ConvertRegex = new Regex(@"[_\s\.*]");
+        private static readonly Regex CleanRegex = new Regex(@"[^a-z0-9-*]");
+        private static readonly Regex ReplyPostfixRegex = new Regex(@"-[0-9*]t[0-9*]z$");
+
+
+        public static string StringToPermlink(string text)
+        {
+            text = text.ToLower();
+            text = text.Trim();
+            text = Transliteration.Convert(text);
+            text = ConvertRegex.Replace(text, "-");
+            text = CleanRegex.Replace(text, string.Empty);
+            return text;
+        }
+
+        public static string PermlinkToParentPermlink(string author, string permlink)
+        {
+            permlink = ReplyPostfixRegex.Replace(permlink, string.Empty);
+            return $"re-{author}-{permlink}-{DateTime.UtcNow:yyyyMMddTHHmmssfffZ}";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Ditch
 {
@@ -10,13 +11,15 @@ namespace Ditch
 
         public byte Precision { get; }
 
-        public Money(string value)
+        public Money(string value) : this(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator) { }
+
+        public Money(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
             var kv = value.Split(' ');
-            Precision = (byte)(kv[0].Length - kv[0].LastIndexOf(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator, StringComparison.OrdinalIgnoreCase) - 1);
+            Precision = (byte)(kv[0].Length - kv[0].LastIndexOf(numberDecimalSeparator, StringComparison.OrdinalIgnoreCase) - 1);
             var buf = kv[0]
-                .Replace(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator, string.Empty)
-                .Replace(GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberGroupSeparator, string.Empty);
+                .Replace(numberDecimalSeparator, string.Empty)
+                .Replace(numberGroupSeparator, string.Empty);
             Value = long.Parse(buf);
             Currency = kv[1].ToUpper();
         }
@@ -71,8 +74,7 @@ namespace Ditch
         {
             return new Money(value);
         }
-
-
+        
         public static implicit operator string(Money value)
         {
             return value.ToString();
@@ -80,13 +82,18 @@ namespace Ditch
 
         public override string ToString()
         {
+            return ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+        }
+
+        public string ToString(string numberDecimalSeparator)
+        {
             var dig = Value.ToString();
             if (dig.Length <= Precision)
             {
                 var prefix = new string('0', Precision - dig.Length + 1);
                 dig = prefix + dig;
             }
-            dig = dig.Insert(dig.Length - Precision, GlobalSettings.ChainInfo.ServerCultureInfo.NumberFormat.NumberDecimalSeparator);
+            dig = dig.Insert(dig.Length - Precision, numberDecimalSeparator);
             return $"{dig} {Currency}";
         }
     }

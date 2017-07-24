@@ -28,20 +28,31 @@ Post:
 ## Supported chains:
  * Golos
  * Steemit
+ 
+## Additional features:
+ * Transliteration (Cyrillic to Latin)
+ * Base58 converter
 
 ## Usage
     //set global properties
-    GlobalSettings.Init(Name, PostingKey, ChainManager.KnownChains.Steem);
-     _operationManager = new OperationManager();
+    public void SetUp()
+    {
+        Chain = ChainManager.GetChainInfo(KnownChains.Steem);
+        OperationManager = new OperationManager(Chain.Url, Chain.ChainId, Chain.JsonSerializerSettings);
+        userPrivateKeys = new List<byte[]>
+        {
+            Base58.GetBytes(WIF)
+        };        
+    }
     
     //Create new post with some beneficiaries
-    var op1 = new PostOperation(parentPermlink, GlobalSettings.Login, permlink, title, body, jsonMetadata);
-    var op2 = new BeneficiaresOperation(GlobalSettings.Login, permlink, GlobalSettings.ChainInfo.SbdSymbol, new Beneficiary(beneficiar, 1000));
-    var responce = _operationManager.BroadcastOberations(op1, op2);
+    var op1 = new PostOperation(parentPermlink, Login, permlink, title, body, jsonMetadata);
+    var op2 = new BeneficiaresOperation(Login, permlink, Chain.SbdSymbol, new Beneficiary(beneficiar, 1000));
+    var responce = _operationManager.BroadcastOberations(userPrivateKeys, op1, op2);
     
     //UpVote
-    var op1 = new UpVoteOperation(GlobalSettings.Login, author, permlink);
-    var responce = _operationManager.BroadcastOberations(op1);
+    var op1 = new UpVoteOperation(Login, author, permlink);
+    var responce = _operationManager.BroadcastOberations(userPrivateKeys, op1);
 
 ## Sources
 

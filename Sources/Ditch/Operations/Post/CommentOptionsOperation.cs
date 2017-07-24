@@ -1,4 +1,5 @@
-﻿using Ditch.Helpers;
+﻿using System;
+using Ditch.Helpers;
 using Newtonsoft.Json;
 
 namespace Ditch.Operations.Post
@@ -28,7 +29,7 @@ namespace Ditch.Operations.Post
 
         [SerializeHelper.MessageOrder(50)]
         [JsonProperty("percent_steem_dollars")]
-        public short PercentSteemDollars { get; set; }
+        public UInt16 PercentSteemDollars { get; set; }
 
         [SerializeHelper.MessageOrder(60)]
         [JsonProperty("allow_votes")]
@@ -42,7 +43,7 @@ namespace Ditch.Operations.Post
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
 
-        public CommentOptionsOperation(string author, string permlink, Money maxAcceptedPayout, short percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
+        public CommentOptionsOperation(string author, string permlink, Money maxAcceptedPayout, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
         {
             Author = author;
             Permlink = permlink;

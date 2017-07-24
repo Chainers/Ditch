@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Ditch.Helpers
 {
-    internal class Base58
+    public class Base58
     {
         public const int CheckSumSizeInBytes = 4;
         protected const string Hexdigits = "0123456789abcdefABCDEF";
@@ -53,7 +53,7 @@ namespace Ditch.Helpers
             return CutFirstBytes(dec, 1);
         }
 
-        public static byte[] RemoveCheckSum(byte[] data)
+        private static byte[] RemoveCheckSum(byte[] data)
         {
             var result = new byte[data.Length - CheckSumSizeInBytes];
             Buffer.BlockCopy(data, 0, result, 0, data.Length - CheckSumSizeInBytes);
@@ -61,7 +61,7 @@ namespace Ditch.Helpers
             return result;
         }
 
-        public static string Encode(byte[] data)
+        private static string Encode(byte[] data)
         {
             // Decode byte[] to BigInteger
             BigInteger intData = 0;
@@ -87,7 +87,7 @@ namespace Ditch.Helpers
             return result;
         }
 
-        public static byte[] Decode(string base58)
+        private static byte[] Decode(string base58)
         {
             // Decode Base58 string to BigInteger 
             BigInteger intData = 0;

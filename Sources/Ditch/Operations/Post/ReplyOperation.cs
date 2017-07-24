@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Helpers;
+using Newtonsoft.Json;
 
 namespace Ditch.Operations.Post
 {
@@ -6,6 +7,6 @@ namespace Ditch.Operations.Post
     public class ReplyOperation : CommentOperation
     {
         public ReplyOperation(string parentAuthor, string parentPermlink, string author, string body, string jsonMetadata)
-            : base(parentAuthor, parentPermlink, author, $"re-{author}-{parentPermlink}", string.Empty, body, jsonMetadata) { }
+            : base(parentAuthor, parentPermlink, author, ConvertHelper.PermlinkToParentPermlink(author, parentPermlink), string.Empty, body, jsonMetadata) { }
     }
 }
