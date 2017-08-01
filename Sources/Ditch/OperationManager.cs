@@ -242,5 +242,16 @@ namespace Ditch
         //(get_miner_queue)
         //(get_transaction)
         #endregion  helper api
+
+        #region database api
+
+        public JsonRpcResponse<List<Discussion>> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<List<Discussion>>("get_discussions_by_author_before_date", author, startPermlink, beforeDate, limit);
+        }
+
+        #endregion  database api
+
+
     }
 }

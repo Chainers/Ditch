@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Ditch.JsonRpc;
+using Ditch.Operations;
 using Newtonsoft.Json;
 using SuperSocket.ClientEngine;
 using WebSocket4Net;
@@ -64,6 +65,13 @@ namespace Ditch
         private string ToJsonRpc(int reqId, string method, string paramData)
         {
             return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
+        }
+
+        public JsonRpcResponse Call(Api api, string operation, params object[] data)
+        {
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, "call", (int)api, operation, data);
+            return Execute(id, msg);
         }
 
         public JsonRpcResponse Call(int api, string operation, params object[] data)
