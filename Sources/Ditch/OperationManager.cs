@@ -20,8 +20,17 @@ namespace Ditch
             _chainId = chainId;
         }
 
-        public OperationManager(string url, byte[] chainId) : this(url, chainId, new JsonSerializerSettings())
+        public OperationManager(string url, byte[] chainId) : this(url, chainId, GetJsonSerializerSettings())
         {
+        }
+
+        private static JsonSerializerSettings GetJsonSerializerSettings()
+        {
+            var rez = new JsonSerializerSettings
+            {
+                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK"
+            };
+            return rez;
         }
 
         /// <summary>
