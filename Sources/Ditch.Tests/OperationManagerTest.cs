@@ -275,5 +275,15 @@ namespace Ditch.Tests
             Assert.IsTrue(respNext.Result.Count <= count);
             Assert.IsTrue(respNext.Result[0].Permlink == resp.Result[count - 1].Permlink);
         }
+
+        [Test]
+        public void GetDiscussionsByAuthorBeforeDateFailTest([Values("Steem", "Golos")] string name)
+        {
+            ushort count = 3;
+            var dt = DateTime.Parse("2017-08-01T18:14:59.30232Z");
+            var resp = Manager(name).GetDiscussionsByAuthorBeforeDate("golosloto", string.Empty, dt, count);
+            Assert.IsFalse(resp.IsError);
+            Assert.IsTrue(resp.Result.Count <= count);
+        }
     }
 }
