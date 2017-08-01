@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Ditch.Errors;
 using Newtonsoft.Json;
 
 namespace Ditch.JsonRpc
@@ -10,12 +11,19 @@ namespace Ditch.JsonRpc
         public object Result { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        public ErrorInfo Error { get; set; }
 
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         public bool IsError => Error != null;
+
+        public JsonRpcResponse() { }
+
+        public JsonRpcResponse(SystemError systemError)
+        {
+            Error = systemError;
+        }
 
         public static JsonRpcResponse FromString(string obj, JsonSerializerSettings jsonSerializerSettings)
         {
