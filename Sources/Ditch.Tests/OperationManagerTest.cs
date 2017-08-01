@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Ditch.Helpers;
 using Ditch.Operations.Post;
 using NUnit.Framework;
@@ -233,6 +234,32 @@ namespace Ditch.Tests
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
             //var prop = Manager(name).BroadcastOperations(op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
+        public void GetFollowersTest([Values("Steem", "Golos")] string name)
+        {
+            ushort count = 3;
+            var resp = Manager(name).GetFollowers(_login[name], string.Empty, FollowType.Blog, count);
+            Assert.IsFalse(resp.IsError);
+            Assert.IsTrue(resp.Result.Count <= count);
+            var respNext = Manager(name).GetFollowers(_login[name], resp.Result.Last().Follower, FollowType.Blog, count);
+            Assert.IsFalse(respNext.IsError);
+            Assert.IsTrue(respNext.Result.Count <= count);
+            Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
+        }
+
+        [Test]
+        public void GetFollowingTest([Values("Steem", "Golos")] string name)
+        {
+            ushort count = 3;
+            var resp = Manager(name).GetFollowing(_login[name], string.Empty, FollowType.Blog, count);
+            Assert.IsFalse(resp.IsError);
+            Assert.IsTrue(resp.Result.Count <= count);
+            var respNext = Manager(name).GetFollowing(_login[name], resp.Result.Last().Following, FollowType.Blog, count);
+            Assert.IsFalse(respNext.IsError);
+            Assert.IsTrue(respNext.Result.Count <= count);
+            Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
         }
     }
 }
