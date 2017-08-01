@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Ditch.Errors;
 using Ditch.JsonRpc;
 using Ditch.Operations;
 using Newtonsoft.Json;
@@ -112,7 +113,9 @@ namespace Ditch
             {
                 _manualResetEventDictionary.Add(id, vaiter);
             }
-            OpenIfClosed();
+            if (!OpenIfClosed())
+                return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
+
             _webSocket.Send(msg);
 
             vaiter.WaitOne(30000);
@@ -136,14 +139,14 @@ namespace Ditch
 
             if (response == null)
             {
-                return new JsonRpcResponse { Error = new ErrorResponse("execution has timed-out") };
+                return new JsonRpcResponse(new SystemError(ErrorCodes.ResponseTimeoutError));
             }
 
             return response;
         }
 
 
-        private void OpenIfClosed()
+        private bool OpenIfClosed()
         {
             switch (_webSocket.State)
             {
@@ -152,25 +155,28 @@ namespace Ditch
                         if (_socketCloseEvent.WaitOne(1000))
                         {
                             _webSocket.Open();
-                            _socketOpenEvent.WaitOne();
+
+                            if (_socketOpenEvent.WaitOne(30000))
+                            {
+                                return true;
+                            }
                         }
-                        break;
+                        return false;
                     }
                 case WebSocketState.Connecting:
                     {
-                        _socketOpenEvent.WaitOne();
-                        break;
+                        return _socketOpenEvent.WaitOne(30000);
                     }
                 case WebSocketState.None:
                 case WebSocketState.Closed:
                     {
                         _webSocket.Open();
-                        _socketOpenEvent.WaitOne();
-                        break;
+                        return _socketOpenEvent.WaitOne(30000);
                     }
+                default:
+                    return true;
             }
         }
-
 
         private void WebSocketOpened(object sender, EventArgs e)
         {
