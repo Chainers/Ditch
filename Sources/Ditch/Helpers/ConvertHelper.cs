@@ -48,7 +48,7 @@ namespace Ditch.Helpers
             text = Transliteration.Convert(text);
             text = ConvertRegex.Replace(text, "-");
             text = CleanRegex.Replace(text, string.Empty);
-            return text;
+            return $"{text}-{DateTime.UtcNow:yyyyMMddTHHmmss}";
         }
 
         public static string PermlinkToParentPermlink(string author, string permlink)

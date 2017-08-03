@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Ditch.Errors;
 using Newtonsoft.Json;
 
@@ -47,7 +48,7 @@ namespace Ditch.JsonRpc
                 var t = typeof(T);
                 var ti = t.GetTypeInfo();
 
-                if (ti.IsValueType)
+                if (ti.IsPrimitive || t == typeof(String))
                     rez.Result = (T)Result;
                 else
                     rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);

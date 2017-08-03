@@ -32,6 +32,6 @@ namespace Ditch
 
         private JsonSerializerSettings _jsonSerializerSettings;
         private CultureInfo _serverCultureInfo;
-        public JsonSerializerSettings JsonSerializerSettings => _jsonSerializerSettings ?? (_jsonSerializerSettings = new JsonSerializerSettings() { Culture = ServerCultureInfo });
+        public JsonSerializerSettings JsonSerializerSettings => _jsonSerializerSettings ?? (_jsonSerializerSettings = new JsonSerializerSettings() { Culture = ServerCultureInfo, DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK" });
     }
 }
