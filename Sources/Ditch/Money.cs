@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Ditch
 {
-    public struct Money
+    public class Money
     {
         public long Value { get; }
 
@@ -74,7 +74,7 @@ namespace Ditch
         {
             return new Money(value);
         }
-        
+
         public static implicit operator string(Money value)
         {
             return value.ToString();
