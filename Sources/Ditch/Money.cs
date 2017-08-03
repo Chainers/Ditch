@@ -16,12 +16,16 @@ namespace Ditch
         public Money(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
             var kv = value.Split(' ');
-            Precision = (byte)(kv[0].Length - kv[0].LastIndexOf(numberDecimalSeparator, StringComparison.OrdinalIgnoreCase) - 1);
+
             var buf = kv[0]
                 .Replace(numberDecimalSeparator, string.Empty)
                 .Replace(numberGroupSeparator, string.Empty);
+
+            var charLenAftSeparator = kv[0].LastIndexOf(numberDecimalSeparator, StringComparison.OrdinalIgnoreCase);
+            if (charLenAftSeparator > 0)
+                Precision = (byte)(buf.Length - charLenAftSeparator);
             Value = long.Parse(buf);
-            Currency = kv[1].ToUpper();
+            Currency = kv.Length > 1 ? kv[1].ToUpper() : string.Empty;
         }
 
         public Money(long value, byte precision, string currency)
@@ -88,13 +92,16 @@ namespace Ditch
         public string ToString(string numberDecimalSeparator)
         {
             var dig = Value.ToString();
-            if (dig.Length <= Precision)
+            if (Precision > 0)
             {
-                var prefix = new string('0', Precision - dig.Length + 1);
-                dig = prefix + dig;
+                if (dig.Length <= Precision)
+                {
+                    var prefix = new string('0', Precision - dig.Length + 1);
+                    dig = prefix + dig;
+                }
+                dig = dig.Insert(dig.Length - Precision, numberDecimalSeparator);
             }
-            dig = dig.Insert(dig.Length - Precision, numberDecimalSeparator);
-            return $"{dig} {Currency}";
+            return string.IsNullOrEmpty(Currency) ? dig : $"{dig} {Currency}";
         }
     }
 }

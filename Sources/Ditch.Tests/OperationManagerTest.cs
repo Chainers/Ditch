@@ -77,13 +77,18 @@ namespace Ditch.Tests
         }
 
         [Test]
-        [TestCase("277.126 SBD")]
-        public void ParseTestTest(string test)
+        [TestCase("277.126 SBD", 277126, 3, "SBD")]
+        [TestCase("0 SBD", 0, 0, "SBD")]
+        [TestCase("0", 0, 0, "")]
+        [TestCase("123 SBD", 123, 0, "SBD")]
+        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
+        public void ParseTestTest(string test, long value, byte precision, string currency)
         {
             var money = new Money(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-            Assert.IsTrue(money.Value == 277126);
-            Assert.IsTrue(money.Precision == 3);
-            Assert.IsTrue(money.Currency == "SBD");
+            Assert.IsTrue(money.Value == value);
+            Assert.IsTrue(money.Precision == precision);
+            Assert.IsTrue(money.Currency == currency);
+            Assert.IsTrue(test.Equals(money.ToString()));
         }
 
         [Test]
@@ -129,7 +134,7 @@ namespace Ditch.Tests
         {
             var op = new FollowOperation(_login[name], "joseph.kalu", FollowType.Blog | FollowType.Posts, _login[name]);
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -167,7 +172,7 @@ namespace Ditch.Tests
         {
             var op = new UnfollowOperation(_login[name], "joseph.kalu", _login[name]);
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -176,7 +181,7 @@ namespace Ditch.Tests
         {
             var op = new UpVoteOperation(_login[name], "joseph.kalu", "fkkl");
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -185,7 +190,7 @@ namespace Ditch.Tests
         {
             var op = new DownVoteOperation(_login[name], "joseph.kalu", "fkkl");
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -194,7 +199,7 @@ namespace Ditch.Tests
         {
             var op = new FlagOperation(_login[name], "joseph.kalu", "fkkl");
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -214,7 +219,7 @@ namespace Ditch.Tests
             var op = new PostOperation("test", _login[name], "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
 
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op, popt);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -223,7 +228,7 @@ namespace Ditch.Tests
         {
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", _login[name], "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -232,7 +237,7 @@ namespace Ditch.Tests
         {
             var op = new RePostOperation(_login[name], "joseph.kalu", "fkkl", _login[name]);
             var prop = Manager(name).VerifyAuthority(_userPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(op);
+            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
