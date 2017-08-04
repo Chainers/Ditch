@@ -219,6 +219,14 @@ namespace Ditch
             return _webSocketManager.GetRequest<UInt64>("get_account_count");
         }
 
+        /// <summary>
+        /// 
+        /// История всех действий пользователя в сети в виде транзакций. При from = -1 будут показаны последние {limit+1} элементов истории. Параметр limit не должен превышать from (исключение from = -1), так как показываются предшествующие {from} элементы истории.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="from"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit)
         {
             var buf = _webSocketManager.GetRequest<JArray[]>("get_account_history", account, from, limit);
@@ -275,6 +283,12 @@ namespace Ditch
             return _webSocketManager.GetRequest<ScheduledHardfork>("get_next_scheduled_hardfork");
         }
 
+        /// <summary>
+        /// 
+        /// Находит и возвращает имена пользователей по публичному ключу
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
         public JsonRpcResponse<string[][]> GetKeyReferences(params string[][] keys)
         {
             return _webSocketManager.Call<string[][]>((int)Api.AccountByKeyApi, "get_key_references", keys);
