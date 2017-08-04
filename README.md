@@ -24,6 +24,9 @@ Get:
 * GetCurrentMedianHistoryPrice
 * GetConfig
 * GetChainProperties
+* GetConversionRequests
+* GetAccountHistory
+* GetAccountReferences
 	
 Post:
 * VoteOperation (vote) 
