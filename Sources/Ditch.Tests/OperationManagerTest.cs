@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Ditch.Helpers;
+using Ditch.Operations.Get;
 using Ditch.Operations.Post;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Ditch.Tests
@@ -53,7 +55,7 @@ namespace Ditch.Tests
                     return null;
             }
         }
-        
+
         [Test]
         [TestCase("277.126 SBD", 277126, 3, "SBD")]
         [TestCase("0 SBD", 0, 0, "SBD")]
@@ -70,7 +72,7 @@ namespace Ditch.Tests
         }
 
         #region Post requests
-        
+
         [Test]
         public void FollowTest([Values("Steem", "Golos")] string name)
         {
@@ -208,9 +210,8 @@ namespace Ditch.Tests
         public void get_dynamic_global_properties([Values("Steem", "Golos")] string name)
         {
             var prop = Manager(name).GetDynamicGlobalProperties();
-            Assert.IsTrue(prop != null);
-            Assert.IsTrue(prop.Result != null);
             Assert.IsFalse(prop.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(prop.Result));
         }
 
         [Test]
@@ -240,11 +241,13 @@ namespace Ditch.Tests
             ushort count = 3;
             var resp = Manager(name).GetFollowers(_login[name], string.Empty, FollowType.Blog, count);
             Assert.IsFalse(resp.IsError);
-            Assert.IsTrue(resp.Result.Count <= count);
+            Assert.IsTrue(resp.Result.Length <= count);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             var respNext = Manager(name).GetFollowers(_login[name], resp.Result.Last().Follower, FollowType.Blog, count);
             Assert.IsFalse(respNext.IsError);
-            Assert.IsTrue(respNext.Result.Count <= count);
+            Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
+            Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
         }
 
         [Test]
@@ -253,10 +256,13 @@ namespace Ditch.Tests
             ushort count = 3;
             var resp = Manager(name).GetFollowing(_login[name], string.Empty, FollowType.Blog, count);
             Assert.IsFalse(resp.IsError);
-            Assert.IsTrue(resp.Result.Count <= count);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.Length <= count);
+
             var respNext = Manager(name).GetFollowing(_login[name], resp.Result.Last().Following, FollowType.Blog, count);
             Assert.IsFalse(respNext.IsError);
-            Assert.IsTrue(respNext.Result.Count <= count);
+            Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
+            Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
         }
 
@@ -267,92 +273,100 @@ namespace Ditch.Tests
             var dt = new DateTime(2017, 7, 1);
             var resp = Manager(name).GetDiscussionsByAuthorBeforeDate(_login[name], string.Empty, dt, count);
             Assert.IsFalse(resp.IsError);
-            Assert.IsTrue(resp.Result.Count <= count);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.Length <= count);
+
             var respNext = Manager(name).GetDiscussionsByAuthorBeforeDate(_login[name], resp.Result[count - 1].Permlink, dt, count);
             Assert.IsFalse(respNext.IsError);
-            Assert.IsTrue(respNext.Result.Count <= count);
+            Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
+            Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result[0].Permlink == resp.Result[count - 1].Permlink);
         }
-        
+
         [Test]
         public void get_state([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_state", "path");
+            var rez = Manager(name).GetState("path");
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result.ToString());
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_config([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_config");
+            var rez = Manager(name).GetConfig();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result.ToString());
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_chain_properties([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_chain_properties");
+            var rez = Manager(name).GetChainProperties();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result.ToString());
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_feed_history([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_feed_history");
+            var rez = Manager(name).GetFeedHistory();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result.ToString());
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_current_median_history_price([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_current_median_history_price");
+            var rez = Manager(name).GetCurrentMedianHistoryPrice();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result.ToString());
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_witness_schedule([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_witness_schedule");
+            var rez = Manager(name).GetWitnessSchedule();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result.ToString());
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_hardfork_version([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<string>("get_hardfork_version");
+            var rez = Manager(name).GetHardforkVersion();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(rez.Result);
         }
 
         [Test]
         public void get_next_scheduled_hardfork([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_next_scheduled_hardfork");
+            var rez = Manager(name).GetNextScheduledHardfork();
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_key_references([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_key_references", "key");
+            var acResp = Manager(name).GetAccounts(_login[name]);
+            Assert.IsFalse(acResp.IsError);
+            var ac = acResp.Result;
+            Assert.IsTrue(ac.Length == 1);
+
+            var rez = Manager(name).GetKeyReferences(new string[1][] { new[] { ac[0].Active.Value } });
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
@@ -360,15 +374,16 @@ namespace Ditch.Tests
         {
             var rez = Manager(name).GetAccounts(_login[name]);
             Assert.IsFalse(rez.IsError, rez.GetErrorMessage());
-            Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_account_references([Values("Steem", "Golos")] string name)
         {
             var ac = Manager(name).GetAccounts(_login[name]);
+            Assert.IsFalse(ac.IsError);
 
-            var rez = Manager(name).CustomGetRequest<object>("get_account_references", ac.Result[0].Id);
+            var rez = Manager(name).GetAccountReferences(ac.Result[0].Id);
             Console.WriteLine(rez.Error);
             Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
@@ -377,51 +392,50 @@ namespace Ditch.Tests
         [Test]
         public void lookup_account_names([Values("Steem", "Golos")] string name)
         {
-            var names = new object[1];
-            names[0] = new[] { _login[name] };
-            var rez = Manager(name).CustomGetRequest<object>("lookup_account_names", names);
+            var rez = Manager(name).LookupAccountNames(_login[name]);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void lookup_accounts([Values("Steem", "Golos")] string name)
         {
-            var limit = 3;
-            var rez = Manager(name).CustomGetRequest<object>("lookup_accounts", _login[name], limit);
+            UInt32 limit = 3;
+            var rez = Manager(name).LookupAccounts(_login[name], limit);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_account_count([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_account_count");
+            var rez = Manager(name).GetAccountCount();
             Console.WriteLine(rez.Error);
             Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(rez.Result);
         }
 
         [Test]
         public void get_conversion_requests([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_conversion_requests", _login[name]);
+            var rez = Manager(name).GetConversionRequests(_login[name]);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
         public void get_account_history([Values("Steem", "Golos")] string name)
         {
-            var from = 0;
-            var limit = 0;
-            var rez = Manager(name).CustomGetRequest<object>("get_account_history", _login[name], from, limit);
+            UInt64 from = 3;
+            UInt32 limit = 3;
+            var rez = Manager(name).GetAccountHistory(_login[name], from, limit);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         [Test]
@@ -464,30 +478,20 @@ namespace Ditch.Tests
         [Test]
         public void get_account_bandwidth([Values("Steem", "Golos")] string name)
         {
-            var rez = Manager(name).CustomGetRequest<object>("get_account_bandwidth", _login[name], "post");
+            var rez = Manager(name).GetAccountBandwidth(_login[name], BandwidthType.Post);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
 
-            rez = Manager(name).CustomGetRequest<object>("get_account_bandwidth", _login[name], "forum");
+            rez = Manager(name).GetAccountBandwidth(_login[name], BandwidthType.Forum);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
 
-            rez = Manager(name).CustomGetRequest<object>("get_account_bandwidth", _login[name], "market");
+            rez = Manager(name).GetAccountBandwidth(_login[name], BandwidthType.Market);
             Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
             Assert.IsFalse(rez.IsError);
-
-            rez = Manager(name).CustomGetRequest<object>("get_account_bandwidth", _login[name], "old_forum");
-            Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
-            Assert.IsFalse(rez.IsError);
-
-            rez = Manager(name).CustomGetRequest<object>("get_account_bandwidth", _login[name], "old_market");
-            Console.WriteLine(rez.Error);
-            Console.WriteLine(rez.Result);
-            Assert.IsFalse(rez.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(rez.Result));
         }
 
         #endregion Get requests

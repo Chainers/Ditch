@@ -28,10 +28,7 @@ namespace Ditch
             get => _serverCultureInfo ?? (_serverCultureInfo = CultureInfo.InvariantCulture);
             set => _serverCultureInfo = value.IsReadOnly ? new CultureInfo(value.Name) : value;
         }
-
-
-        private JsonSerializerSettings _jsonSerializerSettings;
+        
         private CultureInfo _serverCultureInfo;
-        public JsonSerializerSettings JsonSerializerSettings => _jsonSerializerSettings ?? (_jsonSerializerSettings = new JsonSerializerSettings() { Culture = ServerCultureInfo, DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK" });
     }
 }

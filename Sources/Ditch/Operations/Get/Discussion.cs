@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Ditch.Operations.Get
@@ -20,10 +19,10 @@ namespace Ditch.Operations.Get
         public Money TotalPendingPayoutValue { get; set; }
 
         [JsonProperty("active_votes")]
-        public List<VoteState> ActiveVotes { get; set; }
+        public VoteState[] ActiveVotes { get; set; }
 
         [JsonProperty("replies")]
-        public List<string> Replies { get; set; }
+        public string[] Replies { get; set; }
 
         //share_type
         [JsonProperty("author_reputation")]
@@ -36,7 +35,7 @@ namespace Ditch.Operations.Get
         public UInt32 BodyLength { get; set; }
 
         [JsonProperty("reblogged_by")]
-        public List<string> RebloggedBy { get; set; }
+        public string[] RebloggedBy { get; set; }
 
         //public optional<account_name_type> first_reblogged_by;
         //public optional<time_point_sec> first_reblogged_on;

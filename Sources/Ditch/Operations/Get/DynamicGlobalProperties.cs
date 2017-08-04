@@ -38,8 +38,8 @@ namespace Ditch.Operations.Get
         public UInt64 TotalPow { get; set; }
 
         //uint32_t
-        [JsonProperty("num_pow_witnessesv")]
-        public UInt32 NumPowWitnessesv { get; set; }
+        [JsonProperty("num_pow_witnesses")]
+        public UInt32 NumPowWitnesses { get; set; }
 
         //asset( 0, STEEM_SYMBOL )
         [JsonProperty("virtual_supply")]
@@ -77,8 +77,13 @@ namespace Ditch.Operations.Get
         [JsonProperty("total_reward_shares2")]
         public string TotalRewardShares2 { get; set; }
 
-        //asset pending_rewarded_vesting_shares = asset(0, VESTS_SYMBOL);
-        //asset pending_rewarded_vesting_steem = asset(0, STEEM_SYMBOL);
+        //asset(0, VESTS_SYMBOL);
+        [JsonProperty("pending_rewarded_vesting_shares")]
+        public Money PendingRewardedVestingShares { get; set; }
+
+        //asset(0, STEEM_SYMBOL);
+        [JsonProperty("pending_rewarded_vesting_steem")]
+        public Money PendingRewardedVestingSteem { get; set; }
 
         //uint16_t
         [JsonProperty("sbd_interest_rate")]

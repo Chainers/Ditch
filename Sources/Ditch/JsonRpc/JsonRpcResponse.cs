@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using Ditch.Errors;
+﻿using Ditch.Errors;
 using Newtonsoft.Json;
 
 namespace Ditch.JsonRpc
@@ -21,7 +19,7 @@ namespace Ditch.JsonRpc
 
         public JsonRpcResponse() { }
 
-        public JsonRpcResponse(SystemError systemError)
+        public JsonRpcResponse(ErrorInfo systemError)
         {
             Error = systemError;
         }
@@ -46,12 +44,25 @@ namespace Ditch.JsonRpc
             if (Result != null)
             {
                 var t = typeof(T);
-                var ti = t.GetTypeInfo();
-
-                if (ti.IsPrimitive || t == typeof(String))
-                    rez.Result = (T)Result;
-                else
-                    rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
+                switch (t.Name)
+                {
+                    case "Boolean":
+                    case "Byte":
+                    case "Int16":
+                    case "Int32":
+                    case "Int64":
+                    case "Double":
+                    case "String":
+                        {
+                            rez.Result = (T)Result;
+                            break;
+                        }
+                    default:
+                        {
+                            rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
+                            break;
+                        }
+                }
             }
             return rez;
         }
@@ -66,6 +77,15 @@ namespace Ditch.JsonRpc
         public new static JsonRpcResponse<T> FromString(string obj, JsonSerializerSettings serializerSettings)
         {
             return JsonConvert.DeserializeObject<JsonRpcResponse<T>>(obj, serializerSettings);
+        }
+
+        public JsonRpcResponse() { }
+
+        public JsonRpcResponse(ErrorInfo systemError) : base(systemError) { }
+
+        public JsonRpcResponse(T result)
+        {
+            Result = result;
         }
     }
 }
