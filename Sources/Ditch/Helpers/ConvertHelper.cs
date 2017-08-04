@@ -56,5 +56,22 @@ namespace Ditch.Helpers
             permlink = ReplyPostfixRegex.Replace(permlink, string.Empty);
             return $"re-{author}-{permlink}-{DateTime.UtcNow:yyyyMMddTHHmmssfffZ}";
         }
+
+        public static void TagTransliteration(string[] tags)
+        {
+            for (var index = 0; index < tags.Length; index++)
+            {
+                var tag = tags[index];
+                tag = tag.ToLower();
+                tag = tag.Trim();
+                var translit = Transliteration.Convert(tag);
+                tag = translit.Equals(tag) ? translit : $"ru--{translit}";
+                tag = ConvertRegex.Replace(tag, "-");
+                tag = CleanRegex.Replace(tag, string.Empty);
+                tags[index] = tag;
+            }
+        }
+
+
     }
 }

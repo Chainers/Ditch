@@ -11,7 +11,20 @@ Get:
 * VerifyAuthority
 * GetFollowing
 * GetFollowers
-
+* LookupAccountNames
+* LookupAccounts
+* GetAccountCount
+* GetAccountBandwidth
+* GetWitnessSchedule
+* GetState
+* GetNextScheduledHardfork
+* GetKeyReferences
+* GetHardforkVersion
+* GetFeedHistory
+* GetCurrentMedianHistoryPrice
+* GetConfig
+* GetChainProperties
+	
 Post:
 * VoteOperation (vote) 
   * UpVoteOperation inherit VoteOperation

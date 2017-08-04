@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Ditch.Operations.Get
@@ -107,6 +106,6 @@ namespace Ditch.Operations.Get
         public bool AllowCurationRewards { get; set; }
 
         [JsonProperty("beneficiaries")]
-        public List<object> Beneficiaries { get; set; } //bip::vector< beneficiary_route_type, allocator< beneficiary_route_type > > beneficiaries;
+        public object[] Beneficiaries { get; set; } //bip::vector< beneficiary_route_type, allocator< beneficiary_route_type > > beneficiaries;
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.JsonRpc;
+using Ditch.Operations;
 using Ditch.Operations.Get;
 using Ditch.Operations.Post;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch
 {
@@ -20,15 +23,20 @@ namespace Ditch
             _chainId = chainId;
         }
 
-        public OperationManager(string url, byte[] chainId) : this(url, chainId, GetJsonSerializerSettings())
+        public OperationManager(string url, byte[] chainId) : this(url, chainId, GetJsonSerializerSettings(CultureInfo.InvariantCulture))
         {
         }
 
-        private static JsonSerializerSettings GetJsonSerializerSettings()
+        public OperationManager(string url, byte[] chainId, CultureInfo cultureInfo) : this(url, chainId, GetJsonSerializerSettings(cultureInfo))
+        {
+        }
+
+        private static JsonSerializerSettings GetJsonSerializerSettings(CultureInfo cultureInfo)
         {
             var rez = new JsonSerializerSettings
             {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK"
+                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                Culture = cultureInfo
             };
             return rez;
         }
@@ -37,7 +45,7 @@ namespace Ditch
         /// Create and broadcast transaction
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse BroadcastOperations(List<byte[]> userPrivateKeys, params BaseOperation[] operations)
+        public JsonRpcResponse BroadcastOperations(IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties();
             if (prop.IsError)
@@ -54,16 +62,17 @@ namespace Ditch
         /// Get user accounts by user names
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse<List<Account>> GetAccounts(params string[] userList)
+        public JsonRpcResponse<Account[]> GetAccounts(params string[] userList)
         {
-            return _webSocketManager.GetRequest<List<Account>>(Account.OperationName, $"[[\"{string.Join("\",\"", userList)}\"]]");
+            return _webSocketManager.GetRequest<Account[]>(Account.OperationName, $"[[\"{string.Join("\",\"", userList)}\"]]");
         }
 
         /// <summary>
         /// Execute custom user method
+        /// Возвращает TRUE если транзакция подписана правильно
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse<bool> VerifyAuthority(List<byte[]> userPrivateKeys, params BaseOperation[] testOps)
+        public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] testOps)
         {
             var prop = DynamicGlobalProperties.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, testOps);
@@ -105,7 +114,7 @@ namespace Ditch
             return _webSocketManager.Call<Content>(Content.Api, Content.OperationName, author, permlink);
         }
 
-        public Transaction CreateTransaction(DynamicGlobalProperties properties, List<byte[]> userPrivateKeys, params BaseOperation[] operations)
+        public Transaction CreateTransaction(DynamicGlobalProperties properties, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
@@ -144,19 +153,215 @@ namespace Ditch
 
         #region follow_api
 
-        public JsonRpcResponse<List<FollowInfo>> GetFollowers(string to, string start, FollowType followType, UInt16 limit = 10)
+        /// <summary>
+        /// 
+        /// Возвращает список: Либо всех подписчиков пользователя 'following'. 
+        /// Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
+        /// </summary>
+        /// <param name="following"></param>
+        /// <param name="startFollower"></param>
+        /// <param name="followType"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<FollowInfo[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<List<FollowInfo>>("call", FollowInfo.Api, "get_followers", new object[] { to, start, followType.ToString().ToLower(), limit });
+            return _webSocketManager.GetRequest<FollowInfo[]>("call", FollowInfo.Api, "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
         }
 
-        public JsonRpcResponse<List<FollowInfo>> GetFollowing(string to, string start, FollowType followType, UInt16 limit = 10)
+        /// <summary>
+        /// 
+        /// Aналогично GetFollowers только для подписок
+        /// </summary>
+        /// <param name="follower"></param>
+        /// <param name="startFollowing"></param>
+        /// <param name="followType"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<FollowInfo[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<List<FollowInfo>>("call", FollowInfo.Api, "get_following", new object[] { to, start, followType.ToString().ToLower(), limit });
+            return _webSocketManager.GetRequest<FollowInfo[]>("call", FollowInfo.Api, "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
         }
 
         #endregion
 
+        #region database_api
+
+        /// <summary>
+        /// 
+        /// Возращает данные по заданным аккаунтам
+        /// </summary>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<Account[]> LookupAccountNames(params string[] names)
+        {
+            return _webSocketManager.GetRequest<Account[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]");
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает имена пользователей близких к шаблону.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<string[]> LookupAccounts(string account, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<string[]>("lookup_accounts", account, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает количество зарегестрированных пользователей.
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<UInt64> GetAccountCount()
+        {
+            return _webSocketManager.GetRequest<UInt64>("get_account_count");
+        }
+
+        public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit)
+        {
+            var buf = _webSocketManager.GetRequest<JArray[]>("get_account_history", account, from, limit);
+
+            if (buf.IsError)
+                return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>(buf.Error);
+
+            var rez = buf.Result;
+
+            if (rez == null)
+                return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>();
+
+            var typedTez = new KeyValuePair<UInt32, AppliedOperation>[rez.Length];
+            for (int i = 0; i < typedTez.Length; i++)
+            {
+                var key = rez[i][0];
+                var info = rez[i][1];
+
+                typedTez[i] = new KeyValuePair<UInt32, AppliedOperation>(key.ToObject<UInt32>(), info.ToObject<AppliedOperation>());
+            }
+
+            return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>(typedTez);
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает действия пользователя в зависимости от типа
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="bandwidthType"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<AccountBandwidth> GetAccountBandwidth(string account, BandwidthType bandwidthType)
+        {
+            return _webSocketManager.GetRequest<AccountBandwidth>("get_account_bandwidth", account, bandwidthType.ToString().ToLower());
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает текущее состояние делегирования.
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<WitnessSchedule> GetWitnessSchedule()
+        {
+            return _webSocketManager.GetRequest<WitnessSchedule>("get_witness_schedule");
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает дату и версию HardFork
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<ScheduledHardfork> GetNextScheduledHardfork()
+        {
+            return _webSocketManager.GetRequest<ScheduledHardfork>("get_next_scheduled_hardfork");
+        }
+
+        public JsonRpcResponse<string[][]> GetKeyReferences(params string[][] keys)
+        {
+            return _webSocketManager.Call<string[][]>((int)Api.AccountByKeyApi, "get_key_references", keys);
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает текущую версию сети.
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<string> GetHardforkVersion(params string[][] keys)
+        {
+            return _webSocketManager.GetRequest<string>("get_hardfork_version");
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает историю конверсий.
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<FeedHistory> GetFeedHistory()
+        {
+            return _webSocketManager.GetRequest<FeedHistory>("get_feed_history");
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает текущую медианную цену конвертации.
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice()
+        {
+            return _webSocketManager.GetRequest<Price>("get_current_median_history_price");
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает текущую конфигурацию узла.
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<object> GetConfig()
+        {
+            return _webSocketManager.GetRequest<object>("get_config");
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает комиссию за создание пользователя, максимальный размер блока и процентную ставку GBG.
+        /// </summary>
+        /// <returns></returns>
+        public JsonRpcResponse<ChainProperties> GetChainProperties()
+        {
+            return _webSocketManager.GetRequest<ChainProperties>("get_chain_properties");
+        }
+
+        public JsonRpcResponse<object> GetAccountReferences(int accountId)
+        {
+            return _webSocketManager.GetRequest<object>("get_account_references", accountId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// Возвращает текущие запросы на конвертацию указанным пользователем
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<ConvertRequest[]> GetConversionRequests(string owner)
+        {
+            return _webSocketManager.Call<ConvertRequest[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
+        }
+
+        #endregion database_api
+
         #region wallet api
+
+        /// <summary>
+        /// 
+        /// Отображает текущее состояние сети.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<State> GetState(string path)
+        {
+            return _webSocketManager.GetRequest<State>("get_state", $"[\"{path}\"]");
+        }
 
         #endregion wallet api
 
@@ -254,9 +459,9 @@ namespace Ditch
 
         #region database api
 
-        public JsonRpcResponse<List<Discussion>> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit)
+        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<List<Discussion>>("get_discussions_by_author_before_date", author, startPermlink, beforeDate, limit);
+            return _webSocketManager.GetRequest<Discussion[]>("get_discussions_by_author_before_date", author, startPermlink, beforeDate, limit);
         }
 
         #endregion  database api
