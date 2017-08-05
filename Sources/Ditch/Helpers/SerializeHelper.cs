@@ -152,7 +152,7 @@ namespace Ditch.Helpers
                     return;
                 }
                 var buf = Encoding.UTF8.GetBytes(typed);
-                var buflen = ConvertHelper.VarInt(buf.Length);
+                var buflen = VarInt(buf.Length);
                 stream.Write(buflen, 0, buflen.Length);
                 stream.Write(buf, 0, buf.Length);
                 return;
@@ -172,7 +172,7 @@ namespace Ditch.Helpers
                 var typed = (ICollection)val;
                 if (typed == null)
                     return;
-                var buf = ConvertHelper.VarInt(typed.Count);
+                var buf = VarInt(typed.Count);
                 stream.Write(buf, 0, buf.Length);
                 foreach (var value in typed)
                 {
@@ -208,5 +208,36 @@ namespace Ditch.Helpers
             throw new NotImplementedException();
 
         }
+
+        /// <summary>
+        /// Сonverts a number to a minimal byte array
+        /// *peeped  https://github.com/xeroc/python-graphenelib/blob/master/graphenebase/types.py
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private static byte[] VarInt(int n)
+        {
+            //get array len
+            var i = 1;
+            var k = n;
+            while (k >= 0x80)
+            {
+                k >>= 7;
+                i++;
+            }
+
+            var data = new byte[i];
+            i = 0;
+
+            while (n >= 0x80)
+            {
+                data[i++] = (byte)(0x80 | (n & 0x7f));
+                n >>= 7;
+            }
+
+            data[i] += (byte)n;
+            return data;
+        }
+
     }
 }
