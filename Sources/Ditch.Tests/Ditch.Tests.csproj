@@ -35,6 +35,7 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="OperationManagerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransliterationTest.cs" />
     <Compile Include="SecurityTest.cs" />
   </ItemGroup>
   <ItemGroup>

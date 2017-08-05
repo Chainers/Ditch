@@ -1,97 +1,81 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace Ditch.Helpers
 {
     public class Transliteration
     {
-        //https://en.wikipedia.org/wiki/ISO_9
-        private static readonly Dictionary<char, string> Rules = new Dictionary<char, string>
+        //https://github.com/GolosChain/tolstoy/blob/master/app/utils/ParsersAndFormatters.js
+        private static readonly string[,] Rules =
         {
-            {'а', @"a"},
-            {'б', @"b"},
-            {'в', @"v"},
-            {'г', @"g"},
-            {'ѓ', @"g"},
-            {'ґ', @"g"},
-            {'д', @"d"},
-            {'е', @"e"},
-            {'ё', @"yo"},
-            {'є', @"ye"},
-            {'ж', @"zh"},
-            {'з', @"z"},
-            {'и', @"i"},
-            {'й', @"j"},
-            {'ї', @"yi"},
-            {'к', @"k"},
-            {'ќ', @"k"},
-            {'л', @"l"},
-            {'љ', @"l"},
-            {'м', @"m"},
-            {'н', @"n"},
-            {'њ', @"n"},
-            {'о', @"o"},
-            {'п', @"p"},
-            {'р', @"r"},
-            {'с', @"s"},
-            {'т', @"t"},
-            {'у', @"u"},
-            {'ў', @"u"},
-            {'ф', @"f"},
-            {'х', @"x"},
-            {'ц', @"cz"},
-            {'ч', @"ch"},
-            {'џ', @"dh"},
-            {'ш', @"sh"},
-            {'щ', @"shh"},
-            {'ы', @"y"},
-            {'э', @"e"},
-            {'ю', @"yu"},
-            {'я', @"ya"},
-            {'ѣ', @"ye"},
-            {'ѳ', @"fh"},
-            {'ѫ', @"о"},
+            {"ые", "yie"},
+            {"щ", "shch"},
+            {"ш", "sh"},
+            {"ч", "ch"},
+            {"ц", "cz"},
+            {"й", "ij"},
+            {"ё", "yo"},
+            {"э", "ye"},
+            {"ю", "yu"},
+            {"я", "ya"},
+            {"х", "kh"},
+            {"ж", "zh"},
+            {"а", "a"},
+            {"б", "b"},
+            {"в", "v"},
+            {"г", "g"},
+            {"д", "d"},
+            {"е", "e"},
+            {"з", "z"},
+            {"и", "i"},
+            {"к", "k"},
+            {"л", "l"},
+            {"м", "m"},
+            {"н", "n"},
+            {"о", "o"},
+            {"п", "p"},
+            {"р", "r"},
+            {"с", "s"},
+            {"т", "t"},
+            {"у", "u"},
+            {"ф", "f"},
+            {"ъ", "xx"},
+            {"ы", "y"},
+            {"ь", "x"},
+            {"ґ", "g"},
+            {"є", "e"},
+            {"і", "i"},
+            {"ї", "i"}
         };
 
-        public static string Convert(string text)
+
+        public static string ToRus(string text)
+        {
+            if (string.IsNullOrEmpty(text) || !text.StartsWith("ru--"))
+                return text;
+
+            text = text.Remove(0, 4);
+
+            for (var i = 0; i < Rules.GetLength(0); i++)
+            {
+                text = text.Replace(Rules[i, 1], Rules[i, 0]);
+                text = text.Replace(Rules[i, 1].ToUpper(), Rules[i, 0].ToUpper());
+            }
+            
+            return text;
+        }
+
+
+        public static string ToEng(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return text;
 
-            if (!text.Any(t => Rules.ContainsKey(t)))
-                return text;
-
-            var sb = new StringBuilder();
-
-            for (var i = 0; i < text.Length; i++)
+            for (var i = 0; i < Rules.GetLength(0); i++)
             {
-                string substitute;
-                if (Rules.TryGetValue(text[i], out substitute))
-                {
-                    var nextChar = (text.Length > (i + 1)) ? text[i + 1] : ' ';
-                    substitute = CheckSpecificRules(substitute, nextChar);
-                    sb.Append(substitute);
-                }
-                else
-                {
-                    sb.Append(text[i]);
-                }
+                text = text.Replace(Rules[i, 0], Rules[i, 1]);
+                text = text.Replace(Rules[i, 0].ToUpper(), Rules[i, 1].ToUpper());
             }
-            return sb.ToString();
-        }
 
-        private static string CheckSpecificRules(string substitue, char nextCh)
-        {
-            if (substitue.Length != 2 || substitue[1] != 'z')
-                return substitue;
-
-            if (nextCh == 'е' || nextCh == 'ё' || nextCh == 'и' || nextCh == 'й' ||
-                nextCh == 'i' || nextCh == 'ы' || nextCh == 'э' || nextCh == 'ю' ||
-                nextCh == 'я' || nextCh == 'ѣ' || nextCh == 'Ѣ' || nextCh == 'ѵ')
-                return substitue.Substring(0, 1);
-
-            return substitue;
+            return text;
         }
     }
 }
