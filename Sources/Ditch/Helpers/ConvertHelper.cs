@@ -45,7 +45,7 @@ namespace Ditch.Helpers
         {
             text = text.ToLower();
             text = text.Trim();
-            text = Transliteration.Convert(text);
+            text = Transliteration.ToEng(text);
             text = ConvertRegex.Replace(text, "-");
             text = CleanRegex.Replace(text, string.Empty);
             return $"{text}-{DateTime.UtcNow:yyyyMMddTHHmmss}";
@@ -64,7 +64,7 @@ namespace Ditch.Helpers
                 var tag = tags[index];
                 tag = tag.ToLower();
                 tag = tag.Trim();
-                var translit = Transliteration.Convert(tag);
+                var translit = Transliteration.ToEng(tag);
                 tag = translit.Equals(tag) ? translit : $"ru--{translit}";
                 tag = ConvertRegex.Replace(tag, "-");
                 tag = CleanRegex.Replace(tag, string.Empty);
