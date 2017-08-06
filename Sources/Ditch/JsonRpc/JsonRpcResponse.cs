@@ -9,6 +9,7 @@ namespace Ditch.JsonRpc
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
         public object Result { get; set; }
 
+        [JsonConverter(typeof(ConcreteTypeConverter<ResponseError>))]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
         public ErrorInfo Error { get; set; }
 
