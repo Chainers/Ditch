@@ -45,7 +45,7 @@ Post:
   
 ## Supported chains:
  * Golos
- * Steemit
+ * Steem
  
 ## Additional features:
  * Transliteration (Cyrillic to Latin)
