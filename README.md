@@ -57,10 +57,11 @@ Post:
     {
         Chain = ChainManager.GetChainInfo(KnownChains.Steem);
         OperationManager = new OperationManager(Chain.Url, Chain.ChainId, Chain.JsonSerializerSettings);
-        userPrivateKeys = new List<byte[]>
+        YouPrivateKeys = new List<byte[]>
         {
-            Base58.GetBytes(WIF)
+            Base58.GetBytes("5**************************************************") \\WIF
         };        
+        YouLogin = "username";
     }
     
     //Create new post with some beneficiaries
