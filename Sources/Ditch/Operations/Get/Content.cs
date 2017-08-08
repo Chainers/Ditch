@@ -98,11 +98,7 @@ namespace Ditch.Operations.Get
 
         //uint64_t
         [JsonProperty("total_vote_weight")]
-<<<<<<< HEAD
-        public BigInteger TotalVoteWeight { get; set; }
-=======
         public ulong TotalVoteWeight { get; set; }
->>>>>>> ef6deb3cb17a4b01da1ff843ec67126d11e9aafa
 
         //uint16_t
         [JsonProperty("reward_weight")]

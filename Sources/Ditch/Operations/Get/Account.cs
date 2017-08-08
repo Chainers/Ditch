@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Numerics;
 
 namespace Ditch.Operations.Get
 {
@@ -165,22 +166,22 @@ namespace Ditch.Operations.Get
         public DateTime NextVestingWithdrawal { get; set; }
 
         [JsonProperty("withdrawn")]
-        public int Withdrawn { get; set; }
+        public UInt64 Withdrawn { get; set; }
 
         [JsonProperty("to_withdraw")]
-        public int ToWithdraw { get; set; }
+        public UInt64 ToWithdraw { get; set; }
 
         [JsonProperty("withdraw_routes")]
         public int WithdrawRoutes { get; set; }
 
         [JsonProperty("curation_rewards")]
-        public int CurationRewards { get; set; }
+        public UInt64 CurationRewards { get; set; }
 
         [JsonProperty("posting_rewards")]
-        public int PostingRewards { get; set; }
+        public UInt64 PostingRewards { get; set; }
 
         [JsonProperty("proxied_vsf_votes")]
-        public int[] ProxiedVsfVotes { get; set; }
+        public UInt64[] ProxiedVsfVotes { get; set; }
 
         [JsonProperty("witnesses_voted_for")]
         public int WitnessesVotedFor { get; set; }
