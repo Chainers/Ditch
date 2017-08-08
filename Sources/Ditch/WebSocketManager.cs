@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Ditch.Errors;
 using Ditch.JsonRpc;
+using Ditch.Operations;
 using Newtonsoft.Json;
 using SuperSocket.ClientEngine;
 using WebSocket4Net;
@@ -18,7 +20,7 @@ namespace Ditch {
 
       private readonly object _sync;
       private int _id;
-
+      
       private int JsonRpsId {
          get {
             int reqId;
@@ -54,17 +56,19 @@ namespace Ditch {
          _webSocket.Open();
       }
 
-      private string SerializeData(params object[] data) {
-         return (data == null) ? "[]" : JsonConvert.SerializeObject(data, _jsonSerializerSettings);
-      }
-
       private string ToJsonRpc(int reqId, string method, params object[] data) {
-         var paramData = SerializeData(data);
+         var paramData = (data == null) ? "[]" : JsonConvert.SerializeObject(data, _jsonSerializerSettings);
          return ToJsonRpc(reqId, method, paramData);
       }
 
       private string ToJsonRpc(int reqId, string method, string paramData) {
          return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
+      }
+
+      public JsonRpcResponse Call(Api api, string operation, params object[] data) {
+         var id = JsonRpsId;
+         var msg = ToJsonRpc(id, "call", (int)api, operation, data);
+         return Execute(id, msg);
       }
 
       public JsonRpcResponse Call(int api, string operation, params object[] data) {
@@ -74,12 +78,17 @@ namespace Ditch {
       }
 
       public JsonRpcResponse<T> Call<T>(int api, string operation, params object[] data) {
-         var resp = Call(api, operation, data);
+         var id = JsonRpsId;
+         var msg = ToJsonRpc(id, "call", api, operation, data);
+         var resp = Execute(id, msg);
          return resp.ToTyped<T>(_jsonSerializerSettings);
       }
 
       public JsonRpcResponse<T> GetRequest<T>(string method, params object[] data) {
-         return GetRequest<T>(method, SerializeData(data));
+         var id = JsonRpsId;
+         var msg = ToJsonRpc(id, method, data);
+         var response = Execute(id, msg);
+         return response.ToTyped<T>(_jsonSerializerSettings);
       }
 
       public JsonRpcResponse<T> GetRequest<T>(string method, string data) {
@@ -90,54 +99,61 @@ namespace Ditch {
       }
 
       private JsonRpcResponse Execute(int id, string msg) {
+         var waiter = new ManualResetEvent(false);
+         lock (_manualResetEventDictionary) {
+            _manualResetEventDictionary.Add(id, waiter);
+         }
+         if (!OpenIfClosed())
+            return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
+
+         _webSocket.Send(msg);
+
+         waiter.WaitOne(Timeout);
+
+         lock (_manualResetEventDictionary) {
+            if (_manualResetEventDictionary.ContainsKey(id))
+               _manualResetEventDictionary.Remove(id);
+            waiter.Dispose();
+         }
+
          JsonRpcResponse response = null;
-         using (var waiter = new ManualResetEvent(false)) {
-            lock (_manualResetEventDictionary) {
-               _manualResetEventDictionary.Add(id, waiter);
-            }
-            OpenIfClosed();
-            _webSocket.Send(msg);
-
-            waiter.WaitOne(Timeout);
-
-            lock (_manualResetEventDictionary) {
-               if (_manualResetEventDictionary.ContainsKey(id))
-                  _manualResetEventDictionary.Remove(id);
-            }
-
-            lock (_responseDictionary) {
-               if (_responseDictionary.ContainsKey(id)) {
-                  response = _responseDictionary[id];
-                  _responseDictionary.Remove(id);
-               }
-            }
-
-            if (response == null) {
-               return new JsonRpcResponse { Error = new ErrorResponse("Execution timeout") };
+         lock (_responseDictionary) {
+            if (_responseDictionary.ContainsKey(id)) {
+               response = _responseDictionary[id];
+               _responseDictionary.Remove(id);
             }
          }
+
+         if (response == null) {
+            return new JsonRpcResponse(new SystemError(ErrorCodes.ResponseTimeoutError));
+         }
+
          return response;
       }
 
-      private void OpenIfClosed() {
+
+      private bool OpenIfClosed() {
          switch (_webSocket.State) {
             case WebSocketState.Closing: {
                   if (_socketCloseEvent.WaitOne(1000)) {
                      _webSocket.Open();
-                     _socketOpenEvent.WaitOne();
+
+                     if (_socketOpenEvent.WaitOne(Timeout)) {
+                        return true;
+                     }
                   }
-                  break;
+                  return false;
                }
             case WebSocketState.Connecting: {
-                  _socketOpenEvent.WaitOne();
-                  break;
+                  return _socketOpenEvent.WaitOne(Timeout);
                }
             case WebSocketState.None:
             case WebSocketState.Closed: {
                   _webSocket.Open();
-                  _socketOpenEvent.WaitOne();
-                  break;
+                  return _socketOpenEvent.WaitOne(Timeout);
                }
+            default:
+               return true;
          }
       }
 

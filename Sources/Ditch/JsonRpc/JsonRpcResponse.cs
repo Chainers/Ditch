@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using Ditch.Errors;
 using Newtonsoft.Json;
 
 namespace Ditch.JsonRpc
@@ -9,13 +9,21 @@ namespace Ditch.JsonRpc
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
         public object Result { get; set; }
 
+        [JsonConverter(typeof(ConcreteTypeConverter<ResponseError>))]
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
-        public ErrorResponse Error { get; set; }
+        public ErrorInfo Error { get; set; }
 
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
         public bool IsError => Error != null;
+
+        public JsonRpcResponse() { }
+
+        public JsonRpcResponse(ErrorInfo systemError)
+        {
+            Error = systemError;
+        }
 
         public static JsonRpcResponse FromString(string obj, JsonSerializerSettings jsonSerializerSettings)
         {
@@ -37,12 +45,25 @@ namespace Ditch.JsonRpc
             if (Result != null)
             {
                 var t = typeof(T);
-                var ti = t.GetTypeInfo();
-
-                if (ti.IsValueType)
-                    rez.Result = (T)Result;
-                else
-                    rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
+                switch (t.Name)
+                {
+                    case "Boolean":
+                    case "Byte":
+                    case "Int16":
+                    case "Int32":
+                    case "Int64":
+                    case "Double":
+                    case "String":
+                        {
+                            rez.Result = (T)Result;
+                            break;
+                        }
+                    default:
+                        {
+                            rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
+                            break;
+                        }
+                }
             }
             return rez;
         }
@@ -57,6 +78,15 @@ namespace Ditch.JsonRpc
         public new static JsonRpcResponse<T> FromString(string obj, JsonSerializerSettings serializerSettings)
         {
             return JsonConvert.DeserializeObject<JsonRpcResponse<T>>(obj, serializerSettings);
+        }
+
+        public JsonRpcResponse() { }
+
+        public JsonRpcResponse(ErrorInfo systemError) : base(systemError) { }
+
+        public JsonRpcResponse(T result)
+        {
+            Result = result;
         }
     }
 }

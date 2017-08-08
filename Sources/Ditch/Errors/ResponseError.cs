@@ -1,50 +1,29 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Ditch.JsonRpc
+namespace Ditch.Errors
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class ErrorResponse
+    public class ResponseError : ErrorInfo
     {
-        [JsonProperty("code")]
-        public long Code { get; set; }
-
-        [JsonProperty("message")]
-        public string Message { get; set; }
-
         [JsonProperty("data")]
-        public ErrorData Data { get; set; }
-
-        public ErrorResponse()
-        {
-        }
-
-        public ErrorResponse(string message)
-        {
-            Message = message;
-        }
+        public DataError Data { get; set; }
     }
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class ErrorData
+    public class DataError : ErrorInfo
     {
-        [JsonProperty("code")]
-        public long Code { get; set; }
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("message")]
-        public string Message { get; set; }
-
         [JsonProperty("stack")]
-        public ErrorDataStack[] Stack { get; set; }
+        public DataStackError[] Stack { get; set; }
     }
 
-    public class ErrorDataStack
+    public class DataStackError
     {
         [JsonProperty("context")]
-        public ErrorDataStackContext Context { get; set; }
+        public DataStackContextError Context { get; set; }
 
         [JsonProperty("format")]
         public string Format { get; set; }
@@ -53,7 +32,7 @@ namespace Ditch.JsonRpc
         public object Data { get; set; }
     }
 
-    public class ErrorDataStackContext
+    public class DataStackContextError
     {
         [JsonProperty("level")]
         public string Level { get; set; }

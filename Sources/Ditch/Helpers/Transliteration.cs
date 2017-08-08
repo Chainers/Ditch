@@ -1,97 +1,143 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Ditch.Helpers
 {
     public class Transliteration
     {
-        //https://en.wikipedia.org/wiki/ISO_9
-        private static readonly Dictionary<char, string> Rules = new Dictionary<char, string>
+        private static readonly Regex ConvertRegex = new Regex(@"[_\s\.*]");
+        private static readonly Regex CleanRegex = new Regex(@"[^a-z0-9-*]");
+        private static readonly Regex ReplyPostfixRegex = new Regex(@"-[0-9*]t[0-9*]z$");
+
+        //https://github.com/GolosChain/tolstoy/blob/master/app/utils/ParsersAndFormatters.js
+        private static readonly string[,] Rules =
         {
-            {'а', @"a"},
-            {'б', @"b"},
-            {'в', @"v"},
-            {'г', @"g"},
-            {'ѓ', @"g"},
-            {'ґ', @"g"},
-            {'д', @"d"},
-            {'е', @"e"},
-            {'ё', @"yo"},
-            {'є', @"ye"},
-            {'ж', @"zh"},
-            {'з', @"z"},
-            {'и', @"i"},
-            {'й', @"j"},
-            {'ї', @"yi"},
-            {'к', @"k"},
-            {'ќ', @"k"},
-            {'л', @"l"},
-            {'љ', @"l"},
-            {'м', @"m"},
-            {'н', @"n"},
-            {'њ', @"n"},
-            {'о', @"o"},
-            {'п', @"p"},
-            {'р', @"r"},
-            {'с', @"s"},
-            {'т', @"t"},
-            {'у', @"u"},
-            {'ў', @"u"},
-            {'ф', @"f"},
-            {'х', @"x"},
-            {'ц', @"cz"},
-            {'ч', @"ch"},
-            {'џ', @"dh"},
-            {'ш', @"sh"},
-            {'щ', @"shh"},
-            {'ы', @"y"},
-            {'э', @"e"},
-            {'ю', @"yu"},
-            {'я', @"ya"},
-            {'ѣ', @"ye"},
-            {'ѳ', @"fh"},
-            {'ѫ', @"о"},
+            {"ые", "yie"},
+            {"щ", "shch"},
+            {"ш", "sh"},
+            {"ч", "ch"},
+            {"ц", "cz"},
+            {"й", "ij"},
+            {"ё", "yo"},
+            {"э", "ye"},
+            {"ю", "yu"},
+            {"я", "ya"},
+            {"х", "kh"},
+            {"ж", "zh"},
+            {"а", "a"},
+            {"б", "b"},
+            {"в", "v"},
+            {"г", "g"},
+            {"д", "d"},
+            {"е", "e"},
+            {"з", "z"},
+            {"и", "i"},
+            {"к", "k"},
+            {"л", "l"},
+            {"м", "m"},
+            {"н", "n"},
+            {"о", "o"},
+            {"п", "p"},
+            {"р", "r"},
+            {"с", "s"},
+            {"т", "t"},
+            {"у", "u"},
+            {"ф", "f"},
+            {"ъ", "xx"},
+            {"ы", "y"},
+            {"ь", "x"},
+            {"ґ", "g"},
+            {"є", "e"},
+            {"і", "i"},
+            {"ї", "i"}
         };
 
-        public static string Convert(string text)
+        /// <summary>
+        /// Transliteration of the Latin alphabet into Cyrillic (Only words with a prefix "ru--")
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToRus(string text)
+        {
+            if (string.IsNullOrEmpty(text) || !text.StartsWith("ru--"))
+                return text;
+
+            text = text.Remove(0, 4);
+
+            for (var i = 0; i < Rules.GetLength(0); i++)
+            {
+                text = text.Replace(Rules[i, 1], Rules[i, 0]);
+                text = text.Replace(Rules[i, 1].ToUpper(), Rules[i, 0].ToUpper());
+            }
+
+            return text;
+        }
+
+        /// <summary>
+        /// Transliteration of the Cyrillic alphabet into Latin
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToEng(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return text;
 
-            if (!text.Any(t => Rules.ContainsKey(t)))
-                return text;
-
-            var sb = new StringBuilder();
-
-            for (var i = 0; i < text.Length; i++)
+            for (var i = 0; i < Rules.GetLength(0); i++)
             {
-                string substitute;
-                if (Rules.TryGetValue(text[i], out substitute))
-                {
-                    var nextChar = (text.Length > (i + 1)) ? text[i + 1] : ' ';
-                    substitute = CheckSpecificRules(substitute, nextChar);
-                    sb.Append(substitute);
-                }
-                else
-                {
-                    sb.Append(text[i]);
-                }
+                text = text.Replace(Rules[i, 0], Rules[i, 1]);
+                text = text.Replace(Rules[i, 0].ToUpper(), Rules[i, 1].ToUpper());
             }
-            return sb.ToString();
+
+            return text;
         }
 
-        private static string CheckSpecificRules(string substitue, char nextCh)
+        /// <summary>
+        /// Uses input text to generate a valid Permlink
+        /// </summary>
+        /// <param name="text">Any text (usually a Title)</param>
+        /// <returns>A formatted string with a postfix (used current date and time)</returns>
+        public static string PreparePermlink(string text)
         {
-            if (substitue.Length != 2 || substitue[1] != 'z')
-                return substitue;
+            text = text.Trim();
+            text = text.ToLower();
+            text = ReplyPostfixRegex.Replace(text, string.Empty);
+            text = ConvertRegex.Replace(text, "-");
+            text = ToEng(text);
+            text = CleanRegex.Replace(text, string.Empty);
+            return $"{text}-{DateTime.UtcNow:yyyyMMddTHHmmssfffZ}";
+        }
 
-            if (nextCh == 'е' || nextCh == 'ё' || nextCh == 'и' || nextCh == 'й' ||
-                nextCh == 'i' || nextCh == 'ы' || nextCh == 'э' || nextCh == 'ю' ||
-                nextCh == 'я' || nextCh == 'ѣ' || nextCh == 'Ѣ' || nextCh == 'ѵ')
-                return substitue.Substring(0, 1);
+        /// <summary>
+        /// Generate a ParentPermlink by author and permlink (also need perform PreparePermlink after PermlinkToParentPermlink)
+        /// </summary>
+        /// <param name="author">Post author</param>
+        /// <param name="permlink">Post permlink</param>
+        /// <returns>A formatted string with a prefix (re-) and postfix (used current date and time)</returns>
+        public static string PermlinkToParentPermlink(string author, string permlink)
+        {
+            permlink = permlink.Trim();
+            author = author.Trim();
+            return $"re-{author}-{permlink}";
+        }
 
-            return substitue;
+        /// <summary>
+        /// Generate a valid tags
+        /// </summary>
+        /// <param name="tags"></param>
+        public static void PrepareTags(string[] tags)
+        {
+            for (var index = 0; index < tags.Length; index++)
+            {
+                var tag = tags[index];
+                tag = tag.Trim();
+                tag = tag.ToLower();
+                var translit = Transliteration.ToEng(tag);
+                tag = translit.Equals(tag) ? translit : $"ru--{translit}";
+                tag = ConvertRegex.Replace(tag, "-");
+                tag = CleanRegex.Replace(tag, string.Empty);
+                tags[index] = tag;
+            }
         }
     }
 }

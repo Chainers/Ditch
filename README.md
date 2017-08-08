@@ -8,8 +8,26 @@ Get:
 * Content
 * GetAccounts
 * GetCustomRequest
-* VerifyAuthority 
-
+* VerifyAuthority
+* GetFollowing
+* GetFollowers
+* LookupAccountNames
+* LookupAccounts
+* GetAccountCount
+* GetAccountBandwidth
+* GetWitnessSchedule
+* GetState
+* GetNextScheduledHardfork
+* GetKeyReferences
+* GetHardforkVersion
+* GetFeedHistory
+* GetCurrentMedianHistoryPrice
+* GetConfig
+* GetChainProperties
+* GetConversionRequests
+* GetAccountHistory
+* GetAccountReferences
+	
 Post:
 * VoteOperation (vote) 
   * UpVoteOperation inherit VoteOperation
@@ -27,7 +45,7 @@ Post:
   
 ## Supported chains:
  * Golos
- * Steemit
+ * Steem
  
 ## Additional features:
  * Transliteration (Cyrillic to Latin)
@@ -39,20 +57,25 @@ Post:
     {
         Chain = ChainManager.GetChainInfo(KnownChains.Steem);
         OperationManager = new OperationManager(Chain.Url, Chain.ChainId, Chain.JsonSerializerSettings);
-        userPrivateKeys = new List<byte[]>
+        YouPrivateKeys = new List<byte[]>
         {
-            Base58.GetBytes(WIF)
+            Base58.GetBytes("5**************************************************") \\WIF
         };        
+        YouLogin = "username";
     }
     
     //Create new post with some beneficiaries
-    var op1 = new PostOperation(parentPermlink, Login, permlink, title, body, jsonMetadata);
-    var op2 = new BeneficiaresOperation(Login, permlink, Chain.SbdSymbol, new Beneficiary(beneficiar, 1000));
-    var responce = _operationManager.BroadcastOberations(userPrivateKeys, op1, op2);
+    var postOp = new PostOperation("parentPermlink", YouLogin, "Title", "Body", "jsonMetadata");
+    var benOp = new BeneficiaresOperation(YouLogin, postOp.Permlink, Chain.SbdSymbol, new Beneficiary("someBeneficiarName", 1000));
+    var responce = _operationManager.BroadcastOberations(YouPrivateKeys, postOp, benOp);
     
     //UpVote
-    var op1 = new UpVoteOperation(Login, author, permlink);
-    var responce = _operationManager.BroadcastOberations(userPrivateKeys, op1);
+    var voteOp = new UpVoteOperation(YouLogin, "someUserName", "somePermlink");
+    var responce = _operationManager.BroadcastOberations(YouPrivateKeys, voteOp);
+    
+    //Follow
+    var followOp = new FollowOperation(YouLogin, "someUserName", FollowType.Blog, YouLogin);
+    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, followOp);
 
 ## Sources
 
