@@ -12,7 +12,7 @@ namespace Ditch.Operations.Post
         }
 
         public PostOperation(string parentPermlink, string author, string title, string body, string jsonMetadata)
-            : base(string.Empty, parentPermlink, author, Transliteration.ToEng(title), title, body, jsonMetadata)
+            : base(string.Empty, parentPermlink, author, Transliteration.TitleToPermlink(title), title, body, jsonMetadata)
         {
         }
     }

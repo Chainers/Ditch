@@ -5,9 +5,8 @@ namespace Ditch.Helpers
 {
     public class Transliteration
     {
-        private static readonly Regex ConvertRegex = new Regex(@"[_\s\.*]");
-        private static readonly Regex CleanRegex = new Regex(@"[^a-z0-9-*]");
-        private static readonly Regex ReplyPostfixRegex = new Regex(@"-[0-9*]t[0-9*]z$");
+        private static readonly Regex WordDelimiters = new Regex(@"[_\s\.]*");
+        private static readonly Regex PermlinkNotSupportedCharacters = new Regex(@"[^a-z0-9-*]");
 
         //https://github.com/GolosChain/tolstoy/blob/master/app/utils/ParsersAndFormatters.js
         private static readonly string[,] Rules =
@@ -97,27 +96,26 @@ namespace Ditch.Helpers
         /// </summary>
         /// <param name="text">Any text (usually a Title)</param>
         /// <returns>A formatted string with a postfix (used current date and time)</returns>
-        public static string PreparePermlink(string text)
+        public static string TitleToPermlink(string text)
         {
             text = text.Trim();
             text = text.ToLower();
-            text = ReplyPostfixRegex.Replace(text, string.Empty);
-            text = ConvertRegex.Replace(text, "-");
+            text = WordDelimiters.Replace(text, "-");
             text = ToEng(text);
-            text = CleanRegex.Replace(text, string.Empty);
+            text = PermlinkNotSupportedCharacters.Replace(text, string.Empty);
             return $"{text}-{DateTime.UtcNow:yyyyMMddTHHmmssfffZ}";
         }
 
         /// <summary>
-        /// Generate a ParentPermlink by author and permlink (also need perform PreparePermlink after PermlinkToParentPermlink)
+        /// Generate a ParentPermlink by author and permlink
         /// </summary>
         /// <param name="author">Post author</param>
         /// <param name="permlink">Post permlink</param>
         /// <returns>A formatted string with a prefix (re-) and postfix (used current date and time)</returns>
         public static string PermlinkToParentPermlink(string author, string permlink)
         {
-            permlink = permlink.Trim();
-            author = author.Trim();
+            author = WordDelimiters.Replace(author, "-");
+            author = PermlinkNotSupportedCharacters.Replace(author, string.Empty);
             return $"re-{author}-{permlink}";
         }
 
@@ -134,8 +132,8 @@ namespace Ditch.Helpers
                 tag = tag.ToLower();
                 var translit = Transliteration.ToEng(tag);
                 tag = translit.Equals(tag) ? translit : $"ru--{translit}";
-                tag = ConvertRegex.Replace(tag, "-");
-                tag = CleanRegex.Replace(tag, string.Empty);
+                tag = WordDelimiters.Replace(tag, "-");
+                tag = PermlinkNotSupportedCharacters.Replace(tag, string.Empty);
                 tags[index] = tag;
             }
         }
