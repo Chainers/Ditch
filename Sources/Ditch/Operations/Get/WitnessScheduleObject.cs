@@ -14,7 +14,7 @@ namespace Ditch.Operations.Get
 
         // bdType : id_type
         [JsonProperty("id")]
-        public object Id {get; set;}
+        public object Id { get; set; }
 
         // bdType : uint128
         [JsonProperty("current_virtual_time")]
@@ -26,7 +26,7 @@ namespace Ditch.Operations.Get
 
         // bdType : array<account_name_type,steemit_max_witnesses>
         [JsonProperty("current_shuffled_witnesses")]
-        public object[] CurrentShuffledWitnesses {get; set;}
+        public object CurrentShuffledWitnesses { get; set; }
 
         // bdType : uint8_t | = 1;
         [JsonProperty("num_scheduled_witnesses")]

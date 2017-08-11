@@ -23,8 +23,8 @@ namespace Ditch.Tests
         {
             _login = new Dictionary<string, string>()
             {
-                {"Steem", "joseph.kalu"},
-                {"Golos", "joseph.kalu"}
+                {"Steem", "UserLogin"},
+                {"Golos", "UserLogin"}
             };
 
             _chain = new Dictionary<string, ChainInfo>();

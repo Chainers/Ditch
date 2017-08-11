@@ -255,7 +255,7 @@ namespace CppToCsharpConverter.Converters
 
         private string GetKnownCompositType(string line)
         {
-            if (line.StartsWith("map<"))
+            if (line.StartsWith("map<") || line.StartsWith("array<"))
                 return "object";
 
             if (IsArray(line))
@@ -282,8 +282,7 @@ namespace CppToCsharpConverter.Converters
         {
             return line.StartsWith("set<")
                    | line.StartsWith("vector<")
-                   | line.StartsWith("deque<")
-                   | line.StartsWith("array<");
+                   | line.StartsWith("deque<");
         }
 
         private string Unpack(string line, int zIndex)
