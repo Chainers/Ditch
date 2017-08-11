@@ -22,8 +22,7 @@ namespace Ditch
 
         private readonly object _sync;
         private int _id;
-
-
+        
         private int JsonRpsId
         {
             get
@@ -37,6 +36,11 @@ namespace Ditch
                 return reqId;
             }
         }
+
+        /// <summary>
+        /// Timeout in milliseconds waiting for WebSocket request to execute. Default is 30000.
+        /// </summary>
+        public int Timeout { get; set; } = 30000;
 
         public WebSocketManager(string url, JsonSerializerSettings jsonSerializerSettings)
         {
@@ -108,23 +112,23 @@ namespace Ditch
 
         private JsonRpcResponse Execute(int id, string msg)
         {
-            var vaiter = new ManualResetEvent(false);
+            var waiter = new ManualResetEvent(false);
             lock (_manualResetEventDictionary)
             {
-                _manualResetEventDictionary.Add(id, vaiter);
+                _manualResetEventDictionary.Add(id, waiter);
             }
             if (!OpenIfClosed())
                 return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
 
             _webSocket.Send(msg);
 
-            vaiter.WaitOne(30000);
+            waiter.WaitOne(Timeout);
 
             lock (_manualResetEventDictionary)
             {
                 if (_manualResetEventDictionary.ContainsKey(id))
                     _manualResetEventDictionary.Remove(id);
-                vaiter.Dispose();
+                waiter.Dispose();
             }
 
             JsonRpcResponse response = null;
@@ -156,7 +160,7 @@ namespace Ditch
                         {
                             _webSocket.Open();
 
-                            if (_socketOpenEvent.WaitOne(30000))
+                            if (_socketOpenEvent.WaitOne(Timeout))
                             {
                                 return true;
                             }
@@ -165,13 +169,13 @@ namespace Ditch
                     }
                 case WebSocketState.Connecting:
                     {
-                        return _socketOpenEvent.WaitOne(30000);
+                        return _socketOpenEvent.WaitOne(Timeout);
                     }
                 case WebSocketState.None:
                 case WebSocketState.Closed:
                     {
                         _webSocket.Open();
-                        return _socketOpenEvent.WaitOne(30000);
+                        return _socketOpenEvent.WaitOne(Timeout);
                     }
                 default:
                     return true;
