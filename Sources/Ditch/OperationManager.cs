@@ -75,7 +75,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] testOps)
         {
-            var prop = DynamicGlobalPropertiesApiObj.Default;
+            var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, testOps);
             return _webSocketManager.GetRequest<bool>("verify_authority", transaction);
         }
@@ -115,14 +115,14 @@ namespace Ditch
             return _webSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", author, permlink);
         }
 
-        public Transaction CreateTransaction(DynamicGlobalPropertiesApiObj propertiesApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
+        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
                 ChainId = _chainId,
-                RefBlockNum = (ushort)(propertiesApiObj.HeadBlockNumber & 0xffff),
-                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertiesApiObj.HeadBlockId), 4),
-                Expiration = propertiesApiObj.Time.AddSeconds(30),
+                RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
+                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
+                Expiration = propertyApiObj.Time.AddSeconds(30),
                 BaseOperations = operations
             };
 
@@ -147,9 +147,9 @@ namespace Ditch
         /// @see \c get_global_properties() for less-frequently changing properties
         /// </summary>
         /// <returns>the dynamic global properties</returns>
-        public JsonRpcResponse<DynamicGlobalPropertiesApiObj> GetDynamicGlobalProperties()
+        public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties()
         {
-            return _webSocketManager.GetRequest<DynamicGlobalPropertiesApiObj>(DynamicGlobalPropertiesApiObj.Reques);
+            return _webSocketManager.GetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties");
         }
 
         #region follow_api
@@ -166,7 +166,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<FollowApiObj[]>("call", FollowApiObj.Api, "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+            return _webSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<FollowApiObj[]>("call", FollowApiObj.Api, "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return _webSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
         }
 
         #endregion
@@ -358,9 +358,9 @@ namespace Ditch
         /// </summary>
         /// <param name="owner"></param>
         /// <returns></returns>
-        public JsonRpcResponse<ConvertRequest[]> GetConversionRequests(string owner)
+        public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner)
         {
-            return _webSocketManager.Call<ConvertRequest[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
+            return _webSocketManager.Call<ConvertRequestApiObj[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
         }
 
         #endregion database_api

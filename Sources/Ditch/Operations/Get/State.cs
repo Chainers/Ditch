@@ -5,6 +5,7 @@ namespace Ditch.Operations.Get
     /// <summary>
     /// state
     /// steem-0.19.1\libraries\app\include\steemit\app\state.hpp
+    /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class State
@@ -16,7 +17,7 @@ namespace Ditch.Operations.Get
 
         // bdType : dynamic_global_property_api_obj
         [JsonProperty("props")]
-        public DynamicGlobalPropertiesApiObj Props { get; set; }
+        public DynamicGlobalPropertyApiObj Props { get; set; }
 
         // bdType : category_index
         [JsonProperty("category_idx")]
@@ -24,7 +25,7 @@ namespace Ditch.Operations.Get
 
         // bdType : tag_index
         [JsonProperty("tag_idx")]
-        public TagIdx TagIdx { get; set; }
+        public object TagIdx { get; set; }
 
         // bdType : map<string,discussion_index>
         /// <summary>
@@ -69,7 +70,7 @@ namespace Ditch.Operations.Get
 
         // bdType : price
         [JsonProperty("feed_price")]
-        public object FeedPrice { get; set; }
+        public Price FeedPrice { get; set; }
 
         // bdType : string
         [JsonProperty("error")]

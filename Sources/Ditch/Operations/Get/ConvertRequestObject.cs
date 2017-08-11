@@ -9,7 +9,7 @@ namespace Ditch.Operations.Get
     /// steem-0.19.1\libraries\chain\include\steemit\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class ConvertRequest
+    public class ConvertRequestObject
     {
 
         // bdType : id_type
