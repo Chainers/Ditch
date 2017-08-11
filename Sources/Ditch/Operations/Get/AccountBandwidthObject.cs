@@ -1,40 +1,15 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Ditch.Operations.Get
 {
-
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum BandwidthType
-    {
-        /// <summary>
-        /// Rate limiting posting reward eligibility over time
-        /// </summary>
-        [JsonProperty("post")]
-        Post,
-
-        /// <summary>
-        /// Rate limiting for all forum related actins
-        /// </summary>
-        [JsonProperty("forum")]
-        Forum,
-
-        /// <summary>
-        /// Rate limiting for all other actions
-        /// </summary>
-        [JsonProperty("market")]
-        Market
-    }
-
-
     /// <summary>
     /// account_bandwidth_object
     /// golos-0.16.3\libraries\chain\include\steemit\chain\account_object.hpp
     /// steem-0.19.1\libraries\plugins\witness\include\steemit\witness\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class AccountBandwidthApiObj
+    public class AccountBandwidthObject
     {
 
         // bdType : id_type

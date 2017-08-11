@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Ditch.Operations;
@@ -51,7 +50,7 @@ namespace Ditch.Tests
                     return null;
             }
         }
-        
+
         #region Get requests
 
 
@@ -62,7 +61,7 @@ namespace Ditch.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject>(DynamicGlobalPropertiesApiObj.Reques);
+            var obj = Manager(name).CustomGetRequest<JObject>("get_dynamic_global_properties");
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -104,7 +103,7 @@ namespace Ditch.Tests
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("call", FollowApiObj.Api, "get_followers", new object[] { _login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("call", "follow_api", "get_followers", new object[] { _login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -123,7 +122,7 @@ namespace Ditch.Tests
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("call", FollowApiObj.Api, "get_following", new object[] { _login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("call", "follow_api", "get_following", new object[] { _login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 

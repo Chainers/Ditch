@@ -25,14 +25,14 @@ namespace Ditch.Operations.Get
 
         // bdType : asset | = asset(0, sbd_symbol); 
         /// <summary>
-        /// <sbd
+        /// sbd
         /// </summary>
         [JsonProperty("pending_payout_value")]
         public Money PendingPayoutValue { get; set; }
 
         // bdType : asset | = asset(0, sbd_symbol); 
         /// <summary>
-        /// <sbd including replies
+        /// sbd including replies
         /// </summary>
         [JsonProperty("total_pending_payout_value")]
         public Money TotalPendingPayoutValue { get; set; }
@@ -43,7 +43,7 @@ namespace Ditch.Operations.Get
 
         // bdType : vector<string>
         /// <summary>
-        /// <author/slug mapping
+        /// author/slug mapping
         /// </summary>
         [JsonProperty("replies")]
         public string[] Replies { get; set; }

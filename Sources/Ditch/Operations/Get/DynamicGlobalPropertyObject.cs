@@ -10,12 +10,8 @@ namespace Ditch.Operations.Get
     /// steem-0.19.1\libraries\chain\include\steemit\chain\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class DynamicGlobalPropertiesApiObj
+    public class DynamicGlobalPropertyObject
     {
-        public static readonly DynamicGlobalPropertiesApiObj Default = new DynamicGlobalPropertiesApiObj { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
-
-        public const string Reques = "get_dynamic_global_properties";
-
         // bdType : id_type
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -54,7 +50,7 @@ namespace Ditch.Operations.Get
 
         // bdType : asset | = asset(0, steem_symbol); 
         /// <summary>
-        /// <total asset held in confidential balances
+        /// total asset held in confidential balances
         /// </summary>
         [JsonProperty("confidential_supply")]
         public Money ConfidentialSupply { get; set; }
@@ -65,7 +61,7 @@ namespace Ditch.Operations.Get
 
         // bdType : asset | = asset(0, sbd_symbol); 
         /// <summary>
-        /// <total asset held in confidential balances
+        /// total asset held in confidential balances
         /// </summary>
         [JsonProperty("confidential_sbd_supply")]
         public Money ConfidentialSbdSupply { get; set; }
@@ -120,7 +116,7 @@ namespace Ditch.Operations.Get
 
         // bdType : uint8_t | = 0; 
         /// <summary>
-        /// <divide by 128 to compute participation percentage
+        /// divide by 128 to compute participation percentage
         /// </summary>
         [JsonProperty("participation_count")]
         public byte ParticipationCount { get; set; }
