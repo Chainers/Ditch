@@ -3,22 +3,32 @@ using Newtonsoft.Json;
 
 namespace Ditch.Operations.Get
 {
+    /// <summary>
+    /// convert_request_object
+    /// golos-0.16.3\libraries\chain\include\steemit\chain\steem_objects.hpp
+    /// steem-0.19.1\libraries\chain\include\steemit\chain\steem_objects.hpp
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class ConvertRequest
     {
+
+        // bdType : id_type
         [JsonProperty("id")]
-        public UInt64 Id { get; set; }
+        public object Id { get; set; }
 
+        // bdType : account_name_type
         [JsonProperty("owner")]
-        public string Owner { get; set; }
+        public object Owner { get; set; }
 
+        // bdType : uint32_t | = 0; 
+        /// <summary>
+        /// id set by owner,the owner,requestid pair must be unique
+        /// </summary>
         [JsonProperty("requestid")]
         public UInt32 Requestid { get; set; }
 
+        // bdType : asset
         [JsonProperty("amount")]
         public Money Amount { get; set; }
-
-        [JsonProperty("conversion_date")]
-        public DateTime ConversionDate { get; set; }
     }
 }

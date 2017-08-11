@@ -41,9 +41,9 @@ namespace Ditch.Operations.Post
         public CommentOperation(string parentAuthor, string parentPermlink, string author, string permlink, string title, string body, string jsonMetadata)
         {
             ParentAuthor = parentAuthor;
-            ParentPermlink = Transliteration.PreparePermlink(parentPermlink);
+            ParentPermlink = parentPermlink;
             Author = author;
-            Permlink = Transliteration.PreparePermlink(permlink);
+            Permlink = permlink;
             Title = title;
             Body = body;
             JsonMetadata = jsonMetadata;

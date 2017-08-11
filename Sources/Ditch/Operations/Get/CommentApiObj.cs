@@ -1,111 +1,160 @@
 ﻿using System;
+using Ditch.Operations.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.Operations.Get
 {
+    /// <summary>
+    /// comment_api_obj
+    /// golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp
+    /// steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class CommentApi //comment_api_obj *https://github.com/steemit/steem/blob/master/libraries/app/include/steemit/app/steem_api_objects.hpp
+    public class CommentApiObj
     {
+
+        // bdType : comment_id_type
         [JsonProperty("id")]
         public UInt64 Id { get; set; }
 
+        // bdType : string
         [JsonProperty("category")]
         public string Category { get; set; }
 
+        // bdType : account_name_type
         [JsonProperty("parent_author")]
         public string ParentAuthor { get; set; }
 
+        // bdType : string
         [JsonProperty("parent_permlink")]
         public string ParentPermlink { get; set; }
 
+        // bdType : account_name_type
         [JsonProperty("author")]
         public string Author { get; set; }
 
+        // bdType : string
         [JsonProperty("permlink")]
         public string Permlink { get; set; }
 
+        // bdType : string
         [JsonProperty("title")]
         public string Title { get; set; }
 
+        // bdType : string
         [JsonProperty("body")]
         public string Body { get; set; }
 
+        // bdType : string
         [JsonProperty("json_metadata")]
         public string JsonMetadata { get; set; }
 
+        // bdType : time_point_sec
         [JsonProperty("last_update")]
         public DateTime LastUpdate { get; set; }
 
+        // bdType : time_point_sec
         [JsonProperty("created")]
         public DateTime Created { get; set; }
 
+        // bdType : time_point_sec
         [JsonProperty("active")]
         public DateTime Active { get; set; }
 
+        // bdType : time_point_sec
         [JsonProperty("last_payout")]
         public DateTime LastPayout { get; set; }
 
+        // bdType : uint8_t | = 0;
         [JsonProperty("depth")]
-        public UInt16 Depth { get; set; }
+        public byte Depth { get; set; }
 
+        // bdType : uint32_t | = 0;
         [JsonProperty("children")]
         public UInt32 Children { get; set; }
 
+        // bdType : uint128_t
+        [JsonProperty("children_rshares2")]
+        public string ChildrenRshares2 { get; set; }
+
+        // bdType : share_type
         [JsonProperty("net_rshares")]
-        public long NetRshares { get; set; }
+        public object NetRshares { get; set; }
 
+        // bdType : share_type
         [JsonProperty("abs_rshares")]
-        public long AbsRshares { get; set; }
+        public object AbsRshares { get; set; }
 
+        // bdType : share_type
         [JsonProperty("vote_rshares")]
-        public long VoteRshares { get; set; }
+        public object VoteRshares { get; set; }
 
+        // bdType : share_type
         [JsonProperty("children_abs_rshares")]
-        public long ChildrenAbsRshares { get; set; }
+        public object ChildrenAbsRshares { get; set; }
 
+        // bdType : time_point_sec
         [JsonProperty("cashout_time")]
         public DateTime CashoutTime { get; set; }
 
+        // bdType : time_point_sec
         [JsonProperty("max_cashout_time")]
         public DateTime MaxCashoutTime { get; set; }
 
+        // bdType : uint64_t | = 0;
         [JsonProperty("total_vote_weight")]
-        public ulong TotalVoteWeight { get; set; }
+        public UInt64 TotalVoteWeight { get; set; }
 
+        // bdType : uint16_t | = 0;
         [JsonProperty("reward_weight")]
-        public long RewardWeight { get; set; }
+        public UInt16 RewardWeight { get; set; }
 
+        // bdType : asset
         [JsonProperty("total_payout_value")]
         public Money TotalPayoutValue { get; set; }
 
+        // bdType : asset
         [JsonProperty("curator_payout_value")]
         public Money CuratorPayoutValue { get; set; }
 
+        // bdType : share_type
         [JsonProperty("author_rewards")]
-        public long AuthorRewards { get; set; }
+        public object AuthorRewards { get; set; }
 
+        // bdType : int32_t | = 0;
         [JsonProperty("net_votes")]
         public Int32 NetVotes { get; set; }
 
+        // bdType : comment_id_type
         [JsonProperty("root_comment")]
-        public long RootComment { get; set; }
+        public UInt64 RootComment { get; set; }
 
+        // bdType : comment_mode
+        [JsonProperty("mode")]
+        public CommentMode Mode { get; set; }
+
+        // bdType : asset
         [JsonProperty("max_accepted_payout")]
-        public string MaxAcceptedPayout { get; set; }
+        public Money MaxAcceptedPayout { get; set; }
 
+        // bdType : uint16_t | = 0;
         [JsonProperty("percent_steem_dollars")]
         public UInt16 PercentSteemDollars { get; set; }
 
+        // bdType : bool | = false;
         [JsonProperty("allow_replies")]
         public bool AllowReplies { get; set; }
 
+        // bdType : bool | = false;
         [JsonProperty("allow_votes")]
         public bool AllowVotes { get; set; }
 
+        // bdType : bool | = false;
         [JsonProperty("allow_curation_rewards")]
         public bool AllowCurationRewards { get; set; }
 
+        // bdType : vector<beneficiary_route_type>
         [JsonProperty("beneficiaries")]
-        public object[] Beneficiaries { get; set; } //bip::vector< beneficiary_route_type, allocator< beneficiary_route_type > > beneficiaries;
+        public object[] Beneficiaries { get; set; }
     }
 }

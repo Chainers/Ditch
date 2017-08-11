@@ -1,4 +1,6 @@
-﻿namespace Ditch.Operations.Post
+﻿using Ditch.Operations.Enums;
+
+namespace Ditch.Operations.Post
 {
     /// <summary>
     /// Unfollow some author
@@ -13,6 +15,6 @@
         /// <param name="requiredPostingAuths"></param>
         /// <returns></returns>
         public UnfollowOperation(string login, string author, params string[] requiredPostingAuths)
-            : base(login, author, FollowType.Unfollow, requiredPostingAuths) { }
+            : base(login, author, new FollowType[0], requiredPostingAuths) { }
     }
 }
