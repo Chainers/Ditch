@@ -363,6 +363,146 @@ namespace Ditch
             return _webSocketManager.Call<ConvertRequestApiObj[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
         }
 
+
+        /// <summary>
+        /// 
+        /// Возращает список меток(тэгов) включающие словосочетания
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", after, limit);
+        }
+
+        /// <summary>
+        /// Retrieve a block header
+        /// Возвращает все данные о блоке
+        /// </summary>
+        /// <param name="blockNum">Height of the block whose header should be returned</param>
+        /// <returns>header of the referenced block, or null if no matching block was found</returns>
+        public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum)
+        {
+            return _webSocketManager.GetRequest<BlockHeader>("get_block_header", blockNum);
+        }
+
+        /// <summary>
+        /// Retrieve a full, signed block
+        /// Возвращает все данные о блоке включая транзакции
+        /// </summary>
+        /// <param name="blockNum">Height of the block to be returned</param>
+        /// <returns>the referenced block, or null if no matching block was found</returns>
+        public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum)
+        {
+            return _webSocketManager.GetRequest<SignedBlockApiObj>("get_block", blockNum);
+        }
+
+
+        /// <summary>
+        /// Get sequence of operations included/generated within a particular block
+        /// Возвращает все операции в блоке, если параметр 'onlyVirtual' true то возвращает только виртуальные операции
+        /// </summary>
+        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned</param>
+        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true)</param>
+        /// <returns>sequence of operations included/generated within the block</returns>
+        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual = true)
+        {
+            return _webSocketManager.GetRequest<AppliedOperation[]>("get_ops_in_block", blockNum, onlyVirtual);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_best_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_active_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_recent_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает имя пользователя если он изменил право собственности на блокчейн
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(params string[] account)
+        {
+            return _webSocketManager.GetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", account);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает true если пользователь в статусе на восстановление.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(params string[] account)
+        {
+            return _webSocketManager.GetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", account);
+        }
+
+
+        /// <summary>
+        /// 
+        /// Возвращает операции реализованные с помощью посредничества.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="escrowId"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId)
+        {
+            return _webSocketManager.GetRequest<EscrowApiObj>("get_escrow", from, escrowId);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает все переводы на счету пользователя в зависимости от типа
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type)
+        {
+            return _webSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", account, type.ToString().ToLower());
+        }
+
         #endregion database_api
 
         #region wallet api

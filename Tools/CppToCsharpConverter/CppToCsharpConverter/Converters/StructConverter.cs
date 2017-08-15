@@ -23,6 +23,11 @@ namespace CppToCsharpConverter.Converters
             {"id_type", "object"},
             {"feed_history_id_type", "object"},
             {"transaction_id_type", "object"},
+            {"block_id_type", "object"}, //ripemd160
+            {"checksum_type", "object"}, //ripemd160
+            {"category_id_type", "object"},
+            {"owner_authority_history_id_type", "object"},
+            {"account_recovery_request_id_type", "object"},
             //system
             {"string", "string"},
             {"time_point_sec", "DateTime"},
@@ -67,6 +72,15 @@ namespace CppToCsharpConverter.Converters
             {"witness_schedule_object", "WitnessScheduleObject"},
             {"witness_schedule_api_obj", "WitnessScheduleApiObj"},
             {"vote_state", "VoteState"},
+            {"tag_api_obj", "TagApiObj"},
+            {"signed_block_api_obj", "SignedBlockApiObj"},
+            {"signed_block", "SignedBlock"},
+            {"signed_block_header", "SignedBlockHeader"},
+            {"block_header", "BlockHeader"},
+            {"owner_authority_history_api_obj", "OwnerAuthorityHistoryApiObj"},
+            {"account_recovery_request_api_obj", "AccountRecoveryRequestApiObj"},
+            {"escrow_object", "EscrowObject"},
+            {"escrow_api_obj", "EscrowApiObj"},
             //other
             {"account_name_type", "string"},
             {"version", "string"},
@@ -78,6 +92,9 @@ namespace CppToCsharpConverter.Converters
             {"category_index", "object"},
             {"tag_index", "object"},
             {"discussion_index", "object"},
+            {"block_header_extensions_type", "object"},
+            {"signed_transaction", "object"},
+            {"signature_type", "object"},
         };
 
         private class ParsedPropertyInfo

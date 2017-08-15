@@ -4,8 +4,8 @@ The essence of the library is to generate a transaction according to the require
 ## Supported operations
 
 Get:
-* DynamicGlobalProperties
-* Content
+* GetDynamicGlobalProperties
+* GetContent
 * GetAccounts
 * GetCustomRequest
 * VerifyAuthority
@@ -27,6 +27,18 @@ Get:
 * GetConversionRequests
 * GetAccountHistory
 * GetAccountReferences
+* GetTrendingTags
+* GetBlockHeader
+* GetBlock
+* GetOpsInBlock
+* GetTrendingCategories
+* GetBestCategories
+* GetActiveCategories
+* GetRecentCategories
+* GetOwnerHistory
+* GetRecoveryRequest
+* GetEscrow
+* GetWithdrawRoutes
 	
 Post:
 * VoteOperation (vote) 
