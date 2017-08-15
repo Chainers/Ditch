@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Ditch.Operations;
 using Ditch.Operations.Enums;
 using Ditch.Operations.Get;
@@ -14,46 +12,6 @@ namespace Ditch.Tests
     [TestFixture]
     public class OperationManagerGetTest : BaseTest
     {
-        private readonly Dictionary<string, string> _login;
-        private readonly Dictionary<string, ChainInfo> _chain;
-        private readonly OperationManager _steem;
-        private readonly OperationManager _golos;
-
-        public OperationManagerGetTest()
-        {
-            _login = new Dictionary<string, string>()
-            {
-                {"Steem", "UserLogin"},
-                {"Golos", "UserLogin"}
-            };
-
-            _chain = new Dictionary<string, ChainInfo>();
-
-            var steemChainInfo = ChainManager.GetChainInfo(KnownChains.Steem);
-            _chain.Add("Steem", steemChainInfo);
-            _steem = new OperationManager(steemChainInfo.Url, steemChainInfo.ChainId);
-
-            var golosChainInfo = ChainManager.GetChainInfo(KnownChains.Golos);
-            _chain.Add("Golos", golosChainInfo);
-            _golos = new OperationManager(golosChainInfo.Url, golosChainInfo.ChainId);
-        }
-
-        private OperationManager Manager(string name)
-        {
-            switch (name)
-            {
-                case "Steem":
-                    return _steem;
-                case "Golos":
-                    return _golos;
-                default:
-                    return null;
-            }
-        }
-
-        #region Get requests
-
-
         [Test, Sequential]
         public void get_dynamic_global_properties([Values("Steem", "Golos")] string name)
         {
@@ -93,17 +51,17 @@ namespace Ditch.Tests
         public void get_followers([Values("Steem", "Golos")] string name)
         {
             ushort count = 3;
-            var resp = Manager(name).GetFollowers(_login[name], string.Empty, FollowType.blog, count);
+            var resp = Manager(name).GetFollowers(Login[name], string.Empty, FollowType.blog, count);
             Assert.IsFalse(resp.IsError);
             Assert.IsTrue(resp.Result.Length <= count);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            var respNext = Manager(name).GetFollowers(_login[name], resp.Result.Last().Follower, FollowType.blog, count);
+            var respNext = Manager(name).GetFollowers(Login[name], resp.Result.Last().Follower, FollowType.blog, count);
             Assert.IsFalse(respNext.IsError);
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("call", "follow_api", "get_followers", new object[] { _login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("call", "follow_api", "get_followers", new object[] { Login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -111,18 +69,18 @@ namespace Ditch.Tests
         public void get_following([Values("Steem", "Golos")] string name)
         {
             ushort count = 3;
-            var resp = Manager(name).GetFollowing(_login[name], string.Empty, FollowType.blog, count);
+            var resp = Manager(name).GetFollowing(Login[name], string.Empty, FollowType.blog, count);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length <= count);
 
-            var respNext = Manager(name).GetFollowing(_login[name], resp.Result.Last().Following, FollowType.blog, count);
+            var respNext = Manager(name).GetFollowing(Login[name], resp.Result.Last().Following, FollowType.blog, count);
             Assert.IsFalse(respNext.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("call", "follow_api", "get_following", new object[] { _login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("call", "follow_api", "get_following", new object[] { Login[name], resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -131,12 +89,12 @@ namespace Ditch.Tests
         {
             ushort count = 3;
             var dt = new DateTime(2017, 7, 1);
-            var resp = Manager(name).GetDiscussionsByAuthorBeforeDate(_login[name], string.Empty, dt, count);
+            var resp = Manager(name).GetDiscussionsByAuthorBeforeDate(Login[name], string.Empty, dt, count);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length <= count);
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("get_discussions_by_author_before_date", _login[name], resp.Result[count - 1].Permlink, dt, count);
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_discussions_by_author_before_date", Login[name], resp.Result[count - 1].Permlink, dt, count);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -233,7 +191,7 @@ namespace Ditch.Tests
         [Test]
         public void get_key_references([Values("Steem", "Golos")] string name)
         {
-            var acResp = Manager(name).GetAccounts(_login[name]);
+            var acResp = Manager(name).GetAccounts(Login[name]);
             Assert.IsFalse(acResp.IsError);
             var ac = acResp.Result;
             Assert.IsTrue(ac.Length == 1);
@@ -247,19 +205,19 @@ namespace Ditch.Tests
         [Test]
         public void get_accounts([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).GetAccounts(_login[name]);
+            var resp = Manager(name).GetAccounts(Login[name]);
 
             Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("get_accounts", new object[] { new[] { _login[name] } });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_accounts", new object[] { new[] { Login[name] } });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
         public void get_account_references([Values("Steem", "Golos")] string name)
         {
-            var ac = Manager(name).GetAccounts(_login[name]);
+            var ac = Manager(name).GetAccounts(Login[name]);
             Assert.IsFalse(ac.IsError);
 
             var resp = Manager(name).GetAccountReferences(ac.Result[0].Id);
@@ -271,12 +229,12 @@ namespace Ditch.Tests
         [Test]
         public void lookup_account_names([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).LookupAccountNames(_login[name]);
+            var resp = Manager(name).LookupAccountNames(Login[name]);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("lookup_account_names", new object[] { new[] { _login[name] } });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("lookup_account_names", new object[] { new[] { Login[name] } });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -284,7 +242,7 @@ namespace Ditch.Tests
         public void lookup_accounts([Values("Steem", "Golos")] string name)
         {
             UInt32 limit = 3;
-            var resp = Manager(name).LookupAccounts(_login[name], limit);
+            var resp = Manager(name).LookupAccounts(Login[name], limit);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -303,12 +261,12 @@ namespace Ditch.Tests
         [Test]
         public void get_conversion_requests([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).GetConversionRequests(_login[name]);
+            var resp = Manager(name).GetConversionRequests(Login[name]);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("call", (int)Api.DefaultApi, "get_conversion_requests", _login[name]);
+            var obj = Manager(name).CustomGetRequest<JObject[]>("call", (int)Api.DefaultApi, "get_conversion_requests", Login[name]);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -317,7 +275,7 @@ namespace Ditch.Tests
         {
             UInt64 from = 3;
             UInt32 limit = 3;
-            var resp = Manager(name).GetAccountHistory(_login[name], from, limit);
+            var resp = Manager(name).GetAccountHistory(Login[name], from, limit);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -326,109 +284,166 @@ namespace Ditch.Tests
         [Test]
         public void get_owner_history([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).CustomGetRequest<object>("get_owner_history", _login[name]);
+            var resp = Manager(name).GetOwnerHistory(Login[name]);
             Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Result);
             Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_owner_history", Login[name]);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
         public void get_recovery_request([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).CustomGetRequest<object>("get_recovery_request", _login[name]);
+            var resp = Manager(name).GetRecoveryRequest(Login[name]);
             Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Result);
             Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_recovery_request", Login[name]);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
         public void get_withdraw_routes([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).CustomGetRequest<object>("get_withdraw_routes", _login[name], "incoming");
+            var resp = Manager(name).GetWithdrawRoutes(Login[name], WithdrawRouteType.Incoming);
             Console.WriteLine(resp.Error);
             Console.WriteLine(resp.Result);
             Assert.IsFalse(resp.IsError);
 
-            resp = Manager(name).CustomGetRequest<object>("get_withdraw_routes", _login[name], "outgoing");
+            resp = Manager(name).GetWithdrawRoutes(Login[name], WithdrawRouteType.Outgoing);
             Console.WriteLine(resp.Error);
             Console.WriteLine(resp.Result);
             Assert.IsFalse(resp.IsError);
 
-            resp = Manager(name).CustomGetRequest<object>("get_withdraw_routes", _login[name], "all");
+            resp = Manager(name).GetWithdrawRoutes(Login[name], WithdrawRouteType.All);
             Console.WriteLine(resp.Error);
             Console.WriteLine(resp.Result);
             Assert.IsFalse(resp.IsError);
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_withdraw_routes", Login[name], "all");
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
         public void get_account_bandwidth([Values("Steem", "Golos")] string name)
         {
-            var resp = Manager(name).GetAccountBandwidth(_login[name], BandwidthType.Post);
+            var resp = Manager(name).GetAccountBandwidth(Login[name], BandwidthType.Post);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            resp = Manager(name).GetAccountBandwidth(_login[name], BandwidthType.Market);
+            resp = Manager(name).GetAccountBandwidth(Login[name], BandwidthType.Market);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            resp = Manager(name).GetAccountBandwidth(_login[name], BandwidthType.Forum);
+            resp = Manager(name).GetAccountBandwidth(Login[name], BandwidthType.Forum);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject>("get_account_bandwidth", _login[name], BandwidthType.Forum.ToString().ToLower());
+            var obj = Manager(name).CustomGetRequest<JObject>("get_account_bandwidth", Login[name], BandwidthType.Forum.ToString().ToLower());
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        #endregion Get requests
-
-        private void TestPropetries(Type type, JObject jObject)
+        [Test]
+        public void get_trending_tags([Values("Steem", "Golos")] string name)
         {
-            var propNames = GetPropertyNames(type);
+            var resp = Manager(name).GetTrendingTags(Login[name], 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var chSet = jObject.Children();
-
-            List<string> msg = new List<string>();
-            foreach (var jtoken in chSet)
-            {
-                if (!propNames.Contains(jtoken.Path))
-                {
-                    msg.Add($"Missing {jtoken}");
-                }
-            }
-
-            if (msg.Any())
-            {
-                Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
-            }
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_trending_tags", Login[name], 3);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        private void TestPropetries(Type type, JObject[] jObject)
+        [Test]
+        public void get_block_header([Values("Steem", "Golos")] string name)
         {
-            if (jObject == null)
-                throw new NullReferenceException("jObject");
+            var resp = Manager(name).GetBlockHeader(42);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            if (type.IsArray)
-                TestPropetries(type.GetElementType(), jObject[0]);
-            else
-                throw new InvalidCastException();
+            var obj = Manager(name).CustomGetRequest<JObject>("get_block_header", 42);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        private HashSet<string> GetPropertyNames(Type type)
+        [Test]
+        public void get_block([Values("Steem", "Golos")] string name)
         {
-            var props = type.GetRuntimeProperties();
-            var resp = new HashSet<string>();
-            foreach (var prop in props)
-            {
-                var order = prop.GetCustomAttribute<JsonPropertyAttribute>();
-                if (order != null)
-                {
-                    resp.Add(order.PropertyName);
-                }
-            }
-            return resp;
+            var resp = Manager(name).GetBlock(42);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject>("get_block", 42);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_ops_in_block([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetOpsInBlock(1234, false);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_ops_in_block", 1234, false);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+
+        [Test]
+        public void get_trending_categories([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetBestCategories(string.Empty, 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_best_categories", string.Empty, 3);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_active_categories([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetActiveCategories(string.Empty, 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_active_categories", string.Empty, 3);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_recent_categories([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetRecentCategories(string.Empty, 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_recent_categories", string.Empty, 3);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_escrow([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetEscrow(string.Empty, 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_escrow", string.Empty, 3);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

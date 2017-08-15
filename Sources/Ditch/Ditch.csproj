@@ -9,15 +9,15 @@
     <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Chainers/Ditch/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
-    <AssemblyVersion>2.2.1.0</AssemblyVersion>
-    <FileVersion>2.2.1.0</FileVersion>
-    <Version>2.2.1</Version>
+    <AssemblyVersion>2.2.2.0</AssemblyVersion>
+    <FileVersion>2.2.2.0</FileVersion>
+    <Version>2.2.2</Version>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
 </Description>
     <PackageReleaseNotes>## Supported operations
 Get:
-* DynamicGlobalProperties
-* Content
+* GetDynamicGlobalProperties
+* GetContent
 * GetAccounts
 * GetCustomRequest
 * VerifyAuthority 
@@ -38,6 +38,19 @@ Get:
 * GetChainProperties
 * GetConversionRequests
 * GetAccountHistory
+* GetAccountReferences
+* GetTrendingTags
+* GetBlockHeader
+* GetBlock
+* GetOpsInBlock
+* GetTrendingCategories
+* GetBestCategories
+* GetActiveCategories
+* GetRecentCategories
+* GetOwnerHistory
+* GetRecoveryRequest
+* GetEscrow
+* GetWithdrawRoutes
 
 Post:
 * VoteOperation (vote)
