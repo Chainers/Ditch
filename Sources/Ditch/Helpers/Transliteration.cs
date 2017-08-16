@@ -103,7 +103,7 @@ namespace Ditch.Helpers
             text = WordDelimiters.Replace(text, "-");
             text = ToEng(text);
             text = PermlinkNotSupportedCharacters.Replace(text, string.Empty);
-            return $"{text}-{DateTime.UtcNow:yyyy_MM_dd-HH_mm_ss}";
+            return $"{text}-{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}";
         }
 
         /// <summary>
