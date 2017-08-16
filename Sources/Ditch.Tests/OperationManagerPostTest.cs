@@ -12,7 +12,7 @@ namespace Ditch.Tests
         {
             var op = new FollowOperation(Login[name], "joseph.kalu", FollowType.blog, Login[name]);
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -50,7 +50,7 @@ namespace Ditch.Tests
         {
             var op = new UnfollowOperation(Login[name], "joseph.kalu", Login[name]);
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -59,7 +59,7 @@ namespace Ditch.Tests
         {
             var op = new UpVoteOperation(Login[name], "joseph.kalu", "fkkl");
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -68,7 +68,7 @@ namespace Ditch.Tests
         {
             var op = new DownVoteOperation(Login[name], "joseph.kalu", "fkkl");
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -77,14 +77,14 @@ namespace Ditch.Tests
         {
             var op = new FlagOperation(Login[name], "joseph.kalu", "fkkl");
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
         [Test]
         public virtual void PostTest([Values("Steem")] string name)
         {
-            var op = new PostOperation("test", Login[name], "test post with beneficiares", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
+            var op = new PostOperation("steepshot", Login[name], "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
             var popt = new BeneficiariesOperation(Login[name], op.Permlink, Chain[name].SbdSymbol, new Beneficiary("steepshot", 1000));
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op, popt);
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op, popt);
@@ -97,7 +97,7 @@ namespace Ditch.Tests
             var op = new PostOperation("test", Login[name], "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
 
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op, popt);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -106,7 +106,7 @@ namespace Ditch.Tests
         {
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", Login[name], "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
@@ -115,7 +115,7 @@ namespace Ditch.Tests
         {
             var op = new RePostOperation(Login[name], "joseph.kalu", "fkkl", Login[name]);
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
-            //var prop = Manager(name).BroadcastOperations(_userPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 

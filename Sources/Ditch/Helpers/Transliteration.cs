@@ -5,8 +5,8 @@ namespace Ditch.Helpers
 {
     public class Transliteration
     {
-        private static readonly Regex WordDelimiters = new Regex(@"[_\s\.]*");
-        private static readonly Regex PermlinkNotSupportedCharacters = new Regex(@"[^a-z0-9-*]");
+        private static readonly Regex WordDelimiters = new Regex(@"[_\s\.]+");
+        private static readonly Regex PermlinkNotSupportedCharacters = new Regex(@"[^a-z0-9-]+");
 
         //https://github.com/GolosChain/tolstoy/blob/master/app/utils/ParsersAndFormatters.js
         private static readonly string[,] Rules =
@@ -103,7 +103,7 @@ namespace Ditch.Helpers
             text = WordDelimiters.Replace(text, "-");
             text = ToEng(text);
             text = PermlinkNotSupportedCharacters.Replace(text, string.Empty);
-            return $"{text}-{DateTime.UtcNow:yyyyMMddTHHmmssfffZ}";
+            return $"{text}-{DateTime.UtcNow:yyyy_MM_dd-HH_mm_ss}";
         }
 
         /// <summary>
