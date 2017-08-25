@@ -231,7 +231,7 @@ namespace CppToCsharpConverter.Converters
 
             while (index < text.Count)
             {
-                if (StartPrivateRegex.IsMatch(text[index]))
+                if (StartPrivateRegex.IsMatch(text[index]) || (index + 1 == text.Count && text[index].Trim().StartsWith("}")))
                     break;
                 var comm = TryParseComment(text, index, out index);
                 if (StartPrivateRegex.IsMatch(text[index]))
