@@ -3,28 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Title="MainWindow" Height="350" Width="525" Closing="Window_Closing">
+        xmlns:cppToCsharpConverter="clr-namespace:CppToCsharpConverter"
+        mc:Ignorable="d" Title="Blockchain C++ to C# converter" Height="600" Width="800" Closing="Window_Closing">
+
+    <Window.Resources>
+        <ResourceDictionary Source="/CppToCsharpConverter;component/Skins/ListControl.xaml" />
+    </Window.Resources>
+
     <Grid>
         <TabControl>
             <TabItem x:Name="Automation" Header="Automation" KeyDown="UIElement_OnKeyDown">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="23"/>
-                        <RowDefinition Height="23"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="23"/>
                         <RowDefinition Height="23"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Steem"  Grid.Row="0" Grid.Column="0" />
-                    <Label Content="Golos"  Grid.Row="1" Grid.Column="0" />
-                    <TextBox Text="{Binding Path=PathToSteem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
-                    <TextBox Text="{Binding Path=PathToGolos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  />
-                    <TextBox Text="{Binding Path=SearchItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="Wrap" AcceptsReturn="True" />
-                    <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Старт!" Click="Button_Click"/>
+                    <ListBox ItemsSource="{Binding (cppToCsharpConverter:SettingsViewModel.SearchTasks)}" Grid.Row="0" Grid.ColumnSpan="4"  >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="cppToCsharpConverter:SearchTask">
+                                <StackPanel  Orientation="Horizontal" Margin="3">
+                                    <StackPanel Style="{DynamicResource MainStackPanel}">
+                                        <Label Content="Конвертер:" Style="{DynamicResource LabelBold}"/>
+                                        <TextBox Text="{Binding Converter}" Style="{DynamicResource TextBoxCenter}"  />
+                                    </StackPanel>
+                                    <StackPanel Style="{DynamicResource MainStackPanel}"  Margin="50 0 0 0">
+                                        <Label Content="Директория:" Style="{DynamicResource LabelBold}"/>
+                                        <TextBox Text="{Binding SearchDir}" Style="{DynamicResource TextBoxCenter}"  />
+                                    </StackPanel>
+                                    <StackPanel Style="{DynamicResource MainStackPanel}" Margin="10 0 0 0">
+                                        <Label Content="Поиск:" Style="{DynamicResource LabelBold}"/>
+                                        <TextBox Text="{Binding SearchLine}" Style="{DynamicResource TextBoxCenter}"  />
+                                    </StackPanel>
+                                    <StackPanel Style="{DynamicResource MainStackPanel}" Margin="10 0 0 0">
+                                        <Label Content="Найдено в:" Style="{DynamicResource LabelBold}"/>
+                                        <TextBox Text="{Binding FullPath}" Style="{DynamicResource TextBoxCenter}"  />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ComboBox x:Name="DirBox"  Grid.Row="1" Grid.Column="0" ItemsSource="{Binding KnownDirectories}" IsEditable="True" LostFocus="DirLostFocus" Style="{DynamicResource ComboBoxBase}"/>
+                    <TextBox  x:Name="SearchBox"  Grid.Row="1" Grid.Column="1" />
+                    <ComboBox x:Name="ConverterBox"  Grid.Row="1" Grid.Column="2" Style="{DynamicResource ComboBoxBase}"/>
+                    <Button  x:Name="AddLine" Grid.Row="1" Grid.Column="3" Content="Добавить" Style="{DynamicResource Button }"  Click="AddLineClick" />
+
+                    <Button Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0" Content="Старт!" Style="{DynamicResource Button }"  Click="Button_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Convert">
