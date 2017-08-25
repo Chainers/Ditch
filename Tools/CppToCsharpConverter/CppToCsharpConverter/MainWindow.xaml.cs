@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,40 +12,26 @@ namespace CppToCsharpConverter
 {
     public partial class MainWindow
     {
-        private const string FileName = "CustomProperties.txt";
+        private const string FileName = "SettingsViewModel.txt";
 
-        public IConverter Converter = new StructConverter();
-        public CustomProperties CustomProperties { get; set; }
+
+        public StructConverter StructConverter;
+        public InterfaceConverter InterfaceConverter;
+        public SettingsViewModel SettingsViewModel { get; set; }
+
 
         public MainWindow()
         {
             InitializeComponent();
             Load();
-            DataContext = CustomProperties;
+            DataContext = SettingsViewModel;
+            StructConverter = new StructConverter(SettingsViewModel.KnownTypes);
+            InterfaceConverter = new InterfaceConverter(SettingsViewModel.KnownTypes);
+
+            ConverterBox.ItemsSource = Enum.GetValues(typeof(KnownConverter));
+            ConverterBox.SelectedIndex = 0;
         }
 
-        protected void ContentChanged()
-        {
-            try
-            {
-                Output.Text = Converter.Execute(Input.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Input_OnKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                ContentChanged();
-        }
-
-        private void Input_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            ContentChanged();
-        }
 
         private void Load()
         {
@@ -58,25 +43,17 @@ namespace CppToCsharpConverter
             {
                 var txt = File.ReadAllText(FileName);
                 if (!string.IsNullOrEmpty(txt))
-                    CustomProperties = JsonConvert.DeserializeObject<CustomProperties>(txt);
+                    SettingsViewModel = JsonConvert.DeserializeObject<SettingsViewModel>(txt);
             }
-            if (CustomProperties == null)
-                CustomProperties = new CustomProperties();
-        }
-
-        private void Save()
-        {
-            if (CustomProperties != null)
-            {
-                var txt = JsonConvert.SerializeObject(CustomProperties);
-                if (!File.Exists(FileName))
-                    File.Create(FileName);
-                File.WriteAllText(FileName, txt);
-            }
+            if (SettingsViewModel == null)
+                SettingsViewModel = new SettingsViewModel();
+            SettingsViewModel.SearchTasks.Sort();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            DirLostFocus(null, null);
+            SettingsViewModel.SearchTasks.Sort();
             Save();
         }
 
@@ -84,99 +61,139 @@ namespace CppToCsharpConverter
         {
             if (e.Key == Key.S && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
             {
+                DirLostFocus(null, null);
+                SettingsViewModel.SearchTasks.Sort();
                 Save();
             }
         }
+
+        private void Save()
+        {
+            if (SettingsViewModel != null)
+            {
+                var txt = JsonConvert.SerializeObject(SettingsViewModel);
+                if (!File.Exists(FileName))
+                    File.Create(FileName);
+                File.WriteAllText(FileName, JsonBeautifier.Beautify(txt));
+            }
+        }
+
+        private void DirLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (DirBox.SelectedItem != null)
+                return;
+            var newItem = DirBox.Text;
+
+            if (!string.IsNullOrEmpty(newItem) && !SettingsViewModel.KnownDirectories.Contains(newItem))
+                SettingsViewModel.KnownDirectories.Add(newItem);
+
+            DirBox.SelectedItem = newItem;
+        }
+
+        private void AddLineClick(object sender, RoutedEventArgs e)
+        {
+            var dir = DirBox.SelectedItem as string;
+            var search = SearchBox.Text;
+            var converter = (KnownConverter)ConverterBox.SelectedItem;
+            if (!string.IsNullOrEmpty(dir) && !string.IsNullOrEmpty(search))
+                SettingsViewModel.AddTask(search, converter, dir);
+        }
+
+        #region Automation
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
             var prevContent = button.Content;
             button.Content = "Работаю...";
-            Automation.IsEnabled = false;
+            button.IsEnabled = false;
 
             var msg = await FindAndExecuteAsync();
+            AddNewTasks(InterfaceConverter);
+            InterfaceConverter.UnknownTypes.Clear();
+            AddNewTasks(StructConverter);
+            StructConverter.UnknownTypes.Clear();
+            SettingsViewModel.SearchTasks.Sort();
+            Save();
+
             if (!string.IsNullOrEmpty(msg))
                 MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             button.Content = prevContent;
-            Automation.IsEnabled = true;
+            button.IsEnabled = true;
         }
 
         private Task<string> FindAndExecuteAsync()
         {
             return Task.Run(() =>
             {
-                var outDir = "out";//$"{DateTime.Now:yyyyMMddhhmmss}";
-                var msg = FindAndExecute(CustomProperties.PathToSteem, CustomProperties.SearchItems, CustomProperties.SteemSearchItemsPath, "s", outDir);
-                msg += FindAndExecute(CustomProperties.PathToGolos, CustomProperties.SearchItems, CustomProperties.GolosSearchItemsPath, "g", outDir);
-                return msg;
+                var msg = new StringBuilder();
+                foreach (var item in SettingsViewModel.SearchTasks)
+                {
+                    try
+                    {
+                        switch (item.Converter)
+                        {
+                            case KnownConverter.InterfaceConverter:
+                                {
+                                    InterfaceConverter.FindAndExecute(item);
+                                    break;
+                                }
+                            case KnownConverter.StructConverter:
+                                {
+                                    StructConverter.FindAndExecute(item);
+                                    break;
+                                }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        msg.AppendLine(e.Message);
+                        msg.AppendLine(e.StackTrace);
+                    }
+                }
+                return msg.ToString();
             });
         }
 
-        private string FindAndExecute(string dirPath, string searchItems, Dictionary<string, string> searchItemsPath, string pref, string outDir)
+
+        private void AddNewTasks(BaseConverter converter)
+        {
+            foreach (var itm in converter.UnknownTypes)
+                SettingsViewModel.AddTask(itm);
+        }
+
+
+        #endregion
+
+        #region Convert
+
+        protected void OutputContentChanged()
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(searchItems))
-                    return string.Empty;
-
-                var items = searchItems.Split(new[] { Environment.NewLine, "\r\n", "\n\r", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (var item in items)
-                {
-                    var searchLine = item.Trim();
-                    var text = string.Empty;
-                    if (searchItemsPath.ContainsKey(searchLine))
-                    {
-                        text = SearchInFile.Search(searchItemsPath[searchLine], searchLine);
-                    }
-
-                    if (string.IsNullOrEmpty(text))
-                    {
-                        var files = Directory.GetFiles(dirPath, "*.*", SearchOption.AllDirectories).Where(f => f.EndsWith(".cpp") || f.EndsWith(".hpp"));
-                        foreach (var file in files)
-                        {
-                            text = SearchInFile.Search(file, searchLine);
-                            if (!string.IsNullOrEmpty(text))
-                            {
-                                if (searchItemsPath.ContainsKey(searchLine))
-                                {
-                                    searchItemsPath[searchLine] = file;
-                                }
-                                else
-                                {
-                                    searchItemsPath.Add(searchLine, file);
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(text))
-                    {
-                        var path = String.Empty;
-                        if (searchItemsPath.ContainsKey(searchLine))
-                        {
-                            var file = searchItemsPath[searchLine];
-                            var startFrom = file.IndexOf("golos", StringComparison.Ordinal);
-                            if (startFrom < 0)
-                                startFrom = file.IndexOf("steem", StringComparison.Ordinal);
-                            path = file.Substring(startFrom);
-                        }
-                        var converted = Converter.Execute(text, path);
-                        if (!Directory.Exists(outDir))
-                            Directory.CreateDirectory(outDir);
-                        File.WriteAllText($"{outDir}\\in {searchLine} {pref}.txt", text);
-                        File.WriteAllText($"{outDir}\\out {searchLine} {pref}.txt", converted);
-                    }
-                }
+                // Output.Text = StructConverter.TryParseText(Input.Text, null);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e.Message;
+                MessageBox.Show(this, ex.Message, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            return string.Empty;
         }
+
+        private void Input_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                OutputContentChanged();
+        }
+
+        private void Input_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            OutputContentChanged();
+        }
+
+        #endregion Convert
+
+
+
     }
 }
