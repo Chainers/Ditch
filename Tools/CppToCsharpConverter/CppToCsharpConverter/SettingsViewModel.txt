@@ -1,33 +1,23 @@
 {
  "KnownDirectories": [
-  "d:\\Projects\\Chainers\\Forks\\golos-0.16.3\\",
-  "d:\\Projects\\Chainers\\Forks\\steem-0.19.1\\"
+  "d:\\Projects\\Chainers\\Forks\\golos\\",
+  "d:\\Projects\\Chainers\\Forks\\steem\\"
  ],
  "SearchTasks": [
   {
-   "SearchDir": "d:\\Projects\\Chainers\\Forks\\golos-0.16.3\\",
+   "SearchDir": "d:\\Projects\\Chainers\\Forks\\golos\\",
    "Converter": 0,
-   "FullPath": "d:\\Projects\\Chainers\\Forks\\golos-0.16.3\\libraries\\app\\include\\steemit\\app\\database_api.hpp",
+   "FullPath": "d:\\Projects\\Chainers\\Forks\\golos\\libraries\\app\\include\\steemit\\app\\database_api.hpp",
    "SearchLine": "database_api"
   },
   {
-   "SearchDir": "d:\\Projects\\Chainers\\Forks\\steem-0.19.1\\",
+   "SearchDir": "d:\\Projects\\Chainers\\Forks\\steem\\",
    "Converter": 0,
-   "FullPath": "d:\\Projects\\Chainers\\Forks\\steem-0.19.1\\libraries\\app\\include\\steemit\\app\\database_api.hpp",
+   "FullPath": "d:\\Projects\\Chainers\\Forks\\steem\\libraries\\app\\include\\steemit\\app\\database_api.hpp",
    "SearchLine": "database_api"
   },
  ],
  "KnownTypes": {
-  "account_id_type": "object",
-  "comment_id_type": "object",
-  "id_type": "object",
-  "feed_history_id_type": "object",
-  "transaction_id_type": "object",
-  "block_id_type": "object",
-  "checksum_type": "object",
-  "category_id_type": "object",
-  "owner_authority_history_id_type": "object",
-  "account_recovery_request_id_type": "object",
   "string": "string",
   "time_point_sec": "DateTime",
   "bool": "bool",
@@ -50,18 +40,6 @@
   "int32": "Int32",
   "int64": "Int64",
   "asset": "Money",
-  "share_type": "object",
-  "account_name_type": "string",
-  "version": "string",
-  "hardfork_version": "string",
-  "account_authority_map": "object",
-  "key_authority_map": "object",
-  "public_key_type": "string",
-  "category_index": "object",
-  "tag_index": "object",
-  "discussion_index": "object",
-  "block_header_extensions_type": "object",
-  "signed_transaction": "object",
-  "signature_type": "object",
+  
  }
 }

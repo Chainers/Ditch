@@ -16,13 +16,18 @@ namespace CppToCsharpConverter.Converters
 
         public List<IParsedElement> Fields { get; set; } = new List<IParsedElement>();
 
-        public bool IsInterface { get; internal set; }
-
-        public bool IsEnum { get; set; }
+        public ObjectType ObjectType { get; set; } = ObjectType.Class;
 
         public override string ToString()
         {
             return $"{Name}";
         }
+    }
+
+    public enum ObjectType
+    {
+        Class,
+        Enum,
+        Interface
     }
 }

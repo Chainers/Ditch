@@ -12,7 +12,8 @@
 
         public override string ToString()
         {
-            return $"{Type} {Name}{(string.IsNullOrEmpty(Default) ? string.Empty : " = " + Default)}";
+            return $"{Type} {Name}";
+            //return $"{Type} {Name}{(string.IsNullOrEmpty(Default) ? string.Empty : " = " + Default)}";
         }
     }
 }
