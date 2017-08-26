@@ -10,7 +10,7 @@ namespace CppToCsharpConverter.Converters
 
         public string Name { get; set; }
 
-        public object CppName { get; set; }
+        public string CppName { get; set; }
 
         public string Type { get; set; }
 

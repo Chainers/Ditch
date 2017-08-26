@@ -129,15 +129,15 @@ namespace CppToCsharpConverter.Converters
             sb.AppendLine($"{indent}/// {info}");
             sb.AppendLine($"{indent}/// </summary>");
             foreach (var itm in parsedFunc.Params)
-                sb.AppendLine($"{indent}/// <param name=\"{itm.Name}\">API type: {itm.CppType}</param>");
-            sb.AppendLine($"{indent}/// <returns>API type: {parsedFunc.CppType}</returns>");
+                sb.AppendLine($"{indent}/// <param name=\"{itm.Name}\">API type: {TypeCorrection(itm.CppType)}</param>");
+            sb.AppendLine($"{indent}/// <returns>API type: {TypeCorrection(parsedFunc.CppType)}</returns>");
             sb.AppendLine($"{indent}{parsedFunc.Type} {parsedFunc.Name}({string.Join(", ", parsedFunc.Params)});");
         }
 
         protected override ParsedClass InitParsedClass()
         {
             var pc = base.InitParsedClass();
-            pc.IsInterface = true;
+            pc.ObjectType = ObjectType.Interface;
             return pc;
         }
     }

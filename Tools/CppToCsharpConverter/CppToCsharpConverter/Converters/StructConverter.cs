@@ -8,7 +8,8 @@ namespace CppToCsharpConverter.Converters
 {
     public class StructConverter : BaseConverter
     {
-        protected readonly Regex FieldRules = new Regex(@"^\s*[a-z0-9<,>_]*[ \t]{1,}[a-z0-9_]*\s*(=[a-z_0-9<,>\s]*)?;", RegexOptions.IgnoreCase);
+        protected readonly Regex FieldRules = new Regex(@"^\s*[a-z0-9<,>_:]*\s+[a-z0-9_]*\s*(=[a-z_0-9<,>\s]*)?;", RegexOptions.IgnoreCase);
+        protected readonly Regex NotTypeChar = new Regex("[^[a-z0-9_:<,>]]*", RegexOptions.IgnoreCase);
 
         public StructConverter(Dictionary<string, string> knownTypes) : base(knownTypes) { }
 
@@ -66,7 +67,7 @@ namespace CppToCsharpConverter.Converters
             sb.AppendLine($"{indent}/// {parsedField.Comment}");
             sb.AppendLine($"{indent}/// </summary>");
             if (!string.IsNullOrEmpty(parsedField.CppType))
-                sb.AppendLine($"{indent}/// <returns>API type: {parsedField.CppType}</returns>");
+                sb.AppendLine($"{indent}/// <returns>API type: {TypeCorrection(parsedField.CppType)}</returns>");
             sb.AppendLine($"{indent}[JsonProperty(\"{parsedField.CppName}\")]");
             if (!string.IsNullOrEmpty(parsedField.Type))
                 sb.AppendLine($"{indent}public {parsedField.Type} {parsedField.Name} {{get; set;}}");

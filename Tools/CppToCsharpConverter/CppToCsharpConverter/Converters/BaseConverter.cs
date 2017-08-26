@@ -18,13 +18,13 @@ namespace CppToCsharpConverter.Converters
         protected static readonly Regex StartBodyRegex = new Regex(@"(?<=^[^/]*){");
         protected static readonly Regex DirNameRegex = new Regex(@"(?<=\\)[\w-_.]*(?=\\*$)", RegexOptions.IgnoreCase);
         protected static readonly Regex StartPrivateRegex = new Regex(@"^\s*private\s*:");
+        protected readonly Regex PairType = new Regex("(?<=^([a-z0-90_:]*){1,}),(?=([a-z0-90_:]*){1,}$)|(?<=^([a-z0-90_:]*[<][a-z0-90_,:]*[>]){1,}),(?=([a-z0-90_:]*[<][a-z0-90_,:]*[>]){1,}$)", RegexOptions.IgnoreCase);
 
-        protected readonly Regex NotTypeChar = new Regex("[^[a-z0-9_:<,>]]*", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
-        protected readonly Regex NotNameChar = new Regex("[^[a-z0-9_]]*");
-        protected readonly Regex NormalizeType = new Regex(@"((?<=<)\s*)|(\s*((?=>)))|((?<=[<][0-9_a-z\s]*[,])\s*)|(\b[a-z]*::\b)|");
-        protected readonly Regex PairType = new Regex("(?<=^([a-z0-90_:]*){1,}),(?=([a-z0-90_:]*){1,}$)|(?<=^([a-z0-90_:]*[<][a-z0-90_,:]*[>]){1,}),(?=([a-z0-90_:]*[<][a-z0-90_,:]*[>]){1,}$)");
-        protected readonly Regex TypeDefName = new Regex(@"(?<=^\s*typedef\s+[\w<>:]*\s)[\w]*");
-        protected readonly Regex TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[\w<>:]*");
+        protected readonly Regex NotNameChar = new Regex("[^[a-z0-9_]]*", RegexOptions.IgnoreCase);
+        protected readonly Regex NormalizeType = new Regex(@"((?<=<)\s*)|(\s*((?=>)))|((?<=[<][0-9_a-z\s]*[,])\s*)", RegexOptions.IgnoreCase);
+        protected readonly Regex TypeDefName = new Regex(@"(?<=^\s*typedef\s+[\w<>:]*\s)[\w]*", RegexOptions.IgnoreCase);
+        protected readonly Regex TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[\w<>:]*", RegexOptions.IgnoreCase);
+        protected readonly Regex NamespacePref = new Regex(@"\b[a-z]*::", RegexOptions.IgnoreCase);
 
         protected BaseConverter(Dictionary<string, string> knownTypes)
         {
@@ -57,22 +57,47 @@ namespace CppToCsharpConverter.Converters
 
         protected bool TryExecute(string filePath, string searchLine, string dir)
         {
-            var text = TryGrabText(filePath, searchLine);
-            if (text != null)
+            try
             {
-                var converted = TryParseClass(text);
-                PrintToFile(filePath, searchLine, dir, converted, text);
-                return true;
+                var text = TryGrabText(filePath, searchLine);
+                if (text != null)
+                {
+                    var converted = TryParseClass(text);
+                    PrintToFile(filePath, searchLine, dir, converted, text);
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (Exception e)
+            {
+                Console.WriteLine($"{filePath} | {searchLine} | {e.Message} | {e.StackTrace}");
+                throw;
+            }
         }
 
         protected void PrintToFile(string filePath, string searchLine, string dir, ParsedClass converted, List<string> text)
         {
-            var outDir = $"{DirNameRegex.Match(dir).Value}\\{(converted.IsInterface ? "Api" : "Models")}";
+            var outDir = $"{DirNameRegex.Match(dir).Value}\\";
+            switch (converted.ObjectType)
+            {
+                case ObjectType.Class:
+                case ObjectType.Enum:
+                    {
+                        outDir += "Models";
+                        break;
+                    }
+                case ObjectType.Interface:
+                    {
+                        outDir += "Api";
+                        break;
+                    }
+            }
+
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
-            File.WriteAllText($"{outDir}\\{converted.CppName}.txt", string.Join(Environment.NewLine, text));
+            if (!Directory.Exists("src\\" + outDir))
+                Directory.CreateDirectory("src\\" + outDir);
+            File.WriteAllText($"src\\{outDir}\\{converted.CppName}.txt", string.Join(Environment.NewLine, text));
             File.WriteAllText($"{outDir}\\{converted.Name}.cs", PrintParsedClass(converted, filePath, dir));
             foreach (var itm in UnknownTypes)
             {
@@ -98,8 +123,8 @@ namespace CppToCsharpConverter.Converters
             var deep = 0;
             var startWrite = false;
             var enterb = false;
-            var typedefRegexp = new Regex($@"(?<=^\s*typedef\s+)[\w:]*(?=\s*{searchLine})");
-            var classRegexp = new Regex($@"(?<=^\s*(class|struct|enum)\s){searchLine}\b");
+            var typedefRegexp = new Regex($@"^\s*typedef\s+[\w:<>]*\s+{searchLine}\s*;");
+            var classRegexp = new Regex($@"^\s*(class|struct|enum)\s+{searchLine}\b");
 
             for (var index = 0; index < lines.Length; index++)
             {
@@ -189,6 +214,9 @@ namespace CppToCsharpConverter.Converters
 
         protected virtual ParsedClass TryParseClass(List<string> text)
         {
+            if (!text.Any())
+                return null;
+
             int index;
             if (text.Count == 1)
             {
@@ -209,7 +237,7 @@ namespace CppToCsharpConverter.Converters
             var name = TryParseClassName(header);
             result.CppName = name;
             result.Name = ToTitleCase(name);
-            result.IsEnum = EnumRegex.IsMatch(header);
+            result.ObjectType = EnumRegex.IsMatch(header) ? ObjectType.Enum : result.ObjectType;
             var inherit = TryParseInherit(header).Trim();
             if (!string.IsNullOrEmpty(inherit))
             {
@@ -236,7 +264,8 @@ namespace CppToCsharpConverter.Converters
                 var comm = TryParseComment(text, index, out index);
                 if (StartPrivateRegex.IsMatch(text[index]))
                     break;
-                var field = result.IsEnum ? TryParseEnum(text, index, out index) : TryParseElement(text, index, out index);
+
+                var field = result.ObjectType == ObjectType.Enum ? TryParseEnum(text, index, out index) : TryParseElement(text, index, out index);
                 if (field != null)
                 {
                     field.MainComment = comm;
@@ -275,6 +304,9 @@ namespace CppToCsharpConverter.Converters
 
         protected string GetKnownTypeOrDefault(string type)
         {
+            if (NamespacePref.IsMatch(type))
+                type = NamespacePref.Replace(type, string.Empty);
+
             if (type.StartsWith("optional<"))
                 type = Unpack(type, 1);
 
@@ -328,26 +360,30 @@ namespace CppToCsharpConverter.Converters
             return rez;
         }
 
-        protected string GetKnownCompositType(string line)
+        protected string GetKnownCompositType(string type)
         {
-            if (line.StartsWith("map<") || line.StartsWith("array<"))
+            if (type.StartsWith("map<")) //TODO: research is needed
+                return "object";
+            if (type.StartsWith("array<")) //TODO: research is needed
+                return "object";
+            if (type.StartsWith("oid<")) //TODO: research is needed
                 return "object";
 
-            if (IsArray(line))
+            if (IsArray(type))
             {
-                line = Unpack(line, 1);
-                return $"{GetKnownTypeOrDefault(line)}[]";
+                type = Unpack(type, 1);
+                return $"{GetKnownTypeOrDefault(type)}[]";
             }
-            if (line.StartsWith("pair<"))
+            if (type.StartsWith("pair<"))
             {
-                var buf = Unpack(line, 1);
+                var buf = Unpack(type, 1);
 
                 var m = PairType.Matches(buf);
                 if (m.Count != 1)
                     return "KeyValuePair<object,object>";
 
                 var index = m[0].Index;
-                return $"KeyValuePair<{GetKnownTypeOrDefault(buf.Substring(0, index))},{GetKnownTypeOrDefault(buf.Substring(index + 1))}>";
+                return $"KeyValuePair<{GetKnownTypeOrDefault(buf.Substring(0, index))}, {GetKnownTypeOrDefault(buf.Substring(index + 1))}>";
             }
 
             return "object";
@@ -415,11 +451,35 @@ namespace CppToCsharpConverter.Converters
 
         protected virtual void PrinNamespace(StringBuilder sb, ParsedClass parsedClass, string rootDir)
         {
+            sb.AppendLine("using Ditch.Core;");
             sb.AppendLine("using System;");
-            if (parsedClass.IsInterface)
-                sb.AppendLine($"using Ditch.{rootDir}.Models;");
-            sb.AppendLine();
-            sb.AppendLine($"namespace Ditch.{rootDir}.{(parsedClass.IsInterface ? "Api" : "Models")}");
+            sb.AppendLine("using System.Collections.Generic; ");
+            sb.AppendLine("using Newtonsoft.Json;");
+
+            switch (parsedClass.ObjectType)
+            {
+                case ObjectType.Class:
+                    {
+                        sb.AppendLine();
+                        sb.AppendLine($"namespace Ditch.{rootDir}.Models");
+                        break;
+                    }
+                case ObjectType.Enum:
+                    {
+                        sb.AppendLine("using Newtonsoft.Json.Converters;");
+                        sb.AppendLine();
+                        sb.AppendLine($"namespace Ditch.{rootDir}.Models");
+                        break;
+                    }
+                case ObjectType.Interface:
+                    {
+                        sb.AppendLine($"using Ditch.{rootDir}.Models;");
+                        sb.AppendLine();
+                        sb.AppendLine($"namespace Ditch.{rootDir}.Api");
+                        break;
+                    }
+            }
+
             sb.AppendLine("{");
         }
 
@@ -441,6 +501,7 @@ namespace CppToCsharpConverter.Converters
         protected virtual void AddClassName(StringBuilder sb, ParsedClass parsedClass, string pathToFile, string dir, int indentCount)
         {
             var indent = new string(' ', indentCount);
+
             if (!string.IsNullOrEmpty(parsedClass.MainComment))
                 sb.AppendLine($"{indent}{parsedClass.MainComment.Replace("\r\n", "\r\n" + indent)}{Environment.NewLine}");
             sb.AppendLine($"{indent}/// <summary>");
@@ -448,11 +509,33 @@ namespace CppToCsharpConverter.Converters
             if (!string.IsNullOrEmpty(pathToFile))
                 sb.AppendLine($@"{indent}/// {pathToFile.Remove(0, dir.Length)}");
             sb.AppendLine($"{indent}/// </summary>");
-            if (!parsedClass.IsInterface)
-                sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
 
-            sb.AppendLine($"{indent}public {(parsedClass.IsInterface ? "interface" : parsedClass.IsEnum ? "enum" : "class")} {parsedClass.Name}{(parsedClass.Inherit.Any() ? $": {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+            switch (parsedClass.ObjectType)
+            {
+                case ObjectType.Class:
+                    {
+                        sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
+                        sb.AppendLine($"{indent}public class {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        break;
+                    }
+                case ObjectType.Enum:
+                    {
+                        sb.AppendLine($"{indent}[JsonConverter(typeof(StringEnumConverter))]");
+                        sb.AppendLine($"{indent}public enum {parsedClass.Name}");
+                        break;
+                    }
+                case ObjectType.Interface:
+                    {
+                        sb.AppendLine($"{indent}public interface {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        break;
+                    }
+            }
             sb.AppendLine($"{indent}{{");
+        }
+
+        protected string TypeCorrection(string line)
+        {
+            return line.Replace("<", "&lt;");
         }
 
         protected abstract void PrintParsedElements(StringBuilder sb, IParsedElement parsedElement, int indentCount);
