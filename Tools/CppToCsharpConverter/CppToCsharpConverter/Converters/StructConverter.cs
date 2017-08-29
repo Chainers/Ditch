@@ -8,7 +8,7 @@ namespace CppToCsharpConverter.Converters
 {
     public class StructConverter : BaseConverter
     {
-        protected readonly Regex FieldRules = new Regex(@"^\s*[a-z0-9<,>_:]*\s+[a-z0-9_]*\s*(=[a-z_0-9<,>\s]*)?;", RegexOptions.IgnoreCase);
+        protected readonly Regex FieldRules = new Regex(@"^\s*[a-z0-9<,>_:]+\s+[a-z0-9_]+\s*(=[a-z_0-9<,>\s]*)?;", RegexOptions.IgnoreCase);
         protected readonly Regex NotTypeChar = new Regex("[^[a-z0-9_:<,>]]*", RegexOptions.IgnoreCase);
 
         public StructConverter(Dictionary<string, string> knownTypes) : base(knownTypes) { }
@@ -18,6 +18,12 @@ namespace CppToCsharpConverter.Converters
             end = index + 1;
             var text = lines[index];
             var test = NormalizeType.Replace(text, string.Empty);
+
+            if (IsBlockStart(lines, index, out index))
+            {
+                end = index;
+                return null;
+            }
 
             if (!FieldRules.IsMatch(test))
                 return null;

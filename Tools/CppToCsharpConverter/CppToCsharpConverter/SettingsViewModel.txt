@@ -40,6 +40,9 @@
   "int32": "Int32",
   "int64": "Int64",
   "asset": "Money",
-  
+  "sha256": "object",
+  "sha": "object",
+  "ripemd160": "object",
+  "ripemd1": "object",  
  }
 }

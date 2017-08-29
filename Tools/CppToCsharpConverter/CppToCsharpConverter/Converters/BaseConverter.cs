@@ -13,18 +13,19 @@ namespace CppToCsharpConverter.Converters
 
         protected static readonly Regex CommentRegex = new Regex(@"^\s*(\*|/)+");
         protected static readonly Regex EnumRegex = new Regex(@"^\s*enum\s+", RegexOptions.IgnoreCase);
-        protected static readonly Regex ClassRegex = new Regex(@"(?<=^\s*((class)|(struct)|(enum))\s+)[a-z_0-9]*", RegexOptions.IgnoreCase);
-        protected static readonly Regex InheritRegex = new Regex(@"(?<=^\s*(class)|(struct)\s+[a-z_0-9]*\s*:\s*public\s+(object)*\s*<?\s*)[a-z_0-1,\s]*(?=>?)", RegexOptions.IgnoreCase);
+        protected static readonly Regex ClassRegex = new Regex(@"(?<=^\s*((class)|(struct)|(enum))\s+)[a-z_0-9]+", RegexOptions.IgnoreCase);
+        protected static readonly Regex InheritRegex = new Regex(@"(?<=^\s*(class)|(struct)\s+[a-z_0-9]+\s*:\s*public\s+(object\s*)*<?\s*)[a-z_0-1,]+\s*(?=>?)", RegexOptions.IgnoreCase);
         protected static readonly Regex StartBodyRegex = new Regex(@"(?<=^[^/]*){");
-        protected static readonly Regex DirNameRegex = new Regex(@"(?<=\\)[\w-_.]*(?=\\*$)", RegexOptions.IgnoreCase);
+        protected static readonly Regex DirNameRegex = new Regex(@"(?<=\\)[a-z0-9_.-]+(?=\\*$)", RegexOptions.IgnoreCase);
         protected static readonly Regex StartPrivateRegex = new Regex(@"^\s*private\s*:");
-        protected readonly Regex PairType = new Regex("(?<=^([a-z0-90_:]*){1,}),(?=([a-z0-90_:]*){1,}$)|(?<=^([a-z0-90_:]*[<][a-z0-90_,:]*[>]){1,}),(?=([a-z0-90_:]*[<][a-z0-90_,:]*[>]){1,}$)", RegexOptions.IgnoreCase);
+        protected readonly Regex PairType = new Regex("(?<=^([a-z0-9_:]*){1,}),(?=([a-z0-9_:]*){1,}$)|(?<=^([a-z0-9_:]*[<][a-z0-9_,:]*[>]){1,}),(?=([a-z0-9_:]*[<][a-z0-9_,:]*[>]){1,}$)", RegexOptions.IgnoreCase);
 
         protected readonly Regex NotNameChar = new Regex("[^[a-z0-9_]]*", RegexOptions.IgnoreCase);
-        protected readonly Regex NormalizeType = new Regex(@"((?<=<)\s*)|(\s*((?=>)))|((?<=[<][0-9_a-z\s]*[,])\s*)", RegexOptions.IgnoreCase);
-        protected readonly Regex TypeDefName = new Regex(@"(?<=^\s*typedef\s+[\w<>:]*\s)[\w]*", RegexOptions.IgnoreCase);
-        protected readonly Regex TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[\w<>:]*", RegexOptions.IgnoreCase);
-        protected readonly Regex NamespacePref = new Regex(@"\b[a-z]*::", RegexOptions.IgnoreCase);
+        protected readonly Regex NormalizeType = new Regex(@"((?<=<)\s+)|(\s+((?=>)))|((?<=<[0-9_a-z\s]+,)\s+)", RegexOptions.IgnoreCase);
+        protected readonly Regex TypeDefName = new Regex(@"(?<=^\s*typedef\s+[a-z0-9<>:,_]+\s+)[a-z0-9_]+", RegexOptions.IgnoreCase);
+        protected readonly Regex TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[a-z0-9<>:,_]+", RegexOptions.IgnoreCase);
+        protected readonly Regex NamespacePref = new Regex(@"\b[a-z]+::", RegexOptions.IgnoreCase);
+        protected readonly Regex BlockStartPref = new Regex(@"^[a-z0-9<>:,_\s-&\*\(\),]*{", RegexOptions.IgnoreCase);
 
         protected BaseConverter(Dictionary<string, string> knownTypes)
         {
@@ -63,6 +64,15 @@ namespace CppToCsharpConverter.Converters
                 if (text != null)
                 {
                     var converted = TryParseClass(text);
+                    if (!converted.Fields.Any() && converted.Inherit.Count == 1 && converted.Inherit[0].Contains('['))
+                    {
+                        if (KnownTypes.ContainsKey(converted.CppName))
+                            KnownTypes[converted.CppName] = converted.Inherit[0];
+                        else
+                            KnownTypes.Add(converted.CppName, converted.Inherit[0]);
+                        UnknownTypes.Add(new SearchTask { SearchLine = converted.CppName, Converter = KnownConverter.None});
+                    }
+
                     PrintToFile(filePath, searchLine, dir, converted, text);
                     return true;
                 }
@@ -95,9 +105,9 @@ namespace CppToCsharpConverter.Converters
 
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
-            if (!Directory.Exists("src\\" + outDir))
-                Directory.CreateDirectory("src\\" + outDir);
-            File.WriteAllText($"src\\{outDir}\\{converted.CppName}.txt", string.Join(Environment.NewLine, text));
+            if (!Directory.Exists("DebugSrc\\" + outDir))
+                Directory.CreateDirectory("DebugSrc\\" + outDir);
+            File.WriteAllText($"DebugSrc\\{outDir}\\{converted.CppName}.txt", string.Join(Environment.NewLine, text));
             File.WriteAllText($"{outDir}\\{converted.Name}.cs", PrintParsedClass(converted, filePath, dir));
             foreach (var itm in UnknownTypes)
             {
@@ -123,8 +133,8 @@ namespace CppToCsharpConverter.Converters
             var deep = 0;
             var startWrite = false;
             var enterb = false;
-            var typedefRegexp = new Regex($@"^\s*typedef\s+[\w:<>]*\s+{searchLine}\s*;");
-            var classRegexp = new Regex($@"^\s*(class|struct|enum)\s+{searchLine}\b");
+            var typedefRegexp = new Regex($@"^\s*typedef\s+[a-z0-9<>:,_]+\s+{searchLine}\s*;");
+            var classRegexp = new Regex($@"^\s*(class|struct|enum)\s+{searchLine}\b\s*(?!;)");
 
             for (var index = 0; index < lines.Length; index++)
             {
@@ -185,6 +195,40 @@ namespace CppToCsharpConverter.Converters
             text.Reverse();
             return text;
         }
+
+        public bool IsBlockStart(IList<string> lines, int startIndex, out int endIndex)
+        {
+            endIndex = startIndex;
+            var line = lines[startIndex];
+            if (!BlockStartPref.IsMatch(line)) return false;
+
+            var deep = 0;
+            for (var index = startIndex; index < lines.Count; index++)
+            {
+                line = lines[index];
+                for (var i = 0; i < line.Length; i++)
+                {
+                    switch (line[i])
+                    {
+                        case '{':
+                            deep++;
+                            break;
+                        case '}':
+                            deep--;
+                            break;
+                        case '/':
+                            break;
+                    }
+                }
+                if (deep == 0)
+                {
+                    endIndex = index + 1;
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         #endregion GrabText
 
@@ -248,11 +292,11 @@ namespace CppToCsharpConverter.Converters
                     if (!string.IsNullOrWhiteSpace(itm))
                     {
                         var bf = itm.Trim();
-                        var nbf = ToTitleCase(bf);
-                        if (!KnownTypes.ContainsKey(bf))
-                            KnownTypes.Add(bf, nbf);
                         if (!result.CppName.Equals(bf))
-                            result.Inherit.Add(nbf);
+                        {
+                            result.Inherit.Add(ToTitleCase(bf));
+                            AddTypeToTask(bf);
+                        }
                     }
                 }
             }
@@ -261,6 +305,7 @@ namespace CppToCsharpConverter.Converters
             {
                 if (StartPrivateRegex.IsMatch(text[index]) || (index + 1 == text.Count && text[index].Trim().StartsWith("}")))
                     break;
+
                 var comm = TryParseComment(text, index, out index);
                 if (StartPrivateRegex.IsMatch(text[index]))
                     break;
@@ -323,22 +368,26 @@ namespace CppToCsharpConverter.Converters
 
             if (!NotNameChar.IsMatch(type))
             {
-                if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
-                {
-                    var task = new SearchTask
-                    {
-                        Converter = KnownConverter.StructConverter,
-                        SearchLine = type,
-                    };
-                    UnknownTypes.Add(task);
-                }
-                if (!KnownTypes.ContainsKey(type))
-                    KnownTypes.Add(type, ToTitleCase(type));
-
+                AddTypeToTask(type);
                 return ToTitleCase(type);
             }
 
             return "object";
+        }
+
+        private void AddTypeToTask(string type)
+        {
+            if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
+            {
+                var task = new SearchTask
+                {
+                    Converter = KnownConverter.StructConverter,
+                    SearchLine = type,
+                };
+                UnknownTypes.Add(task);
+            }
+            if (!KnownTypes.ContainsKey(type))
+                KnownTypes.Add(type, ToTitleCase(type));
         }
 
         protected string ToTitleCase(string name, bool firstUpper = true)
@@ -365,7 +414,15 @@ namespace CppToCsharpConverter.Converters
             if (type.StartsWith("map<")) //TODO: research is needed
                 return "object";
             if (type.StartsWith("array<")) //TODO: research is needed
-                return "object";
+            {
+                var buf = Unpack(type, 1);
+                var countPart = buf.LastIndexOf(',');
+                if (countPart > 0)
+                {
+                    buf = buf.Remove(countPart);
+                    return $"{GetKnownTypeOrDefault(buf)}[]";
+                }
+            }
             if (type.StartsWith("oid<")) //TODO: research is needed
                 return "object";
 
@@ -398,9 +455,9 @@ namespace CppToCsharpConverter.Converters
 
         protected string Unpack(string line, int zIndex)
         {
-            int startPos = 0;
+            var startPos = 0;
 
-            for (int i = 0; i < zIndex; i++)
+            for (var i = 0; i < zIndex; i++)
             {
                 startPos = line.IndexOf("<", startPos, StringComparison.Ordinal) + 1;
             }
@@ -437,7 +494,7 @@ namespace CppToCsharpConverter.Converters
 
         protected string TryParseInherit(string text)
         {
-            Match rez = InheritRegex.Match(text);
+            var rez = InheritRegex.Match(text);
             if (rez.Success)
             {
                 return rez.Value;

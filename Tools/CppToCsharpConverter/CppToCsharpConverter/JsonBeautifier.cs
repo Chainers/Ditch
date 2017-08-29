@@ -34,7 +34,7 @@ namespace CppToCsharpConverter
                         break;
                     case '"':
                         sb.Append(ch);
-                        bool escaped = false;
+                        var escaped = false;
                         var index = i;
                         while (index > 0 && str[--index] == '\\')
                             escaped = !escaped;
