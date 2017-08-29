@@ -13,7 +13,7 @@ namespace CppToCsharpConverter.Converters
         protected static readonly Regex FuncTypeRegex = new Regex(@"(?<=^\s*)[a-z<,_>0-9:]+", RegexOptions.IgnoreCase);
         protected static readonly Regex VoidFuncRegex = new Regex(@"^\s*void");
         protected static readonly Regex ParamTypeRegex = new Regex(@"(?<=^|,\s*)[a-z0-9:<_>]+", RegexOptions.IgnoreCase);
-        protected static readonly Regex ParamNameRegex = new Regex(@"(?<=[\w_>:]+\s+)[a-z0-9_]+(\s*=\s*[a-z0-9]*)?(?=,|$)", RegexOptions.IgnoreCase);
+        protected static readonly Regex ParamNameRegex = new Regex(@"(?<=[\w_>:]+\s+)[a-z0-9_]+(\s*=\s*[a-z0-9]+)?(?=,|$)", RegexOptions.IgnoreCase);
         protected static readonly Regex ParamNormRegex = new Regex(@"(\bconst\b\s*)|(&*)", RegexOptions.IgnoreCase);
 
         public InterfaceConverter(Dictionary<string, string> knownTypes) : base(knownTypes)
