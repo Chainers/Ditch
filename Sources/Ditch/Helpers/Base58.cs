@@ -12,6 +12,14 @@ namespace Ditch.Helpers
 
         public static byte[] GetBytes(string data)
         {
+            var rezult = TryGetBytes(data);
+            if (rezult.Length > 0)
+                return rezult;
+            throw new NotImplementedException();
+        }
+
+        public static byte[] TryGetBytes(string data)
+        {
             if (data.All(Hexdigits.Contains))
                 return Hex.HexToBytes(data);
 
@@ -24,7 +32,7 @@ namespace Ditch.Helpers
                 case 'L':
                     return CutLastBytes(Base58CheckDecode(data), 1);
             }
-            throw new NotImplementedException();
+            return new byte[0];
         }
 
         private static byte[] CutLastBytes(byte[] source, int cutCount)
