@@ -146,6 +146,7 @@ namespace Ditch
             if (!OpenIfClosed())
                 return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
 
+            Debug.WriteLine($">>> {msg}");
             _webSocket.Send(msg);
 
             waiter.WaitOne(Timeout);
@@ -227,6 +228,7 @@ namespace Ditch
 
         private void WebSocketMessageReceived(object sender, MessageReceivedEventArgs e)
         {
+            Debug.WriteLine($"<<< {e.Message}");
             var prop = JsonRpcResponse.FromString(e.Message, _jsonSerializerSettings);
             lock (_responseDictionary)
             {

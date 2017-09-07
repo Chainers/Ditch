@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Operations.Enums;
+﻿using Ditch.Operations.Enums;
 
 namespace Ditch.Operations.Post
 {

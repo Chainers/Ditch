@@ -27,8 +27,8 @@ namespace Ditch.Tests
 
             UserPrivateKeys = new Dictionary<string, List<byte[]>>()
             {
-                {"Steem", new List<byte[]> {Base58.GetBytes("5**************************************************")}},
-                {"Golos", new List<byte[]> {Base58.GetBytes("5**************************************************")}}
+                {"Steem", new List<byte[]> {Base58.TryGetBytes("5**************************************************")}},
+                {"Golos", new List<byte[]> {Base58.TryGetBytes("5**************************************************")}}
             };
 
             Chain = new Dictionary<string, ChainInfo>();

@@ -22,6 +22,6 @@ namespace Ditch.Operations.Get
 
         // bdType : key_authority_map
         [JsonProperty("key_auths")]
-        public object KeyAuths { get; set; }
+        public object[][] KeyAuths { get; set; }
     }
 }
