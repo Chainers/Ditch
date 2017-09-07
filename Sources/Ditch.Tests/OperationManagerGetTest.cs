@@ -37,16 +37,7 @@ namespace Ditch.Tests
             var obj = Manager(name).CustomGetRequest<JObject>("call", (int)Api.DefaultApi, "get_content", new[] { author, permlink });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
-
-        [Test]
-        public void help([Values("Steem", "Golos")] string name)
-        {
-            var resp = Manager(name).CustomGetRequest<object>("help");
-            Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Result);
-            Assert.IsFalse(resp.IsError);
-        }
-
+        
         [Test]
         public void get_followers([Values("Steem", "Golos")] string name)
         {
@@ -196,7 +187,8 @@ namespace Ditch.Tests
             var ac = acResp.Result;
             Assert.IsTrue(ac.Length == 1);
 
-            var resp = Manager(name).GetKeyReferences(new object[1][] { new[] { ac[0].Active } });
+            var key = ac[0].Active.KeyAuths[0][0] as string;
+            var resp = Manager(name).GetKeyReferences(new object[1][] { new[] { key } });
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));

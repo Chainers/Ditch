@@ -1,4 +1,5 @@
-﻿using Ditch.Operations.Enums;
+﻿using System;
+using Ditch.Operations.Enums;
 using Ditch.Operations.Post;
 using NUnit.Framework;
 
@@ -105,6 +106,7 @@ namespace Ditch.Tests
         public void ReplyTest([Values("Steem", "Golos")] string name)
         {
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", Login[name], "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
+            Assert.IsTrue(ReplyOperation.TimePostfix.IsMatch(op.Permlink));
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
