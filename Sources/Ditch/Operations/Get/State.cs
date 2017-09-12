@@ -2,69 +2,81 @@
 
 namespace Ditch.Operations.Get
 {
+    /// <summary>
+    /// state
+    /// steem-0.19.1\libraries\app\include\steemit\app\state.hpp
+    /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class State
     {
+
+        // bdType : string
         [JsonProperty("current_route")]
         public string CurrentRoute { get; set; }
 
+        // bdType : dynamic_global_property_api_obj
         [JsonProperty("props")]
-        public DynamicGlobalProperties Props { get; set; }
+        public DynamicGlobalPropertyApiObj Props { get; set; }
 
+        // bdType : category_index
         [JsonProperty("category_idx")]
         public object CategoryIdx { get; set; }
 
+        // bdType : tag_index
         [JsonProperty("tag_idx")]
-        public TagIdx TagIdx { get; set; }
+        public object TagIdx { get; set; }
 
-        // map< string, tag_api_obj >
-        [JsonProperty("tags")]
-        public object Tags { get; set; } 
-        
-        // map< string, tag_api_obj >
-        [JsonProperty("categories")]
-        public object Categories { get; set; }
-
-        //map< string, discussion >
-        /// <summary>
-        ///  map from account/slug to full nested discussion
-        /// </summary>
-        [JsonProperty("content")]
-        public Content Content { get; set; }
-
-        //map< string, extended_account >
-        [JsonProperty("accounts")]
-        public object Accounts { get; set; }
-
-        //vector< account_name_type >
-        /// <summary>
-        /// The list of miners who are queued to produce work
-        /// </summary>
-        [JsonProperty("pow_queue")]
-        public object[] PowQueue { get; set; }
-
-        //map< string, witness_api_obj >
-        [JsonProperty("witnesses")]
-        public object Witnesses { get; set; }
-
-        //map<string, discussion_index>
+        // bdType : map<string,discussion_index>
         /// <summary>
         /// is the global discussion index
         /// </summary>
         [JsonProperty("discussion_idx")]
         public object DiscussionIdx { get; set; }
 
+        // bdType : map<string,category_api_obj>
+        [JsonProperty("categories")]
+        public object Categories { get; set; }
+
+        // bdType : map<string,tag_api_obj>
+        [JsonProperty("tags")]
+        public object Tags { get; set; }
+
+        // bdType : map<string,discussion>
+        /// <summary>
+        ///  map from account/slug to full nested discussion
+        /// </summary>
+        [JsonProperty("content")]
+        public object Content { get; set; }
+
+        // bdType : map<string,extended_account>
+        [JsonProperty("accounts")]
+        public object Accounts { get; set; }
+
+        // bdType : vector<account_name_type>
+        /// <summary>
+        /// The list of miners who are queued to produce work
+        /// </summary>
+        [JsonProperty("pow_queue")]
+        public string[] PowQueue { get; set; }
+
+        // bdType : map<string,witness_api_obj>
+        [JsonProperty("witnesses")]
+        public object Witnesses { get; set; }
+
+        // bdType : witness_schedule_api_obj
         [JsonProperty("witness_schedule")]
-        public WitnessSchedule WitnessSchedule { get; set; }
+        public WitnessScheduleApiObj WitnessSchedule { get; set; }
 
-        //price 
+        // bdType : price
         [JsonProperty("feed_price")]
-        public object FeedPrice { get; set; }
+        public Price FeedPrice { get; set; }
 
+        // bdType : string
         [JsonProperty("error")]
         public string Error { get; set; }
 
-        // optional< market > 
+        // bdType : optional<market>
         [JsonProperty("market_data")]
         public object MarketData { get; set; }
     }

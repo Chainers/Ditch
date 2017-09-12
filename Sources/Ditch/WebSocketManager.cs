@@ -20,7 +20,7 @@ namespace Ditch {
 
       private readonly object _sync;
       private int _id;
-      
+
       private int JsonRpsId {
          get {
             int reqId;
@@ -32,11 +32,10 @@ namespace Ditch {
          }
       }
 
-      private int timeout = 30000;
       /// <summary>
       /// Timeout in milliseconds waiting for WebSocket request to execute. Default is 30000.
       /// </summary>
-      public int Timeout { get { return timeout; } set { timeout = value; } }
+      public int Timeout { get; set; } = 30000;
 
       public WebSocketManager(string url, JsonSerializerSettings jsonSerializerSettings) {
          _sync = new object();
@@ -61,8 +60,16 @@ namespace Ditch {
          return ToJsonRpc(reqId, method, paramData);
       }
 
+      private string ToJsonRpc(int reqId, string method, params string[] data) {
+         return ToJsonRpc(reqId, method, $"[\"{string.Join("\",\"", data)}\"]");
+      }
+
       private string ToJsonRpc(int reqId, string method, string paramData) {
          return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
+      }
+
+      private string ToJsonRpc(int reqId, string method) {
+         return $"{{\"method\":\"{method}\",\"params\":[],\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
       }
 
       public JsonRpcResponse Call(Api api, string operation, params object[] data) {
@@ -91,6 +98,20 @@ namespace Ditch {
          return response.ToTyped<T>(_jsonSerializerSettings);
       }
 
+      public JsonRpcResponse<T> GetRequest<T>(string method) {
+         var id = JsonRpsId;
+         var msg = ToJsonRpc(id, method);
+         var response = Execute(id, msg);
+         return response.ToTyped<T>(_jsonSerializerSettings);
+      }
+
+      public JsonRpcResponse<T> GetRequest<T>(string method, params string[] data) {
+         var id = JsonRpsId;
+         var msg = ToJsonRpc(id, method, data);
+         var response = Execute(id, msg);
+         return response.ToTyped<T>(_jsonSerializerSettings);
+      }
+
       public JsonRpcResponse<T> GetRequest<T>(string method, string data) {
          var id = JsonRpsId;
          var msg = ToJsonRpc(id, method, data);
@@ -106,6 +127,7 @@ namespace Ditch {
          if (!OpenIfClosed())
             return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
 
+         Debug.WriteLine($">>> {msg}");
          _webSocket.Send(msg);
 
          waiter.WaitOne(Timeout);
@@ -172,6 +194,7 @@ namespace Ditch {
       }
 
       private void WebSocketMessageReceived(object sender, MessageReceivedEventArgs e) {
+         Debug.WriteLine($"<<< {e.Message}");
          var prop = JsonRpcResponse.FromString(e.Message, _jsonSerializerSettings);
          lock (_responseDictionary) {
             if (_responseDictionary.ContainsKey(prop.Id))

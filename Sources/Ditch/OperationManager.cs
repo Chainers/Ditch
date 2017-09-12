@@ -5,6 +5,7 @@ using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.JsonRpc;
 using Ditch.Operations;
+using Ditch.Operations.Enums;
 using Ditch.Operations.Get;
 using Ditch.Operations.Post;
 using Newtonsoft.Json;
@@ -62,9 +63,9 @@ namespace Ditch
         /// Get user accounts by user names
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse<Account[]> GetAccounts(params string[] userList)
+        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(params string[] userList)
         {
-            return _webSocketManager.GetRequest<Account[]>(Account.OperationName, $"[[\"{string.Join("\",\"", userList)}\"]]");
+            return _webSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", $"[[\"{string.Join("\",\"", userList)}\"]]");
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] testOps)
         {
-            var prop = DynamicGlobalProperties.Default;
+            var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, testOps);
             return _webSocketManager.GetRequest<bool>("verify_authority", transaction);
         }
@@ -102,7 +103,7 @@ namespace Ditch
         {
             return _webSocketManager.GetRequest<T>(method, data);
         }
-
+      
          public JsonRpcResponse Call(Api api, string method, params object[] data) {
             return _webSocketManager.Call((int)api, method, data);
          }
@@ -111,26 +112,25 @@ namespace Ditch
             return _webSocketManager.Call<T>((int)api, method, data);
          }
 
-
-         /// <summary>
-         /// Get post by author and permlink
-         /// </summary>
-         /// <param name="author"></param>
-         /// <param name="permlink"></param>
-         /// <returns></returns>
-         public JsonRpcResponse<Content> GetContent(string author, string permlink)
+        /// <summary>
+        /// Get post by author and permlink
+        /// </summary>
+        /// <param name="author"></param>
+        /// <param name="permlink"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<Discussion> GetContent(string author, string permlink)
         {
-            return _webSocketManager.Call<Content>(Content.Api, Content.OperationName, author, permlink);
+            return _webSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", author, permlink);
         }
 
-        public Transaction CreateTransaction(DynamicGlobalProperties properties, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
+        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
                 ChainId = _chainId,
-                RefBlockNum = (ushort)(properties.HeadBlockNumber & 0xffff),
-                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(properties.HeadBlockId), 4),
-                Expiration = properties.Time.AddSeconds(30),
+                RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
+                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
+                Expiration = propertyApiObj.Time.AddSeconds(30),
                 BaseOperations = operations
             };
 
@@ -155,9 +155,9 @@ namespace Ditch
         /// @see \c get_global_properties() for less-frequently changing properties
         /// </summary>
         /// <returns>the dynamic global properties</returns>
-        public JsonRpcResponse<DynamicGlobalProperties> GetDynamicGlobalProperties()
+        public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties()
         {
-            return _webSocketManager.GetRequest<DynamicGlobalProperties>(DynamicGlobalProperties.Reques);
+            return _webSocketManager.GetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties");
         }
 
         #region follow_api
@@ -172,9 +172,9 @@ namespace Ditch
         /// <param name="followType"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public JsonRpcResponse<FollowInfo[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit = 10)
+        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<FollowInfo[]>("call", FollowInfo.Api, "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+            return _webSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
         }
 
         /// <summary>
@@ -186,9 +186,9 @@ namespace Ditch
         /// <param name="followType"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public JsonRpcResponse<FollowInfo[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit = 10)
+        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<FollowInfo[]>("call", FollowInfo.Api, "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return _webSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
         }
 
         #endregion
@@ -201,9 +201,9 @@ namespace Ditch
         /// </summary>
         /// <param name="names"></param>
         /// <returns></returns>
-        public JsonRpcResponse<Account[]> LookupAccountNames(params string[] names)
+        public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(params string[] names)
         {
-            return _webSocketManager.GetRequest<Account[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]");
+            return _webSocketManager.GetRequest<AccountApiObj[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]");
         }
 
         /// <summary>
@@ -267,9 +267,9 @@ namespace Ditch
         /// <param name="account"></param>
         /// <param name="bandwidthType"></param>
         /// <returns></returns>
-        public JsonRpcResponse<AccountBandwidth> GetAccountBandwidth(string account, BandwidthType bandwidthType)
+        public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth(string account, BandwidthType bandwidthType)
         {
-            return _webSocketManager.GetRequest<AccountBandwidth>("get_account_bandwidth", account, bandwidthType.ToString().ToLower());
+            return _webSocketManager.GetRequest<AccountBandwidthApiObj>("get_account_bandwidth", account, bandwidthType.ToString().ToLower());
         }
 
         /// <summary>
@@ -277,9 +277,9 @@ namespace Ditch
         /// Отображает текущее состояние делегирования.
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse<WitnessSchedule> GetWitnessSchedule()
+        public JsonRpcResponse<WitnessScheduleApiObj> GetWitnessSchedule()
         {
-            return _webSocketManager.GetRequest<WitnessSchedule>("get_witness_schedule");
+            return _webSocketManager.GetRequest<WitnessScheduleApiObj>("get_witness_schedule");
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Ditch
         /// </summary>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public JsonRpcResponse<string[][]> GetKeyReferences(params string[][] keys)
+        public JsonRpcResponse<string[][]> GetKeyReferences(params object[][] keys)
         {
             return _webSocketManager.Call<string[][]>((int)Api.AccountByKeyApi, "get_key_references", keys);
         }
@@ -319,9 +319,9 @@ namespace Ditch
         /// Отображает историю конверсий.
         /// </summary>
         /// <returns></returns>
-        public JsonRpcResponse<FeedHistory> GetFeedHistory()
+        public JsonRpcResponse<FeedHistoryApiObj> GetFeedHistory()
         {
-            return _webSocketManager.GetRequest<FeedHistory>("get_feed_history");
+            return _webSocketManager.GetRequest<FeedHistoryApiObj>("get_feed_history");
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Ditch
             return _webSocketManager.GetRequest<ChainProperties>("get_chain_properties");
         }
 
-        public JsonRpcResponse<object> GetAccountReferences(int accountId)
+        public JsonRpcResponse<object> GetAccountReferences(UInt64 accountId)
         {
             return _webSocketManager.GetRequest<object>("get_account_references", accountId);
         }
@@ -366,9 +366,149 @@ namespace Ditch
         /// </summary>
         /// <param name="owner"></param>
         /// <returns></returns>
-        public JsonRpcResponse<ConvertRequest[]> GetConversionRequests(string owner)
+        public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner)
         {
-            return _webSocketManager.Call<ConvertRequest[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
+            return _webSocketManager.Call<ConvertRequestApiObj[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
+        }
+
+
+        /// <summary>
+        /// 
+        /// Возращает список меток(тэгов) включающие словосочетания
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", after, limit);
+        }
+
+        /// <summary>
+        /// Retrieve a block header
+        /// Возвращает все данные о блоке
+        /// </summary>
+        /// <param name="blockNum">Height of the block whose header should be returned</param>
+        /// <returns>header of the referenced block, or null if no matching block was found</returns>
+        public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum)
+        {
+            return _webSocketManager.GetRequest<BlockHeader>("get_block_header", blockNum);
+        }
+
+        /// <summary>
+        /// Retrieve a full, signed block
+        /// Возвращает все данные о блоке включая транзакции
+        /// </summary>
+        /// <param name="blockNum">Height of the block to be returned</param>
+        /// <returns>the referenced block, or null if no matching block was found</returns>
+        public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum)
+        {
+            return _webSocketManager.GetRequest<SignedBlockApiObj>("get_block", blockNum);
+        }
+
+
+        /// <summary>
+        /// Get sequence of operations included/generated within a particular block
+        /// Возвращает все операции в блоке, если параметр 'onlyVirtual' true то возвращает только виртуальные операции
+        /// </summary>
+        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned</param>
+        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true)</param>
+        /// <returns>sequence of operations included/generated within the block</returns>
+        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual = true)
+        {
+            return _webSocketManager.GetRequest<AppliedOperation[]>("get_ops_in_block", blockNum, onlyVirtual);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_best_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_active_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="after"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit)
+        {
+            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_recent_categories", after, limit);
+        }
+
+        /// <summary>
+        /// 
+        /// Отображает имя пользователя если он изменил право собственности на блокчейн
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(params string[] account)
+        {
+            return _webSocketManager.GetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", account);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает true если пользователь в статусе на восстановление.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(params string[] account)
+        {
+            return _webSocketManager.GetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", account);
+        }
+
+
+        /// <summary>
+        /// 
+        /// Возвращает операции реализованные с помощью посредничества.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="escrowId"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId)
+        {
+            return _webSocketManager.GetRequest<EscrowApiObj>("get_escrow", from, escrowId);
+        }
+
+        /// <summary>
+        /// 
+        /// Возвращает все переводы на счету пользователя в зависимости от типа
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type)
+        {
+            return _webSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", account, type.ToString().ToLower());
         }
 
         #endregion database_api

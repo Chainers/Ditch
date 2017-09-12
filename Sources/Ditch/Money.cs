@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Ditch
 {
-    public class Money
+    public class Money : IComparable<Money>, IEquatable<Money>
     {
         public long Value { get; }
 
@@ -74,14 +74,93 @@ namespace Ditch
             throw new ArithmeticException("Attempt subtract values with different Currency type.");
         }
 
+
+        public static bool operator >(Money money1, Money money2)
+        {
+            return CompareTo(money1, money2) > 0;
+        }
+
+        public static bool operator >=(Money money1, Money money2)
+        {
+            return CompareTo(money1, money2) >= 0;
+        }
+
+        public static bool operator <(Money money1, Money money2)
+        {
+            return CompareTo(money1, money2) < 0;
+        }
+
+        public static bool operator <=(Money money1, Money money2)
+        {
+            return CompareTo(money1, money2) <= 0;
+        }
+
+        public static bool operator ==(Money money1, Money money2)
+        {
+            return CompareTo(money1, money2) == 0;
+        }
+
+        public static bool operator !=(Money money1, Money money2)
+        {
+            return CompareTo(money1, money2) != 0;
+        }
+
+
         public static implicit operator Money(string value)
         {
             return new Money(value);
         }
 
+        public static implicit operator Money(double value)
+        {
+            return new Money(value.ToString(CultureInfo.InvariantCulture));
+        }
+
         public static implicit operator string(Money value)
         {
             return value.ToString();
+        }
+
+        public int CompareTo(Money other)
+        {
+            return CompareTo(this, other);
+        }
+
+        public static int CompareTo(Money first, Money other)
+        {
+            if (!string.IsNullOrEmpty(first.Currency) && !string.IsNullOrEmpty(other.Currency) && !first.Currency.Equals(other.Currency, StringComparison.OrdinalIgnoreCase))
+                throw new InvalidCastException($"Invalid compare {first} and {other}");
+
+            if (other.Value == first.Value && other.Precision == first.Precision)
+                return 0;
+
+            var dThis = first.Value / Math.Pow(10, first.Precision);
+            var dOther = other.Value / Math.Pow(10, other.Precision);
+            return dThis.CompareTo(dOther);
+        }
+
+        public bool Equals(Money other)
+        {
+            return CompareTo(other) == 0;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Money)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Value.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Currency != null ? Currency.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Precision.GetHashCode();
+                return hashCode;
+            }
         }
 
         public override string ToString()
@@ -102,6 +181,11 @@ namespace Ditch
                 dig = dig.Insert(dig.Length - Precision, numberDecimalSeparator);
             }
             return string.IsNullOrEmpty(Currency) ? dig : $"{dig} {Currency}";
+        }
+
+        public double ToDouble()
+        {
+            return Value / Math.Pow(10, Precision);
         }
     }
 }

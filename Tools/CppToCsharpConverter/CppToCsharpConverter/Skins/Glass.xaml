@@ -1,0 +1,351 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Создаём шаблон с названием Glass для контролов типа Button -->
+    <Style x:Key="Button" TargetType="Button" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <!-- Секция для хранения ресурсов шаблона -->
+                    <ControlTemplate.Resources>
+                        <!-- Секция Storyboard является контейнером для анимации, данный контейнер содержит в себе всю информацию отностительно анимации. Первый Storyboard называется Timeline1. Будет использоваться для "зажигания" кнопки -->
+                        <Storyboard x:Key = "Timeline1">
+                            <!-- Создание анимации для glow, и временем начала отсчёта 00:00:00, так - же указывается TargetProperty = UIElement.Opacity. Это означает, что данная анимация будет относится к прозрачности контрола. Происходит переход от 0 до 1, за установленное время -->
+                            <DoubleAnimationUsingKeyFrames BeginTime = "00:00:00" 
+                                                   Storyboard.TargetName = "glow" 
+                                                   Storyboard.TargetProperty = "(UIElement.Opacity)">
+                                <!-- Конечная точка анимации -->
+                                <SplineDoubleKeyFrame KeyTime = "00:00:00.3000" Value ="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <!-- Создание Storyboard с именем Timeline2. Будет использоваться для "гашения" кнопки. В настройках анимации происходит переход от 1 до 0, за установленное время -->
+                        <Storyboard x:Key = "Timeline2">
+                            <DoubleAnimationUsingKeyFrames BeginTime= "00:00:00" 
+                                                   Storyboard.TargetName = "glow"
+                                                   Storyboard.TargetProperty = "(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime= "00:00:00.3000000" Value ="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <!-- Конец хранения ресурсов контрола-->
+                    </ControlTemplate.Resources>
+                    <!-- Начало описания графического представления нашей кнопки-->
+                    <!-- Создание внешней (белой) границы кнопки. Кстати при описании цвета используется ARGB схема, это означает что первые 2 символа после # указывают на прозрачность-->
+                    <Border BorderBrush = "#FFFFFFFF"
+                    BorderThickness = "1,1,1,1" 
+                    CornerRadius = "4,4,4,4">
+                        <!-- Создание внутренней (чёрной) границы кнопки -->
+                        <Border x:Name = "border" 
+                        Background ="#4F000000"
+                        BorderBrush ="#AF000000" 
+                        BorderThickness ="1,1,1,1"
+                        CornerRadius ="4,4,4,4">
+                            <!-- Разбиваем пространство на 2-е строки. Это нужно для реализации эффекта стеклянной поверхности -->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height = "0.507*"/>
+                                    <RowDefinition Height = "0.493*"/>
+                                </Grid.RowDefinitions>
+                                <!-- Рисуем внутри кнопки "свечение". Тот самый эффект который происходит при наведении на кнопку курсором мыши. Название шейпа будет glow -->
+                                <!-- Задаём непрозрачность шейпа 0 (это начальное значение, тоесть пока кнопка не активна) -->
+                                <Border Opacity = "0"
+                                HorizontalAlignment = "Stretch"
+                                x:Name = "glow" 
+                                Width = "Auto"
+                                Grid.RowSpan = "2"
+                                CornerRadius = "4,4,4,4">
+                                    <!-- Будем работать с фоном -->
+                                    <Border.Background>
+                                        <!-- Создаём радиальный градиент -->
+                                        <RadialGradientBrush>
+                                            <!-- Задаём смещение градиента, так чтобы оно было в середине кнопки по горизонтали и немного заходило за нижнюю границу кнопки по вертикали -->
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleX = "1.702" ScaleY ="2.243"/>
+                                                    <SkewTransform AngleX = "0" AngleY = "0"/>
+                                                    <RotateTransform Angle = "0" />
+                                                    <TranslateTransform X = "-0.368" Y = "-0.152"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <!-- Устанавливаем цвета градиента в формате ARGB-->
+                                            <GradientStop Color= "Red" Offset = "0"/>
+                                            <GradientStop Color= "Orange" Offset = "1"/>
+                                        </RadialGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <!-- Завершаем работу со свечением -->
+                                <!-- Начинаем рисовать блик для придания "стеклянного эффекта" -->
+                                <ContentPresenter HorizontalAlignment = "Center"
+                                          VerticalAlignment = "Center" 
+                                          Width = "Auto"
+                                          Grid.RowSpan = "2">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextAlignment" Value="Center" />
+                                            <Setter Property="Foreground" Value="Silver" />
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                                <!-- Создаём шейп с названием shine -->
+                                <Border x:Name = "shine" HorizontalAlignment = "Stretch" Margin ="0,0,0,0" 
+                                        Width ="Auto" CornerRadius = "4,4,0,0">
+                                    <!-- Рисуем на фоне шейпа градиент, который и будет собственно стеклянным бликом -->
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint= "0.494,0.889" StartPoint ="0.494,0.028">
+                                            <GradientStop Color= "#99FFFFFF" Offset = "0"/>
+                                            <GradientStop Color= "#33FFFFFF" Offset = "1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <!-- Блик нарисовали -->
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <!-- Переходим к описанию триггеров нашей кнопки. Триггеры управляют состоянием объекта и через него мы будем описывать действия кнопки на события мыши -->
+                    <ControlTemplate.Triggers>
+                        <!-- Первый триггер IsPressed, состояние когда кнопка нажата. Просто устанавливаем соответствующие значения прозрачности, видимости и фона, для каждого из шейпов (указываем его имя в TargetName) -->
+                        <Trigger Property = "IsPressed" Value ="True">
+                            <Setter TargetName = "shine" Property = "Opacity" Value = "0.4"/>
+                            <Setter Property = "Background" TargetName = "border" Value = "#CC000000"/>
+                            <Setter Property= "Visibility" TargetName = "glow" Value = "Hidden"/>
+                        </Trigger>
+                        <!-- Второй триггер который нас интересует, это триггер состояния когда курсор находится над кнопкой, но кнопка ещё не нажата. Тут есть тонкость: у этого триггера есть 2 состояния. Состояние 1 когда курсор "пришел" на кнопку и состояние 2, когда курсор "ушел с кнопки". Для эмуляции подсветки кнопки мы вызываем анимации Timeline1 и Timeline2, в которых прописано, что они будут менять значение прозрачности у шейпа с названием glow.-->
+                        <Trigger Property = "IsMouseOver" Value = "True">
+                            <!-- Описываем состояние, когда курсор "пришел" -->
+                            <Trigger.EnterActions>
+                                <!-- Вызываем анимацию Timeline1 -->
+                                <BeginStoryboard Storyboard = "{StaticResource Timeline1}" />
+                            </Trigger.EnterActions>
+                            <!-- Описываем состояние, когда курсор "ушел" -->
+                            <Trigger.ExitActions>
+                                <!-- Вызываем анимацию Timeline2 -->
+                                <BeginStoryboard Storyboard = "{StaticResource Timeline2}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!-- Заканчиваем описание триггеров -->
+                    </ControlTemplate.Triggers>
+                    <!-- Заканчиваем описание шаблона -->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TabItem">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <!-- Секция Storyboard является контейнером для анимации, данный контейнер содержит в себе всю информацию отностительно анимации. Первый Storyboard называется Timeline1. Будет использоваться для "зажигания" кнопки -->
+                        <Storyboard x:Key = "Timeline1">
+                            <!-- Создание анимации для glow, и временем начала отсчёта 00:00:00, так - же указывается TargetProperty = UIElement.Opacity. Это означает, что данная анимация будет относится к прозрачности контрола. Происходит переход от 0 до 1, за установленное время -->
+                            <DoubleAnimationUsingKeyFrames BeginTime = "00:00:00" 
+                                                   Storyboard.TargetName = "glow" 
+                                                   Storyboard.TargetProperty = "(UIElement.Opacity)">
+                                <!-- Конечная точка анимации -->
+                                <SplineDoubleKeyFrame KeyTime = "00:00:00.3000" Value ="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <!-- Создание Storyboard с именем Timeline2. Будет использоваться для "гашения" кнопки. В настройках анимации происходит переход от 1 до 0, за установленное время -->
+                        <Storyboard x:Key = "Timeline2">
+                            <DoubleAnimationUsingKeyFrames BeginTime= "00:00:00 " 
+                                                   Storyboard.TargetName = "glow"
+                                                   Storyboard.TargetProperty = "(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime= "00:00:00.3000000 " Value ="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <!-- Конец хранения ресурсов контрола-->
+                    </DataTemplate.Resources>
+                    <!-- Создание внешней (белой) границы кнопки. Кстати при описании цвета используется ARGB схема, это означает что первые 2 символа после # указывают на прозрачность-->
+                    <Border x:Name="bMain" BorderThickness="1,1,1,1" CornerRadius="2,12,0,0">
+                        <!-- Разбиваем пространство на 2-е строки. Это нужно для реализации эффекта стеклянной поверхности -->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height = "0.507* "/>
+                                <RowDefinition Height = "0.493* "/>
+                            </Grid.RowDefinitions>
+                            <!-- Рисуем внутри кнопки "свечение". Тот самый эффект который происходит при наведении на кнопку курсором мыши. Название шейпа будет glow -->
+                            <!-- Задаём непрозрачность шейпа 0 (это начальное значение, тоесть пока кнопка не активна) -->
+                            <Border Opacity = "0" HorizontalAlignment = "Stretch"
+                                            x:Name = "glow" Width = "Auto" Grid.RowSpan = "2" CornerRadius="2,12,0,0">
+                                <!-- Будем работать с фоном -->
+                                <Border.Background>
+                                    <!-- Создаём радиальный градиент -->
+                                    <RadialGradientBrush>
+                                        <!-- Задаём смещение градиента, так чтобы оно было в середине кнопки по горизонтали и немного заходило за нижнюю границу кнопки по вертикали -->
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX = "1.702" ScaleY ="2.243"/>
+                                                <SkewTransform AngleX = "0" AngleY = "0"/>
+                                                <RotateTransform Angle = "0" />
+                                                <TranslateTransform X = "-0.368" Y = "-0.152"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <!-- Устанавливаем цвета градиента в формате ARGB-->
+                                        <GradientStop Color= "Red" Offset = "0"/>
+                                        <GradientStop Color= "Orange" Offset = "1"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <!-- Завершаем работу со свечением -->
+                            <ContentPresenter>
+                                <ContentPresenter.Content>
+                                    <TextBlock x:Name="tbHeader" Margin="4" FontSize="15" Text="{TemplateBinding Content}" Foreground="Silver"/>
+                                </ContentPresenter.Content>
+                            </ContentPresenter>
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TabItem}},Path=IsSelected}" Value="True">
+                            <Setter TargetName="bMain" Property="Background" Value="Silver"/>
+                            <Setter TargetName="tbHeader" Property="Foreground" Value="Black"/>
+                        </DataTrigger>
+                        <!-- Второй триггер который нас интересует, это триггер состояния когда курсор находится над кнопкой, но кнопка ещё не нажата. Тут есть тонкость: у этого триггера есть 2 состояния. Состояние 1 когда курсор "пришел" на кнопку и состояние 2, когда курсор "ушел с кнопки". Для эмуляции подсветки кнопки мы вызываем анимации Timeline1 и Timeline2, в которых прописано, что они будут менять значение прозрачности у шейпа с названием glow.-->
+                        <Trigger Property = "IsMouseOver" Value = "True">
+                            <!-- Описываем состояние, когда курсор "пришел" -->
+                            <Trigger.EnterActions>
+                                <!-- Вызываем анимацию Timeline1 -->
+                                <BeginStoryboard Storyboard = "{StaticResource Timeline1}" />
+                            </Trigger.EnterActions>
+                            <!-- Описываем состояние, когда курсор "ушел" -->
+                            <Trigger.ExitActions>
+                                <!-- Вызываем анимацию Timeline2 -->
+                                <BeginStoryboard Storyboard = "{StaticResource Timeline2}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <!-- Заканчиваем описание триггеров -->
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid x:Name="Root">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="Border" Margin="0,0,-4,0" 
+                                Background="#FF525252"
+                                BorderThickness="1,1,1,1" CornerRadius="2,12,0,0">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#FF888888" />
+                            </Border.BorderBrush>
+                            <ContentPresenter x:Name="ContentSite"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                ContentSource="Header"
+                                RecognizesAccessKey="True" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="100" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+   
+    <Style TargetType="ScrollViewer">
+        <Setter Property="Background" Value="#FF525252"/>
+    </Style>
+
+    <Style TargetType="TabControl">
+        <Setter Property="Background" Value="#FF525252"/>
+    </Style>
+
+    <Style TargetType="ListBoxItem">
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="border" BorderBrush="#FF444444" Background="Orange" BorderThickness="3" CornerRadius ="4,4,4,4">
+                        <ContentPresenter x:Name="ContentSite" RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName ="border" Property = "Opacity" Value = "0.6"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ComboBoxBase" TargetType="ComboBox">
+        <Setter Property="Background" Value="#FF525252"/>
+        <Setter Property="Foreground" Value="Silver"/>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="#FF807C7C"/>
+        <Setter Property="Foreground" Value="Silver"/>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="#FF807C7C"/>
+        <Setter Property="Foreground" Value="Silver"/>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="Silver"/>
+    </Style>
+
+    <Style x:Key="LabelBold" TargetType="Label">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style  x:Key="TextBlockWrapping" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Width" Value="180"/>
+    </Style>
+
+    <Style  x:Key="TextBlockCenter" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="3 0 0 0"/>
+    </Style>
+
+    <Style  x:Key="TextBoxCenter" TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="3 0 0 0"/>
+    </Style>
+
+    <Style  x:Key="AccountStackPanel" TargetType="StackPanel">
+        <Setter Property="Margin" Value="3 3 3 3"/>
+    </Style>
+
+    <Style  TargetType="ListBox">
+        <Setter Property="Background" Value="#FF807C7C"/>
+    </Style>
+
+    <Style  TargetType="Grid">
+        <Setter Property="Background" Value="#FF807C7C"/>
+    </Style>
+
+
+    <Style TargetType="Menu">
+        <Setter Property="Background" Value="#FF807C7C"/>
+    </Style>
+
+    <Style TargetType="MenuItem">
+        <Setter Property="Background" Value="#FF807C7C"/>
+    </Style>
+
+    <Style TargetType="StatusBar">
+        <Setter Property="Background" Value="#FF807C7C"/>
+    </Style>
+
+</ResourceDictionary>

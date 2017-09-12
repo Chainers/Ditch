@@ -1,4 +1,5 @@
-﻿using Ditch.Helpers;
+﻿using System.Globalization;
+using Ditch.Helpers;
 using NUnit.Framework;
 
 namespace Ditch.Tests
@@ -25,7 +26,6 @@ namespace Ditch.Tests
         [TestCase("kuchavo", "kuchavo")]
         [TestCase("kuna", "kuna")]
         [TestCase("lean-startup", "lean-startup")]
-        [TestCase("lesnik-случайнаявст", "лесник-случайнаявст")]
         [TestCase("ligaavtorov", "ligaavtorov")]
         [TestCase("lumia", "lumia")]
         [TestCase("madagascar", "madagascar")]
@@ -35,8 +35,6 @@ namespace Ditch.Tests
         [TestCase("meetup", "meetup")]
         [TestCase("narin", "narin")]
         [TestCase("oagalakova", "oagalakova")]
-        [TestCase("proвсёаn", "провсёан")]
-        [TestCase("provseаn", "провсеан")]
         [TestCase("psk", "psk")]
         [TestCase("ru--akademiya", "академия")]
         [TestCase("ru--anonimnyijavtor", "анонимныйавтор")]
@@ -223,7 +221,6 @@ namespace Ditch.Tests
         [TestCase("rusteemitblog", "rusteemitblog")]
         [TestCase("steemit", "steemit")]
         [TestCase("szczygłów", "szczygłów")]
-        [TestCase("tom123статьи", "том123статьи")]
         [TestCase("u0433u043eu043bu043eu0441u0444u0", "u0433u043eu043bu043eu0441u0444u0")]
         [TestCase("u0434u0435u0432u0443u0448u043au0", "u0434u0435u0432u0443u0448u043au0")]
         [TestCase("u043au0430u0431u0431u0430u043bu0", "u043au0430u0431u0431u0430u043bu0")]
@@ -259,7 +256,6 @@ namespace Ditch.Tests
         [TestCase("kuchavo", "kuchavo")]
         [TestCase("kuna", "kuna")]
         [TestCase("lean-startup", "lean-startup")]
-        [TestCase("lesnik-случайнаявст", "лесник-случайнаявст")]
         [TestCase("ligaavtorov", "ligaavtorov")]
         [TestCase("lumia", "lumia")]
         [TestCase("madagascar", "madagascar")]
@@ -269,8 +265,6 @@ namespace Ditch.Tests
         [TestCase("meetup", "meetup")]
         [TestCase("narin", "narin")]
         [TestCase("oagalakova", "oagalakova")]
-        [TestCase("proвсёаn", "провсёан")]
-        [TestCase("provseаn", "провсеан")]
         [TestCase("psk", "psk")]
         [TestCase("ru--akademiya", "академия")]
         [TestCase("ru--anonimnyijavtor", "анонимныйавтор")]
@@ -457,7 +451,6 @@ namespace Ditch.Tests
         [TestCase("rusteemitblog", "rusteemitblog")]
         [TestCase("steemit", "steemit")]
         [TestCase("szczygłów", "szczygłów")]
-        [TestCase("tom123статьи", "том123статьи")]
         [TestCase("u0433u043eu043bu043eu0441u0444u0", "u0433u043eu043bu043eu0441u0444u0")]
         [TestCase("u0434u0435u0432u0443u0448u043au0", "u0434u0435u0432u0443u0448u043au0")]
         [TestCase("u043au0430u0431u0431u0430u043bu0", "u043au0430u0431u0431u0430u043bu0")]
@@ -469,6 +462,21 @@ namespace Ditch.Tests
         {
             var rez = Transliteration.ToRus(value);
             Assert.IsTrue(rez.Equals(exp), $"{rez} != {exp} ({exp} > {value})");
+        }
+
+        [Test]
+        [TestCase("277.126 SBD", 277126, 3, "SBD")]
+        [TestCase("0 SBD", 0, 0, "SBD")]
+        [TestCase("0", 0, 0, "")]
+        [TestCase("123 SBD", 123, 0, "SBD")]
+        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
+        public void ParseTestTest(string test, long value, byte precision, string currency)
+        {
+            var money = new Money(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+            Assert.IsTrue(money.Value == value);
+            Assert.IsTrue(money.Precision == precision);
+            Assert.IsTrue(money.Currency == currency);
+            Assert.IsTrue(test.Equals(money.ToString()));
         }
     }
 }
