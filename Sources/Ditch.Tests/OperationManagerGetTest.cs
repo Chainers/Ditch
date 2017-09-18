@@ -32,21 +32,24 @@ namespace Ditch.Tests
             var resp = Manager(name).GetContent(author, permlink);
             Assert.IsTrue(resp != null);
             Assert.IsTrue(resp.Result != null);
+            Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
 
             var obj = Manager(name).CustomGetRequest<JObject>("call", (int)Api.DefaultApi, "get_content", new[] { author, permlink });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
-        
+
         [Test]
         public void get_followers([Values("Steem", "Golos")] string name)
         {
             ushort count = 3;
             var resp = Manager(name).GetFollowers(Login[name], string.Empty, FollowType.blog, count);
+            Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Assert.IsTrue(resp.Result.Length <= count);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             var respNext = Manager(name).GetFollowers(Login[name], resp.Result.Last().Follower, FollowType.blog, count);
+            Console.WriteLine(resp.Error);
             Assert.IsFalse(respNext.IsError);
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
@@ -61,11 +64,13 @@ namespace Ditch.Tests
         {
             ushort count = 3;
             var resp = Manager(name).GetFollowing(Login[name], string.Empty, FollowType.blog, count);
+            Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length <= count);
 
             var respNext = Manager(name).GetFollowing(Login[name], resp.Result.Last().Following, FollowType.blog, count);
+            Console.WriteLine(resp.Error);
             Assert.IsFalse(respNext.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
             Assert.IsTrue(respNext.Result.Length <= count);
@@ -81,11 +86,148 @@ namespace Ditch.Tests
             ushort count = 3;
             var dt = new DateTime(2017, 7, 1);
             var resp = Manager(name).GetDiscussionsByAuthorBeforeDate(Login[name], string.Empty, dt, count);
+            Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length <= count);
 
             var obj = Manager(name).CustomGetRequest<JObject[]>("get_discussions_by_author_before_date", Login[name], resp.Result[count - 1].Permlink, dt, count);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_active_witnesses([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetActiveWitnesses();
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        }
+
+        [Test]
+        public void get_miner_queue([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetMinerQueue();
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        }
+
+        [Test]
+        public void get_schema([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetSchema();
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        }
+
+        [Test]
+        public void get_savings_withdraw_from([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetSavingsWithdrawFrom(Login[name]);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_savings_withdraw_from", Login[name]);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_savings_withdraw_to([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetSavingsWithdrawTo(Login[name]);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_savings_withdraw_to", Login[name]);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_witness_by_account([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetWitnessByAccount("steepshot");
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject>("get_witness_by_account", Login[name]);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_witnesses([Values("Steem", "Golos")] string name)
+        {
+            var witnes = Manager(name).GetWitnessesByVote(string.Empty, 1);
+            Console.WriteLine(witnes.Error);
+            Assert.IsFalse(witnes.IsError);
+
+            var resp = Manager(name).GetWitnesses(witnes.Result[0].Id);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_witnesses", new object[1] { new object[] { witnes.Result[0].Id } });
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void lookup_witness_accounts([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).LookupWitnessAccounts(string.Empty, 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            //var obj = Manager(name).CustomGetRequest<JObject[]>("lookup_witness_accounts", string.Empty, 3);
+            //TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_witness_count([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetWitnessCount();
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(resp.Result);
+        }
+
+        [Test]
+        public void get_order_book([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetOrderBook(3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject>("get_order_book", 3);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_open_orders([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetOpenOrders(Login[name]);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_open_orders", Login[name]);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
+
+        [Test]
+        public void get_witnesses_by_vote([Values("Steem", "Golos")] string name)
+        {
+            var resp = Manager(name).GetWitnessesByVote(string.Empty, 3);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_witnesses_by_vote", string.Empty, 3);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 

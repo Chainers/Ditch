@@ -21,14 +21,14 @@ namespace Ditch.Tests
         {
             Login = new Dictionary<string, string>()
             {
-                {"Steem", "UserLogin"},
-                {"Golos", "UserLogin"}
+                {"Steem", "joseph.kalu"},
+                {"Golos", "joseph.kalu"}
             };
 
             UserPrivateKeys = new Dictionary<string, List<byte[]>>()
             {
-                {"Steem", new List<byte[]> {Base58.TryGetBytes("5**************************************************")}},
-                {"Golos", new List<byte[]> {Base58.TryGetBytes("5**************************************************")}}
+                {"Steem", new List<byte[]> {Base58.TryGetBytes("***REMOVED***") }},
+                {"Golos", new List<byte[]> {Base58.TryGetBytes("***REMOVED***")}}
             };
 
             Chain = new Dictionary<string, ChainInfo>();
