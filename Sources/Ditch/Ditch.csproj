@@ -9,48 +9,62 @@
     <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/Chainers/Ditch/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
-    <AssemblyVersion>2.2.6.0</AssemblyVersion>
-    <FileVersion>2.2.6.0</FileVersion>
-    <Version>2.2.6</Version>
+    <AssemblyVersion>2.2.7.0</AssemblyVersion>
+    <FileVersion>2.2.7.0</FileVersion>
+    <Version>2.2.7</Version>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
 </Description>
     <PackageReleaseNotes>## Supported operations
-Get:
-* GetDynamicGlobalProperties
-* GetContent
-* GetAccounts
-* GetCustomRequest
-* VerifyAuthority 
-* GetFollowing
-* GetFollowers
-* LookupAccountNames
-* LookupAccounts
-* GetAccountCount
-* GetAccountBandwidth
-* GetWitnessSchedule
-* GetState
-* GetNextScheduledHardfork
-* GetKeyReferences
-* GetHardforkVersion
-* GetFeedHistory
-* GetCurrentMedianHistoryPrice
-* GetConfig
-* GetChainProperties
-* GetConversionRequests
-* GetAccountHistory
-* GetAccountReferences
+DatabaseApi:
 * GetTrendingTags
+* GetState
+* GetActiveWitnesses
+* GetMinerQueue
 * GetBlockHeader
 * GetBlock
 * GetOpsInBlock
-* GetTrendingCategories
-* GetBestCategories
-* GetActiveCategories
-* GetRecentCategories
+* GetConfig
+* GetSchema
+* GetDynamicGlobalProperties
+* GetChainProperties
+* GetCurrentMedianHistoryPrice
+* GetFeedHistory
+* GetWitnessSchedule
+* GetHardforkVersion
+* GetNextScheduledHardfork
+* GetKeyReferences
+* GetAccountReferences
+* LookupAccountNames
+* LookupAccounts
+* GetAccountCount
 * GetOwnerHistory
 * GetRecoveryRequest
 * GetEscrow
 * GetWithdrawRoutes
+* GetAccountBandwidth
+* GetSavingsWithdrawFrom
+* GetSavingsWithdrawTo
+* GetWitnesses
+* GetConversionRequests
+* GetWitnessByAccount
+* GetWitnessesByVote
+* LookupWitnessAccounts
+* GetWitnessCount
+* GetOrderBook
+* GetOpenOrders
+
+Get:
+* GetContent
+* GetAccounts
+* GetCustomRequest
+* VerifyAuthority
+* GetFollowing
+* GetFollowers
+* GetAccountHistory
+* GetTrendingCategories
+* GetBestCategories
+* GetActiveCategories
+* GetRecentCategories
 
 Post:
 * VoteOperation (vote)
