@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Ditch.Operations.Enums;
 using Ditch.Operations.Post;
 using NUnit.Framework;
+using Ditch.Errors;
 
 namespace Ditch.Tests
 {
     [TestFixture]
     public class OperationManagerPostTest : BaseTest
     {
+        private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
+
+
         [Test]
         public void FollowTest([Values("Steem", "Golos")] string name)
         {
@@ -56,6 +61,15 @@ namespace Ditch.Tests
         }
 
         [Test]
+        public void UnFollowTest2([Values("Steem", "Golos")] string name)
+        {
+            var op = new FollowOperation(Login[name], "aarnold", null, Login[name]);
+            //var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
+            var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
         public void UpVoteOperationTest([Values("Steem", "Golos")] string name)
         {
             var op = new UpVoteOperation(Login[name], "joseph.kalu", "fkkl");
@@ -85,11 +99,28 @@ namespace Ditch.Tests
         [Test]
         public virtual void PostTest([Values("Steem")] string name)
         {
-            var op = new PostOperation("steepshot", Login[name], "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
+            var op = new PostOperation("test", Login[name], "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
             var popt = new BeneficiariesOperation(Login[name], op.Permlink, Chain[name].SbdSymbol, new Beneficiary("steepshot", 1000));
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op, popt);
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+
+        [Test]
+        public virtual void PostFailByTitleSizeTest([Values("Steem")] string name)
+        {
+            var op = new PostOperation("test", Login[name], new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": [\"test\",\"spam\"]}");
+            //var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
+            var response = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
+            Assert.IsTrue(response.IsError);
+            Console.WriteLine(response.GetErrorMessage());
+            Assert.IsTrue(response.Error is ResponseError);
+            var typedError = (ResponseError)response.Error;
+            Assert.IsTrue(typedError.Data.Code == 10);
+            var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
+            Console.WriteLine(match.Value);
+            Assert.IsTrue(match.Success);
+            Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
         }
 
         [Test]

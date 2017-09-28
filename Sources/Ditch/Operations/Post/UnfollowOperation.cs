@@ -1,11 +1,10 @@
-﻿using Ditch.Operations.Enums;
-
+﻿
 namespace Ditch.Operations.Post
 {
     /// <summary>
     /// Unfollow some author
     /// </summary>
-    public class UnfollowOperation : FollowOperation
+    public class UnfollowOperation : CustomJsonOperation
     {
         /// <summary>
         /// 
@@ -15,6 +14,9 @@ namespace Ditch.Operations.Post
         /// <param name="requiredPostingAuths"></param>
         /// <returns></returns>
         public UnfollowOperation(string login, string author, params string[] requiredPostingAuths)
-            : base(login, author, new FollowType[0], requiredPostingAuths) { }
+            : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": []}}]")
+        {
+            RequiredPostingAuths = requiredPostingAuths;
+        }
     }
 }

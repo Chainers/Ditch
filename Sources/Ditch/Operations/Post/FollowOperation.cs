@@ -16,7 +16,7 @@ namespace Ditch.Operations.Post
         /// <param name="requiredPostingAuths"></param>
         /// <returns></returns>
         public FollowOperation(string login, string author, FollowType[] what, params string[] requiredPostingAuths)
-            : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": [\"{string.Format("\", \"", what)}\"]}}]")
+            : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": [{ToString(what)}]}}]")
         {
             RequiredPostingAuths = requiredPostingAuths;
         }
@@ -30,6 +30,13 @@ namespace Ditch.Operations.Post
             : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": [\"{what}\"]}}]")
         {
             RequiredPostingAuths = requiredPostingAuths;
+        }
+
+        private static string ToString(FollowType[] what)
+        {
+            if (what == null || what.Length == 0)
+                return string.Empty;
+            return $"\"{string.Format("\", \"", what)}\"";
         }
     }
 }
