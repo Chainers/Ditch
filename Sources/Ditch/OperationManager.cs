@@ -101,6 +101,14 @@ namespace Ditch
         {
             return _webSocketManager.GetRequest<T>(method, data);
         }
+      
+         public JsonRpcResponse Call(Api api, string method, params object[] data) {
+            return _webSocketManager.Call((int)api, method, data);
+         }
+
+         public JsonRpcResponse<T> Call<T>(Api api, string method, params object[] data) {
+            return _webSocketManager.Call<T>((int)api, method, data);
+         }
 
         /// <summary>
         /// Get post by author and permlink
