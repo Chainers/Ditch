@@ -1,4 +1,5 @@
-﻿using Ditch.Operations.Enums;
+﻿using System.Linq;
+using Ditch.Operations.Enums;
 
 namespace Ditch.Operations.Post
 {
@@ -36,7 +37,7 @@ namespace Ditch.Operations.Post
         {
             if (what == null || what.Length == 0)
                 return string.Empty;
-            return $"\"{string.Format("\", \"", what)}\"";
+            return $"\"{string.Join("\", \"", what)}\"";
         }
     }
 }

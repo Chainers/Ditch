@@ -1,10 +1,9 @@
-﻿
-namespace Ditch.Operations.Post
+﻿namespace Ditch.Operations.Post
 {
     /// <summary>
     /// Unfollow some author
     /// </summary>
-    public class UnfollowOperation : CustomJsonOperation
+    public class UnfollowOperation : FollowOperation
     {
         /// <summary>
         /// 
@@ -14,9 +13,8 @@ namespace Ditch.Operations.Post
         /// <param name="requiredPostingAuths"></param>
         /// <returns></returns>
         public UnfollowOperation(string login, string author, params string[] requiredPostingAuths)
-            : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": []}}]")
+            : base(login, author, null, requiredPostingAuths)
         {
-            RequiredPostingAuths = requiredPostingAuths;
         }
     }
 }

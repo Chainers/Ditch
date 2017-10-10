@@ -22,6 +22,16 @@ namespace Ditch.Tests
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
 
+        [Test]
+        public void FollowTest2([Values("Steem", "Golos")] string name)
+        {
+            var fType = new[] { Ditch.Operations.Enums.FollowType.blog };
+            var op = new FollowOperation(Login[name], "joseph.kalu", fType, Login[name]);
+            var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
+            //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
+            Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
+        }
+        
         /// <summary>
         /// "params": [
         ///     3,
