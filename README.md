@@ -53,7 +53,7 @@ Get:
 * GetBestCategories
 * GetActiveCategories
 * GetRecentCategories
-	
+
 Post:
 * VoteOperation (vote) 
   * UpVoteOperation inherit VoteOperation
@@ -81,8 +81,11 @@ Post:
     //set global properties
     public void SetUp()
     {
-        Chain = ChainManager.GetChainInfo(KnownChains.Steem);
-        OperationManager = new OperationManager(Chain.Url, Chain.ChainId, Chain.JsonSerializerSettings);
+        _operationManager = new OperationManager();
+        var url = _operationManager.TryConnectTo(new List<string> {"wss://steemd.steemit.com", "wss://some.other.steem.node"}) // Steem
+        if (!string.IsNullOrEmpty(url))
+            Console.WriteLine($"Conected to {url}");
+        //_operationManager.TryConnectTo(new List<string> { "wss://ws.golos.io" }); // Golos
         YouPrivateKeys = new List<byte[]>
         {
             Base58.GetBytes("5**************************************************") \\WIF
@@ -92,8 +95,8 @@ Post:
     
     //Create new post with some beneficiaries
     var postOp = new PostOperation("parentPermlink", YouLogin, "Title", "Body", "jsonMetadata");
-    var benOp = new BeneficiaresOperation(YouLogin, postOp.Permlink, Chain.SbdSymbol, new Beneficiary("someBeneficiarName", 1000));
-    var responce = _operationManager.BroadcastOberations(YouPrivateKeys, postOp, benOp);
+    var benOp = new BeneficiariesOperation(YouLogin, postOp.Permlink, _operationManager.SbdSymbol, new Beneficiary("someBeneficiarName", 1000));
+    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, postOp, benOp);
     
     //UpVote
     var voteOp = new UpVoteOperation(YouLogin, "someUserName", "somePermlink");

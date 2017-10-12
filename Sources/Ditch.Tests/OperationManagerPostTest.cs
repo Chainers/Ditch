@@ -109,9 +109,10 @@ namespace Ditch.Tests
         [Test]
         public virtual void PostTest([Values("Steem")] string name)
         {
+            var manager = Manager(name);
             var op = new PostOperation("test", Login[name], "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
-            var popt = new BeneficiariesOperation(Login[name], op.Permlink, Chain[name].SbdSymbol, new Beneficiary("steepshot", 1000));
-            var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op, popt);
+            var popt = new BeneficiariesOperation(Login[name], op.Permlink, manager.SbdSymbol, new Beneficiary("steepshot", 1000));
+            var prop = manager.VerifyAuthority(UserPrivateKeys[name], op, popt);
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op, popt);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }

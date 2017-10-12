@@ -12,7 +12,6 @@ namespace Ditch.Tests
     public class BaseTest
     {
         protected readonly Dictionary<string, string> Login;
-        protected readonly Dictionary<string, ChainInfo> Chain;
         protected readonly OperationManager Steem;
         protected readonly OperationManager Golos;
         protected readonly Dictionary<string, List<byte[]>> UserPrivateKeys;
@@ -27,19 +26,12 @@ namespace Ditch.Tests
 
             UserPrivateKeys = new Dictionary<string, List<byte[]>>()
             {
-                {"Steem", new List<byte[]> {Base58.TryGetBytes("***REMOVED***") }},
-                {"Golos", new List<byte[]> {Base58.TryGetBytes("***REMOVED***")}}
+                {"Steem", new List<byte[]> {Base58.TryGetBytes("5**************************************************") }},
+                {"Golos", new List<byte[]> {Base58.TryGetBytes("5**************************************************")}}
             };
 
-            Chain = new Dictionary<string, ChainInfo>();
-
-            var steemChainInfo = ChainManager.GetChainInfo(KnownChains.Steem);
-            Chain.Add("Steem", steemChainInfo);
-            Steem = new OperationManager(steemChainInfo.Url, steemChainInfo.ChainId);
-
-            var golosChainInfo = ChainManager.GetChainInfo(KnownChains.Golos);
-            Chain.Add("Golos", golosChainInfo);
-            Golos = new OperationManager(golosChainInfo.Url, golosChainInfo.ChainId);
+            Steem = new OperationManager(new List<string> { "wss://steemd.steemit.com" });
+            Golos = new OperationManager(new List<string> { "wss://ws.golos.io" });
         }
 
         protected OperationManager Manager(string name)

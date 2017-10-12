@@ -8,27 +8,129 @@ using Ditch.Operations;
 using Ditch.Operations.Get;
 using Ditch.Operations.Post;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch
 {
     public partial class OperationManager
     {
-        private readonly WebSocketManager _webSocketManager;
-        private readonly byte[] _chainId;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
+        private List<string> _urls;
+        private WebSocketManager _webSocketManager;
+        private byte[] _chainId;
+        private string _sbdSymbol;
 
-        public OperationManager(string url, byte[] chainId, JsonSerializerSettings jsonSerializerSettings)
+        public byte[] ChainId
         {
-            _webSocketManager = new WebSocketManager(url, jsonSerializerSettings);
-            _chainId = chainId;
+            get
+            {
+                if (_webSocketManager == null)
+                    RetryConnect();
+                return _chainId;
+            }
         }
 
+        public string SbdSymbol
+        {
+            get
+            {
+                if (_webSocketManager == null)
+                    RetryConnect();
+                return _sbdSymbol;
+            }
+        }
+
+        private WebSocketManager WebSocketManager
+        {
+            get
+            {
+                if (_webSocketManager == null)
+                    RetryConnect();
+                return _webSocketManager;
+            }
+        }
+
+        #region Constructors
+
+        [Obsolete]
+        public OperationManager(string url, byte[] chainId, JsonSerializerSettings jsonSerializerSettings)
+        {
+            _urls = new List<string>
+            {
+                url
+            };
+            _chainId = chainId;
+            _jsonSerializerSettings = jsonSerializerSettings;
+        }
+
+        [Obsolete]
         public OperationManager(string url, byte[] chainId) : this(url, chainId, GetJsonSerializerSettings(CultureInfo.InvariantCulture))
         {
         }
 
+        [Obsolete]
         public OperationManager(string url, byte[] chainId, CultureInfo cultureInfo) : this(url, chainId, GetJsonSerializerSettings(cultureInfo))
         {
         }
+
+        public OperationManager(List<string> wssUrls, JsonSerializerSettings jsonSerializerSettings)
+        {
+            _urls = wssUrls;
+            _jsonSerializerSettings = jsonSerializerSettings;
+        }
+
+        public OperationManager(List<string> wssUrls)
+            : this(wssUrls, GetJsonSerializerSettings(CultureInfo.InvariantCulture))
+        {
+        }
+
+        public OperationManager()
+        {
+            _jsonSerializerSettings = GetJsonSerializerSettings(CultureInfo.InvariantCulture);
+        }
+
+        #endregion Constructors
+
+
+        public string TryConnectTo(List<string> urls)
+        {
+            if (_urls != urls)
+                _urls = urls;
+
+            _webSocketManager?.Dispose();
+
+            foreach (var url in urls)
+            {
+                _webSocketManager = new WebSocketManager(url, _jsonSerializerSettings);
+                var resp = GetConfig();
+                if (!resp.IsError)
+                {
+                    dynamic conf = resp.Result;
+                    var scid = conf.STEEMIT_CHAIN_ID as JValue;
+                    var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
+                    if (scid != null && smpsbd != null)
+                    {
+                        var cur = smpsbd.Value<string>();
+                        var str = scid.Value<string>();
+                        if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str))
+                        {
+                            _sbdSymbol = new Money(cur).Currency;
+                            _chainId = Hex.HexToBytes(str);
+                            return url;
+                        }
+                    }
+                }
+                _webSocketManager.Dispose();
+            }
+
+            return string.Empty;
+        }
+
+        public string RetryConnect()
+        {
+            return TryConnectTo(_urls);
+        }
+
 
         private static JsonSerializerSettings GetJsonSerializerSettings(CultureInfo cultureInfo)
         {
@@ -53,7 +155,7 @@ namespace Ditch
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations);
-            var resp = _webSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
+            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
             return resp;
         }
 
@@ -63,7 +165,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<ExtendedAccount[]> GetAccounts(params string[] userList)
         {
-            return _webSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", $"[[\"{string.Join("\",\"", userList)}\"]]");
+            return WebSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", $"[[\"{string.Join("\",\"", userList)}\"]]");
         }
 
         /// <summary>
@@ -75,7 +177,7 @@ namespace Ditch
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, testOps);
-            return _webSocketManager.GetRequest<bool>("verify_authority", transaction);
+            return WebSocketManager.GetRequest<bool>("verify_authority", transaction);
         }
 
         /// <summary>
@@ -87,7 +189,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<T> CustomPostRequest<T>(string method, Transaction transaction)
         {
-            return _webSocketManager.GetRequest<T>(method, transaction);
+            return WebSocketManager.GetRequest<T>(method, transaction);
         }
 
         /// <summary>
@@ -99,7 +201,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<T> CustomGetRequest<T>(string method, params object[] data)
         {
-            return _webSocketManager.GetRequest<T>(method, data);
+            return WebSocketManager.GetRequest<T>(method, data);
         }
 
         /// <summary>
@@ -110,14 +212,14 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<Discussion> GetContent(string author, string permlink)
         {
-            return _webSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", author, permlink);
+            return WebSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", author, permlink);
         }
 
         public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
-                ChainId = _chainId,
+                ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
                 Expiration = propertyApiObj.Time.AddSeconds(30),

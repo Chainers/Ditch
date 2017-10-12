@@ -27,7 +27,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", after, limit);
+            return WebSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", after, limit);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<State> GetState(string path)
         {
-            return _webSocketManager.GetRequest<State>("get_state", $"[\"{path}\"]");
+            return WebSocketManager.GetRequest<State>("get_state", $"[\"{path}\"]");
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<string[]> GetActiveWitnesses()
         {
-            return _webSocketManager.GetRequest<string[]>("get_active_witnesses");
+            return WebSocketManager.GetRequest<string[]>("get_active_witnesses");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<string[]> GetMinerQueue()
         {
-            return _webSocketManager.GetRequest<string[]>("get_miner_queue");
+            return WebSocketManager.GetRequest<string[]>("get_miner_queue");
         }
 
 
@@ -75,7 +75,7 @@ namespace Ditch
         /// <returns>header of the referenced block, or null if no matching block was found</returns>
         public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum)
         {
-            return _webSocketManager.GetRequest<BlockHeader>("get_block_header", blockNum);
+            return WebSocketManager.GetRequest<BlockHeader>("get_block_header", blockNum);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Ditch
         /// <returns>the referenced block, or null if no matching block was found</returns>
         public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum)
         {
-            return _webSocketManager.GetRequest<SignedBlockApiObj>("get_block", blockNum);
+            return WebSocketManager.GetRequest<SignedBlockApiObj>("get_block", blockNum);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Ditch
         /// <returns>sequence of operations included/generated within the block</returns>
         public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual = true)
         {
-            return _webSocketManager.GetRequest<AppliedOperation[]>("get_ops_in_block", blockNum, onlyVirtual);
+            return WebSocketManager.GetRequest<AppliedOperation[]>("get_ops_in_block", blockNum, onlyVirtual);
         }
 
 
@@ -114,7 +114,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<object> GetConfig()
         {
-            return _webSocketManager.GetRequest<object>("get_config");
+            return WebSocketManager.GetRequest<object>("get_config");
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<string> GetSchema()
         {
-            return _webSocketManager.GetRequest<string>("get_schema");
+            return WebSocketManager.GetRequest<string>("get_schema");
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Ditch
         /// <returns>the dynamic global properties</returns>
         public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties()
         {
-            return _webSocketManager.GetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties");
+            return WebSocketManager.GetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties");
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<ChainProperties> GetChainProperties()
         {
-            return _webSocketManager.GetRequest<ChainProperties>("get_chain_properties");
+            return WebSocketManager.GetRequest<ChainProperties>("get_chain_properties");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice()
         {
-            return _webSocketManager.GetRequest<Price>("get_current_median_history_price");
+            return WebSocketManager.GetRequest<Price>("get_current_median_history_price");
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<FeedHistoryApiObj> GetFeedHistory()
         {
-            return _webSocketManager.GetRequest<FeedHistoryApiObj>("get_feed_history");
+            return WebSocketManager.GetRequest<FeedHistoryApiObj>("get_feed_history");
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<WitnessScheduleApiObj> GetWitnessSchedule()
         {
-            return _webSocketManager.GetRequest<WitnessScheduleApiObj>("get_witness_schedule");
+            return WebSocketManager.GetRequest<WitnessScheduleApiObj>("get_witness_schedule");
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<string> GetHardforkVersion(params string[][] keys)
         {
-            return _webSocketManager.GetRequest<string>("get_hardfork_version");
+            return WebSocketManager.GetRequest<string>("get_hardfork_version");
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<ScheduledHardfork> GetNextScheduledHardfork()
         {
-            return _webSocketManager.GetRequest<ScheduledHardfork>("get_next_scheduled_hardfork");
+            return WebSocketManager.GetRequest<ScheduledHardfork>("get_next_scheduled_hardfork");
         }
 
         //get_reward_fund
@@ -213,7 +213,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<string[][]> GetKeyReferences(params object[][] keys)
         {
-            return _webSocketManager.Call<string[][]>((int)Api.AccountByKeyApi, "get_key_references", keys);
+            return WebSocketManager.Call<string[][]>((int)Api.AccountByKeyApi, "get_key_references", keys);
         }
 
 
@@ -230,7 +230,7 @@ namespace Ditch
         /// <returns>all accounts that referr to the key or account id in their owner or active authorities.</returns>
         public JsonRpcResponse<object> GetAccountReferences(UInt64 accountId)
         {
-            return _webSocketManager.GetRequest<object>("get_account_references", accountId);
+            return WebSocketManager.GetRequest<object>("get_account_references", accountId);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Ditch
         /// <returns>The accounts holding the provided names</returns>
         public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(params string[] names)
         {
-            return _webSocketManager.GetRequest<AccountApiObj[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]");
+            return WebSocketManager.GetRequest<AccountApiObj[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]");
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Ditch
         /// <returns>Map of account names to corresponding IDs</returns>
         public JsonRpcResponse<string[]> LookupAccounts(string account, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<string[]>("lookup_accounts", account, limit);
+            return WebSocketManager.GetRequest<string[]>("lookup_accounts", account, limit);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<UInt64> GetAccountCount()
         {
-            return _webSocketManager.GetRequest<UInt64>("get_account_count");
+            return WebSocketManager.GetRequest<UInt64>("get_account_count");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(params string[] account)
         {
-            return _webSocketManager.GetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", account);
+            return WebSocketManager.GetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", account);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(params string[] account)
         {
-            return _webSocketManager.GetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", account);
+            return WebSocketManager.GetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", account);
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId)
         {
-            return _webSocketManager.GetRequest<EscrowApiObj>("get_escrow", from, escrowId);
+            return WebSocketManager.GetRequest<EscrowApiObj>("get_escrow", from, escrowId);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type)
         {
-            return _webSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", account, type.ToString().ToLower());
+            return WebSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", account, type.ToString().ToLower());
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth(string account, BandwidthType bandwidthType)
         {
-            return _webSocketManager.GetRequest<AccountBandwidthApiObj>("get_account_bandwidth", account, bandwidthType.ToString().ToLower());
+            return WebSocketManager.GetRequest<AccountBandwidthApiObj>("get_account_bandwidth", account, bandwidthType.ToString().ToLower());
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawFrom(string account)
         {
-            return _webSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_from", $"[\"{account}\"]");
+            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_from", $"[\"{account}\"]");
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawTo(string account)
         {
-            return _webSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_to", $"[\"{account}\"]");
+            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_to", $"[\"{account}\"]");
         }
 
         //get_vesting_delegations
@@ -363,7 +363,7 @@ namespace Ditch
         /// <returns>The witnesses corresponding to the provided IDs</returns>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnesses(params object[] witnessIds)
         {
-            return _webSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses", new object[1][] { witnessIds });
+            return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses", new object[1][] { witnessIds });
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner)
         {
-            return _webSocketManager.Call<ConvertRequestApiObj[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
+            return WebSocketManager.Call<ConvertRequestApiObj[]>((int)Api.DefaultApi, "get_conversion_requests", owner);
         }
         
         /// <summary>
@@ -384,7 +384,7 @@ namespace Ditch
         /// <returns>The witness object, or null if the account does not have a witness</returns>
         public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string account)
         {
-            return _webSocketManager.GetRequest<WitnessApiObj>("get_witness_by_account", $"[\"{account}\"]");
+            return WebSocketManager.GetRequest<WitnessApiObj>("get_witness_by_account", $"[\"{account}\"]");
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Ditch
         /// <returns>An array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnessesByVote(string from, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses_by_vote", from, limit);
+            return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses_by_vote", from, limit);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Ditch
         /// <returns>Map of witness names to corresponding IDs</returns>
         public JsonRpcResponse<object[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<object[]>("lookup_witness_accounts", lowerBoundName, limit);
+            return WebSocketManager.GetRequest<object[]>("lookup_witness_accounts", lowerBoundName, limit);
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Ditch
         /// </summary>
         public JsonRpcResponse<UInt64> GetWitnessCount()
         {
-            return _webSocketManager.GetRequest<UInt64>("get_witness_count");
+            return WebSocketManager.GetRequest<UInt64>("get_witness_count");
         }
 
 
@@ -430,7 +430,7 @@ namespace Ditch
         /// <returns>API type: order_book</returns>
         public JsonRpcResponse<OrderBook> GetOrderBook(UInt32 limit)
         {
-            return _webSocketManager.GetRequest<OrderBook>("get_order_book", limit);
+            return WebSocketManager.GetRequest<OrderBook>("get_order_book", limit);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<ExtendedLimitOrder[]> GetOpenOrders(string owner)
         {
-            return _webSocketManager.GetRequest<ExtendedLimitOrder[]>("get_open_orders", $"[\"{owner}\"]");
+            return WebSocketManager.GetRequest<ExtendedLimitOrder[]>("get_open_orders", $"[\"{owner}\"]");
         }
 
 
@@ -461,7 +461,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", after, limit);
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", after, limit);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_best_categories", after, limit);
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_best_categories", after, limit);
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_active_categories", after, limit);
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_active_categories", after, limit);
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<CategoryApiObj[]>("get_recent_categories", after, limit);
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_recent_categories", after, limit);
         }
 
 
@@ -505,7 +505,7 @@ namespace Ditch
 
         public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit)
         {
-            return _webSocketManager.GetRequest<Discussion[]>("get_discussions_by_author_before_date", author, startPermlink, beforeDate, limit);
+            return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_author_before_date", author, startPermlink, beforeDate, limit);
         }
 
 
@@ -524,7 +524,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit)
         {
-            var buf = _webSocketManager.GetRequest<JArray[]>("get_account_history", account, from, limit);
+            var buf = WebSocketManager.GetRequest<JArray[]>("get_account_history", account, from, limit);
 
             if (buf.IsError)
                 return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>(buf.Error);
@@ -561,7 +561,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+            return WebSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit = 10)
         {
-            return _webSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return WebSocketManager.GetRequest<FollowApiObj[]>("call", "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
         }
 
         #endregion
