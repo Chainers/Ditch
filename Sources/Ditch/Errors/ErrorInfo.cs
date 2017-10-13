@@ -9,25 +9,14 @@ namespace Ditch.Errors
     [JsonObject(MemberSerialization.OptIn)]
     public class ErrorInfo
     {
-        private string _message;
-        private long _code;
-
         /// <summary>
         /// ResponseError message
         /// </summary>
         [JsonProperty("message")]
-        public virtual string Message
-        {
-            get => _message;
-            set => _message = value;
-        }
+        public string Message { get; set; }
 
         [JsonProperty("code")]
-        public virtual long Code
-        {
-            get => _code;
-            set => _code = value;
-        }
+        public long Code { get; set; }
 
 
         public override string ToString()
@@ -50,7 +39,7 @@ namespace Ditch.Errors
         /// <param name="message">ResponseError message</param>
         protected ErrorInfo(string message)
         {
-            _message = message;
+            Message = message;
         }
 
         /// <summary>
@@ -60,8 +49,8 @@ namespace Ditch.Errors
         /// <param name="message">ResponseError message</param>
         protected ErrorInfo(long code, string message)
         {
-            _code = code;
-            _message = message;
+            Code = code;
+            Message = message;
         }
     }
 }

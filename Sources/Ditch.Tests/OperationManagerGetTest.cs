@@ -2,7 +2,6 @@
 using System.Linq;
 using Ditch.Operations;
 using Ditch.Operations.Enums;
-using Ditch.Operations.Get;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -24,7 +23,7 @@ namespace Ditch.Tests
         }
 
         [Test]
-        public virtual void get_content(
+        public void get_content(
             [Values("Steem", "Golos")] string name,
             [Values("steepshot", "golosmedia")] string author,
             [Values("c-lib-ditch-1-0-for-graphene-from-steepshot-team-under-the-mit-license", "psk38")] string permlink)
@@ -170,7 +169,7 @@ namespace Ditch.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("get_witnesses", new object[1] { new object[] { witnes.Result[0].Id } });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_witnesses", new object[] { new [] { witnes.Result[0].Id } });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -330,7 +329,7 @@ namespace Ditch.Tests
             Assert.IsTrue(ac.Length == 1);
 
             var key = ac[0].Active.KeyAuths[0][0] as string;
-            var resp = Manager(name).GetKeyReferences(new object[1][] { new[] { key } });
+            var resp = Manager(name).GetKeyReferences(new object[][] { new[] { key } });
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -349,6 +348,7 @@ namespace Ditch.Tests
         }
 
         [Test]
+        [Ignore("Code: '1'. Message: '10 assert_exception: Assert Exception false: database_api::get_account_references --- Needs to be refactored for steem.")]
         public void get_account_references([Values("Steem", "Golos")] string name)
         {
             var ac = Manager(name).GetAccounts(Login[name]);

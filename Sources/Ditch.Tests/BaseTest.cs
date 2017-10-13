@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using Ditch.Helpers;
@@ -11,23 +12,30 @@ namespace Ditch.Tests
 {
     public class BaseTest
     {
+        private bool IgnoreRequestWithBadData = true;
         protected readonly Dictionary<string, string> Login;
         protected readonly OperationManager Steem;
         protected readonly OperationManager Golos;
         protected readonly Dictionary<string, List<byte[]>> UserPrivateKeys;
 
-        public BaseTest()
+        protected BaseTest()
         {
-            Login = new Dictionary<string, string>()
+            Login = new Dictionary<string, string>
             {
                 {"Steem", "joseph.kalu"},
                 {"Golos", "joseph.kalu"}
             };
 
-            UserPrivateKeys = new Dictionary<string, List<byte[]>>()
+            var steemWif = ConfigurationManager.AppSettings["SteemWif"];
+            var golosWif = ConfigurationManager.AppSettings["GolosWif"];
+
+            Assert.IsFalse(string.IsNullOrEmpty(steemWif));
+            Assert.IsFalse(string.IsNullOrEmpty(golosWif));
+
+            UserPrivateKeys = new Dictionary<string, List<byte[]>>
             {
-                {"Steem", new List<byte[]> {Base58.TryGetBytes("5**************************************************") }},
-                {"Golos", new List<byte[]> {Base58.TryGetBytes("5**************************************************")}}
+                {"Steem", new List<byte[]> {Base58.TryGetBytes(steemWif) }},
+                {"Golos", new List<byte[]> {Base58.TryGetBytes(golosWif) }}
             };
 
             Steem = new OperationManager(new List<string> { "wss://steemd.steemit.com" });
@@ -77,7 +85,7 @@ namespace Ditch.Tests
             {
                 if (jObject.Length > 0)
                     TestPropetries(type.GetElementType(), jObject[0]);
-                else
+                else if (!IgnoreRequestWithBadData)
                     throw new NullReferenceException("Impossible to do test for this input data!");
             }
             else

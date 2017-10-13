@@ -1,6 +1,6 @@
 ﻿namespace Ditch.Helpers
 {
-    public class Transliteration
+    public static class Transliteration
     {
         //https://github.com/GolosChain/tolstoy/blob/master/app/utils/ParsersAndFormatters.js
         private static readonly string[,] Rules =

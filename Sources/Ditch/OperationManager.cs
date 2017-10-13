@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Helpers;
 using Ditch.JsonRpc;
@@ -84,6 +85,11 @@ namespace Ditch
         {
         }
 
+        public OperationManager(JsonSerializerSettings jsonSerializerSettings)
+        {
+            _jsonSerializerSettings = jsonSerializerSettings;
+        }
+
         public OperationManager()
         {
             _jsonSerializerSettings = GetJsonSerializerSettings(CultureInfo.InvariantCulture);
@@ -91,8 +97,24 @@ namespace Ditch
 
         #endregion Constructors
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="urls"></param>
+        /// <returns></returns>
         public string TryConnectTo(List<string> urls)
+        {
+            return TryConnectTo(urls, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="urls"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public string TryConnectTo(List<string> urls, CancellationToken token)
         {
             if (_urls != urls)
                 _urls = urls;
@@ -102,7 +124,7 @@ namespace Ditch
             foreach (var url in urls)
             {
                 _webSocketManager = new WebSocketManager(url, _jsonSerializerSettings);
-                var resp = GetConfig();
+                var resp = GetConfig(token);
                 if (!resp.IsError)
                 {
                     dynamic conf = resp.Result;
@@ -126,9 +148,24 @@ namespace Ditch
             return string.Empty;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string RetryConnect()
         {
-            return TryConnectTo(_urls);
+            return RetryConnect(CancellationToken.None);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public string RetryConnect(CancellationToken token)
+        {
+            return TryConnectTo(_urls, token);
         }
 
 
@@ -145,17 +182,32 @@ namespace Ditch
         /// <summary>
         /// Create and broadcast transaction
         /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="operations"></param>
         /// <returns></returns>
         public JsonRpcResponse BroadcastOperations(IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
-            var prop = GetDynamicGlobalProperties();
+            return BroadcastOperations(userPrivateKeys, CancellationToken.None, operations);
+        }
+
+        /// <summary>
+        /// Create and broadcast transaction
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse BroadcastOperations(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        {
+            var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
             {
                 return prop;
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations);
-            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, transaction);
+            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, token, transaction);
             return resp;
         }
 
@@ -165,19 +217,47 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<ExtendedAccount[]> GetAccounts(params string[] userList)
         {
-            return WebSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", $"[[\"{string.Join("\",\"", userList)}\"]]");
+            return GetAccounts(CancellationToken.None, userList);
+        }
+
+        /// <summary>
+        /// Get user accounts by user names
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="userList"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(CancellationToken token, params string[] userList)
+        {
+            return WebSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", $"[[\"{string.Join("\",\"", userList)}\"]]", token);
         }
 
         /// <summary>
         /// Execute custom user method
         /// Возвращает TRUE если транзакция подписана правильно
         /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="testOps"></param>
         /// <returns></returns>
         public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] testOps)
         {
+            return VerifyAuthority(userPrivateKeys, CancellationToken.None, testOps);
+        }
+
+        /// <summary>
+        /// Execute custom user method
+        /// Возвращает TRUE если транзакция подписана правильно
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="testOps"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, testOps);
-            return WebSocketManager.GetRequest<bool>("verify_authority", transaction);
+            return WebSocketManager.GetRequest<bool>("verify_authority", token, transaction);
         }
 
         /// <summary>
@@ -189,7 +269,21 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<T> CustomPostRequest<T>(string method, Transaction transaction)
         {
-            return WebSocketManager.GetRequest<T>(method, transaction);
+            return CustomPostRequest<T>(method, transaction, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="transaction">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<T> CustomPostRequest<T>(string method, Transaction transaction, CancellationToken token)
+        {
+            return WebSocketManager.GetRequest<T>(method, token, transaction);
         }
 
         /// <summary>
@@ -201,7 +295,21 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<T> CustomGetRequest<T>(string method, params object[] data)
         {
-            return WebSocketManager.GetRequest<T>(method, data);
+            return CustomGetRequest<T>(method, CancellationToken.None, data);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<T> CustomGetRequest<T>(string method, CancellationToken token, params object[] data)
+        {
+            return WebSocketManager.GetRequest<T>(method, token, data);
         }
 
         /// <summary>
@@ -212,10 +320,44 @@ namespace Ditch
         /// <returns></returns>
         public JsonRpcResponse<Discussion> GetContent(string author, string permlink)
         {
-            return WebSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", author, permlink);
+            return GetContent(author, permlink, CancellationToken.None);
         }
 
+        /// <summary>
+        /// Get post by author and permlink
+        /// </summary>
+        /// <param name="author"></param>
+        /// <param name="permlink"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, CancellationToken token)
+        {
+            return WebSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", token, author, permlink);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propertyApiObj"></param>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
         public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
+        {
+            return CreateTransaction(propertyApiObj, userPrivateKeys, CancellationToken.None, operations);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propertyApiObj"></param>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var transaction = new Transaction
             {
@@ -231,6 +373,7 @@ namespace Ditch
 
             foreach (var userPrivateKey in userPrivateKeys)
             {
+                token.ThrowIfCancellationRequested();
                 var sig = Secp256k1Manager.SignCompressedCompact(data, userPrivateKey);
                 transaction.Signatures.Add(sig);
             }

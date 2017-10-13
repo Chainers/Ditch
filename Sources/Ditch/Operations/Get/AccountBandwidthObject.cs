@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Operations.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.Operations.Get

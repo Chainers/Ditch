@@ -25,7 +25,7 @@ namespace Ditch.Tests
         [Test]
         public void FollowTest2([Values("Steem", "Golos")] string name)
         {
-            var fType = new[] { Ditch.Operations.Enums.FollowType.blog };
+            var fType = new[] { FollowType.blog };
             var op = new FollowOperation(Login[name], "joseph.kalu", fType, Login[name]);
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
@@ -107,7 +107,7 @@ namespace Ditch.Tests
         }
 
         [Test]
-        public virtual void PostTest([Values("Steem")] string name)
+        public void PostTest([Values("Steem")] string name)
         {
             var manager = Manager(name);
             var op = new PostOperation("test", Login[name], "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
@@ -118,7 +118,7 @@ namespace Ditch.Tests
         }
 
         [Test]
-        public virtual void PostFailByTitleSizeTest([Values("Steem")] string name)
+        public void PostFailByTitleSizeTest([Values("Steem")] string name)
         {
             var op = new PostOperation("test", Login[name], new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", "{\"app\": \"steepshot / 0.0.4\", \"tags\": [\"test\",\"spam\"]}");
             //var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
@@ -135,7 +135,7 @@ namespace Ditch.Tests
         }
 
         [Test]
-        public virtual void RuPostTest([Values("Steem", "Golos")] string name)
+        public void RuPostTest([Values("Steem", "Golos")] string name)
         {
             var op = new PostOperation("test", Login[name], "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", "{\"app\": \"steepshot / 0.0.4\", \"tags\": []}");
 

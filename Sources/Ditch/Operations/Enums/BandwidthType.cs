@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Ditch.Operations.Get
+namespace Ditch.Operations.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum BandwidthType
