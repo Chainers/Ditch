@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Ditch.Operations;
 using Ditch.Operations.Enums;
 using Newtonsoft.Json;
@@ -11,6 +13,28 @@ namespace Ditch.Tests
     [TestFixture]
     public class OperationManagerGetTest : BaseTest
     {
+
+        [Test]
+        public async Task TryConnectToTest()
+        {
+            var steem = new List<string> { "wss://steemd.steemit.com" };
+            var golos = new List<string> { "wss://ws.golos.io" };
+
+            var manager = new OperationManager();
+
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine($"{i} conect to steem.");
+                var url = manager.TryConnectTo(steem);
+                Console.WriteLine($"{i} conected to {url}");
+                await Task.Delay(3000);
+                Console.WriteLine($"{i} conect to golos.");
+                url = manager.TryConnectTo(golos);
+                Console.WriteLine($"{i} conected to {url}");
+                await Task.Delay(3000);
+            }
+        }
+
         [Test, Sequential]
         public void get_dynamic_global_properties([Values("Steem", "Golos")] string name)
         {
@@ -169,7 +193,7 @@ namespace Ditch.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("get_witnesses", new object[] { new [] { witnes.Result[0].Id } });
+            var obj = Manager(name).CustomGetRequest<JObject[]>("get_witnesses", new object[] { new[] { witnes.Result[0].Id } });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 

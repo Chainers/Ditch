@@ -17,7 +17,7 @@ namespace Ditch
         private readonly Dictionary<int, ManualResetEvent> _manualResetEventDictionary;
         private readonly ManualResetEvent _socketOpenEvent;
         private readonly ManualResetEvent _socketCloseEvent;
-        private readonly WebSocket _webSocket;
+        private WebSocket _webSocket;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         private readonly object _sync;
@@ -413,8 +413,8 @@ namespace Ditch
             {
                 if (_webSocket != null && _webSocket.State == WebSocketState.Open)
                 {
-                    _webSocket.Close();
                     _webSocket.Dispose();
+                    _webSocket = null;
                 }
 
                 lock (_manualResetEventDictionary)
