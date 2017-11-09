@@ -67,8 +67,6 @@ namespace Ditch
             return ToJsonRpc(reqId, method, paramData);
         }
 
-
-
         private string ToJsonRpc(int reqId, string method, string paramData)
         {
             return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
@@ -89,6 +87,32 @@ namespace Ditch
         public JsonRpcResponse Call(Api api, string command, params object[] dataSet)
         {
             return Call(api, command, CancellationToken.None, dataSet);
+        }
+
+        /// <summary>
+        /// Creates and executes a JSON-RPC request to "call" method.
+        /// </summary>
+        /// <param name="api">Api id key</param>
+        /// <param name="command">Api command name</param>
+        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
+        /// <returns></returns>
+        public JsonRpcResponse Call(string api, string command, params object[] dataSet)
+        {
+            return Call(api, command, CancellationToken.None, dataSet);
+        }
+
+        /// <summary>
+        /// Creates and executes a JSON-RPC request to "call" method.
+        /// </summary>
+        /// <param name="api">Api id key</param>
+        /// <param name="command">Api command name</param>
+        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
+        /// <returns></returns>
+        public JsonRpcResponse Call(string api, string command, CancellationToken token, params object[] dataSet)
+        {
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, "call", api, command, dataSet);
+            return Execute(id, msg, token);
         }
 
         /// <summary>
@@ -146,6 +170,37 @@ namespace Ditch
         public JsonRpcResponse<T> Call<T>(int api, string command, params object[] dataSet)
         {
             return Call<T>(api, command, CancellationToken.None, dataSet);
+        }
+
+        /// <summary>
+        /// Creates and executes a JSON-RPC request to "call" method.
+        /// </summary>
+        /// <typeparam name="T">Response type.</typeparam>
+        /// <param name="api">Api id key</param>
+        /// <param name="command">Api command name</param>
+        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
+        /// <returns></returns>
+        public JsonRpcResponse<T> Call<T>(string api, string command, params object[] dataSet)
+        {
+            return Call<T>(api, command, CancellationToken.None, dataSet);
+        }
+
+        /// <summary>
+        /// Creates and executes a JSON-RPC request to "call" method.
+        /// </summary>
+        /// <typeparam name="T">Response type.</typeparam>
+        /// <param name="api">Api id key</param>
+        /// <param name="command">Api command name</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<T> Call<T>(string api, string command, CancellationToken token, params object[] dataSet)
+        {
+            var id = JsonRpsId;
+            var msg = ToJsonRpc(id, "call", api, command, dataSet);
+            var resp = Execute(id, msg, token);
+            return resp.ToTyped<T>(_jsonSerializerSettings);
         }
 
         /// <summary>

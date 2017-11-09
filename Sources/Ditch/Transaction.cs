@@ -11,7 +11,6 @@ namespace Ditch
     public class Transaction
     {
         public const string OperationName = "broadcast_transaction";
-        public const int Api = 3;
 
         [SerializeHelper.MessageOrder(0)]
         public byte[] ChainId { get; set; } = new byte[0]; //64

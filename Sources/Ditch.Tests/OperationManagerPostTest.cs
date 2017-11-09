@@ -16,7 +16,7 @@ namespace Ditch.Tests
         [Test]
         public void FollowTest([Values("Steem", "Golos")] string name)
         {
-            var op = new FollowOperation(Login[name], "joseph.kalu", FollowType.blog, Login[name]);
+            var op = new FollowOperation(Login[name], "steepshot", FollowType.blog, Login[name]);
             var prop = Manager(name).VerifyAuthority(UserPrivateKeys[name], op);
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
@@ -31,7 +31,7 @@ namespace Ditch.Tests
             //var prop = Manager(name).BroadcastOperations(UserPrivateKeys[name], op);
             Assert.IsFalse(prop.IsError, prop.GetErrorMessage());
         }
-        
+
         /// <summary>
         /// "params": [
         ///     3,

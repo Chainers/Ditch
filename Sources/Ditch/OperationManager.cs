@@ -207,7 +207,7 @@ namespace Ditch
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations);
-            var resp = WebSocketManager.Call(Transaction.Api, Transaction.OperationName, token, transaction);
+            var resp = WebSocketManager.Call(ApiNames.NetworkBroadcastApi, Transaction.OperationName, token, transaction);
             return resp;
         }
 
@@ -333,7 +333,7 @@ namespace Ditch
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion> GetContent(string author, string permlink, CancellationToken token)
         {
-            return WebSocketManager.Call<Discussion>((int)Api.DefaultApi, "get_content", token, author, permlink);
+            return WebSocketManager.Call<Discussion>(ApiNames.DatabaseApi, "get_content", token, author, permlink);
         }
 
         /// <summary>

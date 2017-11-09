@@ -58,7 +58,7 @@ namespace Ditch.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
 
-            var obj = Manager(name).CustomGetRequest<JObject>("call", (int)Api.DefaultApi, "get_content", new[] { author, permlink });
+            var obj = Manager(name).CustomGetRequest<JObject>("call", ApiNames.DatabaseApi, "get_content", new[] { author, permlink });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -424,7 +424,7 @@ namespace Ditch.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Manager(name).CustomGetRequest<JObject[]>("call", (int)Api.DefaultApi, "get_conversion_requests", Login[name]);
+            var obj = Manager(name).CustomGetRequest<JObject[]>("call", ApiNames.DatabaseApi, "get_conversion_requests", Login[name]);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 

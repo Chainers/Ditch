@@ -426,7 +426,7 @@ namespace Ditch
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[][]> GetKeyReferences(CancellationToken token, params object[][] keys)
         {
-            return WebSocketManager.Call<string[][]>((int)Api.AccountByKeyApi, "get_key_references", token, keys);
+            return WebSocketManager.Call<string[][]>(ApiNames.AccountByKeyApi, "get_key_references", token, keys);
         }
 
 
@@ -757,7 +757,7 @@ namespace Ditch
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner, CancellationToken token)
         {
-            return WebSocketManager.Call<ConvertRequestApiObj[]>((int)Api.DefaultApi, "get_conversion_requests", token, owner);
+            return WebSocketManager.Call<ConvertRequestApiObj[]>(ApiNames.DatabaseApi, "get_conversion_requests", token, owner);
         }
 
         /// <summary>
