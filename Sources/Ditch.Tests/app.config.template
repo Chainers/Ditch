@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <appSettings>
-    <add key="SteemWif" value="5**************************************************"/>
-    <add key="GolosWif" value="5**************************************************"/>
-  </appSettings>
-</configuration>

@@ -1,6 +1,10 @@
 # Ditch
-The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
+The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain. 
 
+## Supported chains:
+ * Golos
+ * Steem
+ 
 ## Supported operations
 
 DatabaseApi:
@@ -12,7 +16,6 @@ DatabaseApi:
 * GetBlock - Retrieve a full, signed block
 * GetOpsInBlock - Get sequence of operations included/generated within a particular block
 * GetConfig - Displays the current node configuration.
-* GetSchema - Return a JSON description of object representations
 * GetDynamicGlobalProperties - Returns the block chain's rapidly-changing properties.
 * GetChainProperties - Displays the commission for creating the user, the maximum block size and the GBG interest rate
 * GetCurrentMedianHistoryPrice - Displays the current median price of conversion
@@ -68,10 +71,6 @@ Post:
   * ReplyOperation inherit CommentOperation
 * CommentOptionsOperation (comment_options) 
   * BeneficiaresOperation (beneficiaries) inherit CommentOptionsOperation
-  
-## Supported chains:
- * Golos
- * Steem
  
 ## Additional features:
  * Transliteration (Cyrillic to Latin)
@@ -82,14 +81,14 @@ Post:
     public void SetUp()
     {
         _operationManager = new OperationManager();
-        var url = _operationManager.TryConnectTo(new List<string> {"wss://steemd.steemit.com", "wss://some.other.steem.node"}) // Steem
+        var url = _operationManager.TryConnectTo(new List<string> {"wss://steemd.steemit.com"}) // Steem
+        //var url = _operationManager.TryConnectTo(new List<string> { "wss://ws.golos.io" }); // Golos
         if (!string.IsNullOrEmpty(url))
             Console.WriteLine($"Conected to {url}");
-        //_operationManager.TryConnectTo(new List<string> { "wss://ws.golos.io" }); // Golos
         YouPrivateKeys = new List<byte[]>
         {
             Base58.GetBytes("5**************************************************") \\WIF
-        };        
+        };
         YouLogin = "username";
     }
     
@@ -119,3 +118,8 @@ The library is written based on the article https://steemit.com/steem/@xeroc/ste
 * [NETStandard.Library (>= 1.6.1)](https://www.nuget.org/packages/NETStandard.Library)
 * [Newtonsoft.Json (>= 10.0.3)](https://www.nuget.org/packages/Newtonsoft.Json)
 * [WebSocket4Net (>= 0.15.0-beta9)](https://www.nuget.org/packages/WebSocket4Net)
+
+## Feedback
+
+* https://t.me/steepshot_en
+* https://t.me/steepshot_ru

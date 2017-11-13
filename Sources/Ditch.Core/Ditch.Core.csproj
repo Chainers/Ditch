@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <Version>3.0.0</Version>
+    <Authors>Chainers, KorzunAV</Authors>
+    <Company>ChainArtSoft</Company>
+    <PackageProjectUrl>https://github.com/Chainers/Ditch</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/Chainers/Ditch/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Ditch.Core</PackageId>
+    <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
+</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="WebSocket4Net" Version="0.15.0" />
+  </ItemGroup>
+
+</Project>
