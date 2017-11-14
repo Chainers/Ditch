@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Ditch.Golos.Helpers;
+﻿using Ditch.Golos.Helpers;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations.Post
@@ -10,15 +9,6 @@ namespace Ditch.Golos.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
-        /// <summary>
-        /// @"[_\s\.]+"
-        /// </summary>
-        protected static readonly Regex WordDelimiters = new Regex(@"[_\s\.]+");
-        /// <summary>
-        /// @"[^a-z0-9-]+"
-        /// </summary>
-        protected static readonly Regex PermlinkNotSupportedCharacters = new Regex(@"[^a-z0-9-]+", RegexOptions.IgnoreCase);
-
         public override string TypeName => "comment";
 
         public override OperationType Type => OperationType.Comment;

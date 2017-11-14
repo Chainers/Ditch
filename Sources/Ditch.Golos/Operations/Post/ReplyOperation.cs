@@ -26,8 +26,8 @@ namespace Ditch.Golos.Operations.Post
         {
             var parentPermlink = $"re-{user}-re-{parentAuthor}-{permlink}";
             parentPermlink = Transliteration.ToEng(parentPermlink);
-            parentPermlink = WordDelimiters.Replace(parentPermlink, "-");
-            parentPermlink = PermlinkNotSupportedCharacters.Replace(parentPermlink, string.Empty);
+            parentPermlink = Transliteration.WordDelimiters.Replace(parentPermlink, "-");
+            parentPermlink = Transliteration.PermlinkNotSupportedCharacters.Replace(parentPermlink, string.Empty);
             parentPermlink = TimePostfix.Replace(parentPermlink, string.Empty);
             parentPermlink = $"{parentPermlink}-{DateTime.UtcNow:yyyyMMddTHHmmssZ}".ToLower();
             return parentPermlink;
