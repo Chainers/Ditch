@@ -23,24 +23,24 @@ namespace Ditch.Steem.Tests
             return Api.VerifyAuthority(postingKeys, op);
         }
 
-        [Test, Sequential]
+        [Test]
         public void FollowTest()
         {
             var user = User;
             var autor = "steepshot";
 
-            var op = new FollowOperation(user.Login, autor, FollowType.blog, user.Login);
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void FollowTest2()
         {
             var user = User;
             var autor = "steepshot";
 
-            var fType = new[] { FollowType.blog };
+            var fType = new[] { FollowType.Blog };
             var op = new FollowOperation(user.Login, autor, fType, user.Login);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
@@ -75,7 +75,7 @@ namespace Ditch.Steem.Tests
         ///     ]
         /// ],
         /// </summary>
-        [Test, Sequential]
+        [Test]
         public void UnFollowTest()
         {
             var user = User;
@@ -86,7 +86,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void UnFollowTest2()
         {
             var user = User;
@@ -97,7 +97,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void UpVoteOperationTest()
         {
             var user = User;
@@ -109,7 +109,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void DownVoteOperationTest()
         {
             var user = User;
@@ -121,7 +121,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void FlagTest()
         {
             var user = User;
@@ -133,7 +133,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void PostTest()
         {
             var manager = Api;
@@ -144,7 +144,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void PostFailByTitleSizeTest()
         {
             var user = User;
@@ -162,7 +162,7 @@ namespace Ditch.Steem.Tests
             Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
         }
 
-        [Test, Sequential]
+        [Test]
         public void RuPostTest()
         {
             var user = User;
@@ -172,7 +172,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void ReplyTest()
         {
             var user = User;
@@ -183,7 +183,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void RepostTest()
         {
             var user = User;
@@ -193,22 +193,22 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void VerifyAuthoritySuccessTest()
         {
             var user = User;
 
-            var op = new FollowOperation(user.Login, "steepshot", FollowType.blog, user.Login);
+            var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, user.Login);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test, Sequential]
+        [Test]
         public void VerifyAuthorityFallTest()
         {
             var user = User;
 
-            var op = new FollowOperation(user.Login, "steepshot", FollowType.blog, "StubLogin");
+            var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, "StubLogin");
             var response = Post(user.PostingKeys, false, op);
             Assert.IsTrue(response.IsError);
         }

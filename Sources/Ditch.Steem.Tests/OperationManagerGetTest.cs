@@ -14,7 +14,7 @@ namespace Ditch.Steem.Tests
     public class OperationManagerGetTest : BaseTest
     {
 
-        [Test, Sequential]
+        [Test]
         public async Task TryConnectToTest()
         {
             var steem = new List<string> { "wss://steemd.steemit.com" };
@@ -30,7 +30,7 @@ namespace Ditch.Steem.Tests
             }
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_dynamic_global_properties()
         {
             var resp = Api.GetDynamicGlobalProperties();
@@ -41,7 +41,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_content()
         {
             var author = "steepshot";
@@ -57,48 +57,48 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_followers()
         {
             ushort count = 3;
-            var resp = Api.GetFollowers(User.Login, string.Empty, FollowType.blog, count);
+            var resp = Api.GetFollowers(User.Login, string.Empty, FollowType.Blog, count);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Assert.IsTrue(resp.Result.Length <= count);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            var respNext = Api.GetFollowers(User.Login, resp.Result.Last().Follower, FollowType.blog, count);
+            var respNext = Api.GetFollowers(User.Login, resp.Result.Last().Follower, FollowType.Blog, count);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(respNext.IsError);
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
 
-            var obj = Api.CustomGetRequest<JObject[]>("call", "follow_api", "get_followers", new object[] { User.Login, resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
+            var obj = Api.CustomGetRequest<JObject[]>("call", "follow_api", "get_followers", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_following()
         {
             ushort count = 3;
-            var resp = Api.GetFollowing(User.Login, string.Empty, FollowType.blog, count);
+            var resp = Api.GetFollowing(User.Login, string.Empty, FollowType.Blog, count);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length <= count);
 
-            var respNext = Api.GetFollowing(User.Login, resp.Result.Last().Following, FollowType.blog, count);
+            var respNext = Api.GetFollowing(User.Login, resp.Result.Last().Following, FollowType.Blog, count);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(respNext.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
 
-            var obj = Api.CustomGetRequest<JObject[]>("call", "follow_api", "get_following", new object[] { User.Login, resp.Result.Last().Follower, FollowType.blog.ToString().ToLower(), count });
+            var obj = Api.CustomGetRequest<JObject[]>("call", "follow_api", "get_following", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_discussions_by_author_before_date()
         {
             ushort count = 3;
@@ -113,7 +113,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_active_witnesses()
         {
             var resp = Api.GetActiveWitnesses();
@@ -122,7 +122,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_miner_queue()
         {
             var resp = Api.GetMinerQueue();
@@ -131,7 +131,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_savings_withdraw_from()
         {
             var resp = Api.GetSavingsWithdrawFrom(User.Login);
@@ -143,7 +143,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_savings_withdraw_to()
         {
             var resp = Api.GetSavingsWithdrawTo(User.Login);
@@ -155,7 +155,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_witness_by_account()
         {
             var resp = Api.GetWitnessByAccount("steepshot");
@@ -167,7 +167,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_witnesses()
         {
             var witnes = Api.GetWitnessesByVote(string.Empty, 1);
@@ -183,7 +183,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void lookup_witness_accounts()
         {
             var resp = Api.LookupWitnessAccounts(string.Empty, 3);
@@ -195,7 +195,7 @@ namespace Ditch.Steem.Tests
             //TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_witness_count()
         {
             var resp = Api.GetWitnessCount();
@@ -204,7 +204,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_order_book()
         {
             var resp = Api.GetOrderBook(3);
@@ -216,7 +216,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_open_orders()
         {
             var resp = Api.GetOpenOrders(User.Login);
@@ -228,7 +228,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_witnesses_by_vote()
         {
             var resp = Api.GetWitnessesByVote(string.Empty, 3);
@@ -240,7 +240,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_state()
         {
             var resp = Api.GetState("path");
@@ -252,7 +252,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_config()
         {
             var resp = Api.GetConfig();
@@ -261,7 +261,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_chain_properties()
         {
             var resp = Api.GetChainProperties();
@@ -273,7 +273,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_feed_history()
         {
             var resp = Api.GetFeedHistory();
@@ -285,7 +285,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_current_median_history_price()
         {
             var resp = Api.GetCurrentMedianHistoryPrice();
@@ -297,7 +297,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_witness_schedule()
         {
             var resp = Api.GetWitnessSchedule();
@@ -309,7 +309,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_hardfork_version()
         {
             var resp = Api.GetHardforkVersion();
@@ -318,7 +318,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_next_scheduled_hardfork()
         {
             var resp = Api.GetNextScheduledHardfork();
@@ -330,7 +330,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_key_references()
         {
             var acResp = Api.GetAccounts(User.Login);
@@ -345,7 +345,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_accounts()
         {
             var resp = Api.GetAccounts(User.Login);
@@ -357,7 +357,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         [Ignore("Code: '1'. Message: '10 assert_exception: Assert Exception false: database_api::get_account_references --- Needs to be refactored for steem.")]
         public void get_account_references()
         {
@@ -370,7 +370,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test, Sequential]
+        [Test]
         public void lookup_account_names()
         {
             var resp = Api.LookupAccountNames(User.Login);
@@ -382,7 +382,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void lookup_accounts()
         {
             UInt32 limit = 3;
@@ -392,7 +392,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_account_count()
         {
             var resp = Api.GetAccountCount();
@@ -402,7 +402,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_conversion_requests()
         {
             var resp = Api.GetConversionRequests(User.Login);
@@ -414,7 +414,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_account_history()
         {
             UInt64 from = 3;
@@ -425,7 +425,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_owner_history()
         {
             var resp = Api.GetOwnerHistory(User.Login);
@@ -437,7 +437,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_recovery_request()
         {
             var resp = Api.GetRecoveryRequest(User.Login);
@@ -449,7 +449,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_withdraw_routes()
         {
             var resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Incoming);
@@ -471,7 +471,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_account_bandwidth()
         {
             var resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Post);
@@ -493,7 +493,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_trending_tags()
         {
             var resp = Api.GetTrendingTags(User.Login, 3);
@@ -505,7 +505,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_block_header()
         {
             var resp = Api.GetBlockHeader(42);
@@ -517,7 +517,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_block()
         {
             var resp = Api.GetBlock(42);
@@ -529,7 +529,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_ops_in_block()
         {
             var resp = Api.GetOpsInBlock(1234, false);
@@ -541,7 +541,7 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        [Test, Sequential]
+        [Test]
         public void get_escrow()
         {
             var resp = Api.GetEscrow(string.Empty, 3);

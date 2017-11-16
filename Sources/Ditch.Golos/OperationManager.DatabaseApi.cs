@@ -1,90 +1,292 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Ditch.Core;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Enums;
 using Ditch.Golos.Operations.Get;
+using Ditch.Golos.Protocol;
 using Newtonsoft.Json.Linq;
 
 namespace Ditch.Golos
 {
+    /**
+    * @brief The database_api class implements the RPC API for the chain database.
+    *
+    * This API exposes accessors on the database which query state tracked by a blockchain validating node. This API is
+    * read-only; all modifications to the database must be performed via transactions. Transactions are broadcast via
+    * the @ref network_broadcast_api.
+    */
+
+    /// <summary>
+    /// database_api
+    /// libraries\application\include\golos\application\database_api.hpp
+    /// </summary>
+
     public partial class OperationManager
     {
-        /*
-         * @brief The database_api class implements the RPC API for the chain database.
-         *
-         * This API exposes accessors on the database which query state tracked by a blockchain validating node. This API is
-         * read-only; all modifications to the database must be performed via transactions. Transactions are broadcast via
-         * the @ref network_broadcast_api.
-         */
+
+
+        /////////////////////
+        //// Subscriptions //
+        /////////////////////
+
+        ///// <summary>
+        ///// API name: set_subscribe_callback
+        ///// 
+        ///// </summary>
+        ///// <param name="cb">API type: std::function&lt;void</param>
+        ///// <param name="clearFilter">API type: bool</param>
+        ///// <returns>API type: void</returns>
+        //public JsonRpcResponse SetSubscribeCallback(Function<void> cb, bool clearFilter)
+        //{
+        //    return SetSubscribeCallback(cb, clearFilter, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: set_subscribe_callback
+        ///// 
+        ///// </summary>
+        ///// <param name="cb">API type: std::function&lt;void</param>
+        ///// <param name="clearFilter">API type: bool</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: void</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse SetSubscribeCallback(Function<void> cb, bool clearFilter, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest("set_subscribe_callback", token, cb, clearFilter);
+        //}
+
+        ///// <summary>
+        ///// API name: set_pending_transaction_callback
+        ///// 
+        ///// </summary>
+        ///// <param name="cb">API type: std::function&lt;void</param>
+        ///// <returns>API type: void</returns>
+        //public JsonRpcResponse SetPendingTransactionCallback(Function<void> cb)
+        //{
+        //    return SetPendingTransactionCallback(cb, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: set_pending_transaction_callback
+        ///// 
+        ///// </summary>
+        ///// <param name="cb">API type: std::function&lt;void</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: void</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse SetPendingTransactionCallback(Function<void> cb, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest("set_pending_transaction_callback", token, cb);
+        //}
+
+        ///// <summary>
+        ///// API name: set_block_applied_callback
+        ///// 
+        ///// </summary>
+        ///// <param name="cb">API type: std::function&lt;void</param>
+        ///// <returns>API type: void</returns>
+        //public JsonRpcResponse SetBlockAppliedCallback(Function<void> cb)
+        //{
+        //    return SetBlockAppliedCallback(cb, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: set_block_applied_callback
+        ///// 
+        ///// </summary>
+        ///// <param name="cb">API type: std::function&lt;void</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: void</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse SetBlockAppliedCallback(Function<void> cb, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest("set_block_applied_callback", token, cb);
+        //}
+
+
+        ///**
+        // * @brief Stop receiving any notifications
+        // *
+        // * This unsubscribes from all subscribed markets and objects.
+        // */
+        ///// <summary>
+        ///// API name: cancel_all_subscriptions
+        ///// 
+        ///// </summary>
+        ///// <returns>API type: void</returns>
+        //public JsonRpcResponse CancelAllSubscriptions()
+        //{
+        //    return CancelAllSubscriptions(CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: cancel_all_subscriptions
+        ///// 
+        ///// </summary>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: void</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse CancelAllSubscriptions(CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest("cancel_all_subscriptions", token);
+        //}
 
         /// <summary>
+        /// API name: get_trending_tags
         /// Returns a list of tags (tags) that include word combinations
         /// Возращает список меток(тэгов) включающие словосочетания
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit)
+        /// <param name="afterTag">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: tag_api_obj</returns>
+        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string afterTag, UInt32 limit)
         {
-            return GetTrendingTags(after, limit, CancellationToken.None);
+            return GetTrendingTags(afterTag, limit, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_trending_tags
+        ///
         /// Returns a list of tags (tags) that include word combinations
         /// Возращает список меток(тэгов) включающие словосочетания
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
+        /// <param name="afterTag">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: tag_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string afterTag, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", token, after, limit);
+            return WebSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", token, afterTag, limit);
         }
 
         /// <summary>
-        /// This API is a short-cut for returning all of the state required for a particular URL with a single query.
-        /// Отображает текущее состояние сети.
+        /// API name: get_trending_categories
+        /// 
+        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<State> GetState(string path)
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: category_api_obj</returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit)
         {
-            return GetState(path, CancellationToken.None);
+            return GetTrendingCategories(after, limit, CancellationToken.None);
         }
 
         /// <summary>
-        /// This API is a short-cut for returning all of the state required for a particular URL with a single query.
-        /// Отображает текущее состояние сети.
+        /// API name: get_trending_categories
+        /// 
+        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: category_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<State> GetState(string path, CancellationToken token)
+        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<State>("get_state", $"[\"{path}\"]", token);
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", token, after, limit);
         }
 
         /// <summary>
+        /// API name: get_best_categories
+        /// 
+        /// </summary>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: category_api_obj</returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit)
+        {
+            return GetBestCategories(after, limit, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// API name: get_best_categories
+        /// 
+        /// </summary>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: category_api_obj</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit, CancellationToken token)
+        {
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_best_categories", token, after, limit);
+        }
+
+        /// <summary>
+        /// API name: get_active_categories
+        /// 
+        /// </summary>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: category_api_obj</returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit)
+        {
+            return GetActiveCategories(after, limit, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// API name: get_active_categories
+        /// 
+        /// </summary>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: category_api_obj</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit, CancellationToken token)
+        {
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_active_categories", token, after, limit);
+        }
+
+        /// <summary>
+        /// API name: get_recent_categories
+        /// 
+        /// </summary>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: category_api_obj</returns>
+        public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit)
+        {
+            return GetRecentCategories(after, limit, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// API name: get_recent_categories
+        /// 
+        /// </summary>
+        /// <param name="after">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: category_api_obj</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit, CancellationToken token)
+        {
+            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_recent_categories", token, after, limit);
+        }
+
+        /// <summary>
+        /// API name: get_active_witnesses
         /// Displays a list of all active delegates.
         /// Отображает список всех активных делегатов.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: account_name_type</returns>
         public JsonRpcResponse<string[]> GetActiveWitnesses()
         {
             return GetActiveWitnesses(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_active_witnesses
         /// Displays a list of all active delegates.
         /// Отображает список всех активных делегатов.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> GetActiveWitnesses(CancellationToken token)
         {
@@ -92,21 +294,23 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_miner_queue
         /// Creates a list of the miners waiting to enter the DPOW chain to create the block.
         /// Создает список майнеров, ожидающих попасть в DPOW цепочку, чтобы создать блок.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: account_name_type</returns>
         public JsonRpcResponse<string[]> GetMinerQueue()
         {
             return GetMinerQueue(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_miner_queue
         /// Creates a list of the miners waiting to enter the DPOW chain to create the block.
         /// Создает список майнеров, ожидающих попасть в DPOW цепочку, чтобы создать блок.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> GetMinerQueue(CancellationToken token)
         {
@@ -114,65 +318,117 @@ namespace Ditch.Golos
         }
 
 
+        /**
+        *  This API is a short-cut for returning all of the state required for a particular URL
+        *  with a single query.
+        */
+        /// <summary>
+        /// API name: get_state
+        /// This API is a short-cut for returning all of the state required for a particular URL with a single query.
+        /// Отображает текущее состояние сети.
+        /// </summary>
+        /// <param name="path">API type: std::string</param>
+        /// <returns>API type: state</returns>
+        public JsonRpcResponse<State> GetState(string path)
+        {
+            return GetState(path, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// API name: get_state
+        /// This API is a short-cut for returning all of the state required for a particular URL with a single query.
+        /// Отображает текущее состояние сети.
+        /// </summary>
+        /// <param name="path">API type: std::string</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: state</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<State> GetState(string path, CancellationToken token)
+        {
+            return WebSocketManager.GetRequest<State>("get_state", $"[\"{path}\"]", token);
+        }
+
+
         /////////////////////////////
         // Blocks and transactions //
         /////////////////////////////
 
-
+        /**
+         * @brief Retrieve a block header
+         * @param block_num Height of the block whose header should be returned
+         * @return header of the referenced block, or null if no matching block was found
+         */
         /// <summary>
+        /// API name: get_block_header
         /// Retrieve a block header
         /// Возвращает все данные о блоке
         /// </summary>
-        /// <param name="blockNum">Height of the block whose header should be returned</param>
-        /// <returns>header of the referenced block, or null if no matching block was found</returns>
+        /// <param name="blockNum">Height of the block whose header should be returned (API type: uint32_t)</param>
+        /// <returns>header of the referenced block, or null if no matching block was found (API type: block_header)</returns>
         public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum)
         {
             return GetBlockHeader(blockNum, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_block_header
         /// Retrieve a block header
         /// Возвращает все данные о блоке
         /// </summary>
-        /// <param name="blockNum">Height of the block whose header should be returned</param>
+        /// <param name="blockNum">Height of the block whose header should be returned (API type: uint32_t)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>header of the referenced block, or null if no matching block was found</returns>
+        /// <returns>header of the referenced block, or null if no matching block was found (API type: block_header)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum, CancellationToken token)
         {
             return WebSocketManager.GetRequest<BlockHeader>("get_block_header", token, blockNum);
         }
 
+
+        /**
+         * @brief Retrieve a full, signed block
+         * @param block_num Height of the block to be returned
+         * @return the referenced block, or null if no matching block was found
+         */
         /// <summary>
+        /// API name: get_block
         /// Retrieve a full, signed block
         /// Возвращает все данные о блоке включая транзакции
         /// </summary>
-        /// <param name="blockNum">Height of the block to be returned</param>
-        /// <returns>the referenced block, or null if no matching block was found</returns>
-        public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum)
+        /// <param name="blockNum">Height of the block to be returned (API type: uint32_t)</param>
+        /// <returns>the referenced block, or null if no matching block was found (API type: signed_block)</returns>
+        public JsonRpcResponse<SignedBlock> GetBlock(UInt32 blockNum)
         {
             return GetBlock(blockNum, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_block
         /// Retrieve a full, signed block
         /// Возвращает все данные о блоке включая транзакции
         /// </summary>
-        /// <param name="blockNum">Height of the block to be returned</param>
+        /// <param name="blockNum">Height of the block to be returned (API type: uint32_t)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>the referenced block, or null if no matching block was found</returns>
+        /// <returns>the referenced block, or null if no matching block was found (API type: signed_block)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum, CancellationToken token)
+        public JsonRpcResponse<SignedBlock> GetBlock(UInt32 blockNum, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<SignedBlockApiObj>("get_block", token, blockNum);
+            return WebSocketManager.GetRequest<SignedBlock>("get_block", token, blockNum);
         }
 
+        /**
+         *  @brief Get sequence of operations included/generated within a particular block
+         *  @param block_num Height of the block whose generated virtual operations should be returned
+         *  @param only_virtual Whether to only include virtual operations in returned results (default: true)
+         *  @return sequence of operations included/generated within the block
+         */
         /// <summary>
+        /// API name: get_ops_in_block
         /// Get sequence of operations included/generated within a particular block
         /// Возвращает все операции в блоке, если параметр 'onlyVirtual' true то возвращает только виртуальные операции
         /// </summary>
-        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned</param>
-        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true)</param>
+        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned (API type: uint32_t)</param>
+        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true) (API type: bool)</param>
         /// <returns>sequence of operations included/generated within the block</returns>
         public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual)
         {
@@ -180,13 +436,14 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_ops_in_block
         /// Get sequence of operations included/generated within a particular block
         /// Возвращает все операции в блоке, если параметр 'onlyVirtual' true то возвращает только виртуальные операции
         /// </summary>
-        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned</param>
-        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true)</param>
+        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned (API type: uint32_t)</param>
+        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true)(API type: bool)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>sequence of operations included/generated within the block</returns>
+        /// <returns>sequence of operations included/generated within the block (API type: applied_operation)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual, CancellationToken token)
         {
@@ -198,71 +455,108 @@ namespace Ditch.Golos
         // Globals //
         /////////////
 
-
+        /**
+         * @brief Retrieve compile-time constants
+         */
         /// <summary>
+        /// API name: get_config
         /// Displays the current node configuration.
         /// Отображает текущую конфигурацию узла.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: variant_object</returns>
         public JsonRpcResponse<object> GetConfig()
         {
             return GetConfig(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_config
         /// Displays the current node configuration.
         /// Отображает текущую конфигурацию узла.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: variant_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object> GetConfig(CancellationToken token)
         {
             return WebSocketManager.GetRequest<object>("get_config", token);
         }
 
+        ///**
+        // * @brief Retrieve database unused memory amount
+        // */
+        ///// <summary>
+        ///// API name: get_free_memory
+        ///// 
+        ///// </summary>
+        ///// <returns>API type: size_t</returns>
+        //public JsonRpcResponse<SizeT> GetFreeMemory()
+        //{
+        //    return GetFreeMemory(CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_free_memory
+        ///// 
+        ///// </summary>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: size_t</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<SizeT> GetFreeMemory(CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<SizeT>("get_free_memory", token);
+        //}
+
+
+        /**
+         * @brief Retrieve the current @ref dynamic_global_property_object
+         */
         /// <summary>
+        /// API name: get_dynamic_global_properties
         /// Returns the block chain's rapidly-changing properties.
         /// The returned object contains information that changes every block interval
         /// such as the head block number, the next witness, etc.
         /// @see \c get_global_properties() for less-frequently changing properties
         /// </summary>
-        /// <returns>the dynamic global properties</returns>
-        public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties()
+        /// <returns>the dynamic global properties (API type: dynamic_global_property_object)</returns>
+        public JsonRpcResponse<DynamicGlobalPropertyObject> GetDynamicGlobalProperties()
         {
             return GetDynamicGlobalProperties(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_dynamic_global_properties
         /// Returns the block chain's rapidly-changing properties.
         /// The returned object contains information that changes every block interval
         /// such as the head block number, the next witness, etc.
         /// @see \c get_global_properties() for less-frequently changing properties
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>the dynamic global properties</returns>
+        /// <returns>the dynamic global properties (API type: dynamic_global_property_object)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties(CancellationToken token)
+        public JsonRpcResponse<DynamicGlobalPropertyObject> GetDynamicGlobalProperties(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties", token);
+            return WebSocketManager.GetRequest<DynamicGlobalPropertyObject>("get_dynamic_global_properties", token);
         }
 
         /// <summary>
+        /// API name: get_chain_properties
         /// Displays the commission for creating the user, the maximum block size and the GBG interest rate
         /// Отображает комиссию за создание пользователя, максимальный размер блока и процентную ставку GBG.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: chain_properties</returns>
         public JsonRpcResponse<ChainProperties> GetChainProperties()
         {
             return GetChainProperties(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_chain_properties
         /// Displays the commission for creating the user, the maximum block size and the GBG interest rate
         /// Отображает комиссию за создание пользователя, максимальный размер блока и процентную ставку GBG.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: chain_properties</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ChainProperties> GetChainProperties(CancellationToken token)
         {
@@ -270,21 +564,23 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_current_median_history_price
         /// Displays the current median price of conversion
         /// Отображает текущую медианную цену конвертации.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: price</returns>
         public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice()
         {
             return GetCurrentMedianHistoryPrice(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_current_median_history_price
         /// Displays the current median price of conversion
         /// Отображает текущую медианную цену конвертации.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: price</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice(CancellationToken token)
         {
@@ -292,21 +588,23 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_feed_history
         /// Displays the conversion history
         /// Отображает историю конверсий.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: feed_history_api_obj</returns>
         public JsonRpcResponse<FeedHistoryApiObj> GetFeedHistory()
         {
             return GetFeedHistory(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_feed_history
         /// Displays the conversion history
         /// Отображает историю конверсий.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: feed_history_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FeedHistoryApiObj> GetFeedHistory(CancellationToken token)
         {
@@ -314,43 +612,47 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_witness_schedule
         /// Displays the current delegation status.
         /// Отображает текущее состояние делегирования.
         /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<WitnessScheduleApiObj> GetWitnessSchedule()
+        /// <returns>API type: witness_schedule_object</returns>
+        public JsonRpcResponse<WitnessScheduleObject> GetWitnessSchedule()
         {
             return GetWitnessSchedule(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_witness_schedule
         /// Displays the current delegation status.
         /// Отображает текущее состояние делегирования.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: witness_schedule_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessScheduleApiObj> GetWitnessSchedule(CancellationToken token)
+        public JsonRpcResponse<WitnessScheduleObject> GetWitnessSchedule(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WitnessScheduleApiObj>("get_witness_schedule", token);
+            return WebSocketManager.GetRequest<WitnessScheduleObject>("get_witness_schedule", token);
         }
 
         /// <summary>
+        /// API name: get_hardfork_version
         /// Displays the current version of the network.
         /// Отображает текущую версию сети.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: hardfork_version</returns>
         public JsonRpcResponse<string> GetHardforkVersion()
         {
             return GetHardforkVersion(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_hardfork_version
         /// Displays the current version of the network.
         /// Отображает текущую версию сети.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: hardfork_version</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string> GetHardforkVersion(CancellationToken token)
         {
@@ -358,55 +660,75 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_next_scheduled_hardfork
         /// Displays the date and version of HardFork
         /// Отображает дату и версию HardFork
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: scheduled_hardfork</returns>
         public JsonRpcResponse<ScheduledHardfork> GetNextScheduledHardfork()
         {
             return GetNextScheduledHardfork(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_next_scheduled_hardfork
         /// Displays the date and version of HardFork
         /// Отображает дату и версию HardFork
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: scheduled_hardfork</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ScheduledHardfork> GetNextScheduledHardfork(CancellationToken token)
         {
             return WebSocketManager.GetRequest<ScheduledHardfork>("get_next_scheduled_hardfork", token);
         }
 
-        //get_reward_fund
+        ///// <summary>
+        ///// API name: get_reward_fund
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: string</param>
+        ///// <returns>API type: reward_fund_object</returns>
+        //public JsonRpcResponse<RewardFundObject> GetRewardFund(string name)
+        //{
+        //    return GetRewardFund(name, CancellationToken.None);
+        //}
 
-        //////////
-        // Keys //
-        //////////
+        ///// <summary>
+        ///// API name: get_reward_fund
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: string</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: reward_fund_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<RewardFundObject> GetRewardFund(string name, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<RewardFundObject>("get_reward_fund", token, name);
+        //}
 
         /// <summary>
+        /// API name: get_name_cost
         /// 
-        /// Находит и возвращает имена пользователей по публичному ключу
         /// </summary>
-        /// <param name="keys"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<string[][]> GetKeyReferences(params object[][] keys)
+        /// <param name="name">API type: std::string</param>
+        /// <returns>API type: asset</returns>
+        public JsonRpcResponse<Money> GetNameCost(string name)
         {
-            return GetKeyReferences(CancellationToken.None, keys);
+            return GetNameCost(name, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_name_cost
         /// 
-        /// Находит и возвращает имена пользователей по публичному ключу
         /// </summary>
+        /// <param name="name">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="keys"></param>
-        /// <returns></returns>
+        /// <returns>API type: asset</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[][]> GetKeyReferences(CancellationToken token, params object[][] keys)
+        public JsonRpcResponse<Money> GetNameCost(string name, CancellationToken token)
         {
-            return WebSocketManager.Call<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", token, keys);
+            return WebSocketManager.GetRequest<Money>("get_name_cost", token, name);
         }
 
 
@@ -414,97 +736,159 @@ namespace Ditch.Golos
         // Accounts //
         //////////////
 
-        //get_accounts
-
-
         /// <summary>
+        /// API name: get_accounts
+        /// Get user accounts by user names 
         /// </summary>
-        /// <param name="accountId"></param>
-        /// <returns>all accounts that referr to the key or account id in their owner or active authorities.</returns>
-        public JsonRpcResponse<object> GetAccountReferences(UInt64 accountId)
+        /// <param name="names">API type: std::vector&lt;std::string></param>
+        /// <returns>API type: extended_account</returns>
+        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(params string[] names)
         {
-            return GetAccountReferences(accountId, CancellationToken.None);
+            return GetAccounts(new[] { names }, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_accounts
+        /// Get user accounts by user names 
         /// </summary>
-        /// <param name="accountId"></param>
+        /// <param name="names">API type: std::vector&lt;std::string></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>all accounts that referr to the key or account id in their owner or active authorities.</returns>
+        /// <returns>API type: extended_account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetAccountReferences(UInt64 accountId, CancellationToken token)
+        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(string[][] names, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<object>("get_account_references", token, accountId);
+            return WebSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", token, names);
         }
 
+        /**
+         * @brief Get a list of accounts by name
+         * @param account_names Names of the accounts to retrieve
+         * @return The accounts holding the provided names
+         *
+         * This function has semantics identical to @ref get_objects
+         */
         /// <summary>
+        /// API name: lookup_account_names
         /// Get a list of accounts by name
         /// This function has semantics identical to @ref get_objects
         /// Возращает данные по заданным аккаунтам
         /// </summary>
-        /// <param name="names">Names of the accounts to retrieve</param>
-        /// <returns>The accounts holding the provided names</returns>
-        public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(params string[] names)
+        /// <param name="accountNames">Names of the accounts to retrieve (API type: std::vector&lt;std::string>)</param>
+        /// <returns>The accounts holding the provided names (API type: account_api_obj)</returns>
+        public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(params string[] accountNames)
         {
-            return LookupAccountNames(CancellationToken.None, names);
+            return LookupAccountNames(accountNames, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: lookup_account_names
         /// Get a list of accounts by name
         /// This function has semantics identical to @ref get_objects
         /// Возращает данные по заданным аккаунтам
         /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="names">Names of the accounts to retrieve</param>
-        /// <returns>The accounts holding the provided names</returns>
+        /// <param name="accountNames">Names of the accounts to retrieve</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested. (API type: std::vector&lt;std::string>)</param>
+        /// <returns>The accounts holding the provided names (API type: account_api_obj)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(CancellationToken token, params string[] names)
+        public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(string[] accountNames, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<AccountApiObj[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]", token);
+            return WebSocketManager.GetRequest<AccountApiObj[]>("lookup_account_names", $"[[\"{string.Join("\", \"", accountNames)}\"]]", token);
         }
 
+
+        /**
+         * @brief Get names and IDs for registered accounts
+         * @param lower_bound_name Lower bound of the first name to return
+         * @param limit Maximum number of results to return -- must not exceed 1000
+         * @return Map of account names to corresponding IDs
+         */
         /// <summary>
+        /// API name: lookup_accounts
         /// Returns the names of users close to the phrase.
         /// Возвращает имена пользователей близких к шаблону.
         /// </summary>
-        /// <param name="account">Lower bound of the first name to return</param>
-        /// <param name="limit">Maximum number of results to return -- must not exceed 1000</param>
-        /// <returns>Map of account names to corresponding IDs</returns>
-        public JsonRpcResponse<string[]> LookupAccounts(string account, UInt32 limit)
+        /// <param name="lowerBoundName">Lower bound of the first name to return (API type: std::string)</param>
+        /// <param name="limit">Maximum number of results to return -- must not exceed 1000 (API type: uint32_t)</param>
+        /// <returns>Map of account names to corresponding IDs (API type: string)</returns>
+        public JsonRpcResponse<string[]> LookupAccounts(string lowerBoundName, UInt32 limit)
         {
-            return LookupAccounts(account, limit, CancellationToken.None);
+            return LookupAccounts(lowerBoundName, limit, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: lookup_accounts
         /// Returns the names of users close to the phrase.
         /// Возвращает имена пользователей близких к шаблону.
         /// </summary>
-        /// <param name="account">Lower bound of the first name to return</param>
-        /// <param name="limit">Maximum number of results to return -- must not exceed 1000</param>
+        /// <param name="lowerBoundName">Lower bound of the first name to return (API type: std::string)</param>
+        /// <param name="limit">Maximum number of results to return -- must not exceed 1000 (API type: uint32_t)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>Map of account names to corresponding IDs</returns>
+        /// <returns>Map of account names to corresponding IDs (API type: string)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> LookupAccounts(string account, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<string[]> LookupAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<string[]>("lookup_accounts", token, account, limit);
+            return WebSocketManager.GetRequest<string[]>("lookup_accounts", token, lowerBoundName, limit);
         }
 
+
+        //////////////
+        // Balances //
+        //////////////
+
+        ///**
+        // * @brief Get an account's balances in various assets
+        // * @param name of the account to get balances for
+        // * @param assets names of the assets to get balances of; if empty, get all assets account has a balance in
+        // * @return Balances of the account
+        // */
+        ///// <summary>
+        ///// API name: get_account_balances
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: account_name_type</param>
+        ///// <param name="assets">API type: flat_set&lt;asset_name_type></param>
+        ///// <returns>API type: asset</returns>
+        //public JsonRpcResponse<Money[]> GetAccountBalances(string name, FlatSet<AssetNameType> assets)
+        //{
+        //    return GetAccountBalances(name, assets, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_account_balances
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: account_name_type</param>
+        ///// <param name="assets">API type: flat_set&lt;asset_name_type></param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: asset</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Money[]> GetAccountBalances(string name, FlatSet<AssetNameType> assets, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Money[]>("get_account_balances", token, name, assets);
+        //}
+
+
+        /**
+         * @brief Get the total number of accounts registered with the blockchain
+         */
         /// <summary>
+        /// API name: get_account_count
         /// Get the total number of accounts registered with the blockchain
         /// Возвращает количество зарегестрированных пользователей.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>API type: uint64_t</returns>
         public JsonRpcResponse<UInt64> GetAccountCount()
         {
             return GetAccountCount(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_account_count
         /// Get the total number of accounts registered with the blockchain
         /// Возвращает количество зарегестрированных пользователей.
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: uint64_t</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<UInt64> GetAccountCount(CancellationToken token)
         {
@@ -512,315 +896,428 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_owner_history
         /// Displays the user name if he changed the ownership of the blockchain
         /// Отображает имя пользователя если он изменил право собственности на блокчейн
         /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(params string[] account)
+        /// <param name="account">API type: std::string</param>
+        /// <returns>API type: owner_authority_history_api_obj</returns>
+        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(string account)
         {
-            return GetOwnerHistory(CancellationToken.None, account);
+            return GetOwnerHistory(account, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_owner_history
         /// Displays the user name if he changed the ownership of the blockchain
         /// Отображает имя пользователя если он изменил право собственности на блокчейн
         /// </summary>
+        /// <param name="account">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="account"></param>
-        /// <returns></returns>
+        /// <returns>API type: owner_authority_history_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(CancellationToken token, params string[] account)
+        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(string account, CancellationToken token)
         {
             return WebSocketManager.GetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", token, account);
         }
 
         /// <summary>
+        /// API name: get_recovery_request
         /// Returns true if the user is in recovery status.
         /// Возвращает true если пользователь в статусе на восстановление.
         /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(params string[] account)
+        /// <param name="account">API type: std::string</param>
+        /// <returns>API type: account_recovery_request_api_obj</returns>
+        public JsonRpcResponse<AccountRecoveryRequestApiObj> GetRecoveryRequest(string account)
         {
-            return GetRecoveryRequest(CancellationToken.None, account);
+            return GetRecoveryRequest(account, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_recovery_request
         /// Returns true if the user is in recovery status.
         /// Возвращает true если пользователь в статусе на восстановление.
         /// </summary>
+        /// <param name="account">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="account"></param>
-        /// <returns></returns>
+        /// <returns>API type: account_recovery_request_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(CancellationToken token, params string[] account)
+        public JsonRpcResponse<AccountRecoveryRequestApiObj> GetRecoveryRequest(string account, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", token, account);
+            return WebSocketManager.GetRequest<AccountRecoveryRequestApiObj>("get_recovery_request", token, account);
         }
 
         /// <summary>
+        /// API name: get_escrow
         /// Returns the operations implemented through mediation.
         /// Возвращает операции реализованные с помощью посредничества.
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="escrowId"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId)
+        /// <param name="from">API type: std::string</param>
+        /// <param name="escrowId">API type: uint32_t</param>
+        /// <returns>API type: escrow_object</returns>
+        public JsonRpcResponse<EscrowObject> GetEscrow(string from, UInt32 escrowId)
         {
             return GetEscrow(from, escrowId, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_escrow
         /// Returns the operations implemented through mediation.
         /// Возвращает операции реализованные с помощью посредничества.
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="escrowId"></param>
+        /// <param name="from">API type: std::string</param>
+        /// <param name="escrowId">API type: uint32_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: escrow_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId, CancellationToken token)
+        public JsonRpcResponse<EscrowObject> GetEscrow(string from, UInt32 escrowId, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<EscrowApiObj>("get_escrow", token, from, escrowId);
+            return WebSocketManager.GetRequest<EscrowObject>("get_escrow", token, from, escrowId);
         }
 
         /// <summary>
+        /// API name: get_withdraw_routes
         /// Returns all transfers to the user's account, depending on the type
         /// Возвращает все переводы на счету пользователя в зависимости от типа
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="account">API type: std::string</param>
+        /// <param name="type">API type: withdraw_route_type</param>
+        /// <returns>API type: withdraw_route</returns>
         public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type)
         {
             return GetWithdrawRoutes(account, type, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_withdraw_routes
         /// Returns all transfers to the user's account, depending on the type
         /// Возвращает все переводы на счету пользователя в зависимости от типа
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="type"></param>
+        /// <param name="account">API type: std::string</param>
+        /// <param name="type">API type: withdraw_route_type</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: withdraw_route</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", token, account, type.ToString().ToLower());
+            return WebSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", token, account, type);
         }
 
         /// <summary>
+        /// API name: get_account_bandwidth
         /// Displays user actions based on type
         /// Отображает действия пользователя в зависимости от типа
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="bandwidthType"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth(string account, BandwidthType bandwidthType)
+        /// <param name="account">API type: std::string</param>
+        /// <param name="type">API type: bandwidth_type</param>
+        /// <returns>API type: account_bandwidth_object</returns>
+        public JsonRpcResponse<AccountBandwidthObject> GetAccountBandwidth(string account, BandwidthType type)
         {
-            return GetAccountBandwidth(account, bandwidthType, CancellationToken.None);
+            return GetAccountBandwidth(account, type, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_account_bandwidth
         /// Displays user actions based on type
         /// Отображает действия пользователя в зависимости от типа
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="bandwidthType"></param>
+        /// <param name="account">API type: std::string</param>
+        /// <param name="type">API type: bandwidth_type</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: account_bandwidth_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth(string account, BandwidthType bandwidthType, CancellationToken token)
+        public JsonRpcResponse<AccountBandwidthObject> GetAccountBandwidth(string account, BandwidthType type, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<AccountBandwidthApiObj>("get_account_bandwidth", token, account, bandwidthType.ToString().ToLower());
+            return WebSocketManager.GetRequest<AccountBandwidthObject>("get_account_bandwidth", token, account, type);
         }
 
         /// <summary>
+        /// API name: get_savings_withdraw_from
         /// Returns the output data from 'SAFE' for this user
         /// Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
         /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
+        /// <param name="account">API type: std::string</param>
+        /// <returns>API type: savings_withdraw_api_obj</returns>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawFrom(string account)
         {
             return GetSavingsWithdrawFrom(account, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_savings_withdraw_from
         /// Returns the output data from 'SAFE' for this user
         /// Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
         /// </summary>
-        /// <param name="account"></param>
+        /// <param name="account">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: savings_withdraw_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawFrom(string account, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_from", $"[\"{account}\"]", token);
+            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_from", token, account);
         }
 
         /// <summary>
+        /// API name: get_savings_withdraw_to
         /// Returns the output data from 'SAFE' for this user
         /// Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
         /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
+        /// <param name="account">API type: std::string</param>
+        /// <returns>API type: savings_withdraw_api_obj</returns>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawTo(string account)
         {
             return GetSavingsWithdrawTo(account, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_savings_withdraw_to
         /// Returns the output data from 'SAFE' for this user
         /// Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
         /// </summary>
-        /// <param name="account"></param>
+        /// <param name="account">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: savings_withdraw_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawTo(string account, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_to", $"[\"{account}\"]", token);
+            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_to", token, account);
         }
 
-        //get_vesting_delegations
-        //get_expiring_vesting_delegations
+        ///// <summary>
+        ///// API name: get_vesting_delegations
+        ///// 
+        ///// </summary>
+        ///// <param name="account">API type: string</param>
+        ///// <param name="from">API type: string</param>
+        ///// <param name="limit">API type: uint32_t</param>
+        ///// <returns>API type: vesting_delegation_object</returns>
+        //public JsonRpcResponse<VestingDelegationObject[]> GetVestingDelegations(string account, string from, UInt32 limit)
+        //{
+        //    return GetVestingDelegations(account, from, limit, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_vesting_delegations
+        ///// 
+        ///// </summary>
+        ///// <param name="account">API type: string</param>
+        ///// <param name="from">API type: string</param>
+        ///// <param name="limit">API type: uint32_t</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: vesting_delegation_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<VestingDelegationObject[]> GetVestingDelegations(string account, string from, UInt32 limit, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<VestingDelegationObject[]>("get_vesting_delegations", token, account, from, limit);
+        //}
+
+        ///// <summary>
+        ///// API name: get_expiring_vesting_delegations
+        ///// 
+        ///// </summary>
+        ///// <param name="account">API type: string</param>
+        ///// <param name="from">API type: time_point_sec</param>
+        ///// <param name="limit">API type: uint32_t</param>
+        ///// <returns>API type: vesting_delegation_expiration_object</returns>
+        //public JsonRpcResponse<VestingDelegationExpirationObject[]> GetExpiringVestingDelegations(string account, DateTime from, UInt32 limit)
+        //{
+        //    return GetExpiringVestingDelegations(account, from, limit, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_expiring_vesting_delegations
+        ///// 
+        ///// </summary>
+        ///// <param name="account">API type: string</param>
+        ///// <param name="from">API type: time_point_sec</param>
+        ///// <param name="limit">API type: uint32_t</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: vesting_delegation_expiration_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<VestingDelegationExpirationObject[]> GetExpiringVestingDelegations(string account, DateTime from, UInt32 limit, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<VestingDelegationExpirationObject[]>("get_expiring_vesting_delegations", token, account, from, limit);
+        //}
 
 
         ///////////////
         // Witnesses //
         ///////////////
 
+        /**
+        * @brief Get a list of witnesses by ID
+        * @param witness_ids IDs of the witnesses to retrieve
+        * @return The witnesses corresponding to the provided IDs
+        *
+        * This function has semantics identical to @ref get_objects
+        */
 
         /// <summary>
+        /// API name: get_witnesses
         /// Get a list of witnesses by ID
         /// </summary>
-        /// <param name="witnessIds">IDs of the witnesses to retrieve</param>
-        /// <returns>The witnesses corresponding to the provided IDs</returns>
+        /// <param name="witnessIds">IDs of the witnesses to retrieve (API type: std::vector&lt;witness_object::id_type>)</param>
+        /// <returns>The witnesses corresponding to the provided IDs (API type: witness_api_obj)</returns>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnesses(params object[] witnessIds)
         {
-            return GetWitnesses(CancellationToken.None, witnessIds);
+            return GetWitnesses(new[] { witnessIds }, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_witnesses
         /// Get a list of witnesses by ID
         /// </summary>
+        /// <param name="witnessIds">IDs of the witnesses to retrieve (API type: std::vector&lt;witness_object::id_type>)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="witnessIds">IDs of the witnesses to retrieve</param>
-        /// <returns>The witnesses corresponding to the provided IDs</returns>
+        /// <returns>The witnesses corresponding to the provided IDs (API type: witness_api_obj)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObj[]> GetWitnesses(CancellationToken token, params object[] witnessIds)
+        public JsonRpcResponse<WitnessApiObj[]> GetWitnesses(object[][] witnessIds, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses", token, new object[1][] { witnessIds });
+            return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses", token, witnessIds);
         }
 
         /// <summary>
+        /// API name: get_conversion_requests
         /// Returns the current requests for conversion by the specified user
         /// Возвращает текущие запросы на конвертацию указанным пользователем
         /// </summary>
-        /// <param name="owner"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner)
+        /// <param name="accountName">API type: std::string</param>
+        /// <returns>API type: convert_request_object</returns>
+        public JsonRpcResponse<ConvertRequestObject[]> GetConversionRequests(string accountName)
         {
-            return GetConversionRequests(owner, CancellationToken.None);
+            return GetConversionRequests(accountName, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_conversion_requests
         /// Returns the current requests for conversion by the specified user
         /// Возвращает текущие запросы на конвертацию указанным пользователем
         /// </summary>
-        /// <param name="owner"></param>
+        /// <param name="accountName">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: convert_request_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner, CancellationToken token)
+        public JsonRpcResponse<ConvertRequestObject[]> GetConversionRequests(string accountName, CancellationToken token)
         {
-            return WebSocketManager.Call<ConvertRequestApiObj[]>(KnownApiNames.DatabaseApi, "get_conversion_requests", token, owner);
+            return WebSocketManager.GetRequest<ConvertRequestObject[]>("get_conversion_requests", token, accountName);
         }
 
+
+        /**
+         * @brief Get the witness owned by a given account
+         * @param account The name of the account whose witness should be retrieved
+         * @return The witness object, or null if the account does not have a witness
+         */
         /// <summary>
+        /// API name: get_witness_by_account
         /// Get the witness owned by a given account
         /// </summary>
-        /// <param name="account">The name of the account whose witness should be retrieved</param>
-        /// <returns>The witness object, or null if the account does not have a witness</returns>
-        public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string account)
+        /// <param name="accountName">The name of the account whose witness should be retrieved (API type: std::string)</param>
+        /// <returns>The witness object, or null if the account does not have a witness (API type: witness_api_obj)</returns>
+        public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string accountName)
         {
-            return GetWitnessByAccount(account, CancellationToken.None);
+            return GetWitnessByAccount(accountName, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_witness_by_account
         /// Get the witness owned by a given account
         /// </summary>
-        /// <param name="account">The name of the account whose witness should be retrieved</param>
+        /// <param name="accountName">The name of the account whose witness should be retrieved (API type: std::string)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>The witness object, or null if the account does not have a witness</returns>
+        /// <returns>The witness object, or null if the account does not have a witness (API type: witness_api_obj)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string account, CancellationToken token)
+        public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string accountName, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WitnessApiObj>("get_witness_by_account", $"[\"{account}\"]", token);
+            return WebSocketManager.GetRequest<WitnessApiObj>("get_witness_by_account", token, accountName);
         }
 
+
+        /**
+         *  This method is used to fetch witnesses with pagination.
+         *
+         *  @return an array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.
+         */
         /// <summary>
+        /// API name: get_witnesses_by_vote
         /// This method is used to fetch witnesses with pagination.
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="limit"></param>
-        /// <returns>An array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
+        /// <param name="from">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>An array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results. (API type: witness_api_obj)</returns>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnessesByVote(string from, UInt32 limit)
         {
             return GetWitnessesByVote(from, limit, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_witnesses_by_vote
         /// This method is used to fetch witnesses with pagination.
         /// </summary>
-        /// <param name="from"></param>
-        /// <param name="limit"></param>
+        /// <param name="from">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>An array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
+        /// <returns>An array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results. (API type: witness_api_obj)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnessesByVote(string from, UInt32 limit, CancellationToken token)
         {
             return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses_by_vote", token, from, limit);
         }
 
+
+        /**
+         * @brief Get names and IDs for registered witnesses
+         * @param lower_bound_name Lower bound of the first name to return
+         * @param limit Maximum number of results to return -- must not exceed 1000
+         * @return Map of witness names to corresponding IDs
+         */
         /// <summary>
+        /// API name: lookup_witness_accounts
         /// Get names and IDs for registered witnesses
         /// </summary>
-        /// <param name="lowerBoundName">Lower bound of the first name to return</param>
-        /// <param name="limit">Maximum number of results to return -- must not exceed 1000</param>
-        /// <returns>Map of witness names to corresponding IDs</returns>
+        /// <param name="lowerBoundName">Lower bound of the first name to return (API type: std::string)</param>
+        /// <param name="limit">Maximum number of results to return -- must not exceed 1000 (API type: uint32_t)</param>
+        /// <returns>Map of witness names to corresponding IDs (API type: account_name_type)</returns>
         public JsonRpcResponse<object[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit)
         {
             return LookupWitnessAccounts(lowerBoundName, limit, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: lookup_witness_accounts
         /// Get names and IDs for registered witnesses
         /// </summary>
-        /// <param name="lowerBoundName">Lower bound of the first name to return</param>
-        /// <param name="limit">Maximum number of results to return -- must not exceed 1000</param>
+        /// <param name="lowerBoundName">Lower bound of the first name to return (API type: std::string)</param>
+        /// <param name="limit">Maximum number of results to return -- must not exceed 1000 (API type: uint32_t)</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>Map of witness names to corresponding IDs</returns>
+        /// <returns>Map of witness names to corresponding IDs (API type: account_name_type)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
             return WebSocketManager.GetRequest<object[]>("lookup_witness_accounts", token, lowerBoundName, limit);
         }
 
+
+        /**
+         * @brief Get the total number of witnesses registered with the blockchain
+         */
         /// <summary>
+        /// API name: get_witness_count
         /// Get the total number of witnesses registered with the blockchain
         /// </summary>
+        /// <returns>API type: uint64_t</returns>
         public JsonRpcResponse<UInt64> GetWitnessCount()
         {
             return GetWitnessCount(CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_witness_count
         /// Get the total number of witnesses registered with the blockchain
         /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: uint64_t</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<UInt64> GetWitnessCount(CancellationToken token)
         {
             return WebSocketManager.GetRequest<UInt64>("get_witness_count", token);
@@ -828,188 +1325,961 @@ namespace Ditch.Golos
 
 
         ////////////
-        // Market //
+        // Assets //
         ////////////
 
+        ///**
+        // * @brief Get a list of assets by ID
+        // * @param asset_symbols IDs of the assets to retrieve
+        // * @return The assets corresponding to the provided IDs
+        // *
+        // * This function has semantics identical to @ref get_objects
+        // */
+        ///// <summary>
+        ///// API name: get_assets
+        ///// 
+        ///// </summary>
+        ///// <param name="assetSymbols">API type: vector&lt;asset_name_type></param>
+        ///// <returns>API type: asset_object</returns>
+        //public JsonRpcResponse<AssetObject[]> GetAssets(AssetNameType[] assetSymbols)
+        //{
+        //    return GetAssets(assetSymbols, CancellationToken.None);
+        //}
 
+        ///// <summary>
+        ///// API name: get_assets
+        ///// 
+        ///// </summary>
+        ///// <param name="assetSymbols">API type: vector&lt;asset_name_type></param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: asset_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AssetObject[]> GetAssets(AssetNameType[] assetSymbols, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AssetObject[]>("get_assets", token, assetSymbols);
+        //}
+
+        ///// <summary>
+        ///// API name: get_assets_by_issuer
+        ///// 
+        ///// </summary>
+        ///// <param name="issuer">API type: string</param>
+        ///// <returns>API type: asset_object</returns>
+        //public JsonRpcResponse<AssetObject[]> GetAssetsByIssuer(string issuer)
+        //{
+        //    return GetAssetsByIssuer(issuer, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_assets_by_issuer
+        ///// 
+        ///// </summary>
+        ///// <param name="issuer">API type: string</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: asset_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AssetObject[]> GetAssetsByIssuer(string issuer, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AssetObject[]>("get_assets_by_issuer", token, issuer);
+        //}
+
+        ///// <summary>
+        ///// API name: get_assets_dynamic_data
+        ///// 
+        ///// </summary>
+        ///// <param name="assetSymbols">API type: vector&lt;asset_name_type></param>
+        ///// <returns>API type: asset_dynamic_data_object</returns>
+        //public JsonRpcResponse<AssetDynamicDataObject[]> GetAssetsDynamicData(AssetNameType[] assetSymbols)
+        //{
+        //    return GetAssetsDynamicData(assetSymbols, CancellationToken.None);
+        //}
+
+        /////// <summary>
+        ///// API name: get_assets_dynamic_data
+        ///// 
+        ///// </summary>
+        ///// <param name="assetSymbols">API type: vector&lt;asset_name_type></param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: asset_dynamic_data_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AssetDynamicDataObject[]> GetAssetsDynamicData(AssetNameType[] assetSymbols, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AssetDynamicDataObject[]>("get_assets_dynamic_data", token, assetSymbols);
+        //}
+
+        ///// <summary>
+        ///// API name: get_bitassets_data
+        ///// 
+        ///// </summary>
+        ///// <param name="assetSymbols">API type: vector&lt;asset_name_type></param>
+        ///// <returns>API type: asset_bitasset_data_object</returns>
+        //public JsonRpcResponse<AssetBitassetDataObject[]> GetBitassetsData(AssetNameType[] assetSymbols)
+        //{
+        //    return GetBitassetsData(assetSymbols, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_bitassets_data
+        ///// 
+        ///// </summary>
+        ///// <param name="assetSymbols">API type: vector&lt;asset_name_type></param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: asset_bitasset_data_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AssetBitassetDataObject[]> GetBitassetsData(AssetNameType[] assetSymbols, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AssetBitassetDataObject[]>("get_bitassets_data", token, assetSymbols);
+        //}
+
+
+        ///**
+        // * @brief Get assets alphabetically by symbol name
+        // * @param lower_bound_symbol Lower bound of symbol names to retrieve
+        // * @param limit Maximum number of assets to fetch (must not exceed 100)
+        // * @return The assets found
+        // */
+        ///// <summary>
+        ///// API name: list_assets
+        ///// 
+        ///// </summary>
+        ///// <param name="lowerBoundSymbol">API type: asset_name_type</param>
+        ///// <param name="limit">API type: uint32_t</param>
+        ///// <returns>API type: asset_object</returns>
+        //public JsonRpcResponse<AssetObject[]> ListAssets(AssetNameType lowerBoundSymbol, UInt32 limit)
+        //{
+        //    return ListAssets(lowerBoundSymbol, limit, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: list_assets
+        ///// 
+        ///// </summary>
+        ///// <param name="lowerBoundSymbol">API type: asset_name_type</param>
+        ///// <param name="limit">API type: uint32_t</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: asset_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AssetObject[]> ListAssets(AssetNameType lowerBoundSymbol, UInt32 limit, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AssetObject[]>("list_assets", token, lowerBoundSymbol, limit);
+        //}
+
+
+        ////////////////////////////
+        // Authority / Validation //
+        ////////////////////////////
+
+        /// @brief Get a hexdump of the serialized binary form of a transaction
         /// <summary>
-        /// Gets the current order book for STEEM:SBD market
+        /// API name: get_transaction_hex
+        /// 
         /// </summary>
-        /// <param name="limit">Maximum number of orders for each side of the spread to return -- Must not exceed 1000</param>
-        /// <returns>API type: order_book</returns>
-        public JsonRpcResponse<OrderBook> GetOrderBook(UInt32 limit)
+        /// <param name="trx">API type: signed_transaction</param>
+        /// <returns>API type: string</returns>
+        public JsonRpcResponse<string> GetTransactionHex(SignedTransaction trx)
         {
-            return GetOrderBook(limit, CancellationToken.None);
+            return GetTransactionHex(trx, CancellationToken.None);
         }
 
         /// <summary>
-        /// Gets the current order book for STEEM:SBD market
+        /// API name: get_transaction_hex
+        /// 
         /// </summary>
-        /// <param name="limit">Maximum number of orders for each side of the spread to return -- Must not exceed 1000</param>
+        /// <param name="trx">API type: signed_transaction</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: order_book</returns>
+        /// <returns>API type: string</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OrderBook> GetOrderBook(UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<string> GetTransactionHex(SignedTransaction trx, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<OrderBook>("get_order_book", token, limit);
+            return WebSocketManager.GetRequest<string>("get_transaction_hex", token, trx);
+        }
+
+        ///// <summary>
+        ///// API name: get_transaction
+        ///// 
+        ///// </summary>
+        ///// <param name="trxId">API type: transaction_id_type</param>
+        ///// <returns>API type: annotated_signed_transaction</returns>
+        //public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(TransactionIdType trxId)
+        //{
+        //    return GetTransaction(trxId, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_transaction
+        ///// 
+        ///// </summary>
+        ///// <param name="trxId">API type: transaction_id_type</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: annotated_signed_transaction</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(TransactionIdType trxId, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AnnotatedSignedTransaction>("get_transaction", token, trxId);
+        //}
+
+
+        ///**
+        //*  This API will take a partially signed transaction and a set of public keys that the owner has the ability to sign for
+        //*  and return the minimal subset of public keys that should add signatures to the transaction.
+        //*/
+        ///// <summary>
+        ///// API name: get_required_signatures
+        ///// 
+        ///// </summary>
+        ///// <param name="trx">API type: signed_transaction</param>
+        ///// <param name="availableKeys">API type: flat_set&lt;public_key_type></param>
+        ///// <returns>API type: public_key_type</returns>
+        //public JsonRpcResponse<PublicKeyType[]> GetRequiredSignatures(SignedTransaction trx, FlatSet<PublicKeyType> availableKeys)
+        //{
+        //    return GetRequiredSignatures(trx, availableKeys, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_required_signatures
+        ///// 
+        ///// </summary>
+        ///// <param name="trx">API type: signed_transaction</param>
+        ///// <param name="availableKeys">API type: flat_set&lt;public_key_type></param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: public_key_type</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<PublicKeyType[]> GetRequiredSignatures(SignedTransaction trx, FlatSet<PublicKeyType> availableKeys, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<PublicKeyType[]>("get_required_signatures", token, trx, availableKeys);
+        //}
+
+
+        ///**
+        //*  This method will return the set of all public keys that could possibly sign for a given transaction.  This call can
+        //*  be used by wallets to filter their set of public keys to just the relevant subset prior to calling @ref get_required_signatures
+        //*  to get the minimum subset.
+        //*/
+        ///// <summary>
+        ///// API name: get_potential_signatures
+        ///// 
+        ///// </summary>
+        ///// <param name="trx">API type: signed_transaction</param>
+        ///// <returns>API type: public_key_type</returns>
+        //public JsonRpcResponse<PublicKeyType[]> GetPotentialSignatures(SignedTransaction trx)
+        //{
+        //    return GetPotentialSignatures(trx, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_potential_signatures
+        ///// 
+        ///// </summary>
+        ///// <param name="trx">API type: signed_transaction</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: public_key_type</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<PublicKeyType[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<PublicKeyType[]>("get_potential_signatures", token, trx);
+        //}
+
+
+        /**
+        * @return true of the @ref trx has all of the required signatures, otherwise throws an exception
+        */
+        /// <summary>
+        /// API name: verify_authority
+        /// 
+        /// </summary>
+        /// <param name="trx">API type: signed_transaction</param>
+        /// <returns>API type: bool</returns>
+        public JsonRpcResponse<bool> VerifyAuthority(SignedTransaction trx)
+        {
+            return VerifyAuthority(trx, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: verify_authority
         /// 
         /// </summary>
-        /// <param name="owner"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<ExtendedLimitOrder[]> GetOpenOrders(string owner)
-        {
-            return GetOpenOrders(owner, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="owner"></param>
+        /// <param name="trx">API type: signed_transaction</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: bool</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ExtendedLimitOrder[]> GetOpenOrders(string owner, CancellationToken token)
+        public JsonRpcResponse<bool> VerifyAuthority(SignedTransaction trx, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<ExtendedLimitOrder[]>("get_open_orders", $"[\"{owner}\"]", token);
+            return WebSocketManager.GetRequest<bool>("verify_authority", token, trx);
         }
 
 
+        ///*
+        // * @return true if the signers have enough authority to authorize an account
+        // */
+        ///// <summary>
+        ///// API name: verify_account_authority
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: std::string</param>
+        ///// <param name="signers">API type: flat_set&lt;public_key_type></param>
+        ///// <returns>API type: bool</returns>
+        //public JsonRpcResponse<bool> VerifyAccountAuthority(string name, FlatSet<PublicKeyType> signers)
+        //{
+        //    return VerifyAccountAuthority(name, signers, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: verify_account_authority
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: std::string</param>
+        ///// <param name="signers">API type: flat_set&lt;public_key_type></param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: bool</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<bool> VerifyAccountAuthority(string name, FlatSet<PublicKeyType> signers, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<bool>("verify_account_authority", token, name, signers);
+        //}
+
+
+        /**
+        *  if permlink is "" then it will return all votes for author
+        */
         /// <summary>
+        /// API name: get_active_votes
         /// 
-        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit)
+        /// <param name="author">API type: std::string</param>
+        /// <param name="permlink">API type: std::string</param>
+        /// <returns>API type: vote_state</returns>
+        public JsonRpcResponse<VoteState[]> GetActiveVotes(string author, string permlink)
         {
-            return GetTrendingCategories(after, limit, CancellationToken.None);
+            return GetActiveVotes(author, permlink, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_active_votes
         /// 
-        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
+        /// <param name="author">API type: std::string</param>
+        /// <param name="permlink">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: vote_state</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<VoteState[]> GetActiveVotes(string author, string permlink, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", token, after, limit);
+            return WebSocketManager.GetRequest<VoteState[]>("get_active_votes", token, author, permlink);
+        }
+
+        ///// <summary>
+        ///// API name: get_account_votes
+        ///// 
+        ///// </summary>
+        ///// <param name="voter">API type: std::string</param>
+        ///// <returns>API type: account_vote</returns>
+        //public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter)
+        //{
+        //    return GetAccountVotes(voter, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_account_votes
+        ///// 
+        ///// </summary>
+        ///// <param name="voter">API type: std::string</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: account_vote</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<AccountVote[]>("get_account_votes", token, voter);
+        //}
+
+        /// <summary>
+        /// API name: get_content
+        /// Get post by author and permlink 
+        /// </summary>
+        /// <param name="author">API type: std::string</param>
+        /// <param name="permlink">API type: std::string</param>
+        /// <returns>API type: discussion</returns>
+        public JsonRpcResponse<Discussion> GetContent(string author, string permlink)
+        {
+            return GetContent(author, permlink, CancellationToken.None);
         }
 
         /// <summary>
-        /// 
+        /// API name: get_content
+        /// Get post by author and permlink 
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit)
-        {
-            return GetBestCategories(after, limit, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
+        /// <param name="author">API type: std::string</param>
+        /// <param name="permlink">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObj[]> GetBestCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_best_categories", token, after, limit);
+            return WebSocketManager.GetRequest<Discussion>("get_content", token, author, permlink);
+            //return WebSocketManager.Call<Discussion>(KnownApiNames.DatabaseApi, "get_content", token, author, permlink);
         }
 
         /// <summary>
+        /// API name: get_content_replies
         /// 
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit)
+        /// <param name="parent">API type: std::string</param>
+        /// <param name="parentPermlink">API type: std::string</param>
+        /// <returns>API type: discussion</returns>
+        public JsonRpcResponse<Discussion[]> GetContentReplies(string parent, string parentPermlink)
         {
-            return GetActiveCategories(after, limit, CancellationToken.None);
+            return GetContentReplies(parent, parentPermlink, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_content_replies
         /// 
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
+        /// <param name="parent">API type: std::string</param>
+        /// <param name="parentPermlink">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObj[]> GetActiveCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetContentReplies(string parent, string parentPermlink, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_active_categories", token, after, limit);
+            return WebSocketManager.GetRequest<Discussion[]>("get_content_replies", token, parent, parentPermlink);
+        }
+
+
+        /**
+        * Used to retrieve top 1000 tags list used by an author sorted by most frequently used
+        * @param author select tags of this author
+        * @return vector of top 1000 tags used by an author sorted by most frequently used
+        **/
+        /// <summary>
+        /// API name: get_tags_used_by_author
+        /// 
+        /// </summary>
+        /// <param name="author">API type: std::string</param>
+        public JsonRpcResponse<KeyValuePair<string, UInt32>[]> GetTagsUsedByAuthor(string author)
+        {
+            return GetTagsUsedByAuthor(author, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_tags_used_by_author
         /// 
         /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit)
-        {
-            return GetRecentCategories(after, limit, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
+        /// <param name="author">API type: std::string</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObj[]> GetRecentCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<KeyValuePair<string, UInt32>[]> GetTagsUsedByAuthor(string author, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_recent_categories", token, after, limit);
+            return WebSocketManager.GetRequest<KeyValuePair<string, UInt32>[]>("get_tags_used_by_author", token, author);
         }
 
 
+        ///**
+        // * Used to retrieve the list of first payout discussions sorted by rshares^2 amount
+        // * @param query @ref discussion_query
+        // * @return vector of first payout mode discussions sorted by rshares^2 amount
+        // **/
+        ///// <summary>
+        ///// API name: get_discussions_by_trending
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByTrending(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByTrending(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_trending
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByTrending(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_trending", token, query);
+        //}
+
+
+        ///**
+        // * Used to retrieve the list of discussions sorted by created time
+        // * @param query @ref discussion_query
+        // * @return vector of discussions sorted by created time
+        // **/
+        ///// <summary>
+        ///// API name: get_discussions_by_created
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByCreated(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByCreated(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_created
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByCreated(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_created", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions sorted by last activity time
+        //* @param query @ref discussion_query
+        //* @return vector of discussions sorted by last activity time
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_active
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByActive(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByActive(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_active
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByActive(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_active", token, query);
+        //}
+
+
+        ///**
+        // * Used to retrieve the list of discussions sorted by cashout time
+        // * @param query @ref discussion_query
+        // * @return vector of discussions sorted by last cashout time
+        // **/
+        ///// <summary>
+        ///// API name: get_discussions_by_cashout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByCashout(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByCashout(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_cashout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByCashout(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_cashout", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions sorted by net rshares amount
+        //* @param query @ref discussion_query
+        //* @return vector of discussions sorted by net rshares amount
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_payout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByPayout(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByPayout(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_payout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_payout", token, query);
+        //}
+
+        ///// <summary>
+        ///// API name: get_post_discussions_by_payout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetPostDiscussionsByPayout(DiscussionQuery query)
+        //{
+        //    return GetPostDiscussionsByPayout(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_post_discussions_by_payout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetPostDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_post_discussions_by_payout", token, query);
+        //}
+
+        ///// <summary>
+        ///// API name: get_comment_discussions_by_payout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetCommentDiscussionsByPayout(DiscussionQuery query)
+        //{
+        //    return GetCommentDiscussionsByPayout(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_comment_discussions_by_payout
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetCommentDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_comment_discussions_by_payout", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions sorted by direct votes amount
+        //* @param query @ref discussion_query
+        //* @return vector of discussions sorted by direct votes amount
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_votes
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByVotes(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByVotes(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_votes
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByVotes(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_votes", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions sorted by children posts amount
+        //* @param query @ref discussion_query
+        //* @return vector of discussions sorted by children posts amount
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_children
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByChildren(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_children
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_children", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions sorted by hot amount
+        //* @param query @ref discussion_query
+        //* @return vector of discussions sorted by hot amount
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_hot
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByHot(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByHot(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_hot
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByHot(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_hot", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions from the feed of a specific author
+        //* @param query @ref discussion_query
+        //* @attention @ref discussion_query#select_authors must be set and must contain the @ref discussion_query#start_author param if the last one is not null
+        //* @return vector of discussions from the feed of authors in @ref discussion_query#select_authors
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_feed
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByFeed(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByFeed(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_feed
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByFeed(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_feed", token, query);
+        //}
+
+
+        ///**
+        // * Used to retrieve the list of discussions from the blog of a specific author
+        // * @param query @ref discussion_query
+        // * @attention @ref discussion_query#select_authors must be set and must contain the @ref discussion_query#start_author param if the last one is not null
+        // * @return vector of discussions from the blog of authors in @ref discussion_query#select_authors
+        // **/
+        ///// <summary>
+        ///// API name: get_discussions_by_blog
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByBlog(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByBlog(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_blog
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByBlog(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_blog", token, query);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_comments
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByComments(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByComments(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_comments
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByComments(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_comments", token, query);
+        //}
+
+
+        ///**
+        //* Used to retrieve the list of discussions sorted by promoted balance amount
+        //* @param query @ref discussion_query
+        //* @return vector of discussions sorted by promoted balance amount
+        //**/
+        ///// <summary>
+        ///// API name: get_discussions_by_promoted
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <returns>API type: discussion</returns>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByPromoted(DiscussionQuery query)
+        //{
+        //    return GetDiscussionsByPromoted(query, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_discussions_by_promoted
+        ///// 
+        ///// </summary>
+        ///// <param name="query">API type: discussion_query</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: discussion</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<Discussion[]> GetDiscussionsByPromoted(DiscussionQuery query, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_promoted", token, query);
+        //}
+
+
+
+        /**
+        *  Return the active discussions with the highest cumulative pending payouts without respect to category, total
+        *  pending payout means the pending payout of all children as well.
+        */
+        /// <summary>
+        /// API name: get_replies_by_last_update
+        /// 
+        /// </summary>
+        /// <param name="startAuthor">API type: account_name_type</param>
+        /// <param name="startPermlink">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: discussion</returns>
+        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, UInt32 limit)
+        {
+            return GetRepliesByLastUpdate(startAuthor, startPermlink, limit, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// API name: get_replies_by_last_update
+        /// 
+        /// </summary>
+        /// <param name="startAuthor">API type: account_name_type</param>
+        /// <param name="startPermlink">API type: std::string</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: discussion</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, UInt32 limit, CancellationToken token)
+        {
+            return WebSocketManager.GetRequest<Discussion[]>("get_replies_by_last_update", token, startAuthor, startPermlink, limit);
+        }
+
+
+
+        /**
+         *  This method is used to fetch all posts/comments by start_author that occur after before_date and start_permlink with up to limit being returned.
+         *
+         *  If start_permlink is empty then only before_date will be considered. If both are specified the eariler to the two metrics will be used. This
+         *  should allow easy pagination.
+         */
+        /// <summary>
+        /// API name: get_discussions_by_author_before_date
+        /// 
+        /// </summary>
+        /// <param name="author">API type: std::string</param>
+        /// <param name="startPermlink">API type: std::string</param>
+        /// <param name="beforeDate">API type: time_point_sec</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: discussion</returns>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit)
         {
             return GetDiscussionsByAuthorBeforeDate(author, startPermlink, beforeDate, limit, CancellationToken.None);
         }
 
+        /// <summary>
+        /// API name: get_discussions_by_author_before_date
+        /// 
+        /// </summary>
+        /// <param name="author">API type: std::string</param>
+        /// <param name="startPermlink">API type: std::string</param>
+        /// <param name="beforeDate">API type: time_point_sec</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: discussion</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)
         {
             return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_author_before_date", token, author, startPermlink, beforeDate, limit);
         }
 
 
+        /**
+         *  Account operations have sequence numbers from 0 to N where N is the most recent operation. This method
+         *  returns operations in the range [from-limit, from]
+         *
+         *  @param from - the absolute sequence number, -1 means most recent, limit is the number of operations before from.
+         *  @param limit - the maximum number of items that can be queried (0 to 1000], must be less than from
+         */
         /// <summary>
+        /// API name: get_account_history
         /// 
         /// История всех действий пользователя в сети в виде транзакций. При from = -1 будут показаны последние {limit+1} элементов истории. Параметр limit не должен превышать from (исключение from = -1), так как показываются предшествующие {from} элементы истории.
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="from"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
+        /// <param name="account">API type: std::string</param>
+        /// <param name="from">API type: uint64_t</param>
+        /// <param name="limit">API type: uint32_t</param>
+        /// <returns>API type: map&lt;uint32_t,applied_operation></returns>
         public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit)
         {
             return GetAccountHistory(account, from, limit, CancellationToken.None);
         }
 
-
         /// <summary>
+        /// API name: get_account_history
         /// 
         /// История всех действий пользователя в сети в виде транзакций. При from = -1 будут показаны последние {limit+1} элементов истории. Параметр limit не должен превышать from (исключение from = -1), так как показываются предшествующие {from} элементы истории.
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="from"></param>
-        /// <param name="limit"></param>
+        /// <param name="account">API type: std::string</param>
+        /// <param name="from">API type: uint64_t</param>
+        /// <param name="limit">API type: uint32_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: map&lt;uint32_t,applied_operation></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
         {
@@ -1035,71 +2305,154 @@ namespace Ditch.Golos
             return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>(typedTez);
         }
 
-
-        #region follow_api
+        /**
+         * Used to retrieve comment payout window extension cost by time
+         * @param author comment author
+         * @param permlink comment permlink
+         * @param time deadline time the payout window pretends to be extended for
+         * @return SBD amount required to set payout window duration up to time passed
+         */
 
         /// <summary>
+        /// API name: get_payout_extension_cost
         /// 
-        /// Возвращает список: Либо всех подписчиков пользователя 'following'. 
-        /// Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
         /// </summary>
-        /// <param name="following"></param>
-        /// <param name="startFollower"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit)
+        /// <param name="author">API type: string</param>
+        /// <param name="permlink">API type: string</param>
+        /// <param name="time">API type: fc::time_point_sec</param>
+        /// <returns>API type: asset</returns>
+        public JsonRpcResponse<Money> GetPayoutExtensionCost(string author, string permlink, DateTime time)
         {
-            return GetFollowers(following, startFollower, followType, limit, CancellationToken.None);
+            return GetPayoutExtensionCost(author, permlink, time, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_payout_extension_cost
         /// 
-        /// Возвращает список: Либо всех подписчиков пользователя 'following'. 
-        /// Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
         /// </summary>
-        /// <param name="following"></param>
-        /// <param name="startFollower"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
+        /// <param name="author">API type: string</param>
+        /// <param name="permlink">API type: string</param>
+        /// <param name="time">API type: fc::time_point_sec</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: asset</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<Money> GetPayoutExtensionCost(string author, string permlink, DateTime time, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<FollowApiObj[]>("call", token, "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+            return WebSocketManager.GetRequest<Money>("get_payout_extension_cost", token, author, permlink, time);
+        }
+
+
+        /**
+         * Used o retrieve comment payout window extension time by cost
+         * @param author comment author
+         * @param permlink comment permlink
+         * @param cost SBD amount pretended to be spent on extension
+         * @return deadline time the payout window pretends to be extended for
+         */
+        /// <summary>
+        /// API name: get_payout_extension_time
+        /// 
+        /// </summary>
+        /// <param name="author">API type: string</param>
+        /// <param name="permlink">API type: string</param>
+        /// <param name="cost">API type: asset&lt;0,17,0></param>
+        /// <returns>API type: time_point_sec</returns>
+        public JsonRpcResponse<DateTime> GetPayoutExtensionTime(string author, string permlink, Money cost)
+        {
+            return GetPayoutExtensionTime(author, permlink, cost, CancellationToken.None);
         }
 
         /// <summary>
+        /// API name: get_payout_extension_time
         /// 
-        /// Aналогично GetFollowers только для подписок
         /// </summary>
-        /// <param name="follower"></param>
-        /// <param name="startFollowing"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit)
-        {
-            return GetFollowing(follower, startFollowing, followType, limit, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// 
-        /// Aналогично GetFollowers только для подписок
-        /// </summary>
-        /// <param name="follower"></param>
-        /// <param name="startFollowing"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
+        /// <param name="author">API type: string</param>
+        /// <param name="permlink">API type: string</param>
+        /// <param name="cost">API type: asset&lt;0,17,0></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: time_point_sec</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<DateTime> GetPayoutExtensionTime(string author, string permlink, Money cost, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<FollowApiObj[]>("call", token, "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return WebSocketManager.GetRequest<DateTime>("get_payout_extension_time", token, author, permlink, cost);
         }
 
-        #endregion
+
+        ///////////////////////////
+        // Proposed transactions //
+        ///////////////////////////
+
+        ///**
+        // *  @return the set of proposed transactions relevant to the specified account id.
+        // */
+        ///// <summary>
+        ///// API name: get_proposed_transactions
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: account_name_type</param>
+        ///// <returns>API type: proposal_object</returns>
+        //public JsonRpcResponse<ProposalObject[]> GetProposedTransactions(string name)
+        //{
+        //    return GetProposedTransactions(name, CancellationToken.None);
+        //}
+
+        ///// <summary>
+        ///// API name: get_proposed_transactions
+        ///// 
+        ///// </summary>
+        ///// <param name="name">API type: account_name_type</param>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <returns>API type: proposal_object</returns>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<ProposalObject[]> GetProposedTransactions(string name, CancellationToken token)
+        //{
+        //    return WebSocketManager.GetRequest<ProposalObject[]>("get_proposed_transactions", token, name);
+        //}
+
+
+        //    ////////////////////////////
+        //    // Handlers - not exposed //
+        //    ////////////////////////////
+        //    /// <summary>
+        //    /// API name: on_api_startup
+        //    /// 
+        //    /// </summary>
+        //    /// <returns>API type: void</returns>
+        //    public JsonRpcResponse OnApiStartup()
+        //    {
+        //        return OnApiStartup(CancellationToken.None);
+        //    }
+
+        //    /// <summary>
+        //    /// API name: on_api_startup
+        //    /// 
+        //    /// </summary>
+        //    /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        //    /// <returns>API type: void</returns>
+        //    /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //    public JsonRpcResponse OnApiStartup(CancellationToken token)
+        //    {
+        //        return WebSocketManager.GetRequest("on_api_startup", token);
+        //    }
+
+        //    /// <summary>
+        //    /// API name: 
+        //    /// Parsing error: { preParsedElement.CppText}
+        //    /// </summary>
+        //    public JsonRpcResponse<>()
+        //    {
+        //        return (CancellationToken.None);
+        //    }
+
+        ///// <summary>
+        ///// API name: 
+        ///// Parsing error: { preParsedElement.CppText}
+        ///// </summary>
+        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        //public JsonRpcResponse<>(CancellationToken token)
+        //    {
+        //        return WebSocketManager.GetRequest<>("", token);
+        //    }
     }
 }

@@ -16,7 +16,7 @@ namespace Ditch.Golos.Operations.Get
 
         // bdType : dynamic_global_property_api_obj
         [JsonProperty("props")]
-        public DynamicGlobalPropertyApiObj Props { get; set; }
+        public DynamicGlobalPropertyObject Props { get; set; }
 
         // bdType : category_index
         [JsonProperty("category_idx")]

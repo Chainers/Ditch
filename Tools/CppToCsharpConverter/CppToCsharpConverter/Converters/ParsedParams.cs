@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        public string Type { get; set; }
+        public ParsedType Type { get; set; }
 
         public string CppType { get; set; }
 

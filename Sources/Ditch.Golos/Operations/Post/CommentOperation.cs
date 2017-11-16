@@ -5,6 +5,7 @@ namespace Ditch.Golos.Operations.Post
 {
     /// <summary>
     /// comment_operation
+    /// libraries\protocol\include\golos\protocol\operations\comment_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
@@ -18,7 +19,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: account_name_type</returns>
-        [SerializeHelper.MessageOrder(20)]
+        [MessageOrder(20)]
         [JsonProperty("parent_author")]
         public string ParentAuthor { get; set; }
 
@@ -27,7 +28,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [SerializeHelper.MessageOrder(30)]
+        [MessageOrder(30)]
         [JsonProperty("parent_permlink")]
         public string ParentPermlink { get; set; }
 
@@ -36,7 +37,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: account_name_type</returns>
-        [SerializeHelper.MessageOrder(40)]
+        [MessageOrder(40)]
         [JsonProperty("author")]
         public string Author { get; set; }
 
@@ -45,7 +46,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [SerializeHelper.MessageOrder(50)]
+        [MessageOrder(50)]
         [JsonProperty("permlink")]
         public string Permlink { get; set; }
 
@@ -54,7 +55,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [SerializeHelper.MessageOrder(60)]
+        [MessageOrder(60)]
         [JsonProperty("title")]
         public string Title { get; set; }
 
@@ -63,7 +64,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [SerializeHelper.MessageOrder(70)]
+        [MessageOrder(70)]
         [JsonProperty("body")]
         public string Body { get; set; }
 
@@ -72,7 +73,7 @@ namespace Ditch.Golos.Operations.Post
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [SerializeHelper.MessageOrder(80)]
+        [MessageOrder(80)]
         [JsonProperty("json_metadata")]
         public string JsonMetadata { get; set; }
 
