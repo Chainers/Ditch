@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Operations.Enums;
 using Ditch.Steem.Operations.Post;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Ditch.Steem.Tests
@@ -24,77 +26,75 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        public void FollowTest()
+        public async Task FollowUnfollowTest()
         {
             var user = User;
             var autor = "steepshot";
 
-            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+
+            var isFollow = IsFollow(autor);
+
+            var op = isFollow
+                ? new UnfollowOperation(user.Login, autor, user.Login)
+                : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(500);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+            isFollow = !isFollow;
+
+            op = isFollow
+                ? new UnfollowOperation(user.Login, autor, user.Login)
+                : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(500);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+            isFollow = !isFollow;
+
+            var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
+            op = new FollowOperation(user.Login, autor, fType, user.Login);
+            response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(500);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+            isFollow = !isFollow;
+
+            fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
+            op = new FollowOperation(user.Login, autor, fType, user.Login);
+            response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(500);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
         }
 
-        [Test]
-        public void FollowTest2()
+        private bool IsFollow(string autor)
         {
-            var user = User;
-            var autor = "steepshot";
-
-            var fType = new[] { FollowType.Blog };
-            var op = new FollowOperation(user.Login, autor, fType, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
-        /// <summary>
-        /// "params": [
-        ///     3,
-        ///     "broadcast_transaction",
-        ///     [
-        ///         {
-        ///             "ref_block_num": 7663,
-        ///             "ref_block_prefix": 66978938,
-        ///             "expiration": "2017-07-06T09:42:45",
-        ///             "operations": [
-        ///                 [
-        ///                     "custom_json",
-        ///                     {
-        ///                         "required_auths": [],
-        ///                         "required_posting_auths": [
-        ///                             "joseph.kalu"
-        ///                         ],
-        ///                         "id": "follow",
-        ///                         "json": "[\"follow\", {\"follower\": \"joseph.kalu\", \"following\": \"joseph.kalu\", \"what\": [\"\"]}]"
-        ///                     }
-        ///                 ]
-        ///             ],
-        ///             "extensions": [],
-        ///             "signatures": ["**********************************************************************************************************************************"
-        ///             ]
-        ///         }
-        ///     ]
-        /// ],
-        /// </summary>
-        [Test]
-        public void UnFollowTest()
-        {
-            var user = User;
-            var autor = "steepshot";
-
-            var op = new UnfollowOperation(user.Login, autor, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
-        [Test]
-        public void UnFollowTest2()
-        {
-            var user = User;
-            var autor = "steepshot";
-
-            var op = new FollowOperation(user.Login, autor, null, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var resp = Api.GetFollowing(User.Login, autor, FollowType.Blog, 1);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            return resp.Result.Length > 0 && resp.Result[0].Following == autor;
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Ditch.Steem.Tests
             var autor = "joseph.kalu";
             var permlink = "fkkl";
 
-            var op = new UpVoteOperation(user.Login, autor, permlink);
+            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -116,7 +116,7 @@ namespace Ditch.Steem.Tests
             var autor = "joseph.kalu";
             var permlink = "fkkl";
 
-            var op = new DownVoteOperation(user.Login, autor, permlink);
+            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -128,7 +128,7 @@ namespace Ditch.Steem.Tests
             var autor = "joseph.kalu";
             var permlink = "fkkl";
 
-            var op = new FlagOperation(user.Login, autor, permlink);
+            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote);
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

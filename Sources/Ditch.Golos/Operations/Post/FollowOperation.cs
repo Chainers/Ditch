@@ -1,4 +1,6 @@
-﻿using Ditch.Golos.Operations.Enums;
+﻿using System.Linq;
+using Ditch.Core.Helpers;
+using Ditch.Golos.Operations.Enums;
 
 namespace Ditch.Golos.Operations.Post
 {
@@ -27,7 +29,7 @@ namespace Ditch.Golos.Operations.Post
         /// <param name="requiredPostingAuths"></param>
         /// <returns></returns>
         public FollowOperation(string login, string author, FollowType what, params string[] requiredPostingAuths)
-            : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": [\"{what}\"]}}]")
+            : base("follow", $"[\"follow\", {{\"follower\": \"{login}\", \"following\": \"{author}\", \"what\": [\"{EnumConverter.ToJson(what.ToString())}\"]}}]")
         {
             RequiredPostingAuths = requiredPostingAuths;
         }
@@ -36,7 +38,7 @@ namespace Ditch.Golos.Operations.Post
         {
             if (what == null || what.Length == 0)
                 return string.Empty;
-            return $"\"{string.Join("\", \"", what)}\"";
+            return $"\"{string.Join("\", \"", what.Select(i => EnumConverter.ToJson(i.ToString())))}\"";
         }
     }
 }

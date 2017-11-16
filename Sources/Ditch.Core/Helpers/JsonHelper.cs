@@ -25,7 +25,7 @@ namespace Ditch.Core.Helpers
             return false;
         }
 
-        private static string FromJson(string value)
+        public static string FromJson(string value)
         {
             var sb = new StringBuilder();
             bool isUp = true;
@@ -49,7 +49,7 @@ namespace Ditch.Core.Helpers
             return sb.ToString();
         }
 
-        private static string ToJson(string value)
+        public static string ToJson(string value)
         {
             var sb = new StringBuilder();
             for (var i = 0; i < value.Length; i++)
