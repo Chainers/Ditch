@@ -127,11 +127,14 @@ namespace Ditch.Golos.Helpers
                 var typed = (Money)val;
                 var buf = BitConverter.GetBytes(typed.Value);
                 stream.Write(buf, 0, buf.Length);
-                stream.WriteByte(typed.Precision);
-                buf = Encoding.UTF8.GetBytes(typed.Currency);
+
+                buf = Encoding.UTF8.GetBytes(typed.Currency.ToUpper());
+                var buflen = VarInt(buf.Length);
+                stream.Write(buflen, 0, buflen.Length);
                 stream.Write(buf, 0, buf.Length);
-                for (var i = buf.Length; i < 7; i++)
-                    stream.WriteByte(0);
+                
+                stream.WriteByte(typed.Precision);
+
                 return;
             }
             if (type == typeof(String))

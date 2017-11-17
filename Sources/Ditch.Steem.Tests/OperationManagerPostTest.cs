@@ -143,7 +143,7 @@ namespace Ditch.Steem.Tests
             return vote?.Percent ?? 0;
         }
 
-       
+
         [Test]
         public void PostTest()
         {
@@ -154,6 +154,24 @@ namespace Ditch.Steem.Tests
             var response = Post(user.PostingKeys, false, op, popt);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
+
+        [Test]
+        public void DeleteCommentTest()
+        {
+            var user = User;
+
+            //var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
+            //var response = Post(user.PostingKeys, true, op);
+            //Console.WriteLine(response.Error);
+            //Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+
+            var op2 = new DeleteCommentOperation(user.Login, "test-post-for-delete-2017-11-17-13-43-32");
+            var response = Post(user.PostingKeys, true, op2);
+            Console.WriteLine(response.Error);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
 
         [Test]
         public void PostFailByTitleSizeTest()

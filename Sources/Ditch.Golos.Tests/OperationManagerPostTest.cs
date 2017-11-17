@@ -146,13 +146,32 @@ namespace Ditch.Golos.Tests
 
 
         [Test]
-        public void PostTest()
+        public void PostWithBeneficiariesTest()
         {
             var manager = Api;
             var user = User;
-            var op = new PostOperation("test", user.Login, "test with beneficiarie", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
+
+            var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             var op2 = new BeneficiariesOperation(user.Login, op.Permlink, manager.SbdSymbol, new Beneficiary("steepshot", 1000));
             var response = Post(user.PostingKeys, false, op, op2);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+
+        [Test]
+        public void DeleteCommentTest()
+        {
+            var user = User;
+
+            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
+            var response = Post(user.PostingKeys, false, op);
+            Console.WriteLine(response.Error);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+
+            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
+            response = Post(user.PostingKeys, false, op2);
+            Console.WriteLine(response.Error);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
@@ -174,15 +193,6 @@ namespace Ditch.Golos.Tests
             Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
         }
 
-        [Test]
-        public void RuPostTest()
-        {
-            var user = User;
-
-            var op = new PostOperation("test", user.Login, "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
 
         [Test]
         public void ReplyTest()
