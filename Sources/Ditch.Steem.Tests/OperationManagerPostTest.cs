@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
@@ -98,41 +99,51 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        public void UpVoteOperationTest()
+        public async Task VoteTest()
         {
             var user = User;
             var autor = "joseph.kalu";
             var permlink = "fkkl";
 
-            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var voteState = GetVoteState(autor, permlink, user);
+
+            for (int i = 0; i < 3; i++)
+            {
+                var op = voteState < 0
+                    ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote)
+                    : voteState > 0
+                        ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
+                        : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
+
+                var response = Post(user.PostingKeys, false, op);
+                Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+                if (!IsVerify)
+                {
+                    await Task.Delay(3000);
+                    var voteState2 = GetVoteState(autor, permlink, user);
+                    Assert.IsTrue(op.Weight == voteState2);
+                }
+
+                if (voteState == 0)
+                    voteState = VoteOperation.MaxUpVote;
+                else if (voteState > 0)
+                    voteState = VoteOperation.MaxFlagVote;
+                else
+                    voteState = 0;
+            }
         }
 
-        [Test]
-        public void DownVoteOperationTest()
+        private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "fkkl";
-
-            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var resp = Api.GetContent(author, permlink);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
+            return vote?.Percent ?? 0;
         }
 
-        [Test]
-        public void FlagTest()
-        {
-            var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "fkkl";
-
-            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
+       
         [Test]
         public void PostTest()
         {

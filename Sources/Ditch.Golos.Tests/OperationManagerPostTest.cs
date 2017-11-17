@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
@@ -44,7 +45,7 @@ namespace Ditch.Golos.Tests
             {
                 await Task.Delay(500);
                 var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+                Assert.IsTrue(isFollow != isFollow2);
             }
             isFollow = !isFollow;
 
@@ -58,7 +59,7 @@ namespace Ditch.Golos.Tests
             {
                 await Task.Delay(500);
                 var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+                Assert.IsTrue(isFollow != isFollow2);
             }
             isFollow = !isFollow;
 
@@ -71,7 +72,7 @@ namespace Ditch.Golos.Tests
             {
                 await Task.Delay(500);
                 var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+                Assert.IsTrue(isFollow != isFollow2);
             }
             isFollow = !isFollow;
 
@@ -84,55 +85,65 @@ namespace Ditch.Golos.Tests
             {
                 await Task.Delay(500);
                 var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+                Assert.IsTrue(isFollow != isFollow2);
             }
         }
 
-        private bool IsFollow(string autor)
+        private bool IsFollow(string author)
         {
-            var resp = Api.GetFollowing(User.Login, autor, FollowType.Blog, 1);
+            var resp = Api.GetFollowing(User.Login, author, FollowType.Blog, 1);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            return resp.Result.Length > 0 && resp.Result[0].Following == autor;
+            return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
 
         [Test]
-        public void UpVoteOperationTest()
+        public async Task VoteTest()
         {
             var user = User;
             var autor = "joseph.kalu";
             var permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
 
-            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var voteState = GetVoteState(autor, permlink, user);
+
+            for (int i = 0; i < 3; i++)
+            {
+                var op = voteState < 0
+                      ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote)
+                      : voteState > 0
+                      ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
+                      : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
+
+                var response = Post(user.PostingKeys, false, op);
+                Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+                if (!IsVerify)
+                {
+                    await Task.Delay(3000);
+                    var voteState2 = GetVoteState(autor, permlink, user);
+                    Assert.IsTrue(op.Weight == voteState2);
+                }
+
+                if (voteState == 0)
+                    voteState = VoteOperation.MaxUpVote;
+                else if (voteState > 0)
+                    voteState = VoteOperation.MaxFlagVote;
+                else
+                    voteState = 0;
+            }
         }
 
-        [Test]
-        public void DownVoteOperationTest()
+        private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "normal-2017-11-08-12-27-30";
-
-            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var resp = Api.GetContent(author, permlink);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
+            return vote?.Percent ?? 0;
         }
 
-        [Test]
-        public void FlagTest()
-        {
-            var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "normal-2017-11-08-12-27-30";
-
-            var op = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
 
         [Test]
         public void PostTest()

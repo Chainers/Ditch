@@ -11,7 +11,7 @@ namespace Ditch.Steem.Operations.Post
     public class VoteOperation : BaseOperation
     {
         public const short MaxFlagVote = -10000;
-        public const short MaxUpVote = -10000;
+        public const short MaxUpVote = 10000;
         public const short NoneVote = 0;
 
         private short _weight;
