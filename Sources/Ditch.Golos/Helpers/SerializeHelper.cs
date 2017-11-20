@@ -30,7 +30,7 @@ namespace Ditch.Golos.Helpers
             return kvarray.OrderBy(i => i.Key).Select(p => p.Value);
         }
 
-        public static byte[] TransactionToMessage(Transaction transaction)
+        public static byte[] TransactionToMessage(Transaction transaction, int hardforkVersion)
         {
             using (var ms = new MemoryStream())
             {
@@ -39,13 +39,13 @@ namespace Ditch.Golos.Helpers
                 {
                     var type = prop.PropertyType;
                     var val = prop.GetValue(transaction);
-                    AddToMessageStream(ms, type, val);
+                    AddToMessageStream(ms, type, val, hardforkVersion);
                 }
                 return ms.ToArray();
             }
         }
 
-        private static void AddToMessageStream(Stream stream, Type type, object val)
+        private static void AddToMessageStream(Stream stream, Type type, object val, int hardforkVersion)
         {
             if (type == typeof(bool))
             {
@@ -119,21 +119,39 @@ namespace Ditch.Golos.Helpers
             }
             if (type == typeof(OperationType))
             {
-                stream.WriteByte((byte)val);
+                var buf = (OperationType)val;
+                buf = VersionHelper.GetOperationType(hardforkVersion, buf);
+                stream.WriteByte((byte)buf);
                 return;
             }
             if (type == typeof(Money))
             {
                 var typed = (Money)val;
-                var buf = BitConverter.GetBytes(typed.Value);
-                stream.Write(buf, 0, buf.Length);
 
-                buf = Encoding.UTF8.GetBytes(typed.Currency.ToUpper());
-                var buflen = VarInt(buf.Length);
-                stream.Write(buflen, 0, buflen.Length);
-                stream.Write(buf, 0, buf.Length);
-                
-                stream.WriteByte(typed.Precision);
+                if (VersionHelper.GetHardfork(hardforkVersion) > 16)
+                {
+                    var buf = BitConverter.GetBytes(typed.Value);
+                    stream.Write(buf, 0, buf.Length);
+
+                    buf = Encoding.UTF8.GetBytes(typed.Currency.ToUpper());
+                    var buflen = VarInt(buf.Length);
+                    stream.Write(buflen, 0, buflen.Length);
+                    stream.Write(buf, 0, buf.Length);
+
+                    stream.WriteByte(typed.Precision);
+                }
+                else
+                {
+                    var buf = BitConverter.GetBytes(typed.Value);
+                    stream.Write(buf, 0, buf.Length);
+
+                    stream.WriteByte(typed.Precision);
+
+                    buf = Encoding.UTF8.GetBytes(typed.Currency);
+                    stream.Write(buf, 0, buf.Length);
+                    for (var i = buf.Length; i < 7; i++)
+                        stream.WriteByte(0);
+                }
 
                 return;
             }
@@ -157,7 +175,7 @@ namespace Ditch.Golos.Helpers
                 var typed = container;
                 foreach (var value in typed)
                 {
-                    AddToMessageStream(stream, value.GetType(), value);
+                    AddToMessageStream(stream, value.GetType(), value, hardforkVersion);
                 }
                 return;
             }
@@ -170,7 +188,7 @@ namespace Ditch.Golos.Helpers
                 stream.Write(buf, 0, buf.Length);
                 foreach (var value in typed)
                 {
-                    AddToMessageStream(stream, value.GetType(), value);
+                    AddToMessageStream(stream, value.GetType(), value, hardforkVersion);
                 }
                 return;
             }
@@ -182,7 +200,7 @@ namespace Ditch.Golos.Helpers
                 {
                     var intype = prop.PropertyType;
                     var inval = prop.GetValue(val);
-                    AddToMessageStream(stream, intype, inval);
+                    AddToMessageStream(stream, intype, inval, hardforkVersion);
                 }
                 return;
             }
@@ -194,7 +212,7 @@ namespace Ditch.Golos.Helpers
                 {
                     var intype = prop.PropertyType;
                     var inval = prop.GetValue(val);
-                    AddToMessageStream(stream, intype, inval);
+                    AddToMessageStream(stream, intype, inval, hardforkVersion);
                 }
                 return;
             }
@@ -232,6 +250,5 @@ namespace Ditch.Golos.Helpers
             data[i] += (byte)n;
             return data;
         }
-
     }
 }

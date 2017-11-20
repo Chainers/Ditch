@@ -17,7 +17,8 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task TryConnectToTest()
         {
-            var golos = new List<string> { "wss://ws.testnet.golos.io" };
+            var golos = new List<string> { "wss://ws.golos.io" };
+            //var golos = new List<string> { "wss://ws.testnet.golos.io" };
 
             var manager = new OperationManager();
 

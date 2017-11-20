@@ -7,7 +7,6 @@ using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Get;
 using Ditch.Golos.Operations.Post;
 using Ditch.Golos.Protocol;
@@ -23,6 +22,7 @@ namespace Ditch.Golos
         private WebSocketManager _webSocketManager;
         private byte[] _chainId;
         private string _sbdSymbol;
+        private int _version;
 
         public byte[] ChainId
         {
@@ -41,6 +41,16 @@ namespace Ditch.Golos
                 if (_webSocketManager == null)
                     RetryConnect();
                 return _sbdSymbol;
+            }
+        }
+
+        public int Version
+        {
+            get
+            {
+                if (_webSocketManager == null)
+                    RetryConnect();
+                return _version;
             }
         }
 
@@ -127,28 +137,49 @@ namespace Ditch.Golos
             foreach (var url in urls)
             {
                 _webSocketManager = new WebSocketManager(url, _jsonSerializerSettings);
-                var resp = GetConfig(token);
-                if (!resp.IsError)
-                {
-                    dynamic conf = resp.Result;
-                    var scid = conf.STEEMIT_CHAIN_ID as JValue;
-                    var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
-                    if (scid != null && smpsbd != null)
-                    {
-                        var cur = smpsbd.Value<string>();
-                        var str = scid.Value<string>();
-                        if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str))
-                        {
-                            _sbdSymbol = new Money(cur).Currency;
-                            _chainId = Hex.HexToBytes(str);
-                            return url;
-                        }
-                    }
-                }
+                if (TryLoadChainId(token) && TryLoadHardPorkVersion(token))
+                    return url;
+
                 _webSocketManager.Dispose();
             }
 
             return string.Empty;
+        }
+
+
+        private bool TryLoadChainId(CancellationToken token)
+        {
+            var resp = GetConfig(token);
+            if (!resp.IsError)
+            {
+                dynamic conf = resp.Result;
+                var scid = conf.STEEMIT_CHAIN_ID as JValue;
+                var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
+                if (scid != null && smpsbd != null)
+                {
+                    var cur = smpsbd.Value<string>();
+                    var str = scid.Value<string>();
+                    if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str))
+                    {
+                        _sbdSymbol = new Money(cur).Currency;
+                        _chainId = Hex.HexToBytes(str);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool TryLoadHardPorkVersion(CancellationToken token)
+        {
+            var resp = GetHardforkVersion(token);
+            if (!resp.IsError)
+            {
+                _version = VersionHelper.ToInteger(resp.Result);
+                if (_version > 0)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -325,7 +356,7 @@ namespace Ditch.Golos
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction);
+            var msg = SerializeHelper.TransactionToMessage(transaction, Version);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
             foreach (var userPrivateKey in userPrivateKeys)

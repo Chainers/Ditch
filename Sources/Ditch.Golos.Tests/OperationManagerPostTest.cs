@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.JsonRpc;
+using Ditch.Golos.Helpers;
 using Ditch.Golos.Operations.Enums;
 using Ditch.Golos.Operations.Post;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace Ditch.Golos.Tests
     public class OperationManagerPostTest : BaseTest
     {
         private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
-        private const bool IsVerify = false;
+        private const bool IsVerify = true;
 
         private JsonRpcResponse Post(List<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
@@ -153,11 +154,16 @@ namespace Ditch.Golos.Tests
 
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             var op2 = new BeneficiariesOperation(user.Login, op.Permlink, manager.SbdSymbol, new Beneficiary("steepshot", 1000));
-            var response = Post(user.PostingKeys, false, op, op2);
+
+            var response = VersionHelper.GetHardfork(Api.Version) > 16
+                ? Post(user.PostingKeys, false, op, op2)
+                : Post(user.PostingKeys, false, op);
+
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
 
+        [Ignore("NotSupported")]
         [Test]
         public void DeleteCommentTest()
         {

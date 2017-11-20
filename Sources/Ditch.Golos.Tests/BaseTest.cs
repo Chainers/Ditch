@@ -22,7 +22,8 @@ namespace Ditch.Golos.Tests
             User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["GolosWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
             Api = new OperationManager();
-            Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" });
+            Api.TryConnectTo(new List<string> { "wss://ws.golos.io" });
+            // Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" });
         }
 
         protected void TestPropetries(Type type, JObject jObject)
