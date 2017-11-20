@@ -7,9 +7,9 @@ using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Get;
 using Ditch.Golos.Operations.Post;
+using Ditch.Golos.Protocol;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,6 +22,7 @@ namespace Ditch.Golos
         private WebSocketManager _webSocketManager;
         private byte[] _chainId;
         private string _sbdSymbol;
+        private int _version;
 
         public byte[] ChainId
         {
@@ -40,6 +41,16 @@ namespace Ditch.Golos
                 if (_webSocketManager == null)
                     RetryConnect();
                 return _sbdSymbol;
+            }
+        }
+
+        public int Version
+        {
+            get
+            {
+                if (_webSocketManager == null)
+                    RetryConnect();
+                return _version;
             }
         }
 
@@ -126,28 +137,49 @@ namespace Ditch.Golos
             foreach (var url in urls)
             {
                 _webSocketManager = new WebSocketManager(url, _jsonSerializerSettings);
-                var resp = GetConfig(token);
-                if (!resp.IsError)
-                {
-                    dynamic conf = resp.Result;
-                    var scid = conf.STEEMIT_CHAIN_ID as JValue;
-                    var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
-                    if (scid != null && smpsbd != null)
-                    {
-                        var cur = smpsbd.Value<string>();
-                        var str = scid.Value<string>();
-                        if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str))
-                        {
-                            _sbdSymbol = new Money(cur).Currency;
-                            _chainId = Hex.HexToBytes(str);
-                            return url;
-                        }
-                    }
-                }
+                if (TryLoadChainId(token) && TryLoadHardPorkVersion(token))
+                    return url;
+
                 _webSocketManager.Dispose();
             }
 
             return string.Empty;
+        }
+
+
+        private bool TryLoadChainId(CancellationToken token)
+        {
+            var resp = GetConfig(token);
+            if (!resp.IsError)
+            {
+                dynamic conf = resp.Result;
+                var scid = conf.STEEMIT_CHAIN_ID as JValue;
+                var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
+                if (scid != null && smpsbd != null)
+                {
+                    var cur = smpsbd.Value<string>();
+                    var str = scid.Value<string>();
+                    if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str))
+                    {
+                        _sbdSymbol = new Money(cur).Currency;
+                        _chainId = Hex.HexToBytes(str);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool TryLoadHardPorkVersion(CancellationToken token)
+        {
+            var resp = GetHardforkVersion(token);
+            if (!resp.IsError)
+            {
+                _version = VersionHelper.ToInteger(resp.Result);
+                if (_version > 0)
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -209,29 +241,7 @@ namespace Ditch.Golos
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations);
-            var resp = WebSocketManager.Call(KnownApiNames.NetworkBroadcastApi, Transaction.OperationName, token, transaction);
-            return resp;
-        }
-
-        /// <summary>
-        /// Get user accounts by user names
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(params string[] userList)
-        {
-            return GetAccounts(CancellationToken.None, userList);
-        }
-
-        /// <summary>
-        /// Get user accounts by user names
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="userList"></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(CancellationToken token, params string[] userList)
-        {
-            return WebSocketManager.GetRequest<ExtendedAccount[]>("get_accounts", $"[[\"{string.Join("\",\"", userList)}\"]]", token);
+            return BroadcastTransaction(transaction, token);
         }
 
         /// <summary>
@@ -257,7 +267,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
         {
-            var prop = DynamicGlobalPropertyApiObj.Default;
+            var prop = new DynamicGlobalPropertyObject() { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
             var transaction = CreateTransaction(prop, userPrivateKeys, testOps);
             return WebSocketManager.GetRequest<bool>("verify_authority", token, transaction);
         }
@@ -315,37 +325,13 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// Get post by author and permlink
-        /// </summary>
-        /// <param name="author"></param>
-        /// <param name="permlink"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<Discussion> GetContent(string author, string permlink)
-        {
-            return GetContent(author, permlink, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Get post by author and permlink
-        /// </summary>
-        /// <param name="author"></param>
-        /// <param name="permlink"></param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, CancellationToken token)
-        {
-            return WebSocketManager.Call<Discussion>(KnownApiNames.DatabaseApi, "get_content", token, author, permlink);
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="propertyApiObj"></param>
         /// <param name="userPrivateKeys"></param>
         /// <param name="operations"></param>
         /// <returns></returns>
-        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IEnumerable<byte[]> userPrivateKeys, params BaseOperation[] operations)
         {
             return CreateTransaction(propertyApiObj, userPrivateKeys, CancellationToken.None, operations);
         }
@@ -359,9 +345,9 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
-            var transaction = new Transaction
+            var transaction = new SignedTransaction
             {
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
@@ -370,7 +356,7 @@ namespace Ditch.Golos
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction);
+            var msg = SerializeHelper.TransactionToMessage(transaction, Version);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
             foreach (var userPrivateKey in userPrivateKeys)

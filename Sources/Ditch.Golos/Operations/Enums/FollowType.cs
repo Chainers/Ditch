@@ -1,16 +1,12 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
+﻿using Ditch.Core.Helpers;
+using Newtonsoft.Json;
 namespace Ditch.Golos.Operations.Enums
 {
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(EnumConverter))]
     public enum FollowType
     {
-        //[EnumMember(Value = "undefined")]
-        undefined,
-        //[EnumMember(Value = "blog")]
-        blog,
-        //[EnumMember(Value = "ignore")]
-        ignore
-    };
+        Undefined,
+        Blog,
+        Ignore
+    }
 }

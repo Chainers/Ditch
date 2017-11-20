@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using Ditch.Core.Helpers;
+using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations.Enums
 {
@@ -7,14 +7,11 @@ namespace Ditch.Golos.Operations.Enums
     /// withdraw_route_type
     /// golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(EnumConverter))]
     public enum WithdrawRouteType
     {
-        //[EnumMember(Value = "incoming")]
         Incoming,
-        //[EnumMember(Value = "outgoing")]
         Outgoing,
-        //[EnumMember(Value = "all")]
         All
     }
 }

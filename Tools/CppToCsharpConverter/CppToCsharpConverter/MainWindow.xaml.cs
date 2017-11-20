@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,23 +13,18 @@ namespace CppToCsharpConverter
     public partial class MainWindow
     {
         private const string FileName = "SettingsViewModel.txt";
-
-
-        public StructConverter StructConverter;
-        public InterfaceConverter InterfaceConverter;
-        public SettingsViewModel SettingsViewModel { get; set; }
-
+        private readonly ConverterManager _converterManager;
+        private SettingsViewModel SettingsViewModel { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
             Load();
             DataContext = SettingsViewModel;
-            StructConverter = new StructConverter(SettingsViewModel.KnownTypes);
-            InterfaceConverter = new InterfaceConverter(SettingsViewModel.KnownTypes);
 
             ConverterBox.ItemsSource = Enum.GetValues(typeof(KnownConverter));
             ConverterBox.SelectedIndex = 0;
+            _converterManager = new ConverterManager(SettingsViewModel.KnownTypes);
         }
 
 
@@ -96,7 +91,12 @@ namespace CppToCsharpConverter
             var search = SearchBox.Text;
             var converter = (KnownConverter)ConverterBox.SelectedItem;
             if (!string.IsNullOrEmpty(dir) && !string.IsNullOrEmpty(search))
-                SettingsViewModel.AddTask(search, converter, dir);
+                SettingsViewModel.SearchTasks.AddTask(search, converter, dir);
+        }
+
+        private void ClearItems(object sender, RoutedEventArgs e)
+        {
+            SettingsViewModel.SearchTasks.Clear();
         }
 
         #region Automation
@@ -108,61 +108,33 @@ namespace CppToCsharpConverter
             button.Content = "Работаю...";
             button.IsEnabled = false;
 
-            var msg = await FindAndExecuteAsync();
-            AddNewTasks(InterfaceConverter);
-            InterfaceConverter.UnknownTypes.Clear();
-            AddNewTasks(StructConverter);
-            StructConverter.UnknownTypes.Clear();
-            SettingsViewModel.SearchTasks.Sort();
+            var tasks = await FindAndExecuteAsync();
+            SettingsViewModel.SearchTasks.ResetTasks(tasks);
             Save();
-
-            if (!string.IsNullOrEmpty(msg))
-                MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
             button.Content = prevContent;
             button.IsEnabled = true;
         }
 
-        private Task<string> FindAndExecuteAsync()
+        private Task<List<SearchTask>> FindAndExecuteAsync()
         {
             return Task.Run(() =>
             {
-                var msg = new StringBuilder();
-                foreach (var item in SettingsViewModel.SearchTasks)
+                var storeResultDir = "OutFiles";
+                try
                 {
-                    try
-                    {
-                        switch (item.Converter)
-                        {
-                            case KnownConverter.InterfaceConverter:
-                                {
-                                    InterfaceConverter.FindAndExecute(item);
-                                    break;
-                                }
-                            case KnownConverter.StructConverter:
-                                {
-                                    StructConverter.FindAndExecute(item);
-                                    break;
-                                }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        msg.AppendLine(e.Message);
-                        msg.AppendLine(e.StackTrace);
-                    }
+                    if (Directory.Exists(storeResultDir))
+                        Directory.Delete(storeResultDir, true);
+                    Directory.CreateDirectory(storeResultDir);
                 }
-                return msg.ToString();
+                catch
+                {
+                    //skip
+                }
+
+                return _converterManager.Execute(SettingsViewModel.SearchTasks, storeResultDir);
             });
         }
-
-
-        private void AddNewTasks(BaseConverter converter)
-        {
-            foreach (var itm in converter.UnknownTypes)
-                SettingsViewModel.AddTask(itm);
-        }
-
 
         #endregion
 
@@ -172,7 +144,9 @@ namespace CppToCsharpConverter
         {
             try
             {
-                // Output.Text = StructConverter.TryParseText(Input.Text, null);
+                var structConverter = new StructConverter(SettingsViewModel.KnownTypes);
+                var converted = structConverter.Parse(Input.Text, false);
+                Output.Text = structConverter.PrintParsedClass(converted, "projName", String.Empty);
             }
             catch (Exception ex)
             {
@@ -192,8 +166,5 @@ namespace CppToCsharpConverter
         }
 
         #endregion Convert
-
-
-
     }
 }

@@ -1,6 +1,7 @@
-﻿namespace CppToCsharpConverter.Converters
+﻿
+namespace CppToCsharpConverter.Converters
 {
-    public class ParsedField : IParsedElement
+    public class PreParsedElement
     {
         public string MainComment { get; set; }
 
@@ -10,13 +11,13 @@
 
         public string CppName { get; set; }
 
-        public string Type { get; set; }
-        
-        public string CppType { get; set; }
+        public ParsedType Type { get; set; }
+
+        public string CppText { get; set; }
 
         public override string ToString()
         {
-            return $"{Type} {Name}";
+            return $"{Type} {Name} ({CppText})";
         }
     }
 }

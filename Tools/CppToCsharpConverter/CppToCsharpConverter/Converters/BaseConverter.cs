@@ -9,530 +9,343 @@ namespace CppToCsharpConverter.Converters
 {
     public abstract class BaseConverter
     {
-        protected readonly Dictionary<string, string> KnownTypes;
+        private static readonly Regex NamespacePref = new Regex(@"\b[a-z]+::", RegexOptions.IgnoreCase);
+        private static readonly Regex ParamNormRegex = new Regex(@"(\bconst\b\s*)|(&*)", RegexOptions.IgnoreCase);
+        private static readonly Regex ParamTypeRegex = new Regex(@"(?<=^|,\s*)[a-z0-9:<_,>]+", RegexOptions.IgnoreCase);
+        private static readonly Regex ParamNameRegex = new Regex(@"(?<=[\w_>:]+\s+)[a-z0-9_]+(\s*=\s*[a-z0-9]+)?(?=,|$)", RegexOptions.IgnoreCase);
+        protected static readonly Regex NotNameChar = new Regex("[^[a-z0-9_]]*", RegexOptions.IgnoreCase);
 
-        protected static readonly Regex CommentRegex = new Regex(@"^\s*(\*|/)+");
-        protected static readonly Regex EnumRegex = new Regex(@"^\s*enum\s+", RegexOptions.IgnoreCase);
-        protected static readonly Regex ClassRegex = new Regex(@"(?<=^\s*((class)|(struct)|(enum))\s+)[a-z_0-9]+", RegexOptions.IgnoreCase);
-        protected static readonly Regex InheritRegex = new Regex(@"(?<=^\s*(class)|(struct)\s+[a-z_0-9]+\s*:\s*public\s+(object\s*)*<?\s*)[a-z_0-1,]+\s*(?=>?)", RegexOptions.IgnoreCase);
-        protected static readonly Regex StartBodyRegex = new Regex(@"(?<=^[^/]*){");
-        protected static readonly Regex DirNameRegex = new Regex(@"(?<=\\)[a-z0-9_.-]+(?=\\*$)", RegexOptions.IgnoreCase);
-        protected static readonly Regex StartPrivateRegex = new Regex(@"^\s*private\s*:");
-        protected readonly Regex PairType = new Regex("(?<=^([a-z0-9_:]*){1,}),(?=([a-z0-9_:]*){1,}$)|(?<=^([a-z0-9_:]*[<][a-z0-9_,:]*[>]){1,}),(?=([a-z0-9_:]*[<][a-z0-9_,:]*[>]){1,}$)", RegexOptions.IgnoreCase);
-
-        protected readonly Regex NotNameChar = new Regex("[^[a-z0-9_]]*", RegexOptions.IgnoreCase);
-        protected readonly Regex NormalizeType = new Regex(@"((?<=<)\s+)|(\s+((?=>)))|((?<=<[0-9_a-z\s]+,)\s+)", RegexOptions.IgnoreCase);
-        protected readonly Regex TypeDefName = new Regex(@"(?<=^\s*typedef\s+[a-z0-9<>:,_]+\s+)[a-z0-9_]+", RegexOptions.IgnoreCase);
-        protected readonly Regex TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[a-z0-9<>:,_]+", RegexOptions.IgnoreCase);
-        protected readonly Regex NamespacePref = new Regex(@"\b[a-z]+::", RegexOptions.IgnoreCase);
-        protected readonly Regex BlockStartPref = new Regex(@"^[a-z0-9<>:,_\s-&\*\(\),]*{", RegexOptions.IgnoreCase);
+        private readonly Dictionary<string, string> _knownTypes;
+        public static readonly Dictionary<string, string> Founded = new Dictionary<string, string>();
+        public static readonly List<SearchTask> UnknownTypes = new List<SearchTask>();
 
         protected BaseConverter(Dictionary<string, string> knownTypes)
         {
-            KnownTypes = knownTypes;
+            _knownTypes = knownTypes;
         }
 
-        public List<SearchTask> UnknownTypes = new List<SearchTask>();
-
-        public void FindAndExecute(SearchTask searchTask)
-        {
-            if (string.IsNullOrWhiteSpace(searchTask.SearchLine))
-                return;
-
-            if (File.Exists(searchTask.FullPath))
-            {
-                if (TryExecute(searchTask.FullPath, searchTask.SearchLine, searchTask.SearchDir))
-                    return;
-            }
-
-            var files = Directory.GetFiles(searchTask.SearchDir, "*.*", SearchOption.AllDirectories).Where(IsCodeFile).ToArray();
-            foreach (var file in files)
-            {
-                if (TryExecute(file, searchTask.SearchLine, searchTask.SearchDir))
-                {
-                    searchTask.FullPath = file;
-                    return;
-                }
-            }
-        }
-
-        protected bool TryExecute(string filePath, string searchLine, string dir)
+        public ParsedClass FindAndParse(SearchTask searchTask, string projName, string[] extensions, bool isApi)
         {
             try
             {
-                var text = TryGrabText(filePath, searchLine);
-                if (text != null)
+                if (string.IsNullOrWhiteSpace(searchTask.SearchLine))
+                    return null;
+
+                var classes = CashParser.FindAndParse(searchTask, projName, extensions, isApi);
+
+                foreach (var parsedClass in classes)
                 {
-                    var converted = TryParseClass(text);
-                    if (!converted.Fields.Any() && converted.Inherit.Count == 1 && converted.Inherit[0].Contains('['))
+                    ExtendPreParsedClass(parsedClass);
+
+                    foreach (var newTask in UnknownTypes)
                     {
-                        if (KnownTypes.ContainsKey(converted.CppName))
-                            KnownTypes[converted.CppName] = converted.Inherit[0];
-                        else
-                            KnownTypes.Add(converted.CppName, converted.Inherit[0]);
-                        UnknownTypes.Add(new SearchTask { SearchLine = converted.CppName, Converter = KnownConverter.None});
+                        if (string.IsNullOrEmpty(newTask.SearchDir))
+                            newTask.SearchDir = searchTask.SearchDir;
                     }
 
-                    PrintToFile(filePath, searchLine, dir, converted, text);
-                    return true;
+                    if (!parsedClass.Fields.Any() && parsedClass.Inherit.Count == 1 && (parsedClass.Inherit[0].IsArray || _knownTypes.ContainsKey(parsedClass.Inherit[0].CppName)))
+                    {
+                        if (Founded.ContainsKey(parsedClass.CppName))
+                            Founded[parsedClass.CppName] = parsedClass.Inherit[0].Name;
+                        else
+                            Founded.Add(parsedClass.CppName, parsedClass.Inherit[0].Name);
+                        UnknownTypes.Add(new SearchTask { SearchLine = parsedClass.CppName, Converter = KnownConverter.None });
+                    }
+
+                    return parsedClass;
                 }
-                return false;
             }
             catch (Exception e)
             {
-                Console.WriteLine($"{filePath} | {searchLine} | {e.Message} | {e.StackTrace}");
-                throw;
+                throw new Exception($"{searchTask.SearchDir} | {searchTask.SearchLine}", e);
             }
+            return null;
         }
 
-        protected void PrintToFile(string filePath, string searchLine, string dir, ParsedClass converted, List<string> text)
+        public void PrintToFile(ParsedClass converted, string projName, string searchDir, string absPathToFile, string storeResultDir)
         {
-            var outDir = $"{DirNameRegex.Match(dir).Value}\\";
+            var outDir = $"{storeResultDir}\\{projName}\\";
             switch (converted.ObjectType)
             {
                 case ObjectType.Class:
                 case ObjectType.Enum:
                     {
-                        outDir += "Models";
+                        outDir += "Models\\";
                         break;
                     }
-                case ObjectType.Interface:
+                case ObjectType.Api:
                     {
-                        outDir += "Api";
+                        outDir += "Api\\";
                         break;
                     }
             }
 
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
-            if (!Directory.Exists("DebugSrc\\" + outDir))
-                Directory.CreateDirectory("DebugSrc\\" + outDir);
-            File.WriteAllText($"DebugSrc\\{outDir}\\{converted.CppName}.txt", string.Join(Environment.NewLine, text));
-            File.WriteAllText($"{outDir}\\{converted.Name}.cs", PrintParsedClass(converted, filePath, dir));
+
+            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, projName, absPathToFile));
             foreach (var itm in UnknownTypes)
             {
                 if (string.IsNullOrEmpty(itm.SearchDir))
-                    itm.SearchDir = dir;
+                    itm.SearchDir = searchDir;
             }
         }
 
-        #region GrabText
-
-        protected virtual bool IsCodeFile(string path)
+        public ParsedClass Parse(string text, bool isApi)
         {
-            return path.EndsWith(".cpp") || path.EndsWith(".hpp");
+            var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var preParseClass = CashParser.TryParseClass(lines, isApi);
+            ExtendPreParsedClass(preParseClass);
+            return preParseClass;
         }
-
-        protected virtual List<string> TryGrabText(string filePath, string searchLine)
-        {
-            if (!File.Exists(filePath))
-                return null;
-
-            var lines = File.ReadLines(filePath).ToArray();
-            List<string> text = null;
-            var deep = 0;
-            var startWrite = false;
-            var enterb = false;
-            var typedefRegexp = new Regex($@"^\s*typedef\s+[a-z0-9<>:,_]+\s+{searchLine}\s*;");
-            var classRegexp = new Regex($@"^\s*(class|struct|enum)\s+{searchLine}\b\s*(?!;)");
-
-            for (var index = 0; index < lines.Length; index++)
-            {
-                var line = lines[index];
-
-                if (typedefRegexp.IsMatch(line))
-                    return new List<string> { line };
-
-                if (!startWrite && classRegexp.IsMatch(line))
-                {
-                    startWrite = true;
-                    text = TryGetComent(lines, index - 1);
-                }
-
-                if (!startWrite) continue;
-
-                for (var i = 0; i < line.Length; i++)
-                {
-                    switch (line[i])
-                    {
-                        case '{':
-                            enterb = true;
-                            deep++;
-                            break;
-                        case '}':
-                            deep--;
-                            break;
-                    }
-                }
-                text.Add(line);
-
-                if (enterb && deep == 0)
-                    break;
-            }
-            return text;
-        }
-
-        public List<string> TryGetComent(string[] lines, int endIndex)
-        {
-            var text = new List<string>();
-            for (var i = endIndex; i >= 0; i--)
-            {
-                var line = lines[i].Trim();
-                if (line.StartsWith("/") || line.StartsWith("*"))
-                {
-                    text.Add(lines[i]);
-                }
-                else if (string.IsNullOrWhiteSpace(line))
-                {
-                    if (line.Any())
-                        text.Add(lines[i]);
-                }
-                else
-                {
-                    break;
-                }
-            }
-            text.Reverse();
-            return text;
-        }
-
-        public bool IsBlockStart(IList<string> lines, int startIndex, out int endIndex)
-        {
-            endIndex = startIndex;
-            var line = lines[startIndex];
-            if (!BlockStartPref.IsMatch(line)) return false;
-
-            var deep = 0;
-            for (var index = startIndex; index < lines.Count; index++)
-            {
-                line = lines[index];
-                for (var i = 0; i < line.Length; i++)
-                {
-                    switch (line[i])
-                    {
-                        case '{':
-                            deep++;
-                            break;
-                        case '}':
-                            deep--;
-                            break;
-                        case '/':
-                            break;
-                    }
-                }
-                if (deep == 0)
-                {
-                    endIndex = index + 1;
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
-        #endregion GrabText
 
         #region ParseText
 
-        protected virtual ParsedClass InitParsedClass()
+        private void ExtendPreParsedClass(ParsedClass parsedClass)
         {
-            return new ParsedClass();
-        }
+            if (parsedClass == null)
+                return;
 
-        protected virtual ParsedClass TryParseTypedefClass(string text)
-        {
-            var nameMatch = TypeDefName.Match(text);
-            if (!nameMatch.Success)
-                return null;
-            var typeMatch = TypeDefType.Match(text);
-            if (!typeMatch.Success)
-                return null;
+            if (!string.IsNullOrEmpty(parsedClass.CppName))
+                parsedClass.Name = CashParser.ToTitleCase(parsedClass.CppName);
+            if (!string.IsNullOrEmpty(parsedClass.CppInherit))
+                parsedClass.Inherit = new List<ParsedType> { GetKnownTypeOrDefault(parsedClass.CppInherit) };
 
-            return new ParsedClass
+            if (parsedClass.CppConstructorParams != null && parsedClass.CppConstructorParams.Any())
             {
-                CppName = nameMatch.Value,
-                Name = ToTitleCase(nameMatch.Value),
-                Inherit = new List<string> { GetKnownTypeOrDefault(typeMatch.Value) }
-            };
-        }
-
-        protected virtual ParsedClass TryParseClass(List<string> text)
-        {
-            if (!text.Any())
-                return null;
-
-            int index;
-            if (text.Count == 1)
-            {
-                var typedef = TryParseTypedefClass(text[0]);
-                if (typedef != null)
-                    return typedef;
+                foreach (var itm in parsedClass.CppConstructorParams)
+                    parsedClass.ConstructorParams.Add(TryParseParam(itm));
             }
 
-            var result = InitParsedClass();
-            result.MainComment = TryParseComment(text, 0, out index);
-
-            var headerSb = new StringBuilder();
-            do
+            if (parsedClass.ObjectType != ObjectType.Enum)
             {
-                headerSb.AppendLine(text[index]);
-            } while (!StartBodyRegex.IsMatch(text[index++]));
-            var header = headerSb.ToString();
-            var name = TryParseClassName(header);
-            result.CppName = name;
-            result.Name = ToTitleCase(name);
-            result.ObjectType = EnumRegex.IsMatch(header) ? ObjectType.Enum : result.ObjectType;
-            var inherit = TryParseInherit(header).Trim();
-            if (!string.IsNullOrEmpty(inherit))
-            {
-                var allInherit = inherit.Split(',');
+                string templateName = null;
+                if (parsedClass.IsTemplate)
+                    templateName = CashParser.Unpack(parsedClass.Template, 1);
 
-                foreach (var itm in allInherit)
+                for (var i = 0; i < parsedClass.Fields.Count; i++)
                 {
-                    if (!string.IsNullOrWhiteSpace(itm))
-                    {
-                        var bf = itm.Trim();
-                        if (!result.CppName.Equals(bf))
-                        {
-                            result.Inherit.Add(ToTitleCase(bf));
-                            AddTypeToTask(bf);
-                        }
-                    }
+                    var preParsedElement = parsedClass.Fields[i];
+                    parsedClass.Fields[i] = TryParseElement(preParsedElement, templateName);
                 }
             }
 
-            while (index < text.Count)
-            {
-                if (StartPrivateRegex.IsMatch(text[index]) || (index + 1 == text.Count && text[index].Trim().StartsWith("}")))
-                    break;
-
-                var comm = TryParseComment(text, index, out index);
-                if (StartPrivateRegex.IsMatch(text[index]))
-                    break;
-
-                var field = result.ObjectType == ObjectType.Enum ? TryParseEnum(text, index, out index) : TryParseElement(text, index, out index);
-                if (field != null)
-                {
-                    field.MainComment = comm;
-                    result.Fields.Add(field);
-                }
-            }
-
-            return result;
+            parsedClass.Fields.RemoveAll(i => i == null);
         }
 
-        protected abstract IParsedElement TryParseElement(List<string> lines, int index, out int end);
+        protected abstract PreParsedElement TryParseElement(PreParsedElement preParsedElement, string templateName);
 
-
-        protected IParsedElement TryParseEnum(List<string> lines, int index, out int end)
+        protected ParsedType GetKnownTypeOrDefault(string type, string templateName = null)
         {
-            end = index + 1;
-            var text = lines[index].Trim();
-            var parts = text.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (parts.Length == 0)
-                return null;
-
-            var name = parts[0];
-            var coment = string.Empty;
-            if (parts.Length > 1)
-                coment = string.Join(" ", parts.Skip(2)).TrimStart(' ', '/', '<');
-
-            var field = new ParsedField
-            {
-                Name = ToTitleCase(name),
-                CppName = name,
-                Comment = coment
-            };
-            return field;
-        }
-
-        protected string GetKnownTypeOrDefault(string type)
-        {
+            type = type.Trim();
             if (NamespacePref.IsMatch(type))
                 type = NamespacePref.Replace(type, string.Empty);
 
             if (type.StartsWith("optional<"))
-                type = Unpack(type, 1);
+                type = CashParser.Unpack(type, 1);
 
+            if (type.StartsWith("static "))
+                type = type.Remove(0, 7);
             if (type.StartsWith("const "))
                 type = type.Remove(0, 6);
 
-            if (type.IndexOf('<') > -1)
-            {
-                return GetKnownCompositType(type);
-            }
+            if (type.EndsWith("<>"))
+                type = type.Remove(type.Length - 2);
 
-            if (KnownTypes.ContainsKey(type))
-                return KnownTypes[type];
+            if (type.IndexOf('<') > -1)
+                return GetKnownCompositType(type);
+
+            if (_knownTypes.ContainsKey(type))
+                return new ParsedType { CppName = type, Name = _knownTypes[type] };
+
+            if (!string.IsNullOrEmpty(templateName) && type.Equals(templateName, StringComparison.OrdinalIgnoreCase))
+                return new ParsedType { CppName = type, Name = templateName };
+
+            if (Founded.ContainsKey(type))
+            {
+                return new ParsedType { CppName = type, Name = Founded[type] };
+            }
 
             if (!NotNameChar.IsMatch(type))
             {
                 AddTypeToTask(type);
-                return ToTitleCase(type);
+                return new ParsedType { CppName = type, Name = CashParser.ToTitleCase(type) };
             }
 
-            return "object";
+            return new ParsedType { CppName = type, Name = "object" };
         }
 
         private void AddTypeToTask(string type)
         {
-            if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
+            if (!Founded.ContainsKey(type))
             {
-                var task = new SearchTask
+                Founded.Add(type, CashParser.ToTitleCase(type));
+                if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
                 {
-                    Converter = KnownConverter.StructConverter,
-                    SearchLine = type,
-                };
-                UnknownTypes.Add(task);
-            }
-            if (!KnownTypes.ContainsKey(type))
-                KnownTypes.Add(type, ToTitleCase(type));
-        }
-
-        protected string ToTitleCase(string name, bool firstUpper = true)
-        {
-            var sb = new StringBuilder(name.ToLower());
-            for (var i = 0; i < sb.Length; i++)
-            {
-                if (i == 0 && firstUpper)
-                    sb[i] = char.ToUpper(sb[i]);
-
-                if (sb[i] == '_' && i + 1 < sb.Length)
-                    sb[i + 1] = char.ToUpper(sb[i + 1]);
-            }
-            sb.Replace("_", string.Empty);
-            var rez = sb.ToString();
-            if (rez.Equals("params"))
-                rez = "parameters";
-
-            return rez;
-        }
-
-        protected string GetKnownCompositType(string type)
-        {
-            if (type.StartsWith("map<")) //TODO: research is needed
-                return "object";
-            if (type.StartsWith("array<")) //TODO: research is needed
-            {
-                var buf = Unpack(type, 1);
-                var countPart = buf.LastIndexOf(',');
-                if (countPart > 0)
-                {
-                    buf = buf.Remove(countPart);
-                    return $"{GetKnownTypeOrDefault(buf)}[]";
+                    var task = new SearchTask
+                    {
+                        Converter = KnownConverter.StructConverter,
+                        SearchLine = type,
+                    };
+                    UnknownTypes.Add(task);
                 }
             }
-            if (type.StartsWith("oid<")) //TODO: research is needed
-                return "object";
+        }
+
+        private ParsedType GetKnownCompositType(string type)
+        {
+            if (type.StartsWith("map<")) //TODO: research is needed
+                return new ParsedType { CppName = type, Name = "object" };
+
+            var unpacked = CashParser.Unpack(type, 1);
+            ParsedType parsedType;
+            if (type.StartsWith("array<")) //TODO: research is needed
+            {
+                var countPart = unpacked.LastIndexOf(',');
+                if (countPart > 0)
+                {
+                    unpacked = unpacked.Remove(countPart);
+                    parsedType = GetKnownTypeOrDefault(unpacked);
+                    parsedType.IsArray = true;
+                    return parsedType;
+                }
+            }
 
             if (IsArray(type))
             {
-                type = Unpack(type, 1);
-                return $"{GetKnownTypeOrDefault(type)}[]";
+                parsedType = GetKnownTypeOrDefault(unpacked);
+                parsedType.IsArray = true;
+                return parsedType;
             }
-            if (type.StartsWith("pair<"))
+
+            var chArray = CashParser.SplitParams(unpacked);
+            var tmpl = type.Remove(type.IndexOf('<'));
+            parsedType = tmpl.Equals("pair")
+                ? new ParsedType { Name = "KeyValuePair" }
+                : GetKnownTypeOrDefault(tmpl);
+            parsedType.IsTemplate = true;
+
+            foreach (var item in chArray)
             {
-                var buf = Unpack(type, 1);
-
-                var m = PairType.Matches(buf);
-                if (m.Count != 1)
-                    return "KeyValuePair<object,object>";
-
-                var index = m[0].Index;
-                return $"KeyValuePair<{GetKnownTypeOrDefault(buf.Substring(0, index))}, {GetKnownTypeOrDefault(buf.Substring(index + 1))}>";
+                var ch = GetKnownTypeOrDefault(item);
+                parsedType.Container.Add(ch);
             }
-
-            return "object";
+            return parsedType;
         }
 
-        protected bool IsArray(string line)
+        private bool IsArray(string line)
         {
             return line.StartsWith("set<")
                    | line.StartsWith("vector<")
                    | line.StartsWith("deque<");
         }
 
-        protected string Unpack(string line, int zIndex)
+        protected List<ParsedParams> TryParseParams(string parameters)
         {
-            var startPos = 0;
+            parameters = ParamNormRegex.Replace(parameters, string.Empty);
+            parameters = parameters.Trim();
+            if (string.IsNullOrEmpty(parameters))
+                return new List<ParsedParams>();
 
-            for (var i = 0; i < zIndex; i++)
+            var typeMatches = ParamTypeRegex.Matches(parameters);
+            var nameMatches = ParamNameRegex.Matches(parameters);
+
+            if (typeMatches.Count != nameMatches.Count)
+                throw new InvalidCastException();
+
+            var rez = new List<ParsedParams>();
+            for (var i = 0; i < typeMatches.Count; i++)
             {
-                startPos = line.IndexOf("<", startPos, StringComparison.Ordinal) + 1;
+                var defaultValue = string.Empty;
+                var name = nameMatches[i].Value;
+                var eqv = name.IndexOf("=", StringComparison.Ordinal);
+                if (eqv > -1)
+                {
+                    defaultValue = name.Substring(eqv + 1).Trim();
+                    name = name.Remove(eqv).Trim();
+                }
+
+                var param = new ParsedParams()
+                {
+                    Name = CashParser.ToTitleCase(name, false),
+                    Default = defaultValue,
+                    CppType = typeMatches[i].Value,
+                    Type = GetKnownTypeOrDefault(typeMatches[i].Value)
+                };
+                rez.Add(param);
             }
 
-            var buf = line.Remove(0, startPos);
-            buf = buf.Remove(buf.Length - zIndex);
-            return buf;
+            return rez;
         }
 
-        protected string TryParseClassName(string text)
+        private ParsedParams TryParseParam(string parameters)
         {
-            var rez = ClassRegex.Match(text);
-            if (rez.Success)
-                return rez.Value;
+            parameters = ParamNormRegex.Replace(parameters, string.Empty);
+            parameters = parameters.Trim();
+            if (string.IsNullOrEmpty(parameters))
+                return new ParsedParams();
 
-            throw new InvalidCastException();
-        }
+            var typeMatche = ParamTypeRegex.Match(parameters);
+            var nameMatche = ParamNameRegex.Match(parameters);
 
-        protected string TryParseComment(List<string> text, int index, out int end)
-        {
-            end = text.Count;
-            for (var i = index; i < text.Count; i++)
+            if (!typeMatche.Success || !nameMatche.Success)
+                throw new InvalidCastException();
+
+            var defaultValue = string.Empty;
+            var name = nameMatche.Value;
+            var eqv = name.IndexOf("=", StringComparison.Ordinal);
+            if (eqv > -1)
             {
-                var line = text[i];
-                if (string.IsNullOrWhiteSpace(line) || CommentRegex.IsMatch(line))
-                    continue;
-                end = i;
-                break;
+                defaultValue = name.Substring(eqv + 1).Trim();
+                name = name.Remove(eqv).Trim();
             }
 
-            var comm = string.Join(Environment.NewLine, text.Skip(index).Take(end - index));
-            return comm.Contains("/") ? comm : string.Empty;
-        }
-
-        protected string TryParseInherit(string text)
-        {
-            var rez = InheritRegex.Match(text);
-            if (rez.Success)
+            var rez = new ParsedParams()
             {
-                return rez.Value;
-            }
-            return string.Empty;
+                Name = CashParser.ToTitleCase(name, false),
+                Default = defaultValue,
+                CppType = typeMatche.Value,
+                Type = GetKnownTypeOrDefault(typeMatche.Value)
+            };
+            return rez;
         }
 
         #endregion ParseText
 
         #region PrintClass
 
-        protected virtual void PrinNamespace(StringBuilder sb, ParsedClass parsedClass, string rootDir)
+        private void PrinNamespace(StringBuilder sb, ParsedClass parsedClass, string projName)
         {
-            sb.AppendLine("using Ditch.Core;");
-            sb.AppendLine("using System;");
-            sb.AppendLine("using System.Collections.Generic; ");
-            sb.AppendLine("using Newtonsoft.Json;");
-
             switch (parsedClass.ObjectType)
             {
                 case ObjectType.Class:
                     {
+                        sb.AppendLine("using Ditch.Core;");
+                        sb.AppendLine("using System;");
+                        sb.AppendLine("using System.Collections.Generic; ");
+                        sb.AppendLine($"using Ditch.{projName}.Models;");
+                        sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{rootDir}.Models");
+                        sb.AppendLine($"namespace Ditch.{projName}.Models");
                         break;
                     }
                 case ObjectType.Enum:
                     {
-                        sb.AppendLine("using Newtonsoft.Json.Converters;");
+                        sb.AppendLine("using Ditch.Core.Helpers;");
+                        sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{rootDir}.Models");
+                        sb.AppendLine($"namespace Ditch.{projName}.Models");
                         break;
                     }
-                case ObjectType.Interface:
+                case ObjectType.Api:
                     {
-                        sb.AppendLine($"using Ditch.{rootDir}.Models;");
+                        sb.AppendLine("using Ditch.Core;");
+                        sb.AppendLine("using System;");
+                        sb.AppendLine("using System.Collections.Generic; ");
+                        sb.AppendLine("using Ditch.Core.JsonRpc;");
+                        sb.AppendLine($"using Ditch.{projName}.Models;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{rootDir}.Api");
+                        sb.AppendLine($"namespace Ditch.{projName}.Api");
                         break;
                     }
             }
@@ -540,22 +353,23 @@ namespace CppToCsharpConverter.Converters
             sb.AppendLine("{");
         }
 
-        protected virtual string PrintParsedClass(ParsedClass parsedClass, string pathToFile, string dir)
+        public string PrintParsedClass(ParsedClass parsedClass, string projName, string absPathToFile)
         {
             var sb = new StringBuilder();
-            var rootDir = DirNameRegex.Match(dir).Value;
-            rootDir = ToTitleCase(rootDir).Replace(".", "_").Replace("-", "_");
-            PrinNamespace(sb, parsedClass, rootDir);
-            AddClassName(sb, parsedClass, pathToFile, dir, 4);
+            PrinNamespace(sb, parsedClass, projName);
+            AddClassName(sb, parsedClass, absPathToFile, 4);
+            string templateName = null;
+            if (parsedClass.IsTemplate)
+                templateName = CashParser.Unpack(parsedClass.Template, 1);
             foreach (var t in parsedClass.Fields)
-                PrintParsedElements(sb, t, 8);
+                PrintParsedElements(sb, parsedClass, t, 8, templateName);
 
-            CloseClass(sb, 4);
-            CloseClass(sb, 0);
+            CloseTag(sb, 4);
+            CloseTag(sb, 0);
             return sb.ToString();
         }
 
-        protected virtual void AddClassName(StringBuilder sb, ParsedClass parsedClass, string pathToFile, string dir, int indentCount)
+        private void AddClassName(StringBuilder sb, ParsedClass parsedClass, string absPathToFile, int indentCount)
         {
             var indent = new string(' ', indentCount);
 
@@ -563,8 +377,8 @@ namespace CppToCsharpConverter.Converters
                 sb.AppendLine($"{indent}{parsedClass.MainComment.Replace("\r\n", "\r\n" + indent)}{Environment.NewLine}");
             sb.AppendLine($"{indent}/// <summary>");
             sb.AppendLine($"{indent}/// {parsedClass.CppName}");
-            if (!string.IsNullOrEmpty(pathToFile))
-                sb.AppendLine($@"{indent}/// {pathToFile.Remove(0, dir.Length)}");
+            if (!string.IsNullOrEmpty(absPathToFile))
+                sb.AppendLine($@"{indent}/// {absPathToFile}");
             sb.AppendLine($"{indent}/// </summary>");
 
             switch (parsedClass.ObjectType)
@@ -572,32 +386,116 @@ namespace CppToCsharpConverter.Converters
                 case ObjectType.Class:
                     {
                         sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
-                        sb.AppendLine($"{indent}public class {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
                         break;
                     }
                 case ObjectType.Enum:
                     {
-                        sb.AppendLine($"{indent}[JsonConverter(typeof(StringEnumConverter))]");
+                        sb.AppendLine($"{indent}[JsonConverter(typeof(EnumConverter))]");
                         sb.AppendLine($"{indent}public enum {parsedClass.Name}");
                         break;
                     }
-                case ObjectType.Interface:
+                case ObjectType.Api:
                     {
-                        sb.AppendLine($"{indent}public interface {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
                         break;
                     }
             }
             sb.AppendLine($"{indent}{{");
         }
 
-        protected string TypeCorrection(string line)
+        private string TypeCorrection(string line)
         {
+            if (string.IsNullOrEmpty(line))
+                return line;
             return line.Replace("<", "&lt;");
         }
 
-        protected abstract void PrintParsedElements(StringBuilder sb, IParsedElement parsedElement, int indentCount);
+        private void PrintParsedElements(StringBuilder sb, ParsedClass parsedClass, PreParsedElement parsedElement, int indentCount, string templateName, bool printSecond = false)
+        {
+            var indent = new string(' ', indentCount);
+            sb.AppendLine();
 
-        protected void CloseClass(StringBuilder sb, int indentCount)
+            if (!string.IsNullOrEmpty(parsedElement.MainComment) && !printSecond)
+                sb.AppendLine(parsedElement.MainComment);
+
+            var comment = parsedElement.Comment ?? string.Empty;
+            //comment = comment.Replace("\\", $@"/// {Environment.NewLine}");
+
+            sb.AppendLine($"{indent}/// <summary>");
+            sb.AppendLine($"{indent}/// API name: {parsedElement.CppName}");
+            sb.AppendLine($"{indent}/// {TypeCorrection(comment)}");
+            sb.AppendLine($"{indent}/// </summary>");
+
+            var parsedFunc = parsedElement as ParsedFunc;
+            if (parsedFunc != null)
+            {
+                foreach (var itm in parsedFunc.Params)
+                    sb.AppendLine($"{indent}/// <param name=\"{itm.Name}\">API type: {TypeCorrection(itm.CppType)}</param>");
+                if (printSecond && parsedClass.ObjectType == ObjectType.Api)
+                    sb.AppendLine($"{indent}/// <param name=\"token\">Throws a <see cref=\"T:System.OperationCanceledException\" /> if this token has had cancellation requested.</param>");
+            }
+
+            if (!string.IsNullOrEmpty(parsedElement.Type?.CppName))
+                sb.AppendLine($"{indent}/// <returns>API type: {TypeCorrection(parsedElement.Type.CppName)}</returns>");
+
+            if (printSecond && parsedClass.ObjectType == ObjectType.Api)
+                sb.AppendLine($"{indent}/// <exception cref=\"T:System.OperationCanceledException\">The token has had cancellation requested.</exception>");
+
+            var type = GetTypeForPrint(parsedElement.Type, templateName);
+            if (parsedFunc != null)
+            {
+                sb.AppendLine($"{indent}public JsonRpcResponse{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")} {parsedElement.Name}({string.Join(", ", parsedFunc.Params)}{(printSecond && parsedClass.ObjectType == ObjectType.Api ? $"{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken token" : string.Empty)})");
+                sb.AppendLine($"{indent}{{");
+
+                if (!printSecond && parsedClass.ObjectType == ObjectType.Api)
+                {
+                    sb.AppendLine($"{indent}    return {parsedElement.Name}({string.Join(", ", parsedFunc.Params.Select(i => i.Name))}{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken.None);");
+                }
+                else
+                {
+                    sb.Append($"{indent}    return WebSocketManager.GetRequest{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")}(\"{parsedElement.CppName}\"");
+
+                    if (printSecond && parsedClass.ObjectType == ObjectType.Api)
+                        sb.Append(", token");
+
+                    if (parsedFunc.Params.Any())
+                    {
+                        sb.Append(", ");
+                        sb.Append(string.Join(", ", parsedFunc.Params.Select(i => i.Name)));
+                    }
+                    sb.AppendLine(");");
+                }
+                sb.AppendLine($"{indent}}}");
+            }
+            else
+            {
+                if (parsedClass.ObjectType != ObjectType.Enum)
+                    sb.AppendLine($"{indent}[JsonProperty(\"{parsedElement.CppName}\")]");
+                sb.AppendLine(parsedElement.Type != null
+                    ? $"{indent}public {type} {parsedElement.Name} {{get; set;}}"
+                    : $"{indent}{parsedElement.Name},");
+            }
+
+            if (parsedClass.ObjectType == ObjectType.Api && !printSecond)
+                PrintParsedElements(sb, parsedClass, parsedElement, indentCount, templateName, true);
+        }
+
+        private string GetTypeForPrint(ParsedType parsedType, string templateName)
+        {
+            if (parsedType == null)
+                return string.Empty;
+            var type = parsedType.Name;
+            //if (!(!string.IsNullOrEmpty(templateName) && type.Equals(templateName, StringComparison.OrdinalIgnoreCase) || _knownTypes.ContainsValue(parsedType.Name)))
+            //    type = $"I{type}";
+            if (parsedType.IsTemplate)
+                type += $"<{string.Join(", ", parsedType.Container.Select(pt => GetTypeForPrint(pt, templateName)))}>";
+            if (parsedType.IsArray)
+                type += "[]";
+            return type;
+        }
+
+        private void CloseTag(StringBuilder sb, int indentCount)
         {
             var indent = new string(' ', indentCount);
             sb.AppendLine($"{indent}}}");

@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using Ditch.Core.Helpers;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations.Enums
 {
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(EnumConverter))]
     public enum WithdrawRouteType
     {
-        //[EnumMember(Value = "incoming")]
         Incoming,
-        //[EnumMember(Value = "outgoing")]
         Outgoing,
-        //[EnumMember(Value = "all")]
         All
     }
 }
