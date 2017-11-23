@@ -25,35 +25,12 @@ namespace Ditch.Steem
         /// </summary>
         /// <param name="after"></param>
         /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit)
-        {
-            return GetTrendingTags(after, limit, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Returns a list of tags (tags) that include word combinations
-        /// Возращает список меток(тэгов) включающие словосочетания
-        /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string after, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<TagApiObj[]>("get_trending_tags", token, after, limit);
-        }
-
-        /// <summary>
-        /// This API is a short-cut for returning all of the state required for a particular URL with a single query.
-        /// Отображает текущее состояние сети.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<State> GetState(string path)
-        {
-            return GetState(path, CancellationToken.None);
+            return CustomGetRequest<TagApiObj[]>("get_trending_tags", token, after, limit);
         }
 
         /// <summary>
@@ -66,17 +43,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<State> GetState(string path, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<State>("get_state", $"[\"{path}\"]", token);
-        }
-
-        /// <summary>
-        /// Displays a list of all active delegates.
-        /// Отображает список всех активных делегатов.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<string[]> GetActiveWitnesses()
-        {
-            return GetActiveWitnesses(CancellationToken.None);
+            return CustomGetRequest<State>("get_state", token, $"[\"{path}\"]");
         }
 
         /// <summary>
@@ -88,17 +55,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> GetActiveWitnesses(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<string[]>("get_active_witnesses", token);
-        }
-
-        /// <summary>
-        /// Creates a list of the miners waiting to enter the DPOW chain to create the block.
-        /// Создает список майнеров, ожидающих попасть в DPOW цепочку, чтобы создать блок.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<string[]> GetMinerQueue()
-        {
-            return GetMinerQueue(CancellationToken.None);
+            return CustomGetRequest<string[]>("get_active_witnesses", token);
         }
 
         /// <summary>
@@ -110,7 +67,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> GetMinerQueue(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<string[]>("get_miner_queue", token);
+            return CustomGetRequest<string[]>("get_miner_queue", token);
         }
 
 
@@ -124,34 +81,12 @@ namespace Ditch.Steem
         /// Возвращает все данные о блоке
         /// </summary>
         /// <param name="blockNum">Height of the block whose header should be returned</param>
-        /// <returns>header of the referenced block, or null if no matching block was found</returns>
-        public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum)
-        {
-            return GetBlockHeader(blockNum, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Retrieve a block header
-        /// Возвращает все данные о блоке
-        /// </summary>
-        /// <param name="blockNum">Height of the block whose header should be returned</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>header of the referenced block, or null if no matching block was found</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<BlockHeader>("get_block_header", token, blockNum);
-        }
-
-        /// <summary>
-        /// Retrieve a full, signed block
-        /// Возвращает все данные о блоке включая транзакции
-        /// </summary>
-        /// <param name="blockNum">Height of the block to be returned</param>
-        /// <returns>the referenced block, or null if no matching block was found</returns>
-        public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum)
-        {
-            return GetBlock(blockNum, CancellationToken.None);
+            return CustomGetRequest<BlockHeader>("get_block_header", token, blockNum);
         }
 
         /// <summary>
@@ -164,19 +99,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<SignedBlockApiObj> GetBlock(UInt32 blockNum, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<SignedBlockApiObj>("get_block", token, blockNum);
-        }
-
-        /// <summary>
-        /// Get sequence of operations included/generated within a particular block
-        /// Возвращает все операции в блоке, если параметр 'onlyVirtual' true то возвращает только виртуальные операции
-        /// </summary>
-        /// <param name="blockNum">Height of the block whose generated virtual operations should be returned</param>
-        /// <param name="onlyVirtual">Whether to only include virtual operations in returned results (default: true)</param>
-        /// <returns>sequence of operations included/generated within the block</returns>
-        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual)
-        {
-            return GetOpsInBlock(blockNum, onlyVirtual, CancellationToken.None);
+            return CustomGetRequest<SignedBlockApiObj>("get_block", token, blockNum);
         }
 
         /// <summary>
@@ -190,7 +113,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<AppliedOperation[]>("get_ops_in_block", token, blockNum, onlyVirtual);
+            return CustomGetRequest<AppliedOperation[]>("get_ops_in_block", token, blockNum, onlyVirtual);
         }
 
 
@@ -203,34 +126,12 @@ namespace Ditch.Steem
         /// Displays the current node configuration.
         /// Отображает текущую конфигурацию узла.
         /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<object> GetConfig()
-        {
-            return GetConfig(CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Displays the current node configuration.
-        /// Отображает текущую конфигурацию узла.
-        /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object> GetConfig(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<object>("get_config", token);
-        }
-        
-        /// <summary>
-        /// Returns the block chain's rapidly-changing properties.
-        /// The returned object contains information that changes every block interval
-        /// such as the head block number, the next witness, etc.
-        /// @see \c get_global_properties() for less-frequently changing properties
-        /// </summary>
-        /// <returns>the dynamic global properties</returns>
-        public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties()
-        {
-            return GetDynamicGlobalProperties(CancellationToken.None);
+            return CustomGetRequest<object>("get_config", token);
         }
 
         /// <summary>
@@ -244,17 +145,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<DynamicGlobalPropertyApiObj> GetDynamicGlobalProperties(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties", token);
-        }
-
-        /// <summary>
-        /// Displays the commission for creating the user, the maximum block size and the GBG interest rate
-        /// Отображает комиссию за создание пользователя, максимальный размер блока и процентную ставку GBG.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<ChainProperties> GetChainProperties()
-        {
-            return GetChainProperties(CancellationToken.None);
+            return CustomGetRequest<DynamicGlobalPropertyApiObj>("get_dynamic_global_properties", token);
         }
 
         /// <summary>
@@ -266,17 +157,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ChainProperties> GetChainProperties(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<ChainProperties>("get_chain_properties", token);
-        }
-
-        /// <summary>
-        /// Displays the current median price of conversion
-        /// Отображает текущую медианную цену конвертации.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice()
-        {
-            return GetCurrentMedianHistoryPrice(CancellationToken.None);
+            return CustomGetRequest<ChainProperties>("get_chain_properties", token);
         }
 
         /// <summary>
@@ -288,17 +169,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<Price>("get_current_median_history_price", token);
-        }
-
-        /// <summary>
-        /// Displays the conversion history
-        /// Отображает историю конверсий.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<FeedHistoryApiObj> GetFeedHistory()
-        {
-            return GetFeedHistory(CancellationToken.None);
+            return CustomGetRequest<Price>("get_current_median_history_price", token);
         }
 
         /// <summary>
@@ -310,17 +181,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FeedHistoryApiObj> GetFeedHistory(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<FeedHistoryApiObj>("get_feed_history", token);
-        }
-
-        /// <summary>
-        /// Displays the current delegation status.
-        /// Отображает текущее состояние делегирования.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<WitnessScheduleApiObj> GetWitnessSchedule()
-        {
-            return GetWitnessSchedule(CancellationToken.None);
+            return CustomGetRequest<FeedHistoryApiObj>("get_feed_history", token);
         }
 
         /// <summary>
@@ -332,17 +193,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WitnessScheduleApiObj> GetWitnessSchedule(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WitnessScheduleApiObj>("get_witness_schedule", token);
-        }
-
-        /// <summary>
-        /// Displays the current version of the network.
-        /// Отображает текущую версию сети.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<string> GetHardforkVersion()
-        {
-            return GetHardforkVersion(CancellationToken.None);
+            return CustomGetRequest<WitnessScheduleApiObj>("get_witness_schedule", token);
         }
 
         /// <summary>
@@ -354,17 +205,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string> GetHardforkVersion(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<string>("get_hardfork_version", token);
-        }
-
-        /// <summary>
-        /// Displays the date and version of HardFork
-        /// Отображает дату и версию HardFork
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<ScheduledHardfork> GetNextScheduledHardfork()
-        {
-            return GetNextScheduledHardfork(CancellationToken.None);
+            return CustomGetRequest<string>("get_hardfork_version", token);
         }
 
         /// <summary>
@@ -376,7 +217,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ScheduledHardfork> GetNextScheduledHardfork(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<ScheduledHardfork>("get_next_scheduled_hardfork", token);
+            return CustomGetRequest<ScheduledHardfork>("get_next_scheduled_hardfork", token);
         }
 
         //get_reward_fund
@@ -389,24 +230,13 @@ namespace Ditch.Steem
         /// 
         /// Находит и возвращает имена пользователей по публичному ключу
         /// </summary>
-        /// <param name="keys"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<string[][]> GetKeyReferences(params object[][] keys)
-        {
-            return GetKeyReferences(CancellationToken.None, keys);
-        }
-
-        /// <summary>
-        /// 
-        /// Находит и возвращает имена пользователей по публичному ключу
-        /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <param name="keys"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[][]> GetKeyReferences(CancellationToken token, params object[][] keys)
+        public JsonRpcResponse<string[][]> GetKeyReferences(CancellationToken token, params object[] keys)
         {
-            return WebSocketManager.Call<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", token, keys);
+            return CustomGetRequest<string[][]>("call", token, KnownApiNames.AccountByKeyApi, "get_key_references", new object[][] { keys });
         }
 
 
@@ -420,33 +250,12 @@ namespace Ditch.Steem
         /// <summary>
         /// </summary>
         /// <param name="accountId"></param>
-        /// <returns>all accounts that referr to the key or account id in their owner or active authorities.</returns>
-        public JsonRpcResponse<object> GetAccountReferences(UInt64 accountId)
-        {
-            return GetAccountReferences(accountId, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="accountId"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>all accounts that referr to the key or account id in their owner or active authorities.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object> GetAccountReferences(UInt64 accountId, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<object>("get_account_references", token, accountId);
-        }
-
-        /// <summary>
-        /// Get a list of accounts by name
-        /// This function has semantics identical to @ref get_objects
-        /// Возращает данные по заданным аккаунтам
-        /// </summary>
-        /// <param name="names">Names of the accounts to retrieve</param>
-        /// <returns>The accounts holding the provided names</returns>
-        public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(params string[] names)
-        {
-            return LookupAccountNames(CancellationToken.None, names);
+            return CustomGetRequest<object>("get_account_references", token, accountId);
         }
 
         /// <summary>
@@ -460,19 +269,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountApiObj[]> LookupAccountNames(CancellationToken token, params string[] names)
         {
-            return WebSocketManager.GetRequest<AccountApiObj[]>("lookup_account_names", $"[[\"{string.Join("\", \"", names)}\"]]", token);
-        }
-
-        /// <summary>
-        /// Returns the names of users close to the phrase.
-        /// Возвращает имена пользователей близких к шаблону.
-        /// </summary>
-        /// <param name="account">Lower bound of the first name to return</param>
-        /// <param name="limit">Maximum number of results to return -- must not exceed 1000</param>
-        /// <returns>Map of account names to corresponding IDs</returns>
-        public JsonRpcResponse<string[]> LookupAccounts(string account, UInt32 limit)
-        {
-            return LookupAccounts(account, limit, CancellationToken.None);
+            return CustomGetRequest<AccountApiObj[]>("lookup_account_names", token, new object[][] { names });
         }
 
         /// <summary>
@@ -486,17 +283,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> LookupAccounts(string account, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<string[]>("lookup_accounts", token, account, limit);
-        }
-
-        /// <summary>
-        /// Get the total number of accounts registered with the blockchain
-        /// Возвращает количество зарегестрированных пользователей.
-        /// </summary>
-        /// <returns></returns>
-        public JsonRpcResponse<UInt64> GetAccountCount()
-        {
-            return GetAccountCount(CancellationToken.None);
+            return CustomGetRequest<string[]>("lookup_accounts", token, account, limit);
         }
 
         /// <summary>
@@ -508,18 +295,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<UInt64> GetAccountCount(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<UInt64>("get_account_count", token);
-        }
-
-        /// <summary>
-        /// Displays the user name if he changed the ownership of the blockchain
-        /// Отображает имя пользователя если он изменил право собственности на блокчейн
-        /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(params string[] account)
-        {
-            return GetOwnerHistory(CancellationToken.None, account);
+            return CustomGetRequest<UInt64>("get_account_count", token);
         }
 
         /// <summary>
@@ -532,18 +308,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<OwnerAuthorityHistoryApiObj[]> GetOwnerHistory(CancellationToken token, params string[] account)
         {
-            return WebSocketManager.GetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", token, account);
-        }
-
-        /// <summary>
-        /// Returns true if the user is in recovery status.
-        /// Возвращает true если пользователь в статусе на восстановление.
-        /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(params string[] account)
-        {
-            return GetRecoveryRequest(CancellationToken.None, account);
+            return CustomGetRequest<OwnerAuthorityHistoryApiObj[]>("get_owner_history", token, account);
         }
 
         /// <summary>
@@ -556,19 +321,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountRecoveryRequestApiObj[]> GetRecoveryRequest(CancellationToken token, params string[] account)
         {
-            return WebSocketManager.GetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", token, account);
-        }
-
-        /// <summary>
-        /// Returns the operations implemented through mediation.
-        /// Возвращает операции реализованные с помощью посредничества.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="escrowId"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId)
-        {
-            return GetEscrow(from, escrowId, CancellationToken.None);
+            return CustomGetRequest<AccountRecoveryRequestApiObj[]>("get_recovery_request", token, account);
         }
 
         /// <summary>
@@ -582,19 +335,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<EscrowApiObj> GetEscrow(string from, UInt32 escrowId, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<EscrowApiObj>("get_escrow", token, from, escrowId);
-        }
-
-        /// <summary>
-        /// Returns all transfers to the user's account, depending on the type
-        /// Возвращает все переводы на счету пользователя в зависимости от типа
-        /// </summary>
-        /// <param name="account"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type)
-        {
-            return GetWithdrawRoutes(account, type, CancellationToken.None);
+            return CustomGetRequest<EscrowApiObj>("get_escrow", token, from, escrowId);
         }
 
         /// <summary>
@@ -608,19 +349,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WithdrawRoute[]> GetWithdrawRoutes(string account, WithdrawRouteType type, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WithdrawRoute[]>("get_withdraw_routes", token, account, type.ToString().ToLower());
-        }
-
-        /// <summary>
-        /// Displays user actions based on type
-        /// Отображает действия пользователя в зависимости от типа
-        /// </summary>
-        /// <param name="account"></param>
-        /// <param name="bandwidthType"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth(string account, BandwidthType bandwidthType)
-        {
-            return GetAccountBandwidth(account, bandwidthType, CancellationToken.None);
+            return CustomGetRequest<WithdrawRoute[]>("get_withdraw_routes", token, account, type.ToString().ToLower());
         }
 
         /// <summary>
@@ -634,18 +363,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth(string account, BandwidthType bandwidthType, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<AccountBandwidthApiObj>("get_account_bandwidth", token, account, bandwidthType.ToString().ToLower());
-        }
-
-        /// <summary>
-        /// Returns the output data from 'SAFE' for this user
-        /// Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
-        /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawFrom(string account)
-        {
-            return GetSavingsWithdrawFrom(account, CancellationToken.None);
+            return CustomGetRequest<AccountBandwidthApiObj>("get_account_bandwidth", token, account, bandwidthType.ToString().ToLower());
         }
 
         /// <summary>
@@ -658,18 +376,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawFrom(string account, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_from", $"[\"{account}\"]", token);
-        }
-
-        /// <summary>
-        /// Returns the output data from 'SAFE' for this user
-        /// Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
-        /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawTo(string account)
-        {
-            return GetSavingsWithdrawTo(account, CancellationToken.None);
+            return CustomGetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_from", token, $"[\"{account}\"]");
         }
 
         /// <summary>
@@ -682,7 +389,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<SavingsWithdrawApiObj[]> GetSavingsWithdrawTo(string account, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_to", $"[\"{account}\"]", token);
+            return CustomGetRequest<SavingsWithdrawApiObj[]>("get_savings_withdraw_to", token, $"[\"{account}\"]");
         }
 
         //get_vesting_delegations
@@ -697,34 +404,13 @@ namespace Ditch.Steem
         /// <summary>
         /// Get a list of witnesses by ID
         /// </summary>
-        /// <param name="witnessIds">IDs of the witnesses to retrieve</param>
-        /// <returns>The witnesses corresponding to the provided IDs</returns>
-        public JsonRpcResponse<WitnessApiObj[]> GetWitnesses(params object[] witnessIds)
-        {
-            return GetWitnesses(CancellationToken.None, witnessIds);
-        }
-
-        /// <summary>
-        /// Get a list of witnesses by ID
-        /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <param name="witnessIds">IDs of the witnesses to retrieve</param>
         /// <returns>The witnesses corresponding to the provided IDs</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnesses(CancellationToken token, params object[] witnessIds)
         {
-            return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses", token, new object[1][] { witnessIds });
-        }
-
-        /// <summary>
-        /// Returns the current requests for conversion by the specified user
-        /// Возвращает текущие запросы на конвертацию указанным пользователем
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner)
-        {
-            return GetConversionRequests(owner, CancellationToken.None);
+            return CustomGetRequest<WitnessApiObj[]>("get_witnesses", token, new object[1][] { witnessIds });
         }
 
         /// <summary>
@@ -737,17 +423,8 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ConvertRequestApiObj[]> GetConversionRequests(string owner, CancellationToken token)
         {
-            return WebSocketManager.Call<ConvertRequestApiObj[]>(KnownApiNames.DatabaseApi, "get_conversion_requests", token, owner);
-        }
-
-        /// <summary>
-        /// Get the witness owned by a given account
-        /// </summary>
-        /// <param name="account">The name of the account whose witness should be retrieved</param>
-        /// <returns>The witness object, or null if the account does not have a witness</returns>
-        public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string account)
-        {
-            return GetWitnessByAccount(account, CancellationToken.None);
+            return CustomGetRequest<ConvertRequestApiObj[]>("get_conversion_requests", token, owner);
+            //return CustomGetRequest<ConvertRequestApiObj[]>("call", token, KnownApiNames.DatabaseApi, "get_conversion_requests", owner);
         }
 
         /// <summary>
@@ -759,18 +436,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WitnessApiObj> GetWitnessByAccount(string account, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WitnessApiObj>("get_witness_by_account", $"[\"{account}\"]", token);
-        }
-
-        /// <summary>
-        /// This method is used to fetch witnesses with pagination.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="limit"></param>
-        /// <returns>An array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
-        public JsonRpcResponse<WitnessApiObj[]> GetWitnessesByVote(string from, UInt32 limit)
-        {
-            return GetWitnessesByVote(from, limit, CancellationToken.None);
+            return CustomGetRequest<WitnessApiObj>("get_witness_by_account", token, $"[\"{account}\"]");
         }
 
         /// <summary>
@@ -783,18 +449,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<WitnessApiObj[]> GetWitnessesByVote(string from, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<WitnessApiObj[]>("get_witnesses_by_vote", token, from, limit);
-        }
-
-        /// <summary>
-        /// Get names and IDs for registered witnesses
-        /// </summary>
-        /// <param name="lowerBoundName">Lower bound of the first name to return</param>
-        /// <param name="limit">Maximum number of results to return -- must not exceed 1000</param>
-        /// <returns>Map of witness names to corresponding IDs</returns>
-        public JsonRpcResponse<object[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit)
-        {
-            return LookupWitnessAccounts(lowerBoundName, limit, CancellationToken.None);
+            return CustomGetRequest<WitnessApiObj[]>("get_witnesses_by_vote", token, from, limit);
         }
 
         /// <summary>
@@ -807,15 +462,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<object[]>("lookup_witness_accounts", token, lowerBoundName, limit);
-        }
-
-        /// <summary>
-        /// Get the total number of witnesses registered with the blockchain
-        /// </summary>
-        public JsonRpcResponse<UInt64> GetWitnessCount()
-        {
-            return GetWitnessCount(CancellationToken.None);
+            return CustomGetRequest<object[]>("lookup_witness_accounts", token, lowerBoundName, limit);
         }
 
         /// <summary>
@@ -823,7 +470,7 @@ namespace Ditch.Steem
         /// </summary>
         public JsonRpcResponse<UInt64> GetWitnessCount(CancellationToken token)
         {
-            return WebSocketManager.GetRequest<UInt64>("get_witness_count", token);
+            return CustomGetRequest<UInt64>("get_witness_count", token);
         }
 
 
@@ -836,32 +483,12 @@ namespace Ditch.Steem
         /// Gets the current order book for STEEM:SBD market
         /// </summary>
         /// <param name="limit">Maximum number of orders for each side of the spread to return -- Must not exceed 1000</param>
-        /// <returns>API type: order_book</returns>
-        public JsonRpcResponse<OrderBook> GetOrderBook(UInt32 limit)
-        {
-            return GetOrderBook(limit, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Gets the current order book for STEEM:SBD market
-        /// </summary>
-        /// <param name="limit">Maximum number of orders for each side of the spread to return -- Must not exceed 1000</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_book</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<OrderBook> GetOrderBook(UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<OrderBook>("get_order_book", token, limit);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<ExtendedLimitOrder[]> GetOpenOrders(string owner)
-        {
-            return GetOpenOrders(owner, CancellationToken.None);
+            return CustomGetRequest<OrderBook>("get_order_book", token, limit);
         }
 
         /// <summary>
@@ -873,21 +500,9 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ExtendedLimitOrder[]> GetOpenOrders(string owner, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<ExtendedLimitOrder[]>("get_open_orders", $"[\"{owner}\"]", token);
+            return CustomGetRequest<ExtendedLimitOrder[]>("get_open_orders", token, $"[\"{owner}\"]");
         }
 
-
-        /// <summary>
-        /// 
-        /// Возвращает отсортированные по стоимости тэги начиная с заданного или близко к нему похожего.
-        /// </summary>
-        /// <param name="after"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit)
-        {
-            return GetTrendingCategories(after, limit, CancellationToken.None);
-        }
 
         /// <summary>
         /// 
@@ -900,31 +515,12 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<CategoryApiObj[]> GetTrendingCategories(string after, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<CategoryApiObj[]>("get_trending_categories", token, after, limit);
-        }
-
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit)
-        {
-            return GetDiscussionsByAuthorBeforeDate(author, startPermlink, beforeDate, limit, CancellationToken.None);
+            return CustomGetRequest<CategoryApiObj[]>("get_trending_categories", token, after, limit);
         }
 
         public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<Discussion[]>("get_discussions_by_author_before_date", token, author, startPermlink, beforeDate, limit);
-        }
-
-
-        /// <summary>
-        /// 
-        /// История всех действий пользователя в сети в виде транзакций. При from = -1 будут показаны последние {limit+1} элементов истории. Параметр limit не должен превышать from (исключение from = -1), так как показываются предшествующие {from} элементы истории.
-        /// </summary>
-        /// <param name="account"></param>
-        /// <param name="from"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit)
-        {
-            return GetAccountHistory(account, from, limit, CancellationToken.None);
+            return CustomGetRequest<Discussion[]>("get_discussions_by_author_before_date", token, author, startPermlink, beforeDate, limit);
         }
 
 
@@ -940,7 +536,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<KeyValuePair<UInt32, AppliedOperation>[]> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
         {
-            var buf = WebSocketManager.GetRequest<JArray[]>("get_account_history", token, account, from, limit);
+            var buf = CustomGetRequest<JArray[]>("get_account_history", token, account, from, limit);
 
             if (buf.IsError)
                 return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>(buf.Error);
@@ -962,23 +558,34 @@ namespace Ditch.Steem
             return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>(typedTez);
         }
 
-
-        #region follow_api
+        /// <summary>
+        /// Get post by author and permlink
+        /// </summary>
+        /// <param name="author"></param>
+        /// <param name="permlink"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, CancellationToken token)
+        {
+            return CustomGetRequest<Discussion>("get_content", token, author, permlink);
+            //return CustomGetRequest<Discussion>("call", token, KnownApiNames.DatabaseApi, "get_content", author, permlink);
+        }
 
         /// <summary>
-        /// 
-        /// Возвращает список: Либо всех подписчиков пользователя 'following'. 
-        /// Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
+        /// Get user accounts by user names
         /// </summary>
-        /// <param name="following"></param>
-        /// <param name="startFollower"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="userList"></param>
         /// <returns></returns>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit)
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(CancellationToken token, params string[] userList)
         {
-            return GetFollowers(following, startFollower, followType, limit, CancellationToken.None);
+            return CustomGetRequest<ExtendedAccount[]>("get_accounts", token, new object[][] { userList });
         }
+
+
+        #region follow_api
 
         /// <summary>
         /// 
@@ -994,21 +601,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<FollowApiObj[]>("call", token, "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
-        }
-
-        /// <summary>
-        /// 
-        /// Aналогично GetFollowers только для подписок
-        /// </summary>
-        /// <param name="follower"></param>
-        /// <param name="startFollowing"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
-        /// <returns></returns>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit)
-        {
-            return GetFollowing(follower, startFollowing, followType, limit, CancellationToken.None);
+            return CustomGetRequest<FollowApiObj[]>("call", token, "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
         }
 
         /// <summary>
@@ -1024,7 +617,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit, CancellationToken token)
         {
-            return WebSocketManager.GetRequest<FollowApiObj[]>("call", token, "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return CustomGetRequest<FollowApiObj[]>("call", token, "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
         }
 
         #endregion

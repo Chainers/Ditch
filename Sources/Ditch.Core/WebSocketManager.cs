@@ -10,7 +10,7 @@ using WebSocket4Net;
 
 namespace Ditch.Core
 {
-    public class WebSocketManager : IDisposable
+    public class WebSocketManager : IConnectionManager, IDisposable
     {
         private readonly Dictionary<int, JsonRpcResponse> _responseDictionary;
         private readonly Dictionary<int, ManualResetEvent> _manualResetEventDictionary;
@@ -19,37 +19,32 @@ namespace Ditch.Core
         private WebSocket _webSocket;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
-        private readonly object _sync;
-        private int _id;
-
-        private int JsonRpsId
-        {
-            get
-            {
-                int reqId;
-                lock (_sync)
-                {
-                    reqId = _id;
-                    _id++;
-                }
-                return reqId;
-            }
-        }
-
         /// <summary>
         /// Timeout in milliseconds waiting for WebSocket request to execute. Default is 30000.
         /// </summary>
-        public int Timeout { get; set; } = 30000;
+        public int WaitResponceTimeout { get; set; } = 30000;
 
-        public WebSocketManager(string url, JsonSerializerSettings jsonSerializerSettings)
+        /// <summary>
+        /// Timeout in milliseconds waiting for WebSocket connect to chain. Default is 10000.
+        /// </summary>
+        public int WaitConnectTimeout { get; set; } = 10000;
+
+
+        public bool IsConnected => _webSocket.State == WebSocketState.Open;
+
+        public WebSocketManager(JsonSerializerSettings jsonSerializerSettings)
         {
-            _sync = new object();
-            _id = 0;
             _jsonSerializerSettings = jsonSerializerSettings;
             _responseDictionary = new Dictionary<int, JsonRpcResponse>();
             _manualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
             _socketOpenEvent = new ManualResetEvent(false);
             _socketCloseEvent = new ManualResetEvent(false);
+        }
+
+
+        public string ConnectTo(string url, CancellationToken token)
+        {
+            Disconnect();
 
             _webSocket = new WebSocket(url);
             _webSocket.Opened += WebSocketOpened;
@@ -58,284 +53,72 @@ namespace Ditch.Core
             _webSocket.Error += WebSocketOnError;
             _webSocket.EnableAutoSendPing = true;
             _webSocket.Open();
-        }
 
-        private string ToJsonRpc(int reqId, string method, params object[] data)
-        {
-            var paramData = (data == null) ? "[]" : JsonConvert.SerializeObject(data, _jsonSerializerSettings);
-            return ToJsonRpc(reqId, method, paramData);
-        }
-
-        private string ToJsonRpc(int reqId, string method, string paramData)
-        {
-            return $"{{\"method\":\"{method}\",\"params\":{paramData},\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
-        }
-
-        private string ToJsonRpc(int reqId, string method)
-        {
-            return $"{{\"method\":\"{method}\",\"params\":[],\"jsonrpc\":\"2.0\",\"id\":{reqId}}}";
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse Call(string api, string command, params object[] dataSet)
-        {
-            return Call(api, command, CancellationToken.None, dataSet);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse Call(string api, string command, CancellationToken token, params object[] dataSet)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, "call", api, command, dataSet);
-            return Execute(id, msg, token);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse Call(int api, string command, params object[] dataSet)
-        {
-            return Call(api, command, CancellationToken.None, dataSet);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse Call(int api, string command, CancellationToken token, params object[] dataSet)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, "call", api, command, dataSet);
-            return Execute(id, msg, token);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse<T> Call<T>(int api, string command, params object[] dataSet)
-        {
-            return Call<T>(api, command, CancellationToken.None, dataSet);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse<T> Call<T>(string api, string command, params object[] dataSet)
-        {
-            return Call<T>(api, command, CancellationToken.None, dataSet);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> Call<T>(string api, string command, CancellationToken token, params object[] dataSet)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, "call", api, command, dataSet);
-            var resp = Execute(id, msg, token);
-            return resp.ToTyped<T>(_jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request to "call" method.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="api">Api id key</param>
-        /// <param name="command">Api command name</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> Call<T>(int api, string command, CancellationToken token, params object[] dataSet)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, "call", api, command, dataSet);
-            var resp = Execute(id, msg, token);
-            return resp.ToTyped<T>(_jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse<T> GetRequest<T>(string method, params object[] dataSet)
-        {
-            return GetRequest<T>(method, CancellationToken.None, dataSet);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> GetRequest<T>(string method, CancellationToken token, params object[] dataSet)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, method, dataSet);
-            var response = Execute(id, msg, token);
-            return response.ToTyped<T>(_jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <returns></returns>
-        public JsonRpcResponse<T> GetRequest<T>(string method)
-        {
-            return GetRequest<T>(method, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> GetRequest<T>(string method, CancellationToken token)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, method);
-            var response = Execute(id, msg, token);
-            return response.ToTyped<T>(_jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="data">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. If the value is a simple string, then add quotes like \"someSimpleString\"</remarks></param>
-        /// <returns></returns>
-        public JsonRpcResponse<T> GetRequest<T>(string method, string data)
-        {
-            return GetRequest<T>(method, data, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. If the value is a simple string, then add quotes like \"someSimpleString\"</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> GetRequest<T>(string method, string data, CancellationToken token)
-        {
-            var id = JsonRpsId;
-            var msg = ToJsonRpc(id, method, data);
-            var response = Execute(id, msg, token);
-            return response.ToTyped<T>(_jsonSerializerSettings);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> GetRequest<T>(string method, params string[] dataSet)
-        {
-            return GetRequest<T>(method, CancellationToken.None, dataSet);
-        }
-
-        /// <summary>
-        /// Creates and executes a JSON-RPC request.
-        /// </summary>
-        /// <typeparam name="T">Response type.</typeparam>
-        /// <param name="method">Set "method" field in the JSON-RPC request (as is)</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="dataSet">The parameters of a method call.<remarks>Set "params" field in the JSON-RPC request. Uses JsonConvert to convert the object to a string.</remarks></param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> GetRequest<T>(string method, CancellationToken token, params string[] dataSet)
-        {
+            var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
             token.ThrowIfCancellationRequested();
-            return GetRequest<T>(method, $"[\"{string.Join("\",\"", dataSet)}\"]", token);
+            return t == 1 ? url : string.Empty;
+        }
+
+        public string ConnectTo(IEnumerable<string> urls, CancellationToken token)
+        {
+            foreach (var url in urls)
+            {
+                token.ThrowIfCancellationRequested();
+
+                var connectedTo = ConnectTo(url, token);
+                if (!string.IsNullOrWhiteSpace(connectedTo))
+                    return connectedTo;
+            }
+            return string.Empty;
+        }
+
+        public void Disconnect()
+        {
+            if (_webSocket != null && (_webSocket.State == WebSocketState.Open || _webSocket.State == WebSocketState.Connecting))
+            {
+                _webSocket.Close();
+                WaitHandle.WaitAny(new WaitHandle[] { _socketCloseEvent }, WaitResponceTimeout);
+            }
+
+            lock (_manualResetEventDictionary)
+            {
+                foreach (var resetEvent in _manualResetEventDictionary)
+                {
+                    resetEvent.Value.Set();
+                }
+            }
         }
 
 
-        private JsonRpcResponse Execute(int id, string msg, CancellationToken token)
+        public JsonRpcResponse Execute(JsonRpcRequest jsonRpc, CancellationToken token)
         {
             var waiter = new ManualResetEvent(false);
             lock (_manualResetEventDictionary)
             {
-                _manualResetEventDictionary.Add(id, waiter);
+                _manualResetEventDictionary.Add(jsonRpc.Id, waiter);
             }
             if (!OpenIfClosed(token))
                 return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
 
-            Debug.WriteLine($">>> {msg}");
-            _webSocket.Send(msg);
+            Debug.WriteLine($">>> {jsonRpc.Message}");
+            _webSocket.Send(jsonRpc.Message);
 
-            WaitHandle.WaitAny(new[] { token.WaitHandle, waiter }, Timeout);
+            WaitHandle.WaitAny(new[] { token.WaitHandle, waiter }, WaitResponceTimeout);
 
             lock (_manualResetEventDictionary)
             {
-                if (_manualResetEventDictionary.ContainsKey(id))
-                    _manualResetEventDictionary.Remove(id);
+                if (_manualResetEventDictionary.ContainsKey(jsonRpc.Id))
+                    _manualResetEventDictionary.Remove(jsonRpc.Id);
                 waiter.Dispose();
             }
 
             JsonRpcResponse response = null;
             lock (_responseDictionary)
             {
-                if (_responseDictionary.ContainsKey(id))
+                if (_responseDictionary.ContainsKey(jsonRpc.Id))
                 {
-                    response = _responseDictionary[id];
-                    _responseDictionary.Remove(id);
+                    response = _responseDictionary[jsonRpc.Id];
+                    _responseDictionary.Remove(jsonRpc.Id);
                 }
             }
 
@@ -345,6 +128,12 @@ namespace Ditch.Core
                 return new JsonRpcResponse(new SystemError(ErrorCodes.ResponseTimeoutError));
 
             return response;
+        }
+
+        public JsonRpcResponse<T> Execute<T>(JsonRpcRequest jsonRpc, CancellationToken token)
+        {
+            var response = Execute(jsonRpc, token);
+            return response.ToTyped<T>(_jsonSerializerSettings);
         }
 
 
@@ -359,7 +148,7 @@ namespace Ditch.Core
                         if (t == 1)
                         {
                             _webSocket.Open();
-                            t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, Timeout);
+                            t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
                             token.ThrowIfCancellationRequested();
                             return t == 1;
                         }
@@ -367,7 +156,7 @@ namespace Ditch.Core
                     }
                 case WebSocketState.Connecting:
                     {
-                        var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, Timeout);
+                        var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
                         token.ThrowIfCancellationRequested();
                         return t == 1;
                     }
@@ -375,7 +164,7 @@ namespace Ditch.Core
                 case WebSocketState.Closed:
                     {
                         _webSocket.Open();
-                        var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, Timeout);
+                        var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
                         token.ThrowIfCancellationRequested();
                         return t == 1;
                     }
@@ -438,19 +227,13 @@ namespace Ditch.Core
 
             if (disposing)
             {
-                if (_webSocket != null && _webSocket.State == WebSocketState.Open)
+                Disconnect();
+                if (_webSocket != null)
                 {
                     _webSocket.Dispose();
                     _webSocket = null;
                 }
 
-                lock (_manualResetEventDictionary)
-                {
-                    foreach (var resetEvent in _manualResetEventDictionary)
-                    {
-                        resetEvent.Value.Set();
-                    }
-                }
                 // Free any other managed objects here.
                 //
             }

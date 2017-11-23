@@ -23,8 +23,6 @@ namespace CppToCsharpConverter.Converters
         {
             var allTasks = new List<SearchTask>(searchTask);
             var groups = searchTask.GroupBy(i => i.SearchDir);
-            List<ParsedClass> steemClasses = null;
-            List<ParsedClass> golosClasses = null;
             foreach (var group in groups)
             {
                 var tasks = group.ToList();
@@ -38,19 +36,13 @@ namespace CppToCsharpConverter.Converters
                 var classes = RecursiveSearch(tasks, storeResultDir, true, out allTasksPart, projName);
 
                 GenerateTestFileForApi(classes, tasks, projName);
-                if (group.Key.EndsWith("\\steem\\"))
-                    steemClasses = classes;
-                else if (group.Key.EndsWith("\\golos\\"))
-                    golosClasses = classes;
+
                 if (TaskHelper.AddTask(allTasks, allTasksPart))
                 {
                     tasks = allTasksPart;
                     goto somethingChanged;
                 }
             }
-
-            if (steemClasses != null && golosClasses != null && steemClasses.Any() && golosClasses.Any())
-                CreateSteemGolos(steemClasses, golosClasses, storeResultDir);
             return allTasks;
         }
 
@@ -76,7 +68,7 @@ namespace CppToCsharpConverter.Converters
                 sb.AppendLine($"{inden}{{");
 
                 inden = new string(' ', 8);
-                foreach (ParsedFunc funk in clas.Fields.Where(f => f is ParsedFunc))
+                foreach (var funk in clas.Fields.Where(f => f is ParsedFunc))
                 {
                     sb.AppendLine();
                     sb.AppendLine($"{inden}[Test]");
@@ -104,73 +96,6 @@ namespace CppToCsharpConverter.Converters
 
                 File.WriteAllText(Path.Combine(path, clas.Name), sb.ToString());
             }
-        }
-
-
-        private void CreateSteemGolos(List<ParsedClass> steemClasses, List<ParsedClass> golosClasses, string storeResultDir)
-        {
-            if (steemClasses.Count > 0 && golosClasses.Count > 0)
-            {
-                foreach (var steemClass in steemClasses)
-                {
-                    var golosClass = golosClasses.FirstOrDefault(t => t.Name.Equals(steemClass.Name));
-                    if (golosClass != null)
-                    {
-                        var steemGolos = MergeSame(steemClass, golosClass);
-
-                        if (steemClass.ObjectType == ObjectType.Api)
-                            _apiConverter.PrintToFile(steemGolos, "SteemGolos", string.Empty, steemClass.AbsPathToFile, storeResultDir);
-                        else
-                            _structConverter.PrintToFile(steemGolos, "SteemGolos", string.Empty, steemClass.AbsPathToFile, storeResultDir);
-                    }
-                }
-            }
-        }
-
-        private ParsedClass MergeSame(ParsedClass steemClass, ParsedClass golosClass)
-        {
-            var steemGolosClass = new ParsedClass
-            {
-                Comment = steemClass.Comment,
-                CppName = steemClass.CppName,
-                MainComment = steemClass.MainComment,
-                Name = steemClass.Name,
-                ObjectType = steemClass.ObjectType,
-            };
-
-            if (!string.IsNullOrEmpty(steemClass.Template))
-            {
-                steemGolosClass.Template = steemClass.Template.EndsWith(golosClass.Template) ? steemClass.Template : $"??? {steemClass.Template} / {golosClass.Template}";
-            }
-            else if (!string.IsNullOrEmpty(golosClass.Template))
-            {
-                steemGolosClass.Template = $"??? --- / {golosClass.Template}";
-            }
-
-            foreach (var item in steemClass.Fields)
-            {
-                if (golosClass.Fields.Any(f => f.CppName == item.CppName))
-                {
-                    steemGolosClass.Fields.Add(item);
-                }
-            }
-
-            foreach (var item in steemClass.Inherit)
-            {
-                if (golosClass.Inherit.Any(f => f.CppName == item.CppName))
-                {
-                    steemGolosClass.Inherit.Add(item);
-                }
-            }
-
-            foreach (var item in steemClass.ConstructorParams)
-            {
-                if (golosClass.ConstructorParams.Any(f => f.Name == item.Name))
-                {
-                    steemGolosClass.ConstructorParams.Add(item);
-                }
-            }
-            return steemGolosClass;
         }
 
         private ParsedClass FindAndParse(SearchTask task, string projName, string storeResultDir, bool enablePrint)
@@ -201,7 +126,7 @@ namespace CppToCsharpConverter.Converters
             return null;
         }
 
-        private List<ParsedClass> RecursiveSearch(IEnumerable<SearchTask> searchTasks, string storeResultDir, bool enablePrint, out List<SearchTask> allTasks, string projName)
+        private List<ParsedClass> RecursiveSearch(List<SearchTask> searchTasks, string storeResultDir, bool enablePrint, out List<SearchTask> allTasks, string projName)
         {
             allTasks = new List<SearchTask>(searchTasks);
             var parsedClasses = new List<ParsedClass>();

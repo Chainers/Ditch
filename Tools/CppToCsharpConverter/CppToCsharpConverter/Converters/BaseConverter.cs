@@ -411,12 +411,12 @@ namespace CppToCsharpConverter.Converters
             return line.Replace("<", "&lt;");
         }
 
-        private void PrintParsedElements(StringBuilder sb, ParsedClass parsedClass, PreParsedElement parsedElement, int indentCount, string templateName, bool printSecond = false)
+        private void PrintParsedElements(StringBuilder sb, ParsedClass parsedClass, PreParsedElement parsedElement, int indentCount, string templateName)
         {
             var indent = new string(' ', indentCount);
             sb.AppendLine();
 
-            if (!string.IsNullOrEmpty(parsedElement.MainComment) && !printSecond)
+            if (!string.IsNullOrEmpty(parsedElement.MainComment))
                 sb.AppendLine(parsedElement.MainComment);
 
             var comment = parsedElement.Comment ?? string.Empty;
@@ -432,40 +432,33 @@ namespace CppToCsharpConverter.Converters
             {
                 foreach (var itm in parsedFunc.Params)
                     sb.AppendLine($"{indent}/// <param name=\"{itm.Name}\">API type: {TypeCorrection(itm.CppType)}</param>");
-                if (printSecond && parsedClass.ObjectType == ObjectType.Api)
+                if (parsedClass.ObjectType == ObjectType.Api)
                     sb.AppendLine($"{indent}/// <param name=\"token\">Throws a <see cref=\"T:System.OperationCanceledException\" /> if this token has had cancellation requested.</param>");
             }
 
             if (!string.IsNullOrEmpty(parsedElement.Type?.CppName))
                 sb.AppendLine($"{indent}/// <returns>API type: {TypeCorrection(parsedElement.Type.CppName)}</returns>");
 
-            if (printSecond && parsedClass.ObjectType == ObjectType.Api)
+            if (parsedClass.ObjectType == ObjectType.Api)
                 sb.AppendLine($"{indent}/// <exception cref=\"T:System.OperationCanceledException\">The token has had cancellation requested.</exception>");
 
             var type = GetTypeForPrint(parsedElement.Type, templateName);
             if (parsedFunc != null)
             {
-                sb.AppendLine($"{indent}public JsonRpcResponse{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")} {parsedElement.Name}({string.Join(", ", parsedFunc.Params)}{(printSecond && parsedClass.ObjectType == ObjectType.Api ? $"{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken token" : string.Empty)})");
+                sb.AppendLine($"{indent}public JsonRpcResponse{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")} {parsedElement.Name}({string.Join(", ", parsedFunc.Params)}{(parsedClass.ObjectType == ObjectType.Api ? $"{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken token" : string.Empty)})");
                 sb.AppendLine($"{indent}{{");
 
-                if (!printSecond && parsedClass.ObjectType == ObjectType.Api)
-                {
-                    sb.AppendLine($"{indent}    return {parsedElement.Name}({string.Join(", ", parsedFunc.Params.Select(i => i.Name))}{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken.None);");
-                }
-                else
-                {
-                    sb.Append($"{indent}    return WebSocketManager.GetRequest{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")}(\"{parsedElement.CppName}\"");
+                sb.Append($"{indent}    return CustomGetRequest{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")}(\"{parsedElement.CppName}\"");
 
-                    if (printSecond && parsedClass.ObjectType == ObjectType.Api)
-                        sb.Append(", token");
+                if (parsedClass.ObjectType == ObjectType.Api)
+                    sb.Append(", token");
 
-                    if (parsedFunc.Params.Any())
-                    {
-                        sb.Append(", ");
-                        sb.Append(string.Join(", ", parsedFunc.Params.Select(i => i.Name)));
-                    }
-                    sb.AppendLine(");");
+                if (parsedFunc.Params.Any())
+                {
+                    sb.Append(", ");
+                    sb.Append(string.Join(", ", parsedFunc.Params.Select(i => i.Name)));
                 }
+                sb.AppendLine(");");
                 sb.AppendLine($"{indent}}}");
             }
             else
@@ -476,9 +469,6 @@ namespace CppToCsharpConverter.Converters
                     ? $"{indent}public {type} {parsedElement.Name} {{get; set;}}"
                     : $"{indent}{parsedElement.Name},");
             }
-
-            if (parsedClass.ObjectType == ObjectType.Api && !printSecond)
-                PrintParsedElements(sb, parsedClass, parsedElement, indentCount, templateName, true);
         }
 
         private string GetTypeForPrint(ParsedType parsedType, string templateName)

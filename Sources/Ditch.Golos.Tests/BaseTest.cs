@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ namespace Ditch.Golos.Tests
 {
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 2.2.12";
+        protected const string AppVersion = "ditch / 3.0.2";
 
         private bool IgnoreRequestWithBadData = true;
         protected static readonly UserInfo User;
@@ -22,7 +23,7 @@ namespace Ditch.Golos.Tests
             User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["GolosWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
             Api = new OperationManager();
-            Api.TryConnectTo(new List<string> { "wss://ws.golos.io" });
+            Api.TryConnectTo(new List<string> { "wss://ws.golos.io" }, CancellationToken.None);
             // Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" });
         }
 

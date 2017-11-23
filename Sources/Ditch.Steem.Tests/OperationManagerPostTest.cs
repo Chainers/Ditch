@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.JsonRpc;
@@ -21,9 +22,9 @@ namespace Ditch.Steem.Tests
         private JsonRpcResponse Post(List<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
             if (!IsVerify || isNeedBroadcast)
-                return Api.BroadcastOperations(postingKeys, op);
+                return Api.BroadcastOperations(postingKeys, CancellationToken.None, op);
 
-            return Api.VerifyAuthority(postingKeys, op);
+            return Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
         }
 
         [Test]
@@ -91,7 +92,7 @@ namespace Ditch.Steem.Tests
 
         private bool IsFollow(string autor)
         {
-            var resp = Api.GetFollowing(User.Login, autor, FollowType.Blog, 1);
+            var resp = Api.GetFollowing(User.Login, autor, FollowType.Blog, 1, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -136,7 +137,7 @@ namespace Ditch.Steem.Tests
 
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = Api.GetContent(author, permlink);
+            var resp = Api.GetContent(author, permlink, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));

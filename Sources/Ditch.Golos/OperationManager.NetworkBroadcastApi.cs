@@ -31,7 +31,7 @@ namespace Ditch.Golos
         /// <returns>API type: void</returns>
         public JsonRpcResponse BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
-            return WebSocketManager.Call(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", token, trx);
+            return CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", trx);
         }
 
         ///** this version of broadcast transaction registers a callback method that will be called when the transaction is
@@ -47,7 +47,7 @@ namespace Ditch.Golos
         ///// <returns>API type: void</returns>
         //public JsonRpcResponse<Void> BroadcastTransactionWithCallback(ConfirmationCallback cb, SignedTransaction trx)
         //{
-        //    return WebSocketManager.GetRequest<Void>("broadcast_transaction_with_callback", cb, trx);
+        //    return ConnectionManager.GetRequest<Void>("broadcast_transaction_with_callback", cb, trx);
         //}
 
 
@@ -62,7 +62,7 @@ namespace Ditch.Golos
         ///// <returns>API type: variant</returns>
         //public JsonRpcResponse<Variant> BroadcastTransactionSynchronous(SignedTransaction trx)
         //{
-        //    return WebSocketManager.GetRequest<Variant>("broadcast_transaction_synchronous", trx);
+        //    return ConnectionManager.GetRequest<Variant>("broadcast_transaction_synchronous", trx);
         //}
 
         ///// <summary>
@@ -73,7 +73,7 @@ namespace Ditch.Golos
         ///// <returns>API type: void</returns>
         //public JsonRpcResponse<Void> BroadcastBlock(SignedBlock block)
         //{
-        //    return WebSocketManager.GetRequest<Void>("broadcast_block", block);
+        //    return ConnectionManager.GetRequest<Void>("broadcast_block", block);
         //}
 
         ///// <summary>
@@ -84,7 +84,7 @@ namespace Ditch.Golos
         ///// <returns>API type: void</returns>
         //public JsonRpcResponse<Void> SetMaxBlockAge(Int32 maxBlockAge)
         //{
-        //    return WebSocketManager.GetRequest<Void>("set_max_block_age", maxBlockAge);
+        //    return ConnectionManager.GetRequest<Void>("set_max_block_age", maxBlockAge);
         //}
 
 
@@ -97,7 +97,7 @@ namespace Ditch.Golos
         ///// <returns>API type: bool</returns>
         //public JsonRpcResponse<bool> CheckMaxBlockAge(Int32 maxBlockAge)
         //{
-        //    return WebSocketManager.GetRequest<bool>("check_max_block_age", maxBlockAge);
+        //    return ConnectionManager.GetRequest<bool>("check_max_block_age", maxBlockAge);
         //}
 
 
@@ -117,7 +117,7 @@ namespace Ditch.Golos
         ///// <returns>API type: void</returns>
         //public JsonRpcResponse<Void> OnAppliedBlock(SignedBlock b)
         //{
-        //    return WebSocketManager.GetRequest<Void>("on_applied_block", b);
+        //    return ConnectionManager.GetRequest<Void>("on_applied_block", b);
         //}
 
 
@@ -129,7 +129,7 @@ namespace Ditch.Golos
         ///// <returns>API type: void</returns>
         //public JsonRpcResponse<Void> OnApiStartup()
         //{
-        //    return WebSocketManager.GetRequest<Void>("on_api_startup");
+        //    return ConnectionManager.GetRequest<Void>("on_api_startup");
         //}
     }
 }
