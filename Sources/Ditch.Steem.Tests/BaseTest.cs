@@ -6,6 +6,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.Threading;
 
 namespace Ditch.Steem.Tests
 {
@@ -21,7 +22,8 @@ namespace Ditch.Steem.Tests
         {
             User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["SteemWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
-            Api = new OperationManager(new List<string> { "wss://steemd.steemit.com" });
+            Api = new OperationManager();
+            Api.TryConnectTo(new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" }, CancellationToken.None);
         }
 
         protected void TestPropetries(Type type, JObject jObject)

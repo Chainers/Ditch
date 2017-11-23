@@ -156,6 +156,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
+        [Ignore("NotSupported")]
         [Test]
         public void DeleteCommentTest()
         {
