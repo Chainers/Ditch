@@ -31,7 +31,7 @@ namespace Ditch.Golos
         /// <returns>API type: void</returns>
         public JsonRpcResponse BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", trx);
+            return CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", new[] { trx });
         }
 
         ///** this version of broadcast transaction registers a callback method that will be called when the transaction is

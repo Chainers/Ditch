@@ -954,7 +954,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<bool> VerifyAuthority(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest<bool>("verify_authority", token, trx);
+            return CustomGetRequest<bool>("verify_authority", token, new[] { trx });
         }
 
 

@@ -44,7 +44,7 @@ namespace Ditch.Steem.Tests
 
             if (!IsVerify)
             {
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 var isFollow2 = IsFollow(autor);
                 Assert.IsTrue(IsVerify | isFollow != isFollow2);
             }
@@ -58,7 +58,7 @@ namespace Ditch.Steem.Tests
 
             if (!IsVerify)
             {
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 var isFollow2 = IsFollow(autor);
                 Assert.IsTrue(IsVerify | isFollow != isFollow2);
             }
@@ -71,7 +71,7 @@ namespace Ditch.Steem.Tests
 
             if (!IsVerify)
             {
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 var isFollow2 = IsFollow(autor);
                 Assert.IsTrue(IsVerify | isFollow != isFollow2);
             }
@@ -84,7 +84,7 @@ namespace Ditch.Steem.Tests
 
             if (!IsVerify)
             {
-                await Task.Delay(500);
+                await Task.Delay(1000);
                 var isFollow2 = IsFollow(autor);
                 Assert.IsTrue(IsVerify | isFollow != isFollow2);
             }

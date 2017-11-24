@@ -111,7 +111,7 @@ namespace Ditch.Steem
         {
             return TryConnectTo(_urls, token);
         }
-        
+
 
         /// <summary>
         /// Create and broadcast transaction
@@ -130,10 +130,10 @@ namespace Ditch.Steem
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            var resp = CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, Transaction.OperationName, transaction);
+            var resp = CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, Transaction.OperationName, new[] { transaction });
             return resp;
         }
-        
+
         /// <summary>
         /// Execute custom user method
         /// Возвращает TRUE если транзакция подписана правильно
@@ -147,7 +147,7 @@ namespace Ditch.Steem
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
-            return CustomGetRequest<bool>("verify_authority", token, transaction);
+            return CustomGetRequest<bool>("verify_authority", token, new[] { transaction });
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Ditch.Steem
             var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
             return _connectionManager.Execute(jsonRpc, token);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -211,7 +211,7 @@ namespace Ditch.Steem
 
             return transaction;
         }
-        
+
 
         private bool TryLoadChainId(CancellationToken token)
         {
@@ -247,7 +247,7 @@ namespace Ditch.Steem
             }
             return false;
         }
-        
+
         private static JsonSerializerSettings GetJsonSerializerSettings(CultureInfo cultureInfo)
         {
             var rez = new JsonSerializerSettings
