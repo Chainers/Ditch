@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Threading;
+using Ditch.Core;
+using System.Globalization;
 
 namespace Ditch.Steem.Tests
 {
@@ -22,8 +24,20 @@ namespace Ditch.Steem.Tests
         {
             User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["SteemWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
-            Api = new OperationManager();
-            Api.TryConnectTo(new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" }, CancellationToken.None);
+            var jss = GetJsonSerializerSettings();
+            Api = new OperationManager(new HttpManager(jss), jss);
+            Api.TryConnectTo(new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" }, CancellationToken.None);
+            // Api.TryConnectTo(new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" }, CancellationToken.None);
+        }
+
+        protected static JsonSerializerSettings GetJsonSerializerSettings()
+        {
+            var rez = new JsonSerializerSettings
+            {
+                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                Culture = CultureInfo.InvariantCulture
+            };
+            return rez;
         }
 
         protected void TestPropetries(Type type, JObject jObject)

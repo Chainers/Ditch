@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ditch.Core;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System.Globalization;
 
 namespace Ditch.Golos.Tests
 {
@@ -22,9 +24,22 @@ namespace Ditch.Golos.Tests
         {
             User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["GolosWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
-            Api = new OperationManager();
-            Api.TryConnectTo(new List<string> { "wss://ws.golos.io" }, CancellationToken.None);
-            // Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" });
+            var jss = GetJsonSerializerSettings();
+            Api = new OperationManager(new HttpManager(jss), jss);
+            Api.TryConnectTo(new List<string> { "https://public-ws.golos.io" }, CancellationToken.None);
+            //Api.TryConnectTo(new List<string> { "wss://ws.golos.io" }, CancellationToken.None);
+            //Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" });
+        }
+
+
+        protected static JsonSerializerSettings GetJsonSerializerSettings()
+        {
+            var rez = new JsonSerializerSettings
+            {
+                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                Culture = CultureInfo.InvariantCulture
+            };
+            return rez;
         }
 
         protected void TestPropetries(Type type, JObject jObject)

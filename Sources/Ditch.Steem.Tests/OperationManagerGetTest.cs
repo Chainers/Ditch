@@ -9,6 +9,7 @@ using Ditch.Steem.Operations.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Ditch.Core;
 
 namespace Ditch.Steem.Tests
 {
@@ -19,9 +20,11 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task TryConnectToTest()
         {
-            var urls = new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" };
+           // var urls = new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" };
+            var urls = new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" };
 
-            var manager = new OperationManager();
+            var jss = GetJsonSerializerSettings();
+            var manager = new OperationManager(new HttpManager(jss), jss);
 
             var sw = new Stopwatch();
             for (int i = 0; i < 5; i++)

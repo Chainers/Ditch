@@ -28,50 +28,10 @@ namespace Ditch.Golos
 
         #region Constructors
 
-        [Obsolete]
-        public OperationManager(string url, byte[] chainId, JsonSerializerSettings jsonSerializerSettings)
-        {
-            _urls = new List<string>
-            {
-                url
-            };
-            ChainId = chainId;
-            _jsonSerializerSettings = jsonSerializerSettings;
-            _connectionManager = new WebSocketManager(_jsonSerializerSettings);
-        }
-
-        [Obsolete]
-        public OperationManager(string url, byte[] chainId) : this(url, chainId, GetJsonSerializerSettings(CultureInfo.InvariantCulture))
-        {
-        }
-
-        [Obsolete]
-        public OperationManager(string url, byte[] chainId, CultureInfo cultureInfo) : this(url, chainId, GetJsonSerializerSettings(cultureInfo))
-        {
-        }
-
-        public OperationManager(List<string> wssUrls, JsonSerializerSettings jsonSerializerSettings)
-        {
-            _urls = wssUrls;
-            _jsonSerializerSettings = jsonSerializerSettings;
-            _connectionManager = new WebSocketManager(_jsonSerializerSettings);
-        }
-
-        public OperationManager(List<string> wssUrls)
-            : this(wssUrls, GetJsonSerializerSettings(CultureInfo.InvariantCulture))
-        {
-        }
-
-        public OperationManager(JsonSerializerSettings jsonSerializerSettings)
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
         {
             _jsonSerializerSettings = jsonSerializerSettings;
-            _connectionManager = new WebSocketManager(_jsonSerializerSettings);
-        }
-
-        public OperationManager()
-        {
-            _jsonSerializerSettings = GetJsonSerializerSettings(CultureInfo.InvariantCulture);
-            _connectionManager = new WebSocketManager(_jsonSerializerSettings);
+            _connectionManager = connectionManage;
         }
 
         #endregion Constructors
@@ -245,16 +205,6 @@ namespace Ditch.Golos
                     return true;
             }
             return false;
-        }
-
-        private static JsonSerializerSettings GetJsonSerializerSettings(CultureInfo cultureInfo)
-        {
-            var rez = new JsonSerializerSettings
-            {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
-                Culture = cultureInfo
-            };
-            return rez;
         }
     }
 }

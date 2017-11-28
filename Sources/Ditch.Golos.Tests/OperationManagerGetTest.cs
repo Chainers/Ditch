@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Ditch.Core;
 using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Enums;
 using Newtonsoft.Json;
@@ -20,9 +21,11 @@ namespace Ditch.Golos.Tests
         public async Task TryConnectToTest()
         {
             //var urls = new List<string> { "wss://ws.golos.io" };
-            var urls = new List<string> { "wss://ws.testnet.golos.io" };
+            //var urls = new List<string> { "wss://ws.testnet.golos.io" };
+            var urls = new List<string> { "https://public-ws.golos.io" };
 
-            var manager = new OperationManager();
+            var jss = GetJsonSerializerSettings();
+            var manager = new OperationManager(new HttpManager(jss), jss);
 
             var sw = new Stopwatch();
             for (int i = 0; i < 5; i++)
