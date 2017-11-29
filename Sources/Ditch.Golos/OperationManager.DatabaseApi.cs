@@ -1380,7 +1380,7 @@ namespace Ditch.Golos
                 return new JsonRpcResponse<KeyValuePair<uint, AppliedOperation>[]>();
 
             var typedTez = new KeyValuePair<UInt32, AppliedOperation>[rez.Length];
-            for (int i = 0; i < typedTez.Length; i++)
+            for (var i = 0; i < typedTez.Length; i++)
             {
                 var key = rez[i][0];
                 var info = rez[i][1];

@@ -20,7 +20,7 @@ namespace Ditch.Golos
         private readonly JsonSerializerSettings _jsonSerializerSettings;
         private readonly IConnectionManager _connectionManager;
         private List<string> _urls;
-        
+
         public byte[] ChainId { get; private set; }
         public string SbdSymbol { get; private set; }
         public int Version { get; private set; }
@@ -54,13 +54,13 @@ namespace Ditch.Golos
                 if (string.IsNullOrEmpty(connectedTo))
                     continue;
 
-                if (TryLoadChainId(token) && TryLoadHardPorkVersion(token))
+                if (TryLoadChainId(token))
                     return url;
             }
 
             return string.Empty;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -71,7 +71,7 @@ namespace Ditch.Golos
         {
             return TryConnectTo(_urls, token);
         }
-        
+
 
         /// <summary>
         /// Create and broadcast transaction
@@ -108,7 +108,7 @@ namespace Ditch.Golos
             var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
             return VerifyAuthority(transaction, token);
         }
-        
+
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
@@ -170,7 +170,7 @@ namespace Ditch.Golos
 
             return transaction;
         }
-        
+
 
         private bool TryLoadChainId(CancellationToken token)
         {
@@ -180,29 +180,21 @@ namespace Ditch.Golos
                 dynamic conf = resp.Result;
                 var scid = conf.STEEMIT_CHAIN_ID as JValue;
                 var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
-                if (scid != null && smpsbd != null)
+                var sbhv = conf.STEEMIT_BLOCKCHAIN_HARDFORK_VERSION as JValue;
+                //var sbv = conf.STEEMIT_BLOCKCHAIN_VERSION as JValue;
+                if (scid != null && smpsbd != null && sbhv != null)
                 {
                     var cur = smpsbd.Value<string>();
                     var str = scid.Value<string>();
-                    if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str))
+                    var hfvs = sbhv.Value<string>();
+                    if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
                     {
                         SbdSymbol = new Money(cur).Currency;
                         ChainId = Hex.HexToBytes(str);
+                        Version = VersionHelper.ToInteger(hfvs);
                         return true;
                     }
                 }
-            }
-            return false;
-        }
-
-        private bool TryLoadHardPorkVersion(CancellationToken token)
-        {
-            var resp = GetHardforkVersion(token);
-            if (!resp.IsError)
-            {
-                Version = VersionHelper.ToInteger(resp.Result);
-                if (Version > 0)
-                    return true;
             }
             return false;
         }

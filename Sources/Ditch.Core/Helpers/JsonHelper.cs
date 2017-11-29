@@ -28,7 +28,7 @@ namespace Ditch.Core.Helpers
         public static string FromJson(string value)
         {
             var sb = new StringBuilder();
-            bool isUp = true;
+            var isUp = true;
             for (var i = 0; i < value.Length; i++)
             {
                 var ch = value[i];

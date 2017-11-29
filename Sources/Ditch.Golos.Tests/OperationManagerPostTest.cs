@@ -110,7 +110,7 @@ namespace Ditch.Golos.Tests
 
             var voteState = GetVoteState(autor, permlink, user);
 
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 var op = voteState < 0
                       ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote)

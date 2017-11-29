@@ -44,7 +44,7 @@ namespace Ditch.Core
         {
             var rez = new List<KeyValuePair<string, long>>();
             var sw = new Stopwatch();
-            long min = long.MaxValue;
+            var min = long.MaxValue;
 
             foreach (var url in urls)
             {

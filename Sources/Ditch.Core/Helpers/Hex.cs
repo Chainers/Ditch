@@ -20,8 +20,8 @@ namespace Ditch.Core.Helpers
             if (hex.Length % 2 != 0)
                 hex = "0" + hex;
 
-            byte[] arr = new byte[hex.Length >> 1];
-            for (int i = 0; i < arr.Length; ++i)
+            var arr = new byte[hex.Length >> 1];
+            for (var i = 0; i < arr.Length; ++i)
                 arr[i] = (byte)((GetHexVal(hex[i << 1]) << 4) + (GetHexVal(hex[(i << 1) + 1])));
 
             return arr;
