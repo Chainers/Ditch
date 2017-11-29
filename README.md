@@ -75,6 +75,7 @@ Post:
 ## Additional features:
  * Transliteration (Cyrillic to Latin)
  * Base58 converter
+ * Can connect by https or socket (wss)
 
 ## Usage
     //set global properties
