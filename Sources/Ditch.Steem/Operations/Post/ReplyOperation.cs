@@ -29,6 +29,8 @@ namespace Ditch.Steem.Operations.Post
             parentPermlink = Transliteration.WordDelimiters.Replace(parentPermlink, "-");
             parentPermlink = Transliteration.PermlinkNotSupportedCharacters.Replace(parentPermlink, string.Empty);
             parentPermlink = TimePostfix.Replace(parentPermlink, string.Empty);
+            if (parentPermlink.Length > PermlinkCropCount)
+                parentPermlink = parentPermlink.Remove(PermlinkCropCount);
             parentPermlink = $"{parentPermlink}-{DateTime.UtcNow:yyyyMMddTHHmmssZ}".ToLower();
             return parentPermlink;
         }

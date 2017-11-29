@@ -29,6 +29,8 @@ namespace Ditch.Steem.Operations.Post
             text = Transliteration.WordDelimiters.Replace(text, "-");
             text = Transliteration.ToEng(text);
             text = Transliteration.PermlinkNotSupportedCharacters.Replace(text, string.Empty);
+            if (text.Length > PermlinkCropCount)
+                text = text.Remove(PermlinkCropCount);
             return $"{text}-{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}";
         }
     }

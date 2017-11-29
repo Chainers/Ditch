@@ -9,6 +9,7 @@ namespace Ditch.Steem.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
+        protected const int PermlinkCropCount = 40;
         public override string TypeName => "comment";
 
         public override OperationType Type => OperationType.Comment;
