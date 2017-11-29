@@ -80,9 +80,23 @@ Post:
     //set global properties
     public void SetUp()
     {
-        _operationManager = new OperationManager();
-        var url = _operationManager.TryConnectTo(new List<string> {"wss://steemd.steemit.com"}) // Steem
-        //var url = _operationManager.TryConnectTo(new List<string> { "wss://ws.golos.io" }); // Golos
+        var jss = new JsonSerializerSettings
+            {
+                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                Culture = CultureInfo.InvariantCulture
+            };
+        
+        //_operationManager = new OperationManager(new WebSocketManager(jss), jss);
+        _operationManager = new OperationManager(new HttpManager(jss), jss);
+        
+        // Steem
+        //var url = _operationManager.TryConnectTo(new List<string> {"wss://steemd.steemit.com", }, CancellationToken.None);
+        var url = _operationManager.TryConnectTo(new List<string> { "https://api.steemit.com", }, CancellationToken.None);
+        
+        // Golos
+        //var url = _operationManager.TryConnectTo(new List<string> { "wss://ws.golos.io", }, CancellationToken.None);
+        //var url = _operationManager.TryConnectTo(new List<string> { "https://public-ws.golos.io", }, CancellationToken.None);
+        
         if (!string.IsNullOrEmpty(url))
             Console.WriteLine($"Conected to {url}");
         YouPrivateKeys = new List<byte[]>
@@ -95,15 +109,15 @@ Post:
     //Create new post with some beneficiaries
     var postOp = new PostOperation("parentPermlink", YouLogin, "Title", "Body", "jsonMetadata");
     var benOp = new BeneficiariesOperation(YouLogin, postOp.Permlink, _operationManager.SbdSymbol, new Beneficiary("someBeneficiarName", 1000));
-    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, postOp, benOp);
+    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, CancellationToken.None, postOp, benOp);
     
     //UpVote
     var voteOp = new UpVoteOperation(YouLogin, "someUserName", "somePermlink");
-    var responce = _operationManager.BroadcastOberations(YouPrivateKeys, voteOp);
+    var responce = _operationManager.BroadcastOberations(YouPrivateKeys, CancellationToken.None, voteOp);
     
     //Follow
     var followOp = new FollowOperation(YouLogin, "someUserName", FollowType.Blog, YouLogin);
-    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, followOp);
+    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, CancellationToken.None, followOp);
 
 ## Sources
 
