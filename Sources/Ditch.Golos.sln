@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.Golos", "Ditch.Golos\Ditch.Golos.csproj", "{F60D2578-C1B5-437B-813A-924CF616F83A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Golos.Tests", "Ditch.Golos.Tests\Ditch.Golos.Tests.csproj", "{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F60D2578-C1B5-437B-813A-924CF616F83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F60D2578-C1B5-437B-813A-924CF616F83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F60D2578-C1B5-437B-813A-924CF616F83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F60D2578-C1B5-437B-813A-924CF616F83A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B68BC020-59DA-4434-A6A8-9A3C5790B8E9}
+	EndGlobalSection
+EndGlobal

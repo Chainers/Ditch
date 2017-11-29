@@ -1,7 +1,8 @@
 {
  "KnownDirectories": [
   "d:\\Projects\\Chainers\\Forks\\golos\\",
-  "d:\\Projects\\Chainers\\Forks\\steem\\"
+  "d:\\Projects\\Chainers\\Forks\\steem\\",  
+  "d:\\Projects\\Chainers\\Forks\\bitshares\\"
  ],
  "SearchTasks": [
   {
@@ -16,11 +17,20 @@
    "FullPath": "d:\\Projects\\Chainers\\Forks\\steem\\libraries\\app\\include\\steemit\\app\\database_api.hpp",
    "SearchLine": "database_api"
   },
+  {
+   "SearchDir": "d:\\Projects\\Chainers\\Forks\\bitshares\\",
+   "Converter": 0,
+   "FullPath": "d:\\Projects\\Chainers\\Forks\\bitshares\\libraries\\app\\include\\graphene\\app\\database_api.hpp",
+   "SearchLine": "database_api"
+  },
  ],
  "KnownTypes": {
   "string": "string",
+  "shared_string": "string",
+  "fixed_string": "string",
   "time_point_sec": "DateTime",
   "bool": "bool",
+  "char": "char",
   "int": "int",
   "double": "double",
   "uint8_t": "byte",
@@ -44,5 +54,6 @@
   "sha": "object",
   "ripemd160": "object",
   "ripemd1": "object",  
+  "type_id": "UInt16",  
  }
 }

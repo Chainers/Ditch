@@ -16,15 +16,9 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="23"/>
+                        <RowDefinition Height="46"/>
                         <RowDefinition Height="23"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="140" />
-                        <ColumnDefinition Width="80" />
-                    </Grid.ColumnDefinitions>
 
                     <ListBox ItemsSource="{Binding (cppToCsharpConverter:SettingsViewModel.SearchTasks)}" Grid.Row="0" Grid.ColumnSpan="4"  >
                         <ListBox.ItemTemplate>
@@ -51,10 +45,25 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <ComboBox x:Name="DirBox"  Grid.Row="1" Grid.Column="0" ItemsSource="{Binding KnownDirectories}" IsEditable="True" LostFocus="DirLostFocus" Style="{DynamicResource ComboBoxBase}"/>
-                    <TextBox  x:Name="SearchBox"  Grid.Row="1" Grid.Column="1" />
-                    <ComboBox x:Name="ConverterBox"  Grid.Row="1" Grid.Column="2" Style="{DynamicResource ComboBoxBase}"/>
-                    <Button  x:Name="AddLine" Grid.Row="1" Grid.Column="3" Content="Добавить" Style="{DynamicResource Button }"  Click="AddLineClick" />
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Button  x:Name="Clear"  Grid.Row="0" Grid.Column="3"  Content="Очистить список" Style="{DynamicResource Button }"  Click="ClearItems" />
+
+                        <ComboBox x:Name="DirBox"  Grid.Row="1" Grid.Column="0"    ItemsSource="{Binding KnownDirectories}" IsEditable="True" LostFocus="DirLostFocus" Style="{DynamicResource ComboBoxBase}"/>
+                        <TextBox  x:Name="SearchBox"  Grid.Row="1" Grid.Column="1"   />
+                        <ComboBox x:Name="ConverterBox"  Grid.Row="1" Grid.Column="2"   Style="{DynamicResource ComboBoxBase}"/>
+                        <Button  x:Name="AddLine" Grid.Row="1" Grid.Column="3"   Content="Добавить" Style="{DynamicResource Button }"  Click="AddLineClick" />
+                    </Grid>
 
                     <Button Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0" Content="Старт!" Style="{DynamicResource Button }"  Click="Button_Click"/>
                 </Grid>

@@ -2,24 +2,10 @@
 
 namespace CppToCsharpConverter.Converters
 {
-    public class ParsedFunc : IParsedElement
+    public class ParsedFunc : PreParsedElement
     {
-        public string MainComment { get; set; }
-
-        public string Comment { get; set; }
-
-        public string Name { get; set; }
-
-        public string CppName { get; set; }
-
-        public string Type { get; set; }
-
-        public string CppType { get; set; }
-
-        public List<ParsedParams> Params { get; set; }
-
-        public string CppParams { get; set; }
-
+        public List<ParsedParams> Params { get; set; } = new List<ParsedParams>();
+        
         public override string ToString()
         {
             return $"{Type} {Name}({string.Join(", ", Params)});";

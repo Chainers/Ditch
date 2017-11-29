@@ -287,4 +287,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-Sources/Ditch.Tests/app.config
+Sources/Ditch.Steem.Tests/app.config
+Sources/Ditch.Golos.Tests/app.config

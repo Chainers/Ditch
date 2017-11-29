@@ -58,14 +58,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BaseConverter.cs" />
-    <Compile Include="Converters\InterfaceConverter.cs" />
-    <Compile Include="Converters\IParsedElement.cs" />
+    <Compile Include="Converters\ConverterManager.cs" />
+    <Compile Include="Converters\ApiConverter.cs" />
     <Compile Include="Converters\ParsedClass.cs" />
+    <Compile Include="Converters\ParsedType.cs" />
     <Compile Include="Converters\ParsedFunc.cs" />
-    <Compile Include="Converters\ParsedField.cs" />
     <Compile Include="Converters\ParsedParams.cs" />
+    <Compile Include="Converters\Grabber.cs" />
+    <Compile Include="Converters\CashParser.cs" />
+    <Compile Include="Converters\PreParsedElement.cs" />
     <Compile Include="Converters\SearchInFile.cs" />
     <Compile Include="Converters\StructConverter.cs" />
+    <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="SortableObservableCollection.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
