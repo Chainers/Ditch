@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations;
 using Ditch.Steem.Operations.Enums;
 using Ditch.Steem.Operations.Get;
-using Newtonsoft.Json.Linq;
 
 namespace Ditch.Steem
 {

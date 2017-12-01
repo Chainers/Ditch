@@ -12,7 +12,7 @@ namespace Ditch.Steem.Operations.Post
         public override string TypeName => "custom_json";
         public override OperationType Type => OperationType.CustomJson;
 
-        [SerializeHelper.MessageOrder(20)]
+        [MessageOrder(20)]
         [JsonProperty("required_auths")]
         public string[] RequiredAuths
         {
@@ -20,7 +20,7 @@ namespace Ditch.Steem.Operations.Post
             set => _requiredAuths = value;
         }
 
-        [SerializeHelper.MessageOrder(30)]
+        [MessageOrder(30)]
         [JsonProperty("required_posting_auths")]
         public string[] RequiredPostingAuths
         {
@@ -28,11 +28,11 @@ namespace Ditch.Steem.Operations.Post
             set => _requiredPostingAuths = value;
         }
         
-        [SerializeHelper.MessageOrder(40)]
+        [MessageOrder(40)]
         [JsonProperty("id")]
         public string Id { get; }
 
-        [SerializeHelper.MessageOrder(50)]
+        [MessageOrder(50)]
         [JsonProperty("json")]
         public string Json { get; }
 

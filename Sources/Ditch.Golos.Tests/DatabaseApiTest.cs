@@ -514,14 +514,15 @@ namespace Ditch.Golos.Tests
         [Test]
         public void get_content()
         {
-            var author = "golosmedia";
-            var permlink = "psk38";
+            var author = "steepshot";
+            var permlink = "znakomtes-steepshot-io";
 
             var resp = Api.GetContent(author, permlink, CancellationToken.None);
             Assert.IsTrue(resp != null);
             Assert.IsTrue(resp.Result != null);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.DatabaseApi, "get_content", new[] { author, permlink });
             TestPropetries(resp.Result.GetType(), obj.Result);

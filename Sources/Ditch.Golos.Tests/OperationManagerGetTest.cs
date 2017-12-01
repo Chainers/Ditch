@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core;
-using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,9 +19,9 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task TryConnectToHttpsTest()
         {
-            //var urls = new List<string> { "wss://ws.golos.io" };
-            //var urls = new List<string> { "wss://ws.testnet.golos.io" };
             var urls = new List<string> { "https://public-ws.golos.io" };
+            //var urls = new List<string> { "https://golosd.steepshot.org" };
+
 
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new HttpManager(jss), jss);
@@ -46,9 +45,9 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task TryConnectToWssTest()
         {
-            //var urls = new List<string> { "wss://ws.golos.io" };
-            var urls = new List<string> { "wss://ws.testnet.golos.io" };
-            //var urls = new List<string> { "https://public-ws.golos.io" };
+            var urls = new List<string> { "wss://ws.golos.io" };
+            //var urls = new List<string> { "wss://ws.testnet.golos.io" };
+            //var urls = new List<string> { "wss://golosd.steepshot.org" };
 
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new WebSocketManager(jss), jss);

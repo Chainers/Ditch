@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Ditch.Steem.Operations;
 using Ditch.Steem.Operations.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,7 +19,6 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task TryConnectToHttpsTest()
         {
-            // var urls = new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" };
             var urls = new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" };
 
             var jss = GetJsonSerializerSettings();
@@ -46,7 +44,6 @@ namespace Ditch.Steem.Tests
         public async Task TryConnectToWssTest()
         {
             var urls = new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" };
-            //var urls = new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" };
 
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new WebSocketManager(jss), jss);

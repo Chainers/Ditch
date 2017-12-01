@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Golos.Helpers;
+using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations.Post
 {
@@ -18,6 +19,7 @@ namespace Ditch.Golos.Operations.Post
         /// </summary>
         /// <returns>API type: account_name_type</returns>
         [JsonProperty("author")]
+        [MessageOrder(20)]
         public string Author { get; set; }
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace Ditch.Golos.Operations.Post
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("permlink")]
+        [MessageOrder(30)]
         public string Permlink { get; set; }
 
 

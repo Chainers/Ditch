@@ -163,19 +163,15 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-
-        [Ignore("NotSupported")]
         [Test]
         public void DeleteCommentTest()
         {
             var user = User;
-
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
             var response = Post(user.PostingKeys, false, op);
             Console.WriteLine(response.Error);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-
+            
             var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
             response = Post(user.PostingKeys, false, op2);
             Console.WriteLine(response.Error);

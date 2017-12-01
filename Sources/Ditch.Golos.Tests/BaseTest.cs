@@ -26,6 +26,11 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
             var jss = GetJsonSerializerSettings();
             Api = new OperationManager(new HttpManager(jss), jss);
+            // Api = new OperationManager(new HttpManager(jss), jss);
+
+            //Api.TryConnectTo(new List<string> { "https://golosd.steepshot.org" }, CancellationToken.None);
+            //Api.TryConnectTo(new List<string> { "wss://golosd.steepshot.org" }, CancellationToken.None);
+
             Api.TryConnectTo(new List<string> { "https://public-ws.golos.io" }, CancellationToken.None);
             //Api.TryConnectTo(new List<string> { "wss://ws.golos.io" }, CancellationToken.None);
             //Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" });

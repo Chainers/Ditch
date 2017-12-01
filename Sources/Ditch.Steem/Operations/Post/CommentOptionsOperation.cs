@@ -11,36 +11,36 @@ namespace Ditch.Steem.Operations.Post
         public override OperationType Type => OperationType.CommentOptions;
         public override string TypeName => "comment_options";
 
-        [SerializeHelper.MessageOrder(20)]
+        [MessageOrder(20)]
         [JsonProperty("author")]
         public string Author { get; set; }
 
-        [SerializeHelper.MessageOrder(30)]
+        [MessageOrder(30)]
         [JsonProperty("permlink")]
         public string Permlink { get; set; }
 
         [JsonProperty("max_accepted_payout")]
         public string MaxAcceptedPayoutStr { get; set; }
-        [SerializeHelper.MessageOrder(40)]
+        [MessageOrder(40)]
         public Money MaxAcceptedPayout
         {
             get => MaxAcceptedPayoutStr;
             set => MaxAcceptedPayoutStr = value;
         }
 
-        [SerializeHelper.MessageOrder(50)]
+        [MessageOrder(50)]
         [JsonProperty("percent_steem_dollars")]
         public UInt16 PercentSteemDollars { get; set; }
 
-        [SerializeHelper.MessageOrder(60)]
+        [MessageOrder(60)]
         [JsonProperty("allow_votes")]
         public bool AllowVotes { get; set; }
 
-        [SerializeHelper.MessageOrder(70)]
+        [MessageOrder(70)]
         [JsonProperty("allow_curation_rewards")]
         public bool AllowCurationRewards { get; set; }
 
-        [SerializeHelper.MessageOrder(80)]
+        [MessageOrder(80)]
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
 

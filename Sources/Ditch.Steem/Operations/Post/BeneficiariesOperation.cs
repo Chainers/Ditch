@@ -21,7 +21,7 @@ namespace Ditch.Steem.Operations.Post
         public const byte Key = 0;
 
         [JsonProperty("beneficiaries")]
-        [SerializeHelper.MessageOrder(10)]
+        [MessageOrder(10)]
         public Beneficiary[] BeneficiariesContainer { get; set; }
         
         public BeneficiaryContainer(Beneficiary[] beneficiaries)
@@ -33,11 +33,11 @@ namespace Ditch.Steem.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public class Beneficiary : INamedContainer
     {
-        [SerializeHelper.MessageOrder(10)]
+        [MessageOrder(10)]
         [JsonProperty("account")]
         public string Account { get; set; }
 
-        [SerializeHelper.MessageOrder(20)]
+        [MessageOrder(20)]
         [JsonProperty("weight")]
         public UInt16 Weight { get; set; }
 

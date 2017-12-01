@@ -9,7 +9,7 @@ namespace Ditch.Steem.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class BaseOperation
     {
-        [SerializeHelper.MessageOrder(10)]
+        [MessageOrder(10)]
         public abstract OperationType Type { get; }
 
         public abstract string TypeName { get; }

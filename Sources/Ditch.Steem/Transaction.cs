@@ -13,22 +13,22 @@ namespace Ditch.Steem
     {
         public const string OperationName = "broadcast_transaction";
 
-        [SerializeHelper.MessageOrder(0)]
+        [MessageOrder(0)]
         public byte[] ChainId { get; set; } = new byte[0]; //64
 
-        [SerializeHelper.MessageOrder(1)]
+        [MessageOrder(1)]
         [JsonProperty("ref_block_num")]
         public UInt16 RefBlockNum { get; set; }
 
-        [SerializeHelper.MessageOrder(2)]
+        [MessageOrder(2)]
         [JsonProperty("ref_block_prefix")]
         public UInt32 RefBlockPrefix { get; set; }
 
-        [SerializeHelper.MessageOrder(3)]
+        [MessageOrder(3)]
         [JsonProperty("expiration")]
         public DateTime Expiration { get; set; }
 
-        [SerializeHelper.MessageOrder(4)]
+        [MessageOrder(4)]
         public BaseOperation[] BaseOperations { get; set; }
 
         [JsonProperty("operations")]
@@ -46,7 +46,7 @@ namespace Ditch.Steem
             }
         }
 
-        [SerializeHelper.MessageOrder(5)]
+        [MessageOrder(5)]
         public string ExtensionsStr { get; set; } = string.Empty;
 
         [JsonProperty("extensions")]

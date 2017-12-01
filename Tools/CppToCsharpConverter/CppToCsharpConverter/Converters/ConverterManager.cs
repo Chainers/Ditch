@@ -76,6 +76,7 @@ namespace CppToCsharpConverter.Converters
                     sb.AppendLine($"{inden}{{");
                     var inIntent = inden + "    ";
                     sb.AppendLine($"{inIntent}var resp = Manager.DatabaseApi.{funk.Name}();");
+                    sb.AppendLine($"{inIntent}Console.WriteLine(resp.Error);");
                     sb.AppendLine($"{inIntent}Assert.IsFalse(resp.IsError);");
                     sb.AppendLine($"{inIntent}Console.WriteLine(JsonConvert.SerializeObject(resp.Result));");
                     sb.AppendLine();

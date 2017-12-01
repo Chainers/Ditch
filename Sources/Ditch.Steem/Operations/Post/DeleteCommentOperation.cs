@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Steem.Helpers;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations.Post
 {
@@ -18,6 +19,7 @@ namespace Ditch.Steem.Operations.Post
         /// </summary>
         /// <returns>API type: account_name_type</returns>
         [JsonProperty("author")]
+        [MessageOrder(20)]
         public string Author { get; set; }
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace Ditch.Steem.Operations.Post
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("permlink")]
+        [MessageOrder(30)]
         public string Permlink { get; set; }
 
 
