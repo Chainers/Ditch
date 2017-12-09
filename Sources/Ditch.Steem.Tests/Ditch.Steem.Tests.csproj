@@ -79,8 +79,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountByKeyApiTest.cs" />
     <None Include="app.config" />
     <None Include="app.config.template" />
+    <Compile Include="FollowApiTest.cs" />
+    <Compile Include="LoginApiTest.cs" />
+    <Compile Include="MarketHistoryApiTest.cs" />
+    <Compile Include="NetworkBroadcastApiTest.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
