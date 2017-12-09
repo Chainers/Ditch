@@ -3,7 +3,7 @@
 
     
     <url>
-     <loc>/Ditch.Core/</loc>
+     <loc>/Ditch.Steem/</loc>
      <lastmod>2017-12-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -19,7 +19,7 @@
 
     
     <url>
-     <loc>/Ditch.Steem/</loc>
+     <loc>/Ditch.Core/</loc>
      <lastmod>2017-12-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
