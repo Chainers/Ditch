@@ -1,0 +1,5 @@
+site_name: Ditch documentation
+pages:
+    - Steem: index.md
+    - Golos: Ditch.Golos.md
+    - Core: Ditch.Core.md

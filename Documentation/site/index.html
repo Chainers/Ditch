@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        <title>Ditch documentation</title>
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=".">Ditch documentation</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href=".">Steem</a>
+                    </li>
+                    <li >
+                        <a href="Ditch.Golos/">Golos</a>
+                    </li>
+                    <li >
+                        <a href="Ditch.Core/">Core</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li class="disabled">
+                        <a rel="next" >
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="Ditch.Golos/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#operationmanager">OperationManager</a></li>
+        <li class="main "><a href="#operationtype">OperationType</a></li>
+        <li class="main "><a href="#baseoperation">BaseOperation</a></li>
+        <li class="main "><a href="#commentoperation">CommentOperation</a></li>
+        <li class="main "><a href="#deletecommentoperation">DeleteCommentOperation</a></li>
+        <li class="main "><a href="#followoperation">FollowOperation</a></li>
+        <li class="main "><a href="#repostoperation">RePostOperation</a></li>
+        <li class="main "><a href="#unfollowoperation">UnfollowOperation</a></li>
+        <li class="main "><a href="#voteoperation">VoteOperation</a></li>
+        <li class="main "><a href="#accountapiobj">AccountApiObj</a></li>
+        <li class="main "><a href="#accountbandwidthapiobj">AccountBandwidthApiObj</a></li>
+        <li class="main "><a href="#accountbandwidthobject">AccountBandwidthObject</a></li>
+        <li class="main "><a href="#accountrecoveryrequestapiobj">AccountRecoveryRequestApiObj</a></li>
+        <li class="main "><a href="#appliedoperation">AppliedOperation</a></li>
+        <li class="main "><a href="#authority">Authority</a></li>
+        <li class="main "><a href="#blockheader">BlockHeader</a></li>
+        <li class="main "><a href="#categoryapiobj">CategoryApiObj</a></li>
+        <li class="main "><a href="#chainproperties">ChainProperties</a></li>
+        <li class="main "><a href="#commentapiobj">CommentApiObj</a></li>
+        <li class="main "><a href="#convertrequestapiobj">ConvertRequestApiObj</a></li>
+        <li class="main "><a href="#convertrequestobject">ConvertRequestObject</a></li>
+        <li class="main "><a href="#discussion">Discussion</a></li>
+        <li class="main "><a href="#dynamicglobalpropertyapiobj">DynamicGlobalPropertyApiObj</a></li>
+        <li class="main "><a href="#dynamicglobalpropertyobject">DynamicGlobalPropertyObject</a></li>
+        <li class="main "><a href="#escrowapiobj">EscrowApiObj</a></li>
+        <li class="main "><a href="#escrowobject">EscrowObject</a></li>
+        <li class="main "><a href="#extendedaccount">ExtendedAccount</a></li>
+        <li class="main "><a href="#extendedlimitorder">ExtendedLimitOrder</a></li>
+        <li class="main "><a href="#feedhistoryapiobj">FeedHistoryApiObj</a></li>
+        <li class="main "><a href="#followapiobj">FollowApiObj</a></li>
+        <li class="main "><a href="#order">Order</a></li>
+        <li class="main "><a href="#orderbook">OrderBook</a></li>
+        <li class="main "><a href="#ownerauthorityhistoryapiobj">OwnerAuthorityHistoryApiObj</a></li>
+        <li class="main "><a href="#price">Price</a></li>
+        <li class="main "><a href="#savingswithdrawapiobj">SavingsWithdrawApiObj</a></li>
+        <li class="main "><a href="#scheduledhardfork">ScheduledHardfork</a></li>
+        <li class="main "><a href="#signedblock">SignedBlock</a></li>
+        <li class="main "><a href="#signedblockapiobj">SignedBlockApiObj</a></li>
+        <li class="main "><a href="#signedblockheader">SignedBlockHeader</a></li>
+        <li class="main "><a href="#state">State</a></li>
+        <li class="main "><a href="#tagapiobj">TagApiObj</a></li>
+        <li class="main "><a href="#votestate">VoteState</a></li>
+        <li class="main "><a href="#withdrawroute">WithdrawRoute</a></li>
+        <li class="main "><a href="#witnessapiobj">WitnessApiObj</a></li>
+        <li class="main "><a href="#witnessscheduleapiobj">WitnessScheduleApiObj</a></li>
+        <li class="main "><a href="#witnessscheduleobject">WitnessScheduleObject</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p><a id="Ditch.Steem.OperationManager"></a></p>
+<h2 id="operationmanager">OperationManager</h2>
+<p><em>class Ditch.Steem.OperationManager</em></p>
+<p>database_api
+libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Methods</strong></p>
+<p><a id="Ditch.Steem.OperationManager.TryConnectTo(System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>String</em> <strong>TryConnectTo</strong> <em>(List&lt;String&gt; urls, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.RetryConnect(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>String</em> <strong>RetryConnect</strong> <em>(CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.BroadcastOperations(System.Collections.Generic.IEnumerable`1[[System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken,Ditch.Steem.Operations.Post.BaseOperation[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>BroadcastOperations</strong> <em>(IEnumerable&lt;Byte[]&gt; userPrivateKeys, CancellationToken token, BaseOperation[] operations)</em>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.VerifyAuthority(System.Collections.Generic.IEnumerable`1[[System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken,Ditch.Steem.Operations.Post.BaseOperation[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Boolean&gt;</em> <strong>VerifyAuthority</strong> <em>(IEnumerable&lt;Byte[]&gt; userPrivateKeys, CancellationToken token, BaseOperation[] testOps)</em>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.CustomGetRequest(System.String,System.Threading.CancellationToken,System.Object[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;T&gt;</em> <strong>CustomGetRequest</strong> <em>(String method, CancellationToken token, Object[] data)</em><br />
+  Create and execute custom json-rpc method  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.CustomGetRequest(System.String,System.Threading.CancellationToken,System.Object[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>CustomGetRequest</strong> <em>(String method, CancellationToken token, Object[] data)</em><br />
+  Create and execute custom json-rpc method  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.CreateTransaction(Ditch.Steem.Operations.Get.DynamicGlobalPropertyApiObj,System.Collections.Generic.IEnumerable`1[[System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken,Ditch.Steem.Operations.Post.BaseOperation[])"></a></p>
+<ul>
+<li><em>Transaction</em> <strong>CreateTransaction</strong> <em>(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable&lt;Byte[]&gt; userPrivateKeys, CancellationToken token, BaseOperation[] operations)</em>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetTrendingTags(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;TagApiObj[]&gt;</em> <strong>GetTrendingTags</strong> <em>(String afterTag, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_trending_tags</li>
+</ul>
+<p>Returns a list of tags (tags) that include word combinations
+Возращает список меток(тэгов) включающие словосочетания  </p>
+<p><a id="Ditch.Steem.OperationManager.GetState(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;State&gt;</em> <strong>GetState</strong> <em>(String path, CancellationToken token)</em><br />
+  API name: get_state</li>
+</ul>
+<p>This API is a short-cut for returning all of the state required for a particular URL with a single query.
+Отображает текущее состояние сети.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetActiveWitnesses(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>GetActiveWitnesses</strong> <em>(CancellationToken token)</em><br />
+  API name: get_active_witnesses</li>
+</ul>
+<p>Displays a list of all active delegates.
+Отображает список всех активных делегатов.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetMinerQueue(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>GetMinerQueue</strong> <em>(CancellationToken token)</em><br />
+  API name: get_miner_queue</li>
+</ul>
+<p>Creates a list of the miners waiting to enter the DPOW chain to create the block.
+Создает список майнеров, ожидающих попасть в DPOW цепочку, чтобы создать блок.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetBlockHeader(System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;BlockHeader&gt;</em> <strong>GetBlockHeader</strong> <em>(UInt32 blockNum, CancellationToken token)</em><br />
+  API name: get_block_header</li>
+</ul>
+<p>Retrieve a block header
+Возвращает все данные о блоке  </p>
+<p><a id="Ditch.Steem.OperationManager.GetBlock(System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SignedBlockApiObj&gt;</em> <strong>GetBlock</strong> <em>(UInt32 blockNum, CancellationToken token)</em><br />
+  API name: get_block</li>
+</ul>
+<p>Retrieve a full, signed block
+Возвращает все данные о блоке включая транзакции  </p>
+<p><a id="Ditch.Steem.OperationManager.GetOpsInBlock(System.UInt32,System.Boolean,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AppliedOperation[]&gt;</em> <strong>GetOpsInBlock</strong> <em>(UInt32 blockNum, Boolean onlyVirtual, CancellationToken token)</em><br />
+  API name: get_ops_in_block</li>
+</ul>
+<p>Get sequence of operations included/generated within a particular block
+Возвращает все операции в блоке, если параметр 'onlyVirtual' true то возвращает только виртуальные операции  </p>
+<p><a id="Ditch.Steem.OperationManager.GetConfig(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object&gt;</em> <strong>GetConfig</strong> <em>(CancellationToken token)</em><br />
+  API name: get_config</li>
+</ul>
+<p>Displays the current node configuration.
+Отображает текущую конфигурацию узла.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetSchema(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String&gt;</em> <strong>GetSchema</strong> <em>(CancellationToken token)</em><br />
+  API name: get_schema  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetDynamicGlobalProperties(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;DynamicGlobalPropertyApiObj&gt;</em> <strong>GetDynamicGlobalProperties</strong> <em>(CancellationToken token)</em><br />
+  API name: get_dynamic_global_properties</li>
+</ul>
+<p>Returns the block chain's rapidly-changing properties.
+The returned object contains information that changes every block interval
+such as the head block number, the next witness, etc.
+@see \c get_global_properties() for less-frequently changing properties  </p>
+<p><a id="Ditch.Steem.OperationManager.GetChainProperties(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ChainProperties&gt;</em> <strong>GetChainProperties</strong> <em>(CancellationToken token)</em><br />
+  API name: get_chain_properties</li>
+</ul>
+<p>Displays the commission for creating the user, the maximum block size and the GBG interest rate
+Отображает комиссию за создание пользователя, максимальный размер блока и процентную ставку GBG.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetCurrentMedianHistoryPrice(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Price&gt;</em> <strong>GetCurrentMedianHistoryPrice</strong> <em>(CancellationToken token)</em><br />
+  API name: get_current_median_history_price</li>
+</ul>
+<p>Displays the current median price of conversion
+Отображает текущую медианную цену конвертации.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetFeedHistory(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FeedHistoryApiObj&gt;</em> <strong>GetFeedHistory</strong> <em>(CancellationToken token)</em><br />
+  API name: get_feed_history</li>
+</ul>
+<p>Displays the conversion history
+Отображает историю конверсий.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetWitnessSchedule(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessScheduleApiObj&gt;</em> <strong>GetWitnessSchedule</strong> <em>(CancellationToken token)</em><br />
+  API name: get_witness_schedule</li>
+</ul>
+<p>Displays the current delegation status.
+Отображает текущее состояние делегирования.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetHardforkVersion(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String&gt;</em> <strong>GetHardforkVersion</strong> <em>(CancellationToken token)</em><br />
+  API name: get_hardfork_version</li>
+</ul>
+<p>Displays the current version of the network.
+Отображает текущую версию сети.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetNextScheduledHardfork(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ScheduledHardfork&gt;</em> <strong>GetNextScheduledHardfork</strong> <em>(CancellationToken token)</em><br />
+  API name: get_next_scheduled_hardfork</li>
+</ul>
+<p>Displays the date and version of HardFork
+Отображает дату и версию HardFork  </p>
+<p><a id="Ditch.Steem.OperationManager.GetKeyReferences(System.Threading.CancellationToken,System.Object[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[][]&gt;</em> <strong>GetKeyReferences</strong> <em>(CancellationToken token, Object[] keys)</em><br />
+  API name: get_key_references</li>
+</ul>
+<p>Находит и возвращает имена пользователей по публичному ключу  </p>
+<p><a id="Ditch.Steem.OperationManager.GetAccounts(System.Threading.CancellationToken,System.String[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ExtendedAccount[]&gt;</em> <strong>GetAccounts</strong> <em>(CancellationToken token, String[] names)</em><br />
+  API name: get_accounts</li>
+</ul>
+<p>Get user accounts by user names  </p>
+<p><a id="Ditch.Steem.OperationManager.GetAccountReferences(System.UInt64,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object&gt;</em> <strong>GetAccountReferences</strong> <em>(UInt64 accountId, CancellationToken token)</em><br />
+  API name: get_account_references  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.LookupAccountNames(System.Threading.CancellationToken,System.String[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountApiObj[]&gt;</em> <strong>LookupAccountNames</strong> <em>(CancellationToken token, String[] accountNames)</em><br />
+  API name: lookup_account_names</li>
+</ul>
+<p>Get a list of accounts by name
+This function has semantics identical to @ref get_objects
+Возращает данные по заданным аккаунтам  </p>
+<p><a id="Ditch.Steem.OperationManager.LookupAccounts(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>LookupAccounts</strong> <em>(String lowerBoundName, UInt32 limit, CancellationToken token)</em><br />
+  API name: lookup_accounts</li>
+</ul>
+<p>Returns the names of users close to the phrase.
+Возвращает имена пользователей близких к шаблону.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetAccountCount(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;UInt64&gt;</em> <strong>GetAccountCount</strong> <em>(CancellationToken token)</em><br />
+  API name: get_account_count</li>
+</ul>
+<p>Get the total number of accounts registered with the blockchain
+Возвращает количество зарегестрированных пользователей.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetOwnerHistory(System.Threading.CancellationToken,System.String[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;OwnerAuthorityHistoryApiObj[]&gt;</em> <strong>GetOwnerHistory</strong> <em>(CancellationToken token, String[] account)</em><br />
+  API name: get_owner_history</li>
+</ul>
+<p>Displays the user name if he changed the ownership of the blockchain
+Отображает имя пользователя если он изменил право собственности на блокчейн  </p>
+<p><a id="Ditch.Steem.OperationManager.GetRecoveryRequest(System.Threading.CancellationToken,System.String[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountRecoveryRequestApiObj[]&gt;</em> <strong>GetRecoveryRequest</strong> <em>(CancellationToken token, String[] account)</em><br />
+  API name: get_recovery_request</li>
+</ul>
+<p>Returns true if the user is in recovery status.
+Возвращает true если пользователь в статусе на восстановление.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetEscrow(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;EscrowApiObj&gt;</em> <strong>GetEscrow</strong> <em>(String from, UInt32 escrowId, CancellationToken token)</em><br />
+  API name: get_escrow</li>
+</ul>
+<p>Returns the operations implemented through mediation.
+Возвращает операции реализованные с помощью посредничества.  </p>
+<p><a id="Ditch.Steem.OperationManager.GetWithdrawRoutes(System.String,Ditch.Steem.Operations.Enums.WithdrawRouteType,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WithdrawRoute[]&gt;</em> <strong>GetWithdrawRoutes</strong> <em>(String account, WithdrawRouteType type, CancellationToken token)</em><br />
+  API name: get_withdraw_routes</li>
+</ul>
+<p>Returns all transfers to the user's account, depending on the type
+Возвращает все переводы на счету пользователя в зависимости от типа  </p>
+<p><a id="Ditch.Steem.OperationManager.GetAccountBandwidth(System.String,Ditch.Steem.Operations.Enums.BandwidthType,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountBandwidthApiObj&gt;</em> <strong>GetAccountBandwidth</strong> <em>(String account, BandwidthType type, CancellationToken token)</em><br />
+  API name: get_account_bandwidth</li>
+</ul>
+<p>Displays user actions based on type
+Отображает действия пользователя в зависимости от типа  </p>
+<p><a id="Ditch.Steem.OperationManager.GetSavingsWithdrawFrom(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SavingsWithdrawApiObj[]&gt;</em> <strong>GetSavingsWithdrawFrom</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_savings_withdraw_from</li>
+</ul>
+<p>Returns the output data from 'SAFE' for this user
+Возвращает данные о выводах из 'СЕЙФА' для данного пользователя  </p>
+<p><a id="Ditch.Steem.OperationManager.GetSavingsWithdrawTo(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SavingsWithdrawApiObj[]&gt;</em> <strong>GetSavingsWithdrawTo</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_savings_withdraw_to</li>
+</ul>
+<p>Returns the output data from 'SAFE' for this user
+Возвращает данные о выводах из 'СЕЙФА' для данного пользователя  </p>
+<p><a id="Ditch.Steem.OperationManager.GetWitnesses(System.Threading.CancellationToken,System.Object[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessApiObj[]&gt;</em> <strong>GetWitnesses</strong> <em>(CancellationToken token, Object[] witnessIds)</em><br />
+  API name: get_witnesses</li>
+</ul>
+<p>Get a list of witnesses by ID  </p>
+<p><a id="Ditch.Steem.OperationManager.GetConversionRequests(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ConvertRequestApiObj[]&gt;</em> <strong>GetConversionRequests</strong> <em>(String accountName, CancellationToken token)</em><br />
+  API name: get_conversion_requests</li>
+</ul>
+<p>Returns the current requests for conversion by the specified user
+Возвращает текущие запросы на конвертацию указанным пользователем  </p>
+<p><a id="Ditch.Steem.OperationManager.GetWitnessByAccount(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessApiObj&gt;</em> <strong>GetWitnessByAccount</strong> <em>(String accountName, CancellationToken token)</em><br />
+  API name: get_witness_by_account</li>
+</ul>
+<p>Get the witness owned by a given account  </p>
+<p><a id="Ditch.Steem.OperationManager.GetWitnessesByVote(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessApiObj[]&gt;</em> <strong>GetWitnessesByVote</strong> <em>(String from, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_witnesses_by_vote</li>
+</ul>
+<p>This method is used to fetch witnesses with pagination.  </p>
+<p><a id="Ditch.Steem.OperationManager.LookupWitnessAccounts(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object[]&gt;</em> <strong>LookupWitnessAccounts</strong> <em>(String lowerBoundName, UInt32 limit, CancellationToken token)</em><br />
+  API name: lookup_witness_accounts</li>
+</ul>
+<p>Get names and IDs for registered witnesses  </p>
+<p><a id="Ditch.Steem.OperationManager.GetWitnessCount(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;UInt64&gt;</em> <strong>GetWitnessCount</strong> <em>(CancellationToken token)</em><br />
+  API name: get_witness_count</li>
+</ul>
+<p>Get the total number of witnesses registered with the blockchain  </p>
+<p><a id="Ditch.Steem.OperationManager.GetOrderBook(System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;OrderBook&gt;</em> <strong>GetOrderBook</strong> <em>(UInt32 limit, CancellationToken token)</em><br />
+  API name: get_order_book</li>
+</ul>
+<p>Gets the current order book for STEEM:SBD market  </p>
+<p><a id="Ditch.Steem.OperationManager.GetOpenOrders(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ExtendedLimitOrder[]&gt;</em> <strong>GetOpenOrders</strong> <em>(String owner, CancellationToken token)</em><br />
+  API name: get_open_orders  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetActiveVotes(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;VoteState[]&gt;</em> <strong>GetActiveVotes</strong> <em>(String author, String permlink, CancellationToken token)</em><br />
+  API name: get_active_votes  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetContent(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion&gt;</em> <strong>GetContent</strong> <em>(String author, String permlink, CancellationToken token)</em><br />
+  API name: get_content</li>
+</ul>
+<p>Get post by author and permlink  </p>
+<p><a id="Ditch.Steem.OperationManager.GetContentReplies(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion[]&gt;</em> <strong>GetContentReplies</strong> <em>(String parent, String parentPermlink, CancellationToken token)</em><br />
+  API name: get_content_replies  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetTagsUsedByAuthor(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;KeyValuePair`2[]&gt;</em> <strong>GetTagsUsedByAuthor</strong> <em>(String author, CancellationToken token)</em><br />
+  API name: get_tags_used_by_author  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetDiscussionsByAuthorBeforeDate(System.String,System.String,System.DateTime,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion[]&gt;</em> <strong>GetDiscussionsByAuthorBeforeDate</strong> <em>(String author, String startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_discussions_by_author_before_date  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetAccountHistory(System.String,System.UInt64,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;KeyValuePair`2[]&gt;</em> <strong>GetAccountHistory</strong> <em>(String account, UInt64 from, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_account_history</li>
+</ul>
+<p>История всех действий пользователя в сети в виде транзакций. При from = -1 будут показаны последние {limit+1} элементов истории. Параметр limit не должен превышать from (исключение from = -1), так как показываются предшествующие {from} элементы истории.  </p>
+<p><a id="Ditch.Steem.OperationManager.OnApiStartup(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>OnApiStartup</strong> <em>(CancellationToken token)</em><br />
+  API name: on_api_startup  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetFollowers(System.String,System.String,Ditch.Steem.Operations.Enums.FollowType,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FollowApiObj[]&gt;</em> <strong>GetFollowers</strong> <em>(String following, String startFollower, FollowType followType, UInt16 limit, CancellationToken token)</em><br />
+  Возвращает список: Либо всех подписчиков пользователя 'following'. 
+Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.GetFollowing(System.String,System.String,Ditch.Steem.Operations.Enums.FollowType,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FollowApiObj[]&gt;</em> <strong>GetFollowing</strong> <em>(String follower, String startFollowing, FollowType followType, UInt16 limit, CancellationToken token)</em><br />
+  Aналогично GetFollowers только для подписок  </li>
+</ul>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.OperationManager.ChainId"></a></p>
+<ul>
+<li><em>Byte[]</em> <strong>ChainId</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.SbdSymbol"></a></p>
+<ul>
+<li><em>String</em> <strong>SbdSymbol</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.Version"></a></p>
+<ul>
+<li><em>Int32</em> <strong>Version</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.OperationManager.IsConnected"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>IsConnected</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.OperationType"></a></p>
+<h2 id="operationtype">OperationType</h2>
+<p><em>enum Ditch.Steem.Operations.OperationType</em></p>
+<p>https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/operations.hpp
+ NOTE:  do not change the order of any operations</p>
+<p><strong>Enum Values</strong></p>
+<ul>
+<li><strong>Vote</strong></li>
+<li><strong>Comment</strong></li>
+<li><strong>Transfer</strong></li>
+<li><strong>TransferToVesting</strong></li>
+<li><strong>WithdrawVesting</strong></li>
+<li><strong>LimitOrderCreate</strong></li>
+<li><strong>LimitOrderCancel</strong></li>
+<li><strong>FeedPublish</strong></li>
+<li><strong>Convert</strong></li>
+<li><strong>AccountCreate</strong></li>
+<li><strong>AccountUpdate</strong></li>
+<li><strong>WitnessUpdate</strong></li>
+<li><strong>AccountWitnessVote</strong></li>
+<li><strong>AccountWitnessProxy</strong></li>
+<li><strong>Pow</strong></li>
+<li><strong>Custom</strong></li>
+<li><strong>ReportOverProduction</strong></li>
+<li><strong>DeleteComment</strong></li>
+<li><strong>CustomJson</strong></li>
+<li><strong>CommentOptions</strong></li>
+<li><strong>SetWithdrawVestingRoute</strong></li>
+<li><strong>LimitOrderCreate2</strong></li>
+<li><strong>ChallengeAuthority</strong></li>
+<li><strong>ProveAuthority</strong></li>
+<li><strong>RequestAccountRecovery</strong></li>
+<li><strong>RecoverAccount</strong></li>
+<li><strong>ChangeRecoveryAccount</strong></li>
+<li><strong>EscrowTransfer</strong></li>
+<li><strong>EscrowDispute</strong></li>
+<li><strong>EscrowRelease</strong></li>
+<li><strong>Pow2</strong></li>
+<li><strong>EscrowApprove</strong></li>
+<li><strong>TransferToSavings</strong></li>
+<li><strong>TransferFromSavings</strong></li>
+<li><strong>CancelTransferFromSavings</strong></li>
+<li><strong>CustomBinaryOperation</strong></li>
+<li><strong>DeclineVotingRightsOperation</strong></li>
+<li><strong>ResetAccountOperation</strong></li>
+<li><strong>SetResetAccountOperation</strong></li>
+<li><strong>AccountCreateWithDelegation</strong></li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.BaseOperation"></a></p>
+<h2 id="baseoperation">BaseOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.BaseOperation</em></p>
+<p>base_operation</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Post.BaseOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.BaseOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation"></a></p>
+<h2 id="commentoperation">CommentOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.CommentOperation: Ditch.Steem.Operations.Post.BaseOperation</em></p>
+<p>comment_operation</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.ParentAuthor"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentAuthor</strong><br />
+  API name: parent_author  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.ParentPermlink"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentPermlink</strong><br />
+  API name: parent_permlink  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.Title"></a></p>
+<ul>
+<li><em>String</em> <strong>Title</strong><br />
+  API name: title  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.Body"></a></p>
+<ul>
+<li><em>String</em> <strong>Body</strong><br />
+  API name: body  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.CommentOperation.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong><br />
+  API name: json_metadata  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.DeleteCommentOperation"></a></p>
+<h2 id="deletecommentoperation">DeleteCommentOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.DeleteCommentOperation: Ditch.Steem.Operations.Post.BaseOperation</em></p>
+<p>delete_comment_operation
+libraries\protocol\include\steemit\protocol\steem_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Post.DeleteCommentOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.DeleteCommentOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.DeleteCommentOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.DeleteCommentOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.FollowOperation"></a></p>
+<h2 id="followoperation">FollowOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.FollowOperation: Ditch.Steem.Operations.Post.CustomJsonOperation</em></p>
+<p>Follow / Unfollow some author</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.RePostOperation"></a></p>
+<h2 id="repostoperation">RePostOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.RePostOperation: Ditch.Steem.Operations.Post.CustomJsonOperation</em></p>
+<p>Repost some post by author and permlink (loads all additional parameters from the blockchain)</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.UnfollowOperation"></a></p>
+<h2 id="unfollowoperation">UnfollowOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.UnfollowOperation: Ditch.Steem.Operations.Post.FollowOperation</em></p>
+<p>Unfollow some author</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation"></a></p>
+<h2 id="voteoperation">VoteOperation</h2>
+<p><em>class Ditch.Steem.Operations.Post.VoteOperation: Ditch.Steem.Operations.Post.BaseOperation</em></p>
+<p>Vote up/down/flag post</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation.Voter"></a></p>
+<ul>
+<li><em>String</em> <strong>Voter</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Post.VoteOperation.Weight"></a></p>
+<ul>
+<li><em>Int16</em> <strong>Weight</strong><br />
+  An weignt from 0 to 10000. -10000 for flag  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj"></a></p>
+<h2 id="accountapiobj">AccountApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.AccountApiObj</em></p>
+<p>account_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Id"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Owner"></a></p>
+<ul>
+<li><em>Authority</em> <strong>Owner</strong><br />
+  used for backup control, can set owner or active  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Active"></a></p>
+<ul>
+<li><em>Authority</em> <strong>Active</strong><br />
+  used for all monetary operations, can set active or posting  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Posting"></a></p>
+<ul>
+<li><em>Authority</em> <strong>Posting</strong><br />
+  used for voting and posting  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.MemoKey"></a></p>
+<ul>
+<li><em>String</em> <strong>MemoKey</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Proxy"></a></p>
+<ul>
+<li><em>String</em> <strong>Proxy</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastOwnerUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastOwnerUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastAccountUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastAccountUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Mined"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Mined</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.OwnerChallenged"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>OwnerChallenged</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.ActiveChallenged"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>ActiveChallenged</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastOwnerProved"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastOwnerProved</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastActiveProved"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastActiveProved</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.RecoveryAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>RecoveryAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.ResetAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>ResetAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastAccountRecovery"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastAccountRecovery</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.CommentCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>CommentCount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LifetimeVoteCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LifetimeVoteCount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.PostCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>PostCount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.CanVote"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>CanVote</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.VotingPower"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>VotingPower</strong><br />
+  Current voting power of this account, it falls after every vote  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastVoteTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastVoteTime</strong><br />
+  used to increase the voting power of this account the longer it goes without voting.  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Balance"></a></p>
+<ul>
+<li><em>Money</em> <strong>Balance</strong><br />
+  total liquid shares held by this account  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SavingsBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SavingsBalance</strong><br />
+  total liquid shares held by this account  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SbdBalance</strong><br />
+  Total sbd balance  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SbdSeconds"></a></p>
+<ul>
+<li><em>String</em> <strong>SbdSeconds</strong><br />
+  Total sbd * how long it has been hel  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SbdSecondsLastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SbdSecondsLastUpdate</strong><br />
+  the last time the sbd_seconds was updated  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SbdLastInterestPayment"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SbdLastInterestPayment</strong><br />
+  used to pay interest at most once per month  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SavingsSbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SavingsSbdBalance</strong><br />
+  total sbd balance  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SavingsSbdSeconds"></a></p>
+<ul>
+<li><em>String</em> <strong>SavingsSbdSeconds</strong><br />
+  total sbd * how long it has been hel  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SavingsSbdSecondsLastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SavingsSbdSecondsLastUpdate</strong><br />
+  the last time the sbd_seconds was updated  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SavingsSbdLastInterestPayment"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SavingsSbdLastInterestPayment</strong><br />
+  used to pay interest at most once per month  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.SavingsWithdrawRequests"></a></p>
+<ul>
+<li><em>Byte</em> <strong>SavingsWithdrawRequests</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.RewardSbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardSbdBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.RewardSteemBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardSteemBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.RewardVestingBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardVestingBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.RewardVestingSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardVestingSteem</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.CurationRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>CurationRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.PostingRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>PostingRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.VestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>VestingShares</strong><br />
+  total vesting shares held by this account, controls its voting power  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.DelegatedVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>DelegatedVestingShares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.ReceivedVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>ReceivedVestingShares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.VestingWithdrawRate"></a></p>
+<ul>
+<li><em>Money</em> <strong>VestingWithdrawRate</strong><br />
+  at the time this is updated it can be at most vesting_shares/104  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.NextVestingWithdrawal"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>NextVestingWithdrawal</strong><br />
+  after every withdrawal this is incremented by 1 week  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.Withdrawn"></a></p>
+<ul>
+<li><em>Object</em> <strong>Withdrawn</strong><br />
+  Track how many shares have been withdrawn  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.ToWithdraw"></a></p>
+<ul>
+<li><em>Object</em> <strong>ToWithdraw</strong><br />
+  Might be able to look this up with operation history.  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.WithdrawRoutes"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>WithdrawRoutes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.ProxiedVsfVotes"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>ProxiedVsfVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.WitnessesVotedFor"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>WitnessesVotedFor</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.AverageBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>AverageBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LifetimeBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>LifetimeBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastBandwidthUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastBandwidthUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.AverageMarketBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>AverageMarketBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LifetimeMarketBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>LifetimeMarketBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastMarketBandwidthUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastMarketBandwidthUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastPost"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastPost</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.LastRootPost"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastRootPost</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.PostBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>PostBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.NewAverageBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>NewAverageBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountApiObj.NewAverageMarketBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>NewAverageMarketBandwidth</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthApiObj"></a></p>
+<h2 id="accountbandwidthapiobj">AccountBandwidthApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.AccountBandwidthApiObj: Ditch.Steem.Operations.Get.AccountBandwidthObject</em></p>
+<p>account_bandwidth_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject"></a></p>
+<h2 id="accountbandwidthobject">AccountBandwidthObject</h2>
+<p><em>class Ditch.Steem.Operations.Get.AccountBandwidthObject</em></p>
+<p>account_bandwidth_object
+steem-0.19.1\libraries\plugins\witness\include\steemit\witness\witness_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject.Type"></a></p>
+<ul>
+<li><em>BandwidthType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject.AverageBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>AverageBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject.LifetimeBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>LifetimeBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountBandwidthObject.LastBandwidthUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastBandwidthUpdate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.AccountRecoveryRequestApiObj"></a></p>
+<h2 id="accountrecoveryrequestapiobj">AccountRecoveryRequestApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.AccountRecoveryRequestApiObj</em></p>
+<p>account_recovery_request_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.AccountRecoveryRequestApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountRecoveryRequestApiObj.AccountToRecover"></a></p>
+<ul>
+<li><em>String</em> <strong>AccountToRecover</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountRecoveryRequestApiObj.NewOwnerAuthority"></a></p>
+<ul>
+<li><em>Authority</em> <strong>NewOwnerAuthority</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AccountRecoveryRequestApiObj.Expires"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Expires</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation"></a></p>
+<h2 id="appliedoperation">AppliedOperation</h2>
+<p><em>class Ditch.Steem.Operations.Get.AppliedOperation</em></p>
+<p>applied_operation
+steem-0.19.1\libraries\app\include\steemit\app\applied_operation.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.TrxId"></a></p>
+<ul>
+<li><em>Object</em> <strong>TrxId</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.Block"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Block</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.TrxInBlock"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TrxInBlock</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.OpInTrx"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>OpInTrx</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.VirtualOp"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>VirtualOp</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.Timestamp"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Timestamp</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.AppliedOperation.Op"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Op</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.Authority"></a></p>
+<h2 id="authority">Authority</h2>
+<p><em>class Ditch.Steem.Operations.Get.Authority</em></p>
+<p>authority
+steem-0.19.1\libraries\protocol\include\steemit\protocol\authority.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.Authority.WeightThreshold"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>WeightThreshold</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Authority.AccountAuths"></a></p>
+<ul>
+<li><em>Object</em> <strong>AccountAuths</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Authority.KeyAuths"></a></p>
+<ul>
+<li><em>Object[][]</em> <strong>KeyAuths</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.BlockHeader"></a></p>
+<h2 id="blockheader">BlockHeader</h2>
+<p><em>class Ditch.Steem.Operations.Get.BlockHeader</em></p>
+<p>block_header
+steem-0.19.1\libraries\protocol\include\steemit\protocol\block_header.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.BlockHeader.Previous"></a></p>
+<ul>
+<li><em>Object</em> <strong>Previous</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.BlockHeader.Timestamp"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Timestamp</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.BlockHeader.Witness"></a></p>
+<ul>
+<li><em>String</em> <strong>Witness</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.BlockHeader.TransactionMerkleRoot"></a></p>
+<ul>
+<li><em>Object</em> <strong>TransactionMerkleRoot</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.BlockHeader.Extensions"></a></p>
+<ul>
+<li><em>Object</em> <strong>Extensions</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj"></a></p>
+<h2 id="categoryapiobj">CategoryApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.CategoryApiObj</em></p>
+<p>category_api_obj</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj.AbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>AbsRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj.TotalPayouts"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayouts</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj.Discussions"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Discussions</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CategoryApiObj.LastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastUpdate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.ChainProperties"></a></p>
+<h2 id="chainproperties">ChainProperties</h2>
+<p><em>class Ditch.Steem.Operations.Get.ChainProperties</em></p>
+<p>chain_properties
+steem-0.19.1\libraries\protocol\include\steemit\protocol\steem_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.ChainProperties.AccountCreationFee"></a></p>
+<ul>
+<li><em>Money</em> <strong>AccountCreationFee</strong><br />
+  This fee, paid in STEEM, is converted into VESTING SHARES for the new account.Accounts 
+without vesting shares cannot earn usage rations and therefore are powerless.This minimum 
+fee requires all accounts to have some kind of commitment to the network that includes the
+ ability to vote and make transactions.  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ChainProperties.MaximumBlockSize"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MaximumBlockSize</strong><br />
+  This witnesses vote for the maximum_block_size which is used by the network to tune rate limiting and capacity  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ChainProperties.SbdInterestRate"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>SbdInterestRate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj"></a></p>
+<h2 id="commentapiobj">CommentApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.CommentApiObj</em></p>
+<p>comment_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Id"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Category"></a></p>
+<ul>
+<li><em>String</em> <strong>Category</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.ParentAuthor"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentAuthor</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.ParentPermlink"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentPermlink</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Title"></a></p>
+<ul>
+<li><em>String</em> <strong>Title</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Body"></a></p>
+<ul>
+<li><em>String</em> <strong>Body</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.LastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Active"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Active</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.LastPayout"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastPayout</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Depth"></a></p>
+<ul>
+<li><em>Byte</em> <strong>Depth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Children"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Children</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.ChildrenRshares2"></a></p>
+<ul>
+<li><em>String</em> <strong>ChildrenRshares2</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.NetRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>NetRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.AbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>AbsRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.VoteRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>VoteRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.ChildrenAbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>ChildrenAbsRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.CashoutTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>CashoutTime</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.MaxCashoutTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>MaxCashoutTime</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.TotalVoteWeight"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>TotalVoteWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.RewardWeight"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>RewardWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.TotalPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayoutValue</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.CuratorPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>CuratorPayoutValue</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.AuthorRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>AuthorRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.NetVotes"></a></p>
+<ul>
+<li><em>Int32</em> <strong>NetVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.RootComment"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>RootComment</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Mode"></a></p>
+<ul>
+<li><em>CommentMode</em> <strong>Mode</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.MaxAcceptedPayout"></a></p>
+<ul>
+<li><em>Money</em> <strong>MaxAcceptedPayout</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.PercentSteemDollars"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>PercentSteemDollars</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.AllowReplies"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowReplies</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.AllowVotes"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.AllowCurationRewards"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowCurationRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.CommentApiObj.Beneficiaries"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Beneficiaries</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.ConvertRequestApiObj"></a></p>
+<h2 id="convertrequestapiobj">ConvertRequestApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.ConvertRequestApiObj: Ditch.Steem.Operations.Get.ConvertRequestObject</em></p>
+<p>convert_request_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.ConvertRequestObject"></a></p>
+<h2 id="convertrequestobject">ConvertRequestObject</h2>
+<p><em>class Ditch.Steem.Operations.Get.ConvertRequestObject</em></p>
+<p>convert_request_object
+steem-0.19.1\libraries\chain\include\steemit\chain\steem_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.ConvertRequestObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ConvertRequestObject.Owner"></a></p>
+<ul>
+<li><em>Object</em> <strong>Owner</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ConvertRequestObject.Requestid"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Requestid</strong><br />
+  id set by owner,the owner,requestid pair must be unique  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ConvertRequestObject.Amount"></a></p>
+<ul>
+<li><em>Money</em> <strong>Amount</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.Discussion"></a></p>
+<h2 id="discussion">Discussion</h2>
+<p><em>class Ditch.Steem.Operations.Get.Discussion: Ditch.Steem.Operations.Get.CommentApiObj</em></p>
+<p>discussion
+steem-0.19.1\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.Url"></a></p>
+<ul>
+<li><em>String</em> <strong>Url</strong><br />
+  /category/@rootauthor/root_permlink#author/permlink  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.RootTitle"></a></p>
+<ul>
+<li><em>String</em> <strong>RootTitle</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.PendingPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>PendingPayoutValue</strong><br />
+  sbd  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.TotalPendingPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPendingPayoutValue</strong><br />
+  sbd including replies  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.ActiveVotes"></a></p>
+<ul>
+<li><em>VoteState[]</em> <strong>ActiveVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.Replies"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Replies</strong><br />
+  author/slug mapping  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.AuthorReputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>AuthorReputation</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.Promoted"></a></p>
+<ul>
+<li><em>Money</em> <strong>Promoted</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.BodyLength"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>BodyLength</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.RebloggedBy"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RebloggedBy</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.FirstRebloggedBy"></a></p>
+<ul>
+<li><em>Object</em> <strong>FirstRebloggedBy</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Discussion.FirstRebloggedOn"></a></p>
+<ul>
+<li><em>Object</em> <strong>FirstRebloggedOn</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyApiObj"></a></p>
+<h2 id="dynamicglobalpropertyapiobj">DynamicGlobalPropertyApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.DynamicGlobalPropertyApiObj: Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject</em></p>
+<p>Shows an overview of various information regarding the current state of the STEEM network.
+dynamic_global_property_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyApiObj.CurrentReserveRatio"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>CurrentReserveRatio</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyApiObj.AverageBlockSize"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>AverageBlockSize</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyApiObj.MaxVirtualBandwidth"></a></p>
+<ul>
+<li><em>String</em> <strong>MaxVirtualBandwidth</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject"></a></p>
+<h2 id="dynamicglobalpropertyobject">DynamicGlobalPropertyObject</h2>
+<p><em>class Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject</em></p>
+<p>Shows an overview of various information regarding the current state of the STEEM network.
+dynamic_global_property_object
+steem-0.19.1\libraries\chain\include\steemit\chain\global_property_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.Id"></a></p>
+<ul>
+<li><em>String</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.HeadBlockNumber"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>HeadBlockNumber</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.HeadBlockId"></a></p>
+<ul>
+<li><em>String</em> <strong>HeadBlockId</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.Time"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Time</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.CurrentWitness"></a></p>
+<ul>
+<li><em>String</em> <strong>CurrentWitness</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.TotalPow"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>TotalPow</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.NumPowWitnesses"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NumPowWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.VirtualSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>VirtualSupply</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.CurrentSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>CurrentSupply</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.ConfidentialSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>ConfidentialSupply</strong><br />
+  total asset held in confidential balances  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.CurrentSbdSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>CurrentSbdSupply</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.ConfidentialSbdSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>ConfidentialSbdSupply</strong><br />
+  total asset held in confidential balances  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.TotalVestingFundSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalVestingFundSteem</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.TotalVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalVestingShares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.TotalRewardFundSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalRewardFundSteem</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.TotalRewardShares2"></a></p>
+<ul>
+<li><em>String</em> <strong>TotalRewardShares2</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.PendingRewardedVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>PendingRewardedVestingShares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.PendingRewardedVestingSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>PendingRewardedVestingSteem</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.SbdInterestRate"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>SbdInterestRate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.SbdPrintRate"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>SbdPrintRate</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.AverageBlockSize"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>AverageBlockSize</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.MaximumBlockSize"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MaximumBlockSize</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.CurrentAslot"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>CurrentAslot</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.RecentSlotsFilled"></a></p>
+<ul>
+<li><em>String</em> <strong>RecentSlotsFilled</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.ParticipationCount"></a></p>
+<ul>
+<li><em>Byte</em> <strong>ParticipationCount</strong><br />
+  divide by 128 to compute participation percentage  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.LastIrreversibleBlockNum"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LastIrreversibleBlockNum</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.MaxVirtualBandwidth"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>MaxVirtualBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.CurrentReserveRatio"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>CurrentReserveRatio</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.VoteRegenerationPerDay"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>VoteRegenerationPerDay</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.DynamicGlobalPropertyObject.VotePowerReserveRate"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>VotePowerReserveRate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.EscrowApiObj"></a></p>
+<h2 id="escrowapiobj">EscrowApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.EscrowApiObj: Ditch.Steem.Operations.Get.EscrowObject</em></p>
+<p>escrow_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject"></a></p>
+<h2 id="escrowobject">EscrowObject</h2>
+<p><em>class Ditch.Steem.Operations.Get.EscrowObject</em></p>
+<p>escrow_object
+steem-0.19.1\libraries\chain\include\steemit\chain\steem_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.EscrowId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>EscrowId</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.From"></a></p>
+<ul>
+<li><em>String</em> <strong>From</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.To"></a></p>
+<ul>
+<li><em>String</em> <strong>To</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.Agent"></a></p>
+<ul>
+<li><em>String</em> <strong>Agent</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.RatificationDeadline"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>RatificationDeadline</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.EscrowExpiration"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>EscrowExpiration</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.SbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SbdBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.SteemBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SteemBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.PendingFee"></a></p>
+<ul>
+<li><em>Money</em> <strong>PendingFee</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.ToApproved"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>ToApproved</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.AgentApproved"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AgentApproved</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.EscrowObject.Disputed"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Disputed</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount"></a></p>
+<h2 id="extendedaccount">ExtendedAccount</h2>
+<p><em>class Ditch.Steem.Operations.Get.ExtendedAccount: Ditch.Steem.Operations.Get.AccountApiObj</em></p>
+<p>extended_account 
+steem-0.19.1\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.VestingBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>VestingBalance</strong><br />
+  convert vesting_shares to vesting steem  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.Reputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>Reputation</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.TransferHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>TransferHistory</strong><br />
+  transfer to/from vesting  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.MarketHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>MarketHistory</strong><br />
+  limit order / cancel / fill  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.PostHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>PostHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.VoteHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>VoteHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.OtherHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>OtherHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.WitnessVotes"></a></p>
+<ul>
+<li><em>String[]</em> <strong>WitnessVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.TagsUsage"></a></p>
+<ul>
+<li><em>KeyValuePair`2[]</em> <strong>TagsUsage</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.GuestBloggers"></a></p>
+<ul>
+<li><em>KeyValuePair`2[]</em> <strong>GuestBloggers</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.OpenOrders"></a></p>
+<ul>
+<li><em>Object</em> <strong>OpenOrders</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.Comments"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Comments</strong><br />
+  permlinks for this user  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.Blog"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Blog</strong><br />
+  blog posts for this user  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.Feed"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Feed</strong><br />
+  feed posts for this user  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.RecentReplies"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RecentReplies</strong><br />
+  blog posts for this user  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.BlogCategory"></a></p>
+<ul>
+<li><em>Object</em> <strong>BlogCategory</strong><br />
+  blog posts for this user  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedAccount.Recommended"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Recommended</strong><br />
+  posts recommened for this user  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.ExtendedLimitOrder"></a></p>
+<h2 id="extendedlimitorder">ExtendedLimitOrder</h2>
+<p><em>class Ditch.Steem.Operations.Get.ExtendedLimitOrder</em></p>
+<p>extended_limit_order
+libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedLimitOrder.RealPrice"></a></p>
+<ul>
+<li><em>Double</em> <strong>RealPrice</strong><br />
+  API name: real_price
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ExtendedLimitOrder.Rewarded"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Rewarded</strong><br />
+  API name: rewarded
+= false;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.FeedHistoryApiObj"></a></p>
+<h2 id="feedhistoryapiobj">FeedHistoryApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.FeedHistoryApiObj</em></p>
+<p>feed_history_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.FeedHistoryApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.FeedHistoryApiObj.CurrentMedianHistory"></a></p>
+<ul>
+<li><em>Price</em> <strong>CurrentMedianHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.FeedHistoryApiObj.PriceHistory"></a></p>
+<ul>
+<li><em>Price[]</em> <strong>PriceHistory</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.FollowApiObj"></a></p>
+<h2 id="followapiobj">FollowApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.FollowApiObj</em></p>
+<p>follow_api_obj
+steem-0.19.1\libraries\plugins\follow\include\steemit\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.FollowApiObj.Follower"></a></p>
+<ul>
+<li><em>String</em> <strong>Follower</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.FollowApiObj.Following"></a></p>
+<ul>
+<li><em>String</em> <strong>Following</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.FollowApiObj.What"></a></p>
+<ul>
+<li><em>FollowType[]</em> <strong>What</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.Order"></a></p>
+<h2 id="order">Order</h2>
+<p><em>class Ditch.Steem.Operations.Get.Order</em></p>
+<p>order
+libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.Order.OrderPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>OrderPrice</strong><br />
+  API name: order_price  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Order.RealPrice"></a></p>
+<ul>
+<li><em>Double</em> <strong>RealPrice</strong><br />
+  API name: real_price
+dollars per steem  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Order.Steem"></a></p>
+<ul>
+<li><em>Object</em> <strong>Steem</strong><br />
+  API name: steem  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Order.Sbd"></a></p>
+<ul>
+<li><em>Object</em> <strong>Sbd</strong><br />
+  API name: sbd  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Order.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong><br />
+  API name: created  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.OrderBook"></a></p>
+<h2 id="orderbook">OrderBook</h2>
+<p><em>class Ditch.Steem.Operations.Get.OrderBook</em></p>
+<p>order_book
+libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.OrderBook.Asks"></a></p>
+<ul>
+<li><em>Order[]</em> <strong>Asks</strong><br />
+  API name: asks  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.OrderBook.Bids"></a></p>
+<ul>
+<li><em>Order[]</em> <strong>Bids</strong><br />
+  API name: bids  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.OwnerAuthorityHistoryApiObj"></a></p>
+<h2 id="ownerauthorityhistoryapiobj">OwnerAuthorityHistoryApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.OwnerAuthorityHistoryApiObj</em></p>
+<p>owner_authority_history_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.OwnerAuthorityHistoryApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.OwnerAuthorityHistoryApiObj.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.OwnerAuthorityHistoryApiObj.PreviousOwnerAuthority"></a></p>
+<ul>
+<li><em>Authority</em> <strong>PreviousOwnerAuthority</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.OwnerAuthorityHistoryApiObj.LastValidTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastValidTime</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.Price"></a></p>
+<h2 id="price">Price</h2>
+<p><em>class Ditch.Steem.Operations.Get.Price</em></p>
+<p>price
+steem-0.19.1\libraries\protocol\include\steemit\protocol\asset.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.Price.Base"></a></p>
+<ul>
+<li><em>Money</em> <strong>Base</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.Price.Quote"></a></p>
+<ul>
+<li><em>Money</em> <strong>Quote</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj"></a></p>
+<h2 id="savingswithdrawapiobj">SavingsWithdrawApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.SavingsWithdrawApiObj</em></p>
+<p>savings_withdraw_api_obj
+libraries\app\include\steemit\app\steem_api_objects.hpp
+libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.From"></a></p>
+<ul>
+<li><em>String</em> <strong>From</strong><br />
+  API name: from  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.To"></a></p>
+<ul>
+<li><em>String</em> <strong>To</strong><br />
+  API name: to  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.Memo"></a></p>
+<ul>
+<li><em>String</em> <strong>Memo</strong><br />
+  API name: memo  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.RequestId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RequestId</strong><br />
+  API name: request_id
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.Amount"></a></p>
+<ul>
+<li><em>Money</em> <strong>Amount</strong><br />
+  API name: amount  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SavingsWithdrawApiObj.Complete"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Complete</strong><br />
+  API name: complete  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.ScheduledHardfork"></a></p>
+<h2 id="scheduledhardfork">ScheduledHardfork</h2>
+<p><em>class Ditch.Steem.Operations.Get.ScheduledHardfork</em></p>
+<p>scheduled_hardfork
+steem-0.19.1\libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.ScheduledHardfork.HfVersion"></a></p>
+<ul>
+<li><em>String</em> <strong>HfVersion</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.ScheduledHardfork.LiveTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LiveTime</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.SignedBlock"></a></p>
+<h2 id="signedblock">SignedBlock</h2>
+<p><em>class Ditch.Steem.Operations.Get.SignedBlock: Ditch.Steem.Operations.Get.SignedBlockHeader</em></p>
+<p>signed_block
+steem-0.19.1\libraries\protocol\include\steemit\protocol\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.SignedBlock.Transactions"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Transactions</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.SignedBlockApiObj"></a></p>
+<h2 id="signedblockapiobj">SignedBlockApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.SignedBlockApiObj: Ditch.Steem.Operations.Get.SignedBlock</em></p>
+<p>signed_block_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.SignedBlockApiObj.BlockId"></a></p>
+<ul>
+<li><em>Object</em> <strong>BlockId</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SignedBlockApiObj.SigningKey"></a></p>
+<ul>
+<li><em>String</em> <strong>SigningKey</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.SignedBlockApiObj.TransactionIds"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>TransactionIds</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.SignedBlockHeader"></a></p>
+<h2 id="signedblockheader">SignedBlockHeader</h2>
+<p><em>class Ditch.Steem.Operations.Get.SignedBlockHeader: Ditch.Steem.Operations.Get.BlockHeader</em></p>
+<p>signed_block_header
+steem-0.19.1\libraries\protocol\include\steemit\protocol\block_header.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.SignedBlockHeader.WitnessSignature"></a></p>
+<ul>
+<li><em>Object</em> <strong>WitnessSignature</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.State"></a></p>
+<h2 id="state">State</h2>
+<p><em>class Ditch.Steem.Operations.Get.State</em></p>
+<p>state
+steem-0.19.1\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.State.CurrentRoute"></a></p>
+<ul>
+<li><em>String</em> <strong>CurrentRoute</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Props"></a></p>
+<ul>
+<li><em>DynamicGlobalPropertyApiObj</em> <strong>Props</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.CategoryIdx"></a></p>
+<ul>
+<li><em>Object</em> <strong>CategoryIdx</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.TagIdx"></a></p>
+<ul>
+<li><em>Object</em> <strong>TagIdx</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.DiscussionIdx"></a></p>
+<ul>
+<li><em>Object</em> <strong>DiscussionIdx</strong><br />
+  is the global discussion index  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Categories"></a></p>
+<ul>
+<li><em>Object</em> <strong>Categories</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Tags"></a></p>
+<ul>
+<li><em>Object</em> <strong>Tags</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Content"></a></p>
+<ul>
+<li><em>Object</em> <strong>Content</strong><br />
+  map from account/slug to full nested discussion  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Accounts"></a></p>
+<ul>
+<li><em>Object</em> <strong>Accounts</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.PowQueue"></a></p>
+<ul>
+<li><em>String[]</em> <strong>PowQueue</strong><br />
+  The list of miners who are queued to produce work  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Witnesses"></a></p>
+<ul>
+<li><em>Object</em> <strong>Witnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.WitnessSchedule"></a></p>
+<ul>
+<li><em>WitnessScheduleApiObj</em> <strong>WitnessSchedule</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.FeedPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>FeedPrice</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.Error"></a></p>
+<ul>
+<li><em>String</em> <strong>Error</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.State.MarketData"></a></p>
+<ul>
+<li><em>Object</em> <strong>MarketData</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj"></a></p>
+<h2 id="tagapiobj">TagApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.TagApiObj</em></p>
+<p>tag_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.TotalChildrenRshares2"></a></p>
+<ul>
+<li><em>String</em> <strong>TotalChildrenRshares2</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.TotalPayouts"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayouts</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.NetVotes"></a></p>
+<ul>
+<li><em>Int32</em> <strong>NetVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.TopPosts"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TopPosts</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.Comments"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Comments</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.TagApiObj.Trending"></a></p>
+<ul>
+<li><em>String</em> <strong>Trending</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.VoteState"></a></p>
+<h2 id="votestate">VoteState</h2>
+<p><em>class Ditch.Steem.Operations.Get.VoteState</em></p>
+<p>vote_state
+steem-0.19.1\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.VoteState.Voter"></a></p>
+<ul>
+<li><em>String</em> <strong>Voter</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.VoteState.Weight"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>Weight</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.VoteState.Rshares"></a></p>
+<ul>
+<li><em>Int64</em> <strong>Rshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.VoteState.Percent"></a></p>
+<ul>
+<li><em>Int16</em> <strong>Percent</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.VoteState.Reputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>Reputation</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.VoteState.Time"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Time</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.WithdrawRoute"></a></p>
+<h2 id="withdrawroute">WithdrawRoute</h2>
+<p><em>class Ditch.Steem.Operations.Get.WithdrawRoute</em></p>
+<p>withdraw_route
+steem-0.19.1\libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.WithdrawRoute.FromAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>FromAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WithdrawRoute.ToAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>ToAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WithdrawRoute.Percent"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Percent</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WithdrawRoute.AutoVest"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AutoVest</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj"></a></p>
+<h2 id="witnessapiobj">WitnessApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.WitnessApiObj</em></p>
+<p>witness_api_obj
+libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.Owner"></a></p>
+<ul>
+<li><em>String</em> <strong>Owner</strong><br />
+  API name: owner  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong><br />
+  API name: created  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.Url"></a></p>
+<ul>
+<li><em>String</em> <strong>Url</strong><br />
+  API name: url  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.TotalMissed"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TotalMissed</strong><br />
+  API name: total_missed
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.LastAslot"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>LastAslot</strong><br />
+  API name: last_aslot
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.LastConfirmedBlockNum"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>LastConfirmedBlockNum</strong><br />
+  API name: last_confirmed_block_num
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.PowWorker"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>PowWorker</strong><br />
+  API name: pow_worker
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.SigningKey"></a></p>
+<ul>
+<li><em>Object</em> <strong>SigningKey</strong><br />
+  API name: signing_key  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.Props"></a></p>
+<ul>
+<li><em>ChainProperties</em> <strong>Props</strong><br />
+  API name: props  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.SbdExchangeRate"></a></p>
+<ul>
+<li><em>Price</em> <strong>SbdExchangeRate</strong><br />
+  API name: sbd_exchange_rate  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.LastSbdExchangeUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastSbdExchangeUpdate</strong><br />
+  API name: last_sbd_exchange_update  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.Votes"></a></p>
+<ul>
+<li><em>Object</em> <strong>Votes</strong><br />
+  API name: votes  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.VirtualLastUpdate"></a></p>
+<ul>
+<li><em>String</em> <strong>VirtualLastUpdate</strong><br />
+  API name: virtual_last_update  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.VirtualPosition"></a></p>
+<ul>
+<li><em>String</em> <strong>VirtualPosition</strong><br />
+  API name: virtual_position  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.VirtualScheduledTime"></a></p>
+<ul>
+<li><em>String</em> <strong>VirtualScheduledTime</strong><br />
+  API name: virtual_scheduled_time  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.LastWork"></a></p>
+<ul>
+<li><em>Object</em> <strong>LastWork</strong><br />
+  API name: last_work  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.RunningVersion"></a></p>
+<ul>
+<li><em>Version</em> <strong>RunningVersion</strong><br />
+  API name: running_version  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.HardforkVersionVote"></a></p>
+<ul>
+<li><em>Object</em> <strong>HardforkVersionVote</strong><br />
+  API name: hardfork_version_vote  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessApiObj.HardforkTimeVote"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>HardforkTimeVote</strong><br />
+  API name: hardfork_time_vote  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleApiObj"></a></p>
+<h2 id="witnessscheduleapiobj">WitnessScheduleApiObj</h2>
+<p><em>class Ditch.Steem.Operations.Get.WitnessScheduleApiObj: Ditch.Steem.Operations.Get.WitnessScheduleObject</em></p>
+<p>witness_schedule_api_obj
+steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject"></a></p>
+<h2 id="witnessscheduleobject">WitnessScheduleObject</h2>
+<p><em>class Ditch.Steem.Operations.Get.WitnessScheduleObject</em></p>
+<p>witness_schedule_object
+steem-0.19.1\libraries\chain\include\steemit\chain\witness_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.CurrentVirtualTime"></a></p>
+<ul>
+<li><em>String</em> <strong>CurrentVirtualTime</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.NextShuffleBlockNum"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NextShuffleBlockNum</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.CurrentShuffledWitnesses"></a></p>
+<ul>
+<li><em>Object</em> <strong>CurrentShuffledWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.NumScheduledWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>NumScheduledWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.Top19Weight"></a></p>
+<ul>
+<li><em>Byte</em> <strong>Top19Weight</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.TimeshareWeight"></a></p>
+<ul>
+<li><em>Byte</em> <strong>TimeshareWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.MinerWeight"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MinerWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.WitnessPayNormalizationFactor"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>WitnessPayNormalizationFactor</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.MedianProps"></a></p>
+<ul>
+<li><em>ChainProperties</em> <strong>MedianProps</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.MajorityVersion"></a></p>
+<ul>
+<li><em>String</em> <strong>MajorityVersion</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.MaxVotedWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MaxVotedWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.MaxMinerWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MaxMinerWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.MaxRunnerWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MaxRunnerWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Steem.Operations.Get.WitnessScheduleObject.HardforkRequiredWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>HardforkRequiredWitnesses</strong>  </li>
+</ul>
+<hr /></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '.';</script>
+        <script src="./js/base.js"></script>
+        <script src="./search/require.js"></script>
+        <script src="./search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 0.17.2
+Build Date UTC : 2017-12-09 14:50:55
+-->
