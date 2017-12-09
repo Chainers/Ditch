@@ -5,7 +5,7 @@ namespace Ditch.Golos.Operations.Get
 {
     /// <summary>
     /// withdraw_route
-    /// golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp
+    /// golos-0.16.3\libraries\app\include\steemit\app\database_Api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class WithdrawRoute

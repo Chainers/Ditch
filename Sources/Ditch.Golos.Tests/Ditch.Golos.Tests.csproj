@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Ditch.Golos.Tests</RootNamespace>
     <AssemblyName>Ditch.Golos.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -67,8 +67,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountByKeyApiTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="DatabaseApiTest.cs" />
+    <Compile Include="FollowApiTest.cs" />
+    <Compile Include="MarketHistoryApiTest.cs" />
+    <Compile Include="NetworkBroadcastApiTest.cs" />
     <Compile Include="OperationManagerGetTest.cs" />
     <Compile Include="OperationManagerPostTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
