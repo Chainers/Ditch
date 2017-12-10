@@ -64,112 +64,101 @@ namespace Ditch.Steem.Tests
             var obj = Api.CustomGetRequest<JObject[]>("call", CancellationToken.None, "follow_api", "get_following", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
-        //[Test]
-        //public void get_following()
-        //{
-        //    var resp = Api.GetFollowing();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_following");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_follow_count()
+        {
+            var resp = Api.GetFollowCount(User.Login, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_follow_count()
-        //{
-        //    var resp = Api.GetFollowCount();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_follow_count", CancellationToken.None, "joseph.kalu");
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_follow_count");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_feed_entries()
+        {
+            var resp = Api.GetFeedEntries(User.Login, 0, 10, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_feed_entries()
-        //{
-        //    var resp = Api.GetFeedEntries();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_feed_entries", CancellationToken.None, User.Login, 0, 10);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_feed_entries");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_feed()
+        {
+            var resp = Api.GetFeed(User.Login, 0, 10, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_feed()
-        //{
-        //    var resp = Api.GetFeed();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_feed", CancellationToken.None, User.Login, 0, 10);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_feed");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_blog_entries()
+        {
+            var resp = Api.GetBlogEntries(User.Login, 0, 10, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_blog_entries()
-        //{
-        //    var resp = Api.GetBlogEntries();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_blog_entries", CancellationToken.None, User.Login, 0, 10);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_blog_entries");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_blog()
+        {
+            var resp = Api.GetBlog(User.Login, 0, 10, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_blog()
-        //{
-        //    var resp = Api.GetBlog();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_blog", CancellationToken.None, User.Login, 0, 10);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_blog");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_account_reputations()
+        {
+            var resp = Api.GetAccountReputations(User.Login, 10, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_account_reputations()
-        //{
-        //    var resp = Api.GetAccountReputations();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_account_reputations", CancellationToken.None, User.Login, 10);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_account_reputations");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_reblogged_by()
+        {
+            var resp = Api.GetRebloggedBy("steepshot", "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app", CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_reblogged_by()
-        //{
-        //    var resp = Api.GetRebloggedBy();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CustomGetRequest<JObject>("get_reblogged_by", CancellationToken.None, "steepshot", "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app");
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-        //    var obj = Api.CustomGetRequest<JObject>("get_reblogged_by");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+        [Test]
+        public void get_blog_authors()
+        {
+            var resp = Api.GetBlogAuthors(User.Login, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //[Test]
-        //public void get_blog_authors()
-        //{
-        //    var resp = Api.GetBlogAuthors();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-        //    var obj = Api.CustomGetRequest<JObject>("get_blog_authors");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
+            var obj = Api.CustomGetRequest<JObject>("get_blog_authors", CancellationToken.None, User.Login);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
     }
 }
