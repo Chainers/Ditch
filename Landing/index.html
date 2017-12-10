@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="UTF-8" />
+	<title>Ditch</title>
+	<link rel="shortcut icon" href=""/>
+	<link rel="stylesheet" href="assets/css/screen.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/base.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div class="bg-menu">
+        <div class="block center block-menu">
+            <div class="menu left">
+                <a href="#intro">Home</a><a href="#about">About Ditch</a><a href="#usage">Usage</a><a href="#donate">
+                <span class="icon-make-deposit"></span>
+                Donate</a><a href="#plans">Our plans</a> <a href="https://github.com/Chainers/Ditch">Github</a>
+            </div>
+        </div>
+    </div>
+    <div class="block-main-slider navigation" id="intro" class="intro">
+        <div class="on-image">
+            <div class="block center block-on-slider">
+                <a href="#" class="logo-slider center"><label>Ditch</label>.NET</a>
+                <div class="navigation center">
+                    <div class="round animate active" id="round-1" data-number="1" data-container-id="image-1-container"></div>
+                    <div class="round animate" id="round-2" data-number="2" data-container-id="image-2-container"></div>
+                    <div class="round animate" id="round-3" data-number="3" data-container-id="image-3-container"></div>
+                </div>
+            </div>
+        </div>
+        <div class="image">
+            <span class="item slow-animate active" id="image-1-container" ></span>
+            <span class="item slow-animate" id="image-2-container"></span>
+            <span class="item slow-animate" id="image-3-container"></span>
+        </div>
+    </div>
+
+
+ <div class="block center block-text" id="about" class="about">
+        <div class="title"><a href="#about">About Ditch</a></div>
+        <div class="hr">
+            <div class="square left"></div>
+            <div class="square right"></div>
+            <div class="line"></div>
+        </div>
+        <div class="text">
+            <p>
+              This library can be used by C# clients to make the signing of transactions on the client side and not to transfer private keys to the server.
+            </p>
+            <p>
+               The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain.
+            </p>
+        </div>
+    </div>
+
+
+     <div class="block center block-text">
+        <div class="title"><a href="#">Supported Chains</a></div>
+        <div class="hr">
+            <div class="square left"></div>
+            <div class="square right"></div>
+            <div class="line"></div>
+        </div>
+        <div class="container_12">
+        <div class="grid_6" id="golos"></div>
+        <div class="grid_6" id="steemit"></div>
+        </div>
+    </div>
+
+
+ <div class="block center block-text block-less-margin usage" id="usage">
+         <div class="title"><a href="#usage">Usage</a></div>
+        <div class="hr">
+            <div class="square left"></div>
+            <div class="square right"></div>
+            <div class="line"></div>
+        </div>
+        </div>
+
+
+    <div class="block center">
+        <div>
+            <div id="examples" class="container_12">
+
+<div class="code-description">Choose which blockchain you want to use Steem or/and Golos:</div>
+               <div class="code-samples">
+                    <div class="syntax-container">
+                        <div class="toolbar"></div>
+                        <div class="syntax plain highlighted">
+                            <pre>
+PM> Install-Package Ditch.Steem -Version 3.0.8
+PM> Install-Package Ditch.Golos -Version 3.0.8
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+<div class="code-description">Add code to open connection:</div>
+
+
+                <div class="code-samples">
+                    <div class="syntax-container">
+                        <div class="toolbar"></div>
+                        <div class="syntax plain highlighted">
+                            <pre>
+
+private readonly OperationManager _operationManager;
+
+public GolosClient(JsonNetConverter jsonConverter) : base(jsonConverter)
+{
+    //specify how to parse json
+    var jss = new JsonSerializerSettings
+    {
+        DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+        Culture = CultureInfo.InvariantCulture
+    };
+    var cm = new WebSocketManager(jss);
+    _operationManager = new OperationManager(cm, jss);
+}
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+
+<div class="code-description">Add initialization code:</div>
+                <div class="code-samples">
+                    <div class="syntax-container">
+                        <div class="toolbar"></div>
+                        <div class="syntax plain highlighted">
+                            <pre>
+var cUrls = new List<string> { "wss://ws.golos.io" };
+var conectedTo = _operationManager.TryConnectTo(cUrls,  CancellationToken.None);
+
+Note: Use correct address https for HttpManager and wss for WebSocketManager.
+** TryConnectTo will return url which _operation Manager choose to conect.  If returned null,
+ then connection was not established.
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+ 
+<div class="code-description">Use operation Manager for get or post request, for example:</div>
+                <div class="code-samples">
+                    <div class="syntax-container">
+                        <div class="toolbar"></div>
+                        <div class="syntax plain highlighted">
+                            <pre>
+var config = _operationManager.GetDynamicGlobalProperties(CancellationToken.None); 
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        <div class="code-description text-center">
+          <p class="bold-text info-title">For more information about supported methods you can visit <a href="https://chainers.github.io/Ditch/" class="underline">documentation on Github</a>.</p>
+        </div>
+        </div>
+
+    <div class="block center block-text" id="donate" class="donate">
+        <div class="title"><a href="#donate">Donate</a></div>
+        <div class="hr">
+            <div class="square left"></div>
+            <div class="square right"></div>
+            <div class="line"></div>
+        </div>
+        <div class="text">
+            <p  class="ways-to-help">
+                Open source software lives and dies with the community surrounding it. As developers, open source makes our jobs easier, and 
+                supporting it doesn't necessarily mean you have to get your wallet out!
+            </p>
+            <p class="ways-to-help">There are lots of ways to help:</p>
+            <ul class="ways-to-help">
+                <li>Contribute bug reports or ideas for improvements;</li>
+                <li>Submit patches for new features or integrations with other projects;</li>
+                <li>Spread the word about Ditch. Tell your friends and co-workers.</li>
+            </ul>
+             <h3 class="bold-text donate-title">Also you can make a donation for project support: </h3>
+
+                <div class="container_12">
+       <div>
+        <div class="grid_6" >
+            <div id="bitshareslogo"></div>
+            <p class="bold-text">chainers-ditch</p>
+        </div>
+          <div class="grid_6">
+              <div  id="bitcoinlogo"></div>
+              <p class="bold-text">chainartsoft-ditch</p>
+          </div>
+</div>
+           <div class="grid_6 etherium-grid">
+            <div  id="etheriumlogo"></div>
+            <p class="bold-text">0x0071f539764c04948Cc8B0dD21c765b2b34ef080</p>
+        </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+         <div class="block center block-text plans" id=plans>
+        <div class="title"><a href="#">Our Plans</a></div>
+        <div class="hr">
+            <div class="square left"></div>
+            <div class="square right"></div>
+            <div class="line"></div>
+        </div>
+        <div class="container_12">
+        <div class="grid_6" id="bitshares"></div>
+        </div>
+    </div>
+
+    <div class="bg-footer">
+        <div class="block center block-footer">
+            <div class="block-menus left">
+                <div class="footer-contacts">
+                    <div class="title"><strong>Our</strong> Contacts</div>
+                    <div class="contacts">
+                        <div class="email left">steepshot.org@gmail.com</div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <span>Copyright © 2016 - 2017 Ditch. All Rights Reserved.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
