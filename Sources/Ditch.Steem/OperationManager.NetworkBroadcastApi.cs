@@ -73,46 +73,46 @@ namespace Ditch.Steem
         //    return CustomGetRequest<Variant>("broadcast_transaction_synchronous", token, trx);
         //}
 
-        ///// <summary>
-        ///// API name: broadcast_block
-        ///// 
-        ///// </summary>
-        ///// <param name="block">API type: signed_block</param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <returns>API type: void</returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse BroadcastBlock(SignedBlock block, CancellationToken token)
-        //{
-        //    return CustomGetRequest("broadcast_block", token, block);
-        //}
+        /// <summary>
+        /// API name: broadcast_block
+        /// 
+        /// </summary>
+        /// <param name="block">API type: signed_block</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: void</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse BroadcastBlock(SignedBlock block, CancellationToken token)
+        {
+            return CustomGetRequest("broadcast_block", token, block);
+        }
 
-        ///// <summary>
-        ///// API name: set_max_block_age
-        ///// 
-        ///// </summary>
-        ///// <param name="maxBlockAge">API type: int32_t</param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <returns>API type: void</returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse SetMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
-        //{
-        //    return CustomGetRequest("set_max_block_age", token, maxBlockAge);
-        //}
+        /// <summary>
+        /// API name: set_max_block_age
+        /// 
+        /// </summary>
+        /// <param name="maxBlockAge">API type: int32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: void</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse SetMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
+        {
+            return CustomGetRequest("set_max_block_age", token, maxBlockAge);
+        }
 
 
-        //// implementation detail, not reflected
-        ///// <summary>
-        ///// API name: check_max_block_age
-        ///// 
-        ///// </summary>
-        ///// <param name="maxBlockAge">API type: int32_t</param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <returns>API type: bool</returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse<bool> CheckMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
-        //{
-        //    return CustomGetRequest<bool>("check_max_block_age", token, maxBlockAge);
-        //}
+        // implementation detail, not reflected
+        /// <summary>
+        /// API name: check_max_block_age
+        /// 
+        /// </summary>
+        /// <param name="maxBlockAge">API type: int32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: bool</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<bool> CheckMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
+        {
+            return CustomGetRequest<bool>("check_max_block_age", token, maxBlockAge);
+        }
 
 
         ///**
