@@ -60,12 +60,12 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_trade_history()
         {
-            var resp = Api.GetTradeHistory(DateTime.Now.Subtract(TimeSpan.FromDays(5)), DateTime.Now, 100, CancellationToken.None);
+            var resp = Api.GetTradeHistory(new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.MarketHistoryApi, "get_trade_history", DateTime.Now.Subtract(TimeSpan.FromDays(5)).ToString("s"), DateTime.Now.ToString("s"), 100);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { new DateTime(2017, 4, 2).ToString("s"), new DateTime(2017, 4, 3).ToString("s"), 100 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -77,7 +77,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_recent_trades", CancellationToken.None, 100);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[] { 100 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -89,20 +89,20 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_market_history", CancellationToken.None, 100, DateTime.Now.Subtract(TimeSpan.FromDays(5)), DateTime.Now);
+            var obj = Api.CustomGetRequest<JObject>("get_market_history", CancellationToken.None, new object[] { 100, DateTime.Now.Subtract(TimeSpan.FromDays(5)), DateTime.Now });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-        //        [Test]
-        //        public void get_market_history_buckets()
-        //        {
-        //            var resp = Api.GetMarketHistoryBuckets();
-        //            Console.WriteLine(resp.Error);
-        //            Assert.IsFalse(resp.IsError);
-        //            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //[Test]
+        //public void get_market_history_buckets()
+        //{
+        //    var resp = Api.GetMarketHistoryBuckets();
+        //    Console.WriteLine(resp.Error);
+        //    Assert.IsFalse(resp.IsError);
+        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //            var obj = Api.CustomGetRequest<JObject>("get_market_history_buckets");
-        //            TestPropetries(resp.Result.GetType(), obj.Result);
-        //        }
+        //    var obj = Api.CustomGetRequest<JObject>("get_market_history_buckets");
+        //    TestPropetries(resp.Result.GetType(), obj.Result);
+        //}
     }
 }

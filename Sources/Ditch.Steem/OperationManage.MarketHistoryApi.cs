@@ -94,7 +94,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MarketTrade[]> GetTradeHistory(DateTime start, DateTime end, UInt32 limit, CancellationToken token)
         {
-            return CustomGetRequest<MarketTrade[]>("call", token, KnownApiNames.MarketHistoryApi, "get_trade_history", start.ToString("s"), end.ToString("s"), limit);
+            return CustomGetRequest<MarketTrade[]>("call", token, KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { start.ToString("s"), end.ToString("s"), limit });
         }
 
 
@@ -113,7 +113,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MarketTrade[]> GetRecentTrades(UInt32 limit, CancellationToken token)
         {
-            return CustomGetRequest<MarketTrade[]>("call", token, KnownApiNames.MarketHistoryApi, "get_recent_trades", limit);
+            return CustomGetRequest<MarketTrade[]>("call", token, KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[]{ limit });
         }
 
 
@@ -136,7 +136,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<BucketObject[]> GetMarketHistory(UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)
         {
-            return CustomGetRequest<BucketObject[]>("call", token, KnownApiNames.MarketHistoryApi, "get_market_history", bucketSeconds, start, end);
+            return CustomGetRequest<BucketObject[]>("call", token, KnownApiNames.MarketHistoryApi, "get_market_history", new object[] { bucketSeconds, start, end });
         }
 
 

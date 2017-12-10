@@ -61,6 +61,22 @@ namespace Ditch.Steem.Tests
             }
         }
 
+        protected void TestPropetries(Type type, JArray jArray)
+        {
+            if (jArray == null)
+                throw new NullReferenceException("jArray");
+
+            if (type.IsArray)
+            {
+                if (jArray.Count > 0)
+                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
+                else if (!IgnoreRequestWithBadData)
+                    throw new NullReferenceException("Impossible to do test for this input data!");
+            }
+            else
+                throw new InvalidCastException();
+        }
+
         protected void TestPropetries(Type type, JObject[] jObject)
         {
             if (jObject == null)

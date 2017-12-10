@@ -86,7 +86,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed_entries", User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed_entries", new object[] { User.Login, 0, 10 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -98,7 +98,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed", User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed", new object[] { User.Login, 0, 10 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -110,7 +110,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog_entries", User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog_entries", new object[] { User.Login, 0, 10 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -122,7 +122,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog", User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog", new object[] { User.Login, 0, 10 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -134,7 +134,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_account_reputations", User.Login, 10);
+            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_account_reputations", new object[] { User.Login, 10 });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -145,9 +145,6 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_reblogged_by", "steepshot", "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app");
-            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -157,9 +154,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog_authors", User.Login);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            Assert.IsFalse(string.IsNullOrEmpty(resp.Result[0].Key));
         }
     }
 }
