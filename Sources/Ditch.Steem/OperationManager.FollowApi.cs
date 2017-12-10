@@ -14,37 +14,38 @@ namespace Ditch.Steem
     public partial class OperationManager
     {
 
-        ///// <summary>
-        ///// API name: get_followers
-        ///// 
-        ///// </summary>
-        ///// <param name="to">API type: string</param>
-        ///// <param name="start">API type: string</param>
-        ///// <param name="type">API type: follow_type</param>
-        ///// <param name="limit">API type: uint16_t</param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <returns>API type: follow_api_obj</returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse<FollowApiObj[]> GetFollowers(string to, string start, FollowType type, UInt16 limit, CancellationToken token)
-        //{
-        //    return CustomGetRequest<FollowApiObj[]>("get_followers", token, to, start, type, limit);
-        //}
+        /// <summary>
+        /// 
+        /// Возвращает список: Либо всех подписчиков пользователя 'following'. 
+        /// Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
+        /// </summary>
+        /// <param name="following"></param>
+        /// <param name="startFollower"></param>
+        /// <param name="followType"></param>
+        /// <param name="limit"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit, CancellationToken token)
+        {
+            return CustomGetRequest<FollowApiObj[]>("call", token, "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+        }
 
-        ///// <summary>
-        ///// API name: get_following
-        ///// 
-        ///// </summary>
-        ///// <param name="from">API type: string</param>
-        ///// <param name="start">API type: string</param>
-        ///// <param name="type">API type: follow_type</param>
-        ///// <param name="limit">API type: uint16_t</param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <returns>API type: follow_api_obj</returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse<FollowApiObj[]> GetFollowing(string from, string start, FollowType type, UInt16 limit, CancellationToken token)
-        //{
-        //    return CustomGetRequest<FollowApiObj[]>("get_following", token, from, start, type, limit);
-        //}
+        /// <summary>
+        /// 
+        /// Aналогично GetFollowers только для подписок
+        /// </summary>
+        /// <param name="follower"></param>
+        /// <param name="startFollowing"></param>
+        /// <param name="followType"></param>
+        /// <param name="limit"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit, CancellationToken token)
+        {
+            return CustomGetRequest<FollowApiObj[]>("call", token, "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+        }
 
         ///// <summary>
         ///// API name: get_follow_count

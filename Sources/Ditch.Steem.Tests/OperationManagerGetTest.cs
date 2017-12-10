@@ -63,46 +63,5 @@ namespace Ditch.Steem.Tests
                 await Task.Delay(3000);
             }
         }
-
-        [Test]
-        public void get_followers()
-        {
-            ushort count = 3;
-            var resp = Api.GetFollowers(User.Login, string.Empty, FollowType.Blog, count, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Assert.IsTrue(resp.Result.Length <= count);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            var respNext = Api.GetFollowers(User.Login, resp.Result.Last().Follower, FollowType.Blog, count, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(respNext.IsError);
-            Assert.IsTrue(respNext.Result.Length <= count);
-            Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
-            Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
-
-            var obj = Api.CustomGetRequest<JObject[]>("call", CancellationToken.None, "follow_api", "get_followers", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
-            TestPropetries(resp.Result.GetType(), obj.Result);
-        }
-
-        [Test]
-        public void get_following()
-        {
-            ushort count = 3;
-            var resp = Api.GetFollowing(User.Login, string.Empty, FollowType.Blog, count, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            Assert.IsTrue(resp.Result.Length <= count);
-
-            var respNext = Api.GetFollowing(User.Login, resp.Result.Last().Following, FollowType.Blog, count, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(respNext.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
-            Assert.IsTrue(respNext.Result.Length <= count);
-            Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
-
-            var obj = Api.CustomGetRequest<JObject[]>("call", CancellationToken.None, "follow_api", "get_following", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
-            TestPropetries(resp.Result.GetType(), obj.Result);
-        }
     }
 }
