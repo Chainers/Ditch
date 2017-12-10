@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Ditch.Steem.Operations.Enums;
 using System.Threading;
 using System.Linq;
+using Ditch.Steem.Operations;
 
 namespace Ditch.Steem.Tests
 {
@@ -73,7 +74,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_follow_count", CancellationToken.None, "joseph.kalu");
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_follow_count", new object[] { User.Login });
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -85,7 +86,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_feed_entries", CancellationToken.None, User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed_entries", User.Login, 0, 10);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -97,7 +98,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_feed", CancellationToken.None, User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed", User.Login, 0, 10);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -109,7 +110,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_blog_entries", CancellationToken.None, User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog_entries", User.Login, 0, 10);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -121,7 +122,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_blog", CancellationToken.None, User.Login, 0, 10);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog", User.Login, 0, 10);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -133,7 +134,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_account_reputations", CancellationToken.None, User.Login, 10);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_account_reputations", User.Login, 10);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -145,7 +146,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_reblogged_by", CancellationToken.None, "steepshot", "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app");
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_reblogged_by", "steepshot", "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app");
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -157,7 +158,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_blog_authors", CancellationToken.None, User.Login);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog_authors", User.Login);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }

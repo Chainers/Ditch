@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Steem.Operations;
 using Ditch.Steem.Operations.Enums;
 using Ditch.Steem.Operations.Get;
 
@@ -29,7 +30,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<FollowApiObj[]>("call", token, "follow_api", "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+            return CustomGetRequest<FollowApiObj[]>("call", token, KnownApiNames.FollowApi, "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<FollowApiObj[]>("call", token, "follow_api", "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return CustomGetRequest<FollowApiObj[]>("call", token, KnownApiNames.FollowApi, "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FollowCountApiObj> GetFollowCount(string account, CancellationToken token)
         {
-            return CustomGetRequest<FollowCountApiObj>("get_follow_count", token, account);
+            return CustomGetRequest<FollowCountApiObj>("call", token, KnownApiNames.FollowApi, "get_follow_count", new object[] { account });
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FeedEntry[]> GetFeedEntries(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<FeedEntry[]>("get_feed_entries", token, account, entryId, limit);
+            return CustomGetRequest<FeedEntry[]>("call", token, KnownApiNames.FollowApi, "get_feed_entries", account, entryId, limit);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<CommentFeedEntry[]> GetFeed(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<CommentFeedEntry[]>("get_feed", token, account, entryId, limit);
+            return CustomGetRequest<CommentFeedEntry[]>("call", token, KnownApiNames.FollowApi, "get_feed", account, entryId, limit);
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<BlogEntry[]> GetBlogEntries(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<BlogEntry[]>("get_blog_entries", token, account, entryId, limit);
+            return CustomGetRequest<BlogEntry[]>("call", token, KnownApiNames.FollowApi, "get_blog_entries", account, entryId, limit);
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<CommentBlogEntry[]> GetBlog(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<CommentBlogEntry[]>("get_blog", token, account, entryId, limit);
+            return CustomGetRequest<CommentBlogEntry[]>("call", token, KnownApiNames.FollowApi, "get_blog", account, entryId, limit);
         }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountReputation[]> GetAccountReputations(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
-            return CustomGetRequest<AccountReputation[]>("get_account_reputations", token, lowerBoundName, limit);
+            return CustomGetRequest<AccountReputation[]>("call", token, KnownApiNames.FollowApi, "get_account_reputations", lowerBoundName, limit);
         }
 
 
@@ -150,7 +151,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> GetRebloggedBy(string author, string permlink, CancellationToken token)
         {
-            return CustomGetRequest<string[]>("get_reblogged_by", token, author, permlink);
+            return CustomGetRequest<string[]>("call", token, KnownApiNames.FollowApi, "get_reblogged_by", author, permlink);
         }
 
 
@@ -166,7 +167,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<KeyValuePair<string, UInt32>[]> GetBlogAuthors(string blogAccount, CancellationToken token)
         {
-            return CustomGetRequest<KeyValuePair<string, UInt32>[]>("get_blog_authors", token, blogAccount);
+            return CustomGetRequest<KeyValuePair<string, UInt32>[]>("call", token, KnownApiNames.FollowApi, "get_blog_authors", blogAccount);
         }
     }
 }

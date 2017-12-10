@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Steem.Operations;
 using Ditch.Steem.Operations.Enums;
 using Ditch.Steem.Operations.Get;
 
@@ -38,7 +39,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<bool> Login(string user, string password, CancellationToken token)
         {
-            return CustomGetRequest<bool>("login", token, user, password);
+            return CustomGetRequest<bool>("call", token, KnownApiNames.LoginApi, "login", user, password);
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object> GetApiByName(string apiName, CancellationToken token)
         {
-            return CustomGetRequest<object>("get_api_by_name", token, apiName);
+            return CustomGetRequest<object>("call", token, KnownApiNames.LoginApi, "get_api_by_name", new object[] { apiName });
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<SteemVersionInfo> GetVersion(CancellationToken token)
         {
-            return CustomGetRequest<SteemVersionInfo>("get_version", token);
+            return CustomGetRequest<SteemVersionInfo>("call", token, KnownApiNames.LoginApi, "get_version", new object[0]);
         }
 
 

@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_ticker", CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.MarketHistoryApi, "get_ticker", new object[0]);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -40,7 +41,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_volume", CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.MarketHistoryApi, "get_volume", new object[0]);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -64,7 +65,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("get_trade_history",CancellationToken.None, DateTime.Now.Subtract(TimeSpan.FromDays(5)), DateTime.Now, 100);
+            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.MarketHistoryApi, "get_trade_history", DateTime.Now.Subtract(TimeSpan.FromDays(5)).ToString("s"), DateTime.Now.ToString("s"), 100);
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
@@ -92,16 +93,16 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
-//        [Test]
-//        public void get_market_history_buckets()
-//        {
-//            var resp = Api.GetMarketHistoryBuckets();
-//            Console.WriteLine(resp.Error);
-//            Assert.IsFalse(resp.IsError);
-//            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        [Test]
+        //        public void get_market_history_buckets()
+        //        {
+        //            var resp = Api.GetMarketHistoryBuckets();
+        //            Console.WriteLine(resp.Error);
+        //            Assert.IsFalse(resp.IsError);
+        //            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-//            var obj = Api.CustomGetRequest<JObject>("get_market_history_buckets");
-//            TestPropetries(resp.Result.GetType(), obj.Result);
-//        }
+        //            var obj = Api.CustomGetRequest<JObject>("get_market_history_buckets");
+        //            TestPropetries(resp.Result.GetType(), obj.Result);
+        //        }
     }
 }
