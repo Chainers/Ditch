@@ -1,8 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations.Enums;
-using Ditch.Steem.Operations.Get;
 
 namespace Ditch.Steem
 {
@@ -24,17 +21,17 @@ namespace Ditch.Steem
         //    return CustomGetRequest("on_api_startup", token);
         //}
 
-        ///// <summary>
-        ///// API name: get_key_references
-        ///// 
-        ///// </summary>
-        ///// <param name="keys">API type: vector&lt;public_key_type></param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <returns>API type: account_name_type</returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse<AccountNameType[]> GetKeyReferences(PublicKeyType[] keys, CancellationToken token)
-        //{
-        //    return CustomGetRequest<AccountNameType[]>("get_key_references", token, keys);
-        //}
+        /// <summary>
+        /// API name: get_key_references
+        /// 
+        /// </summary>
+        /// <param name="keys">API type: vector&lt;public_key_type></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: account_name_type</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<string[]> GetKeyReferences(string[] keys, CancellationToken token)
+        {
+            return CustomGetRequest<string[]>("get_key_references", token, keys);
+        }
     }
 }
