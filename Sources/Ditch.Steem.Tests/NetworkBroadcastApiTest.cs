@@ -1,12 +1,13 @@
-//using System;
-//using Newtonsoft.Json;
-//using Newtonsoft.Json.Linq;
-//using NUnit.Framework;
-//namespace Ditch.Steem.Tests
-//{
-//    [TestFixture]
-//    public class NetworkBroadcastApiTest : BaseTest
-//    {
+using System;
+using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
+namespace Ditch.Steem.Tests
+{
+    [TestFixture]
+    public class NetworkBroadcastApiTest : BaseTest
+    {
 
 //        [Test]
 //        public void broadcast_transaction()
@@ -44,41 +45,41 @@
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //        }
 
-//        [Test]
-//        public void broadcast_block()
-//        {
-//            var resp = Api.BroadcastBlock();
-//            Console.WriteLine(resp.Error);
-//            Assert.IsFalse(resp.IsError);
-//            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //[Test]
+        //public void broadcast_block()
+        //{
+        //    var resp = Api.BroadcastBlock(new Operations.Get.SignedBlock(), CancellationToken.None);
+        //    Console.WriteLine(resp.Error);
+        //    Assert.IsFalse(resp.IsError);
+        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-//            var obj = Api.CustomGetRequest<JObject>("broadcast_block");
-//            TestPropetries(resp.Result.GetType(), obj.Result);
-//        }
+        //    var obj = Api.CustomGetRequest<JObject>("broadcast_block", CancellationToken.None, new Operations.Get.SignedBlock();
+        //    TestPropetries(resp.Result.GetType(), obj.Result);
+        //}
 
-//        [Test]
-//        public void set_max_block_age()
-//        {
-//            var resp = Api.SetMaxBlockAge();
-//            Console.WriteLine(resp.Error);
-//            Assert.IsFalse(resp.IsError);
-//            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void set_max_block_age()
+        {
+            var resp = Api.SetMaxBlockAge(0, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-//            var obj = Api.CustomGetRequest<JObject>("set_max_block_age");
-//            TestPropetries(resp.Result.GetType(), obj.Result);
-//        }
+            var obj = Api.CustomGetRequest<JObject>("set_max_block_age", CancellationToken.None, 0);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
-//        [Test]
-//        public void check_max_block_age()
-//        {
-//            var resp = Api.CheckMaxBlockAge();
-//            Console.WriteLine(resp.Error);
-//            Assert.IsFalse(resp.IsError);
-//            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void check_max_block_age()
+        {
+            var resp = Api.CheckMaxBlockAge(0, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-//            var obj = Api.CustomGetRequest<JObject>("check_max_block_age");
-//            TestPropetries(resp.Result.GetType(), obj.Result);
-//        }
+            var obj = Api.CustomGetRequest<JObject>("check_max_block_age", CancellationToken.None, 0);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+        }
 
 //        [Test]
 //        public void on_applied_block()
@@ -103,5 +104,5 @@
 //            var obj = Api.CustomGetRequest<JObject>("on_api_startup");
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //        }
-//    }
-//}
+    }
+}
