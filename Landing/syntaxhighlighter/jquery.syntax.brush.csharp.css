@@ -1,0 +1,49 @@
+﻿.syntax .csharp {
+    color: black
+}
+
+.syntax .eventIdentifier {
+    color: black
+}
+
+.syntax .namespaceIdentifier {
+    color: black
+}
+
+.syntax .preprocessorInstruction {
+    color: #0000FF
+}
+
+.syntax .preprocessorArgument {
+    color: black
+}
+
+
+
+
+
+
+.syntax .xmlCommentSlash {
+    color: #800080
+}
+
+.syntax .xmlCommentTag {
+    color: #800080
+}
+
+.syntax .xmlComment {
+    color: #008000
+}
+
+.syntax .classIdentifier {
+    color: #008B8B
+}
+
+.syntax .identifier {
+    color: black
+}
+
+.syntax .current {
+    color: #FF0000;
+    font-weight: bold
+}
