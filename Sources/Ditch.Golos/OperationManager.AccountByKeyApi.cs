@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 
-namespace Ditch.Steem
+namespace Ditch.Golos
 {
     /// <summary>
     /// account_by_key_api
-    /// libraries\plugins\account_by_key\include\steemit\account_by_key\account_by_key_api.hpp
+    /// libraries\plugins\account_by_key\include\golos\account_by_key\account_by_key_api.hpp
     /// </summary>
     public partial class OperationManager
     {

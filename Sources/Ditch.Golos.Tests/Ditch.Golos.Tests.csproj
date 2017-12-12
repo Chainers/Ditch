@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountByKeyApiTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="DatabaseApiTest.cs" />
     <Compile Include="FollowApiTest.cs" />

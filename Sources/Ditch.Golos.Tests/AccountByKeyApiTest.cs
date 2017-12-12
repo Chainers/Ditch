@@ -3,7 +3,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Golos.Tests
 {
     [TestFixture]
     public class AccountByKeyApiTest : BaseTest
@@ -12,7 +12,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_key_references()
         {
-            var pubKey = "STM6C8GjDBAHrfSqaNRn4FnLLUdCfw3WgjY3td1cC4T7CKpb32YM6";
+            var pubKey = "GLS5hVWAKDvt9HzxvXSY2HoJKQ5S4Ka1ZT8qqFVQBnx2wJ6aguwmD";
 
             var resp = Api.GetKeyReferences(new[] { pubKey }, CancellationToken.None);
             Console.WriteLine(resp.Error);
