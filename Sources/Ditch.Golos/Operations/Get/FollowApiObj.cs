@@ -5,7 +5,7 @@ namespace Ditch.Golos.Operations.Get
 {
     /// <summary>
     /// follow_api_obj
-    /// golos-0.16.3\libraries\plugins\follow\include\steemit\follow\follow_api.hpp
+    /// golos-0.16.3\libraries\plugins\follow\include\steemit\follow\follow_Api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class FollowApiObj

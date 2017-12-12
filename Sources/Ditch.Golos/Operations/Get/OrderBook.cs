@@ -4,7 +4,7 @@ namespace Ditch.Golos.Operations.Get
 {
     /// <summary>
     /// order_book
-    /// libraries\app\include\steemit\app\database_api.hpp
+    /// libraries\app\include\steemit\app\database_Api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class OrderBook
