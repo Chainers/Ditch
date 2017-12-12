@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Dtos;
 using Ditch.Steem.Enums;
 using Ditch.Steem.Objects;
 

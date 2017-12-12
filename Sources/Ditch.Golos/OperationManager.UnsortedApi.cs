@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Dtos;
+using Ditch.Golos.Objects;
 
 namespace Ditch.Golos
 {

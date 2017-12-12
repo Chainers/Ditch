@@ -1,5 +1,4 @@
 using System;
-using Ditch.Steem.Dtos;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Objects

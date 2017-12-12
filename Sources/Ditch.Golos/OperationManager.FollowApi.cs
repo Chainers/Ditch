@@ -3,14 +3,13 @@ using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Objects;
 using Ditch.Golos.Operations.Enums;
-using Ditch.Golos.Dtos;
 
 namespace Ditch.Golos
 {
 
     /// <summary>
     /// follow_api
-    /// \libraries\plugins\follow\include\steemit\follow\follow_api.hpp
+    /// \libraries\plugins\follow\include\golos\follow\follow_api.hpp
     /// </summary>
     public partial class OperationManager
     {

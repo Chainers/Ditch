@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Dtos;
+using Ditch.Steem.Objects;
 
 namespace Ditch.Steem
 {

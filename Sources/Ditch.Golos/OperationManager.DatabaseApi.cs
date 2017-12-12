@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Dtos;
 using Ditch.Golos.Objects;
 using Ditch.Golos.Operations.Enums;
 using Ditch.Golos.Protocol;

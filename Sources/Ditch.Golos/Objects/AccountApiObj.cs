@@ -1,6 +1,5 @@
 using System;
 using Ditch.Core;
-using Ditch.Golos.Dtos;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Objects
