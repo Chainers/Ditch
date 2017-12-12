@@ -377,10 +377,10 @@ namespace CppToCsharpConverter.Converters
                         sb.AppendLine("using Ditch.Core;");
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
-                        sb.AppendLine($"using Ditch.{projName}.Models;");
+                        sb.AppendLine($"using Ditch.{projName}.Objects;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{projName}.Models");
+                        sb.AppendLine($"namespace Ditch.{projName}.Objects");
                         break;
                     }
                 case ObjectType.Enum:
@@ -388,7 +388,7 @@ namespace CppToCsharpConverter.Converters
                         sb.AppendLine("using Ditch.Core.Helpers;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{projName}.Models");
+                        sb.AppendLine($"namespace Ditch.{projName}.Objects");
                         break;
                     }
                 case ObjectType.Api:
@@ -397,7 +397,7 @@ namespace CppToCsharpConverter.Converters
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
                         sb.AppendLine("using Ditch.Core.JsonRpc;");
-                        sb.AppendLine($"using Ditch.{projName}.Models;");
+                        sb.AppendLine($"using Ditch.{projName}.Objects;");
                         sb.AppendLine();
                         sb.AppendLine($"namespace Ditch.{projName}.Api");
                         break;

@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Objects;
+using Ditch.Golos.Objects;
 
-namespace Ditch.Steem
+namespace Ditch.Golos
 {
     /**
     * @brief The login_api class implements the bottom layer of the RPC API
@@ -12,7 +12,7 @@ namespace Ditch.Steem
 
     /// <summary>
     /// login_api
-    /// libraries\app\include\steemit\app\api.hpp
+    /// libraries\application\include\golos\application\api.hpp
     /// </summary>
     public partial class OperationManager
     {

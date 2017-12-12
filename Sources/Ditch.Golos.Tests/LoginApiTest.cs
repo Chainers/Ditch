@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Golos.Tests
 {
     [TestFixture]
     public class LoginApiTest : BaseTest
