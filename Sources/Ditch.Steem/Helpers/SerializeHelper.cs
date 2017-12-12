@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Ditch.Core;
+using Ditch.Steem.Objects;
 using Ditch.Steem.Operations;
 using Ditch.Steem.Operations.Post;
 
@@ -29,7 +30,7 @@ namespace Ditch.Steem.Helpers
             return kvarray.OrderBy(i => i.Key).Select(p => p.Value);
         }
 
-        public static byte[] TransactionToMessage(Transaction transaction)
+        public static byte[] TransactionToMessage(Transaction transaction, int version)
         {
             using (var ms = new MemoryStream())
             {

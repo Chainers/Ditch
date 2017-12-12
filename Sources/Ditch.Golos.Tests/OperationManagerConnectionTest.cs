@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Ditch.Core;
+using NUnit.Framework;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Golos.Tests
 {
     [TestFixture]
-    public class OperationManagerGetTest : BaseTest
+    public class OperationManagerConnectionTest : BaseTest
     {
 
         [Test]
         public async Task TryConnectToHttpsTest()
         {
-            var urls = new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" };
+            var urls = new List<string> { "https://public-ws.golos.io" };
+            //var urls = new List<string> { "https://golosd.steepshot.org" };
+
 
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new HttpManager(jss), jss);
@@ -39,7 +41,9 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task TryConnectToWssTest()
         {
-            var urls = new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" };
+            var urls = new List<string> { "wss://ws.golos.io" };
+            //var urls = new List<string> { "wss://ws.testnet.golos.io" };
+            //var urls = new List<string> { "wss://golosd.steepshot.org" };
 
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new WebSocketManager(jss), jss);

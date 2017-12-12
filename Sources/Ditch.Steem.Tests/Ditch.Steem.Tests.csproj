@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="DatabaseApiTest.cs" />
-    <Compile Include="OperationManagerGetTest.cs" />
+    <Compile Include="OperationManagerConnectionTest.cs" />
     <Compile Include="OperationManagerPostTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />

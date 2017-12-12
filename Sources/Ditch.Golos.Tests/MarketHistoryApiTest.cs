@@ -166,7 +166,7 @@ namespace Ditch.Golos.Tests
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-
+        
         //[Test]
         //public void get_trade_history()
         //{

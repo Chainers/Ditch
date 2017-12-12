@@ -88,8 +88,7 @@ namespace Ditch.Steem
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            var resp = CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, Transaction.OperationName, new[] { transaction });
-            return resp;
+            return BroadcastTransaction(transaction, token);
         }
 
         /// <summary>
@@ -177,9 +176,9 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
-            var transaction = new Transaction
+            var transaction = new SignedTransaction
             {
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
@@ -188,7 +187,7 @@ namespace Ditch.Steem
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction);
+            var msg = SerializeHelper.TransactionToMessage(transaction, Version);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
             foreach (var userPrivateKey in userPrivateKeys)
