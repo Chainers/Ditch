@@ -50,8 +50,8 @@ namespace CppToCsharpConverter.Converters
         {
             foreach (var item in group.Where(i => i.Converter == KnownConverter.ApiConverter))
             {
-                var clas = classes.FirstOrDefault(c => c.CppName.Equals(item.SearchLine, StringComparison.OrdinalIgnoreCase));
-                if (clas == null)
+                var parsedClass = classes.FirstOrDefault(c => c.CppName.Equals(item.SearchLine, StringComparison.OrdinalIgnoreCase));
+                if (parsedClass == null)
                     continue;
 
                 var sb = new StringBuilder();
@@ -64,24 +64,33 @@ namespace CppToCsharpConverter.Converters
 
                 var inden = new string(' ', 4);
                 sb.AppendLine($"{inden}[TestFixture]");
-                sb.AppendLine($"{inden}public class {clas.Name}Test : BaseTest");
+                sb.AppendLine($"{inden}public class {parsedClass.Name}Test : BaseTest");
                 sb.AppendLine($"{inden}{{");
-
+                
+                var doc = string.Empty;
+                if (parsedClass.ObjectType == ObjectType.Api && !string.IsNullOrEmpty(item.FullPath))
+                    doc = File.ReadAllText(item.FullPath);
+                
                 inden = new string(' ', 8);
-                foreach (var funk in clas.Fields.Where(f => f is ParsedFunc))
+                foreach (var funk in parsedClass.Fields.Where(f => f is ParsedFunc))
                 {
+                    if (parsedClass.ObjectType == ObjectType.Api && !string.IsNullOrEmpty(doc) && !doc.Contains($"({funk.CppName})"))
+                        continue;
+
                     sb.AppendLine();
                     sb.AppendLine($"{inden}[Test]");
                     sb.AppendLine($"{inden}public void {funk.CppName}()");
                     sb.AppendLine($"{inden}{{");
                     var inIntent = inden + "    ";
-                    sb.AppendLine($"{inIntent}var resp = Manager.DatabaseApi.{funk.Name}();");
+                    sb.AppendLine($"{inIntent}var resp = Api.{funk.Name}(CancellationToken.None);");
                     sb.AppendLine($"{inIntent}Console.WriteLine(resp.Error);");
                     sb.AppendLine($"{inIntent}Assert.IsFalse(resp.IsError);");
                     sb.AppendLine($"{inIntent}Console.WriteLine(JsonConvert.SerializeObject(resp.Result));");
                     sb.AppendLine();
-                    sb.AppendLine($"{inIntent}var obj = Manager.CustomGetRequest<JObject>(\"{funk.CppName}\");");
+                    sb.AppendLine($"{inIntent}var obj = Api.CallRequest<JObject>(KnownApiNames.{parsedClass.Name},\"{funk.CppName}\", new object[]{{}}, CancellationToken.None);");
                     sb.AppendLine($"{inIntent}TestPropetries(resp.Result.GetType(), obj.Result);");
+                    sb.AppendLine($"{inIntent}Console.WriteLine(\"----------------------------------------------------------------------------\");");
+                    sb.AppendLine($"{inIntent}Console.WriteLine(JsonConvert.SerializeObject(obj));");
                     sb.AppendLine($"{inden}}}");
                 }
                 inden = new string(' ', 4);
@@ -95,7 +104,7 @@ namespace CppToCsharpConverter.Converters
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                File.WriteAllText(Path.Combine(path, clas.Name), sb.ToString());
+                File.WriteAllText(Path.Combine(path, parsedClass.Name), sb.ToString());
             }
         }
 

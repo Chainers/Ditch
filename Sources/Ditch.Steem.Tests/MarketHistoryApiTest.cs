@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;

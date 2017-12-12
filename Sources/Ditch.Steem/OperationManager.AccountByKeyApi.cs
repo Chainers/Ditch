@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations;
 
 namespace Ditch.Steem
 {

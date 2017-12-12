@@ -47,9 +47,9 @@ namespace Ditch.Steem.Tests
             var chSet = jObject.Children();
 
             var msg = new List<string>();
-            foreach (var jtoken in chSet)
+            foreach (JProperty jtoken in chSet)
             {
-                if (!propNames.Contains(jtoken.Path))
+                if (!propNames.Contains(jtoken.Name))
                 {
                     msg.Add($"Missing {jtoken}");
                 }

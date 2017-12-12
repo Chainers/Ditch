@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Operations;
 using Ditch.Golos.Protocol;
 
 namespace Ditch.Golos

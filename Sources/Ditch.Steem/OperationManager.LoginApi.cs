@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations;
-using Ditch.Steem.Operations.Enums;
-using Ditch.Steem.Operations.Get;
+using Ditch.Steem.Dtos;
 
 namespace Ditch.Steem
 {

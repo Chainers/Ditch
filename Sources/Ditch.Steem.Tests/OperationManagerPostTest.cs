@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations.Enums;
+using Ditch.Steem.Enums;
 using Ditch.Steem.Operations.Post;
 using Newtonsoft.Json;
 using NUnit.Framework;

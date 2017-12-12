@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Text;
 using Ditch.Core;
 using Ditch.Golos.Operations;
-using Ditch.Golos.Operations.Post;
 using Ditch.Golos.Protocol;
 
 namespace Ditch.Golos.Helpers

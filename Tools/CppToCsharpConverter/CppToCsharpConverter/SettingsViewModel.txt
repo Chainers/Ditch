@@ -55,5 +55,9 @@
   "ripemd160": "object",
   "ripemd1": "object",  
   "type_id": "UInt16",  
+
+  "account_name_type": "string", 
+  "variant_object": "object", 
+  "hardfork_version": "string", 
  }
 }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Helpers;
+using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Enums;
-using Ditch.Golos.Operations.Post;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

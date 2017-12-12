@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations.Enums;
-using Ditch.Steem.Operations.Get;
+using Ditch.Steem.Dtos;
 
 namespace Ditch.Steem
 {
@@ -83,7 +82,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse BroadcastBlock(SignedBlock block, CancellationToken token)
         {
-            return CustomGetRequest("broadcast_block", token, block);
+            return CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, "broadcast_block", new[] { block });
         }
 
         /// <summary>
@@ -96,7 +95,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse SetMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
         {
-            return CustomGetRequest("set_max_block_age", token, maxBlockAge);
+            return CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, "set_max_block_age", new object[] { maxBlockAge });
         }
 
 
@@ -111,7 +110,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<bool> CheckMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
         {
-            return CustomGetRequest<bool>("check_max_block_age", token, maxBlockAge);
+            return CustomGetRequest<bool>("call", token, KnownApiNames.NetworkBroadcastApi, "check_max_block_age", new object[] { maxBlockAge });
         }
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Operations.Post;
+using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Protocol

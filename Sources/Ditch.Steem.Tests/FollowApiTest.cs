@@ -1,29 +1,16 @@
-using System;
+﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Ditch.Steem.Operations.Enums;
 using System.Threading;
 using System.Linq;
-using Ditch.Steem.Operations;
+using Ditch.Steem.Enums;
 
 namespace Ditch.Steem.Tests
 {
     [TestFixture]
     public class FollowApiTest : BaseTest
     {
-
-        //[Test]
-        //public void on_api_startup()
-        //{
-        //    var resp = Api.OnApiStartup();
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-        //    var obj = Api.CustomGetRequest<JObject>("on_api_startup");
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //}
 
         [Test]
         public void get_followers()
@@ -41,8 +28,10 @@ namespace Ditch.Steem.Tests
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
             Console.WriteLine(JsonConvert.SerializeObject(respNext.Result));
 
-            var obj = Api.CustomGetRequest<JObject[]>("call", CancellationToken.None, "follow_api", "get_followers", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_followers", new object[] { User.Login, string.Empty, FollowType.Blog, count }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -62,8 +51,10 @@ namespace Ditch.Steem.Tests
             Assert.IsTrue(respNext.Result.Length <= count);
             Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
 
-            var obj = Api.CustomGetRequest<JObject[]>("call", CancellationToken.None, "follow_api", "get_following", new object[] { User.Login, resp.Result.Last().Follower, FollowType.Blog.ToString().ToLower(), count });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_following", new object[] { User.Login, string.Empty, FollowType.Blog, count }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -74,8 +65,10 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_follow_count", new object[] { User.Login });
+            var obj = Api.CallRequest<JObject>(KnownApiNames.FollowApi, "get_follow_count", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -86,8 +79,10 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed_entries", new object[] { User.Login, 0, 10 });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_feed_entries", new object[] { User.Login, 0, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -98,8 +93,10 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_feed", new object[] { User.Login, 0, 10 });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_feed", new object[] { User.Login, 0, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -110,8 +107,10 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog_entries", new object[] { User.Login, 0, 10 });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_blog_entries", new object[] { User.Login, 0, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -122,8 +121,10 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_blog", new object[] { User.Login, 0, 10 });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_blog", new object[] { User.Login, 0, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -134,8 +135,10 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JArray>("call", CancellationToken.None, KnownApiNames.FollowApi, "get_account_reputations", new object[] { User.Login, 10 });
+            var obj = Api.CallRequest<JArray>(KnownApiNames.FollowApi, "get_account_reputations", new object[] { User.Login, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -154,7 +157,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            Assert.IsFalse(string.IsNullOrEmpty(resp.Result[0].Key));
+            Assert.IsFalse(string.IsNullOrEmpty((string)resp.Result[0][0]));
         }
     }
 }

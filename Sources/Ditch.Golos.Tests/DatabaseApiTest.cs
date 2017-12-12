@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Golos.Operations;
 using Ditch.Golos.Operations.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -57,6 +56,7 @@ namespace Ditch.Golos.Tests
 
             var obj = Api.CustomGetRequest<JObject[]>("get_active_categories", CancellationToken.None, string.Empty, 3);
             TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -328,17 +328,17 @@ namespace Ditch.Golos.Tests
         {
             var resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Incoming, CancellationToken.None);
             Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Result);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsFalse(resp.IsError);
 
             resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Outgoing, CancellationToken.None);
             Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Result);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsFalse(resp.IsError);
 
             resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.All, CancellationToken.None);
             Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Result);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject[]>("get_withdraw_routes", CancellationToken.None, User.Login, "all");

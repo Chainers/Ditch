@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Operations;
-using Ditch.Steem.Operations.Enums;
-using Ditch.Steem.Operations.Get;
+using Ditch.Steem.Dtos;
+using Ditch.Steem.Enums;
+using Ditch.Steem.Objects;
 
 namespace Ditch.Steem
 {
@@ -17,40 +16,41 @@ namespace Ditch.Steem
     {
 
         /// <summary>
+        /// API name: get_followers
+        /// *Returns the list: Either all of the subscribers of the user are 'following'. Or, if the user name is specified, the list of matching subscribers is returned in the parameter 'startFollower'.
         /// 
-        /// Возвращает список: Либо всех подписчиков пользователя 'following'. 
-        /// Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
         /// </summary>
-        /// <param name="following"></param>
-        /// <param name="startFollower"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
+        /// <param name="to">API type: string</param>
+        /// <param name="start">API type: string</param>
+        /// <param name="type">API type: follow_type</param>
+        /// <param name="limit">API type: uint16_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: follow_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string following, string startFollower, FollowType followType, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<FollowApiObj[]> GetFollowers(string to, string start, FollowType type, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<FollowApiObj[]>("call", token, KnownApiNames.FollowApi, "get_followers", new object[] { following, startFollower, followType.ToString().ToLower(), limit });
+            return CallRequest<FollowApiObj[]>(KnownApiNames.FollowApi, "get_followers", new object[] { to, start, type, limit }, token);
         }
 
         /// <summary>
+        /// API name: get_following
         /// 
-        /// Aналогично GetFollowers только для подписок
         /// </summary>
-        /// <param name="follower"></param>
-        /// <param name="startFollowing"></param>
-        /// <param name="followType"></param>
-        /// <param name="limit"></param>
+        /// <param name="from">API type: string</param>
+        /// <param name="start">API type: string</param>
+        /// <param name="type">API type: follow_type</param>
+        /// <param name="limit">API type: uint16_t</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
+        /// <returns>API type: follow_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string follower, string startFollowing, FollowType followType, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<FollowApiObj[]> GetFollowing(string from, string start, FollowType type, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<FollowApiObj[]>("call", token, KnownApiNames.FollowApi, "get_following", new object[] { follower, startFollowing, followType.ToString().ToLower(), limit });
+            return CallRequest<FollowApiObj[]>(KnownApiNames.FollowApi, "get_following", new object[] { from, start, type, limit }, token);
         }
 
         /// <summary>
         /// API name: get_follow_count
+        /// *Returns information about the number of subscribers and subscriptions of the specified user.
         /// 
         /// </summary>
         /// <param name="account">API type: string</param>
@@ -59,11 +59,12 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FollowCountApiObj> GetFollowCount(string account, CancellationToken token)
         {
-            return CustomGetRequest<FollowCountApiObj>("call", token, KnownApiNames.FollowApi, "get_follow_count", new object[] { account });
+            return CallRequest<FollowCountApiObj>(KnownApiNames.FollowApi, "get_follow_count", new object[] { account }, token);
         }
 
         /// <summary>
         /// API name: get_feed_entries
+        /// *Returns brief information about records from the specified user's tape
         /// 
         /// </summary>
         /// <param name="account">API type: string</param>
@@ -74,11 +75,12 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<FeedEntry[]> GetFeedEntries(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<FeedEntry[]>("call", token, KnownApiNames.FollowApi, "get_feed_entries", new object[] { account, entryId, limit });
+            return CallRequest<FeedEntry[]>(KnownApiNames.FollowApi, "get_feed_entries", new object[] { account, entryId, limit }, token);
         }
 
         /// <summary>
         /// API name: get_feed
+        /// *Returns the complete record data from the specified user's tape.
         /// 
         /// </summary>
         /// <param name="account">API type: string</param>
@@ -89,11 +91,12 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<CommentFeedEntry[]> GetFeed(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<CommentFeedEntry[]>("call", token, KnownApiNames.FollowApi, "get_feed", new object[] { account, entryId, limit });
+            return CallRequest<CommentFeedEntry[]>(KnownApiNames.FollowApi, "get_feed", new object[] { account, entryId, limit }, token);
         }
 
         /// <summary>
         /// API name: get_blog_entries
+        /// *Returns brief information about records from the blog of the specified user.
         /// 
         /// </summary>
         /// <param name="account">API type: string</param>
@@ -104,11 +107,12 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<BlogEntry[]> GetBlogEntries(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<BlogEntry[]>("call", token, KnownApiNames.FollowApi, "get_blog_entries", new object[] { account, entryId, limit });
+            return CallRequest<BlogEntry[]>(KnownApiNames.FollowApi, "get_blog_entries", new object[] { account, entryId, limit }, token);
         }
 
         /// <summary>
         /// API name: get_blog
+        /// *Returns the complete record data from the blog of the specified user.
         /// 
         /// </summary>
         /// <param name="account">API type: string</param>
@@ -119,11 +123,12 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<CommentBlogEntry[]> GetBlog(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
         {
-            return CustomGetRequest<CommentBlogEntry[]>("call", token, KnownApiNames.FollowApi, "get_blog", new object[] { account, entryId, limit });
+            return CallRequest<CommentBlogEntry[]>(KnownApiNames.FollowApi, "get_blog", new object[] { account, entryId, limit }, token);
         }
 
         /// <summary>
         /// API name: get_account_reputations
+        /// *Returns data about the reputation of users filtered by template.
         /// 
         /// </summary>
         /// <param name="lowerBoundName">API type: string</param>
@@ -133,15 +138,14 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountReputation[]> GetAccountReputations(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
-            return CustomGetRequest<AccountReputation[]>("call", token, KnownApiNames.FollowApi, "get_account_reputations", new Object[] { lowerBoundName, limit });
+            return CallRequest<AccountReputation[]>(KnownApiNames.FollowApi, "get_account_reputations", new object[] { lowerBoundName, limit }, token);
         }
 
-
-        /**
-         * Gets list of accounts that have reblogged a particular post
-         */
         /// <summary>
         /// API name: get_reblogged_by
+        /// Gets list of accounts that have reblogged a particular post
+        ///
+        /// *Returns the list of users who either created the record or made it a repost.
         /// 
         /// </summary>
         /// <param name="author">API type: string</param>
@@ -151,23 +155,22 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[]> GetRebloggedBy(string author, string permlink, CancellationToken token)
         {
-            return CustomGetRequest<string[]>("call", token, KnownApiNames.FollowApi, "get_reblogged_by", new object[] { author, permlink });
+            return CallRequest<string[]>(KnownApiNames.FollowApi, "get_reblogged_by", new object[] { author, permlink }, token);
         }
 
-
-        /**
-         * Gets a list of authors that have had their content reblogged on a given blog account
-         */
         /// <summary>
         /// API name: get_blog_authors
+        /// Gets a list of authors that have had their content reblogged on a given blog account
+        ///
+        /// *Returns the list of authors and the number of reposts of this author by the user.
         /// 
         /// </summary>
         /// <param name="blogAccount">API type: account_name_type</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<KeyValuePair<string, UInt32>[]> GetBlogAuthors(string blogAccount, CancellationToken token)
+        public JsonRpcResponse<object[][]> GetBlogAuthors(string blogAccount, CancellationToken token)
         {
-            return CustomGetRequest<KeyValuePair<string, UInt32>[]>("call", token, KnownApiNames.FollowApi, "get_blog_authors", new object[] { blogAccount });
+            return CallRequest<object[][]>(KnownApiNames.FollowApi, "get_blog_authors", new object[] { blogAccount }, token);
         }
     }
 }

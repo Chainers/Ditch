@@ -1,5 +1,4 @@
-﻿
-namespace CppToCsharpConverter.Converters
+﻿namespace CppToCsharpConverter.Converters
 {
     public class PreParsedElement
     {
