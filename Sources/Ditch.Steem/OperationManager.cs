@@ -6,8 +6,7 @@ using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
-using Ditch.Steem.Operations;
-using Ditch.Steem.Operations.Get;
+using Ditch.Steem.Objects;
 using Ditch.Steem.Operations.Post;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -89,8 +88,7 @@ namespace Ditch.Steem
             }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            var resp = CustomGetRequest("call", token, KnownApiNames.NetworkBroadcastApi, Transaction.OperationName, new[] { transaction });
-            return resp;
+            return BroadcastTransaction(transaction, token);
         }
 
         /// <summary>
@@ -139,6 +137,37 @@ namespace Ditch.Steem
         }
 
         /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Api method</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse CallRequest(string api, string method, object[] data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            return _connectionManager.Execute(jsonRpc, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Api method</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<T> CallRequest<T>(string api, string method, object[] data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            return _connectionManager.Execute<T>(jsonRpc, token);
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="propertyApiObj"></param>
@@ -147,9 +176,9 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Transaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
-            var transaction = new Transaction
+            var transaction = new SignedTransaction
             {
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
@@ -158,7 +187,7 @@ namespace Ditch.Steem
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction);
+            var msg = SerializeHelper.TransactionToMessage(transaction, Version);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
             foreach (var userPrivateKey in userPrivateKeys)

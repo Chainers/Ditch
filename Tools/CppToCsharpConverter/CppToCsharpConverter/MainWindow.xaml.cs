@@ -146,7 +146,7 @@ namespace CppToCsharpConverter
             {
                 var structConverter = new StructConverter(SettingsViewModel.KnownTypes);
                 var converted = structConverter.Parse(Input.Text, false);
-                Output.Text = structConverter.PrintParsedClass(converted, "projName", String.Empty);
+                Output.Text = structConverter.PrintParsedClass(converted, "projName", string.Empty, string.Empty);
             }
             catch (Exception ex)
             {

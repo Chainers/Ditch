@@ -6,8 +6,8 @@ using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Operations.Get;
-using Ditch.Golos.Operations.Post;
+using Ditch.Golos.Objects;
+using Ditch.Golos.Operations;
 using Ditch.Golos.Protocol;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -137,6 +137,36 @@ namespace Ditch.Golos
             return _connectionManager.Execute(jsonRpc, token);
         }
 
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Api method</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse CallRequest(string api, string method, object[] data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            return _connectionManager.Execute(jsonRpc, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Api method</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<T> CallRequest<T>(string api, string method, object[] data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            return _connectionManager.Execute<T>(jsonRpc, token);
+        }
+        
         /// <summary>
         /// 
         /// </summary>

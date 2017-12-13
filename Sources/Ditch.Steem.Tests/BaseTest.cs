@@ -47,9 +47,9 @@ namespace Ditch.Steem.Tests
             var chSet = jObject.Children();
 
             var msg = new List<string>();
-            foreach (var jtoken in chSet)
+            foreach (JProperty jtoken in chSet)
             {
-                if (!propNames.Contains(jtoken.Path))
+                if (!propNames.Contains(jtoken.Name))
                 {
                     msg.Add($"Missing {jtoken}");
                 }
@@ -59,6 +59,22 @@ namespace Ditch.Steem.Tests
             {
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
+        }
+
+        protected void TestPropetries(Type type, JArray jArray)
+        {
+            if (jArray == null)
+                throw new NullReferenceException("jArray");
+
+            if (type.IsArray)
+            {
+                if (jArray.Count > 0)
+                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
+                else if (!IgnoreRequestWithBadData)
+                    throw new NullReferenceException("Impossible to do test for this input data!");
+            }
+            else
+                throw new InvalidCastException();
         }
 
         protected void TestPropetries(Type type, JObject[] jObject)
