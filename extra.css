@@ -7,14 +7,14 @@ div.col-md-9 > p:first-of-type
   text-align: center;
 }
 #bitshareslogo {
-    background: url('../img/bitshares.png') no-repeat center 0;
+    background: url('../Ditch/img/bitshares.png') no-repeat center 0;
     background-size: auto auto;
     background-size: 200px 75px;
     width: 200px;
     height: 100px;
 }
 #bitcoinlogo {
-    background: url('../img/bitpaylogo.png') no-repeat center 0;
+    background: url('../Ditch/img/bitpaylogo.png') no-repeat center 0;
     background-size: auto auto;
     background-size: 200px 100px;
     width: 200px;
@@ -22,7 +22,7 @@ div.col-md-9 > p:first-of-type
 }
 
 #etheriumlogo {
-    background: url('../img/etheriumlogo.png') no-repeat center 0;
+    background: url('../Ditch/img/etheriumlogo.png') no-repeat center 0;
     background-size: auto auto;
     background-size: 190px 150px;
     width: 190px;
