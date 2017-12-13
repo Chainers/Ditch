@@ -1,8 +1,6 @@
 cd ..\Sources\
 @echo off
 
-del *.user /S /Q 
-
 FOR /R %%f IN (.) DO (
 	if "%%~nf"=="obj" (
 		rmdir /S /Q "%%f"
@@ -11,3 +9,7 @@ FOR /R %%f IN (.) DO (
 		rmdir /S /Q "%%f"
 	)
 )
+
+del *.user /S /Q 
+
+cd ..\Automation\

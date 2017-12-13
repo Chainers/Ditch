@@ -1,5 +1,10 @@
 site_name: Ditch documentation
 pages:
-    - Steem: index.md
-    - Golos: Ditch.Golos.md
-    - Core: Ditch.Core.md
+    - Home: index.md
+    - Libraries:
+        - Ditch.Steem: Libraries\Ditch.Steem.md
+        - Ditch.Golos: Libraries\Ditch.Golos.md
+        - Ditch.Core: Libraries\Ditch.Core.md
+    - Donate: donate.md
+        
+extra_css: [extra.css]
