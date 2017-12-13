@@ -1,0 +1,3821 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ditch.Golos - Ditch documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">Ditch documentation</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Libraries <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../Ditch.Steem/">Ditch.Steem</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Ditch.Golos</a>
+</li>
+                            
+<li >
+    <a href="../Ditch.Core/">Ditch.Core</a>
+</li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="../../donate/">Donate</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../Ditch.Steem/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../Ditch.Core/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#operationmanager">OperationManager</a></li>
+        <li class="main "><a href="#signedtransaction">SignedTransaction</a></li>
+        <li class="main "><a href="#transaction">Transaction</a></li>
+        <li class="main "><a href="#accountapiobj">AccountApiObj</a></li>
+        <li class="main "><a href="#accountbandwidthapiobj">AccountBandwidthApiObj</a></li>
+        <li class="main "><a href="#accountbandwidthobject">AccountBandwidthObject</a></li>
+        <li class="main "><a href="#accountrecoveryrequestapiobj">AccountRecoveryRequestApiObj</a></li>
+        <li class="main "><a href="#accountreputation">AccountReputation</a></li>
+        <li class="main "><a href="#appliedoperation">AppliedOperation</a></li>
+        <li class="main "><a href="#authority">Authority</a></li>
+        <li class="main "><a href="#beneficiaryroutetype">BeneficiaryRouteType</a></li>
+        <li class="main "><a href="#blockheader">BlockHeader</a></li>
+        <li class="main "><a href="#blogentry">BlogEntry</a></li>
+        <li class="main "><a href="#bucketobject">BucketObject</a></li>
+        <li class="main "><a href="#callorderobject">CallOrderObject</a></li>
+        <li class="main "><a href="#categoryapiobj">CategoryApiObj</a></li>
+        <li class="main "><a href="#chainproperties">ChainProperties</a></li>
+        <li class="main "><a href="#collateralbidobject">CollateralBidObject</a></li>
+        <li class="main "><a href="#commentapiobj">CommentApiObj</a></li>
+        <li class="main "><a href="#commentapiobject">CommentApiObject</a></li>
+        <li class="main "><a href="#commentblogentry">CommentBlogEntry</a></li>
+        <li class="main "><a href="#commentfeedentry">CommentFeedEntry</a></li>
+        <li class="main "><a href="#convertrequestapiobj">ConvertRequestApiObj</a></li>
+        <li class="main "><a href="#convertrequestobject">ConvertRequestObject</a></li>
+        <li class="main "><a href="#discussion">Discussion</a></li>
+        <li class="main "><a href="#dynamicglobalpropertyobject">DynamicGlobalPropertyObject</a></li>
+        <li class="main "><a href="#escrowapiobj">EscrowApiObj</a></li>
+        <li class="main "><a href="#escrowobject">EscrowObject</a></li>
+        <li class="main "><a href="#extendedaccount">ExtendedAccount</a></li>
+        <li class="main "><a href="#extendedlimitorder">ExtendedLimitOrder</a></li>
+        <li class="main "><a href="#feedentry">FeedEntry</a></li>
+        <li class="main "><a href="#feedhistoryapiobj">FeedHistoryApiObj</a></li>
+        <li class="main "><a href="#followapiobj">FollowApiObj</a></li>
+        <li class="main "><a href="#followcountapiobj">FollowCountApiObj</a></li>
+        <li class="main "><a href="#forcesettlementobject">ForceSettlementObject</a></li>
+        <li class="main "><a href="#historykey">HistoryKey</a></li>
+        <li class="main "><a href="#limitorderobject">LimitOrderObject</a></li>
+        <li class="main "><a href="#marketticker">MarketTicker</a></li>
+        <li class="main "><a href="#markettrade">MarketTrade</a></li>
+        <li class="main "><a href="#marketvolume">MarketVolume</a></li>
+        <li class="main "><a href="#order">Order</a></li>
+        <li class="main "><a href="#orderbook">OrderBook</a></li>
+        <li class="main "><a href="#orderhistoryobject">OrderHistoryObject</a></li>
+        <li class="main "><a href="#ownerauthorityhistoryapiobj">OwnerAuthorityHistoryApiObj</a></li>
+        <li class="main "><a href="#price">Price</a></li>
+        <li class="main "><a href="#savingswithdrawapiobj">SavingsWithdrawApiObj</a></li>
+        <li class="main "><a href="#scheduledhardfork">ScheduledHardfork</a></li>
+        <li class="main "><a href="#signedblock">SignedBlock</a></li>
+        <li class="main "><a href="#signedblockapiobj">SignedBlockApiObj</a></li>
+        <li class="main "><a href="#signedblockheader">SignedBlockHeader</a></li>
+        <li class="main "><a href="#state">State</a></li>
+        <li class="main "><a href="#steemversioninfo">SteemVersionInfo</a></li>
+        <li class="main "><a href="#tagapiobj">TagApiObj</a></li>
+        <li class="main "><a href="#votestate">VoteState</a></li>
+        <li class="main "><a href="#withdrawroute">WithdrawRoute</a></li>
+        <li class="main "><a href="#witnessapiobj">WitnessApiObj</a></li>
+        <li class="main "><a href="#witnessscheduleapiobj">WitnessScheduleApiObj</a></li>
+        <li class="main "><a href="#witnessscheduleobject">WitnessScheduleObject</a></li>
+        <li class="main "><a href="#baseoperation">BaseOperation</a></li>
+        <li class="main "><a href="#commentoperation">CommentOperation</a></li>
+        <li class="main "><a href="#commentoptionsoperation">CommentOptionsOperation</a></li>
+        <li class="main "><a href="#deletecommentoperation">DeleteCommentOperation</a></li>
+        <li class="main "><a href="#followoperation">FollowOperation</a></li>
+        <li class="main "><a href="#operationtype">OperationType</a></li>
+        <li class="main "><a href="#repostoperation">RePostOperation</a></li>
+        <li class="main "><a href="#unfollowoperation">UnfollowOperation</a></li>
+        <li class="main "><a href="#voteoperation">VoteOperation</a></li>
+        <li class="main "><a href="#withdrawroutetype">WithdrawRouteType</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p><a id="Ditch.Golos.OperationManager"></a></p>
+<h2 id="operationmanager">OperationManager</h2>
+<p><em>class Ditch.Golos.OperationManager</em></p>
+<p>market_history_api
+libraries\plugins\market_history\include\golos\market_history\market_history_api.hpp</p>
+<p><strong>Methods</strong></p>
+<p><a id="Ditch.Golos.OperationManager.GetAccountHistory(System.String,System.UInt64,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object&gt;</em> <strong>GetAccountHistory</strong> <em>(String account, UInt64 from, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_account_history
+Account operations have sequence numbers from 0 to N where N is the most recent operation.</li>
+</ul>
+<p>*The history of all user actions on the network in the form of transactions. If from = -1, then are last {limit+1} history elements are shown. Parameter limit should be less or equals {from} (except from = -1). This is because elements preceding {from} are shown.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetPayoutExtensionCost(System.String,System.String,System.DateTime,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Money&gt;</em> <strong>GetPayoutExtensionCost</strong> <em>(String author, String permlink, DateTime time, CancellationToken token)</em><br />
+  API name: get_payout_extension_cost
+Used to retrieve comment payout window extension cost by time  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetFollowers(System.String,System.String,Ditch.Golos.Operations.Enums.FollowType,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FollowApiObj[]&gt;</em> <strong>GetFollowers</strong> <em>(String to, String start, FollowType type, UInt16 limit, CancellationToken token)</em><br />
+  API name: get_followers
+*Returns the list: Either all of the subscribers of the user are 'following'. Or, if the user name is specified, the list of matching subscribers is returned in the parameter 'startFollower'.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetFollowing(System.String,System.String,Ditch.Golos.Operations.Enums.FollowType,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FollowApiObj[]&gt;</em> <strong>GetFollowing</strong> <em>(String from, String start, FollowType type, UInt16 limit, CancellationToken token)</em><br />
+  API name: get_following  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetFollowCount(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FollowCountApiObj&gt;</em> <strong>GetFollowCount</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_follow_count
+*Returns information about the number of subscribers and subscriptions of the specified user.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetFeedEntries(System.String,System.UInt32,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FeedEntry[]&gt;</em> <strong>GetFeedEntries</strong> <em>(String account, UInt32 entryId, UInt16 limit, CancellationToken token)</em><br />
+  API name: get_feed_entries
+*Returns brief information about records from the specified user's tape  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetFeed(System.String,System.UInt32,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CommentFeedEntry[]&gt;</em> <strong>GetFeed</strong> <em>(String account, UInt32 entryId, UInt16 limit, CancellationToken token)</em><br />
+  API name: get_feed
+*Returns the complete record data from the specified user's tape.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetBlogEntries(System.String,System.UInt32,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;BlogEntry[]&gt;</em> <strong>GetBlogEntries</strong> <em>(String account, UInt32 entryId, UInt16 limit, CancellationToken token)</em><br />
+  API name: get_blog_entries
+*Returns brief information about records from the blog of the specified user.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetBlog(System.String,System.UInt32,System.UInt16,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CommentBlogEntry[]&gt;</em> <strong>GetBlog</strong> <em>(String account, UInt32 entryId, UInt16 limit, CancellationToken token)</em><br />
+  API name: get_blog
+*Returns the complete record data from the blog of the specified user.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetAccountReputations(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountReputation[]&gt;</em> <strong>GetAccountReputations</strong> <em>(String lowerBoundName, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_account_reputations
+*Returns data about the reputation of users filtered by template.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetRebloggedBy(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>GetRebloggedBy</strong> <em>(String author, String permlink, CancellationToken token)</em><br />
+  API name: get_reblogged_by
+Gets list of accounts that have reblogged a particular post</li>
+</ul>
+<p>*Returns the list of users who either created the record or made it a repost.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetBlogAuthors(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object[][]&gt;</em> <strong>GetBlogAuthors</strong> <em>(String blogAccount, CancellationToken token)</em><br />
+  API name: get_blog_authors
+Gets a list of authors that have had their content reblogged on a given blog account</li>
+</ul>
+<p>*Returns the list of authors and the number of reposts of this author by the user.  </p>
+<p><a id="Ditch.Golos.OperationManager.Login(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Boolean&gt;</em> <strong>Login</strong> <em>(String user, String password, CancellationToken token)</em><br />
+  API name: login
+Authenticate to the RPC server</li>
+</ul>
+<p>*Allows you to connect to the accounts on the network.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetApiByName(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object&gt;</em> <strong>GetApiByName</strong> <em>(String apiName, CancellationToken token)</em><br />
+  API name: get_api_by_name
+*Returns the unique API identifier by its name.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetVersion(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SteemVersionInfo&gt;</em> <strong>GetVersion</strong> <em>(CancellationToken token)</em><br />
+  API name: get_version
+*Returns the version information for the components of the blockchain.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.BroadcastTransaction(Ditch.Golos.Protocol.SignedTransaction,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>BroadcastTransaction</strong> <em>(SignedTransaction trx, CancellationToken token)</em><br />
+  API name: broadcast_transaction
+Broadcast a transaction to the network</li>
+</ul>
+<p>*The transaction will be checked for validity in the local database prior to broadcasting. If it fails to apply locally, an error will be thrown and the transaction will not be broadcast.  </p>
+<p><a id="Ditch.Golos.OperationManager.BroadcastTransactionWithCallback(System.Object,Ditch.Golos.Protocol.SignedTransaction,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>BroadcastTransactionWithCallback</strong> <em>(Object cb, SignedTransaction trx, CancellationToken token)</em><br />
+  API name: broadcast_transaction_with_callback
+this version of broadcast transaction registers a callback method that will be called when the transaction is
+included into a block.  The callback method includes the transaction id, block number, and transaction number in the
+block.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.BroadcastTransactionSynchronous(Ditch.Golos.Protocol.SignedTransaction,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object&gt;</em> <strong>BroadcastTransactionSynchronous</strong> <em>(SignedTransaction trx, CancellationToken token)</em><br />
+  API name: broadcast_transaction_synchronous
+This call will not return until the transaction is included in a block.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.BroadcastBlock(Ditch.Golos.Objects.SignedBlock,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>BroadcastBlock</strong> <em>(SignedBlock block, CancellationToken token)</em><br />
+  API name: broadcast_block  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.SetMaxBlockAge(System.Int32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>SetMaxBlockAge</strong> <em>(Int32 maxBlockAge, CancellationToken token)</em><br />
+  API name: set_max_block_age  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.SetSubscribeCallback(System.Object,System.Boolean,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>SetSubscribeCallback</strong> <em>(Object cb, Boolean clearFilter, CancellationToken token)</em><br />
+  API name: set_subscribe_callback  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.SetPendingTransactionCallback(System.Object,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>SetPendingTransactionCallback</strong> <em>(Object cb, CancellationToken token)</em><br />
+  API name: set_pending_transaction_callback  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.SetBlockAppliedCallback(System.Object,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>SetBlockAppliedCallback</strong> <em>(Object cb, CancellationToken token)</em><br />
+  API name: set_block_applied_callback  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.CancelAllSubscriptions(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>CancelAllSubscriptions</strong> <em>(CancellationToken token)</em><br />
+  API name: cancel_all_subscriptions
+Stop receiving any notifications</li>
+</ul>
+<p>This unsubscribes from all subscribed markets and objects.  </p>
+<p><a id="Ditch.Golos.OperationManager.SubscribeToMarket(System.Object,System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>SubscribeToMarket</strong> <em>(Object callback, String a, String b, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.UnsubscribeFromMarket(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>UnsubscribeFromMarket</strong> <em>(String a, String b, CancellationToken token)</em><br />
+  API name: unsubscribe_from_market
+Unsubscribe from updates to a given market  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetLimitOrdersByOwner(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ExtendedLimitOrder[]&gt;</em> <strong>GetLimitOrdersByOwner</strong> <em>(String owner, CancellationToken token)</em><br />
+  API name: get_limit_orders_by_owner  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetSettleOrdersByOwner(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ForceSettlementObject[]&gt;</em> <strong>GetSettleOrdersByOwner</strong> <em>(String owner, CancellationToken token)</em><br />
+  API name: get_settle_orders_by_owner  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetTicker(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;MarketTicker&gt;</em> <strong>GetTicker</strong> <em>(String base, String quote, CancellationToken token)</em><br />
+  API name: get_ticker
+Returns the ticker for the market assetA:assetB</li>
+</ul>
+<p>*Returns the market ticker for the internal market  </p>
+<p><a id="Ditch.Golos.OperationManager.GetVolume(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;MarketVolume&gt;</em> <strong>GetVolume</strong> <em>(String base, String quote, CancellationToken token)</em><br />
+  API name: get_volume
+Returns the 24 hour volume for the market assetA:assetB</li>
+</ul>
+<p>*Returns the market volume for the past 24 hours  </p>
+<p><a id="Ditch.Golos.OperationManager.GetOrderBook(System.String,System.String,System.Byte,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;OrderBook&gt;</em> <strong>GetOrderBook</strong> <em>(String base, String quote, Byte limit, CancellationToken token)</em><br />
+  API name: get_order_book
+Returns the order book for the market base:quote</li>
+</ul>
+<p>*Displays a list of applications on the internal exchange for the purchase and sale of the network  </p>
+<p><a id="Ditch.Golos.OperationManager.GetOrderBook(System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;OrderBook&gt;</em> <strong>GetOrderBook</strong> <em>(UInt32 limit, CancellationToken token)</em><br />
+  Gets the current order book for STEEM:SBD market  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetTradeHistory(System.String,System.String,System.DateTime,System.DateTime,System.Byte,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;MarketTrade[]&gt;</em> <strong>GetTradeHistory</strong> <em>(String base, String quote, DateTime start, DateTime stop, Byte limit, CancellationToken token)</em><br />
+  API name: get_trade_history
+Returns recent trades for the market assetA:assetB
+Note: Currently, timezone offsets are not supported. The time must be UTC.</li>
+</ul>
+<p>*Returns the trade history for the internal market.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetFillOrderHistory(System.String,System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;OrderHistoryObject[]&gt;</em> <strong>GetFillOrderHistory</strong> <em>(String a, String b, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_fill_order_history  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetMarketHistory(System.String,System.String,System.UInt32,System.DateTime,System.DateTime,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;BucketObject[]&gt;</em> <strong>GetMarketHistory</strong> <em>(String a, String b, UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)</em><br />
+  API name: get_market_history
+Returns the market history for the internal SBD:STEEM market.</li>
+</ul>
+<p>*Returns the market history for the internal market.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetLimitOrders(System.String,System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;LimitOrderObject[]&gt;</em> <strong>GetLimitOrders</strong> <em>(String a, String b, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_limit_orders
+Get limit orders in a given market  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetCallOrders(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CallOrderObject[]&gt;</em> <strong>GetCallOrders</strong> <em>(String a, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_call_orders
+Get call orders in a given asset  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetSettleOrders(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ForceSettlementObject[]&gt;</em> <strong>GetSettleOrders</strong> <em>(String a, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_settle_orders
+Get forced settlement orders in a given asset  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetCollateralBids(System.Object,System.UInt32,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CollateralBidObject[]&gt;</em> <strong>GetCollateralBids</strong> <em>(Object asset, UInt32 limit, UInt32 start, CancellationToken token)</em><br />
+  API name: get_collateral_bids
+Get collateral_bid_objects for a given asset  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetMarginPositions(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CallOrderObject[]&gt;</em> <strong>GetMarginPositions</strong> <em>(String name, CancellationToken token)</em><br />
+  API name: get_margin_positions  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetKeyReferences(System.String[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[][]&gt;</em> <strong>GetKeyReferences</strong> <em>(String[] keys, CancellationToken token)</em><br />
+  API name: get_key_references  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.TryConnectTo(System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>String</em> <strong>TryConnectTo</strong> <em>(List&lt;String&gt; urls, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.RetryConnect(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>String</em> <strong>RetryConnect</strong> <em>(CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.BroadcastOperations(System.Collections.Generic.IEnumerable`1[[System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken,Ditch.Golos.Operations.BaseOperation[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>BroadcastOperations</strong> <em>(IEnumerable&lt;Byte[]&gt; userPrivateKeys, CancellationToken token, BaseOperation[] operations)</em>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.VerifyAuthority(System.Collections.Generic.IEnumerable`1[[System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken,Ditch.Golos.Operations.BaseOperation[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Boolean&gt;</em> <strong>VerifyAuthority</strong> <em>(IEnumerable&lt;Byte[]&gt; userPrivateKeys, CancellationToken token, BaseOperation[] testOps)</em>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.CustomGetRequest(System.String,System.Threading.CancellationToken,System.Object[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;T&gt;</em> <strong>CustomGetRequest</strong> <em>(String method, CancellationToken token, Object[] data)</em><br />
+  Create and execute custom json-rpc method  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.CustomGetRequest(System.String,System.Threading.CancellationToken,System.Object[])"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>CustomGetRequest</strong> <em>(String method, CancellationToken token, Object[] data)</em><br />
+  Create and execute custom json-rpc method  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.CallRequest(System.String,System.String,System.Object[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse</em> <strong>CallRequest</strong> <em>(String api, String method, Object[] data, CancellationToken token)</em><br />
+  Create and execute custom json-rpc method  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.CallRequest(System.String,System.String,System.Object[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;T&gt;</em> <strong>CallRequest</strong> <em>(String api, String method, Object[] data, CancellationToken token)</em><br />
+  Create and execute custom json-rpc method  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.CreateTransaction(Ditch.Golos.Objects.DynamicGlobalPropertyObject,System.Collections.Generic.IEnumerable`1[[System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken,Ditch.Golos.Operations.BaseOperation[])"></a></p>
+<ul>
+<li><em>SignedTransaction</em> <strong>CreateTransaction</strong> <em>(DynamicGlobalPropertyObject propertyApiObj, IEnumerable&lt;Byte[]&gt; userPrivateKeys, CancellationToken token, BaseOperation[] operations)</em>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetTrendingTags(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;TagApiObj[]&gt;</em> <strong>GetTrendingTags</strong> <em>(String afterTag, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_trending_tags
+*Returns a list of tags (tags) that include word combinations  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetTrendingCategories(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CategoryApiObj[]&gt;</em> <strong>GetTrendingCategories</strong> <em>(String after, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_trending_categories
+*Returns sorted by value tags starting with a given or similar to it.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetBestCategories(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CategoryApiObj[]&gt;</em> <strong>GetBestCategories</strong> <em>(String after, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_best_categories  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetActiveCategories(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CategoryApiObj[]&gt;</em> <strong>GetActiveCategories</strong> <em>(String after, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_active_categories  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetRecentCategories(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;CategoryApiObj[]&gt;</em> <strong>GetRecentCategories</strong> <em>(String after, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_recent_categories  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetActiveWitnesses(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>GetActiveWitnesses</strong> <em>(CancellationToken token)</em><br />
+  API name: get_active_witnesses
+*Displays a list of all active delegates.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetMinerQueue(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>GetMinerQueue</strong> <em>(CancellationToken token)</em><br />
+  API name: get_miner_queue
+*Creates a list of the miners waiting to enter the DPOW chain to create the block.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetState(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;State&gt;</em> <strong>GetState</strong> <em>(String path, CancellationToken token)</em><br />
+  API name: get_state
+This API is a short-cut for returning all of the state required for a particular URL
+with a single query.</li>
+</ul>
+<p>*Displays the current network status.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetBlockHeader(System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;BlockHeader&gt;</em> <strong>GetBlockHeader</strong> <em>(UInt32 blockNum, CancellationToken token)</em><br />
+  API name: get_block_header
+Retrieve a block header</li>
+</ul>
+<p>*Returns block for given number  </p>
+<p><a id="Ditch.Golos.OperationManager.GetBlock(System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SignedBlock&gt;</em> <strong>GetBlock</strong> <em>(UInt32 blockNum, CancellationToken token)</em><br />
+  API name: get_block
+Retrieve a full, signed block</li>
+</ul>
+<p>*Returns block for given number  </p>
+<p><a id="Ditch.Golos.OperationManager.GetOpsInBlock(System.UInt32,System.Boolean,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AppliedOperation[]&gt;</em> <strong>GetOpsInBlock</strong> <em>(UInt32 blockNum, Boolean onlyVirtual, CancellationToken token)</em><br />
+  API name: get_ops_in_block
+Get sequence of operations included/generated within a particular block</li>
+</ul>
+<p>*Returns all operations in the block, if the parameter 'onlyVirtual' is true, then returns only the virtual operations  </p>
+<p><a id="Ditch.Golos.OperationManager.GetConfig(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Object&gt;</em> <strong>GetConfig</strong> <em>(CancellationToken token)</em><br />
+  API name: get_config
+Retrieve compile-time constants</li>
+</ul>
+<p>*Displays the current node configuration.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetDynamicGlobalProperties(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;DynamicGlobalPropertyObject&gt;</em> <strong>GetDynamicGlobalProperties</strong> <em>(CancellationToken token)</em><br />
+  API name: get_dynamic_global_properties
+Retrieve the current @ref dynamic_global_property_object</li>
+</ul>
+<p>*Displays information about the current network status.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetChainProperties(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ChainProperties&gt;</em> <strong>GetChainProperties</strong> <em>(CancellationToken token)</em><br />
+  API name: get_chain_properties
+*Displays the commission for creating the user, the maximum block size and the GBG interest rate.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetCurrentMedianHistoryPrice(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Price&gt;</em> <strong>GetCurrentMedianHistoryPrice</strong> <em>(CancellationToken token)</em><br />
+  API name: get_current_median_history_price
+*Displays the current median price of conversion  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetFeedHistory(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;FeedHistoryApiObj&gt;</em> <strong>GetFeedHistory</strong> <em>(CancellationToken token)</em><br />
+  API name: get_feed_history
+*Displays the conversion history  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetWitnessSchedule(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessScheduleObject&gt;</em> <strong>GetWitnessSchedule</strong> <em>(CancellationToken token)</em><br />
+  API name: get_witness_schedule
+*Displays the current delegation status.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetHardforkVersion(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String&gt;</em> <strong>GetHardforkVersion</strong> <em>(CancellationToken token)</em><br />
+  API name: get_hardfork_version
+*Displays the current version of the network.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetNextScheduledHardfork(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ScheduledHardfork&gt;</em> <strong>GetNextScheduledHardfork</strong> <em>(CancellationToken token)</em><br />
+  API name: get_next_scheduled_hardfork
+*Displays the date and version of HardFork  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetNameCost(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Money&gt;</em> <strong>GetNameCost</strong> <em>(String name, CancellationToken token)</em><br />
+  API name: get_name_cost  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetAccounts(System.String[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ExtendedAccount[]&gt;</em> <strong>GetAccounts</strong> <em>(String[] names, CancellationToken token)</em><br />
+  API name: get_accounts
+*Returns data for specified accounts  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.LookupAccountNames(System.String[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountApiObj[]&gt;</em> <strong>LookupAccountNames</strong> <em>(String[] accountNames, CancellationToken token)</em><br />
+  API name: lookup_account_names
+Get a list of accounts by name</li>
+</ul>
+<p>*Returns data for specified accounts  </p>
+<p><a id="Ditch.Golos.OperationManager.LookupAccounts(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>LookupAccounts</strong> <em>(String lowerBoundName, UInt32 limit, CancellationToken token)</em><br />
+  API name: lookup_accounts
+Get names and IDs for registered accounts</li>
+</ul>
+<p>*Returns the names of users close to the phrase.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetAccountCount(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;UInt64&gt;</em> <strong>GetAccountCount</strong> <em>(CancellationToken token)</em><br />
+  API name: get_account_count
+Get the total number of accounts registered with the blockchain</li>
+</ul>
+<p>*Returns the number of registered users.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetOwnerHistory(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;OwnerAuthorityHistoryApiObj[]&gt;</em> <strong>GetOwnerHistory</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_owner_history
+*Displays the user name if he changed the ownership of the blockchain  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetRecoveryRequest(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountRecoveryRequestApiObj&gt;</em> <strong>GetRecoveryRequest</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_recovery_request
+*Returns true if the user is in recovery status.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetEscrow(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;EscrowObject&gt;</em> <strong>GetEscrow</strong> <em>(String from, UInt32 escrowId, CancellationToken token)</em><br />
+  API name: get_escrow
+*Returns the operations implemented through mediation.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetWithdrawRoutes(System.String,Ditch.Golos.Operations.Enums.WithdrawRouteType,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WithdrawRoute[]&gt;</em> <strong>GetWithdrawRoutes</strong> <em>(String account, WithdrawRouteType type, CancellationToken token)</em><br />
+  API name: get_withdraw_routes
+*Returns all transfers to the user's account, depending on the type  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetAccountBandwidth(System.String,Ditch.Golos.Operations.Enums.BandwidthType,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;AccountBandwidthObject&gt;</em> <strong>GetAccountBandwidth</strong> <em>(String account, BandwidthType type, CancellationToken token)</em><br />
+  API name: get_account_bandwidth
+*Displays user actions based on type  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetSavingsWithdrawFrom(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SavingsWithdrawApiObj[]&gt;</em> <strong>GetSavingsWithdrawFrom</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_savings_withdraw_from
+*Returns the output data from 'SAFE' for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetSavingsWithdrawTo(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;SavingsWithdrawApiObj[]&gt;</em> <strong>GetSavingsWithdrawTo</strong> <em>(String account, CancellationToken token)</em><br />
+  API name: get_savings_withdraw_to
+*Returns the output data from 'SAFE' for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetWitnesses(System.Object[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessApiObj[]&gt;</em> <strong>GetWitnesses</strong> <em>(Object[] witnessIds, CancellationToken token)</em><br />
+  API name: get_witnesses
+Get a list of witnesses by ID</li>
+</ul>
+<p>*Displays delegate data according to the specified ID  </p>
+<p><a id="Ditch.Golos.OperationManager.GetConversionRequests(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;ConvertRequestObject[]&gt;</em> <strong>GetConversionRequests</strong> <em>(String accountName, CancellationToken token)</em><br />
+  API name: get_conversion_requests
+*Returns the current requests for conversion by the specified user  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetWitnessByAccount(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessApiObj&gt;</em> <strong>GetWitnessByAccount</strong> <em>(String accountName, CancellationToken token)</em><br />
+  API name: get_witness_by_account
+Get the witness owned by a given account</li>
+</ul>
+<p>*Displays data about the delegate (if it is) according to the data from the request  </p>
+<p><a id="Ditch.Golos.OperationManager.GetWitnessesByVote(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;WitnessApiObj[]&gt;</em> <strong>GetWitnessesByVote</strong> <em>(String from, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_witnesses_by_vote
+This method is used to fetch witnesses with pagination.</li>
+</ul>
+<p>*Displays a limited list of delegates approving the vote.  </p>
+<p><a id="Ditch.Golos.OperationManager.LookupWitnessAccounts(System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String[]&gt;</em> <strong>LookupWitnessAccounts</strong> <em>(String lowerBoundName, UInt32 limit, CancellationToken token)</em><br />
+  API name: lookup_witness_accounts
+Get names and IDs for registered witnesses</li>
+</ul>
+<p>*Displays a limited list of users who have announced their intention to work as a delegate.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetWitnessCount(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;UInt64&gt;</em> <strong>GetWitnessCount</strong> <em>(CancellationToken token)</em><br />
+  API name: get_witness_count
+Get the total number of witnesses registered with the blockchain</li>
+</ul>
+<p>*Displays the number of delegates.  </p>
+<p><a id="Ditch.Golos.OperationManager.GetTransactionHex(Ditch.Golos.Protocol.SignedTransaction,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;String&gt;</em> <strong>GetTransactionHex</strong> <em>(SignedTransaction trx, CancellationToken token)</em><br />
+  API name: get_transaction_hex
+Get a hexdump of the serialized binary form of a transaction</li>
+</ul>
+<p>*Displays the HEX transaction string.  </p>
+<p><a id="Ditch.Golos.OperationManager.VerifyAuthority(Ditch.Golos.Protocol.SignedTransaction,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Boolean&gt;</em> <strong>VerifyAuthority</strong> <em>(SignedTransaction trx, CancellationToken token)</em><br />
+  API name: verify_authority
+*Returns TRUE if the transaction is signed correctly  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetActiveVotes(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;VoteState[]&gt;</em> <strong>GetActiveVotes</strong> <em>(String author, String permlink, CancellationToken token)</em><br />
+  API name: get_active_votes
+*Displays the list of users who voted for the specified entry  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetContent(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion&gt;</em> <strong>GetContent</strong> <em>(String author, String permlink, CancellationToken token)</em><br />
+  API name: get_content
+*Gets information about the publication, with the exception of comments  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetContentReplies(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion[]&gt;</em> <strong>GetContentReplies</strong> <em>(String parent, String parentPermlink, CancellationToken token)</em><br />
+  API name: get_content_replies
+*Displays a list of all comments for the selected publication  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetTagsUsedByAuthor(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;KeyValuePair`2[]&gt;</em> <strong>GetTagsUsedByAuthor</strong> <em>(String author, CancellationToken token)</em><br />
+  API name: get_tags_used_by_author
+Used to retrieve top 1000 tags list used by an author sorted by most frequently used  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetRepliesByLastUpdate(System.String,System.String,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion[]&gt;</em> <strong>GetRepliesByLastUpdate</strong> <em>(String startAuthor, String startPermlink, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_replies_by_last_update
+*Return the active discussions with the highest cumulative pending payouts without respect to category, total  pending payout means the pending payout of all children as well.  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.GetDiscussionsByAuthorBeforeDate(System.String,System.String,System.DateTime,System.UInt32,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>JsonRpcResponse&lt;Discussion[]&gt;</em> <strong>GetDiscussionsByAuthorBeforeDate</strong> <em>(String author, String startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)</em><br />
+  API name: get_discussions_by_author_before_date
+This method is used to fetch all posts/comments by start_author that occur after before_date and start_permlink with up to limit being returned.</li>
+</ul>
+<p>If start_permlink is empty then only before_date will be considered. If both are specified the eariler to the two metrics will be used. This
+should allow easy pagination.</p>
+<p>*Displays a limited number of user publications  </p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.OperationManager.ChainId"></a></p>
+<ul>
+<li><em>Byte[]</em> <strong>ChainId</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.SbdSymbol"></a></p>
+<ul>
+<li><em>String</em> <strong>SbdSymbol</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.Version"></a></p>
+<ul>
+<li><em>Int32</em> <strong>Version</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.OperationManager.IsConnected"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>IsConnected</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Protocol.SignedTransaction"></a></p>
+<h2 id="signedtransaction">SignedTransaction</h2>
+<p><em>class Ditch.Golos.Protocol.SignedTransaction: Ditch.Golos.Protocol.Transaction</em></p>
+<p>signed_transaction
+libraries\protocol\include\golos\protocol\transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Protocol.SignedTransaction.Operations"></a></p>
+<ul>
+<li><em>Object[][]</em> <strong>Operations</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.SignedTransaction.Signatures"></a></p>
+<ul>
+<li><em>List&lt;Byte[]&gt;</em> <strong>Signatures</strong><br />
+  API name: signatures  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.SignedTransaction.SignaturesStr"></a></p>
+<ul>
+<li><em>String[]</em> <strong>SignaturesStr</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Protocol.Transaction"></a></p>
+<h2 id="transaction">Transaction</h2>
+<p><em>class Ditch.Golos.Protocol.Transaction</em></p>
+<p>transaction
+libraries\protocol\include\golos\protocol\transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Protocol.Transaction.ChainId"></a></p>
+<ul>
+<li><em>Byte[]</em> <strong>ChainId</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.Transaction.RefBlockNum"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>RefBlockNum</strong><br />
+  API name: ref_block_num
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.Transaction.RefBlockPrefix"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RefBlockPrefix</strong><br />
+  API name: ref_block_prefix
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.Transaction.Expiration"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Expiration</strong><br />
+  API name: expiration  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.Transaction.BaseOperations"></a></p>
+<ul>
+<li><em>BaseOperation[]</em> <strong>BaseOperations</strong><br />
+  API name: operations  </li>
+</ul>
+<p><a id="Ditch.Golos.Protocol.Transaction.Extensions"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Extensions</strong><br />
+  API name: extensions  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.AccountApiObj"></a></p>
+<h2 id="accountapiobj">AccountApiObj</h2>
+<p><em>class Ditch.Golos.Objects.AccountApiObj</em></p>
+<p>account_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Id"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Owner"></a></p>
+<ul>
+<li><em>Authority</em> <strong>Owner</strong><br />
+  used for backup control, can set owner or active  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Active"></a></p>
+<ul>
+<li><em>Authority</em> <strong>Active</strong><br />
+  used for all monetary operations, can set active or posting  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Posting"></a></p>
+<ul>
+<li><em>Authority</em> <strong>Posting</strong><br />
+  used for voting and posting  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.MemoKey"></a></p>
+<ul>
+<li><em>String</em> <strong>MemoKey</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Proxy"></a></p>
+<ul>
+<li><em>String</em> <strong>Proxy</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastOwnerUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastOwnerUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastAccountUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastAccountUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Mined"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Mined</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.OwnerChallenged"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>OwnerChallenged</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.ActiveChallenged"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>ActiveChallenged</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastOwnerProved"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastOwnerProved</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastActiveProved"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastActiveProved</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.RecoveryAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>RecoveryAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.ResetAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>ResetAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastAccountRecovery"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastAccountRecovery</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.CommentCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>CommentCount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LifetimeVoteCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LifetimeVoteCount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.PostCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>PostCount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.CanVote"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>CanVote</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.VotingPower"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>VotingPower</strong><br />
+  Current voting power of this account, it falls after every vote  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastVoteTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastVoteTime</strong><br />
+  used to increase the voting power of this account the longer it goes without voting.  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Balance"></a></p>
+<ul>
+<li><em>Money</em> <strong>Balance</strong><br />
+  total liquid shares held by this account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SavingsBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SavingsBalance</strong><br />
+  total liquid shares held by this account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SbdBalance</strong><br />
+  Total sbd balance  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SbdSeconds"></a></p>
+<ul>
+<li><em>String</em> <strong>SbdSeconds</strong><br />
+  Total sbd * how long it has been hel  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SbdSecondsLastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SbdSecondsLastUpdate</strong><br />
+  the last time the sbd_seconds was updated  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SbdLastInterestPayment"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SbdLastInterestPayment</strong><br />
+  used to pay interest at most once per month  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SavingsSbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SavingsSbdBalance</strong><br />
+  total sbd balance  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SavingsSbdSeconds"></a></p>
+<ul>
+<li><em>String</em> <strong>SavingsSbdSeconds</strong><br />
+  total sbd * how long it has been hel  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SavingsSbdSecondsLastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SavingsSbdSecondsLastUpdate</strong><br />
+  the last time the sbd_seconds was updated  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SavingsSbdLastInterestPayment"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SavingsSbdLastInterestPayment</strong><br />
+  used to pay interest at most once per month  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.SavingsWithdrawRequests"></a></p>
+<ul>
+<li><em>Byte</em> <strong>SavingsWithdrawRequests</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.RewardSbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardSbdBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.RewardSteemBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardSteemBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.RewardVestingBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardVestingBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.RewardVestingSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>RewardVestingSteem</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.CurationRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>CurationRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.PostingRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>PostingRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.VestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>VestingShares</strong><br />
+  total vesting shares held by this account, controls its voting power  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.DelegatedVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>DelegatedVestingShares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.ReceivedVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>ReceivedVestingShares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.VestingWithdrawRate"></a></p>
+<ul>
+<li><em>Money</em> <strong>VestingWithdrawRate</strong><br />
+  at the time this is updated it can be at most vesting_shares/104  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.NextVestingWithdrawal"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>NextVestingWithdrawal</strong><br />
+  after every withdrawal this is incremented by 1 week  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.Withdrawn"></a></p>
+<ul>
+<li><em>Object</em> <strong>Withdrawn</strong><br />
+  Track how many shares have been withdrawn  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.ToWithdraw"></a></p>
+<ul>
+<li><em>Object</em> <strong>ToWithdraw</strong><br />
+  Might be able to look this up with operation history.  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.WithdrawRoutes"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>WithdrawRoutes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.ProxiedVsfVotes"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>ProxiedVsfVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.WitnessesVotedFor"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>WitnessesVotedFor</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.AverageBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>AverageBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LifetimeBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>LifetimeBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastBandwidthUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastBandwidthUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.AverageMarketBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>AverageMarketBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LifetimeMarketBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>LifetimeMarketBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastMarketBandwidthUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastMarketBandwidthUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastPost"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastPost</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.LastRootPost"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastRootPost</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.PostBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>PostBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.NewAverageBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>NewAverageBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountApiObj.NewAverageMarketBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>NewAverageMarketBandwidth</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.AccountBandwidthApiObj"></a></p>
+<h2 id="accountbandwidthapiobj">AccountBandwidthApiObj</h2>
+<p><em>class Ditch.Golos.Objects.AccountBandwidthApiObj: Ditch.Golos.Objects.AccountBandwidthObject</em></p>
+<p>account_bandwidth_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp\</p>
+<hr />
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject"></a></p>
+<h2 id="accountbandwidthobject">AccountBandwidthObject</h2>
+<p><em>class Ditch.Golos.Objects.AccountBandwidthObject</em></p>
+<p>account_bandwidth_object
+golos-0.16.3\libraries\chain\include\steemit\chain\account_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject.Type"></a></p>
+<ul>
+<li><em>BandwidthType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject.AverageBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>AverageBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject.LifetimeBandwidth"></a></p>
+<ul>
+<li><em>Object</em> <strong>LifetimeBandwidth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountBandwidthObject.LastBandwidthUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastBandwidthUpdate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.AccountRecoveryRequestApiObj"></a></p>
+<h2 id="accountrecoveryrequestapiobj">AccountRecoveryRequestApiObj</h2>
+<p><em>class Ditch.Golos.Objects.AccountRecoveryRequestApiObj</em></p>
+<p>account_recovery_request_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.AccountRecoveryRequestApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountRecoveryRequestApiObj.AccountToRecover"></a></p>
+<ul>
+<li><em>String</em> <strong>AccountToRecover</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountRecoveryRequestApiObj.NewOwnerAuthority"></a></p>
+<ul>
+<li><em>Authority</em> <strong>NewOwnerAuthority</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountRecoveryRequestApiObj.Expires"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Expires</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.AccountReputation"></a></p>
+<h2 id="accountreputation">AccountReputation</h2>
+<p><em>class Ditch.Golos.Objects.AccountReputation</em></p>
+<p>account_reputation
+libraries\plugins\follow\include\golos\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.AccountReputation.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong><br />
+  API name: account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AccountReputation.Reputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>Reputation</strong><br />
+  API name: reputation  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.AppliedOperation"></a></p>
+<h2 id="appliedoperation">AppliedOperation</h2>
+<p><em>class Ditch.Golos.Objects.AppliedOperation</em></p>
+<p>applied_operation
+golos-0.16.3\libraries\app\include\steemit\app\applied_operation.hpp\</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.TrxId"></a></p>
+<ul>
+<li><em>Object</em> <strong>TrxId</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.Block"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Block</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.TrxInBlock"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TrxInBlock</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.OpInTrx"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>OpInTrx</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.VirtualOp"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>VirtualOp</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.Timestamp"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Timestamp</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.AppliedOperation.Op"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Op</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.Authority"></a></p>
+<h2 id="authority">Authority</h2>
+<p><em>class Ditch.Golos.Objects.Authority</em></p>
+<p>authority
+golos-0.16.3\libraries\protocol\include\steemit\protocol\authority.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.Authority.WeightThreshold"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>WeightThreshold</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Authority.AccountAuths"></a></p>
+<ul>
+<li><em>Object</em> <strong>AccountAuths</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Authority.KeyAuths"></a></p>
+<ul>
+<li><em>Object[][]</em> <strong>KeyAuths</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.BeneficiaryRouteType"></a></p>
+<h2 id="beneficiaryroutetype">BeneficiaryRouteType</h2>
+<p><em>class Ditch.Golos.Objects.BeneficiaryRouteType</em></p>
+<p>beneficiary_route_type
+libraries\protocol\include\golos\protocol\operations\comment_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.BeneficiaryRouteType.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong><br />
+  API name: account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BeneficiaryRouteType.Weight"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Weight</strong><br />
+  API name: weight  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.BlockHeader"></a></p>
+<h2 id="blockheader">BlockHeader</h2>
+<p><em>class Ditch.Golos.Objects.BlockHeader</em></p>
+<p>block_header
+golos-0.16.3\libraries\protocol\include\steemit\protocol\block_header.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.BlockHeader.Previous"></a></p>
+<ul>
+<li><em>Object</em> <strong>Previous</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlockHeader.Timestamp"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Timestamp</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlockHeader.Witness"></a></p>
+<ul>
+<li><em>String</em> <strong>Witness</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlockHeader.TransactionMerkleRoot"></a></p>
+<ul>
+<li><em>Object</em> <strong>TransactionMerkleRoot</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlockHeader.Extensions"></a></p>
+<ul>
+<li><em>Object</em> <strong>Extensions</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.BlogEntry"></a></p>
+<h2 id="blogentry">BlogEntry</h2>
+<p><em>class Ditch.Golos.Objects.BlogEntry</em></p>
+<p>blog_entry
+libraries\plugins\follow\include\golos\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.BlogEntry.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlogEntry.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlogEntry.Blog"></a></p>
+<ul>
+<li><em>String</em> <strong>Blog</strong><br />
+  API name: blog  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlogEntry.ReblogOn"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>ReblogOn</strong><br />
+  API name: reblog_on  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BlogEntry.EntryId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>EntryId</strong><br />
+  API name: entry_id
+= 0;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.BucketObject"></a></p>
+<h2 id="bucketobject">BucketObject</h2>
+<p><em>class Ditch.Golos.Objects.BucketObject</em></p>
+<p>bucket_object
+libraries\plugins\blockchain_statistics\include\golos\blockchain_statistics\blockchain_statistics_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.BucketObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Open"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Open</strong><br />
+  API name: open
+Open time of the bucket  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Seconds"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Seconds</strong><br />
+  API name: seconds
+= 0; ///&lt; Seconds accounted for in the bucket  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Blocks"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Blocks</strong><br />
+  API name: blocks
+= 0; ///&lt; Blocks produced  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Bandwidth"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Bandwidth</strong><br />
+  API name: bandwidth
+= 0; ///&lt; Bandwidth in bytes  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Operations"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Operations</strong><br />
+  API name: operations
+= 0; ///&lt; Operations evaluated  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Transactions"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Transactions</strong><br />
+  API name: transactions
+= 0; ///&lt; Transactions processed  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Transfers"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Transfers</strong><br />
+  API name: transfers
+= 0; ///&lt; Account to account transfers  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SteemTransferred"></a></p>
+<ul>
+<li><em>Object</em> <strong>SteemTransferred</strong><br />
+  API name: steem_transferred
+= 0; ///&lt; STEEM transferred from account to account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SbdTransferred"></a></p>
+<ul>
+<li><em>Object</em> <strong>SbdTransferred</strong><br />
+  API name: sbd_transferred
+= 0; ///&lt; SBD transferred from account to account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SbdPaidAsInterest"></a></p>
+<ul>
+<li><em>Object</em> <strong>SbdPaidAsInterest</strong><br />
+  API name: sbd_paid_as_interest
+= 0; ///&lt; SBD paid as interest  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.PaidAccountsCreated"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>PaidAccountsCreated</strong><br />
+  API name: paid_accounts_created
+= 0; ///&lt; Accounts created with fee  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.MinedAccountsCreated"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MinedAccountsCreated</strong><br />
+  API name: mined_accounts_created
+= 0; ///&lt; Accounts mined for free  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.RootComments"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RootComments</strong><br />
+  API name: root_comments
+= 0; ///&lt; Top level root comments  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.RootCommentEdits"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RootCommentEdits</strong><br />
+  API name: root_comment_edits
+= 0; ///&lt; Edits to root comments  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.RootCommentsDeleted"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RootCommentsDeleted</strong><br />
+  API name: root_comments_deleted
+= 0; ///&lt; Root comments deleted  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Replies"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Replies</strong><br />
+  API name: replies
+= 0; ///&lt; Replies to comments  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.ReplyEdits"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>ReplyEdits</strong><br />
+  API name: reply_edits
+= 0; ///&lt; Edits to replies  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.RepliesDeleted"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RepliesDeleted</strong><br />
+  API name: replies_deleted
+= 0; ///&lt; Replies deleted  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.NewRootVotes"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NewRootVotes</strong><br />
+  API name: new_root_votes
+= 0; ///&lt; New votes on root comments  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.ChangedRootVotes"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>ChangedRootVotes</strong><br />
+  API name: changed_root_votes
+= 0; ///&lt; Changed votes on root comments  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.NewReplyVotes"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NewReplyVotes</strong><br />
+  API name: new_reply_votes
+= 0; ///&lt; New votes on replies  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.ChangedReplyVotes"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>ChangedReplyVotes</strong><br />
+  API name: changed_reply_votes
+= 0; ///&lt; Changed votes on replies  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.Payouts"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Payouts</strong><br />
+  API name: payouts
+= 0; ///&lt; Number of comment payouts  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SbdPaidToAuthors"></a></p>
+<ul>
+<li><em>Object</em> <strong>SbdPaidToAuthors</strong><br />
+  API name: sbd_paid_to_authors
+= 0; ///&lt; Ammount of SBD paid to authors  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.VestsPaidToAuthors"></a></p>
+<ul>
+<li><em>Object</em> <strong>VestsPaidToAuthors</strong><br />
+  API name: vests_paid_to_authors
+= 0; ///&lt; Ammount of VESS paid to authors  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.VestsPaidToCurators"></a></p>
+<ul>
+<li><em>Object</em> <strong>VestsPaidToCurators</strong><br />
+  API name: vests_paid_to_curators
+= 0; ///&lt; Ammount of VESTS paid to curators  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.LiquidityRewardsPaid"></a></p>
+<ul>
+<li><em>Object</em> <strong>LiquidityRewardsPaid</strong><br />
+  API name: liquidity_rewards_paid
+= 0; ///&lt; Ammount of STEEM paid to market makers  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.TransfersToVesting"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TransfersToVesting</strong><br />
+  API name: transfers_to_vesting
+= 0; ///&lt; Transfers of STEEM into VESTS  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SteemVested"></a></p>
+<ul>
+<li><em>Object</em> <strong>SteemVested</strong><br />
+  API name: steem_vested
+= 0; ///&lt; Ammount of STEEM vested  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.NewVestingWithdrawalRequests"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NewVestingWithdrawalRequests</strong><br />
+  API name: new_vesting_withdrawal_requests
+= 0; ///&lt; New vesting withdrawal requests  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.ModifiedVestingWithdrawalRequests"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>ModifiedVestingWithdrawalRequests</strong><br />
+  API name: modified_vesting_withdrawal_requests
+= 0; ///&lt; Changes to vesting withdrawal requests  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.VestingWithdrawRateDelta"></a></p>
+<ul>
+<li><em>Object</em> <strong>VestingWithdrawRateDelta</strong><br />
+  API name: vesting_withdraw_rate_delta
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.VestingWithdrawalsProcessed"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>VestingWithdrawalsProcessed</strong><br />
+  API name: vesting_withdrawals_processed
+= 0; ///&lt; Number of vesting withdrawals  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.FinishedVestingWithdrawals"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>FinishedVestingWithdrawals</strong><br />
+  API name: finished_vesting_withdrawals
+= 0; ///&lt; Processed vesting withdrawals that are now finished  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.VestsWithdrawn"></a></p>
+<ul>
+<li><em>Object</em> <strong>VestsWithdrawn</strong><br />
+  API name: vests_withdrawn
+= 0; ///&lt; Ammount of VESTS withdrawn to STEEM  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.VestsTransferred"></a></p>
+<ul>
+<li><em>Object</em> <strong>VestsTransferred</strong><br />
+  API name: vests_transferred
+= 0; ///&lt; Ammount of VESTS transferred to another account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SbdConversionRequestsCreated"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>SbdConversionRequestsCreated</strong><br />
+  API name: sbd_conversion_requests_created
+= 0; ///&lt; SBD conversion requests created  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SbdToBeConverted"></a></p>
+<ul>
+<li><em>Object</em> <strong>SbdToBeConverted</strong><br />
+  API name: sbd_to_be_converted
+= 0; ///&lt; Amount of SBD to be converted  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SbdConversionRequestsFilled"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>SbdConversionRequestsFilled</strong><br />
+  API name: sbd_conversion_requests_filled
+= 0; ///&lt; SBD conversion requests filled  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.SteemConverted"></a></p>
+<ul>
+<li><em>Object</em> <strong>SteemConverted</strong><br />
+  API name: steem_converted
+= 0; ///&lt; Amount of STEEM that was converted  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.LimitOrdersCreated"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LimitOrdersCreated</strong><br />
+  API name: limit_orders_created
+= 0; ///&lt; Limit orders created  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.LimitOrdersFilled"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LimitOrdersFilled</strong><br />
+  API name: limit_orders_filled
+= 0; ///&lt; Limit orders filled  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.LimitOrdersCancelled"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LimitOrdersCancelled</strong><br />
+  API name: limit_orders_cancelled
+= 0; ///&lt; Limit orders cancelled  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.TotalPow"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TotalPow</strong><br />
+  API name: total_pow
+= 0; ///&lt; POW submitted  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.BucketObject.EstimatedHashpower"></a></p>
+<ul>
+<li><em>String</em> <strong>EstimatedHashpower</strong><br />
+  API name: estimated_hashpower
+= 0; ///&lt; Estimated average hashpower over interval  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CallOrderObject"></a></p>
+<h2 id="callorderobject">CallOrderObject</h2>
+<p><em>class Ditch.Golos.Objects.CallOrderObject</em></p>
+<p>call_order_object
+libraries\chain\include\golos\chain\objects\market_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CallOrderObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CallOrderObject.OrderId"></a></p>
+<ul>
+<li><em>Object</em> <strong>OrderId</strong><br />
+  API name: order_id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CallOrderObject.Borrower"></a></p>
+<ul>
+<li><em>String</em> <strong>Borrower</strong><br />
+  API name: borrower  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CallOrderObject.Collateral"></a></p>
+<ul>
+<li><em>Object</em> <strong>Collateral</strong><br />
+  API name: collateral
+call_price.base.asset_id, access via get_collateral  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CallOrderObject.Debt"></a></p>
+<ul>
+<li><em>Object</em> <strong>Debt</strong><br />
+  API name: debt
+call_price.quote.asset_id, access via get_collateral  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CallOrderObject.CallPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>CallPrice</strong><br />
+  API name: call_price
+Debt / Collateral  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CategoryApiObj"></a></p>
+<h2 id="categoryapiobj">CategoryApiObj</h2>
+<p><em>class Ditch.Golos.Objects.CategoryApiObj</em></p>
+<p>category_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CategoryApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CategoryApiObj.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CategoryApiObj.AbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>AbsRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CategoryApiObj.TotalPayouts"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayouts</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CategoryApiObj.Discussions"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Discussions</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CategoryApiObj.LastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastUpdate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.ChainProperties"></a></p>
+<h2 id="chainproperties">ChainProperties</h2>
+<p><em>class Ditch.Golos.Objects.ChainProperties</em></p>
+<p>chain_properties
+golos-0.16.3\libraries\protocol\include\steemit\protocol\steem_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.ChainProperties.AccountCreationFee"></a></p>
+<ul>
+<li><em>Money</em> <strong>AccountCreationFee</strong><br />
+  This fee, paid in STEEM, is converted into VESTING SHARES for the new account.Accounts 
+without vesting shares cannot earn usage rations and therefore are powerless.This minimum 
+fee requires all accounts to have some kind of commitment to the network that includes the
+ ability to vote and make transactions.  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ChainProperties.MaximumBlockSize"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MaximumBlockSize</strong><br />
+  This witnesses vote for the maximum_block_size which is used by the network to tune rate limiting and capacity  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ChainProperties.SbdInterestRate"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>SbdInterestRate</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CollateralBidObject"></a></p>
+<h2 id="collateralbidobject">CollateralBidObject</h2>
+<p><em>class Ditch.Golos.Objects.CollateralBidObject</em></p>
+<p>collateral_bid_object
+libraries\chain\include\golos\chain\objects\market_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CollateralBidObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CollateralBidObject.Bidder"></a></p>
+<ul>
+<li><em>String</em> <strong>Bidder</strong><br />
+  API name: bidder  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CollateralBidObject.InvSwanPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>InvSwanPrice</strong><br />
+  API name: inv_swan_price
+Collateral / Debt  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CommentApiObj"></a></p>
+<h2 id="commentapiobj">CommentApiObj</h2>
+<p><em>class Ditch.Golos.Objects.CommentApiObj</em></p>
+<p>comment_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Id"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Category"></a></p>
+<ul>
+<li><em>String</em> <strong>Category</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.ParentAuthor"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentAuthor</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.ParentPermlink"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentPermlink</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Title"></a></p>
+<ul>
+<li><em>String</em> <strong>Title</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Body"></a></p>
+<ul>
+<li><em>String</em> <strong>Body</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.LastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastUpdate</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Active"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Active</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.LastPayout"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastPayout</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Depth"></a></p>
+<ul>
+<li><em>Byte</em> <strong>Depth</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Children"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Children</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.ChildrenRshares2"></a></p>
+<ul>
+<li><em>String</em> <strong>ChildrenRshares2</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.NetRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>NetRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.AbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>AbsRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.VoteRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>VoteRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.ChildrenAbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>ChildrenAbsRshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.CashoutTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>CashoutTime</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.MaxCashoutTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>MaxCashoutTime</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.TotalVoteWeight"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>TotalVoteWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.RewardWeight"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>RewardWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.TotalPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayoutValue</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.CuratorPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>CuratorPayoutValue</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.AuthorRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>AuthorRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.NetVotes"></a></p>
+<ul>
+<li><em>Int32</em> <strong>NetVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.RootComment"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>RootComment</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Mode"></a></p>
+<ul>
+<li><em>CommentMode</em> <strong>Mode</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.MaxAcceptedPayout"></a></p>
+<ul>
+<li><em>Money</em> <strong>MaxAcceptedPayout</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.PercentSteemDollars"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>PercentSteemDollars</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.AllowReplies"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowReplies</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.AllowVotes"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.AllowCurationRewards"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowCurationRewards</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObj.Beneficiaries"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Beneficiaries</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CommentApiObject"></a></p>
+<h2 id="commentapiobject">CommentApiObject</h2>
+<p><em>class Ditch.Golos.Objects.CommentApiObject</em></p>
+<p>comment_api_object
+libraries\application\include\golos\application\api_objects\comment_api_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Category"></a></p>
+<ul>
+<li><em>String</em> <strong>Category</strong><br />
+  API name: category  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.ParentAuthor"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentAuthor</strong><br />
+  API name: parent_author  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.ParentPermlink"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentPermlink</strong><br />
+  API name: parent_permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Title"></a></p>
+<ul>
+<li><em>String</em> <strong>Title</strong><br />
+  API name: title  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Body"></a></p>
+<ul>
+<li><em>String</em> <strong>Body</strong><br />
+  API name: body  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong><br />
+  API name: json_metadata  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.LastUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastUpdate</strong><br />
+  API name: last_update  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong><br />
+  API name: created  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Active"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Active</strong><br />
+  API name: active  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.LastPayout"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastPayout</strong><br />
+  API name: last_payout  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Depth"></a></p>
+<ul>
+<li><em>Byte</em> <strong>Depth</strong><br />
+  API name: depth  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Children"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Children</strong><br />
+  API name: children  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.ChildrenRshares2"></a></p>
+<ul>
+<li><em>String</em> <strong>ChildrenRshares2</strong><br />
+  API name: children_rshares2  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.NetRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>NetRshares</strong><br />
+  API name: net_rshares  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.AbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>AbsRshares</strong><br />
+  API name: abs_rshares  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.VoteRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>VoteRshares</strong><br />
+  API name: vote_rshares  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.ChildrenAbsRshares"></a></p>
+<ul>
+<li><em>Object</em> <strong>ChildrenAbsRshares</strong><br />
+  API name: children_abs_rshares  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.CashoutTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>CashoutTime</strong><br />
+  API name: cashout_time  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.MaxCashoutTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>MaxCashoutTime</strong><br />
+  API name: max_cashout_time  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.TotalVoteWeight"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>TotalVoteWeight</strong><br />
+  API name: total_vote_weight  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.RewardWeight"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>RewardWeight</strong><br />
+  API name: reward_weight  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.TotalPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayoutValue</strong><br />
+  API name: total_payout_value  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.CuratorPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>CuratorPayoutValue</strong><br />
+  API name: curator_payout_value  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.AuthorRewards"></a></p>
+<ul>
+<li><em>Object</em> <strong>AuthorRewards</strong><br />
+  API name: author_rewards  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.NetVotes"></a></p>
+<ul>
+<li><em>Int32</em> <strong>NetVotes</strong><br />
+  API name: net_votes  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.RootComment"></a></p>
+<ul>
+<li><em>Object</em> <strong>RootComment</strong><br />
+  API name: root_comment  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.MaxAcceptedPayout"></a></p>
+<ul>
+<li><em>Money</em> <strong>MaxAcceptedPayout</strong><br />
+  API name: max_accepted_payout  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.PercentSteemDollars"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>PercentSteemDollars</strong><br />
+  API name: percent_steem_dollars  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.AllowReplies"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowReplies</strong><br />
+  API name: allow_replies  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.AllowVotes"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowVotes</strong><br />
+  API name: allow_votes  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.AllowCurationRewards"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowCurationRewards</strong><br />
+  API name: allow_curation_rewards  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentApiObject.Beneficiaries"></a></p>
+<ul>
+<li><em>BeneficiaryRouteType[]</em> <strong>Beneficiaries</strong><br />
+  API name: beneficiaries  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CommentBlogEntry"></a></p>
+<h2 id="commentblogentry">CommentBlogEntry</h2>
+<p><em>class Ditch.Golos.Objects.CommentBlogEntry</em></p>
+<p>comment_blog_entry
+libraries\plugins\follow\include\golos\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CommentBlogEntry.Comment"></a></p>
+<ul>
+<li><em>CommentApiObject</em> <strong>Comment</strong><br />
+  API name: comment  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentBlogEntry.Blog"></a></p>
+<ul>
+<li><em>String</em> <strong>Blog</strong><br />
+  API name: blog  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentBlogEntry.ReblogOn"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>ReblogOn</strong><br />
+  API name: reblog_on  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentBlogEntry.EntryId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>EntryId</strong><br />
+  API name: entry_id
+= 0;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.CommentFeedEntry"></a></p>
+<h2 id="commentfeedentry">CommentFeedEntry</h2>
+<p><em>class Ditch.Golos.Objects.CommentFeedEntry</em></p>
+<p>comment_feed_entry
+libraries\plugins\follow\include\golos\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.CommentFeedEntry.Comment"></a></p>
+<ul>
+<li><em>CommentApiObject</em> <strong>Comment</strong><br />
+  API name: comment  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentFeedEntry.ReblogBy"></a></p>
+<ul>
+<li><em>String[]</em> <strong>ReblogBy</strong><br />
+  API name: reblog_by  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentFeedEntry.ReblogOn"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>ReblogOn</strong><br />
+  API name: reblog_on  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.CommentFeedEntry.EntryId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>EntryId</strong><br />
+  API name: entry_id
+= 0;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.ConvertRequestApiObj"></a></p>
+<h2 id="convertrequestapiobj">ConvertRequestApiObj</h2>
+<p><em>class Ditch.Golos.Objects.ConvertRequestApiObj: Ditch.Golos.Objects.ConvertRequestObject</em></p>
+<p>convert_request_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Golos.Objects.ConvertRequestObject"></a></p>
+<h2 id="convertrequestobject">ConvertRequestObject</h2>
+<p><em>class Ditch.Golos.Objects.ConvertRequestObject</em></p>
+<p>convert_request_object
+golos-0.16.3\libraries\chain\include\steemit\chain\steem_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.ConvertRequestObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ConvertRequestObject.Owner"></a></p>
+<ul>
+<li><em>Object</em> <strong>Owner</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ConvertRequestObject.Requestid"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Requestid</strong><br />
+  id set by owner,the owner,requestid pair must be unique  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ConvertRequestObject.Amount"></a></p>
+<ul>
+<li><em>Money</em> <strong>Amount</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.Discussion"></a></p>
+<h2 id="discussion">Discussion</h2>
+<p><em>class Ditch.Golos.Objects.Discussion: Ditch.Golos.Objects.CommentApiObj</em></p>
+<p>discussion
+golos-0.16.3\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.Discussion.Url"></a></p>
+<ul>
+<li><em>String</em> <strong>Url</strong><br />
+  /category/@rootauthor/root_permlink#author/permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.RootTitle"></a></p>
+<ul>
+<li><em>String</em> <strong>RootTitle</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.PendingPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>PendingPayoutValue</strong><br />
+  sbd  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.TotalPendingPayoutValue"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPendingPayoutValue</strong><br />
+  sbd including replies  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.ActiveVotes"></a></p>
+<ul>
+<li><em>VoteState[]</em> <strong>ActiveVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.Replies"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Replies</strong><br />
+  author/slug mapping  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.AuthorReputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>AuthorReputation</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.Promoted"></a></p>
+<ul>
+<li><em>Money</em> <strong>Promoted</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.BodyLength"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>BodyLength</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.RebloggedBy"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RebloggedBy</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.FirstRebloggedBy"></a></p>
+<ul>
+<li><em>Object</em> <strong>FirstRebloggedBy</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Discussion.FirstRebloggedOn"></a></p>
+<ul>
+<li><em>Object</em> <strong>FirstRebloggedOn</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject"></a></p>
+<h2 id="dynamicglobalpropertyobject">DynamicGlobalPropertyObject</h2>
+<p><em>class Ditch.Golos.Objects.DynamicGlobalPropertyObject</em></p>
+<p>dynamic_global_property_object
+libraries\chain\include\golos\chain\objects\global_property_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.Id"></a></p>
+<ul>
+<li><em>String</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.HeadBlockNumber"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>HeadBlockNumber</strong><br />
+  API name: head_block_number
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.HeadBlockId"></a></p>
+<ul>
+<li><em>String</em> <strong>HeadBlockId</strong><br />
+  API name: head_block_id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.Time"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Time</strong><br />
+  API name: time  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.CurrentWitness"></a></p>
+<ul>
+<li><em>String</em> <strong>CurrentWitness</strong><br />
+  API name: current_witness  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.TotalPow"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>TotalPow</strong><br />
+  API name: total_pow
+= -1;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.NumPowWitnesses"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NumPowWitnesses</strong><br />
+  API name: num_pow_witnesses
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.VirtualSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>VirtualSupply</strong><br />
+  API name: virtual_supply
+= asset&lt;0,17,0&gt;(0, STEEM_SYMBOL_NAME);  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.CurrentSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>CurrentSupply</strong><br />
+  API name: current_supply
+= asset&lt;0,17,0&gt;(0, STEEM_SYMBOL_NAME);  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.ConfidentialSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>ConfidentialSupply</strong><br />
+  API name: confidential_supply
+= asset&lt;0,17,0&gt;(0, STEEM_SYMBOL_NAME); ///&lt; total asset held in confidential balances  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.CurrentSbdSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>CurrentSbdSupply</strong><br />
+  API name: current_sbd_supply
+= asset&lt;0,17,0&gt;(0, SBD_SYMBOL_NAME);  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.ConfidentialSbdSupply"></a></p>
+<ul>
+<li><em>Money</em> <strong>ConfidentialSbdSupply</strong><br />
+  API name: confidential_sbd_supply
+= asset&lt;0,17,0&gt;(0, SBD_SYMBOL_NAME); ///&lt; total asset held in confidential balances  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.TotalVestingFundSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalVestingFundSteem</strong><br />
+  API name: total_vesting_fund_steem
+= asset&lt;0,17,0&gt;(0, STEEM_SYMBOL_NAME);  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.TotalVestingShares"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalVestingShares</strong><br />
+  API name: total_vesting_shares
+= asset&lt;0,17,0&gt;(0, VESTS_SYMBOL);  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.TotalRewardFundSteem"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalRewardFundSteem</strong><br />
+  API name: total_reward_fund_steem
+= asset&lt;0,17,0&gt;(0, STEEM_SYMBOL_NAME);  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.TotalRewardShares2"></a></p>
+<ul>
+<li><em>String</em> <strong>TotalRewardShares2</strong><br />
+  API name: total_reward_shares2
+the running total of REWARD^2  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.SbdInterestRate"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>SbdInterestRate</strong><br />
+  API name: sbd_interest_rate
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.SbdPrintRate"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>SbdPrintRate</strong><br />
+  API name: sbd_print_rate
+= STEEMIT_100_PERCENT;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.AverageBlockSize"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>AverageBlockSize</strong><br />
+  API name: average_block_size
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.MaximumBlockSize"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MaximumBlockSize</strong><br />
+  API name: maximum_block_size
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.CurrentAslot"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>CurrentAslot</strong><br />
+  API name: current_aslot
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.RecentSlotsFilled"></a></p>
+<ul>
+<li><em>String</em> <strong>RecentSlotsFilled</strong><br />
+  API name: recent_slots_filled  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.ParticipationCount"></a></p>
+<ul>
+<li><em>Byte</em> <strong>ParticipationCount</strong><br />
+  API name: participation_count
+= 0; ///&lt; Divide by 128 to compute participation percentage  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.LastIrreversibleBlockNum"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>LastIrreversibleBlockNum</strong><br />
+  API name: last_irreversible_block_num
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.MaxVirtualBandwidth"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>MaxVirtualBandwidth</strong><br />
+  API name: max_virtual_bandwidth
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.CurrentReserveRatio"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>CurrentReserveRatio</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.DynamicGlobalPropertyObject.VoteRegenerationPerDay"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>VoteRegenerationPerDay</strong><br />
+  API name: vote_regeneration_per_day
+= 40;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.EscrowApiObj"></a></p>
+<h2 id="escrowapiobj">EscrowApiObj</h2>
+<p><em>class Ditch.Golos.Objects.EscrowApiObj: Ditch.Golos.Objects.EscrowObject</em></p>
+<p>escrow_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Golos.Objects.EscrowObject"></a></p>
+<h2 id="escrowobject">EscrowObject</h2>
+<p><em>class Ditch.Golos.Objects.EscrowObject</em></p>
+<p>escrow_object
+golos-0.16.3\libraries\chain\include\steemit\chain\steem_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.EscrowObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.EscrowId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>EscrowId</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.From"></a></p>
+<ul>
+<li><em>String</em> <strong>From</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.To"></a></p>
+<ul>
+<li><em>String</em> <strong>To</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.Agent"></a></p>
+<ul>
+<li><em>String</em> <strong>Agent</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.RatificationDeadline"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>RatificationDeadline</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.EscrowExpiration"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>EscrowExpiration</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.SbdBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SbdBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.SteemBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>SteemBalance</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.PendingFee"></a></p>
+<ul>
+<li><em>Money</em> <strong>PendingFee</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.ToApproved"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>ToApproved</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.AgentApproved"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AgentApproved</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.EscrowObject.Disputed"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Disputed</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.ExtendedAccount"></a></p>
+<h2 id="extendedaccount">ExtendedAccount</h2>
+<p><em>class Ditch.Golos.Objects.ExtendedAccount: Ditch.Golos.Objects.AccountApiObj</em></p>
+<p>extended_account 
+golos-0.16.3\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.VestingBalance"></a></p>
+<ul>
+<li><em>Money</em> <strong>VestingBalance</strong><br />
+  convert vesting_shares to vesting steem  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.Reputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>Reputation</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.TransferHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>TransferHistory</strong><br />
+  transfer to/from vesting  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.MarketHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>MarketHistory</strong><br />
+  limit order / cancel / fill  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.PostHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>PostHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.VoteHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>VoteHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.OtherHistory"></a></p>
+<ul>
+<li><em>Object</em> <strong>OtherHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.WitnessVotes"></a></p>
+<ul>
+<li><em>String[]</em> <strong>WitnessVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.TagsUsage"></a></p>
+<ul>
+<li><em>KeyValuePair`2[]</em> <strong>TagsUsage</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.GuestBloggers"></a></p>
+<ul>
+<li><em>KeyValuePair`2[]</em> <strong>GuestBloggers</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.OpenOrders"></a></p>
+<ul>
+<li><em>Object</em> <strong>OpenOrders</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.Comments"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Comments</strong><br />
+  permlinks for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.Blog"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Blog</strong><br />
+  blog posts for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.Feed"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Feed</strong><br />
+  feed posts for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.RecentReplies"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RecentReplies</strong><br />
+  blog posts for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.BlogCategory"></a></p>
+<ul>
+<li><em>Object</em> <strong>BlogCategory</strong><br />
+  blog posts for this user  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedAccount.Recommended"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Recommended</strong><br />
+  posts recommened for this user  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.ExtendedLimitOrder"></a></p>
+<h2 id="extendedlimitorder">ExtendedLimitOrder</h2>
+<p><em>class Ditch.Golos.Objects.ExtendedLimitOrder</em></p>
+<p>extended_limit_order
+libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.ExtendedLimitOrder.RealPrice"></a></p>
+<ul>
+<li><em>Double</em> <strong>RealPrice</strong><br />
+  API name: real_price
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ExtendedLimitOrder.Rewarded"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Rewarded</strong><br />
+  API name: rewarded
+= false;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.FeedEntry"></a></p>
+<h2 id="feedentry">FeedEntry</h2>
+<p><em>class Ditch.Golos.Objects.FeedEntry</em></p>
+<p>feed_entry
+libraries\plugins\follow\include\golos\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.FeedEntry.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FeedEntry.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FeedEntry.ReblogBy"></a></p>
+<ul>
+<li><em>String[]</em> <strong>ReblogBy</strong><br />
+  API name: reblog_by  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FeedEntry.ReblogOn"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>ReblogOn</strong><br />
+  API name: reblog_on  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FeedEntry.EntryId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>EntryId</strong><br />
+  API name: entry_id
+= 0;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.FeedHistoryApiObj"></a></p>
+<h2 id="feedhistoryapiobj">FeedHistoryApiObj</h2>
+<p><em>class Ditch.Golos.Objects.FeedHistoryApiObj</em></p>
+<p>feed_history_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.FeedHistoryApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FeedHistoryApiObj.CurrentMedianHistory"></a></p>
+<ul>
+<li><em>Price</em> <strong>CurrentMedianHistory</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FeedHistoryApiObj.PriceHistory"></a></p>
+<ul>
+<li><em>Price[]</em> <strong>PriceHistory</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.FollowApiObj"></a></p>
+<h2 id="followapiobj">FollowApiObj</h2>
+<p><em>class Ditch.Golos.Objects.FollowApiObj</em></p>
+<p>follow_api_obj
+golos-0.16.3\libraries\plugins\follow\include\steemit\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.FollowApiObj.Follower"></a></p>
+<ul>
+<li><em>String</em> <strong>Follower</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FollowApiObj.Following"></a></p>
+<ul>
+<li><em>String</em> <strong>Following</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FollowApiObj.What"></a></p>
+<ul>
+<li><em>FollowType[]</em> <strong>What</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.FollowCountApiObj"></a></p>
+<h2 id="followcountapiobj">FollowCountApiObj</h2>
+<p><em>class Ditch.Golos.Objects.FollowCountApiObj</em></p>
+<p>follow_count_api_obj
+libraries\plugins\follow\include\golos\follow\follow_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.FollowCountApiObj.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong><br />
+  API name: account  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FollowCountApiObj.FollowerCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>FollowerCount</strong><br />
+  API name: follower_count
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.FollowCountApiObj.FollowingCount"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>FollowingCount</strong><br />
+  API name: following_count
+= 0;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.ForceSettlementObject"></a></p>
+<h2 id="forcesettlementobject">ForceSettlementObject</h2>
+<p><em>class Ditch.Golos.Objects.ForceSettlementObject</em></p>
+<p>force_settlement_object
+libraries\chain\include\golos\chain\objects\market_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.ForceSettlementObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ForceSettlementObject.Owner"></a></p>
+<ul>
+<li><em>String</em> <strong>Owner</strong><br />
+  API name: owner  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ForceSettlementObject.SettlementId"></a></p>
+<ul>
+<li><em>Object</em> <strong>SettlementId</strong><br />
+  API name: settlement_id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ForceSettlementObject.Balance"></a></p>
+<ul>
+<li><em>Money</em> <strong>Balance</strong><br />
+  API name: balance  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ForceSettlementObject.SettlementDate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>SettlementDate</strong><br />
+  API name: settlement_date  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.HistoryKey"></a></p>
+<h2 id="historykey">HistoryKey</h2>
+<p><em>class Ditch.Golos.Objects.HistoryKey</em></p>
+<p>history_key
+libraries\plugins\market_history\include\golos\market_history\order_history_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.HistoryKey.Sequence"></a></p>
+<ul>
+<li><em>Int64</em> <strong>Sequence</strong><br />
+  API name: sequence
+= 0;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.LimitOrderObject"></a></p>
+<h2 id="limitorderobject">LimitOrderObject</h2>
+<p><em>class Ditch.Golos.Objects.LimitOrderObject</em></p>
+<p>limit_order_object
+libraries\chain\include\golos\chain\objects\market_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong><br />
+  API name: created  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.Expiration"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Expiration</strong><br />
+  API name: expiration  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.Seller"></a></p>
+<ul>
+<li><em>String</em> <strong>Seller</strong><br />
+  API name: seller  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.OrderId"></a></p>
+<ul>
+<li><em>Object</em> <strong>OrderId</strong><br />
+  API name: order_id
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.ForSale"></a></p>
+<ul>
+<li><em>Object</em> <strong>ForSale</strong><br />
+  API name: for_sale
+asset id is sell_price.base.symbol  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.SellPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>SellPrice</strong><br />
+  API name: sell_price  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.LimitOrderObject.DeferredFee"></a></p>
+<ul>
+<li><em>Object</em> <strong>DeferredFee</strong><br />
+  API name: deferred_fee  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.MarketTicker"></a></p>
+<h2 id="marketticker">MarketTicker</h2>
+<p><em>class Ditch.Golos.Objects.MarketTicker</em></p>
+<p>market_ticker
+libraries\plugins\market_history\include\golos\market_history\market_history_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.MarketTicker.Base"></a></p>
+<ul>
+<li><em>String</em> <strong>Base</strong><br />
+  API name: base  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.Quote"></a></p>
+<ul>
+<li><em>String</em> <strong>Quote</strong><br />
+  API name: quote  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.Latest"></a></p>
+<ul>
+<li><em>Double</em> <strong>Latest</strong><br />
+  API name: latest  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.LowestAsk"></a></p>
+<ul>
+<li><em>Double</em> <strong>LowestAsk</strong><br />
+  API name: lowest_ask  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.HighestBid"></a></p>
+<ul>
+<li><em>Double</em> <strong>HighestBid</strong><br />
+  API name: highest_bid  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.PercentChange"></a></p>
+<ul>
+<li><em>Double</em> <strong>PercentChange</strong><br />
+  API name: percent_change  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.BaseVolume"></a></p>
+<ul>
+<li><em>Double</em> <strong>BaseVolume</strong><br />
+  API name: base_volume  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTicker.QuoteVolume"></a></p>
+<ul>
+<li><em>Double</em> <strong>QuoteVolume</strong><br />
+  API name: quote_volume  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.MarketTrade"></a></p>
+<h2 id="markettrade">MarketTrade</h2>
+<p><em>class Ditch.Golos.Objects.MarketTrade</em></p>
+<p>market_trade
+libraries\plugins\market_history\include\golos\market_history\market_history_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.MarketTrade.Date"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Date</strong><br />
+  API name: date  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTrade.Price"></a></p>
+<ul>
+<li><em>Double</em> <strong>Price</strong><br />
+  API name: price  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTrade.Amount"></a></p>
+<ul>
+<li><em>Double</em> <strong>Amount</strong><br />
+  API name: amount  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTrade.Value"></a></p>
+<ul>
+<li><em>Double</em> <strong>Value</strong><br />
+  API name: value  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTrade.Side1AccountName"></a></p>
+<ul>
+<li><em>String</em> <strong>Side1AccountName</strong><br />
+  API name: side1_account_name  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketTrade.Side2AccountName"></a></p>
+<ul>
+<li><em>String</em> <strong>Side2AccountName</strong><br />
+  API name: side2_account_name  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.MarketVolume"></a></p>
+<h2 id="marketvolume">MarketVolume</h2>
+<p><em>class Ditch.Golos.Objects.MarketVolume</em></p>
+<p>market_volume
+libraries\plugins\market_history\include\golos\market_history\market_history_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.MarketVolume.Base"></a></p>
+<ul>
+<li><em>String</em> <strong>Base</strong><br />
+  API name: base  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketVolume.Quote"></a></p>
+<ul>
+<li><em>String</em> <strong>Quote</strong><br />
+  API name: quote  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketVolume.BaseVolume"></a></p>
+<ul>
+<li><em>Double</em> <strong>BaseVolume</strong><br />
+  API name: base_volume  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.MarketVolume.QuoteVolume"></a></p>
+<ul>
+<li><em>Double</em> <strong>QuoteVolume</strong><br />
+  API name: quote_volume  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.Order"></a></p>
+<h2 id="order">Order</h2>
+<p><em>class Ditch.Golos.Objects.Order</em></p>
+<p>order
+libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.Order.OrderPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>OrderPrice</strong><br />
+  API name: order_price  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Order.RealPrice"></a></p>
+<ul>
+<li><em>Double</em> <strong>RealPrice</strong><br />
+  API name: real_price
+dollars per steem  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Order.Steem"></a></p>
+<ul>
+<li><em>Object</em> <strong>Steem</strong><br />
+  API name: steem  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Order.Sbd"></a></p>
+<ul>
+<li><em>Object</em> <strong>Sbd</strong><br />
+  API name: sbd  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Order.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong><br />
+  API name: created  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.OrderBook"></a></p>
+<h2 id="orderbook">OrderBook</h2>
+<p><em>class Ditch.Golos.Objects.OrderBook</em></p>
+<p>order_book
+libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.OrderBook.Asks"></a></p>
+<ul>
+<li><em>Order[]</em> <strong>Asks</strong><br />
+  API name: asks  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OrderBook.Bids"></a></p>
+<ul>
+<li><em>Order[]</em> <strong>Bids</strong><br />
+  API name: bids  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.OrderHistoryObject"></a></p>
+<h2 id="orderhistoryobject">OrderHistoryObject</h2>
+<p><em>class Ditch.Golos.Objects.OrderHistoryObject</em></p>
+<p>order_history_object
+libraries\plugins\market_history\include\golos\market_history\order_history_object.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.OrderHistoryObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OrderHistoryObject.Key"></a></p>
+<ul>
+<li><em>HistoryKey</em> <strong>Key</strong><br />
+  API name: key  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OrderHistoryObject.Time"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Time</strong><br />
+  API name: time  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OrderHistoryObject.Op"></a></p>
+<ul>
+<li><em>Object</em> <strong>Op</strong><br />
+  API name: op  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.OwnerAuthorityHistoryApiObj"></a></p>
+<h2 id="ownerauthorityhistoryapiobj">OwnerAuthorityHistoryApiObj</h2>
+<p><em>class Ditch.Golos.Objects.OwnerAuthorityHistoryApiObj</em></p>
+<p>owner_authority_history_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.OwnerAuthorityHistoryApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OwnerAuthorityHistoryApiObj.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OwnerAuthorityHistoryApiObj.PreviousOwnerAuthority"></a></p>
+<ul>
+<li><em>Authority</em> <strong>PreviousOwnerAuthority</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.OwnerAuthorityHistoryApiObj.LastValidTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastValidTime</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.Price"></a></p>
+<h2 id="price">Price</h2>
+<p><em>class Ditch.Golos.Objects.Price</em></p>
+<p>price
+golos-0.16.3\libraries\protocol\include\steemit\protocol\asset.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.Price.Base"></a></p>
+<ul>
+<li><em>Money</em> <strong>Base</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.Price.Quote"></a></p>
+<ul>
+<li><em>Money</em> <strong>Quote</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj"></a></p>
+<h2 id="savingswithdrawapiobj">SavingsWithdrawApiObj</h2>
+<p><em>class Ditch.Golos.Objects.SavingsWithdrawApiObj</em></p>
+<p>savings_withdraw_api_obj
+libraries\app\include\steemit\app\steem_api_objects.hpp
+libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.From"></a></p>
+<ul>
+<li><em>String</em> <strong>From</strong><br />
+  API name: from  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.To"></a></p>
+<ul>
+<li><em>String</em> <strong>To</strong><br />
+  API name: to  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.Memo"></a></p>
+<ul>
+<li><em>String</em> <strong>Memo</strong><br />
+  API name: memo  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.RequestId"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RequestId</strong><br />
+  API name: request_id
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.Amount"></a></p>
+<ul>
+<li><em>Money</em> <strong>Amount</strong><br />
+  API name: amount  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SavingsWithdrawApiObj.Complete"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Complete</strong><br />
+  API name: complete  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.ScheduledHardfork"></a></p>
+<h2 id="scheduledhardfork">ScheduledHardfork</h2>
+<p><em>class Ditch.Golos.Objects.ScheduledHardfork</em></p>
+<p>scheduled_hardfork
+golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.ScheduledHardfork.HfVersion"></a></p>
+<ul>
+<li><em>String</em> <strong>HfVersion</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.ScheduledHardfork.LiveTime"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LiveTime</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.SignedBlock"></a></p>
+<h2 id="signedblock">SignedBlock</h2>
+<p><em>class Ditch.Golos.Objects.SignedBlock: Ditch.Golos.Objects.SignedBlockHeader</em></p>
+<p>signed_block
+golos-0.16.3\libraries\protocol\include\steemit\protocol\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.SignedBlock.Transactions"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Transactions</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.SignedBlockApiObj"></a></p>
+<h2 id="signedblockapiobj">SignedBlockApiObj</h2>
+<p><em>class Ditch.Golos.Objects.SignedBlockApiObj: Ditch.Golos.Objects.SignedBlock</em></p>
+<p>signed_block_api_obj
+golos-0.16.3\libraries\protocol\include\steemit\protocol\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.SignedBlockApiObj.BlockId"></a></p>
+<ul>
+<li><em>Object</em> <strong>BlockId</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SignedBlockApiObj.SigningKey"></a></p>
+<ul>
+<li><em>String</em> <strong>SigningKey</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SignedBlockApiObj.TransactionIds"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>TransactionIds</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.SignedBlockHeader"></a></p>
+<h2 id="signedblockheader">SignedBlockHeader</h2>
+<p><em>class Ditch.Golos.Objects.SignedBlockHeader: Ditch.Golos.Objects.BlockHeader</em></p>
+<p>signed_block_header
+golos-0.16.3\libraries\protocol\include\steemit\protocol\block_header.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.SignedBlockHeader.WitnessSignature"></a></p>
+<ul>
+<li><em>Object</em> <strong>WitnessSignature</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.State"></a></p>
+<h2 id="state">State</h2>
+<p><em>class Ditch.Golos.Objects.State</em></p>
+<p>state
+golos-0.16.3\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.State.CurrentRoute"></a></p>
+<ul>
+<li><em>String</em> <strong>CurrentRoute</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Props"></a></p>
+<ul>
+<li><em>DynamicGlobalPropertyObject</em> <strong>Props</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.CategoryIdx"></a></p>
+<ul>
+<li><em>Object</em> <strong>CategoryIdx</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.TagIdx"></a></p>
+<ul>
+<li><em>Object</em> <strong>TagIdx</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.DiscussionIdx"></a></p>
+<ul>
+<li><em>Object</em> <strong>DiscussionIdx</strong><br />
+  is the global discussion index  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Categories"></a></p>
+<ul>
+<li><em>Object</em> <strong>Categories</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Tags"></a></p>
+<ul>
+<li><em>Object</em> <strong>Tags</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Content"></a></p>
+<ul>
+<li><em>Object</em> <strong>Content</strong><br />
+  map from account/slug to full nested discussion  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Accounts"></a></p>
+<ul>
+<li><em>Object</em> <strong>Accounts</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.PowQueue"></a></p>
+<ul>
+<li><em>String[]</em> <strong>PowQueue</strong><br />
+  The list of miners who are queued to produce work  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Witnesses"></a></p>
+<ul>
+<li><em>Object</em> <strong>Witnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.WitnessSchedule"></a></p>
+<ul>
+<li><em>WitnessScheduleApiObj</em> <strong>WitnessSchedule</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.FeedPrice"></a></p>
+<ul>
+<li><em>Price</em> <strong>FeedPrice</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.Error"></a></p>
+<ul>
+<li><em>String</em> <strong>Error</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.State.MarketData"></a></p>
+<ul>
+<li><em>Object</em> <strong>MarketData</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.SteemVersionInfo"></a></p>
+<h2 id="steemversioninfo">SteemVersionInfo</h2>
+<p><em>class Ditch.Golos.Objects.SteemVersionInfo</em></p>
+<p>steem_version_info
+libraries\application\include\golos\application\api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.SteemVersionInfo.BlockchainVersion"></a></p>
+<ul>
+<li><em>String</em> <strong>BlockchainVersion</strong><br />
+  API name: blockchain_version  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SteemVersionInfo.SteemRevision"></a></p>
+<ul>
+<li><em>String</em> <strong>SteemRevision</strong><br />
+  API name: steem_revision  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.SteemVersionInfo.FcRevision"></a></p>
+<ul>
+<li><em>String</em> <strong>FcRevision</strong><br />
+  API name: fc_revision  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.TagApiObj"></a></p>
+<h2 id="tagapiobj">TagApiObj</h2>
+<p><em>class Ditch.Golos.Objects.TagApiObj</em></p>
+<p>tag_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.TagApiObj.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.TagApiObj.TotalChildrenRshares2"></a></p>
+<ul>
+<li><em>String</em> <strong>TotalChildrenRshares2</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.TagApiObj.TotalPayouts"></a></p>
+<ul>
+<li><em>Money</em> <strong>TotalPayouts</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.TagApiObj.NetVotes"></a></p>
+<ul>
+<li><em>Int32</em> <strong>NetVotes</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.TagApiObj.TopPosts"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TopPosts</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.TagApiObj.Comments"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Comments</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.TagApiObj.Trending"></a></p>
+<ul>
+<li><em>String</em> <strong>Trending</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.VoteState"></a></p>
+<h2 id="votestate">VoteState</h2>
+<p><em>class Ditch.Golos.Objects.VoteState</em></p>
+<p>vote_state
+golos-0.16.3\libraries\app\include\steemit\app\state.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.VoteState.Voter"></a></p>
+<ul>
+<li><em>String</em> <strong>Voter</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.VoteState.Weight"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>Weight</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.VoteState.Rshares"></a></p>
+<ul>
+<li><em>Int64</em> <strong>Rshares</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.VoteState.Percent"></a></p>
+<ul>
+<li><em>Int16</em> <strong>Percent</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.VoteState.Reputation"></a></p>
+<ul>
+<li><em>Object</em> <strong>Reputation</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.VoteState.Time"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Time</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.WithdrawRoute"></a></p>
+<h2 id="withdrawroute">WithdrawRoute</h2>
+<p><em>class Ditch.Golos.Objects.WithdrawRoute</em></p>
+<p>withdraw_route
+golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.WithdrawRoute.FromAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>FromAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WithdrawRoute.ToAccount"></a></p>
+<ul>
+<li><em>String</em> <strong>ToAccount</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WithdrawRoute.Percent"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Percent</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WithdrawRoute.AutoVest"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AutoVest</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.WitnessApiObj"></a></p>
+<h2 id="witnessapiobj">WitnessApiObj</h2>
+<p><em>class Ditch.Golos.Objects.WitnessApiObj</em></p>
+<p>witness_api_obj
+libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.Owner"></a></p>
+<ul>
+<li><em>String</em> <strong>Owner</strong><br />
+  API name: owner  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.Created"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Created</strong><br />
+  API name: created  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.Url"></a></p>
+<ul>
+<li><em>String</em> <strong>Url</strong><br />
+  API name: url  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.TotalMissed"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>TotalMissed</strong><br />
+  API name: total_missed
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.LastAslot"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>LastAslot</strong><br />
+  API name: last_aslot
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.LastConfirmedBlockNum"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>LastConfirmedBlockNum</strong><br />
+  API name: last_confirmed_block_num
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.PowWorker"></a></p>
+<ul>
+<li><em>UInt64</em> <strong>PowWorker</strong><br />
+  API name: pow_worker
+= 0;  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.SigningKey"></a></p>
+<ul>
+<li><em>Object</em> <strong>SigningKey</strong><br />
+  API name: signing_key  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.Props"></a></p>
+<ul>
+<li><em>ChainProperties</em> <strong>Props</strong><br />
+  API name: props  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.SbdExchangeRate"></a></p>
+<ul>
+<li><em>Price</em> <strong>SbdExchangeRate</strong><br />
+  API name: sbd_exchange_rate  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.LastSbdExchangeUpdate"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>LastSbdExchangeUpdate</strong><br />
+  API name: last_sbd_exchange_update  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.Votes"></a></p>
+<ul>
+<li><em>Object</em> <strong>Votes</strong><br />
+  API name: votes  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.VirtualLastUpdate"></a></p>
+<ul>
+<li><em>String</em> <strong>VirtualLastUpdate</strong><br />
+  API name: virtual_last_update  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.VirtualPosition"></a></p>
+<ul>
+<li><em>String</em> <strong>VirtualPosition</strong><br />
+  API name: virtual_position  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.VirtualScheduledTime"></a></p>
+<ul>
+<li><em>String</em> <strong>VirtualScheduledTime</strong><br />
+  API name: virtual_scheduled_time  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.LastWork"></a></p>
+<ul>
+<li><em>Object</em> <strong>LastWork</strong><br />
+  API name: last_work  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.RunningVersion"></a></p>
+<ul>
+<li><em>Version</em> <strong>RunningVersion</strong><br />
+  API name: running_version  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.HardforkVersionVote"></a></p>
+<ul>
+<li><em>Object</em> <strong>HardforkVersionVote</strong><br />
+  API name: hardfork_version_vote  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessApiObj.HardforkTimeVote"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>HardforkTimeVote</strong><br />
+  API name: hardfork_time_vote  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Objects.WitnessScheduleApiObj"></a></p>
+<h2 id="witnessscheduleapiobj">WitnessScheduleApiObj</h2>
+<p><em>class Ditch.Golos.Objects.WitnessScheduleApiObj: Ditch.Golos.Objects.WitnessScheduleObject</em></p>
+<p>witness_schedule_api_obj
+golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp</p>
+<hr />
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject"></a></p>
+<h2 id="witnessscheduleobject">WitnessScheduleObject</h2>
+<p><em>class Ditch.Golos.Objects.WitnessScheduleObject</em></p>
+<p>witness_schedule_object
+golos-0.16.3\libraries\chain\include\steemit\chain\witness_objects.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.Id"></a></p>
+<ul>
+<li><em>Object</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.CurrentVirtualTime"></a></p>
+<ul>
+<li><em>String</em> <strong>CurrentVirtualTime</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.NextShuffleBlockNum"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NextShuffleBlockNum</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.CurrentShuffledWitnesses"></a></p>
+<ul>
+<li><em>Object</em> <strong>CurrentShuffledWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.NumScheduledWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>NumScheduledWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.Top19Weight"></a></p>
+<ul>
+<li><em>Byte</em> <strong>Top19Weight</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.TimeshareWeight"></a></p>
+<ul>
+<li><em>Byte</em> <strong>TimeshareWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.MinerWeight"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MinerWeight</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.WitnessPayNormalizationFactor"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>WitnessPayNormalizationFactor</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.MedianProps"></a></p>
+<ul>
+<li><em>ChainProperties</em> <strong>MedianProps</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.MajorityVersion"></a></p>
+<ul>
+<li><em>String</em> <strong>MajorityVersion</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.MaxVotedWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MaxVotedWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.MaxMinerWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MaxMinerWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.MaxRunnerWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>MaxRunnerWitnesses</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Objects.WitnessScheduleObject.HardforkRequiredWitnesses"></a></p>
+<ul>
+<li><em>Byte</em> <strong>HardforkRequiredWitnesses</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.BaseOperation"></a></p>
+<h2 id="baseoperation">BaseOperation</h2>
+<p><em>class Ditch.Golos.Operations.BaseOperation</em></p>
+<p>base_operation
+libraries\protocol\include\golos\protocol\base.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Operations.BaseOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.BaseOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.CommentOperation"></a></p>
+<h2 id="commentoperation">CommentOperation</h2>
+<p><em>class Ditch.Golos.Operations.CommentOperation: Ditch.Golos.Operations.BaseOperation</em></p>
+<p>comment_operation
+libraries\protocol\include\golos\protocol\operations\comment_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Operations.CommentOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.ParentAuthor"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentAuthor</strong><br />
+  API name: parent_author  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.ParentPermlink"></a></p>
+<ul>
+<li><em>String</em> <strong>ParentPermlink</strong><br />
+  API name: parent_permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.Title"></a></p>
+<ul>
+<li><em>String</em> <strong>Title</strong><br />
+  API name: title  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.Body"></a></p>
+<ul>
+<li><em>String</em> <strong>Body</strong><br />
+  API name: body  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOperation.JsonMetadata"></a></p>
+<ul>
+<li><em>String</em> <strong>JsonMetadata</strong><br />
+  API name: json_metadata  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation"></a></p>
+<h2 id="commentoptionsoperation">CommentOptionsOperation</h2>
+<p><em>class Ditch.Golos.Operations.CommentOptionsOperation: Ditch.Golos.Operations.BaseOperation</em></p>
+<p>comment_options_operation
+libraries\protocol\include\golos\protocol\operations\comment_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.MaxAcceptedPayoutStr"></a></p>
+<ul>
+<li><em>String</em> <strong>MaxAcceptedPayoutStr</strong><br />
+  API name: max_accepted_payout 
+= {1000000000, SBD_SYMBOL_NAME}; <br />
+SBD value of the maximum payout this post will receive  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.MaxAcceptedPayout"></a></p>
+<ul>
+<li><em>Money</em> <strong>MaxAcceptedPayout</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.PercentSteemDollars"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>PercentSteemDollars</strong><br />
+  API name: percent_steem_dollars
+= STEEMIT_100_PERCENT; 
+the percent of Golos Gold to key, unkept amounts will be received as Golos Power  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.AllowVotes"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowVotes</strong><br />
+  API name: allow_votes
+= true; /// allows a post to receive votes;  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.AllowCurationRewards"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>AllowCurationRewards</strong><br />
+  API name: allow_curation_rewards
+= true; 
+allows voters to recieve curation rewards. Rewards return to reward fund.  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.CommentOptionsOperation.Extensions"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Extensions</strong><br />
+  API name: extensions  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.DeleteCommentOperation"></a></p>
+<h2 id="deletecommentoperation">DeleteCommentOperation</h2>
+<p><em>class Ditch.Golos.Operations.DeleteCommentOperation: Ditch.Golos.Operations.BaseOperation</em></p>
+<p>delete_comment_operation
+libraries\protocol\include\golos\protocol\operations\comment_operations.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Operations.DeleteCommentOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.DeleteCommentOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.DeleteCommentOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong><br />
+  API name: author  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.DeleteCommentOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong><br />
+  API name: permlink  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.FollowOperation"></a></p>
+<h2 id="followoperation">FollowOperation</h2>
+<p><em>class Ditch.Golos.Operations.FollowOperation: Ditch.Golos.Operations.CustomJsonOperation</em></p>
+<p>Follow / Unfollow some author</p>
+<hr />
+<p><a id="Ditch.Golos.Operations.OperationType"></a></p>
+<h2 id="operationtype">OperationType</h2>
+<p><em>enum Ditch.Golos.Operations.OperationType</em></p>
+<p>https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/operations.hpp
+ NOTE= do not change the order of any operations</p>
+<p><strong>Enum Values</strong></p>
+<ul>
+<li><strong>Vote16</strong></li>
+<li><strong>Comment16</strong></li>
+<li><strong>Transfer16</strong></li>
+<li><strong>TransferToVesting16</strong></li>
+<li><strong>WithdrawVesting16</strong></li>
+<li><strong>LimitOrderCreate16</strong></li>
+<li><strong>LimitOrderCancel16</strong></li>
+<li><strong>FeedPublish16</strong></li>
+<li><strong>Convert16</strong></li>
+<li><strong>AccountCreate16</strong></li>
+<li><strong>AccountUpdate16</strong></li>
+<li><strong>WitnessUpdate16</strong></li>
+<li><strong>AccountWitnessVote16</strong></li>
+<li><strong>AccountWitnessProxy16</strong></li>
+<li><strong>Pow16</strong></li>
+<li><strong>Custom</strong></li>
+<li><strong>ReportOverProduction16</strong></li>
+<li><strong>DeleteComment16</strong></li>
+<li><strong>CustomJson</strong></li>
+<li><strong>CommentOptions16</strong></li>
+<li><strong>SetWithdrawVestingRoute16</strong></li>
+<li><strong>LimitOrderCreate216</strong></li>
+<li><strong>ChallengeAuthority16</strong></li>
+<li><strong>ProveAuthority16</strong></li>
+<li><strong>RequestAccountRecovery16</strong></li>
+<li><strong>RecoverAccount16</strong></li>
+<li><strong>ChangeRecoveryAccount16</strong></li>
+<li><strong>EscrowTransfer16</strong></li>
+<li><strong>EscrowDispute16</strong></li>
+<li><strong>EscrowRelease16</strong></li>
+<li><strong>Pow216</strong></li>
+<li><strong>EscrowApprove16</strong></li>
+<li><strong>TransferToSavings16</strong></li>
+<li><strong>TransferFromSavings16</strong></li>
+<li><strong>CancelTransferFromSavings16</strong></li>
+<li><strong>CustomBinary</strong></li>
+<li><strong>DeclineVotingRights16</strong></li>
+<li><strong>ResetAccount16</strong></li>
+<li><strong>SetResetAccount16</strong></li>
+<li><strong>CommentBenefactorReward16</strong></li>
+<li><strong>Vote</strong></li>
+<li><strong>Comment</strong></li>
+<li><strong>Transfer</strong></li>
+<li><strong>TransferToVesting</strong></li>
+<li><strong>WithdrawVesting</strong></li>
+<li><strong>LimitOrderCreate</strong></li>
+<li><strong>LimitOrderCancel</strong></li>
+<li><strong>FeedPublish</strong></li>
+<li><strong>Convert</strong></li>
+<li><strong>AccountCreate</strong></li>
+<li><strong>AccountUpdate</strong></li>
+<li><strong>WitnessUpdate</strong></li>
+<li><strong>AccountWitnessVote</strong></li>
+<li><strong>AccountWitnessProxy</strong></li>
+<li><strong>Pow</strong></li>
+<li><strong>ReportOverProduction</strong></li>
+<li><strong>DeleteComment</strong></li>
+<li><strong>CommentOptions</strong></li>
+<li><strong>SetWithdrawVestingRoute</strong></li>
+<li><strong>LimitOrderCreate2</strong></li>
+<li><strong>ChallengeAuthority</strong></li>
+<li><strong>ProveAuthority</strong></li>
+<li><strong>RequestAccountRecovery</strong></li>
+<li><strong>RecoverAccount</strong></li>
+<li><strong>ChangeRecoveryAccount</strong></li>
+<li><strong>EscrowTransfer</strong></li>
+<li><strong>EscrowDispute</strong></li>
+<li><strong>EscrowRelease</strong></li>
+<li><strong>Pow2</strong></li>
+<li><strong>EscrowApprove</strong></li>
+<li><strong>TransferToSavings</strong></li>
+<li><strong>TransferFromSavings</strong></li>
+<li><strong>CancelTransferFromSavings</strong></li>
+<li><strong>DeclineVotingRights</strong></li>
+<li><strong>ResetAccount</strong></li>
+<li><strong>SetResetAccount</strong></li>
+<li><strong>CommentBenefactorReward</strong></li>
+<li><strong>DelegateVestingShares</strong></li>
+<li><strong>AccountCreateWithDelegation</strong></li>
+<li><strong>CommentPayoutExtension</strong></li>
+<li><strong>AssetCreate</strong></li>
+<li><strong>AssetUpdate</strong></li>
+<li><strong>AssetUpdateBitasset</strong></li>
+<li><strong>AssetUpdateFeedProducers</strong></li>
+<li><strong>AssetIssue</strong></li>
+<li><strong>AssetReserve</strong></li>
+<li><strong>AssetFundFeePool</strong></li>
+<li><strong>AssetSettle</strong></li>
+<li><strong>AssetForceSettle</strong></li>
+<li><strong>AssetGlobalSettle</strong></li>
+<li><strong>AssetPublishFeed</strong></li>
+<li><strong>AssetClaimFees</strong></li>
+<li><strong>CallOrderUpdate</strong></li>
+<li><strong>AccountWhitelist</strong></li>
+<li><strong>OverrideTransfer</strong></li>
+<li><strong>ProposalCreate</strong></li>
+<li><strong>ProposalUpdate</strong></li>
+<li><strong>ProposalDelete</strong></li>
+<li><strong>BidCollateral</strong></li>
+<li><strong>FillConvertRequest16</strong></li>
+<li><strong>AuthorReward16</strong></li>
+<li><strong>CurationReward16</strong></li>
+<li><strong>CommentReward16</strong></li>
+<li><strong>LiquidityReward16</strong></li>
+<li><strong>Interest16</strong></li>
+<li><strong>FillVestingWithdraw16</strong></li>
+<li><strong>FillOrder16</strong></li>
+<li><strong>ShutdownWitness16</strong></li>
+<li><strong>FillTransferFromSavings16</strong></li>
+<li><strong>Hardfork16</strong></li>
+<li><strong>CommentPayoutUpdate16</strong></li>
+<li><strong>FillConvertRequest</strong></li>
+<li><strong>AuthorReward</strong></li>
+<li><strong>CurationReward</strong></li>
+<li><strong>CommentReward</strong></li>
+<li><strong>LiquidityReward</strong></li>
+<li><strong>Interest</strong></li>
+<li><strong>FillVestingWithdraw</strong></li>
+<li><strong>FillOrder</strong></li>
+<li><strong>ShutdownWitness</strong></li>
+<li><strong>FillTransferFromSavings</strong></li>
+<li><strong>Hardfork</strong></li>
+<li><strong>CommentPayoutUpdate</strong></li>
+<li><strong>ReturnVestingDelegation</strong></li>
+<li><strong>AssetSettleCancel</strong></li>
+<li><strong>FillCallOrder</strong></li>
+<li><strong>FillSettlementOrder</strong></li>
+<li><strong>ExecuteBid</strong></li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.RePostOperation"></a></p>
+<h2 id="repostoperation">RePostOperation</h2>
+<p><em>class Ditch.Golos.Operations.RePostOperation: Ditch.Golos.Operations.CustomJsonOperation</em></p>
+<p>Repost some post by author and permlink (loads all additional parameters from the blockchain)</p>
+<hr />
+<p><a id="Ditch.Golos.Operations.UnfollowOperation"></a></p>
+<h2 id="unfollowoperation">UnfollowOperation</h2>
+<p><em>class Ditch.Golos.Operations.UnfollowOperation: Ditch.Golos.Operations.FollowOperation</em></p>
+<p>Unfollow some author</p>
+<hr />
+<p><a id="Ditch.Golos.Operations.VoteOperation"></a></p>
+<h2 id="voteoperation">VoteOperation</h2>
+<p><em>class Ditch.Golos.Operations.VoteOperation: Ditch.Golos.Operations.BaseOperation</em></p>
+<p>Vote up/down/flag post</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.Golos.Operations.VoteOperation.TypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>TypeName</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.VoteOperation.Type"></a></p>
+<ul>
+<li><em>OperationType</em> <strong>Type</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.VoteOperation.Voter"></a></p>
+<ul>
+<li><em>String</em> <strong>Voter</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.VoteOperation.Author"></a></p>
+<ul>
+<li><em>String</em> <strong>Author</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.VoteOperation.Permlink"></a></p>
+<ul>
+<li><em>String</em> <strong>Permlink</strong>  </li>
+</ul>
+<p><a id="Ditch.Golos.Operations.VoteOperation.Weight"></a></p>
+<ul>
+<li><em>Int16</em> <strong>Weight</strong><br />
+  An weignt from 0 to 10000. -10000 for flag  </li>
+</ul>
+<hr />
+<p><a id="Ditch.Golos.Operations.Enums.WithdrawRouteType"></a></p>
+<h2 id="withdrawroutetype">WithdrawRouteType</h2>
+<p><em>enum Ditch.Golos.Operations.Enums.WithdrawRouteType</em></p>
+<p>withdraw_route_type
+golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp</p>
+<p><strong>Enum Values</strong></p>
+<ul>
+<li><strong>Incoming</strong></li>
+<li><strong>Outgoing</strong></li>
+<li><strong>All</strong></li>
+</ul>
+<hr /></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/require.js"></script>
+        <script src="../../search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>

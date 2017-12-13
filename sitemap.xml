@@ -4,23 +4,37 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-12-09</lastmod>
+     <lastmod>2017-12-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
+        
     <url>
-     <loc>/Ditch.Golos/</loc>
-     <lastmod>2017-12-09</lastmod>
+     <loc>/Libraries/Ditch.Steem/</loc>
+     <lastmod>2017-12-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>/Libraries/Ditch.Golos/</loc>
+     <lastmod>2017-12-13</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Libraries/Ditch.Core/</loc>
+     <lastmod>2017-12-13</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
     <url>
-     <loc>/Ditch.Core/</loc>
-     <lastmod>2017-12-09</lastmod>
+     <loc>/donate/</loc>
+     <lastmod>2017-12-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
