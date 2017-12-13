@@ -229,4 +229,4 @@ var resp = _operationManager.BroadcastTransaction(transaction, CancellationToken
 
 ## Getting help
 
-To get help with Ditch, please use the [telegram ru](https://t.me/steepshot_ru), [telegram en](https://t.me/steepshot_en), [GitHab issues](https://github.com/Chainers/Ditch/issues).
+To get help with Ditch, please use the [Telegram](https://t.me/KorzunAV) or [GitHab issues](https://github.com/Chainers/Ditch/issues).
