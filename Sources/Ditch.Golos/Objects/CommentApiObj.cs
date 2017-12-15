@@ -1,6 +1,6 @@
 ﻿using System;
 using Ditch.Core;
-using Ditch.Golos.Operations.Enums;
+using Ditch.Golos.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Objects
@@ -111,11 +111,11 @@ namespace Ditch.Golos.Objects
 
         // bdType : asset
         [JsonProperty("total_payout_value")]
-        public Money TotalPayoutValue { get; set; }
+        public Asset TotalPayoutValue { get; set; }
 
         // bdType : asset
         [JsonProperty("curator_payout_value")]
-        public Money CuratorPayoutValue { get; set; }
+        public Asset CuratorPayoutValue { get; set; }
 
         // bdType : share_type
         [JsonProperty("author_rewards")]
@@ -135,7 +135,7 @@ namespace Ditch.Golos.Objects
 
         // bdType : asset
         [JsonProperty("max_accepted_payout")]
-        public Money MaxAcceptedPayout { get; set; }
+        public Asset MaxAcceptedPayout { get; set; }
 
         // bdType : uint16_t | = 0;
         [JsonProperty("percent_steem_dollars")]

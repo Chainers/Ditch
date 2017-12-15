@@ -4,7 +4,7 @@ using Ditch.Core;
 using Ditch.Steem.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Operations.Post
+namespace Ditch.Steem.Operations
 {
     public class KeyContainer : List<object>
     {
@@ -52,7 +52,7 @@ namespace Ditch.Steem.Operations.Post
     public class BeneficiariesOperation : CommentOptionsOperation
     {
         public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
-            : base(author, permlink, new Money(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
+            : base(author, permlink, new Asset(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
         {
         }
 

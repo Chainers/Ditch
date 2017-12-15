@@ -1,4 +1,4 @@
-﻿namespace Ditch.Steem.Operations.Post
+﻿namespace Ditch.Steem.Operations
 {
     public interface INamedContainer
     {

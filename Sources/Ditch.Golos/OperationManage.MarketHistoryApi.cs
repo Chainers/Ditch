@@ -17,7 +17,7 @@ namespace Ditch.Golos
         // Subscriptions //
         ///////////////////
 
-
+        /*
         /// <summary>
         /// API name: set_subscribe_callback
         /// 
@@ -73,7 +73,7 @@ namespace Ditch.Golos
         {
             return CallRequest(KnownApiNames.MarketHistoryApi, "cancel_all_subscriptions", new object[] { }, token);
         }
-
+        */
         /// <summary>
         /// API name: subscribe_to_market
         /// Request notification when the active orders in the market between two assets changes

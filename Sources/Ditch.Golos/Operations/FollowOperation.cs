@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Ditch.Core.Helpers;
-using Ditch.Golos.Operations.Enums;
+using Ditch.Golos.Enums;
 
 namespace Ditch.Golos.Operations
 {

@@ -17,7 +17,7 @@ namespace Ditch.Steem.Objects
         /// convert vesting_shares to vesting steem
         /// </summary>
         [JsonProperty("vesting_balance")]
-        public Money VestingBalance { get; set; }
+        public Asset VestingBalance { get; set; }
 
         // bdType : share_type | = 0;
         [JsonProperty("reputation")]

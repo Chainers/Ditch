@@ -49,7 +49,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("balance")]
-        public Money Balance { get; set; }
+        public Asset Balance { get; set; }
 
         /// <summary>
         /// API name: settlement_date

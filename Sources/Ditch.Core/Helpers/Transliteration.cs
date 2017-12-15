@@ -1,19 +1,8 @@
-﻿using System.Text.RegularExpressions;
-
+﻿
 namespace Ditch.Core.Helpers
 {
     public static class Transliteration
     {
-        /// <summary>
-        /// @"[_\s\.]+"
-        /// </summary>
-        public static readonly Regex WordDelimiters = new Regex(@"[_\s\.]+");
-
-        /// <summary>
-        /// @"[^a-z0-9-]+"
-        /// </summary>
-        public static readonly Regex PermlinkNotSupportedCharacters = new Regex(@"[^a-z0-9-]+", RegexOptions.IgnoreCase);
-
         //https://github.com/GolosChain/tolstoy/blob/master/app/utils/ParsersAndFormatters.js
         private static readonly string[,] Rules =
         {
@@ -95,25 +84,6 @@ namespace Ditch.Core.Helpers
             }
 
             return text;
-        }
-
-        /// <summary>
-        /// Generate a valid tags
-        /// </summary>
-        /// <param name="tags"></param>
-        public static void PrepareTags(string[] tags)
-        {
-            for (var index = 0; index < tags.Length; index++)
-            {
-                var tag = tags[index];
-                tag = tag.Trim();
-                tag = tag.ToLower();
-                var translit = Transliteration.ToEng(tag);
-                tag = translit.Equals(tag) ? translit : $"ru--{translit}";
-                tag = WordDelimiters.Replace(tag, "-");
-                tag = PermlinkNotSupportedCharacters.Replace(tag, string.Empty);
-                tags[index] = tag;
-            }
         }
     }
 }

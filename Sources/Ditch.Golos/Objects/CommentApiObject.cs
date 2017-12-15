@@ -210,7 +210,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("total_payout_value")]
-        public Money TotalPayoutValue { get; set; }
+        public Asset TotalPayoutValue { get; set; }
 
         /// <summary>
         /// API name: curator_payout_value
@@ -218,7 +218,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("curator_payout_value")]
-        public Money CuratorPayoutValue { get; set; }
+        public Asset CuratorPayoutValue { get; set; }
 
         /// <summary>
         /// API name: author_rewards
@@ -250,7 +250,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("max_accepted_payout")]
-        public Money MaxAcceptedPayout { get; set; }
+        public Asset MaxAcceptedPayout { get; set; }
 
         /// <summary>
         /// API name: percent_steem_dollars

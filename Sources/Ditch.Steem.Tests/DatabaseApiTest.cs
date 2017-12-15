@@ -460,7 +460,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_witnesses()
         {
-            var witnes = Api.GetWitnessesByVote(string.Empty, 1, CancellationToken.None);
+            var witnes = Api.GetWitnessesByVote(string.Empty, 100, CancellationToken.None);
             Console.WriteLine(witnes.Error);
             Assert.IsFalse(witnes.IsError);
 
@@ -492,12 +492,13 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_witness_by_account()
         {
-            var resp = Api.GetWitnessByAccount(User.Login, CancellationToken.None);
+            var witness = "good-karma";
+            var resp = Api.GetWitnessByAccount(witness, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_by_account", new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_by_account", new object[] { witness }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -562,21 +563,21 @@ namespace Ditch.Steem.Tests
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        /*
+
         [Test]
         public void get_liquidity_queue()
         {
-            var resp = Api.GetLiquidityQueue(CancellationToken.None);
+            var resp = Api.GetLiquidityQueue(string.Empty, 10, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_liquidity_queue", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_liquidity_queue", new object[] { string.Empty, 1 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-
+        /*
         [Test]
         public void get_transaction_hex()
         {

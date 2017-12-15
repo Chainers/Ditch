@@ -5,10 +5,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
+using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
+using Ditch.Golos.Enums;
 using Ditch.Golos.Helpers;
 using Ditch.Golos.Operations;
-using Ditch.Golos.Operations.Enums;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -171,7 +172,7 @@ namespace Ditch.Golos.Tests
             var response = Post(user.PostingKeys, false, op);
             Console.WriteLine(response.Error);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
-            
+
             var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
             response = Post(user.PostingKeys, false, op2);
             Console.WriteLine(response.Error);
@@ -203,7 +204,7 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            Assert.IsTrue(ReplyOperation.TimePostfix.IsMatch(op.Permlink));
+            Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

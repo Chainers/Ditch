@@ -16,7 +16,7 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("steem_volume")]
-        public Money SteemVolume {get; set;}
+        public Asset SteemVolume {get; set;}
 
         /// <summary>
         /// API name: sbd_volume
@@ -24,6 +24,6 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("sbd_volume")]
-        public Money SbdVolume {get; set;}
+        public Asset SbdVolume {get; set;}
     }
 }

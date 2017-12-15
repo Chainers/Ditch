@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Ditch.Core
 {
-    public class Money : IComparable<Money>, IEquatable<Money>
+    public class Asset : IComparable<Asset>, IEquatable<Asset>
     {
         public long Value { get; }
 
@@ -11,9 +11,9 @@ namespace Ditch.Core
 
         public byte Precision { get; }
 
-        public Money(string value) : this(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator) { }
+        public Asset(string value) : this(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator) { }
 
-        public Money(string value, string numberDecimalSeparator, string numberGroupSeparator)
+        public Asset(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
             var kv = value.Split(' ');
 
@@ -28,105 +28,105 @@ namespace Ditch.Core
             Currency = kv.Length > 1 ? kv[1].ToUpper() : string.Empty;
         }
 
-        public Money(long value, byte precision, string currency)
+        public Asset(long value, byte precision, string currency)
         {
             Value = value;
             Currency = currency.ToUpper();
             Precision = precision;
         }
 
-        public static Money operator +(Money money1, Money money2)
+        public static Asset operator +(Asset asset1, Asset asset2)
         {
-            if (money1.Currency.Equals(money2.Currency))
+            if (asset1.Currency.Equals(asset2.Currency))
             {
-                if (money1.Precision > money2.Precision)
+                if (asset1.Precision > asset2.Precision)
                 {
-                    var buf = money2.Value * (10 ^ (money1.Precision - money2.Precision));
-                    return new Money(money1.Value + buf, money1.Precision, money1.Currency);
+                    var buf = asset2.Value * (10 ^ (asset1.Precision - asset2.Precision));
+                    return new Asset(asset1.Value + buf, asset1.Precision, asset1.Currency);
                 }
-                if (money1.Precision < money2.Precision)
+                if (asset1.Precision < asset2.Precision)
                 {
-                    var buf = money1.Value * (10 ^ (money2.Precision - money1.Precision));
-                    return new Money(buf + money2.Value, money2.Precision, money1.Currency);
+                    var buf = asset1.Value * (10 ^ (asset2.Precision - asset1.Precision));
+                    return new Asset(buf + asset2.Value, asset2.Precision, asset1.Currency);
                 }
-                return new Money(money1.Value + money2.Value, money1.Precision, money1.Currency);
+                return new Asset(asset1.Value + asset2.Value, asset1.Precision, asset1.Currency);
             }
             throw new ArithmeticException("Attempt adding values with different Currency type.");
         }
 
-        public static Money operator -(Money money1, Money money2)
+        public static Asset operator -(Asset asset1, Asset asset2)
         {
-            if (money1.Currency.Equals(money2.Currency))
+            if (asset1.Currency.Equals(asset2.Currency))
             {
-                if (money1.Precision > money2.Precision)
+                if (asset1.Precision > asset2.Precision)
                 {
-                    var buf = money2.Value * (10 ^ (money1.Precision - money2.Precision));
-                    return new Money(money1.Value - buf, money1.Precision, money1.Currency);
+                    var buf = asset2.Value * (10 ^ (asset1.Precision - asset2.Precision));
+                    return new Asset(asset1.Value - buf, asset1.Precision, asset1.Currency);
                 }
-                if (money1.Precision < money2.Precision)
+                if (asset1.Precision < asset2.Precision)
                 {
-                    var buf = money1.Value * (10 ^ (money2.Precision - money1.Precision));
-                    return new Money(buf - money2.Value, money2.Precision, money1.Currency);
+                    var buf = asset1.Value * (10 ^ (asset2.Precision - asset1.Precision));
+                    return new Asset(buf - asset2.Value, asset2.Precision, asset1.Currency);
                 }
-                return new Money(money1.Value - money2.Value, money1.Precision, money1.Currency);
+                return new Asset(asset1.Value - asset2.Value, asset1.Precision, asset1.Currency);
             }
 
             throw new ArithmeticException("Attempt subtract values with different Currency type.");
         }
 
 
-        public static bool operator >(Money money1, Money money2)
+        public static bool operator >(Asset asset1, Asset asset2)
         {
-            return CompareTo(money1, money2) > 0;
+            return CompareTo(asset1, asset2) > 0;
         }
 
-        public static bool operator >=(Money money1, Money money2)
+        public static bool operator >=(Asset asset1, Asset asset2)
         {
-            return CompareTo(money1, money2) >= 0;
+            return CompareTo(asset1, asset2) >= 0;
         }
 
-        public static bool operator <(Money money1, Money money2)
+        public static bool operator <(Asset asset1, Asset asset2)
         {
-            return CompareTo(money1, money2) < 0;
+            return CompareTo(asset1, asset2) < 0;
         }
 
-        public static bool operator <=(Money money1, Money money2)
+        public static bool operator <=(Asset asset1, Asset asset2)
         {
-            return CompareTo(money1, money2) <= 0;
+            return CompareTo(asset1, asset2) <= 0;
         }
 
-        public static bool operator ==(Money money1, Money money2)
+        public static bool operator ==(Asset asset1, Asset asset2)
         {
-            return CompareTo(money1, money2) == 0;
+            return CompareTo(asset1, asset2) == 0;
         }
 
-        public static bool operator !=(Money money1, Money money2)
+        public static bool operator !=(Asset asset1, Asset asset2)
         {
-            return CompareTo(money1, money2) != 0;
+            return CompareTo(asset1, asset2) != 0;
         }
 
 
-        public static implicit operator Money(string value)
+        public static implicit operator Asset(string value)
         {
-            return new Money(value);
+            return new Asset(value);
         }
 
-        public static implicit operator Money(double value)
+        public static implicit operator Asset(double value)
         {
-            return new Money(value.ToString(CultureInfo.InvariantCulture));
+            return new Asset(value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public static implicit operator string(Money value)
+        public static implicit operator string(Asset value)
         {
             return value.ToString();
         }
 
-        public int CompareTo(Money other)
+        public int CompareTo(Asset other)
         {
             return CompareTo(this, other);
         }
 
-        public static int CompareTo(Money first, Money other)
+        public static int CompareTo(Asset first, Asset other)
         {
             if (!string.IsNullOrEmpty(first.Currency) && !string.IsNullOrEmpty(other.Currency) && !first.Currency.Equals(other.Currency, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidCastException($"Invalid compare {first} and {other}");
@@ -139,7 +139,7 @@ namespace Ditch.Core
             return dThis.CompareTo(dOther);
         }
 
-        public bool Equals(Money other)
+        public bool Equals(Asset other)
         {
             return CompareTo(other) == 0;
         }
@@ -149,7 +149,7 @@ namespace Ditch.Core
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((Money)obj);
+            return Equals((Asset)obj);
         }
 
         public override int GetHashCode()

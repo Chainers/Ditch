@@ -472,11 +472,11 @@ namespace Ditch.Core.Tests
         [TestCase("0.12345 SBD", 12345, 5, "SBD")]
         public void ParseTestTest(string test, long value, byte precision, string currency)
         {
-            var money = new Money(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-            Assert.IsTrue(money.Value == value);
-            Assert.IsTrue(money.Precision == precision);
-            Assert.IsTrue(money.Currency == currency);
-            Assert.IsTrue(test.Equals(money.ToString()));
+            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+            Assert.IsTrue(asset.Value == value);
+            Assert.IsTrue(asset.Precision == precision);
+            Assert.IsTrue(asset.Currency == currency);
+            Assert.IsTrue(test.Equals(asset.ToString()));
         }
     }
 }

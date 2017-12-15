@@ -1,5 +1,5 @@
 ﻿using System;
-using Ditch.Golos.Operations.Enums;
+using Ditch.Golos.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Objects

@@ -135,14 +135,14 @@ namespace Ditch.Golos.Objects
         /// total liquid shares held by this account
         /// </summary>
         [JsonProperty("balance")]
-        public Money Balance { get; set; }
+        public Asset Balance { get; set; }
 
         // bdType : asset
         /// <summary>
         /// total liquid shares held by this account
         /// </summary>
         [JsonProperty("savings_balance")]
-        public Money SavingsBalance { get; set; }
+        public Asset SavingsBalance { get; set; }
 
 
         /**
@@ -164,7 +164,7 @@ namespace Ditch.Golos.Objects
         /// Total sbd balance
         /// </summary>
         [JsonProperty("sbd_balance")]
-        public Money SbdBalance { get; set; }
+        public Asset SbdBalance { get; set; }
 
         // bdType : uint128_t
         /// <summary>
@@ -192,7 +192,7 @@ namespace Ditch.Golos.Objects
         /// total sbd balance
         /// </summary>
         [JsonProperty("savings_sbd_balance")]
-        public Money SavingsSbdBalance { get; set; }
+        public Asset SavingsSbdBalance { get; set; }
 
         // bdType : uint128_t
         /// <summary>
@@ -221,19 +221,19 @@ namespace Ditch.Golos.Objects
 
         // bdType : asset
         [JsonProperty("reward_sbd_balance")]
-        public Money RewardSbdBalance { get; set; }
+        public Asset RewardSbdBalance { get; set; }
 
         // bdType : asset
         [JsonProperty("reward_steem_balance")]
-        public Money RewardSteemBalance { get; set; }
+        public Asset RewardSteemBalance { get; set; }
 
         // bdType : asset
         [JsonProperty("reward_vesting_balance")]
-        public Money RewardVestingBalance { get; set; }
+        public Asset RewardVestingBalance { get; set; }
 
         // bdType : asset
         [JsonProperty("reward_vesting_steem")]
-        public Money RewardVestingSteem { get; set; }
+        public Asset RewardVestingSteem { get; set; }
 
         // bdType : share_type
         [JsonProperty("curation_rewards")]
@@ -248,22 +248,22 @@ namespace Ditch.Golos.Objects
         /// total vesting shares held by this account, controls its voting power
         /// </summary>
         [JsonProperty("vesting_shares")]
-        public Money VestingShares { get; set; }
+        public Asset VestingShares { get; set; }
 
         // bdType : asset
         [JsonProperty("delegated_vesting_shares")]
-        public Money DelegatedVestingShares { get; set; }
+        public Asset DelegatedVestingShares { get; set; }
 
         // bdType : asset
         [JsonProperty("received_vesting_shares")]
-        public Money ReceivedVestingShares { get; set; }
+        public Asset ReceivedVestingShares { get; set; }
 
         // bdType : asset
         /// <summary>
         /// at the time this is updated it can be at most vesting_shares/104
         /// </summary>
         [JsonProperty("vesting_withdraw_rate")]
-        public Money VestingWithdrawRate { get; set; }
+        public Asset VestingWithdrawRate { get; set; }
 
         // bdType : time_point_sec
         /// <summary>

@@ -42,15 +42,15 @@ namespace Ditch.Steem.Objects
 
         // bdType : asset
         [JsonProperty("sbd_balance")]
-        public Money SbdBalance { get; set; }
+        public Asset SbdBalance { get; set; }
 
         // bdType : asset
         [JsonProperty("steem_balance")]
-        public Money SteemBalance { get; set; }
+        public Asset SteemBalance { get; set; }
 
         // bdType : asset
         [JsonProperty("pending_fee")]
-        public Money PendingFee { get; set; }
+        public Asset PendingFee { get; set; }
 
         // bdType : bool | = false;
         [JsonProperty("to_approved")]

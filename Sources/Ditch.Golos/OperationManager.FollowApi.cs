@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Golos.Enums;
 using Ditch.Golos.Objects;
-using Ditch.Golos.Operations.Enums;
 
 namespace Ditch.Golos
 {

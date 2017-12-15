@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
+using Ditch.Golos.Enums;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Ditch.Golos.Operations;
-using Ditch.Golos.Operations.Enums;
 
 namespace Ditch.Golos.Tests
 {

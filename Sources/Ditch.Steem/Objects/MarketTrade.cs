@@ -26,7 +26,7 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("current_pays")]
-        public Money CurrentPays {get; set;}
+        public Asset CurrentPays {get; set;}
 
         /// <summary>
         /// API name: open_pays
@@ -34,6 +34,6 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("open_pays")]
-        public Money OpenPays {get; set;}
+        public Asset OpenPays {get; set;}
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Ditch.Steem.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Operations.Post
+namespace Ditch.Steem.Operations
 {
     /// <summary>
     /// comment_operation
@@ -9,7 +9,6 @@ namespace Ditch.Steem.Operations.Post
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
-        protected const int PermlinkCropCount = 40;
         public override string TypeName => "comment";
 
         public override OperationType Type => OperationType.Comment;

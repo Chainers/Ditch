@@ -8,7 +8,6 @@ using Ditch.Core.JsonRpc;
 using Ditch.Golos.Helpers;
 using Ditch.Golos.Objects;
 using Ditch.Golos.Operations;
-using Ditch.Golos.Protocol;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -218,7 +217,7 @@ namespace Ditch.Golos
                     var hfvs = sbhv.Value<string>();
                     if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
                     {
-                        SbdSymbol = new Money(cur).Currency;
+                        SbdSymbol = new Asset(cur).Currency;
                         ChainId = Hex.HexToBytes(str);
                         Version = VersionHelper.ToInteger(hfvs);
                         return true;

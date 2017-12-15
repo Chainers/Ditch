@@ -91,7 +91,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("virtual_supply")]
-        public Money VirtualSupply { get; set; }
+        public Asset VirtualSupply { get; set; }
 
         /// <summary>
         /// API name: current_supply
@@ -99,7 +99,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("current_supply")]
-        public Money CurrentSupply { get; set; }
+        public Asset CurrentSupply { get; set; }
 
         /// <summary>
         /// API name: confidential_supply
@@ -107,7 +107,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("confidential_supply")]
-        public Money ConfidentialSupply { get; set; }
+        public Asset ConfidentialSupply { get; set; }
 
         /// <summary>
         /// API name: current_sbd_supply
@@ -115,7 +115,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("current_sbd_supply")]
-        public Money CurrentSbdSupply { get; set; }
+        public Asset CurrentSbdSupply { get; set; }
 
         /// <summary>
         /// API name: confidential_sbd_supply
@@ -123,7 +123,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("confidential_sbd_supply")]
-        public Money ConfidentialSbdSupply { get; set; }
+        public Asset ConfidentialSbdSupply { get; set; }
 
         /// <summary>
         /// API name: total_vesting_fund_steem
@@ -131,7 +131,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("total_vesting_fund_steem")]
-        public Money TotalVestingFundSteem { get; set; }
+        public Asset TotalVestingFundSteem { get; set; }
 
         /// <summary>
         /// API name: total_vesting_shares
@@ -139,7 +139,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("total_vesting_shares")]
-        public Money TotalVestingShares { get; set; }
+        public Asset TotalVestingShares { get; set; }
 
         /// <summary>
         /// API name: total_reward_fund_steem
@@ -147,7 +147,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("total_reward_fund_steem")]
-        public Money TotalRewardFundSteem { get; set; }
+        public Asset TotalRewardFundSteem { get; set; }
 
         /// <summary>
         /// API name: total_reward_shares2

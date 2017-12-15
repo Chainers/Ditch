@@ -1,7 +1,7 @@
 using Ditch.Core.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Operations.Enums
+namespace Ditch.Golos.Enums
 {
     [JsonConverter(typeof(EnumConverter))]
     public enum CommentMode

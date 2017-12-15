@@ -3,7 +3,7 @@ using System.Linq;
 using Ditch.Core.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Protocol
+namespace Ditch.Golos.Objects
 {
     /// <summary>
     /// signed_transaction
@@ -14,11 +14,19 @@ namespace Ditch.Golos.Protocol
     {
         #region for json
 
+        private object[][] _operations;
+
         [JsonProperty("operations")]
         public object[][] Operations
         {
             get
             {
+                if (_operations != null)
+                    return _operations;
+
+                if (BaseOperations == null)
+                    return new object[0][];
+
                 var buf = new object[BaseOperations.Length][];
                 for (var i = 0; i < BaseOperations.Length; i++)
                 {
@@ -27,6 +35,7 @@ namespace Ditch.Golos.Protocol
                 }
                 return buf;
             }
+            set => _operations = value;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using System;
 using Ditch.Steem.Helpers;
-using Ditch.Steem.Operations.Post;
+using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Objects

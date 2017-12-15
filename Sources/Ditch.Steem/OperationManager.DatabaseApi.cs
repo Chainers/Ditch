@@ -657,8 +657,6 @@ namespace Ditch.Steem
             return CallRequest<ExtendedLimitOrder[]>(KnownApiNames.DatabaseApi, "get_open_orders", new object[] { owner }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_liquidity_queue
         /// Gets the current liquidity reward queue.
@@ -672,10 +670,8 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<LiquidityBalance[]> GetLiquidityQueue(string startAccount, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<LiquidityBalance[]>(KnownApiNames.DatabaseApi, "get_liquidity_queue", new object[] {startAccount, limit}, token);
+            return CallRequest<LiquidityBalance[]>(KnownApiNames.DatabaseApi, "get_liquidity_queue", new object[] { startAccount, limit }, token);
         }
-
-        */
 
 
         ////////////////////////////

@@ -42,41 +42,41 @@ namespace Ditch.Steem.Objects
 
         // bdType : asset | = asset(0, steem_symbol);
         [JsonProperty("virtual_supply")]
-        public Money VirtualSupply { get; set; }
+        public Asset VirtualSupply { get; set; }
 
         // bdType : asset | = asset(0, steem_symbol);
         [JsonProperty("current_supply")]
-        public Money CurrentSupply { get; set; }
+        public Asset CurrentSupply { get; set; }
 
         // bdType : asset | = asset(0, steem_symbol); 
         /// <summary>
         /// total asset held in confidential balances
         /// </summary>
         [JsonProperty("confidential_supply")]
-        public Money ConfidentialSupply { get; set; }
+        public Asset ConfidentialSupply { get; set; }
 
         // bdType : asset | = asset(0, sbd_symbol);
         [JsonProperty("current_sbd_supply")]
-        public Money CurrentSbdSupply { get; set; }
+        public Asset CurrentSbdSupply { get; set; }
 
         // bdType : asset | = asset(0, sbd_symbol); 
         /// <summary>
         /// total asset held in confidential balances
         /// </summary>
         [JsonProperty("confidential_sbd_supply")]
-        public Money ConfidentialSbdSupply { get; set; }
+        public Asset ConfidentialSbdSupply { get; set; }
 
         // bdType : asset | = asset(0, steem_symbol);
         [JsonProperty("total_vesting_fund_steem")]
-        public Money TotalVestingFundSteem { get; set; }
+        public Asset TotalVestingFundSteem { get; set; }
 
         // bdType : asset | = asset(0, vests_symbol);
         [JsonProperty("total_vesting_shares")]
-        public Money TotalVestingShares { get; set; }
+        public Asset TotalVestingShares { get; set; }
 
         // bdType : asset | = asset(0, steem_symbol);
         [JsonProperty("total_reward_fund_steem")]
-        public Money TotalRewardFundSteem { get; set; }
+        public Asset TotalRewardFundSteem { get; set; }
 
         //uint128
         [JsonProperty("total_reward_shares2")]
@@ -84,11 +84,11 @@ namespace Ditch.Steem.Objects
 
         // bdType : asset | = asset( 0, vests_symbol );
         [JsonProperty("pending_rewarded_vesting_shares")]
-        public Money PendingRewardedVestingShares { get; set; }
+        public Asset PendingRewardedVestingShares { get; set; }
 
         // bdType : asset | = asset( 0, steem_symbol );
         [JsonProperty("pending_rewarded_vesting_steem")]
-        public Money PendingRewardedVestingSteem { get; set; }
+        public Asset PendingRewardedVestingSteem { get; set; }
 
         // bdType : uint16_t | = 0;
         [JsonProperty("sbd_interest_rate")]

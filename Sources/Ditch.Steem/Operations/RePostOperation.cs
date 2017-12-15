@@ -1,4 +1,4 @@
-﻿namespace Ditch.Steem.Operations.Post
+﻿namespace Ditch.Steem.Operations
 {
     /// <summary>
     /// Repost some post by author and permlink (loads all additional parameters from the blockchain)

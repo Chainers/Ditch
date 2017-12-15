@@ -13,10 +13,10 @@ namespace Ditch.Steem.Objects
 
         // bdType : asset
         [JsonProperty("base")]
-        public Money Base { get; set; }
+        public Asset Base { get; set; }
 
         // bdType : asset
         [JsonProperty("quote")]
-        public Money Quote { get; set; }
+        public Asset Quote { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("amount")]
-        public Money Amount { get; set; }
+        public Asset Amount { get; set; }
 
         /// <summary>
         /// API name: complete

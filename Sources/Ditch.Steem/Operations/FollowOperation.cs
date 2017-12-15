@@ -2,7 +2,7 @@
 using Ditch.Core.Helpers;
 using Ditch.Steem.Enums;
 
-namespace Ditch.Steem.Operations.Post
+namespace Ditch.Steem.Operations
 {
     /// <summary>
     /// Follow / Unfollow some author

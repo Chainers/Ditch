@@ -51,7 +51,7 @@ namespace Ditch.Golos.Operations
         [JsonProperty("max_accepted_payout")]
         public string MaxAcceptedPayoutStr { get; set; }
         [MessageOrder(40)]
-        public Money MaxAcceptedPayout
+        public Asset MaxAcceptedPayout
         {
             get => MaxAcceptedPayoutStr;
             set => MaxAcceptedPayoutStr = value;
@@ -95,7 +95,7 @@ namespace Ditch.Golos.Operations
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
 
-        public CommentOptionsOperation(string author, string permlink, Money maxAcceptedPayout, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
+        public CommentOptionsOperation(string author, string permlink, Asset maxAcceptedPayout, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
         {
             Author = author;
             Permlink = permlink;

@@ -20,6 +20,6 @@ namespace Ditch.Golos.Objects
 
         // bdType : vector<transaction_id_type>
         [JsonProperty("transaction_ids")]
-        public object[] TransactionIds { get; set; }
+        public string[] TransactionIds { get; set; }
     }
 }

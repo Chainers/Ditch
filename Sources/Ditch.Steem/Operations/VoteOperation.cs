@@ -2,7 +2,7 @@
 using Ditch.Steem.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Operations.Post
+namespace Ditch.Steem.Operations
 {
     /// <summary>
     /// Vote up/down/flag post

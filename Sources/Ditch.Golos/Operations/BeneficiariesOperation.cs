@@ -52,7 +52,7 @@ namespace Ditch.Golos.Operations
     public class BeneficiariesOperation : CommentOptionsOperation
     {
         public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
-            : base(author, permlink, new Money(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
+            : base(author, permlink, new Asset(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
         {
         }
 

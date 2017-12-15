@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
+using Ditch.Golos.Enums;
 using Ditch.Golos.Objects;
-using Ditch.Golos.Operations.Enums;
-using Ditch.Golos.Protocol;
 
 namespace Ditch.Golos
 {
@@ -278,8 +277,6 @@ namespace Ditch.Golos
             return CallRequest<object>(KnownApiNames.DatabaseApi, "get_config", new object[] { }, token);
         }
 
-        /*
-        
         /// <summary>
         /// API name: get_free_memory
         /// Retrieve database unused memory amount
@@ -289,12 +286,11 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: size_t</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<SizeT> GetFreeMemory(CancellationToken token)
+        public JsonRpcResponse<long> GetFreeMemory(CancellationToken token)
         {
-            return CallRequest<SizeT>(KnownApiNames.DatabaseApi, "get_free_memory", new object[] {}, token);
+            return CallRequest<long>(KnownApiNames.DatabaseApi, "get_free_memory", new object[] { }, token);
         }
 
-        */
 
         /// <summary>
         /// API name: get_dynamic_global_properties
@@ -389,22 +385,18 @@ namespace Ditch.Golos
             return CallRequest<ScheduledHardfork>(KnownApiNames.DatabaseApi, "get_next_scheduled_hardfork", new object[] { }, token);
         }
 
-        /*
-
-                /// <summary>
-                /// API name: get_reward_fund
-                /// 
-                /// </summary>
-                /// <param name="name">API type: string</param>
-                /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-                /// <returns>API type: reward_fund_object</returns>
-                /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-                public JsonRpcResponse<RewardFundObject> GetRewardFund(string name, CancellationToken token)
-                {
-            return CallRequest<RewardFundObject>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] {name}, token);
-                }
-
-        */
+        /// <summary>
+        /// API name: get_reward_fund
+        /// 
+        /// </summary>
+        /// <param name = "name" > API type: string</param>
+        /// <param name = "token" > Throws a<see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: reward_fund_object</returns>
+        /// <exception cref = "T:System.OperationCanceledException" > The token has had cancellation requested.</exception>
+        public JsonRpcResponse<RewardFundObject> GetRewardFund(string name, CancellationToken token)
+        {
+            return CallRequest<RewardFundObject>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] { name }, token);
+        }
 
         /// <summary>
         /// API name: get_name_cost
@@ -414,9 +406,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Money> GetNameCost(string name, CancellationToken token)
+        public JsonRpcResponse<Asset> GetNameCost(string name, CancellationToken token)
         {
-            return CallRequest<Money>(KnownApiNames.DatabaseApi, "get_name_cost", new object[] { name }, token);
+            return CallRequest<Asset>(KnownApiNames.DatabaseApi, "get_name_cost", new object[] { name }, token);
         }
 
 
@@ -478,8 +470,6 @@ namespace Ditch.Golos
         // Balances //
         //////////////
 
-        /*
-             
         /// <summary>
         /// API name: get_account_balances
         /// Get an account's balances in various assets
@@ -491,12 +481,10 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset Balances of the account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Money[]> GetAccountBalances(string name, FlatSet<AssetNameType> assets, CancellationToken token)
+        public JsonRpcResponse<Asset[]> GetAccountBalances(string name, string[] assets, CancellationToken token)
         {
-            return CallRequest<Money<0, 17, 0>[]>(KnownApiNames.DatabaseApi, "get_account_balances", new object[] {name, assets}, token);
+            return CallRequest<Asset[]>(KnownApiNames.DatabaseApi, "get_account_balances", new object[] { name, assets }, token);
         }
-
-        */
 
         /// <summary>
         /// API name: get_account_count
@@ -614,7 +602,6 @@ namespace Ditch.Golos
             return CallRequest<SavingsWithdrawApiObj[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to", new object[] { account }, token);
         }
 
-        /*
 
         /// <summary>
         /// API name: get_vesting_delegations
@@ -628,9 +615,9 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<VestingDelegationObject[]> GetVestingDelegations(string account, string from, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<VestingDelegationObject[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] {account, from, limit}, token);
+            return CallRequest<VestingDelegationObject[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { account, from, limit }, token);
         }
-        
+
         /// <summary>
         /// API name: get_expiring_vesting_delegations
         /// 
@@ -643,10 +630,8 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<VestingDelegationExpirationObject[]> GetExpiringVestingDelegations(string account, DateTime from, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<VestingDelegationExpirationObject[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] {account, from, limit}, token);
+            return CallRequest<VestingDelegationExpirationObject[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { account, from, limit }, token);
         }
-        
-        */
 
         ///////////////
         // Witnesses //
@@ -753,8 +738,6 @@ namespace Ditch.Golos
         // Assets //
         ////////////
 
-        /*
-
         /// <summary>
         /// API name: get_assets
         /// Get a list of assets by ID
@@ -767,9 +750,9 @@ namespace Ditch.Golos
         /// 
         /// This function has semantics identical to @ref get_objects</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AssetObject[]> GetAssets(AssetNameType[] assetSymbols, CancellationToken token)
+        public JsonRpcResponse<AssetObject[]> GetAssets(string[] assetSymbols, CancellationToken token)
         {
-            return CallRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "get_assets", new object[] {assetSymbols}, token);
+            return CallRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "get_assets", new object[] { assetSymbols }, token);
         }
 
         /// <summary>
@@ -782,7 +765,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AssetObject[]> GetAssetsByIssuer(string issuer, CancellationToken token)
         {
-            return CallRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "get_assets_by_issuer", new object[] {issuer}, token);
+            return CallRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "get_assets_by_issuer", new object[] { issuer }, token);
         }
 
         /// <summary>
@@ -793,9 +776,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset_dynamic_data_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AssetDynamicDataObject[]> GetAssetsDynamicData(AssetNameType[] assetSymbols, CancellationToken token)
+        public JsonRpcResponse<AssetDynamicDataObject[]> GetAssetsDynamicData(string[] assetSymbols, CancellationToken token)
         {
-            return CallRequest<AssetDynamicDataObject[]>(KnownApiNames.DatabaseApi, "get_assets_dynamic_data", new object[] {assetSymbols}, token);
+            return CallRequest<AssetDynamicDataObject[]>(KnownApiNames.DatabaseApi, "get_assets_dynamic_data", new object[] { assetSymbols }, token);
         }
 
         /// <summary>
@@ -806,9 +789,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset_bitasset_data_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AssetBitassetDataObject[]> GetBitassetsData(AssetNameType[] assetSymbols, CancellationToken token)
+        public JsonRpcResponse<AssetBitassetDataObject[]> GetBitassetsData(string[] assetSymbols, CancellationToken token)
         {
-            return CallRequest<AssetBitassetDataObject[]>(KnownApiNames.DatabaseApi, "get_bitassets_data", new object[] {assetSymbols}, token);
+            return CallRequest<AssetBitassetDataObject[]>(KnownApiNames.DatabaseApi, "get_bitassets_data", new object[] { assetSymbols }, token);
         }
 
         /// <summary>
@@ -822,13 +805,11 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset_object The assets found</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AssetObject[]> ListAssets(AssetNameType lowerBoundSymbol, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<AssetObject[]> ListAssets(string lowerBoundSymbol, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "list_assets", new object[] {lowerBoundSymbol, limit}, token);
+            return CallRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "list_assets", new object[] { lowerBoundSymbol, limit }, token);
         }
 
-        
-        */
 
         ////////////////////////////
         // Authority / Validation //
@@ -850,8 +831,6 @@ namespace Ditch.Golos
             return CallRequest<string>(KnownApiNames.DatabaseApi, "get_transaction_hex", new object[] { trx }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_transaction
         /// *Displays transaction details for the specified transaction ID.
@@ -861,9 +840,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: annotated_signed_transaction</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(TransactionIdType trxId, CancellationToken token)
+        public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(string trxId, CancellationToken token)
         {
-            return CallRequest<AnnotatedSignedTransaction>(KnownApiNames.DatabaseApi, "get_transaction", new object[] {trxId}, token);
+            return CallRequest<AnnotatedSignedTransaction>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { trxId }, token);
         }
 
         /// <summary>
@@ -878,9 +857,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<PublicKeyType[]> GetRequiredSignatures(SignedTransaction trx, FlatSet<PublicKeyType> availableKeys, CancellationToken token)
+        public JsonRpcResponse<object[]> GetRequiredSignatures(SignedTransaction trx, object[] availableKeys, CancellationToken token)
         {
-            return CallRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] {trx, availableKeys}, token);
+            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { trx, availableKeys }, token);
         }
 
         /// <summary>
@@ -896,13 +875,10 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<PublicKeyType[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<object[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] {trx}, token);
+            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { trx }, token);
         }
-
-        
-        */
 
         /// <summary>
         /// API name: verify_authority
@@ -918,8 +894,6 @@ namespace Ditch.Golos
             return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_authority", new object[] { trx }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: verify_account_authority
         /// *Return true if the signers have enough authority to authorize an account
@@ -930,13 +904,10 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bool true if the signers have enough authority to authorize an account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAccountAuthority(string name, FlatSet<PublicKeyType> signers, CancellationToken token)
+        public JsonRpcResponse<bool> VerifyAccountAuthority(string name, object[] signers, CancellationToken token)
         {
-            return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] {name, signers}, token);
+            return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] { name, signers }, token);
         }
-
-        
-        */
 
         /// <summary>
         /// API name: get_active_votes
@@ -953,8 +924,6 @@ namespace Ditch.Golos
             return CallRequest<VoteState[]>(KnownApiNames.DatabaseApi, "get_active_votes", new object[] { author, permlink }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_account_votes
         /// *Displays all the voices that are displayed by the specified user
@@ -966,11 +935,8 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter, CancellationToken token)
         {
-            return CallRequest<AccountVote[]>(KnownApiNames.DatabaseApi, "get_account_votes", new object[] {voter}, token);
+            return CallRequest<AccountVote[]>(KnownApiNames.DatabaseApi, "get_account_votes", new object[] { voter }, token);
         }
-
-        
-        */
 
         /// <summary>
         /// API name: get_content
@@ -1017,8 +983,6 @@ namespace Ditch.Golos
             return CallRequest<KeyValuePair<string, UInt32>[]>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { author }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_discussions_by_trending
         /// Used to retrieve the list of first payout discussions sorted by rshares^2 amount
@@ -1032,7 +996,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByTrending(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_trending", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_trending", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1048,7 +1012,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByCreated(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_created", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_created", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1064,7 +1028,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByActive(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_active", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_active", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1080,7 +1044,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByCashout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_cashout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_cashout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1096,7 +1060,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1109,7 +1073,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetPostDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1122,7 +1086,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetCommentDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1138,7 +1102,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByVotes(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_votes", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_votes", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1154,7 +1118,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_children", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_children", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1170,7 +1134,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByHot(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_hot", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_hot", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1187,7 +1151,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByFeed(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_feed", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_feed", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1204,7 +1168,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByBlog(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_blog", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_blog", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1218,7 +1182,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByComments(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_comments", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_comments", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1234,11 +1198,8 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByPromoted(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_promoted", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_promoted", new object[] { query }, token);
         }
-
-        
-        */
 
         /// <summary>
         /// API name: get_replies_by_last_update
@@ -1309,12 +1270,10 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset SBD amount required to set payout window duration up to time passed</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Money> GetPayoutExtensionCost(string author, string permlink, DateTime time, CancellationToken token)
+        public JsonRpcResponse<Asset> GetPayoutExtensionCost(string author, string permlink, DateTime time, CancellationToken token)
         {
-            return CallRequest<Money>(KnownApiNames.DatabaseApi, "get_payout_extension_cost", new object[] { author, permlink, time }, token);
+            return CallRequest<Asset>(KnownApiNames.DatabaseApi, "get_payout_extension_cost", new object[] { author, permlink, time }, token);
         }
-
-        /*
 
         /// <summary>
         /// API name: get_payout_extension_time
@@ -1328,9 +1287,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: time_point_sec deadline time the payout window pretends to be extended for</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<DateTime> GetPayoutExtensionTime(string author, string permlink, Money<0, 17, 0> cost, CancellationToken token)
+        public JsonRpcResponse<DateTime> GetPayoutExtensionTime(string author, string permlink, Asset cost, CancellationToken token)
         {
-            return CallRequest<DateTime>(KnownApiNames.DatabaseApi, "get_payout_extension_time", new object[] {author, permlink, cost}, token);
+            return CallRequest<DateTime>(KnownApiNames.DatabaseApi, "get_payout_extension_time", new object[] { author, permlink, cost }, token);
         }
 
         ///////////////////////////
@@ -1347,21 +1306,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ProposalObject[]> GetProposedTransactions(string name, CancellationToken token)
         {
-            return CallRequest<ProposalObject[]>(KnownApiNames.DatabaseApi, "get_proposed_transactions", new object[] {name}, token);
+            return CallRequest<ProposalObject[]>(KnownApiNames.DatabaseApi, "get_proposed_transactions", new object[] { name }, token);
         }
-
-        /// <summary>
-        /// API name: 
-        /// Parsing error: { preParsedElement.CppText}
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<>(CancellationToken token)
-            {
-            return CallRequest<>(KnownApiNames.DatabaseApi, "", new object[] {}, token);
-}
-
-
-    */
     }
 }

@@ -7,7 +7,7 @@ using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
 using Ditch.Steem.Objects;
-using Ditch.Steem.Operations.Post;
+using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -218,7 +218,7 @@ namespace Ditch.Steem
                     var hfvs = sbhv.Value<string>();
                     if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
                     {
-                        SbdSymbol = new Money(cur).Currency;
+                        SbdSymbol = new Asset(cur).Currency;
                         ChainId = Hex.HexToBytes(str);
                         Version = VersionHelper.ToInteger(hfvs);
                         return true;

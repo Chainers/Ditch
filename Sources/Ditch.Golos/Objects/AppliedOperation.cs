@@ -13,7 +13,7 @@ namespace Ditch.Golos.Objects
 
         // bdType : transaction_id_type
         [JsonProperty("trx_id")]
-        public object TrxId { get; set; }
+        public string TrxId { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("block")]

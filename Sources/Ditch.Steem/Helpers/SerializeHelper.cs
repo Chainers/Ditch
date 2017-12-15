@@ -8,7 +8,6 @@ using System.Text;
 using Ditch.Core;
 using Ditch.Steem.Objects;
 using Ditch.Steem.Operations;
-using Ditch.Steem.Operations.Post;
 
 namespace Ditch.Steem.Helpers
 {
@@ -122,9 +121,9 @@ namespace Ditch.Steem.Helpers
                 stream.WriteByte((byte)val);
                 return;
             }
-            if (type == typeof(Money))
+            if (type == typeof(Asset))
             {
-                var typed = (Money)val;
+                var typed = (Asset)val;
                 var buf = BitConverter.GetBytes(typed.Value);
                 stream.Write(buf, 0, buf.Length);
                 stream.WriteByte(typed.Precision);

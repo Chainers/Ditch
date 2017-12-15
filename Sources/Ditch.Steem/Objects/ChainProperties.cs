@@ -20,7 +20,7 @@ namespace Ditch.Steem.Objects
         ///  ability to vote and make transactions.
         /// </summary>
         [JsonProperty("account_creation_fee")]
-        public Money AccountCreationFee { get; set; }
+        public Asset AccountCreationFee { get; set; }
 
         // bdType : uint32_t | = steemit_min_block_size_limit * 2;
         /// <summary>

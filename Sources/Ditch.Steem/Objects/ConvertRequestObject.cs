@@ -29,6 +29,6 @@ namespace Ditch.Steem.Objects
 
         // bdType : asset
         [JsonProperty("amount")]
-        public Money Amount { get; set; }
+        public Asset Amount { get; set; }
     }
 }

@@ -6,8 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Ditch.Core;
+using Ditch.Golos.Objects;
 using Ditch.Golos.Operations;
-using Ditch.Golos.Protocol;
 
 namespace Ditch.Golos.Helpers
 {
@@ -123,9 +123,9 @@ namespace Ditch.Golos.Helpers
                 stream.WriteByte((byte)buf);
                 return;
             }
-            if (type == typeof(Money))
+            if (type == typeof(Asset))
             {
-                var typed = (Money)val;
+                var typed = (Asset)val;
 
                 if (VersionHelper.GetHardfork(hardforkVersion) > 16)
                 {

@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Protocol;
 using System;
 using Ditch.Golos.Objects;
 

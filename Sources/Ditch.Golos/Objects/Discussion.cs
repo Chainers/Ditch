@@ -28,14 +28,14 @@ namespace Ditch.Golos.Objects
         /// sbd
         /// </summary>
         [JsonProperty("pending_payout_value")]
-        public Money PendingPayoutValue { get; set; }
+        public Asset PendingPayoutValue { get; set; }
 
         // bdType : asset | = asset(0, sbd_symbol); 
         /// <summary>
         /// sbd including replies
         /// </summary>
         [JsonProperty("total_pending_payout_value")]
-        public Money TotalPendingPayoutValue { get; set; }
+        public Asset TotalPendingPayoutValue { get; set; }
 
         // bdType : vector<vote_state>
         [JsonProperty("active_votes")]
@@ -54,7 +54,7 @@ namespace Ditch.Golos.Objects
 
         // bdType : asset | = asset(0, sbd_symbol);
         [JsonProperty("promoted")]
-        public Money Promoted { get; set; }
+        public Asset Promoted { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("body_length")]

@@ -2,9 +2,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Ditch.Golos.Operations.Enums;
 using System.Threading;
 using System.Linq;
+using Ditch.Golos.Enums;
 
 namespace Ditch.Golos.Tests
 {

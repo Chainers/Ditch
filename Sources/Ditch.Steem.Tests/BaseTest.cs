@@ -27,7 +27,6 @@ namespace Ditch.Steem.Tests
             var jss = GetJsonSerializerSettings();
             Api = new OperationManager(new HttpManager(jss), jss);
             Api.TryConnectTo(new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" }, CancellationToken.None);
-            // Api.TryConnectTo(new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" }, CancellationToken.None);
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

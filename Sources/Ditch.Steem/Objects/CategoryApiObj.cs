@@ -25,7 +25,7 @@ namespace Ditch.Steem.Objects
 
         // bdType : asset
         [JsonProperty("total_payouts")]
-        public Money TotalPayouts { get; set; }
+        public Asset TotalPayouts { get; set; }
 
         // bdType : uint32_t
         [JsonProperty("discussions")]
