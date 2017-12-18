@@ -63,5 +63,9 @@
   "share_type": "object",
   "id_type": "object",
   "transaction_id_type": "string",
+  "public_key_type": "string",
+  "integral_id_type": "UInt32",
+  "weight_type": "UInt16",
+  "transaction_handle_type": "UInt16",
  }
 }

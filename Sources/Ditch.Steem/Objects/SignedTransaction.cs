@@ -13,12 +13,19 @@ namespace Ditch.Steem.Objects
     public class SignedTransaction : Transaction
     {
         #region for json
+        private object[][] _operations;
 
         [JsonProperty("operations")]
         public object[][] Operations
         {
             get
             {
+                if (_operations != null)
+                    return _operations;
+
+                if (BaseOperations == null)
+                    return new object[0][];
+
                 var buf = new object[BaseOperations.Length][];
                 for (var i = 0; i < BaseOperations.Length; i++)
                 {
@@ -27,6 +34,7 @@ namespace Ditch.Steem.Objects
                 }
                 return buf;
             }
+            set => _operations = value; //TODO: need cast from objects to some operations
         }
 
         /// <summary>

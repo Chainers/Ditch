@@ -13,65 +13,6 @@ namespace Ditch.Golos.Tests
     [TestFixture]
     public class DatabaseApiTest : BaseTest
     {
-        /*
-        [Test]
-        public void set_subscribe_callback()
-        {
-            var resp = Api.SetSubscribeCallback(CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "set_subscribe_callback", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
-        public void set_pending_transaction_callback()
-        {
-            var resp = Api.SetPendingTransactionCallback(CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "set_pending_transaction_callback", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
-        public void set_block_applied_callback()
-        {
-            var resp = Api.SetBlockAppliedCallback(CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "set_block_applied_callback", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-
-        [Test]
-        public void cancel_all_subscriptions()
-        {
-            var resp = Api.CancelAllSubscriptions(CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "cancel_all_subscriptions", new object[] { },
-                CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-        */
         [Test]
         public void get_trending_tags()
         {
@@ -80,8 +21,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_trending_tags",
-                new object[] { User.Login, 3 }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -95,8 +35,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_trending_categories",
-                new object[] { string.Empty, 3 }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_trending_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -110,8 +49,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_best_categories",
-                new object[] { string.Empty, 3 }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_best_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -125,8 +63,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_active_categories",
-                new object[] { string.Empty, 3 }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_active_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -140,8 +77,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_recent_categories",
-                new object[] { string.Empty, 3 }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_recent_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -173,8 +109,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_state", new object[] { "path" },
-                CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_state", new object[] { "path" }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -188,8 +123,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_block_header", new object[] { 42 },
-                CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_block_header", new object[] { 42 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -203,8 +137,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_block", new object[] { 42 },
-                CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_block", new object[] { 42 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -251,8 +184,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties",
-                new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -280,8 +212,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_current_median_history_price",
-                new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_current_median_history_price", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -309,8 +240,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_schedule", new object[] { },
-                CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_schedule", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -322,9 +252,8 @@ namespace Ditch.Golos.Tests
             var resp = Api.GetHardforkVersion(CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(resp.Result);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
-
 
         [Test]
         public void get_next_scheduled_hardfork()
@@ -334,13 +263,12 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_next_scheduled_hardfork",
-                new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_next_scheduled_hardfork", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        /*
+
         [Test]
         public void get_reward_fund()
         {
@@ -368,7 +296,6 @@ namespace Ditch.Golos.Tests
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        */
 
         [Test]
         public void get_accounts()
@@ -378,8 +305,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_accounts",
-                new object[] { new[] { User.Login } }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_accounts", new object[] { new[] { User.Login } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -393,8 +319,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "lookup_account_names",
-                new object[] { new[] { User.Login } }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "lookup_account_names", new object[] { new[] { User.Login } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -403,7 +328,8 @@ namespace Ditch.Golos.Tests
         [Test]
         public void lookup_accounts()
         {
-            var resp = Api.LookupAccounts(User.Login, 3, CancellationToken.None);
+            UInt32 limit = 3;
+            var resp = Api.LookupAccounts(User.Login, limit, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -436,8 +362,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_owner_history",
-                new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_owner_history", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -451,8 +376,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_recovery_request",
-                new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_recovery_request", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -466,8 +390,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_escrow", new object[] { string.Empty, 3 },
-                CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_escrow", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -491,8 +414,7 @@ namespace Ditch.Golos.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsFalse(resp.IsError);
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_withdraw_routes",
-                new object[] { User.Login, "all" }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_withdraw_routes", new object[] { User.Login, "all" }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -516,8 +438,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_bandwidth",
-                new object[] { User.Login, BandwidthType.Forum }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_bandwidth", new object[] { User.Login, BandwidthType.Forum }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -531,8 +452,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_from",
-                new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_savings_withdraw_from", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -546,8 +466,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to",
-                new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -575,7 +494,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100, }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -584,7 +503,7 @@ namespace Ditch.Golos.Tests
         [Test]
         public void get_witnesses()
         {
-            var witnes = Api.GetWitnessesByVote(string.Empty, 1, CancellationToken.None);
+            var witnes = Api.GetWitnessesByVote(string.Empty, 100, CancellationToken.None);
             Console.WriteLine(witnes.Error);
             Assert.IsFalse(witnes.IsError);
 
@@ -593,8 +512,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_witnesses",
-                new object[] { new[] { witnes.Result[0].Id } }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_witnesses", new object[] { new[] { witnes.Result[0].Id } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -608,8 +526,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_conversion_requests",
-                new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_conversion_requests", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -624,8 +541,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_by_account",
-                new object[] { witness }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_by_account", new object[] { witness }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -639,8 +555,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_witnesses_by_vote",
-                new object[] { string.Empty, 3 }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_witnesses_by_vote", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -661,7 +576,7 @@ namespace Ditch.Golos.Tests
             var resp = Api.GetWitnessCount(CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(resp.Result);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
 
@@ -868,8 +783,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_content",
-                new object[] { author, permlink }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_content", new object[] { author, permlink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -1129,7 +1043,7 @@ namespace Ditch.Golos.Tests
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login },
+                SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByComments(query, CancellationToken.None);
             Console.WriteLine(resp.Error);
@@ -1179,15 +1093,13 @@ namespace Ditch.Golos.Tests
         {
             ushort count = 3;
             var dt = DateTime.Now;
-            var resp = Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count,
-                CancellationToken.None);
+            var resp = Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length <= count);
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_discussions_by_author_before_date",
-                new object[] { User.Login, string.Empty, dt, count }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_author_before_date", new object[] { User.Login, string.Empty, dt, count }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));

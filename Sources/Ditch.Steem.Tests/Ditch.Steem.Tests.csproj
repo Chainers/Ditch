@@ -87,6 +87,7 @@
     <Compile Include="MarketHistoryApiTest.cs" />
     <Compile Include="NetworkBroadcastApiTest.cs" />
     <None Include="packages.config" />
+    <Compile Include="PrivateMessageApi.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,31 +1,17 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Steem.Enums;
+using Ditch.Steem.Objects;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Ditch.Steem.Operations;
 
 namespace Ditch.Steem.Tests
 {
     [TestFixture]
     public class DatabaseApiTest : BaseTest
     {
-        /*
-        [Test]
-        public void set_block_applied_callback()
-        {
-            var resp = Api.SetBlockAppliedCallback(CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "set_block_applied_callback", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-        */
-
         [Test]
         public void get_trending_tags()
         {
@@ -103,12 +89,13 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_ops_in_block()
         {
-            var resp = Api.GetOpsInBlock(1, false, CancellationToken.None);
+            uint id = 2;
+            var resp = Api.GetOpsInBlock(id, false, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_ops_in_block", new object[] { 1, false }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_ops_in_block", new object[] { id, false }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -200,7 +187,6 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
         }
 
         [Test]
@@ -217,31 +203,29 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
-        /*
         [Test]
         public void get_reward_fund()
         {
-            var resp = Api.GetRewardFund(CancellationToken.None);
+            var resp = Api.GetRewardFund(User.Login, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        
+        /*
         [Test]
         public void get_key_references()
         {
-            var resp = Api.GetKeyReferences(CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var pubKey = "STM6C8GjDBAHrfSqaNRn4FnLLUdCfw3WgjY3td1cC4T7CKpb32YM6";
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_key_references", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+
+            var obj = Api.CallRequest<JObject>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { pubKey }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_key_references", new object[] { pubKey }, CancellationToken.None);
+            //TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
@@ -333,7 +317,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_recovery_request", new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_recovery_request", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -358,18 +342,18 @@ namespace Ditch.Steem.Tests
         {
             var resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Incoming, CancellationToken.None);
             Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsFalse(resp.IsError);
 
             resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Outgoing, CancellationToken.None);
             Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsFalse(resp.IsError);
 
             resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.All, CancellationToken.None);
             Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsFalse(resp.IsError);
 
             var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_withdraw_routes", new object[] { User.Login, "all" }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -395,7 +379,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_bandwidth", new object[] { User.Login, BandwidthType.Forum.ToString().ToLower() }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_bandwidth", new object[] { User.Login, BandwidthType.Forum }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -428,16 +412,16 @@ namespace Ditch.Steem.Tests
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        /*
+
         [Test]
         public void get_vesting_delegations()
         {
-            var resp = Api.GetVestingDelegations(CancellationToken.None);
+            var resp = Api.GetVestingDelegations(User.Login, string.Empty, 10, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -446,17 +430,17 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_expiring_vesting_delegations()
         {
-            var resp = Api.GetExpiringVestingDelegations(CancellationToken.None);
+            var resp = Api.GetExpiringVestingDelegations(User.Login, new DateTime(2017, 01, 01), 100, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        */
+
         [Test]
         public void get_witnesses()
         {
@@ -577,114 +561,123 @@ namespace Ditch.Steem.Tests
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        /*
+
         [Test]
         public void get_transaction_hex()
         {
-            var resp = Api.GetTransactionHex(CancellationToken.None);
+            var user = User;
+            var autor = "steepshot";
+
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+
+            var resp = Api.GetTransactionHex(transaction, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction_hex", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
         public void get_transaction()
         {
-            var resp = Api.GetTransaction(CancellationToken.None);
+            var op = Api.GetOpsInBlock(2, false, CancellationToken.None);
+            Assert.IsFalse(op.IsError);
+
+            var resp = Api.GetTransaction(op.Result[0].TrxId, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { op.Result[0].TrxId }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        
+
         [Test]
         public void get_required_signatures()
         {
-            var resp = Api.GetRequiredSignatures(CancellationToken.None);
+            var user = User;
+            var autor = "steepshot";
+
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+
+            var resp = Api.GetRequiredSignatures(transaction, new object[0], CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
         public void get_potential_signatures()
         {
-            var resp = Api.GetPotentialSignatures(CancellationToken.None);
+            var user = User;
+            var autor = "steepshot";
+
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+
+            var resp = Api.GetPotentialSignatures(transaction, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        
+
         [Test]
         public void verify_authority()
         {
-            var resp = Api.VerifyAuthority(CancellationToken.None);
+            var user = User;
+            var autor = "steepshot";
+
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+
+            var resp = Api.VerifyAuthority(transaction, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "verify_authority", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        
+
         [Test]
+        [Ignore("---")]
         public void verify_account_authority()
         {
-            var resp = Api.VerifyAccountAuthority(CancellationToken.None);
+            var resp = Api.VerifyAccountAuthority(User.Login, new object[] { "" }, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] { }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
         public void verify_signatures()
         {
-            var resp = Api.VerifySignatures(CancellationToken.None);
+            var args = new VerifySignaturesArgs();
+            var resp = Api.VerifySignatures(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "verify_signatures", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "verify_signatures", new object[] { args }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        
+
         [Test]
         public void get_active_votes()
         {
-            var resp = Api.GetActiveVotes(CancellationToken.None);
+            var permlink = "test";
+            var resp = Api.GetActiveVotes(User.Login, permlink, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_active_votes", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_active_votes", new object[] { User.Login, permlink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -693,17 +686,17 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_account_votes()
         {
-            var resp = Api.GetAccountVotes(CancellationToken.None);
+            var resp = Api.GetAccountVotes(User.Login, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_votes", new object[] { }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_account_votes", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        */
+
         [Test]
         public void get_content()
         {
@@ -714,7 +707,6 @@ namespace Ditch.Steem.Tests
             Assert.IsTrue(resp != null);
             Assert.IsTrue(resp.Result != null);
             Console.WriteLine(resp.Error);
-            Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
@@ -723,245 +715,306 @@ namespace Ditch.Steem.Tests
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
-        /*
-       [Test]
-       public void get_content_replies()
-       {
-           var resp = Api.GetContentReplies(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_content_replies", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        [Ignore("add data for test")]
+        public void get_content_replies()
+        {
+            var parent = "";
+            var parentPermink = "";
+            var resp = Api.GetContentReplies(parent, parentPermink, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-       [Test]
-       public void get_tags_used_by_author()
-       {
-           var resp = Api.GetTagsUsedByAuthor(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_content_replies", new object[] { parent, parentPermink }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        public void get_tags_used_by_author()
+        {
+            var resp = Api.GetTagsUsedByAuthor(User.Login, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-       [Test]
-       public void get_discussions_by_payout()
-       {
-           var resp = Api.GetDiscussionsByPayout(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        public void get_discussions_by_payout()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-       [Test]
-       public void get_post_discussions_by_payout()
-       {
-           var resp = Api.GetPostDiscussionsByPayout(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        public void get_post_discussions_by_payout()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetPostDiscussionsByPayout(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-       [Test]
-       public void get_comment_discussions_by_payout()
-       {
-           var resp = Api.GetCommentDiscussionsByPayout(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        public void get_comment_discussions_by_payout()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetCommentDiscussionsByPayout(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-       [Test]
-       public void get_discussions_by_trending()
-       {
-           var resp = Api.GetDiscussionsByTrending(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_trending", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        public void get_discussions_by_trending()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByTrending(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-       [Test]
-       public void get_discussions_by_created()
-       {
-           var resp = Api.GetDiscussionsByCreated(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_trending", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_created", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+        [Test]
+        public void get_discussions_by_created()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
 
-       [Test]
-       public void get_discussions_by_active()
-       {
-           var resp = Api.GetDiscussionsByActive(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var resp = Api.GetDiscussionsByCreated(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_active", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_created", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_cashout()
-       {
-           var resp = Api.GetDiscussionsByCashout(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_active()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByActive(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_cashout", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_active", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_votes()
-       {
-           var resp = Api.GetDiscussionsByVotes(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_cashout()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByCashout(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_votes", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_cashout", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_children()
-       {
-           var resp = Api.GetDiscussionsByChildren(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_votes()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByVotes(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_children", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_votes", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_hot()
-       {
-           var resp = Api.GetDiscussionsByHot(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_children()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByChildren(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_hot", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_feed()
-       {
-           var resp = Api.GetDiscussionsByFeed(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_hot()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByHot(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_feed", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_hot", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_blog()
-       {
-           var resp = Api.GetDiscussionsByBlog(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_feed()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByFeed(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_blog", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_feed", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_comments()
-       {
-           var resp = Api.GetDiscussionsByComments(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_blog()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByBlog(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_comments", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_blog", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_discussions_by_promoted()
-       {
-           var resp = Api.GetDiscussionsByPromoted(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        [Ignore("add data for test")]
+        public void get_discussions_by_comments()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByComments(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_promoted", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_comments", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-       [Test]
-       public void get_replies_by_last_update()
-       {
-           var resp = Api.GetRepliesByLastUpdate(CancellationToken.None);
-           Console.WriteLine(resp.Error);
-           Assert.IsFalse(resp.IsError);
-           Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        [Test]
+        public void get_discussions_by_promoted()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByPromoted(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-           var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_replies_by_last_update", new object[] { }, CancellationToken.None);
-           TestPropetries(resp.Result.GetType(), obj.Result);
-           Console.WriteLine("----------------------------------------------------------------------------");
-           Console.WriteLine(JsonConvert.SerializeObject(obj));
-       }
-       */
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_promoted", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_replies_by_last_update()
+        {
+            var resp = Api.GetRepliesByLastUpdate(User.Login, string.Empty, 10, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_replies_by_last_update", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
         [Test]
         public void get_discussions_by_author_before_date()
         {
@@ -988,11 +1041,6 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_account_history", new object[] { User.Login, from, limit }, CancellationToken.None);
-            //TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
     }
 }

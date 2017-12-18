@@ -268,8 +268,6 @@ namespace Ditch.Steem
             return CallRequest<ScheduledHardfork>(KnownApiNames.DatabaseApi, "get_next_scheduled_hardfork", new object[] { }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_reward_fund
         /// 
@@ -280,17 +278,15 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<RewardFundApiObj> GetRewardFund(string name, CancellationToken token)
         {
-            return CallRequest<RewardFundApiObj>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] {name}, token);
+            return CallRequest<RewardFundApiObj>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] { name }, token);
         }
-
-        */
 
 
         //////////
         // Keys //
         //////////
 
-
+        /*
         /// <summary>
         /// API name: get_key_references
         /// 
@@ -299,11 +295,11 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: string</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> GetKeyReferences(object[] key, CancellationToken token)
+        public JsonRpcResponse<string[]> GetKeyReferences(string[] key, CancellationToken token)
         {
             return CallRequest<string[]>(KnownApiNames.DatabaseApi, "get_key_references", new object[] { key }, token);
         }
-
+        */
 
         //////////////
         // Accounts //
@@ -488,8 +484,6 @@ namespace Ditch.Steem
             return CallRequest<SavingsWithdrawApiObj[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to", new object[] { account }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_vesting_delegations
         /// 
@@ -502,7 +496,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<VestingDelegationApiObj[]> GetVestingDelegations(string account, string from, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<VestingDelegationApiObj[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] {account, from, limit}, token);
+            return CallRequest<VestingDelegationApiObj[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { account, from, limit }, token);
         }
 
         /// <summary>
@@ -517,10 +511,9 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<VestingDelegationExpirationApiObj[]> GetExpiringVestingDelegations(string account, DateTime from, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<VestingDelegationExpirationApiObj[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] {account, from, limit}, token);
+            return CallRequest<VestingDelegationExpirationApiObj[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { account, from, limit }, token);
         }
 
-        */
 
         ///////////////
         // Witnesses //
@@ -678,7 +671,7 @@ namespace Ditch.Steem
         // Authority / validation //
         ////////////////////////////
 
-        /*
+
 
         /// <summary>
         /// API name: get_transaction_hex
@@ -693,7 +686,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string> GetTransactionHex(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest<string>(KnownApiNames.DatabaseApi, "get_transaction_hex", new object[] {trx}, token);
+            return CallRequest<string>(KnownApiNames.DatabaseApi, "get_transaction_hex", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -705,9 +698,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: annotated_signed_transaction</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(TransactionIdType trxId, CancellationToken token)
+        public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(string trxId, CancellationToken token)
         {
-            return CallRequest<AnnotatedSignedTransaction>(KnownApiNames.DatabaseApi, "get_transaction", new object[] {trxId}, token);
+            return CallRequest<AnnotatedSignedTransaction>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { trxId }, token);
         }
 
         /// <summary>
@@ -722,9 +715,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<PublicKeyType[]> GetRequiredSignatures(SignedTransaction trx, FlatSet<PublicKeyType> availableKeys, CancellationToken token)
+        public JsonRpcResponse<object[]> GetRequiredSignatures(SignedTransaction trx, object[] availableKeys, CancellationToken token)
         {
-            return CallRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] {trx, availableKeys}, token);
+            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { trx, availableKeys }, token);
         }
 
         /// <summary>
@@ -740,9 +733,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<PublicKeyType[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<object[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] {trx}, token);
+            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -756,7 +749,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<bool> VerifyAuthority(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_authority", new object[] {trx}, token);
+            return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_authority", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -769,9 +762,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bool true if the signers have enough authority to authorize an account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAccountAuthority(string nameOrId, FlatSet<PublicKeyType> signers, CancellationToken token)
+        public JsonRpcResponse<bool> VerifyAccountAuthority(string nameOrId, object[] signers, CancellationToken token)
         {
-            return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] {nameOrId, signers}, token);
+            return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] { nameOrId, signers }, token);
         }
 
         /// <summary>
@@ -787,10 +780,8 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<VerifySignaturesReturn> VerifySignatures(VerifySignaturesArgs args, CancellationToken token)
         {
-            return CallRequest<VerifySignaturesReturn>(KnownApiNames.DatabaseApi, "verify_signatures", new object[] {args}, token);
+            return CallRequest<VerifySignaturesReturn>(KnownApiNames.DatabaseApi, "verify_signatures", new object[] { args }, token);
         }
-
-        */
 
         /// <summary>
         /// API name: get_active_votes
@@ -807,8 +798,6 @@ namespace Ditch.Steem
             return CallRequest<VoteState[]>(KnownApiNames.DatabaseApi, "get_active_votes", new object[] { author, permlink }, token);
         }
 
-        /*
-
         /// <summary>
         /// API name: get_account_votes
         /// *Displays all the voices that are displayed by the specified user
@@ -820,10 +809,8 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter, CancellationToken token)
         {
-            return CallRequest<AccountVote[]>(KnownApiNames.DatabaseApi, "get_account_votes", new object[] {voter}, token);
+            return CallRequest<AccountVote[]>(KnownApiNames.DatabaseApi, "get_account_votes", new object[] { voter }, token);
         }
-
-        */
 
         /// <summary>
         /// API name: get_content
@@ -871,9 +858,6 @@ namespace Ditch.Steem
             return CallRequest<KeyValuePair<string, UInt32>[]>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { author }, token);
         }
 
-
-        /*
-
         /// <summary>
         /// API name: get_discussions_by_payout
         /// Used to retrieve the list of discussions sorted by net rshares amount
@@ -887,7 +871,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -900,7 +884,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetPostDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -913,7 +897,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetCommentDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -929,7 +913,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByTrending(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_trending", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_trending", new object[] { query }, token);
         }
 
         /// <summary>
@@ -945,7 +929,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByCreated(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_created", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_created", new object[] { query }, token);
         }
 
         /// <summary>
@@ -961,7 +945,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByActive(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_active", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_active", new object[] { query }, token);
         }
 
         /// <summary>
@@ -977,7 +961,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByCashout(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_cashout", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_cashout", new object[] { query }, token);
         }
 
         /// <summary>
@@ -993,7 +977,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByVotes(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_votes", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_votes", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1009,7 +993,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_children", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_children", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1025,7 +1009,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByHot(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_hot", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_hot", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1042,7 +1026,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByFeed(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_feed", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_feed", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1059,7 +1043,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByBlog(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_blog", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_blog", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1073,7 +1057,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByComments(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_comments", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_comments", new object[] { query }, token);
         }
 
         /// <summary>
@@ -1089,7 +1073,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<Discussion[]> GetDiscussionsByPromoted(DiscussionQuery query, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_promoted", new object[] {query}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_discussions_by_promoted", new object[] { query }, token);
         }
 
 
@@ -1106,12 +1090,10 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(AccountNameType startAuthor, string startPermlink, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_replies_by_last_update", new object[] {startAuthor, startPermlink, limit}, token);
+            return CallRequest<Discussion[]>(KnownApiNames.DatabaseApi, "get_replies_by_last_update", new object[] { startAuthor, startPermlink, limit }, token);
         }
-            
-        */
 
         /// <summary>
         /// API name: get_discussions_by_author_before_date

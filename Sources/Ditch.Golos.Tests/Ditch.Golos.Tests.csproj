@@ -89,6 +89,7 @@
     <None Include="app.config" />
     <None Include="app.config.template" />
     <None Include="packages.config" />
+    <Compile Include="PrivateMessageApi.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

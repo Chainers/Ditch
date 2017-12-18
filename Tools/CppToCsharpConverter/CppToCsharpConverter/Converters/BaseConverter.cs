@@ -22,7 +22,7 @@ namespace CppToCsharpConverter.Converters
         private readonly Dictionary<string, string> _knownTypes;
         public static readonly Dictionary<string, string> Founded = new Dictionary<string, string>();
         public static readonly List<SearchTask> UnknownTypes = new List<SearchTask>();
-        private Dictionary<string, string> _methodDescriptions;
+        private Dictionary<string, string> _methodDescriptions = new Dictionary<string, string>();
 
         private Dictionary<string, string> MethodDescriptions
         {

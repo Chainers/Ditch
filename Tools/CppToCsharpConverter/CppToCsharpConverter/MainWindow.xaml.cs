@@ -19,6 +19,7 @@ namespace CppToCsharpConverter
         public MainWindow()
         {
             InitializeComponent();
+
             Load();
             DataContext = SettingsViewModel;
 
@@ -26,7 +27,6 @@ namespace CppToCsharpConverter
             ConverterBox.SelectedIndex = 0;
             _converterManager = new ConverterManager(SettingsViewModel.KnownTypes);
         }
-
 
         private void Load()
         {
