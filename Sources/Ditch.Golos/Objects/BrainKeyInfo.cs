@@ -24,7 +24,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("pub_key")]
-        public string PubKey { get; set; }
+        public PublicKeyType PubKey { get; set; }
 
         /// <summary>
         /// API name: wif_priv_key

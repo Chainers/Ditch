@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <appSettings>
-    <add key="GolosWif" value="5**************************************************" />
-    <add key="GolosTestWif" value="5**************************************************" />
+    <add key="Login" value="***********" />
+    <add key="PostingWif" value="*********************" />
+    <add key="ActiveWif" value="5**************************************************" />
+    <add key="Url" value="wss://ws.testnet.golos.io" />
   </appSettings>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">

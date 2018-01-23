@@ -36,9 +36,6 @@
     <Reference Include="Cryptography.ECDSA, Version=2.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Cryptography.ECDSA.Secp256k1.1.0.1\lib\netstandard1.3\Cryptography.ECDSA.dll</HintPath>
     </Reference>
-    <Reference Include="Ditch.Core, Version=3.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ditch.Core.3.0.6\lib\netstandard2.0\Ditch.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -67,19 +64,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountByKeyApiTest.cs" />
     <Compile Include="BaseTest.cs" />
-    <Compile Include="DatabaseApiTest.cs" />
-    <Compile Include="FollowApiTest.cs" />
-    <Compile Include="LoginApiTest.cs" />
-    <Compile Include="MarketHistoryApiTest.cs" />
-    <Compile Include="NetworkBroadcastApiTest.cs" />
+    <Compile Include="Apis\AccountByKeyApiTest.cs" />
+    <Compile Include="Apis\DatabaseApiTest.cs" />
+    <Compile Include="Apis\FollowApiTest.cs" />
+    <Compile Include="Apis\LoginApiTest.cs" />
+    <Compile Include="Apis\MarketHistoryApiTest.cs" />
+    <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
+    <Compile Include="Apis\PrivateMessageApi.cs" />
     <Compile Include="OperationManagerConnectionTest.cs" />
     <Compile Include="OperationManagerPostTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj">
+      <Project>{15294a4e-300e-460d-b229-7a20a5796d1f}</Project>
+      <Name>Ditch.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ditch.Golos\Ditch.Golos.csproj">
       <Project>{f60d2578-c1b5-437b-813a-924cf616f83a}</Project>
       <Name>Ditch.Golos</Name>
@@ -89,7 +91,6 @@
     <None Include="app.config" />
     <None Include="app.config.template" />
     <None Include="packages.config" />
-    <Compile Include="PrivateMessageApi.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

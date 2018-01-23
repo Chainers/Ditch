@@ -238,5 +238,20 @@ namespace Ditch.Golos.Tests
             var response = Post(user.PostingKeys, false, op);
             Assert.IsTrue(response.IsError);
         }
+
+        [Test]
+        public async Task AccountUpdateTest()
+        {
+            var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var acc = resp.Result[0];
+            
+            var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
     }
 }

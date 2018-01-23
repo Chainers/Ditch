@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Steem.Objects;
 
 namespace Ditch.Steem
 {
@@ -18,7 +19,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[][]> GetKeyReferences(string[] keys, CancellationToken token)
+        public JsonRpcResponse<string[][]> GetKeyReferences(PublicKeyType[] keys, CancellationToken token)
         {
             return CallRequest<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { keys }, token);
         }

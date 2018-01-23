@@ -22,15 +22,11 @@ namespace Ditch.Golos.Tests
 
         static BaseTest()
         {
-           // User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["GolosWif"] };
-            User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["GolosTestWif"] };
-            Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
+            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
             var jss = GetJsonSerializerSettings();
             Api = new OperationManager(new WebSocketManager(jss), jss);
-
-            //Api.TryConnectTo(new List<string> { "wss://golosd.steepshot.org" }, CancellationToken.None);
-            //Api.TryConnectTo(new List<string> { "wss://ws.golos.io" }, CancellationToken.None);
-            Api.TryConnectTo(new List<string> { "wss://ws.testnet.golos.io" }, CancellationToken.None);
+            Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

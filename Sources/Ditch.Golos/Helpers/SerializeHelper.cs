@@ -6,8 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Ditch.Core;
+using Ditch.Core.Helpers;
 using Ditch.Golos.Objects;
 using Ditch.Golos.Operations;
+using Newtonsoft.Json;
 
 namespace Ditch.Golos.Helpers
 {
@@ -36,12 +38,28 @@ namespace Ditch.Golos.Helpers
                 var props = GetPropertiesForMessage(typeof(Transaction));
                 foreach (var prop in props)
                 {
-                    var type = prop.PropertyType;
-                    var val = prop.GetValue(transaction);
-                    AddToMessageStream(ms, type, val, hardforkVersion);
+                    AddToMessageStream(ms, prop, transaction, hardforkVersion);
                 }
                 return ms.ToArray();
             }
+        }
+
+        private static void AddToMessageStream(Stream stream, PropertyInfo prop, object val, int hardforkVersion)
+        {
+            var intype = prop.PropertyType;
+            var inval = prop.GetValue(val);
+
+            if (inval == null)
+            {
+                var order = prop.GetCustomAttribute<JsonPropertyAttribute>();
+                if (order?.NullValueHandling == NullValueHandling.Ignore)
+                {
+                    stream.WriteByte(0);
+                    return;
+                }
+            }
+
+            AddToMessageStream(stream, intype, inval, hardforkVersion);
         }
 
         private static void AddToMessageStream(Stream stream, Type type, object val, int hardforkVersion)
@@ -191,27 +209,13 @@ namespace Ditch.Golos.Helpers
                 }
                 return;
             }
-            if (val is BaseOperation)
+            if (type.IsClass)
             {
                 var chType = val.GetType();
                 var properties = GetPropertiesForMessage(chType);
                 foreach (var prop in properties)
                 {
-                    var intype = prop.PropertyType;
-                    var inval = prop.GetValue(val);
-                    AddToMessageStream(stream, intype, inval, hardforkVersion);
-                }
-                return;
-            }
-            if (val is INamedContainer)
-            {
-                var chType = val.GetType();
-                var properties = GetPropertiesForMessage(chType);
-                foreach (var prop in properties)
-                {
-                    var intype = prop.PropertyType;
-                    var inval = prop.GetValue(val);
-                    AddToMessageStream(stream, intype, inval, hardforkVersion);
+                    AddToMessageStream(stream, prop, val, hardforkVersion);
                 }
                 return;
             }

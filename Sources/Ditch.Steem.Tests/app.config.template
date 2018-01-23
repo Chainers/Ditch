@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <appSettings>
-    <add key="SteemWif" value="5**************************************************" />
+    <add key="Login" value="***********" />
+    <add key="PostingWif" value="5**************************************************" />
+    <add key="ActiveWif" value="5**************************************************" />
+    <add key="Url" value="https://api.steemit.com" />
   </appSettings>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">

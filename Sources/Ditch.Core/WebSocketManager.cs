@@ -22,18 +22,25 @@ namespace Ditch.Core
         /// <summary>
         /// Timeout in milliseconds waiting for WebSocket request to execute. Default is 30000.
         /// </summary>
-        public int WaitResponceTimeout { get; set; } = 30000;
+        public int WaitResponceTimeout { get; set; }
 
         /// <summary>
         /// Timeout in milliseconds waiting for WebSocket connect to chain. Default is 10000.
         /// </summary>
-        public int WaitConnectTimeout { get; set; } = 10000;
-
+        public int WaitConnectTimeout { get; set; }
 
         public bool IsConnected => _webSocket.State == WebSocketState.Open;
 
-        public WebSocketManager(JsonSerializerSettings jsonSerializerSettings)
+        /// <summary>
+        /// Manager for ws/wss connections
+        /// </summary>
+        /// <param name="jsonSerializerSettings">Specifies json settings</param>
+        /// <param name="waitConnectTimeout"></param>
+        /// <param name="waitResponceTimeout"></param>
+        public WebSocketManager(JsonSerializerSettings jsonSerializerSettings, int waitConnectTimeout = 10000, int waitResponceTimeout = 30000)
         {
+            WaitConnectTimeout = waitConnectTimeout;
+            WaitResponceTimeout = waitResponceTimeout;
             _jsonSerializerSettings = jsonSerializerSettings;
             _responseDictionary = new Dictionary<int, JsonRpcResponse>();
             _manualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
@@ -41,7 +48,13 @@ namespace Ditch.Core
             _socketCloseEvent = new ManualResetEvent(false);
         }
 
-
+        /// <summary>
+        /// Connects and checks socket status
+        /// </summary>
+        /// <param name="url">The Uri the request is sent to.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Url which will be used for data transfer (empty if none)</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public string ConnectTo(string url, CancellationToken token)
         {
             Disconnect();
@@ -54,11 +67,18 @@ namespace Ditch.Core
             _webSocket.EnableAutoSendPing = true;
             _webSocket.Open();
 
-            var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
+            var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitConnectTimeout);
             token.ThrowIfCancellationRequested();
             return t == 1 ? url : string.Empty;
         }
 
+        /// <summary>
+        /// Connects and checks socket status
+        /// </summary>
+        /// <param name="urls">The Uri the request is sent to.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Url which will be used for data transfer (empty if none)</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public string ConnectTo(IEnumerable<string> urls, CancellationToken token)
         {
             foreach (var url in urls)
@@ -72,6 +92,9 @@ namespace Ditch.Core
             return string.Empty;
         }
 
+        /// <summary>
+        /// Cleans all wait handlers
+        /// </summary>
         public void Disconnect()
         {
             if (_webSocket != null && (_webSocket.State == WebSocketState.Open || _webSocket.State == WebSocketState.Connecting))
@@ -89,7 +112,13 @@ namespace Ditch.Core
             }
         }
 
-
+        /// <summary>
+        /// Sends request to specified url
+        /// </summary>
+        /// <param name="jsonRpc">Request body</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>JsonRpcResponse</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse Execute(JsonRpcRequest jsonRpc, CancellationToken token)
         {
             var waiter = new ManualResetEvent(false);
@@ -130,6 +159,14 @@ namespace Ditch.Core
             return response;
         }
 
+        /// <summary>
+        /// Sends request to specified url
+        /// </summary>
+        /// <typeparam name="T">Some type for response deserialization</typeparam>
+        /// <param name="jsonRpc">Request body</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Typed JsonRpcResponse</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<T> Execute<T>(JsonRpcRequest jsonRpc, CancellationToken token)
         {
             var response = Execute(jsonRpc, token);

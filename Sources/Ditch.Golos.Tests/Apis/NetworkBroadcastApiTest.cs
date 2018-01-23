@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Steem.Enums;
-using Ditch.Steem.Operations;
+using Ditch.Golos.Enums;
+using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Golos.Tests.Apis
 {
     [TestFixture]
     public class NetworkBroadcastApiTest : BaseTest

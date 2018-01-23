@@ -18,28 +18,47 @@ namespace Ditch.Core
         private string _url;
 
 
-        public HttpManager(JsonSerializerSettings jsonSerializerSettings)
+        public bool IsConnected => !string.IsNullOrEmpty(_url);
+
+        /// <summary>
+        /// Manager for http connections
+        /// </summary>
+        /// <param name="jsonSerializerSettings">Specifies json settings</param>
+        /// <param name="maxResponseContentBufferSize">Sets the maximum numbr of bytes to buffer when reading the response content.</param>
+        public HttpManager(JsonSerializerSettings jsonSerializerSettings, long maxResponseContentBufferSize = 256000)
         {
             _jsonSerializerSettings = jsonSerializerSettings;
             _client = new HttpClient
             {
-                MaxResponseContentBufferSize = 256000
+                MaxResponseContentBufferSize = maxResponseContentBufferSize
             };
         }
 
-        public bool IsConnected => !string.IsNullOrEmpty(_url);
 
-
-        public string ConnectTo(string endpoin, CancellationToken tokent)
+        /// <summary>
+        /// Connects and checks http status
+        /// </summary>  
+        /// <param name="endpoin">The Uri the request is sent to.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Url which will be used for data transfer (empty if none)</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public string ConnectTo(string endpoin, CancellationToken token)
         {
             _url = string.Empty;
-            var rez = _client.GetAsync(endpoin, tokent).Result;
+            var rez = _client.GetAsync(endpoin, token).Result;
             if (rez.StatusCode == HttpStatusCode.OK)
                 _url = endpoin;
 
             return _url;
         }
 
+        /// <summary>
+        /// Connects and checks http status
+        /// </summary>
+        /// <param name="urls">The Uri the request is sent to.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Url which will be used for data transfer (empty if none)</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public string ConnectTo(IEnumerable<string> urls, CancellationToken token)
         {
             var rez = new List<KeyValuePair<string, long>>();
@@ -67,11 +86,21 @@ namespace Ditch.Core
             return string.Empty;
         }
 
+        /// <summary>
+        /// Clears connection url
+        /// </summary>
         public void Disconnect()
         {
             _url = string.Empty;
         }
 
+        /// <summary>
+        /// Sends request to specified url
+        /// </summary>
+        /// <param name="jsonRpc">Request body</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>JsonRpcResponse</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse Execute(JsonRpcRequest jsonRpc, CancellationToken token)
         {
             if (string.IsNullOrEmpty(_url))
@@ -89,6 +118,14 @@ namespace Ditch.Core
             return new JsonRpcResponse { Error = new HttpResponseError((int)response.StatusCode, "Http Error") };
         }
 
+        /// <summary>
+        /// Sends request to specified url
+        /// </summary>
+        /// <typeparam name="T">Some type for response deserialization</typeparam>
+        /// <param name="jsonRpc">Request body</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Typed JsonRpcResponse</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<T> Execute<T>(JsonRpcRequest jsonRpc, CancellationToken token)
         {
             if (string.IsNullOrEmpty(_url))

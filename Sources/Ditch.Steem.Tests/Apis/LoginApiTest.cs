@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Steem.Tests.Apis
 {
     [TestFixture]
     public class LoginApiTest : BaseTest
@@ -12,7 +12,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void login()
         {
-            var resp = Api.Login(User.Login, User.Wif, CancellationToken.None);
+            var resp = Api.Login(User.Login, User.PostingWif, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));

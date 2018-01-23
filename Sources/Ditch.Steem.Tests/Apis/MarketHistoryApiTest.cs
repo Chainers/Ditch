@@ -3,7 +3,8 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-namespace Ditch.Steem.Tests
+
+namespace Ditch.Steem.Tests.Apis
 {
     [TestFixture]
     public class MarketHistoryApiTest : BaseTest
@@ -15,6 +16,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.SbdVolume > 0 || resp.Result.SteemVolume > 0);
 
             var obj = Api.CallRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_ticker", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -29,6 +31,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.SbdVolume > 0 || resp.Result.SteemVolume > 0);
 
             var obj = Api.CallRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_volume", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -39,10 +42,12 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_order_book()
         {
+            var count = 100;
             var resp = Api.GetOrderBook2(100, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.Asks.Length == count || resp.Result.Bids.Length == count);
 
             var obj = Api.CallRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_order_book", new object[] { 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -53,10 +58,12 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_trade_history()
         {
-            var resp = Api.GetTradeHistory(new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100, CancellationToken.None);
+            uint count = 100;
+            var resp = Api.GetTradeHistory(new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), count, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.Length == count);
 
             var obj = Api.CallRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -71,6 +78,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsTrue(resp.Result.Length > 0);
 
             var obj = Api.CallRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[] { 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);

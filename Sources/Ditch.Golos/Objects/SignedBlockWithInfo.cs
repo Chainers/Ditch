@@ -24,7 +24,7 @@ namespace Ditch.Golos.Objects
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("signing_key")]
-        public string SigningKey {get; set;}
+        public PublicKeyType SigningKey {get; set;}
 
         /// <summary>
         /// API name: transaction_ids

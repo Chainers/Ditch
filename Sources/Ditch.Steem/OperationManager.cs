@@ -48,12 +48,19 @@ namespace Ditch.Steem
 
             foreach (var url in urls)
             {
-                var connectedTo = _connectionManager.ConnectTo(url, token);
-                if (string.IsNullOrEmpty(connectedTo))
-                    continue;
+                try
+                {
+                    var connectedTo = _connectionManager.ConnectTo(url, token);
+                    if (string.IsNullOrEmpty(connectedTo))
+                        continue;
 
-                if (TryLoadChainId(token))
-                    return url;
+                    if (TryLoadChainId(token))
+                        return url;
+                }
+                catch
+                {
+                    //todo nothing
+                }
             }
 
             return string.Empty;

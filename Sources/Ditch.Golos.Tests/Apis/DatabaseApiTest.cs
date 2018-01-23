@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Steem.Enums;
-using Ditch.Steem.Objects;
+using Ditch.Core;
+using Ditch.Golos.Enums;
+using Ditch.Golos.Helpers;
+using Ditch.Golos.Objects;
+using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Ditch.Steem.Operations;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Golos.Tests.Apis
 {
     [TestFixture]
     public class DatabaseApiTest : BaseTest
@@ -27,14 +29,56 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        public void get_state()
+        public void get_trending_categories()
         {
-            var resp = Api.GetState("path", CancellationToken.None);
+            var resp = Api.GetTrendingCategories(string.Empty, 3, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_state", new object[] { "path" }, CancellationToken.None);
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_trending_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_best_categories()
+        {
+            var resp = Api.GetBestCategories(string.Empty, 3, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_best_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_active_categories()
+        {
+            var resp = Api.GetActiveCategories(User.Login, 3, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_active_categories", new object[] { User.Login, 3 }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_recent_categories()
+        {
+            var resp = Api.GetRecentCategories(string.Empty, 3, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_recent_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -56,6 +100,20 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        }
+
+        [Test]
+        public void get_state()
+        {
+            var resp = Api.GetState("path", CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_state", new object[] { "path" }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -105,6 +163,16 @@ namespace Ditch.Steem.Tests
         public void get_config()
         {
             var resp = Api.GetConfig(CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        }
+
+        [Test]
+        [Ignore("no method with name 'get_free_memory'")]
+        public void get_free_memory()
+        {
+            var resp = Api.GetFreeMemory(CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -206,30 +274,45 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_reward_fund()
         {
-            var resp = Api.GetRewardFund(User.Login, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetRewardFund(User.Login, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+                var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_reward_fund", new object[] { User.Login }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
-        /*
+
         [Test]
-        public void get_key_references()
+        public void get_name_cost()
         {
-            var pubKey = "STM6C8GjDBAHrfSqaNRn4FnLLUdCfw3WgjY3td1cC4T7CKpb32YM6";
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetNameCost(User.Login, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { pubKey }, CancellationToken.None);
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_key_references", new object[] { pubKey }, CancellationToken.None);
-            //TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+                var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_name_cost", new object[] { User.Login }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
-        */
+
         [Test]
         public void get_accounts()
         {
@@ -245,24 +328,6 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        [Ignore("Code: '1'. Message: '10 assert_exception: Assert Exception false: database_api::get_account_references --- Needs to be refactored for steem.")]
-        public void get_account_references()
-        {
-            var ac = Api.GetAccounts(new[] { User.Login }, CancellationToken.None);
-            Assert.IsFalse(ac.IsError);
-
-            var resp = Api.GetAccountReferences(ac.Result[0].Id, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_references", new object[] { ac.Result[0].Id }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
         public void lookup_account_names()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
@@ -270,7 +335,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "lookup_account_names", new object[] { new[] { User.Login }, }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "lookup_account_names", new object[] { new[] { User.Login } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -284,6 +349,23 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+        }
+
+        [Test]
+        public void get_account_balances()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetAccountBalances(User.Login, new string[0], CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
@@ -416,29 +498,43 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_vesting_delegations()
         {
-            var resp = Api.GetVestingDelegations(User.Login, string.Empty, 10, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetVestingDelegations(User.Login, string.Empty, 10, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
         public void get_expiring_vesting_delegations()
         {
-            var resp = Api.GetExpiringVestingDelegations(User.Login, new DateTime(2017, 01, 01), 100, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetExpiringVestingDelegations(User.Login, new DateTime(2017, 01, 01), 100, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100 }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
@@ -520,46 +616,110 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
-        [Test]
-        public void get_order_book()
-        {
-            var resp = Api.GetOrderBook(3, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_order_book", new object[] { 3 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        [Test]
+        public void get_assets()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetAssets(new[] { "GBG", "GOLOS" }, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_assets", new object[] { new[] { "GBG" } }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
-        public void get_open_orders()
+        public void get_assets_by_issuer()
         {
-            var resp = Api.GetOpenOrders(User.Login, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetAssetsByIssuer("b1acksun", CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_open_orders", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_assets_by_issuer", new object[] { "b1acksun" }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
-        public void get_liquidity_queue()
+        public void get_assets_dynamic_data()
         {
-            var resp = Api.GetLiquidityQueue(string.Empty, 10, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetAssetsDynamicData(new[] { "GBG" }, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_liquidity_queue", new object[] { string.Empty, 1 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_assets_dynamic_data", new object[] { new[] { "GBG" } }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
+        }
+
+        [Test]
+        public void get_bitassets_data()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetBitassetsData(new[] { "GBG" }, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_bitassets_data", new object[] { new[] { "GBG" } }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
+        }
+
+        [Test]
+        public void list_assets()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.ListAssets(string.Empty, 10, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "list_assets", new object[] { string.Empty, 1 }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
@@ -605,7 +765,7 @@ namespace Ditch.Steem.Tests
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
 
-            var resp = Api.GetRequiredSignatures(transaction, new object[0], CancellationToken.None);
+            var resp = Api.GetRequiredSignatures(transaction, new PublicKeyType[0], CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -647,25 +807,10 @@ namespace Ditch.Steem.Tests
         [Ignore("---")]
         public void verify_account_authority()
         {
-            var resp = Api.VerifyAccountAuthority(User.Login, new object[] { "" }, CancellationToken.None);
+            var resp = Api.VerifyAccountAuthority(User.Login, new PublicKeyType[0], CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-        }
-
-        [Test]
-        public void verify_signatures()
-        {
-            var args = new VerifySignaturesArgs();
-            var resp = Api.VerifySignatures(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "verify_signatures", new object[] { args }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -701,7 +846,7 @@ namespace Ditch.Steem.Tests
         public void get_content()
         {
             var author = "steepshot";
-            var permlink = "c-lib-ditch-1-0-for-graphene-from-steepshot-team-under-the-mit-license";
+            var permlink = "znakomtes-steepshot-io";
 
             var resp = Api.GetContent(author, permlink, CancellationToken.None);
             Assert.IsTrue(resp != null);
@@ -742,60 +887,6 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
-        public void get_discussions_by_payout()
-        {
-            var query = new DiscussionQuery()
-            {
-                SelectAuthors = new[] { User.Login }
-            };
-            var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
-        public void get_post_discussions_by_payout()
-        {
-            var query = new DiscussionQuery()
-            {
-                SelectAuthors = new[] { User.Login }
-            };
-            var resp = Api.GetPostDiscussionsByPayout(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
-        public void get_comment_discussions_by_payout()
-        {
-            var query = new DiscussionQuery()
-            {
-                SelectAuthors = new[] { User.Login }
-            };
-            var resp = Api.GetCommentDiscussionsByPayout(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -872,6 +963,74 @@ namespace Ditch.Steem.Tests
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_discussions_by_payout()
+        {
+            var query = new DiscussionQuery()
+            {
+                SelectAuthors = new[] { User.Login }
+            };
+            var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_post_discussions_by_payout()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var query = new DiscussionQuery()
+                {
+                    SelectAuthors = new[] { User.Login }
+                };
+                var resp = Api.GetPostDiscussionsByPayout(query, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
+        }
+
+        [Test]
+        public void get_comment_discussions_by_payout()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var query = new DiscussionQuery()
+                {
+                    SelectAuthors = new[] { User.Login }
+                };
+                var resp = Api.GetCommentDiscussionsByPayout(query, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
         }
 
         [Test]
@@ -1042,5 +1201,60 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
+
+        [Test]
+        [Ignore("add data for test")]
+        public void get_payout_extension_cost()
+        {
+            var parmlink = "";
+            var resp = Api.GetPayoutExtensionCost(User.Login, parmlink, new DateTime(2017, 1, 1), CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_payout_extension_cost", new object[] { User.Login, parmlink, new DateTime(2017, 1, 1) }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        [Ignore("add data for test")]
+        public void get_payout_extension_time()
+        {
+            var parmlink = "";
+            var resp = Api.GetPayoutExtensionTime(User.Login, parmlink, new Asset(0, 3, "GBG"), CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_payout_extension_time", new object[] { User.Login, parmlink, new Asset(0, 3, "GBG") },
+                CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_proposed_transactions()
+        {
+            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            {
+                var resp = Api.GetProposedTransactions(User.Login, CancellationToken.None);
+                Console.WriteLine(resp.Error);
+                Assert.IsFalse(resp.IsError);
+                Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+                var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_proposed_transactions", new object[] { User.Login }, CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                Console.WriteLine("----------------------------------------------------------------------------");
+                Console.WriteLine(JsonConvert.SerializeObject(obj));
+            }
+            else
+            {
+                Console.WriteLine("Added in hf 17");
+            }
+        }
     }
 }
+

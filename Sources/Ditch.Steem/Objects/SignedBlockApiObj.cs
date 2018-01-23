@@ -16,7 +16,7 @@ namespace Ditch.Steem.Objects
 
         // bdType : public_key_type
         [JsonProperty("signing_key")]
-        public string SigningKey { get; set; }
+        public PublicKeyType SigningKey { get; set; }
 
         // bdType : vector<transaction_id_type>
         [JsonProperty("transaction_ids")]

@@ -1,5 +1,6 @@
 using System;
 using Ditch.Core;
+using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Objects
@@ -45,7 +46,7 @@ namespace Ditch.Golos.Objects
 
         // bdType : public_key_type
         [JsonProperty("memo_key")]
-        public string MemoKey { get; set; }
+        public PublicKeyType MemoKey { get; set; }
 
         // bdType : string
         [JsonProperty("json_metadata")]

@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using Ditch.Steem.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Threading;
-using System.Linq;
-using Ditch.Steem.Enums;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Steem.Tests.Apis
 {
     [TestFixture]
     public class FollowApiTest : BaseTest

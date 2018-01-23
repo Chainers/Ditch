@@ -81,7 +81,7 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("signing_key")]
-        public object SigningKey { get; set; }
+        public PublicKeyType SigningKey { get; set; }
 
         /// <summary>
         /// API name: props

@@ -295,7 +295,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: string</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> GetKeyReferences(string[] key, CancellationToken token)
+        public JsonRpcResponse<string[]> GetKeyReferences(PublicKeyType[] key, CancellationToken token)
         {
             return CallRequest<string[]>(KnownApiNames.DatabaseApi, "get_key_references", new object[] { key }, token);
         }
@@ -715,9 +715,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetRequiredSignatures(SignedTransaction trx, object[] availableKeys, CancellationToken token)
+        public JsonRpcResponse<PublicKeyType[]> GetRequiredSignatures(SignedTransaction trx, PublicKeyType[] availableKeys, CancellationToken token)
         {
-            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { trx, availableKeys }, token);
+            return CallRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { trx, availableKeys }, token);
         }
 
         /// <summary>
@@ -733,9 +733,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<PublicKeyType[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { trx }, token);
+            return CallRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -762,7 +762,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bool true if the signers have enough authority to authorize an account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAccountAuthority(string nameOrId, object[] signers, CancellationToken token)
+        public JsonRpcResponse<bool> VerifyAccountAuthority(string nameOrId, PublicKeyType[] signers, CancellationToken token)
         {
             return CallRequest<bool>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] { nameOrId, signers }, token);
         }

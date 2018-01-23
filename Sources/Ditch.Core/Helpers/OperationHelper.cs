@@ -27,16 +27,18 @@ namespace Ditch.Core.Helpers
         public static void PrepareTags(string[] tags)
         {
             for (var index = 0; index < tags.Length; index++)
+                tags[index] = PrepareTag(tags[index]);
+        }
+
+        public static string PrepareTag(string tag)
             {
-                var tag = tags[index];
                 tag = tag.Trim();
                 tag = tag.ToLower();
                 var translit = Transliteration.ToEng(tag);
                 tag = translit.Equals(tag) ? translit : $"ru--{translit}";
                 tag = WordDelimiters.Replace(tag, "-");
                 tag = PermlinkNotSupportedCharacters.Replace(tag, string.Empty);
-                tags[index] = tag;
-            }
+            return tag;
         }
 
 

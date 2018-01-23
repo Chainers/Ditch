@@ -22,11 +22,12 @@ namespace Ditch.Steem.Tests
 
         static BaseTest()
         {
-            User = new UserInfo { Login = "joseph.kalu", Wif = ConfigurationManager.AppSettings["SteemWif"] };
-            Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
+            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
             var jss = GetJsonSerializerSettings();
-            Api = new OperationManager(new HttpManager(jss), jss);
-            Api.TryConnectTo(new List<string> { "https://api.steemit.com", "https://steemd2.steepshot.org" }, CancellationToken.None);
+            var manager = new HttpManager(jss, 1024 * 1024);
+            Api = new OperationManager(manager, jss);
+            Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

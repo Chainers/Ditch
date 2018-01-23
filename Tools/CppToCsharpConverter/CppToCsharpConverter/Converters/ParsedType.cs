@@ -14,6 +14,7 @@ namespace CppToCsharpConverter.Converters
 
         public List<ParsedType> Container { get; set; } = new List<ParsedType>();
 
+        public bool IsOptional { get; internal set; }
 
         public override string ToString()
         {

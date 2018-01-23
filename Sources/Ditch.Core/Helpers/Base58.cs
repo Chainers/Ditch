@@ -35,21 +35,21 @@ namespace Ditch.Core.Helpers
             return new byte[0];
         }
 
-        private static byte[] CutLastBytes(byte[] source, int cutCount)
+        public static byte[] CutLastBytes(byte[] source, int cutCount)
         {
             var rez = new byte[source.Length - cutCount];
             Array.Copy(source, rez, rez.Length);
             return rez;
         }
 
-        private static byte[] CutFirstBytes(byte[] source, int cutCount)
+        public static byte[] CutFirstBytes(byte[] source, int cutCount)
         {
             var rez = new byte[source.Length - cutCount];
             Array.Copy(source, cutCount, rez, 0, rez.Length);
             return rez;
         }
 
-        private static byte[] Base58CheckDecode(string data)
+        public static byte[] Base58CheckDecode(string data)
         {
             var s = Decode(data);
             var dec = CutLastBytes(s, 4);
@@ -95,7 +95,7 @@ namespace Ditch.Core.Helpers
             return result;
         }
 
-        private static byte[] Decode(string base58)
+        public static byte[] Decode(string base58)
         {
             // Decode Base58 string to BigInteger 
             BigInteger intData = 0;

@@ -45,7 +45,7 @@ namespace Ditch.Steem.Objects
 
         // bdType : public_key_type
         [JsonProperty("memo_key")]
-        public string MemoKey { get; set; }
+        public PublicKeyType MemoKey { get; set; }
 
         // bdType : string
         [JsonProperty("json_metadata")]

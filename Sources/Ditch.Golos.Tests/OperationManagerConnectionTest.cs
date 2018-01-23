@@ -11,12 +11,45 @@ namespace Ditch.Golos.Tests
     [TestFixture]
     public class OperationManagerConnectionTest : BaseTest
     {
+        [Test]
+        public void NodeTest()
+        {
+            var urls = new List<string> {
+                "wss://ws.golos.io",
+                "wss://ws.testnet.golos.io",
+                "wss://golosd.steepshot.org"
+            };
+
+            var jss = GetJsonSerializerSettings();
+            var connectionManager = new WebSocketManager(jss);
+            var manager = new OperationManager(connectionManager, jss);
+
+            var sw = new Stopwatch();
+            //test all urls
+            for (var i = 0; i < urls.Count; i++)
+            {
+                var buf = new List<string>() { urls[i] };
+                sw.Restart();
+
+                var url = manager.TryConnectTo(buf, CancellationToken.None);
+
+                sw.Stop();
+
+                Console.WriteLine($"{i} {(manager.IsConnected ? "conected" : "Not connected")} to {urls[i]} {sw.ElapsedMilliseconds}");
+
+                if (manager.IsConnected)
+                {
+                    Assert.IsNotNull(manager.ChainId, "ChainId null");
+                    Assert.IsNotNull(manager.SbdSymbol, "SbdSymbol null");
+                    Assert.IsNotNull(manager.Version, "Version null");
+                }
+            }
+        }
 
         [Test]
         public async Task TryConnectToHttpsTest()
         {
             var urls = new List<string> { "https://public-ws.golos.io" };
-            //var urls = new List<string> { "https://golosd.steepshot.org" };
 
 
             var jss = GetJsonSerializerSettings();
@@ -25,7 +58,6 @@ namespace Ditch.Golos.Tests
             var sw = new Stopwatch();
             for (var i = 0; i < 5; i++)
             {
-                Console.WriteLine($"{i} conect to golos.");
                 sw.Restart();
                 var url = manager.TryConnectTo(urls, CancellationToken.None);
                 sw.Stop();
@@ -42,8 +74,6 @@ namespace Ditch.Golos.Tests
         public async Task TryConnectToWssTest()
         {
             var urls = new List<string> { "wss://ws.golos.io" };
-            //var urls = new List<string> { "wss://ws.testnet.golos.io" };
-            //var urls = new List<string> { "wss://golosd.steepshot.org" };
 
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new WebSocketManager(jss), jss);

@@ -350,7 +350,7 @@ namespace CppToCsharpConverter.Converters
                         var chPrev = text[i - 1];
                         if (chPrev >= 'a' && chPrev <= 'z')
                             open++;
-                        else if (chPrev == ' ' && i > 5 && TestWord(sb, "asset", i - 2))
+                        else if (chPrev == ' ' && i > 5 && TestWord(sb, "asset", sb.Length - 2))
                         {
                             open++;
                         }
@@ -374,6 +374,10 @@ namespace CppToCsharpConverter.Converters
                                 var privCh = text[i - 1];
                                 if (privCh == ' ' || privCh == '<' || privCh == ',' || (i + 1 < text.Length && (text[i + 1] == '>' || text[i + 1] == ' ')))  // < int, int, int > to  <int,int,int> 
                                     continue;
+                            }
+                            else if (i + 1 < text.Length && text[i + 1] == '<')
+                            {
+                                continue;
                             }
                             break;
                         }

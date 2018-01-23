@@ -189,12 +189,16 @@ namespace CppToCsharpConverter.Converters
 
         protected ParsedType GetKnownTypeOrDefault(string type, string templateName = null)
         {
+            var isOptional = false;
             type = type.Trim();
             if (NamespacePref.IsMatch(type))
                 type = NamespacePref.Replace(type, string.Empty);
 
             if (type.StartsWith("optional<"))
+            {
                 type = CashParser.Unpack(type, 1);
+                isOptional = true;
+            }
 
             if (type.StartsWith("static "))
                 type = type.Remove(0, 7);
@@ -205,26 +209,34 @@ namespace CppToCsharpConverter.Converters
                 type = type.Remove(type.Length - 2);
 
             if (type.IndexOf('<') > -1)
-                return GetKnownCompositType(type);
+            {
+                var ct = GetKnownCompositType(type);
+                ct.IsOptional = isOptional;
+                return ct;
+            }
 
             if (_knownTypes.ContainsKey(type))
-                return new ParsedType { CppName = type, Name = _knownTypes[type] };
+            {
+                return new ParsedType { CppName = type, Name = _knownTypes[type], IsOptional = isOptional };
+            }
 
             if (!string.IsNullOrEmpty(templateName) && type.Equals(templateName, StringComparison.OrdinalIgnoreCase))
-                return new ParsedType { CppName = type, Name = templateName };
+            {
+                return new ParsedType { CppName = type, Name = templateName, IsOptional = isOptional };
+            }
 
             if (Founded.ContainsKey(type))
             {
-                return new ParsedType { CppName = type, Name = Founded[type] };
+                return new ParsedType { CppName = type, Name = Founded[type], IsOptional = isOptional };
             }
 
             if (!NotNameChar.IsMatch(type))
             {
                 AddTypeToTask(type);
-                return new ParsedType { CppName = type, Name = CashParser.ToTitleCase(type) };
+                return new ParsedType { CppName = type, Name = CashParser.ToTitleCase(type), IsOptional = isOptional };
             }
 
-            return new ParsedType { CppName = type, Name = "object" };
+            return new ParsedType { CppName = type, Name = "object", IsOptional = isOptional };
         }
 
         private void AddTypeToTask(string type)
@@ -578,7 +590,7 @@ namespace CppToCsharpConverter.Converters
             else
             {
                 if (parsedClass.ObjectType != ObjectType.Enum)
-                    sb.AppendLine($"{indent}[JsonProperty(\"{parsedElement.CppName}\")]");
+                    sb.AppendLine($"{indent}[JsonProperty(\"{parsedElement.CppName}\"{(parsedElement.Type != null && parsedElement.Type.IsOptional ? ", NullValueHandling = NullValueHandling.Ignore" : string.Empty)})]");
                 sb.AppendLine(parsedElement.Type != null
                     ? $"{indent}public {type} {parsedElement.Name} {{get; set;}}"
                     : $"{indent}{parsedElement.Name},");

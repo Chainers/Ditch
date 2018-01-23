@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using Ditch.Golos.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Threading;
-using System.Linq;
-using Ditch.Golos.Enums;
 
-namespace Ditch.Golos.Tests
+namespace Ditch.Golos.Tests.Apis
 {
     [TestFixture]
     public class FollowApiTest : BaseTest

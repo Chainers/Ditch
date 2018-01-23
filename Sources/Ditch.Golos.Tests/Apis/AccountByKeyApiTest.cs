@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading;
+using Ditch.Golos.Objects;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Ditch.Golos.Tests
+namespace Ditch.Golos.Tests.Apis
 {
     [TestFixture]
     public class AccountByKeyApiTest : BaseTest
@@ -12,7 +13,7 @@ namespace Ditch.Golos.Tests
         [Test]
         public void get_key_references()
         {
-            var pubKey = "GLS5hVWAKDvt9HzxvXSY2HoJKQ5S4Ka1ZT8qqFVQBnx2wJ6aguwmD";
+            var pubKey = new PublicKeyType("GLS5hVWAKDvt9HzxvXSY2HoJKQ5S4Ka1ZT8qqFVQBnx2wJ6aguwmD");
 
             var resp = Api.GetKeyReferences(new[] { pubKey }, CancellationToken.None);
             Console.WriteLine(resp.Error);

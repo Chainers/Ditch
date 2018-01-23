@@ -3,7 +3,8 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-namespace Ditch.Golos.Tests
+
+namespace Ditch.Golos.Tests.Apis
 {
     [TestFixture]
     public class PrivateMessageApiTest : BaseTest

@@ -41,7 +41,7 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("from_memo_key")]
-        public string FromMemoKey {get; set;}
+        public PublicKeyType FromMemoKey {get; set;}
 
         /// <summary>
         /// API name: to_memo_key
@@ -49,7 +49,7 @@ namespace Ditch.Steem.Objects
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("to_memo_key")]
-        public string ToMemoKey {get; set;}
+        public PublicKeyType ToMemoKey {get; set;}
 
         /// <summary>
         /// API name: sent_time

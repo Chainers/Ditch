@@ -1,10 +1,10 @@
 using System;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Threading;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.Steem.Tests.Apis
 {
     [TestFixture]
     public class PrivateMessageApiTest : BaseTest
