@@ -39,7 +39,7 @@ namespace Ditch.Steem.Objects
         /// API name: auth_level
         /// 
         /// </summary>
-        /// <returns>API type: classification</returns>
+        /// <returns>API type: partial classification</returns>
         [JsonProperty("auth_level")]
         public Classification AuthLevel { get; set; }
     }

@@ -7,7 +7,7 @@ namespace Ditch.Golos.Objects
     /// libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class OrderBook
+    public partial class OrderBook
     {
 
         /// <summary>

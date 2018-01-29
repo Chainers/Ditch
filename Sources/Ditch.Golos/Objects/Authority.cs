@@ -9,7 +9,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\protocol\include\steemit\protocol\authority.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Authority
+    public partial class Authority
     {
         // bdType : uint32_t | = 0;
         [JsonProperty("weight_threshold")]

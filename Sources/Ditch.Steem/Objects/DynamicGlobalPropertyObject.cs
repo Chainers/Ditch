@@ -10,7 +10,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\chain\include\steemit\chain\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class DynamicGlobalPropertyObject
+    public partial class DynamicGlobalPropertyObject
     {
         // bdType : id_type
         [JsonProperty("id")]

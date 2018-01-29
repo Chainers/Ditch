@@ -10,7 +10,7 @@ namespace Ditch.Golos.Objects
     /// libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SavingsWithdrawApiObj
+    public partial class SavingsWithdrawApiObj
     {
 
         /// <summary>

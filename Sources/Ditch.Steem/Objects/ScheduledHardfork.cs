@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class ScheduledHardfork
+    public partial class ScheduledHardfork
     {
 
         // bdType : hardfork_version

@@ -8,7 +8,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\plugins\follow\include\steemit\follow\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class FollowApiObj
+    public partial class FollowApiObj
     {
 
         // bdType : string

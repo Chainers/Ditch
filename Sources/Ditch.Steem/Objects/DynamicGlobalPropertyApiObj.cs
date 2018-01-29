@@ -9,7 +9,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class DynamicGlobalPropertyApiObj : DynamicGlobalPropertyObject
+    public partial class DynamicGlobalPropertyApiObj : DynamicGlobalPropertyObject
     {
         public static readonly DynamicGlobalPropertyApiObj Default = new DynamicGlobalPropertyApiObj { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
 

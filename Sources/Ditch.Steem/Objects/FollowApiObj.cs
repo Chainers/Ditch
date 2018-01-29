@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\plugins\follow\include\steemit\follow\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class FollowApiObj
+    public partial class FollowApiObj
     {
 
         // bdType : string

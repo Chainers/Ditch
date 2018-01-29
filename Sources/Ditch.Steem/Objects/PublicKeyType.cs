@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Ditch.Steem.Objects
 {
     [JsonConverter(typeof(ToStringConverter))]
-    public class PublicKeyType : IComplexString
+    public partial class PublicKeyType : IComplexString
     {
         public const string AddressPrefix = "STM";
 

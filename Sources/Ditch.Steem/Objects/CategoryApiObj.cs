@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// category_api_obj
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class CategoryApiObj
+    public partial class CategoryApiObj
     {
 
         // bdType : category_id_type

@@ -8,7 +8,7 @@ namespace Ditch.Golos.Objects
     /// libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class WitnessApiObj
+    public partial class WitnessApiObj
     {
 
         /// <summary>

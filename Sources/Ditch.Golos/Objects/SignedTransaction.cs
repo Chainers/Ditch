@@ -10,7 +10,7 @@ namespace Ditch.Golos.Objects
     /// libraries\protocol\include\golos\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SignedTransaction : Transaction
+    public partial class SignedTransaction : Transaction
     {
         #region for json
 

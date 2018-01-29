@@ -8,7 +8,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class WithdrawRoute
+    public partial class WithdrawRoute
     {
 
         // bdType : string

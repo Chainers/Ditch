@@ -7,7 +7,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class State
+    public partial class State
     {
 
         // bdType : string

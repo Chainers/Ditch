@@ -10,7 +10,7 @@ namespace Ditch.Steem.Objects
     /// libraries\protocol\include\steemit\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Transaction
+    public partial class Transaction
     {
         [MessageOrder(0)]
         public byte[] ChainId { get; set; } = new byte[0]; //64

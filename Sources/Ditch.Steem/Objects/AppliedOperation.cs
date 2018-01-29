@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\app\include\steemit\app\applied_operation.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class AppliedOperation
+    public partial class AppliedOperation
     {
 
         // bdType : transaction_id_type

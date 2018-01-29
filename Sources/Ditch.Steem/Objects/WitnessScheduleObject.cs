@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\chain\include\steemit\chain\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class WitnessScheduleObject
+    public partial class WitnessScheduleObject
     {
 
         // bdType : id_type

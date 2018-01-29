@@ -9,7 +9,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\chain\include\steemit\chain\account_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class AccountBandwidthObject
+    public partial class AccountBandwidthObject
     {
 
         // bdType : id_type

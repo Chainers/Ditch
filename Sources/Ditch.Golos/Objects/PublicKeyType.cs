@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Ditch.Golos.Objects
 {
     [JsonConverter(typeof(ToStringConverter))]
-    public class PublicKeyType : IComplexString
+    public partial class PublicKeyType : IComplexString
     {
         public const string AddressPrefix = "GLS";
 

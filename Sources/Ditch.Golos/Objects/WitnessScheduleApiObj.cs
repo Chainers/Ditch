@@ -7,7 +7,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class WitnessScheduleApiObj : WitnessScheduleObject
+    public partial class WitnessScheduleApiObj : WitnessScheduleObject
     {
     }
 }

@@ -9,7 +9,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\chain\include\steemit\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class EscrowObject
+    public partial class EscrowObject
     {
 
         // bdType : id_type

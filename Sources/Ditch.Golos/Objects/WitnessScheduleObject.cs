@@ -8,7 +8,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\chain\include\steemit\chain\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class WitnessScheduleObject
+    public partial class WitnessScheduleObject
     {
 
         // bdType : id_type

@@ -9,7 +9,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\protocol\include\steemit\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class ChainProperties
+    public partial class ChainProperties
     {
 
         // bdType : asset | =

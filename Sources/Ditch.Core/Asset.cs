@@ -3,13 +3,16 @@ using System.Globalization;
 
 namespace Ditch.Core
 {
-    public class Asset : IComparable<Asset>, IEquatable<Asset>
+    public partial class Asset : IComparable<Asset>, IEquatable<Asset>
     {
-        public long Value { get; }
+        public long Value { get; set; }
 
-        public string Currency { get; }
+        public string Currency { get; set; }
 
-        public byte Precision { get; }
+        public byte Precision { get; set; }
+
+
+        public Asset() { }
 
         public Asset(string value) : this(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator) { }
 
@@ -34,6 +37,7 @@ namespace Ditch.Core
             Currency = currency.ToUpper();
             Precision = precision;
         }
+
 
         public static Asset operator +(Asset asset1, Asset asset2)
         {

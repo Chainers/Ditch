@@ -7,7 +7,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\protocol\include\steemit\protocol\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SignedBlock : SignedBlockHeader
+    public partial class SignedBlock : SignedBlockHeader
     {
         // bdType : vector<signed_transaction>
         [JsonProperty("transactions")]

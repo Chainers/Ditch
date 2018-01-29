@@ -8,7 +8,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\app\include\steemit\app\applied_operation.hpp\
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class AppliedOperation
+    public partial class AppliedOperation
     {
 
         // bdType : transaction_id_type

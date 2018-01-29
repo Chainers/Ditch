@@ -10,7 +10,7 @@ namespace Ditch.Steem.Objects
     /// libraries\protocol\include\steemit\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SignedTransaction : Transaction
+    public partial class SignedTransaction : Transaction
     {
         #region for json
         private object[][] _operations;

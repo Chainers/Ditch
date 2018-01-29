@@ -9,7 +9,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class ChainProperties
+    public partial class ChainProperties
     {
 
         // bdType : asset | =

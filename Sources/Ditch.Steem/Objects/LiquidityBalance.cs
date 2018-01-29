@@ -4,7 +4,7 @@ namespace Ditch.Steem.Objects
 {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class LiquidityBalance
+    public partial class LiquidityBalance
     {
         [JsonProperty("account")]
         public string Account { get; set; }

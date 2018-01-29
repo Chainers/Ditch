@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\authority.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Authority
+    public partial class Authority
     {
 
         // bdType : uint32_t | = 0;

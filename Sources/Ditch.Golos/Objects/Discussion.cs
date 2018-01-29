@@ -9,7 +9,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Discussion : CommentApiObj
+    public partial class Discussion : CommentApiObj
     {
 
         // bdType : string

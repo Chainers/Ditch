@@ -8,7 +8,7 @@ namespace Ditch.Steem.Objects
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Price
+    public partial class Price
     {
 
         // bdType : asset

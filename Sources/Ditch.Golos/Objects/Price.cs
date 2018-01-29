@@ -8,7 +8,7 @@ namespace Ditch.Golos.Objects
     /// golos-0.16.3\libraries\protocol\include\steemit\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Price
+    public partial class Price
     {
 
         // bdType : asset

@@ -7,7 +7,7 @@ namespace Ditch.Steem.Objects
     /// libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class ExtendedLimitOrder : LimitOrderApiObj
+    public partial class ExtendedLimitOrder : LimitOrderApiObj
     {
 
         /// <summary>
