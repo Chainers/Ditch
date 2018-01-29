@@ -11,6 +11,7 @@ using Ditch.Steem.Enums;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Ditch.Core;
 
 namespace Ditch.Steem.Tests
 {
@@ -253,6 +254,14 @@ namespace Ditch.Steem.Tests
             var acc = resp.Result[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test]
+        public async Task TransferOperationTest()
+        {
+            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

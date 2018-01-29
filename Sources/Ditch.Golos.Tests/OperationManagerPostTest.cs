@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Ditch.Core;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
@@ -248,8 +249,16 @@ namespace Ditch.Golos.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var acc = resp.Result[0];
-            
+
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test]
+        public async Task TransferOperationTest()
+        {
+            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

@@ -1,34 +1,27 @@
 ﻿using System;
 using System.Globalization;
+using Newtonsoft.Json;
+using Ditch.Core.Helpers;
 
 namespace Ditch.Core
 {
-    public partial class Asset : IComparable<Asset>, IEquatable<Asset>
+    [JsonConverter(typeof(ToStringConverter))]
+    public partial class Asset : IComparable<Asset>, IEquatable<Asset>, IComplexString
     {
-        public long Value { get; set; }
+        public long Value { get; private set; }
 
-        public string Currency { get; set; }
+        public string Currency { get; private set; }
 
-        public byte Precision { get; set; }
+        public byte Precision { get; private set; }
 
 
         public Asset() { }
 
-        public Asset(string value) : this(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator) { }
+        public Asset(string value) { InitFromString(value); }
 
         public Asset(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
-            var kv = value.Split(' ');
-
-            var buf = kv[0]
-                .Replace(numberDecimalSeparator, string.Empty)
-                .Replace(numberGroupSeparator, string.Empty);
-
-            var charLenAftSeparator = kv[0].LastIndexOf(numberDecimalSeparator, StringComparison.OrdinalIgnoreCase);
-            if (charLenAftSeparator > 0)
-                Precision = (byte)(buf.Length - charLenAftSeparator);
-            Value = long.Parse(buf);
-            Currency = kv.Length > 1 ? kv[1].ToUpper() : string.Empty;
+            InitFromString(value, numberDecimalSeparator, numberGroupSeparator);
         }
 
         public Asset(long value, byte precision, string currency)
@@ -167,11 +160,6 @@ namespace Ditch.Core
             }
         }
 
-        public override string ToString()
-        {
-            return ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
-        }
-
         public string ToString(string numberDecimalSeparator)
         {
             var dig = Value.ToString();
@@ -191,5 +179,35 @@ namespace Ditch.Core
         {
             return Value / Math.Pow(10, Precision);
         }
+
+
+        #region ToStringConverter
+
+        public void InitFromString(string value)
+        {
+            InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+        }
+
+        public void InitFromString(string value, string numberDecimalSeparator, string numberGroupSeparator)
+        {
+            var kv = value.Split(' ');
+
+            var buf = kv[0]
+                .Replace(numberDecimalSeparator, string.Empty)
+                .Replace(numberGroupSeparator, string.Empty);
+
+            var charLenAftSeparator = kv[0].LastIndexOf(numberDecimalSeparator, StringComparison.OrdinalIgnoreCase);
+            if (charLenAftSeparator > 0)
+                Precision = (byte)(buf.Length - charLenAftSeparator);
+            Value = long.Parse(buf);
+            Currency = kv.Length > 1 ? kv[1].ToUpper() : string.Empty;
+        }
+
+        public override string ToString()
+        {
+            return ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+        }
+
+        #endregion ToStringConverter
     }
 }
