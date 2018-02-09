@@ -77,9 +77,10 @@ namespace Ditch.Golos
             return TryConnectTo(_urls, token);
         }
 
-
         /// <summary>
-        /// Create and broadcast transaction
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// The transaction will be checked for validity in the local database prior to broadcasting. If it fails to apply locally, an error will be thrown and the transaction will not be broadcast.
         /// </summary>
         /// <param name="userPrivateKeys"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -90,12 +91,30 @@ namespace Ditch.Golos
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-            {
                 return prop;
-            }
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
             return BroadcastTransaction(transaction, token);
+        }
+
+        /// <summary>
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// This call will not return until the transaction is included in a block. 
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse BroadcastOperationsSynchronous(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        {
+            var prop = GetDynamicGlobalProperties(token);
+            if (prop.IsError)
+                return prop;
+
+            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            return BroadcastTransactionSynchronous(transaction, token);
         }
 
         /// <summary>

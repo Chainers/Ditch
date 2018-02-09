@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.11</Version>
+    <Version>3.0.12</Version>
     <Authors>Chainers, KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Copyright></Copyright>
@@ -13,7 +13,7 @@
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
 </Description>
-    <PackageReleaseNotes>added transfer_operation</PackageReleaseNotes>
+    <PackageReleaseNotes>added BroadcastTransactionSynchronous</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
