@@ -117,8 +117,10 @@ body a:hover,
     display: table;
 }
 .menu{
-    padding: 25px 0;
+    padding: 0;
     font-size: 25px;
+    display: flex;
+    justify-content: center;
 }
 .menu a{
     font-weight: 300;
@@ -133,8 +135,30 @@ body a:hover,
     background: url('../images/bg-menu-hover.png');
 }
 .menu a:first-child{
-    border-left: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255, 255, 255, .2);
 }
+
+.header-donate-button {
+    box-shadow: inset 0 0 9px 3px #feaa35;
+    animation: donate 1.5s linear infinite;
+}
+.header-donate-button:hover {
+    box-shadow: none;
+    animation: none;
+}
+
+@keyframes donate {
+    0% {
+        box-shadow: inset 0 0 1px 0 #f77900;
+    }
+    50% {
+        box-shadow: inset 0 0 13px 3px #f77900;
+    }
+    100% {
+        box-shadow: inset 0 0 1px 0 #f77900;
+    }
+}
+
 .social-networks{
     margin-top: 22px;
 }
@@ -1726,7 +1750,6 @@ form .form-actions{
 }
 .block-account .table-container .rows .row:nth-child(2n){
     border: 1px solid rgba(0,0,0,0.2);
-    border-width: 1px 0px 1px 0;
     background: rgba(0,0,0,0.05);
 }
 .block-account .table-container .rows .row:nth-child(2n):hover,
@@ -2967,7 +2990,7 @@ grid_1, .grid_2, .grid_3, .grid_4, .grid_5, .grid_6, .grid_7, .grid_8, .grid_9, 
 }
 
 .text-center{
-        text-align: center;
+    text-align: center;
 }
 .block a.underline{
     text-decoration: underline; 
@@ -2997,7 +3020,7 @@ ul.ways-to-help{
     height : 200px;
 }
 #bitcoinlogo{
-      background: url('../images/bitpaylogo.png') no-repeat center 0;
+      background: url('../images/bitcoinlogo.png') no-repeat center 0;
     background-size: 400px 200px;
     height : 200px;
 }

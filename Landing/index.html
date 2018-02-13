@@ -6,17 +6,30 @@
 	<title>Ditch</title>
 	<link rel="shortcut icon" href=""/>
 	<link rel="stylesheet" href="assets/css/screen.css" type="text/css" media="screen" />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113963952-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-113963952-1');
+    </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/js/base.js"></script>
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <div class="bg-menu">
         <div class="block center block-menu">
-            <div class="menu left">
-                <a href="#intro">Home</a><a href="#about">About Ditch</a><a href="#usage">Usage</a><a href="#donate">
-                <span class="icon-make-deposit"></span>
-                Donate</a><a href="#plans">Our plans</a> <a href="https://github.com/Chainers/Ditch">Github</a>
+            <div class="menu">
+                <a href="#intro">Home</a>
+                <a href="#about">About Ditch</a>
+                <a href="#usage">Usage</a>
+                <a href="#donate" class="header-donate-button">
+                    <span class="icon-make-deposit"></span>Donate
+                </a>
+                <a href="#plans">Our plans</a>
+                <a href="https://github.com/Chainers/Ditch">Github</a>
             </div>
         </div>
     </div>
@@ -191,8 +204,8 @@ var config = _operationManager.GetDynamicGlobalProperties(CancellationToken.None
             <p class="bold-text">chainers-ditch</p>
         </div>
           <div class="grid_6">
-              <div  id="bitcoinlogo"></div>
-              <p class="bold-text">chainartsoft-ditch</p>
+              <div id="bitcoinlogo"></div>
+              <p class="bold-text">3AKjDXPUdxpPgD3Z6iSp89unwmQ4WbUBom</p>
           </div>
 </div>
            <div class="grid_6 etherium-grid">
@@ -226,7 +239,7 @@ var config = _operationManager.GetDynamicGlobalProperties(CancellationToken.None
                     </div>
                 </div>
                 <div class="copyright">
-                    <span>Copyright © 2016 - 2017 Ditch. All Rights Reserved.</span>
+                    <span>Copyright © 2016 - 2018 Ditch. All Rights Reserved.</span>
                 </div>
             </div>
         </div>
