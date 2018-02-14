@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta charset="UTF-8" />
-	<title>Ditch</title>
+	<title>Ditch.NET</title>
 	<link rel="shortcut icon" href=""/>
 	<link rel="stylesheet" href="assets/css/screen.css" type="text/css" media="screen" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113963952-1"></script>
@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="bg-menu">
-        <div class="block center block-menu">
+        <div class="center block-menu">
             <div class="menu">
                 <a href="#intro">Home</a>
                 <a href="#about">About Ditch</a>
@@ -29,11 +29,12 @@
                     <span class="icon-make-deposit"></span>Donate
                 </a>
                 <a href="#plans">Our plans</a>
-                <a href="https://github.com/Chainers/Ditch">Github</a>
+                <a href="https://github.com/Chainers/Ditch" target="_blank">Github</a>
+                <a href="https://chainers.github.io/Ditch/" target="_blank">Documentation</a>
             </div>
         </div>
     </div>
-    <div class="block-main-slider navigation" id="intro" class="intro">
+    <div class="block-main-slider navigation intro" id="intro">
         <div class="on-image">
             <div class="block center block-on-slider">
                 <a href="#" class="logo-slider center"><label>Ditch</label>.NET</a>
@@ -52,7 +53,7 @@
     </div>
 
 
- <div class="block center block-text" id="about" class="about">
+ <div class="block center block-text about" id="about">
         <div class="title"><a href="#about">About Ditch</a></div>
         <div class="hr">
             <div class="square left"></div>
@@ -151,6 +152,7 @@ var conectedTo = _operationManager.TryConnectTo(cUrls,  CancellationToken.None);
 Note: Use correct address https for HttpManager and wss for WebSocketManager.
 ** TryConnectTo will return url which _operation Manager choose to conect.  If returned null,
  then connection was not established.
+                            </string>
                             </pre>
                         </div>
                     </div>
@@ -177,7 +179,7 @@ var config = _operationManager.GetDynamicGlobalProperties(CancellationToken.None
         </div>
         </div>
 
-    <div class="block center block-text" id="donate" class="donate">
+    <div class="block center block-text donate" id="donate">
         <div class="title"><a href="#donate">Donate</a></div>
         <div class="hr">
             <div class="square left"></div>
@@ -196,26 +198,35 @@ var config = _operationManager.GetDynamicGlobalProperties(CancellationToken.None
                 <li>Spread the word about Ditch. Tell your friends and co-workers.</li>
             </ul>
              <h3 class="bold-text donate-title">Also you can make a donation for project support: </h3>
-
-                <div class="container_12">
-       <div>
-        <div class="grid_6" >
-            <div id="bitshareslogo"></div>
-            <p class="bold-text">chainers-ditch</p>
+            <div class="container_12">
+               <div>
+                  <div class="grid_6 donate-block-margin">
+                      <div id="bitshareslogo"></div>
+                      <p class="bold-text">chainers-ditch</p>
+                  </div>
+                  <div class="grid_6 donate-block-margin">
+                        <div id="bitcoinlogo"></div>
+                        <p class="bold-text">3AKjDXPUdxpPgD3Z6iSp89unwmQ4WbUBom</p>
+                  </div>
+               </div>
+                <div>
+                    <div class="grid_6 donate-block-margin">
+                        <div id="goloslogo"></div>
+                        <p class="bold-text">Golos wallet: korzunav</p>
+                    </div>
+                    <div class="grid_6 donate-block-margin">
+                        <div id="steemlogo"></div>
+                        <p class="bold-text">Steem wallet: korzunav</p>
+                    </div>
+                </div>
+               <div class="grid_6 etherium-grid">
+                    <div  id="etheriumlogo"></div>
+                    <p class="bold-text">0x0071f539764c04948Cc8B0dD21c765b2b34ef080</p>
+                </div>
+            </div>
         </div>
-          <div class="grid_6">
-              <div id="bitcoinlogo"></div>
-              <p class="bold-text">3AKjDXPUdxpPgD3Z6iSp89unwmQ4WbUBom</p>
-          </div>
+    </div>
 </div>
-           <div class="grid_6 etherium-grid">
-            <div  id="etheriumlogo"></div>
-            <p class="bold-text">0x0071f539764c04948Cc8B0dD21c765b2b34ef080</p>
-        </div>
-        </div>
-    </div>
-        </div>
-    </div>
 
          <div class="block center block-text plans" id=plans>
         <div class="title"><a href="#">Our Plans</a></div>

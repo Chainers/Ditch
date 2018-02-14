@@ -118,16 +118,17 @@ body a:hover,
 }
 .menu{
     padding: 0;
-    font-size: 25px;
+    font-size: 24px;
     display: flex;
     justify-content: center;
 }
 .menu a{
     font-weight: 300;
-    color: #FFF;
+    color: #ffffff;
     text-transform: uppercase;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-    border-right: 1px solid rgba(255,255,255,0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, .4);
+    text-decoration: none;
+    border-right: 1px solid rgba(255, 255, 255, .2);
     padding: 23px 20px;
     background: url('../images/bg-menu.png');
 }
@@ -139,10 +140,19 @@ body a:hover,
 }
 
 .header-donate-button {
-    box-shadow: inset 0 0 9px 3px #feaa35;
-    animation: donate 1.5s linear infinite;
+    position: relative;
 }
-.header-donate-button:hover {
+.header-donate-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: inset 0 0 9px 3px #feaa35;
+    animation: donate 1.3s linear infinite;
+}
+.header-donate-button:hover::after {
     box-shadow: none;
     animation: none;
 }
@@ -322,9 +332,9 @@ body a:hover,
     padding-top: 10px;
 }
 .actions .title{
-    display: block!important;
+    display: block !important;
     text-transform: uppercase;
-    font-weight: bold!important;
+    font-weight: bold !important;
     font-size: 25px;
     margin-bottom: 5px;
 }
@@ -3007,32 +3017,50 @@ ul.ways-to-help{
     margin-left:20px;
 }
 .block-less-margin{
-        margin: 30px auto;
+    margin: 30px auto;
 }
 .bold-text{
-      font-weight: bold;
-          font-size: 130%;
+    font-weight: bold;
+    font-size: 130%;
 }
 #bitshareslogo{
-     background: url('../images/bitshares.png') no-repeat center 0;
+    background: url('../images/bitshares.png') no-repeat center 0;
     background-size: 400px 150px;
-    width : 400px;
-    height : 200px;
+    width: 460px;
+    height: 200px;
 }
 #bitcoinlogo{
-      background: url('../images/bitcoinlogo.png') no-repeat center 0;
+    background: url('../images/bitcoinlogo.png') no-repeat center 0;
     background-size: 400px 200px;
-    height : 200px;
+    width: 460px;
+    height: 200px;
+}
+#goloslogo {
+    background: url('../images/golos.png') no-repeat center;
+    background-size: 150px;
+    width: 460px;
+    height: 200px;
+    margin-bottom: 25px;
+}
+#steemlogo {
+    background: url('../images/steem.png') no-repeat center;
+    background-size: 300px 300px;
+    width: 460px;
+    height: 200px;
+    margin-bottom: 25px;
 }
 #etheriumlogo{
-      background: url('../images/etheriumlogo.png') no-repeat center 0;
-     background-size: 381px 300px;
-    width : 381px;
-    height : 300px;
+    background: url('../images/etheriumlogo.png') no-repeat center 0;
+    background-size: 381px 300px;
+    width: 381px;
+    height: 300px;
     margin-left:8%;
 }
+.donate-block-margin {
+    margin-top: 20px;
+}
 .etherium-grid{
-    margin-left:27%;
+    margin-left: 27%;
 }
 
 .bitshares-grid{
@@ -3047,5 +3075,16 @@ ul.ways-to-help{
 }
 .info-title{
     font-size:130%;
-        margin-top: 30px;
+    margin-top: 30px;
+}
+
+@media (max-width: 1224px) {
+    .menu {
+        font-size: 22px;
+    }
+}
+@media (max-width: 1124px) {
+    .menu {
+        font-size: 19px;
+    }
 }
