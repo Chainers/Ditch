@@ -9,6 +9,7 @@
         public const string FollowApi = "follow_api";
         public const string LoginApi = "login_api";
         public const string PrivateMessageApi = "private_message_api";
+        public const string CondenserApi = "condenser_api";
 
         public const string NetworkNodeApi = "network_node_api";
         public const string FcApi = "fc_api";

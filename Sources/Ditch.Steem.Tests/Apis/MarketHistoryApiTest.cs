@@ -16,9 +16,9 @@ namespace Ditch.Steem.Tests.Apis
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            Assert.IsTrue(resp.Result.SbdVolume > 0 || resp.Result.SteemVolume > 0);
+            Assert.IsTrue(resp.Result.SbdVolume.Amount != null);
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_ticker", new object[] { }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_ticker", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -31,9 +31,9 @@ namespace Ditch.Steem.Tests.Apis
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            Assert.IsTrue(resp.Result.SbdVolume > 0 || resp.Result.SteemVolume > 0);
+            Assert.IsTrue(resp.Result.SbdVolume.Amount != null);
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_volume", new object[] { }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_volume", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -49,7 +49,7 @@ namespace Ditch.Steem.Tests.Apis
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Asks.Length == count || resp.Result.Bids.Length == count);
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_order_book", new object[] { 100 }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.MarketHistoryApi, "get_order_book", new object[] { 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -65,7 +65,7 @@ namespace Ditch.Steem.Tests.Apis
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length == count);
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100 }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -80,7 +80,7 @@ namespace Ditch.Steem.Tests.Apis
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             Assert.IsTrue(resp.Result.Length > 0);
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[] { 100 }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[] { 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -94,7 +94,7 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_market_history", new object[] { 100, new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistoryApi, "get_market_history", new object[] { 100, new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));

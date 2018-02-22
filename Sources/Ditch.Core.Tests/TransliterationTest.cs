@@ -463,20 +463,5 @@ namespace Ditch.Core.Tests
             var rez = Transliteration.ToRus(value);
             Assert.IsTrue(rez.Equals(exp), $"{rez} != {exp} ({exp} > {value})");
         }
-
-        [Test, Sequential]
-        [TestCase("277.126 SBD", 277126, 3, "SBD")]
-        [TestCase("0 SBD", 0, 0, "SBD")]
-        [TestCase("0", 0, 0, "")]
-        [TestCase("123 SBD", 123, 0, "SBD")]
-        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
-        public void ParseTestTest(string test, long value, byte precision, string currency)
-        {
-            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-            Assert.IsTrue(asset.Value == value);
-            Assert.IsTrue(asset.Precision == precision);
-            Assert.IsTrue(asset.Currency == currency);
-            Assert.IsTrue(test.Equals(asset.ToString()));
-        }
     }
 }

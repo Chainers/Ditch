@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
-using Ditch.Steem.Objects;
+using Ditch.Steem.JsonRpc;
+using Ditch.Steem.Models.Objects;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -54,7 +56,7 @@ namespace Ditch.Steem
                     if (string.IsNullOrEmpty(connectedTo))
                         continue;
 
-                    if (TryLoadChainId(token))
+                    if (TryLoadConfig(token))
                         return url;
                 }
                 catch
@@ -76,7 +78,7 @@ namespace Ditch.Steem
         {
             return TryConnectTo(_urls, token);
         }
-        
+
         /// <summary>
         /// Create and Broadcast a transaction to the network
         /// 
@@ -130,35 +132,52 @@ namespace Ditch.Steem
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
-            return CustomGetRequest<bool>("verify_authority", token, new[] { transaction });
+            return CustomGetRequest<bool>(KnownApiNames.DatabaseApi, "verify_authority", transaction, token);
         }
 
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string method, CancellationToken token, params object[] data)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string method, CancellationToken token, params object[] data)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
+            var jsonRpc = new JsonRpcRequest(api, method);
+            return _connectionManager.Execute<T>(jsonRpc, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse CustomGetRequest(string api, string method, object data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute(jsonRpc, token);
         }
 
@@ -166,32 +185,15 @@ namespace Ditch.Steem
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <param name="api">Api name</param>
-        /// <param name="method">Api method</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CallRequest(string api, string method, object[] data, CancellationToken token)
+        public JsonRpcResponse CustomGetRequest(string api, string method, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            var jsonRpc = new JsonRpcRequest(api, method);
             return _connectionManager.Execute(jsonRpc, token);
         }
-
-        /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Api method</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CallRequest<T>(string api, string method, object[] data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
-            return _connectionManager.Execute<T>(jsonRpc, token);
-        }
-
 
         /// <summary>
         /// 
@@ -202,7 +204,7 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var transaction = new SignedTransaction
             {
@@ -227,24 +229,24 @@ namespace Ditch.Steem
         }
 
 
-        private bool TryLoadChainId(CancellationToken token)
+        public virtual bool TryLoadConfig(CancellationToken token)
         {
             var resp = GetConfig(token);
             if (!resp.IsError)
             {
                 dynamic conf = resp.Result;
-                var scid = conf.STEEMIT_CHAIN_ID as JValue;
-                var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
-                var sbhv = conf.STEEMIT_BLOCKCHAIN_HARDFORK_VERSION as JValue;
+                var scid = conf.STEEM_CHAIN_ID as JValue;
+                var smpsbd = conf.STEEM_MIN_PAYOUT_SBD as JArray;
+
+                var sbhv = conf.STEEM_BLOCKCHAIN_VERSION as JValue;
                 //var sbv = conf.STEEMIT_BLOCKCHAIN_VERSION as JValue;
-                if (scid != null && smpsbd != null && sbhv != null)
+                if (scid != null && smpsbd != null && smpsbd.Count == 3 && sbhv != null)
                 {
-                    var cur = smpsbd.Value<string>();
                     var str = scid.Value<string>();
                     var hfvs = sbhv.Value<string>();
-                    if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
+                    if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
                     {
-                        SbdSymbol = new Asset(cur).Currency;
+                        SbdSymbol = smpsbd[2].Value<string>();
                         ChainId = Hex.HexToBytes(str);
                         Version = VersionHelper.ToInteger(hfvs);
                         return true;

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Enums;
+using Ditch.Steem.Models.Enums;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Ditch.Core;
+using Ditch.Steem.Models.Objects;
+using Ditch.Steem.Models;
 
 namespace Ditch.Steem.Tests
 {
@@ -153,7 +154,7 @@ namespace Ditch.Steem.Tests
             var manager = Api;
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            var popt = new BeneficiariesOperation(user.Login, op.Permlink, manager.SbdSymbol, new Beneficiary("steepshot", 1000));
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Beneficiary("steepshot", 1000));
             var response = Post(user.PostingKeys, false, op, popt);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -261,7 +262,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
+            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.STEEM_ASSET_NUM_SBD), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

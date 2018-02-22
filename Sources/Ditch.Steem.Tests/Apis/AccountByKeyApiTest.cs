@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
+using Ditch.Steem.Models.Objects;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Ditch.Steem.Objects;
 
 namespace Ditch.Steem.Tests.Apis
 {

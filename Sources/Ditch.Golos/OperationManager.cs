@@ -6,6 +6,7 @@ using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Helpers;
+using Ditch.Golos.JsonRpc;
 using Ditch.Golos.Objects;
 using Ditch.Golos.Operations;
 using Newtonsoft.Json;
@@ -54,7 +55,7 @@ namespace Ditch.Golos
                     if (string.IsNullOrEmpty(connectedTo))
                         continue;
 
-                    if (TryLoadChainId(token))
+                    if (TryLoadConfig(token))
                         return url;
                 }
                 catch
@@ -226,7 +227,7 @@ namespace Ditch.Golos
         }
 
 
-        private bool TryLoadChainId(CancellationToken token)
+        public virtual bool TryLoadConfig(CancellationToken token)
         {
             var resp = GetConfig(token);
             if (!resp.IsError)

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Steem.Enums;
+using Ditch.Steem.Models.Enums;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -52,7 +52,7 @@ namespace Ditch.Steem.Tests.Apis
         //    Assert.IsFalse(resp.IsError);
         //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //    var obj = Api.CallRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", new object[] { }, CancellationToken.None);
+        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", CancellationToken.None);
         //    TestPropetries(resp.Result.GetType(), obj.Result);
         //    Console.WriteLine("----------------------------------------------------------------------------");
         //    Console.WriteLine(JsonConvert.SerializeObject(obj));

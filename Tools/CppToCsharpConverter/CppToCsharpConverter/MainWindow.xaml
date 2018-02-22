@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:cppToCsharpConverter="clr-namespace:CppToCsharpConverter"
+        xmlns:core="clr-namespace:Converter.Core;assembly=Converter.Core"
         mc:Ignorable="d" Title="Blockchain C++ to C# converter" Height="600" Width="800" Closing="Window_Closing">
 
     <Window.Resources>
@@ -20,9 +20,9 @@
                         <RowDefinition Height="23"/>
                     </Grid.RowDefinitions>
 
-                    <ListBox ItemsSource="{Binding (cppToCsharpConverter:SettingsViewModel.SearchTasks)}" Grid.Row="0" Grid.ColumnSpan="4"  >
+                    <ListBox ItemsSource="{Binding (SearchTasks)}" Grid.Row="0" Grid.ColumnSpan="4"  >
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="cppToCsharpConverter:SearchTask">
+                            <DataTemplate DataType="core:SearchTask">
                                 <StackPanel  Orientation="Horizontal" Margin="3">
                                     <StackPanel Style="{DynamicResource MainStackPanel}">
                                         <Label Content="Конвертер:" Style="{DynamicResource LabelBold}"/>

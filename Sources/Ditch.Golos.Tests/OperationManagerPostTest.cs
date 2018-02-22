@@ -10,9 +10,11 @@ using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Enums;
 using Ditch.Golos.Helpers;
+using Ditch.Golos.Objects;
 using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Globalization;
 
 namespace Ditch.Golos.Tests
 {
@@ -261,6 +263,21 @@ namespace Ditch.Golos.Tests
             var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+        
+        [Test, Sequential]
+        [TestCase("277.126 SBD", 277126, 3, "SBD")]
+        [TestCase("0 SBD", 0, 0, "SBD")]
+        [TestCase("0", 0, 0, "")]
+        [TestCase("123 SBD", 123, 0, "SBD")]
+        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
+        public void ParseTestTest(string test, long value, byte precision, string currency)
+        {
+            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+            Assert.IsTrue(asset.Value == value);
+            Assert.IsTrue(asset.Precision == precision);
+            Assert.IsTrue(asset.Currency == currency);
+            Assert.IsTrue(test.Equals(asset.ToString()));
         }
     }
 }

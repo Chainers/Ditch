@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>CppToCsharpConverter</RootNamespace>
     <AssemblyName>CppToCsharpConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -57,20 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\BaseConverter.cs" />
-    <Compile Include="Converters\ConverterManager.cs" />
-    <Compile Include="Converters\ApiConverter.cs" />
-    <Compile Include="Converters\ParsedClass.cs" />
-    <Compile Include="Converters\ParsedType.cs" />
-    <Compile Include="Converters\ParsedFunc.cs" />
-    <Compile Include="Converters\ParsedParams.cs" />
-    <Compile Include="Converters\Grabber.cs" />
-    <Compile Include="Converters\CashParser.cs" />
-    <Compile Include="Converters\PreParsedElement.cs" />
-    <Compile Include="Converters\SearchInFile.cs" />
-    <Compile Include="Converters\StructConverter.cs" />
-    <Compile Include="Helpers\TaskHelper.cs" />
-    <Compile Include="SortableObservableCollection.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,7 +67,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="JsonBeautifier.cs" />
-    <Compile Include="SettingsViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -124,6 +110,19 @@
   <ItemGroup>
     <Resource Include="SettingsViewModel.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Converter.Core\Converter.Core.csproj">
+      <Project>{0d7a1ddf-3ce4-4efe-8136-026a00f1591e}</Project>
+      <Name>Converter.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Converter.Golos\Converter.Golos.csproj">
+      <Project>{35e05190-6c7f-45bc-9d0a-ffb10ad8d09e}</Project>
+      <Name>Converter.Golos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Converter.Steem\Converter.Steem.csproj">
+      <Project>{0fe24c12-675a-46da-b398-0875730e663a}</Project>
+      <Name>Converter.Steem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

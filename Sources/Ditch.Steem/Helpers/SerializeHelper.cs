@@ -5,8 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Ditch.Core;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.Objects;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 
@@ -138,18 +137,18 @@ namespace Ditch.Steem.Helpers
                 stream.WriteByte((byte)val);
                 return;
             }
-            if (type == typeof(Asset))
-            {
-                var typed = (Asset)val;
-                var buf = BitConverter.GetBytes(typed.Value);
-                stream.Write(buf, 0, buf.Length);
-                stream.WriteByte(typed.Precision);
-                buf = Encoding.UTF8.GetBytes(typed.Currency);
-                stream.Write(buf, 0, buf.Length);
-                for (var i = buf.Length; i < 7; i++)
-                    stream.WriteByte(0);
-                return;
-            }
+            //if (type == typeof(Asset))
+            //{
+            //    var typed = (Asset)val;
+            //    var buf = BitConverter.GetBytes(typed.Value);
+            //    stream.Write(buf, 0, buf.Length);
+            //    stream.WriteByte(typed.Precision);
+            //    buf = Encoding.UTF8.GetBytes(typed.Currency);
+            //    stream.Write(buf, 0, buf.Length);
+            //    for (var i = buf.Length; i < 7; i++)
+            //        stream.WriteByte(0);
+            //    return;
+            //}
             if (type == typeof(String))
             {
                 var typed = (string)val;

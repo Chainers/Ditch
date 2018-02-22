@@ -35,7 +35,7 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.LoginApi, "get_version", new object[] { }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.LoginApi, "get_version", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Ditch.Core;
 using Ditch.Golos.Helpers;
+using Ditch.Golos.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations

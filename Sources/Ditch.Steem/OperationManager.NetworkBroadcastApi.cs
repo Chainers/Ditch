@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.Objects;
 
 namespace Ditch.Steem
 {
@@ -32,7 +32,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", new object[] { trx }, token);
+            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse BroadcastTransactionWithCallback(object cb, SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_with_callback", new object[] { cb, trx }, token);
+            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_with_callback", new object[] { cb, trx }, token);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object> BroadcastTransactionSynchronous(SignedTransaction trx, CancellationToken token)
         {
-            return CallRequest<object>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", new object[] { trx }, token);
+            return CustomGetRequest<object>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse BroadcastBlock(SignedBlock block, CancellationToken token)
         {
-            return CallRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_block", new object[] { block }, token);
+            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_block", new object[] { block }, token);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse SetMaxBlockAge(Int32 maxBlockAge, CancellationToken token)
         {
-            return CallRequest(KnownApiNames.NetworkBroadcastApi, "set_max_block_age", new object[] { maxBlockAge }, token);
+            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "set_max_block_age", new object[] { maxBlockAge }, token);
         }
     }
 }

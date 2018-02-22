@@ -83,7 +83,7 @@ namespace Ditch.Core
             }
         }
 
-        public JsonRpcResponse Execute(JsonRpcRequest jsonRpc, CancellationToken token)
+        public JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
             SendData(Socket, jsonRpc.Message);
             var responce = ReceiveData(Socket);
@@ -91,7 +91,7 @@ namespace Ditch.Core
             return prop;
         }
 
-        public JsonRpcResponse<T> Execute<T>(JsonRpcRequest jsonRpc, CancellationToken token)
+        public JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
             var response = Execute(jsonRpc, token);
             return response.ToTyped<T>(_jsonSerializerSettings);

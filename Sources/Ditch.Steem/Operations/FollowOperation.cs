@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Ditch.Core.Helpers;
-using Ditch.Steem.Enums;
+using Ditch.Steem.Models.Enums;
 
 namespace Ditch.Steem.Operations
 {

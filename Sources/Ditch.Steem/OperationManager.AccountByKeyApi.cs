@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.Objects;
 
 namespace Ditch.Steem
 {
@@ -21,7 +21,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[][]> GetKeyReferences(PublicKeyType[] keys, CancellationToken token)
         {
-            return CallRequest<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { keys }, token);
+            return CustomGetRequest<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { keys }, token);
         }
     }
 }

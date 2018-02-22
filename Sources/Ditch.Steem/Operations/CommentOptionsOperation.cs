@@ -1,6 +1,6 @@
 ﻿using System;
-using Ditch.Core;
 using Ditch.Steem.Helpers;
+using Ditch.Steem.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
@@ -20,13 +20,8 @@ namespace Ditch.Steem.Operations
         public string Permlink { get; set; }
 
         [JsonProperty("max_accepted_payout")]
-        public string MaxAcceptedPayoutStr { get; set; }
         [MessageOrder(40)]
-        public Asset MaxAcceptedPayout
-        {
-            get => MaxAcceptedPayoutStr;
-            set => MaxAcceptedPayoutStr = value;
-        }
+        public Asset MaxAcceptedPayout { get; set; }
 
         [MessageOrder(50)]
         [JsonProperty("percent_steem_dollars")]

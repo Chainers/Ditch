@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.Objects;
 
 namespace Ditch.Steem
 {
@@ -24,7 +24,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MarketTicker> GetTicker(CancellationToken token)
         {
-            return CallRequest<MarketTicker>(KnownApiNames.MarketHistoryApi, "get_ticker", new object[] { }, token);
+            return CustomGetRequest<MarketTicker>(KnownApiNames.MarketHistoryApi, "get_ticker", token);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MarketVolume> GetVolume(CancellationToken token)
         {
-            return CallRequest<MarketVolume>(KnownApiNames.MarketHistoryApi, "get_volume", new object[] { }, token);
+            return CustomGetRequest<MarketVolume>(KnownApiNames.MarketHistoryApi, "get_volume", token);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<OrderBook> GetOrderBook2(UInt32 limit, CancellationToken token)
         {
-            return CallRequest<OrderBook>(KnownApiNames.MarketHistoryApi, "get_order_book", new object[] { limit }, token);
+            return CustomGetRequest<OrderBook>(KnownApiNames.MarketHistoryApi, "get_order_book", new object[] { limit }, token);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MarketTrade[]> GetTradeHistory(DateTime start, DateTime end, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<MarketTrade[]>(KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { start, end, limit }, token);
+            return CustomGetRequest<MarketTrade[]>(KnownApiNames.MarketHistoryApi, "get_trade_history", new object[] { start, end, limit }, token);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MarketTrade[]> GetRecentTrades(UInt32 limit, CancellationToken token)
         {
-            return CallRequest<MarketTrade[]>(KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[] { limit }, token);
+            return CustomGetRequest<MarketTrade[]>(KnownApiNames.MarketHistoryApi, "get_recent_trades", new object[] { limit }, token);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<BucketObject[]> GetMarketHistory(UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)
         {
-            return CallRequest<BucketObject[]>(KnownApiNames.MarketHistoryApi, "get_market_history", new object[] { bucketSeconds, start, end }, token);
+            return CustomGetRequest<BucketObject[]>(KnownApiNames.MarketHistoryApi, "get_market_history", new object[] { bucketSeconds, start, end }, token);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<UInt32[]> GetMarketHistoryBuckets(CancellationToken token)
         {
-            return CallRequest<UInt32[]>(KnownApiNames.MarketHistoryApi, "get_market_history_buckets", new object[] { }, token);
+            return CustomGetRequest<UInt32[]>(KnownApiNames.MarketHistoryApi, "get_market_history_buckets", token);
         }
     }
 }

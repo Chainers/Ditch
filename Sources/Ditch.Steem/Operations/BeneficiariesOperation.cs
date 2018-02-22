@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ditch.Core;
 using Ditch.Steem.Helpers;
 using Newtonsoft.Json;
+using Ditch.Steem.Models;
 
 namespace Ditch.Steem.Operations
 {
@@ -23,7 +23,7 @@ namespace Ditch.Steem.Operations
         [JsonProperty("beneficiaries")]
         [MessageOrder(10)]
         public Beneficiary[] BeneficiariesContainer { get; set; }
-        
+
         public BeneficiaryContainer(Beneficiary[] beneficiaries)
         {
             BeneficiariesContainer = beneficiaries;
@@ -51,8 +51,13 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class BeneficiariesOperation : CommentOptionsOperation
     {
-        public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
-            : base(author, permlink, new Asset(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
+        public BeneficiariesOperation(string author, string permlink, Asset asset, params Beneficiary[] beneficiaries)
+            : base(author, permlink, asset, 10000, true, true, SetBeneficiaries(beneficiaries))
+        {
+        }
+
+        public BeneficiariesOperation(string author, string permlink, params Beneficiary[] beneficiaries)
+            : this(author, permlink, new Asset(1000000000, Config.STEEM_ASSET_NUM_SBD), beneficiaries)
         {
         }
 

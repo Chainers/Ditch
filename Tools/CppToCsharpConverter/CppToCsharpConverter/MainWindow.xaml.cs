@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CppToCsharpConverter.Converters;
 using Newtonsoft.Json;
+using Converter.Steem;
+using Converter.Core;
 
 namespace CppToCsharpConverter
 {
@@ -131,7 +132,6 @@ namespace CppToCsharpConverter
                 {
                     //skip
                 }
-
                 return _converterManager.Execute(SettingsViewModel.SearchTasks, storeResultDir);
             });
         }
@@ -146,7 +146,7 @@ namespace CppToCsharpConverter
             {
                 var structConverter = new StructConverter(SettingsViewModel.KnownTypes);
                 var converted = structConverter.Parse(Input.Text, false);
-                Output.Text = structConverter.PrintParsedClass(converted, "projName", string.Empty, string.Empty);
+                Output.Text = structConverter.PrintParsedClass(converted, string.Empty, string.Empty);
             }
             catch (Exception ex)
             {
