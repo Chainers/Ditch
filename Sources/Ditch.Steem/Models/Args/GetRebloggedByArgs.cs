@@ -1,28 +1,29 @@
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Models.Objects
+namespace Ditch.Steem.Models.Args
 {
     /// <summary>
-    /// account_reputation
+    /// get_reblogged_by_args
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountReputation
+    public partial class GetRebloggedByArgs
     {
+
         /// <summary>
-        /// API name: account
+        /// API name: author
         /// 
         /// </summary>
         /// <returns>API type: account_name_type</returns>
-        [JsonProperty("account")]
-        public string Account {get; set;}
+        [JsonProperty("author")]
+        public string Author {get; set;}
 
         /// <summary>
-        /// API name: reputation
+        /// API name: permlink
         /// 
         /// </summary>
-        /// <returns>API type: share_type</returns>
-        [JsonProperty("reputation")]
-        public object Reputation {get; set;}
+        /// <returns>API type: string</returns>
+        [JsonProperty("permlink")]
+        public string Permlink {get; set;}
     }
 }

@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Ditch.Steem.Models.Objects;
 using Ditch.Steem.Models;
+using Ditch.Steem.Models.Args;
 
 namespace Ditch.Steem.Tests
 {
@@ -95,11 +96,18 @@ namespace Ditch.Steem.Tests
 
         private bool IsFollow(string autor)
         {
-            var resp = Api.GetFollowing(User.Login, autor, FollowType.Blog, 1, CancellationToken.None);
+            var args = new GetFollowingArgs()
+            {
+                Account = User.Login,
+                Start = autor,
+                Limit = 1,
+                Type = FollowType.Blog
+            };
+            var resp = Api.GetFollowing(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            return resp.Result.Length > 0 && resp.Result[0].Following == autor;
+            return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
         }
 
         [Test]

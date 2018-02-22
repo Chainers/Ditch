@@ -1,4 +1,3 @@
-using Ditch.Steem.Models.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Return

@@ -44,6 +44,8 @@ namespace Ditch.Steem.Models
             Symbol = assetSymbolType;
         }
 
+        public Asset() { }
+
         #region IComplexArray
 
         public void InitFromArray(object[] value)

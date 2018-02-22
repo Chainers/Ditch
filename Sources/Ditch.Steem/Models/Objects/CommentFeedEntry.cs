@@ -5,7 +5,7 @@ namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
     /// comment_feed_entry
-    /// libraries\plugins\follow\include\steemit\follow\follow_api.hpp
+    /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class CommentFeedEntry
@@ -15,9 +15,9 @@ namespace Ditch.Steem.Models.Objects
         /// API name: comment
         /// 
         /// </summary>
-        /// <returns>API type: comment_api_obj</returns>
+        /// <returns>API type: database_api::api_comment_object</returns>
         [JsonProperty("comment")]
-        public object Comment {get; set;}
+        public ApiCommentObject Comment {get; set;}
 
         /// <summary>
         /// API name: reblog_by

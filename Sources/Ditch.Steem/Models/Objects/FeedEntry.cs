@@ -5,7 +5,7 @@ namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
     /// feed_entry
-    /// libraries\plugins\follow\include\steemit\follow\follow_api.hpp
+    /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class FeedEntry
@@ -14,7 +14,7 @@ namespace Ditch.Steem.Models.Objects
         /// API name: author
         /// 
         /// </summary>
-        /// <returns>API type: string</returns>
+        /// <returns>API type: account_name_type</returns>
         [JsonProperty("author")]
         public string Author {get; set;}
 

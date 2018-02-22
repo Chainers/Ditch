@@ -3,11 +3,30 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Enums
 {
+    /// <summary>
+    /// follow_type
+    /// libraries\plugins\follow\include\steem\plugins\follow\follow_objects.hpp
+    /// </summary>
     [JsonConverter(typeof(EnumConverter))]
     public enum FollowType
     {
+
+        /// <summary>
+        /// API name: undefined
+        /// 
+        /// </summary>
         Undefined,
+
+        /// <summary>
+        /// API name: blog
+        /// 
+        /// </summary>
         Blog,
-        Ignore
-    };
+
+        /// <summary>
+        /// API name: ignore
+        /// 
+        /// </summary>
+        Ignore,
+    }
 }

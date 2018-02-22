@@ -1,28 +1,30 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
-    /// account_reputation
+    /// reblog_count
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountReputation
+    public partial class ReblogCount
     {
+
         /// <summary>
-        /// API name: account
+        /// API name: author
         /// 
         /// </summary>
         /// <returns>API type: account_name_type</returns>
-        [JsonProperty("account")]
-        public string Account {get; set;}
+        [JsonProperty("author")]
+        public string Author {get; set;}
 
         /// <summary>
-        /// API name: reputation
+        /// API name: count
         /// 
         /// </summary>
-        /// <returns>API type: share_type</returns>
-        [JsonProperty("reputation")]
-        public object Reputation {get; set;}
+        /// <returns>API type: uint32_t</returns>
+        [JsonProperty("count")]
+        public UInt32 Count {get; set;}
     }
 }

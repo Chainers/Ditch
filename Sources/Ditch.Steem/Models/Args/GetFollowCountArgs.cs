@@ -1,14 +1,15 @@
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Models.Objects
+namespace Ditch.Steem.Models.Args
 {
     /// <summary>
-    /// account_reputation
+    /// get_follow_count_args
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountReputation
+    public partial class GetFollowCountArgs
     {
+
         /// <summary>
         /// API name: account
         /// 
@@ -16,13 +17,5 @@ namespace Ditch.Steem.Models.Objects
         /// <returns>API type: account_name_type</returns>
         [JsonProperty("account")]
         public string Account {get; set;}
-
-        /// <summary>
-        /// API name: reputation
-        /// 
-        /// </summary>
-        /// <returns>API type: share_type</returns>
-        [JsonProperty("reputation")]
-        public object Reputation {get; set;}
     }
 }
