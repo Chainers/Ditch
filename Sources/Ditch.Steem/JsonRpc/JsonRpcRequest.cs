@@ -7,7 +7,7 @@ namespace Ditch.Steem.JsonRpc
 {
     public struct JsonRpcRequest : IJsonRpcRequest
     {
-        private static int _id = 0;
+        private static int _id;
 
         public int Id { get; }
 

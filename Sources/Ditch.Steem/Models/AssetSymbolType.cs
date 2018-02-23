@@ -20,7 +20,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(10)]
-        public UInt32 AssetNum { get; set; } = 0;
+        public UInt32 AssetNum { get; set; }
 
 
         public AssetSymbolType(UInt32 assetNum)
@@ -34,8 +34,8 @@ namespace Ditch.Steem.Models
             if (!m.Success)
                 throw new InvalidCastException();
 
-            UInt32 asset_num = UInt32.Parse(m.Value);
-            AssetNum = AssetNumFromNai(asset_num, decimalPlaces);
+            UInt32 assetNum = UInt32.Parse(m.Value);
+            AssetNum = AssetNumFromNai(assetNum, decimalPlaces);
         }
 
         private UInt32 AssetNumFromNai(UInt32 nai, byte decimalPlaces)
@@ -44,12 +44,12 @@ namespace Ditch.Steem.Models
 
             switch (naiDataDigits)
             {
-                case Config.STEEM_NAI_STEEM:
-                    return Config.STEEM_ASSET_NUM_STEEM;
-                case Config.STEEM_NAI_SBD:
-                    return Config.STEEM_ASSET_NUM_SBD;
-                case Config.STEEM_NAI_VESTS:
-                    return Config.STEEM_ASSET_NUM_VESTS;
+                case Config.SteemNaiSteem:
+                    return Config.SteemAssetNumSteem;
+                case Config.SteemNaiSbd:
+                    return Config.SteemAssetNumSbd;
+                case Config.SteemNaiVests:
+                    return Config.SteemAssetNumVests;
                 default:
                     return (naiDataDigits << 5) | 0x10 | decimalPlaces;
             }
@@ -68,19 +68,19 @@ namespace Ditch.Steem.Models
 
         private UInt32 ToNai()
         {
-            UInt32 naiDataDigits = 0;
+            UInt32 naiDataDigits;
 
             // Can be replaced with some clever bitshifting
             switch (AssetNum)
             {
-                case Config.STEEM_ASSET_NUM_STEEM:
-                    naiDataDigits = Config.STEEM_NAI_STEEM;
+                case Config.SteemAssetNumSteem:
+                    naiDataDigits = Config.SteemNaiSteem;
                     break;
-                case Config.STEEM_ASSET_NUM_SBD:
-                    naiDataDigits = Config.STEEM_NAI_SBD;
+                case Config.SteemAssetNumSbd:
+                    naiDataDigits = Config.SteemNaiSbd;
                     break;
-                case Config.STEEM_ASSET_NUM_VESTS:
-                    naiDataDigits = Config.STEEM_NAI_VESTS;
+                case Config.SteemAssetNumVests:
+                    naiDataDigits = Config.SteemNaiVests;
                     break;
                 default:
                     naiDataDigits = AssetNum >> 5;

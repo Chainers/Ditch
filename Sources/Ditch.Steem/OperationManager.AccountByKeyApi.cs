@@ -21,7 +21,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<GetKeyReferencesReturn> GetKeyReferences(GetKeyReferencesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetKeyReferencesReturn>(KnownApiNames.BlockApi, "get_block_header", args, token);
+            return CustomGetRequest<GetKeyReferencesReturn>(KnownApiNames.AccountByKeyApi, "get_block_header", args, token);
         }
     }
 }

@@ -69,7 +69,6 @@
     <Compile Include="Apis\MarketHistoryApiTest.cs" />
     <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
     <Compile Include="Apis\AccountByKeyApiTest.cs" />
-    <Compile Include="Apis\PrivateMessageApi.cs" />
     <Compile Include="Apis\TagsApiTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="InfoTest.cs" />

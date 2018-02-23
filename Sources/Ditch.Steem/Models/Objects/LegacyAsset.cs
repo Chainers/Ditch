@@ -30,16 +30,16 @@ namespace Ditch.Steem.Models.Objects
 
         #region IComplexArray
 
-        private object[] items;
+        private object[] _items;
 
         public void InitFromArray(object[] value)
         {
-            items = value;
+            _items = value;
         }
 
         public object[] ToArray()
         {
-            return items;
+            return _items;
         }
         
         #endregion

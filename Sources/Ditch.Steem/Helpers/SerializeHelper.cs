@@ -163,8 +163,7 @@ namespace Ditch.Steem.Helpers
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            var container = val as KeyContainer;
-            if (container != null)
+            if (val is KeyContainer container)
             {
                 var typed = container;
                 foreach (var value in typed)

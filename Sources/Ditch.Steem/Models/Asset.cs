@@ -56,7 +56,7 @@ namespace Ditch.Steem.Models
 
         public object[] ToArray()
         {
-            return new object[] { Amount, Symbol.Decimals(), Symbol.ToNaiString() };
+            return new[] { Amount, Symbol.Decimals(), Symbol.ToNaiString() };
         }
 
         #endregion

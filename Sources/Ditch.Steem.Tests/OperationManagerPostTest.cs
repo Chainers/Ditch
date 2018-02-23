@@ -278,7 +278,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.STEEM_ASSET_NUM_SBD), "ditch test transfer");
+            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

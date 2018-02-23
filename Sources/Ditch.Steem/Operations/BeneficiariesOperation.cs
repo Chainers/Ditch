@@ -57,7 +57,7 @@ namespace Ditch.Steem.Operations
         }
 
         public BeneficiariesOperation(string author, string permlink, params Beneficiary[] beneficiaries)
-            : this(author, permlink, new Asset(1000000000, Config.STEEM_ASSET_NUM_SBD), beneficiaries)
+            : this(author, permlink, new Asset(1000000000, Config.SteemAssetNumSbd), beneficiaries)
         {
         }
 
