@@ -1,14 +1,14 @@
-using System;
+using Ditch.Steem.Models.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args
 {
     /// <summary>
-    /// beneficiary_route_type
-    /// libraries\protocol\include\steem\protocol\steem_operations.hpp
+    /// get_account_bandwidth_args
+    /// libraries\plugins\apis\witness_api\include\steem\plugins\witness_api\witness_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BeneficiaryRouteType
+    public partial class GetAccountBandwidthArgs
     {
 
         /// <summary>
@@ -20,11 +20,11 @@ namespace Ditch.Steem.Models.Args
         public string Account {get; set;}
 
         /// <summary>
-        /// API name: weight
+        /// API name: type
         /// 
         /// </summary>
-        /// <returns>API type: uint16_t</returns>
-        [JsonProperty("weight")]
-        public UInt16 Weight {get; set;}
+        /// <returns>API type: bandwidth_type</returns>
+        [JsonProperty("type")]
+        public BandwidthType Type {get; set;}
     }
 }

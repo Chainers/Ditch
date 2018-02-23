@@ -6,34 +6,58 @@ namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
     /// account_bandwidth_object
-    /// steem-0.19.1\libraries\plugins\witness\include\steemit\witness\witness_objects.hpp
+    /// libraries\plugins\witness\include\steem\plugins\witness\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class AccountBandwidthObject
     {
 
-        // bdType : id_type
+        /// <summary>
+        /// API name: id
+        /// 
+        /// </summary>
+        /// <returns>API type: id_type</returns>
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public object Id {get; set;}
 
-        // bdType : account_name_type
+        /// <summary>
+        /// API name: account
+        /// 
+        /// </summary>
+        /// <returns>API type: account_name_type</returns>
         [JsonProperty("account")]
-        public string Account { get; set; }
+        public string Account {get; set;}
 
-        // bdType : bandwidth_type
+        /// <summary>
+        /// API name: type
+        /// 
+        /// </summary>
+        /// <returns>API type: bandwidth_type</returns>
         [JsonProperty("type")]
-        public BandwidthType Type { get; set; }
+        public BandwidthType Type {get; set;}
 
-        // bdType : share_type
+        /// <summary>
+        /// API name: average_bandwidth
+        /// 
+        /// </summary>
+        /// <returns>API type: share_type</returns>
         [JsonProperty("average_bandwidth")]
-        public object AverageBandwidth { get; set; }
+        public object AverageBandwidth {get; set;}
 
-        // bdType : share_type
+        /// <summary>
+        /// API name: lifetime_bandwidth
+        /// 
+        /// </summary>
+        /// <returns>API type: share_type</returns>
         [JsonProperty("lifetime_bandwidth")]
-        public object LifetimeBandwidth { get; set; }
+        public object LifetimeBandwidth {get; set;}
 
-        // bdType : time_point_sec
+        /// <summary>
+        /// API name: last_bandwidth_update
+        /// 
+        /// </summary>
+        /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_bandwidth_update")]
-        public DateTime LastBandwidthUpdate { get; set; }
+        public DateTime LastBandwidthUpdate {get; set;}
     }
 }

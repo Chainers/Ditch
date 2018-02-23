@@ -9,6 +9,9 @@ using NUnit.Framework;
 using System.Threading;
 using Ditch.Core;
 using System.Globalization;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Objects;
+using Ditch.Steem.Operations;
 
 namespace Ditch.Steem.Tests
 {
@@ -112,6 +115,18 @@ namespace Ditch.Steem.Tests
         {
             var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
             return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
+        }
+
+
+        protected SignedTransaction GetSignedTransaction()
+        {
+            var user = User;
+            var autor = "steepshot";
+
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            return transaction;
         }
     }
 }

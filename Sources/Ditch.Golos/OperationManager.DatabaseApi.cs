@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Ditch.Core;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Enums;
 using Ditch.Golos.Objects;

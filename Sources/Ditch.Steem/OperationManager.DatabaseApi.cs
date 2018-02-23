@@ -550,20 +550,6 @@ namespace Ditch.Steem
             return CustomGetRequest<FindLimitOrdersReturn>(KnownApiNames.DatabaseApi, "find_limit_orders", args, token);
         }
 
-        /// <summary>
-        /// API name: get_order_book
-        /// 
-        /// </summary>
-        /// <param name="args">API type: get_order_book_args</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: get_order_book_return</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetOrderBookReturn> GetOrderBook(GetOrderBookArgs args, CancellationToken token)
-        {
-            return CustomGetRequest<GetOrderBookReturn>(KnownApiNames.DatabaseApi, "get_order_book", args, token);
-        }
-
-
         ////////////////////////////
         // Authority / validation //
         ////////////////////////////

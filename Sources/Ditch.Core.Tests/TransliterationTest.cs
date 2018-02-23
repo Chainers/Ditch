@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Ditch.Core.Helpers;
+﻿using Ditch.Core.Helpers;
 using NUnit.Framework;
 
 namespace Ditch.Core.Tests

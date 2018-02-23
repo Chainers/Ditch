@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Core;
 using Ditch.Golos.Enums;
 using Ditch.Golos.Helpers;
 using Ditch.Golos.Objects;

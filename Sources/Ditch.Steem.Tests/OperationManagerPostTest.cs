@@ -11,7 +11,6 @@ using Ditch.Steem.Models.Enums;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Ditch.Steem.Models.Objects;
 using Ditch.Steem.Models;
 using Ditch.Steem.Models.Args;
 
@@ -260,12 +259,16 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task AccountUpdateTest()
         {
-            var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            var args = new FindAccountsArgs()
+            {
+                Accounts = new[] { User.Login }
+            };
+            var resp = Api.FindAccounts(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var acc = resp.Result[0];
+            var acc = resp.Result.Accounts[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
             var response = Post(User.ActiveKeys, false, op);

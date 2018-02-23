@@ -4,7 +4,6 @@ using System.Threading;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Enums;
 using Ditch.Steem.Models.Objects;
-using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -694,21 +693,6 @@ namespace Ditch.Steem.Tests.Apis
         }
 
         [Test]
-        public void get_order_book()
-        {
-            var args = new GetOrderBookArgs();
-            var resp = Api.GetOrderBook(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_order_book", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
-        }
-
-        [Test]
         public void get_transaction_hex()
         {
             var args = new GetTransactionHexArgs()
@@ -837,24 +821,5 @@ namespace Ditch.Steem.Tests.Apis
                 }
             }
         }
-
-
-
-
-
-
-
-        private SignedTransaction GetSignedTransaction()
-        {
-            var user = User;
-            var autor = "steepshot";
-
-            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
-            return transaction;
-        }
-
-
     }
 }

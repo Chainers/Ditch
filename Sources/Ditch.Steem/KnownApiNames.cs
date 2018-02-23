@@ -8,21 +8,11 @@
         public const string MarketHistoryApi = "market_history_api";
         public const string FollowApi = "follow_api";
         public const string PrivateMessageApi = "private_message_api";
-        public const string CondenserApi = "condenser_api";
         public const string TagsApi = "tags_api";
+        public const string BlockApi = "block_api";
+        public const string WitnessApi = "witness_api";
 
-        public const string NetworkNodeApi = "network_node_api";
-        public const string FcApi = "fc_api";
-        public const string WebsocketApi = "websocket_api";
-        public const string EnableP2PDebuggingApi = "enable_p2p_debugging_api";
-        public const string AccountStatisticsApi = "account_statistics_api";
-        public const string AuthUtilApi = "auth_util_api";
-        public const string BlockchainStatisticsApi = "blockchain_statistics_api";
-        public const string BlockInfoApi = "block_info_api";
-        public const string DebugNodeApi = "debug_node_api";
-        public const string RawBlockApi = "raw_block_api";
-        public const string TagApi = "tag_api";
-        public const string WalletApi = "wallet_api";
+        public const string CondenserApi = "condenser_api";
 
     }
 }

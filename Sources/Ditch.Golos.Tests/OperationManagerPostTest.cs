@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Ditch.Core;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;

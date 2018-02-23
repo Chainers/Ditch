@@ -1,10 +1,7 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic; 
-using Ditch.Steem.Objects;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Objects
+namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
     /// tag_count_object

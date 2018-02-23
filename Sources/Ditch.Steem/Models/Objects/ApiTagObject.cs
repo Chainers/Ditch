@@ -1,11 +1,7 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic; 
-using Ditch.Steem.Objects;
 using Newtonsoft.Json;
-using Ditch.Steem.Models.Objects;
 
-namespace Ditch.Steem.Objects
+namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
     /// api_tag_object

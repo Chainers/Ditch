@@ -1,10 +1,7 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic; 
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.Objects;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Objects
+namespace Ditch.Steem.Models.Return
 {
     /// <summary>
     /// get_discussions_by_hot_return

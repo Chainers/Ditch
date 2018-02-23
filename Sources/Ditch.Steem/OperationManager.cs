@@ -97,7 +97,11 @@ namespace Ditch.Steem
                 return prop;
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return BroadcastTransaction(transaction, token);
+            var args = new BroadcastTransactionArgs()
+            {
+                Trx = transaction
+            };
+            return BroadcastTransaction(args, token);
         }
 
         /// <summary>
@@ -117,7 +121,11 @@ namespace Ditch.Steem
                 return prop;
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return BroadcastTransactionSynchronous(transaction, token);
+            var args = new BroadcastTransactionSynchronousArgs()
+            {
+                Trx = transaction
+            };
+            return BroadcastTransactionSynchronous(args, token);
         }
 
         /// <summary>

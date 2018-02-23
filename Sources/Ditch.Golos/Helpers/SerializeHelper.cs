@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Ditch.Core;
-using Ditch.Core.Helpers;
 using Ditch.Golos.Objects;
 using Ditch.Golos.Operations;
 using Newtonsoft.Json;
