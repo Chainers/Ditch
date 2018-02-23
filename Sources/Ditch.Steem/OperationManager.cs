@@ -7,7 +7,9 @@ using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
 using Ditch.Steem.JsonRpc;
+using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Objects;
+using Ditch.Steem.Models.Return;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -127,11 +129,15 @@ namespace Ditch.Steem
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
-            return CustomGetRequest<bool>(KnownApiNames.DatabaseApi, "verify_authority", transaction, token);
+            var args = new VerifyAuthorityArgs()
+            {
+                Trx = transaction
+            };
+            return VerifyAuthority(args, token);
         }
 
         /// <summary>

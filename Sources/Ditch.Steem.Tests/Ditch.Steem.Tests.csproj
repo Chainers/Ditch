@@ -69,6 +69,7 @@
     <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
     <Compile Include="Apis\AccountByKeyApiTest.cs" />
     <Compile Include="Apis\PrivateMessageApi.cs" />
+    <Compile Include="Apis\TagsApiTest.cs" />
     <Compile Include="InfoTest.cs" />
     <Compile Include="OperationManagerConnectionTest.cs" />
     <Compile Include="OperationManagerPostTest.cs" />

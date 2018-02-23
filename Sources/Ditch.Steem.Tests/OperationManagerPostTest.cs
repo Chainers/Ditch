@@ -148,7 +148,12 @@ namespace Ditch.Steem.Tests
 
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = Api.GetContent(author, permlink, CancellationToken.None);
+            var args = new GetDiscussionArgs()
+            {
+                Author = author,
+                Permlink = permlink
+            };
+            var resp = Api.GetDiscussion(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));

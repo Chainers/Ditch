@@ -37,7 +37,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("filter_tags")]
-        public string[] FilterTags { get; set; }
+        public string[] FilterTags { get; set; } = new string[0];
 
         /// <summary>
         /// API name: select_authors
@@ -45,7 +45,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("select_authors")]
-        public string[] SelectAuthors { get; set; }
+        public string[] SelectAuthors { get; set; } = new string[0];
 
         /// <summary>
         /// API name: select_tags
@@ -53,7 +53,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("select_tags")]
-        public string[] SelectTags { get; set; }
+        public string[] SelectTags { get; set; } = new string[0];
 
         /// <summary>
         /// API name: truncate_body
