@@ -8,6 +8,7 @@ using System.Text;
 using Ditch.Steem.Models.Objects;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
+using Ditch.Steem.Models;
 
 namespace Ditch.Steem.Helpers
 {
@@ -137,18 +138,39 @@ namespace Ditch.Steem.Helpers
                 stream.WriteByte((byte)val);
                 return;
             }
-            //if (type == typeof(Asset))
-            //{
-            //    var typed = (Asset)val;
-            //    var buf = BitConverter.GetBytes(typed.Value);
-            //    stream.Write(buf, 0, buf.Length);
-            //    stream.WriteByte(typed.Precision);
-            //    buf = Encoding.UTF8.GetBytes(typed.Currency);
-            //    stream.Write(buf, 0, buf.Length);
-            //    for (var i = buf.Length; i < 7; i++)
-            //        stream.WriteByte(0);
-            //    return;
-            //}
+            if (type == typeof(AssetSymbolType))
+            {
+                var typed = (AssetSymbolType)val;
+               
+                switch (typed.AssetNum)
+                {
+                    case Config.SteemAssetNumSteem:
+                        {
+                            var buf = BitConverter.GetBytes(Config.SteemSymbolSer);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                    case Config.SteemAssetNumSbd:
+                        {
+                            var buf = BitConverter.GetBytes(Config.SbdSymbolSer);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                    case Config.SteemAssetNumVests:
+                        {
+                            var buf = BitConverter.GetBytes(Config.VestsSymbolSer);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                    default:
+                        {
+                            var buf = BitConverter.GetBytes(typed.AssetNum);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                }
+                return;
+            }
             if (type == typeof(String))
             {
                 var typed = (string)val;

@@ -18,7 +18,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: signed_transaction</returns>
         [JsonProperty("trx")]
-        public SignedTransaction Trx {get; set;}
+        public SignedTransaction Trx { get; set; }
 
         /// <summary>
         /// API name: max_block_age
@@ -26,6 +26,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("max_block_age")]
-        public Int32 MaxBlockAge {get; set;}
+        public Int32 MaxBlockAge { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: share_type</returns>
         [MessageOrder(10)]
-        public object Amount { get; set; }
+        public long Amount { get; set; }
 
         /// <summary>
         /// API name: symbol
@@ -26,37 +26,25 @@ namespace Ditch.Steem.Models
         public AssetSymbolType Symbol { get; set; }
 
 
-        public Asset(object amount, UInt32 assetNum)
+        public Asset(long amount, UInt32 assetNum)
         {
             Amount = amount;
             Symbol = new AssetSymbolType(assetNum);
         }
 
-        public Asset(object amount, AssetSymbolType assetSymbolType)
-        {
-            Amount = amount;
-            Symbol = assetSymbolType;
-        }
-
-        public Asset(int amount, AssetSymbolType assetSymbolType)
-        {
-            Amount = amount;
-            Symbol = assetSymbolType;
-        }
-
         public Asset() { }
+        
+#region IComplexArray
 
-        #region IComplexArray
-
-        public void InitFromArray(object[] value)
+public void InitFromArray(object[] value)
         {
-            Amount = value[0];
+            Amount = long.Parse((string)value[0]);
             Symbol = new AssetSymbolType((string)value[2], (byte)value[1]);
         }
 
         public object[] ToArray()
         {
-            return new[] { Amount, Symbol.Decimals(), Symbol.ToNaiString() };
+            return new object[] { Amount.ToString(), Symbol.Decimals(), Symbol.ToNaiString() };
         }
 
         #endregion

@@ -63,7 +63,7 @@ namespace Ditch.Steem.Models
         public string ToNaiString()
         {
             var x = ToNai();
-            return $"@@{x}";
+            return x.ToString("@@000000000");
         }
 
         private UInt32 ToNai()
@@ -132,6 +132,5 @@ namespace Ditch.Steem.Models
             x = t[x + d0];
             return (byte)(x / 10);
         }
-
     }
 }
