@@ -59,6 +59,9 @@ namespace Ditch.Steem
 
                     if (TryLoadConfig(token))
                         return url;
+                    
+                    if (_connectionManager.IsConnected)
+                        _connectionManager.Disconnect();
                 }
                 catch
                 {
