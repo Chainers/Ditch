@@ -163,7 +163,6 @@ namespace Ditch.Steem.Tests
         [Test]
         public void PostTest()
         {
-            var manager = Api;
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
             var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Beneficiary("steepshot", 1000));
@@ -194,13 +193,18 @@ namespace Ditch.Steem.Tests
 
             var op = new PostOperation("test", user.Login, new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(new[] { "test", "spam" }));
             var response = Post(user.PostingKeys, true, op);
+
             Assert.IsTrue(response.IsError);
             Console.WriteLine(response.GetErrorMessage());
+
             Assert.IsTrue(response.Error is ResponseError);
             var typedError = (ResponseError)response.Error;
+
             Assert.IsTrue(typedError.Data.Code == 10);
+
             var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
             Console.WriteLine(match.Value);
+
             Assert.IsTrue(match.Success);
             Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
         }

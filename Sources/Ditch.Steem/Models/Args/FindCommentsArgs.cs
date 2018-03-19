@@ -16,6 +16,6 @@ namespace Ditch.Steem.Models.Args
         /// 
         /// </summary>
         [JsonProperty("comments")]
-        public KeyValuePair<string, string>[] Comments { get; set; }
+        public string[][] Comments { get; set; }
     }
 }

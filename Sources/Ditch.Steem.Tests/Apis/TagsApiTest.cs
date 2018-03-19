@@ -220,7 +220,12 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_feed()
         {
-            var args = new GetDiscussionsByFeedArgs();
+            var args = new GetDiscussionsByFeedArgs()
+            {
+                Tag = "photo",
+                SelectAuthors = new[] {User.Login},
+                FilterTags = new string[] {"steepshot"}
+            };
             var resp = Api.GetDiscussionsByFeed(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
@@ -235,7 +240,12 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_blog()
         {
-            var args = new GetDiscussionsByBlogArgs();
+            var args = new GetDiscussionsByBlogArgs()
+            {
+                Tag = "photo",
+                SelectAuthors = new[] { User.Login },
+                FilterTags = new string[] { "steepshot" }
+            };
             var resp = Api.GetDiscussionsByBlog(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
