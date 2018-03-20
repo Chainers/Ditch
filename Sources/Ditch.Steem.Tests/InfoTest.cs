@@ -16,6 +16,7 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
         }
+
         [Test]
         public void get_signature()
         {

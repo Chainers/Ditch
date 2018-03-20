@@ -59,7 +59,7 @@ namespace Ditch.Steem
 
                     if (TryLoadConfig(token))
                         return url;
-                    
+
                     if (_connectionManager.IsConnected)
                         _connectionManager.Disconnect();
                 }
@@ -247,27 +247,33 @@ namespace Ditch.Steem
 
         public virtual bool TryLoadConfig(CancellationToken token)
         {
-            var resp = GetConfig(token);
+            var resp = GetConfig<JObject>(token);
             if (!resp.IsError)
             {
-                dynamic conf = resp.Result;
-                var scid = conf.STEEM_CHAIN_ID as JValue;
-                var smpsbd = conf.STEEM_MIN_PAYOUT_SBD as JArray;
+                var conf = resp.Result;
+                JToken jToken;
+                conf.TryGetValue("STEEM_CHAIN_ID", out jToken);
+                if (jToken == null)
+                    return false;
 
-                var sbhv = conf.STEEM_BLOCKCHAIN_VERSION as JValue;
-                //var sbv = conf.STEEMIT_BLOCKCHAIN_VERSION as JValue;
-                if (scid != null && smpsbd != null && smpsbd.Count == 3 && sbhv != null)
-                {
-                    var str = scid.Value<string>();
-                    var hfvs = sbhv.Value<string>();
-                    if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
-                    {
-                        SbdSymbol = smpsbd[2].Value<string>();
-                        ChainId = Hex.HexToBytes(str);
-                        Version = VersionHelper.ToInteger(hfvs);
-                        return true;
-                    }
-                }
+                var str = jToken.Value<string>();
+                ChainId = Hex.HexToBytes(str);
+
+                conf.TryGetValue("STEEM_MIN_PAYOUT_SBD", out jToken);
+                if (jToken == null)
+                    return false;
+
+                var smpsbd = jToken[2].Value<string>();
+                SbdSymbol = smpsbd;
+
+                conf.TryGetValue("STEEM_BLOCKCHAIN_VERSION", out jToken);
+                if (jToken == null)
+                    return false;
+
+                var hfvs = jToken.Value<string>();
+                Version = VersionHelper.ToInteger(hfvs);
+
+                return true;
             }
             return false;
         }

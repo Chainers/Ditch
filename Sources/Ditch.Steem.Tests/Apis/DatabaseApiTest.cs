@@ -15,7 +15,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_config()
         {
-            var resp = Api.GetConfig(CancellationToken.None);
+            var resp = Api.GetConfig<JObject>(CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -807,11 +807,14 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_smt_next_identifier()
         {
-            var confResp = Api.GetConfig(CancellationToken.None);
+            var confResp = Api.GetConfig<JObject>(CancellationToken.None);
             if (!confResp.IsError)
             {
-                dynamic conf = confResp.Result;
-                var isEnableSmt = (bool)conf.STEEM_ENABLE_SMT;
+                var conf = confResp.Result;
+
+                JToken jToken;
+                conf.TryGetValue("STEEM_ENABLE_SMT", out jToken);
+                var isEnableSmt = jToken != null && jToken.Value<bool>();
 
                 if (isEnableSmt)
                 {
