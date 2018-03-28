@@ -6,8 +6,10 @@ using Ditch.Core;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
-using Ditch.Steem.Objects;
-using Ditch.Steem.Operations;
+using Ditch.Steem.JsonRpc;
+using Ditch.Steem.Models.ApiObj;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -20,16 +22,21 @@ namespace Ditch.Steem
         private List<string> _urls;
 
         public byte[] ChainId { get; private set; }
-        public string SbdSymbol { get; private set; }
-        public int Version { get; private set; }
         public bool IsConnected => _connectionManager.IsConnected;
+        private readonly Config _config;
 
         #region Constructors
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, Config config)
         {
             _jsonSerializerSettings = jsonSerializerSettings;
             _connectionManager = connectionManage;
+            _config = config;
+        }
+
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
+            : this(connectionManage, jsonSerializerSettings, new Config())
+        {
         }
 
         #endregion Constructors
@@ -54,7 +61,7 @@ namespace Ditch.Steem
                     if (string.IsNullOrEmpty(connectedTo))
                         continue;
 
-                    if (TryLoadChainId(token))
+                    if (TryLoadConfig(token))
                         return url;
                 }
                 catch
@@ -76,7 +83,7 @@ namespace Ditch.Steem
         {
             return TryConnectTo(_urls, token);
         }
-        
+
         /// <summary>
         /// Create and Broadcast a transaction to the network
         /// 
@@ -213,7 +220,7 @@ namespace Ditch.Steem
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction, Version);
+            var msg = SerializeHelper.TransactionToMessage(transaction);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
             foreach (var userPrivateKey in userPrivateKeys)
@@ -226,30 +233,21 @@ namespace Ditch.Steem
             return transaction;
         }
 
-
-        private bool TryLoadChainId(CancellationToken token)
+        public virtual bool TryLoadConfig(CancellationToken token)
         {
-            var resp = GetConfig(token);
+            var resp = GetConfig<JObject>(token);
             if (!resp.IsError)
             {
-                dynamic conf = resp.Result;
-                var scid = conf.STEEMIT_CHAIN_ID as JValue;
-                var smpsbd = conf.STEEMIT_MIN_PAYOUT_SBD as JValue;
-                var sbhv = conf.STEEMIT_BLOCKCHAIN_HARDFORK_VERSION as JValue;
-                //var sbv = conf.STEEMIT_BLOCKCHAIN_VERSION as JValue;
-                if (scid != null && smpsbd != null && sbhv != null)
-                {
-                    var cur = smpsbd.Value<string>();
-                    var str = scid.Value<string>();
-                    var hfvs = sbhv.Value<string>();
-                    if (!string.IsNullOrEmpty(cur) && !string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(hfvs))
-                    {
-                        SbdSymbol = new Asset(cur).Currency;
-                        ChainId = Hex.HexToBytes(str);
-                        Version = VersionHelper.ToInteger(hfvs);
-                        return true;
-                    }
-                }
+                var conf = resp.Result;
+                JToken jToken;
+                conf.TryGetValue(_config.ChainFieldName, out jToken);
+                if (jToken == null)
+                    return false;
+
+                var str = jToken.Value<string>();
+                ChainId = Hex.HexToBytes(str);
+
+                return true;
             }
             return false;
         }

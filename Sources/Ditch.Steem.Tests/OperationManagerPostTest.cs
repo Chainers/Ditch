@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Enums;
-using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Ditch.Core;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 
 namespace Ditch.Steem.Tests
 {
@@ -150,10 +150,9 @@ namespace Ditch.Steem.Tests
         [Test]
         public void PostTest()
         {
-            var manager = Api;
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            var popt = new BeneficiariesOperation(user.Login, op.Permlink, manager.SbdSymbol, new Beneficiary("steepshot", 1000));
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, SbdSymbol, new Beneficiary("steepshot", 1000));
             var response = Post(user.PostingKeys, false, op, popt);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

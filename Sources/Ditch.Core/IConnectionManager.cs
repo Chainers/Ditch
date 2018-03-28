@@ -12,7 +12,7 @@ namespace Ditch.Core
         string ConnectTo(IEnumerable<string> urls, CancellationToken token);
         void Disconnect();
 
-        JsonRpcResponse Execute(JsonRpcRequest jsonRpc, CancellationToken token);
-        JsonRpcResponse<T> Execute<T>(JsonRpcRequest jsonRpc, CancellationToken token);
+        JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token);
+        JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token);
     }
 }

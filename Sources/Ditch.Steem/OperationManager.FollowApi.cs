@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Enums;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.ApiObj;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Other;
 
 namespace Ditch.Steem
 {

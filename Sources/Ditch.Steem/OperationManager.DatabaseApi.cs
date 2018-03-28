@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Enums;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.ApiObj;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Other;
 
 namespace Ditch.Steem
 {
@@ -170,9 +171,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetConfig(CancellationToken token)
+        public JsonRpcResponse<T> GetConfig<T>(CancellationToken token)
         {
-            return CallRequest<object>(KnownApiNames.DatabaseApi, "get_config", new object[] { }, token);
+            return CallRequest<T>(KnownApiNames.DatabaseApi, "get_config", new object[] { }, token);
         }
 
         /// <summary>
@@ -853,9 +854,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>vector of top 1000 tags used by an author sorted by most frequently used</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<KeyValuePair<string, UInt32>[]> GetTagsUsedByAuthor(string author, CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, UInt32>> GetTagsUsedByAuthor(string author, CancellationToken token)
         {
-            return CallRequest<KeyValuePair<string, UInt32>[]>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { author }, token);
+            return CallRequest<MapContainer<string, UInt32>>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { author }, token);
         }
 
         /// <summary>
@@ -1131,9 +1132,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: map&lt;uint32_t,applied_operation></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<MapContainer<UInt32, AppliedOperation>> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<object[]>(KnownApiNames.DatabaseApi, "get_account_history", new object[] { account, from, limit }, token);
+            return CallRequest<MapContainer<UInt32, AppliedOperation>>(KnownApiNames.DatabaseApi, "get_account_history", new object[] { account, from, limit }, token);
         }
     }
 }

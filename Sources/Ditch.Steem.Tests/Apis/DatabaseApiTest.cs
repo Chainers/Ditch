@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Steem.Enums;
-using Ditch.Steem.Objects;
-using Ditch.Steem.Operations;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -104,7 +104,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_config()
         {
-            var resp = Api.GetConfig(CancellationToken.None);
+            var resp = Api.GetConfig<JObject>(CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -740,11 +740,6 @@ namespace Ditch.Steem.Tests.Apis
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -777,7 +772,7 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
@@ -788,14 +783,15 @@ namespace Ditch.Steem.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                Tag = "life",
+                TruncateBody = 10
             };
             var resp = Api.GetCommentDiscussionsByPayout(query, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CallRequest<JObject>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
+            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));

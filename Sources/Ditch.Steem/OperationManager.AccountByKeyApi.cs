@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Objects;
+using Ditch.Steem.Models.Other;
 
 namespace Ditch.Steem
 {

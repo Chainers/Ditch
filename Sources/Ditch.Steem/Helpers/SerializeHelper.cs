@@ -5,9 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Ditch.Core;
-using Ditch.Steem.Objects;
-using Ditch.Steem.Operations;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Helpers
@@ -30,20 +29,20 @@ namespace Ditch.Steem.Helpers
             return kvarray.OrderBy(i => i.Key).Select(p => p.Value);
         }
 
-        public static byte[] TransactionToMessage(Transaction transaction, int hardforkVersion)
+        public static byte[] TransactionToMessage(Transaction transaction)
         {
             using (var ms = new MemoryStream())
             {
                 var props = GetPropertiesForMessage(typeof(Transaction));
                 foreach (var prop in props)
                 {
-                    AddToMessageStream(ms, prop, transaction, hardforkVersion);
+                    AddToMessageStream(ms, prop, transaction);
                 }
                 return ms.ToArray();
             }
         }
 
-        private static void AddToMessageStream(Stream stream, PropertyInfo prop, object val, int hardforkVersion)
+        private static void AddToMessageStream(Stream stream, PropertyInfo prop, object val)
         {
             var intype = prop.PropertyType;
             var inval = prop.GetValue(val);
@@ -58,10 +57,10 @@ namespace Ditch.Steem.Helpers
                 }
             }
 
-            AddToMessageStream(stream, intype, inval, hardforkVersion);
+            AddToMessageStream(stream, intype, inval);
         }
 
-        private static void AddToMessageStream(Stream stream, Type type, object val, int hardforkVersion)
+        private static void AddToMessageStream(Stream stream, Type type, object val)
         {
             if (type == typeof(bool))
             {
@@ -170,7 +169,7 @@ namespace Ditch.Steem.Helpers
                 var typed = container;
                 foreach (var value in typed)
                 {
-                    AddToMessageStream(stream, value.GetType(), value, hardforkVersion);
+                    AddToMessageStream(stream, value.GetType(), value);
                 }
                 return;
             }
@@ -183,7 +182,7 @@ namespace Ditch.Steem.Helpers
                 stream.Write(buf, 0, buf.Length);
                 foreach (var value in typed)
                 {
-                    AddToMessageStream(stream, value.GetType(), value, hardforkVersion);
+                    AddToMessageStream(stream, value.GetType(), value);
                 }
                 return;
             }
@@ -193,7 +192,7 @@ namespace Ditch.Steem.Helpers
                 var properties = GetPropertiesForMessage(chType);
                 foreach (var prop in properties)
                 {
-                    AddToMessageStream(stream, prop, val, hardforkVersion);
+                    AddToMessageStream(stream, prop, val);
                 }
                 return;
             }

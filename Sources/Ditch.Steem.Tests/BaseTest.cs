@@ -9,6 +9,7 @@ using NUnit.Framework;
 using System.Threading;
 using Ditch.Core;
 using System.Globalization;
+using Ditch.Steem.Helpers;
 
 namespace Ditch.Steem.Tests
 {
@@ -17,17 +18,24 @@ namespace Ditch.Steem.Tests
         protected const string AppVersion = "ditch / 2.2.12";
 
         private bool IgnoreRequestWithBadData = true;
-        protected static readonly UserInfo User;
-        protected static readonly OperationManager Api;
+        protected readonly UserInfo User;
+        protected readonly OperationManager Api;
+        protected int Version;
+        protected string SbdSymbol = "SBD";
 
-        static BaseTest()
+        public BaseTest()
         {
             User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
             var jss = GetJsonSerializerSettings();
             var manager = new HttpManager(jss, 1024 * 1024);
             Api = new OperationManager(manager, jss);
-            Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
+            var connectedTo = Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
+            Assert.IsFalse(string.IsNullOrEmpty(connectedTo));
+
+            var response = Api.GetHardforkVersion(CancellationToken.None);
+            Assert.IsFalse(response.IsError);
+            Version = VersionHelper.ToInteger(response.Result);
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

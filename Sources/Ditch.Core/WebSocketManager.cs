@@ -119,7 +119,7 @@ namespace Ditch.Core
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>JsonRpcResponse</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse Execute(JsonRpcRequest jsonRpc, CancellationToken token)
+        public JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
             var waiter = new ManualResetEvent(false);
             lock (_manualResetEventDictionary)
@@ -167,7 +167,7 @@ namespace Ditch.Core
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Typed JsonRpcResponse</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> Execute<T>(JsonRpcRequest jsonRpc, CancellationToken token)
+        public JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
             var response = Execute(jsonRpc, token);
             return response.ToTyped<T>(_jsonSerializerSettings);

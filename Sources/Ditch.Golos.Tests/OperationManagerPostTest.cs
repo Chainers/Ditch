@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Ditch.Core;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Enums;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Operations;
+using Ditch.Golos.Models.Enums;
+using Ditch.Golos.Models.Operations;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -156,9 +156,9 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, manager.SbdSymbol, new Beneficiary("steepshot", 1000));
+            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, SbdSymbol, new Beneficiary("steepshot", 1000));
 
-            var response = VersionHelper.GetHardfork(Api.Version) > 16
+            var response = VersionHelper.GetHardfork(Version) > 16
                 ? Post(user.PostingKeys, false, op, op2)
                 : Post(user.PostingKeys, false, op);
 

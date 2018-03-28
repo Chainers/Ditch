@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Enums;
-using Ditch.Golos.Objects;
+using Ditch.Golos.Models.ApiObj;
+using Ditch.Golos.Models.Enums;
+using Ditch.Golos.Models.Objects;
+using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos
 {
@@ -272,9 +273,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetConfig(CancellationToken token)
+        public JsonRpcResponse<T> GetConfig<T>(CancellationToken token)
         {
-            return CallRequest<object>(KnownApiNames.DatabaseApi, "get_config", new object[] { }, token);
+            return CallRequest<T>(KnownApiNames.DatabaseApi, "get_config", new object[] { }, token);
         }
 
         /// <summary>
@@ -976,9 +977,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>vector of top 1000 tags used by an author sorted by most frequently used</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<KeyValuePair<string, UInt32>[]> GetTagsUsedByAuthor(string author, CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, UInt32>> GetTagsUsedByAuthor(string author, CancellationToken token)
         {
-            return CallRequest<KeyValuePair<string, UInt32>[]>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { author }, token);
+            return CallRequest<MapContainer<string, UInt32>>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { author }, token);
         }
 
         /// <summary>
@@ -1249,11 +1250,11 @@ namespace Ditch.Golos
         /// <param name="from">API type: uint64_t - the absolute sequence number, -1 means most recent, limit is the number of operations before from.</param>
         /// <param name="limit">API type: uint32_t - the maximum number of items that can be queried (0 to 1000], must be less than from</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: map&lt;uint32_t,applied_operation> operations in the range [from-limit, from]</returns>
+        /// <returns>API type: get_account_history_return_type operations in the range [from-limit, from]</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<GetAccountHistoryReturnType> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
         {
-            return CallRequest<object>(KnownApiNames.DatabaseApi, "get_account_history", new object[] { account, from, limit }, token);
+            return CallRequest<GetAccountHistoryReturnType>(KnownApiNames.DatabaseApi, "get_account_history", new object[] { account, from, limit }, token);
         }
 
         /// <summary>

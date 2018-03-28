@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Core;
-using Ditch.Golos.Enums;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Objects;
-using Ditch.Golos.Operations;
+using Ditch.Golos.Models.Enums;
+using Ditch.Golos.Models.Operations;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -162,7 +161,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_config()
         {
-            var resp = Api.GetConfig(CancellationToken.None);
+            var resp = Api.GetConfig<JObject>(CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
@@ -274,7 +273,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_reward_fund()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetRewardFund(User.Login, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -295,7 +294,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_name_cost()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetNameCost(User.Login, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -355,7 +354,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_account_balances()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetAccountBalances(User.Login, new string[0], CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -498,7 +497,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_vesting_delegations()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetVestingDelegations(User.Login, string.Empty, 10, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -519,7 +518,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_expiring_vesting_delegations()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetExpiringVestingDelegations(User.Login, new DateTime(2017, 01, 01), 100, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -620,7 +619,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_assets()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetAssets(new[] { "GBG", "GOLOS" }, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -641,7 +640,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_assets_by_issuer()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetAssetsByIssuer("b1acksun", CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -662,7 +661,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_assets_dynamic_data()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetAssetsDynamicData(new[] { "GBG" }, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -683,7 +682,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_bitassets_data()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetBitassetsData(new[] { "GBG" }, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -704,7 +703,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void list_assets()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.ListAssets(string.Empty, 10, CancellationToken.None);
                 Console.WriteLine(resp.Error);
@@ -885,11 +884,6 @@ namespace Ditch.Golos.Tests.Apis
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
-            var obj = Api.CallRequest<JArray>(KnownApiNames.DatabaseApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
@@ -986,7 +980,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_post_discussions_by_payout()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var query = new DiscussionQuery()
                 {
@@ -1011,7 +1005,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_comment_discussions_by_payout()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var query = new DiscussionQuery()
                 {
@@ -1238,7 +1232,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_proposed_transactions()
         {
-            if (VersionHelper.GetHardfork(Api.Version) > 16)
+            if (VersionHelper.GetHardfork(Version) > 16)
             {
                 var resp = Api.GetProposedTransactions(User.Login, CancellationToken.None);
                 Console.WriteLine(resp.Error);
