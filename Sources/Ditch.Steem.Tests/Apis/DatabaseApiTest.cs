@@ -2,7 +2,7 @@
 using System.Threading;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Enums;
-using Ditch.Steem.Models.Objects;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;

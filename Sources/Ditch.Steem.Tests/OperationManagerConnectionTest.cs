@@ -53,8 +53,6 @@ namespace Ditch.Steem.Tests
                 if (manager.IsConnected)
                 {
                     Assert.IsNotNull(manager.ChainId, "ChainId null");
-                    Assert.IsNotNull(manager.SbdSymbol, "SbdSymbol null");
-                    Assert.IsNotNull(manager.Version, "Version null");
                 }
             }
         }
@@ -91,8 +89,6 @@ namespace Ditch.Steem.Tests
                 Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
                 Assert.IsTrue(manager.IsConnected, "Not connected");
                 Assert.IsNotNull(manager.ChainId, "ChainId null");
-                Assert.IsNotNull(manager.SbdSymbol, "SbdSymbol null");
-                Assert.IsNotNull(manager.Version, "Version null");
                 await Task.Delay(3000);
             }
         }
@@ -117,8 +113,6 @@ namespace Ditch.Steem.Tests
                 {
                     Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
                     Assert.IsNotNull(manager.ChainId, "ChainId null");
-                    Assert.IsNotNull(manager.SbdSymbol, "SbdSymbol null");
-                    Assert.IsNotNull(manager.Version, "Version null");
                     await Task.Delay(3000);
                 }
                 else

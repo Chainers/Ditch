@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Newtonsoft.Json;
 using Ditch.Core.JsonRpc;
+using Newtonsoft.Json;
 
 namespace Ditch.Golos.JsonRpc
 {

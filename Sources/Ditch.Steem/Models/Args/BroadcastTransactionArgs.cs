@@ -1,5 +1,5 @@
 using System;
-using Ditch.Steem.Models.Objects;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args

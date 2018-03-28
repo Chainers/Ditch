@@ -7,10 +7,12 @@ using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
 using Ditch.Steem.JsonRpc;
+using Ditch.Steem.Models.ApiObj;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Objects;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 using Ditch.Steem.Models.Return;
-using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -23,16 +25,21 @@ namespace Ditch.Steem
         private List<string> _urls;
 
         public byte[] ChainId { get; private set; }
-        public string SbdSymbol { get; private set; }
-        public int Version { get; private set; }
         public bool IsConnected => _connectionManager.IsConnected;
+        private readonly Config _config;
 
         #region Constructors
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, Config config)
         {
             _jsonSerializerSettings = jsonSerializerSettings;
             _connectionManager = connectionManage;
+            _config = config;
+        }
+
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
+            : this(connectionManage, jsonSerializerSettings, new Config())
+        {
         }
 
         #endregion Constructors
@@ -231,7 +238,7 @@ namespace Ditch.Steem
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction, Version);
+            var msg = SerializeHelper.TransactionToMessage(transaction);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
             foreach (var userPrivateKey in userPrivateKeys)
@@ -244,7 +251,6 @@ namespace Ditch.Steem
             return transaction;
         }
 
-
         public virtual bool TryLoadConfig(CancellationToken token)
         {
             var resp = GetConfig<JObject>(token);
@@ -252,26 +258,12 @@ namespace Ditch.Steem
             {
                 var conf = resp.Result;
                 JToken jToken;
-                conf.TryGetValue("STEEM_CHAIN_ID", out jToken);
+                conf.TryGetValue(_config.ChainFieldName, out jToken);
                 if (jToken == null)
                     return false;
 
                 var str = jToken.Value<string>();
                 ChainId = Hex.HexToBytes(str);
-
-                conf.TryGetValue("STEEM_MIN_PAYOUT_SBD", out jToken);
-                if (jToken == null)
-                    return false;
-
-                var smpsbd = jToken[2].Value<string>();
-                SbdSymbol = smpsbd;
-
-                conf.TryGetValue("STEEM_BLOCKCHAIN_VERSION", out jToken);
-                if (jToken == null)
-                    return false;
-
-                var hfvs = jToken.Value<string>();
-                Version = VersionHelper.ToInteger(hfvs);
 
                 return true;
             }

@@ -2,7 +2,7 @@
 
 namespace Ditch.Steem
 {
-    public static class Config
+    public class Config
     {
         public const int SteemAssetSymbolPrecisionBits = 4;
         public const UInt32 SmtMaxNai = 99999999;
@@ -37,5 +37,6 @@ namespace Ditch.Steem
 #endif
 
 
+        public string ChainFieldName { get; set; } = "STEEM_CHAIN_ID";
     }
 }

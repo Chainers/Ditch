@@ -10,8 +10,8 @@ using System.Threading;
 using Ditch.Core;
 using System.Globalization;
 using Ditch.Steem.Models.Enums;
-using Ditch.Steem.Models.Objects;
-using Ditch.Steem.Operations;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 
 namespace Ditch.Steem.Tests
 {

@@ -1,4 +1,5 @@
-﻿using Ditch.Core.Errors;
+﻿using Ditch.Core.Converters;
+using Ditch.Core.Errors;
 using Newtonsoft.Json;
 
 namespace Ditch.Core.JsonRpc

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Enums;
-using Ditch.Golos.Objects;
+using Ditch.Golos.Models.ApiObj;
+using Ditch.Golos.Models.Enums;
+using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos
 {
