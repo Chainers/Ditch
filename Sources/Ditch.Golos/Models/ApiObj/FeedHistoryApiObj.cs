@@ -1,7 +1,6 @@
-﻿using Ditch.Golos.Models.Other;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// feed_history_api_obj

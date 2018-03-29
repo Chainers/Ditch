@@ -1,45 +1,28 @@
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// market_volume
-    /// libraries\plugins\market_history\include\golos\market_history\market_history_api.hpp
+    /// plugins\market_history\include\golos\plugins\market_history\market_history_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class MarketVolume
     {
+        /// <summary>
+        /// API name: steem_volume
+        /// = asset(0, STEEM_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("steem_volume")]
+        public Asset SteemVolume { get; set; }
 
         /// <summary>
-        /// API name: base
-        /// 
+        /// API name: sbd_volume
+        /// = asset(0, SBD_SYMBOL);
         /// </summary>
-        /// <returns>API type: string</returns>
-        [JsonProperty("base")]
-        public string Base {get; set;}
-
-        /// <summary>
-        /// API name: quote
-        /// 
-        /// </summary>
-        /// <returns>API type: string</returns>
-        [JsonProperty("quote")]
-        public string Quote {get; set;}
-
-        /// <summary>
-        /// API name: base_volume
-        /// 
-        /// </summary>
-        /// <returns>API type: double</returns>
-        [JsonProperty("base_volume")]
-        public double BaseVolume {get; set;}
-
-        /// <summary>
-        /// API name: quote_volume
-        /// 
-        /// </summary>
-        /// <returns>API type: double</returns>
-        [JsonProperty("quote_volume")]
-        public double QuoteVolume {get; set;}
+        /// <returns>API type: asset</returns>
+        [JsonProperty("sbd_volume")]
+        public Asset SbdVolume { get; set; }
     }
 }

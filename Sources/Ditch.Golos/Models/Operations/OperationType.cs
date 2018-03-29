@@ -6,25 +6,32 @@
     /// </summary>
     public enum OperationType : byte
     {
-        Vote = 0,
+        Vote,
         Comment,
+
         Transfer,
         TransferToVesting,
         WithdrawVesting,
+
         LimitOrderCreate,
         LimitOrderCancel,
+
         FeedPublish,
         Convert,
+
         AccountCreate,
         AccountUpdate,
+
         WitnessUpdate,
         AccountWitnessVote,
         AccountWitnessProxy,
+
         Pow,
 
         Custom,
 
         ReportOverProduction,
+
         DeleteComment,
         CustomJson,
         CommentOptions,
@@ -43,10 +50,24 @@
         TransferToSavings,
         TransferFromSavings,
         CancelTransferFromSavings,
-        CustomBinaryOperation,
-        DeclineVotingRightsOperation,
-        ResetAccountOperation,
-        SetResetAccountOperation,
-        AccountCreateWithDelegation,
+        CustomBinary,
+        DeclineVotingRights,
+        ResetAccount,
+        SetResetAccount,
+
+        /// virtual operations below this point
+        FillConvertRequest,
+        AuthorReward,
+        CurationReward,
+        CommentReward,
+        LiquidityReward,
+        Interest,
+        FillVestingWithdraw,
+        FillOrder,
+        ShutdownWitness,
+        FillTransferFromSavings,
+        Hardfork,
+        CommentPayoutUpdate,
+        CommentBenefactorReward
     }
 }

@@ -1,16 +1,15 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models.Objects;
 
 namespace Ditch.Golos
 {
     /// <summary>
-    /// account_by_key_api
-    /// libraries\plugins\account_by_key\include\golos\account_by_key\account_by_key_api.hpp
+    /// account_by_key
+    /// plugins\account_by_key\include\golos\plugins\account_by_key\account_by_key_plugin.hpp
     /// </summary>
     public partial class OperationManager
     {
-
         /// <summary>
         /// API name: get_key_references
         /// 
@@ -21,7 +20,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<string[][]> GetKeyReferences(PublicKeyType[] keys, CancellationToken token)
         {
-            return CallRequest<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { keys }, token);
+            return CustomGetRequest<string[][]>(KnownApiNames.AccountByKey, "get_key_references", new object[] { keys }, token);
         }
     }
 }

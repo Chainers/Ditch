@@ -1,7 +1,6 @@
-﻿using Ditch.Golos.Models.Other;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// signed_block_api_obj

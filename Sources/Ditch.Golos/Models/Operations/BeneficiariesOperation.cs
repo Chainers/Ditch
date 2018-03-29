@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Operations
@@ -23,7 +23,7 @@ namespace Ditch.Golos.Models.Operations
         [JsonProperty("beneficiaries")]
         [MessageOrder(10)]
         public Beneficiary[] BeneficiariesContainer { get; set; }
-        
+
         public BeneficiaryContainer(Beneficiary[] beneficiaries)
         {
             BeneficiariesContainer = beneficiaries;
@@ -51,8 +51,18 @@ namespace Ditch.Golos.Models.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class BeneficiariesOperation : CommentOptionsOperation
     {
+        public BeneficiariesOperation(string author, string permlink, Asset asset, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params Beneficiary[] beneficiaries)
+            : base(author, permlink, asset, percentSteemDollars, allowVotes, allowCurationRewards, SetBeneficiaries(beneficiaries))
+        {
+        }
+
+        public BeneficiariesOperation(string author, string permlink, Asset asset, params Beneficiary[] beneficiaries)
+            : this(author, permlink, asset, 10000, true, true, beneficiaries)
+        {
+        }
+
         public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
-            : base(author, permlink, new Asset(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
+            : this(author, permlink, new Asset(1000000000, 3, currency), beneficiaries)
         {
         }
 

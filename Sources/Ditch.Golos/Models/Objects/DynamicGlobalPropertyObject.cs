@@ -1,6 +1,5 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos.Models.Objects
 {

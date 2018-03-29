@@ -1,7 +1,6 @@
-﻿using Ditch.Golos.Models.Objects;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// escrow_api_obj

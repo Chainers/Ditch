@@ -1,5 +1,5 @@
 using System;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.ApiObject

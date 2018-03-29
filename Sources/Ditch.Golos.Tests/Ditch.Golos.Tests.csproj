@@ -2,6 +2,8 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TestProjectType>UnitTest</TestProjectType>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}</ProjectGuid>
@@ -64,11 +66,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\SocialNetworkTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Apis\AccountByKeyApiTest.cs" />
     <Compile Include="Apis\DatabaseApiTest.cs" />
     <Compile Include="Apis\FollowApiTest.cs" />
-    <Compile Include="Apis\LoginApiTest.cs" />
     <Compile Include="Apis\MarketHistoryApiTest.cs" />
     <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
     <Compile Include="Apis\PrivateMessageApi.cs" />

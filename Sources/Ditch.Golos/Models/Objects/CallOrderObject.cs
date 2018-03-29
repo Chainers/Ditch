@@ -1,4 +1,3 @@
-using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Objects

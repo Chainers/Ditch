@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /**
      * @class discussion_query
@@ -11,7 +11,7 @@ namespace Ditch.Golos.Models.Other
 
     /// <summary>
     /// discussion_query
-    /// libraries\application\include\golos\application\discussion_query.hpp
+    /// plugins\social_network\include\golos\plugins\social_network\api_object\discussion_query.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class DiscussionQuery
@@ -56,6 +56,38 @@ namespace Ditch.Golos.Models.Other
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("truncate_body")]
         public UInt32 TruncateBody { get; set; }
+
+        /// <summary>
+        /// API name: start_author
+        /// the author of discussion to start searching from
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("start_author", NullValueHandling = NullValueHandling.Ignore)]
+        public string StartAuthor { get; set; }
+
+        /// <summary>
+        /// API name: start_permlink
+        /// the permlink of discussion to start searching from
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("start_permlink", NullValueHandling = NullValueHandling.Ignore)]
+        public string StartPermlink { get; set; }
+
+        /// <summary>
+        /// API name: parent_author
+        /// the author of parent discussion
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("parent_author", NullValueHandling = NullValueHandling.Ignore)]
+        public string ParentAuthor { get; set; }
+
+        /// <summary>
+        /// API name: parent_permlink
+        /// the permlink of parent discussion
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("parent_permlink", NullValueHandling = NullValueHandling.Ignore)]
+        public string ParentPermlink { get; set; }
 
         /// <summary>
         /// API name: select_languages

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests
 {
     [TestFixture]
-    public class OperationManagerConnectionTest : BaseTest
+    public class OperationManagerConnectionTest
     {
         [Test]
         public void NodeTest()
@@ -48,8 +50,7 @@ namespace Ditch.Golos.Tests
         public async Task TryConnectToHttpsTest()
         {
             var urls = new List<string> { "https://public-ws.golos.io" };
-
-
+            
             var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new HttpManager(jss), jss);
 
@@ -59,10 +60,16 @@ namespace Ditch.Golos.Tests
                 sw.Restart();
                 var url = manager.TryConnectTo(urls, CancellationToken.None);
                 sw.Stop();
-                Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
-                Assert.IsTrue(manager.IsConnected, "Not connected");
-                Assert.IsNotNull(manager.ChainId, "ChainId null");
-                await Task.Delay(3000);
+                if (manager.IsConnected)
+                {
+                    Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
+                    Assert.IsNotNull(manager.ChainId, "ChainId null");
+                    await Task.Delay(3000);
+                }
+                else
+                {
+                    Console.WriteLine($"{i} not conected {sw.ElapsedMilliseconds}");
+                }
             }
         }
 
@@ -81,11 +88,27 @@ namespace Ditch.Golos.Tests
                 sw.Restart();
                 var url = manager.TryConnectTo(urls, CancellationToken.None);
                 sw.Stop();
-                Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
-                Assert.IsTrue(manager.IsConnected, "Not connected");
-                Assert.IsNotNull(manager.ChainId, "ChainId null");
-                await Task.Delay(3000);
+                if (manager.IsConnected)
+                {
+                    Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
+                    Assert.IsNotNull(manager.ChainId, "ChainId null");
+                    await Task.Delay(3000);
+                }
+                else
+                {
+                    Console.WriteLine($"{i} not conected to {url} {sw.ElapsedMilliseconds}");
+                }
             }
+        }
+
+        protected static JsonSerializerSettings GetJsonSerializerSettings()
+        {
+            var rez = new JsonSerializerSettings
+            {
+                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                Culture = CultureInfo.InvariantCulture
+            };
+            return rez;
         }
     }
 }

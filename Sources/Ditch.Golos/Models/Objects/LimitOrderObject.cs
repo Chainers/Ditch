@@ -1,5 +1,4 @@
 using System;
-using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Objects
@@ -15,7 +14,7 @@ namespace Ditch.Golos.Models.Objects
 
     /// <summary>
     /// limit_order_object
-    /// libraries\chain\include\golos\chain\objects\market_object.hpp
+    /// libraries\chain\include\golos\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class LimitOrderObject
@@ -54,12 +53,12 @@ namespace Ditch.Golos.Models.Objects
         public string Seller { get; set; }
 
         /// <summary>
-        /// API name: order_id
+        /// API name: orderid
         /// = 0;
         /// </summary>
-        /// <returns>API type: integral_id_type</returns>
-        [JsonProperty("order_id")]
-        public object OrderId { get; set; }
+        /// <returns>API type: uint32_t</returns>
+        [JsonProperty("orderid")]
+        public UInt32 Orderid {get; set;}
 
         /// <summary>
         /// API name: for_sale
@@ -76,13 +75,5 @@ namespace Ditch.Golos.Models.Objects
         /// <returns>API type: price</returns>
         [JsonProperty("sell_price")]
         public Price SellPrice { get; set; }
-
-        /// <summary>
-        /// API name: deferred_fee
-        /// 
-        /// </summary>
-        /// <returns>API type: share_type</returns>
-        [JsonProperty("deferred_fee")]
-        public object DeferredFee { get; set; }
     }
 }

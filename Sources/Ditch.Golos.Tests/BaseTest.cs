@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Globalization;
-using Ditch.Golos.Helpers;
 
 namespace Ditch.Golos.Tests
 {
@@ -18,23 +17,18 @@ namespace Ditch.Golos.Tests
         protected const string AppVersion = "ditch / 3.0.2";
 
         private bool IgnoreRequestWithBadData = true;
-        protected static UserInfo User;
-        protected static OperationManager Api;
-        protected int Version;
-        protected string SbdSymbol = "GBG";
+        protected static readonly UserInfo User;
+        protected static readonly OperationManager Api;
 
-        public BaseTest()
+        static BaseTest()
         {
             User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
             var jss = GetJsonSerializerSettings();
             Api = new OperationManager(new WebSocketManager(jss), jss);
-            var connectedTo = Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo));
-
-            var response = Api.GetHardforkVersion(CancellationToken.None);
-            Assert.IsFalse(response.IsError);
-            Version = VersionHelper.ToInteger(response.Result);
+            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

@@ -1,12 +1,11 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// convert_request_object
-    /// golos-0.16.3\libraries\chain\include\steemit\chain\steem_objects.hpp
+    /// libraries\chain\include\golos\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class ConvertRequestObject
@@ -18,7 +17,7 @@ namespace Ditch.Golos.Models.Objects
 
         // bdType : account_name_type
         [JsonProperty("owner")]
-        public object Owner { get; set; }
+        public string Owner { get; set; }
 
         // bdType : uint32_t | = 0; 
         /// <summary>
@@ -30,5 +29,9 @@ namespace Ditch.Golos.Models.Objects
         // bdType : asset
         [JsonProperty("amount")]
         public Asset Amount { get; set; }
+
+        
+        [JsonProperty("conversion_date")]
+        public DateTime ConversionDate {get; set;}
     }
 }
