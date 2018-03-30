@@ -258,10 +258,11 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
+        [Ignore("test work only for real broadcast transaction")]
         public async Task TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
-            var response = Post(User.ActiveKeys, false, op);
+            var op = new TransferOperation(User.Login, "korzunav", new Asset("0.001 SBD"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch). Thanks for your work!");
+            var response = Post(User.ActiveKeys, true, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
     }
