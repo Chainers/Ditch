@@ -237,6 +237,7 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
+        [Ignore("unavailable for VerifyAuthority")]
         public async Task AccountUpdateTest()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
@@ -252,6 +253,16 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
+        [Ignore("unavailable for VerifyAuthority. not tested")]
+        public async Task WitnessUpdateOperationTest()
+        {
+            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", "GLS1111111111111111111111111111111114T1Anm", new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test]
+        [Ignore("unavailable for VerifyAuthority")]
         public async Task TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");

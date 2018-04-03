@@ -25,6 +25,7 @@ namespace Ditch.Golos.Tests
             User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
             var jss = GetJsonSerializerSettings();
+            //Api = new OperationManager(new HttpManager(jss), jss);
             Api = new OperationManager(new WebSocketManager(jss), jss);
             var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
             var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
