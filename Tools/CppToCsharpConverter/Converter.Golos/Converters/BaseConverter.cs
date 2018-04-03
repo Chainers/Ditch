@@ -29,11 +29,11 @@ namespace Converter.Golos.Converters
         public static readonly List<SearchTask> UnknownTypes = new List<SearchTask>();
         private Dictionary<string, string> _methodDescriptions = new Dictionary<string, string>();
 
-        private Dictionary<string, string> MethodDescriptions
+        public Dictionary<string, string> MethodDescriptions
         {
             get
             {
-                if (_methodDescriptions == null)
+                if (_methodDescriptions == null || _methodDescriptions.Count == 0)
                 {
                     _methodDescriptions = GetMethodDescriptions().Result;
                 }
@@ -48,7 +48,7 @@ namespace Converter.Golos.Converters
             _knownTypes = knownTypes;
             _cashParser = cashParser;
         }
-        
+
         private async Task<Dictionary<string, string>> GetMethodDescriptions()
         {
             try
@@ -67,7 +67,7 @@ namespace Converter.Golos.Converters
                     {
                         var methodJObject = JObject.Parse(method.Value.ToString());
                         var desc = JObject.Parse(methodJObject["desc"].ToString());
-                        var enDesc = desc["en"].ToString();
+                        var enDesc = desc["ru"].ToString();
                         if (!result.ContainsKey(method.Name))
                         {
                             result.Add(method.Name, enDesc);
@@ -111,7 +111,7 @@ namespace Converter.Golos.Converters
                     itm.SearchDir = searchDir;
             }
         }
-        
+
         #region ParseText
 
         protected void ExtendPreParsedClass(ParsedClass parsedClass)
