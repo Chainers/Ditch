@@ -48,14 +48,8 @@
     <Compile Include="Converters\ApiConverter.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Grabber.cs" />
-    <Compile Include="ParsedClass.cs" />
-    <Compile Include="ParsedFunc.cs" />
-    <Compile Include="ParsedParams.cs" />
-    <Compile Include="ParsedType.cs" />
-    <Compile Include="PreParsedElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchInFile.cs" />
-    <Compile Include="StructConverter.cs" />
+    <Compile Include="Converters\StructConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Converter.Core\Converter.Core.csproj">

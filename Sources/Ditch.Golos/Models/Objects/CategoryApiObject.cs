@@ -1,15 +1,14 @@
 using System;
-using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// category_api_obj
     /// golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CategoryApiObj
+    public partial class CategoryApiObject
     {
 
         // bdType : category_id_type
@@ -36,5 +35,4 @@ namespace Ditch.Golos.Models.ApiObj
         [JsonProperty("last_update")]
         public DateTime LastUpdate { get; set; }
     }
-
 }

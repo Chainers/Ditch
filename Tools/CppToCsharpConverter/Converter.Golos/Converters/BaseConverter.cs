@@ -7,12 +7,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Converter.Core;
+using Converter.Core.Models;
 using Newtonsoft.Json.Linq;
 
 namespace Converter.Golos.Converters
 {
     public abstract class BaseConverter
     {
+        public const string ProjName = "Golos";
+
         private const string Url = "https://raw.githubusercontent.com/gropox/steemjsgui/master/src/steemjs/api/types.json";
         private static readonly Regex NamespacePref = new Regex(@"\b[a-z]+::", RegexOptions.IgnoreCase);
         private static readonly Regex ParamNormRegex = new Regex(@"(\bconst\b\s*)|(&*)", RegexOptions.IgnoreCase);
@@ -20,16 +23,17 @@ namespace Converter.Golos.Converters
         private static readonly Regex ParamNameRegex = new Regex(@"(?<=[\w_>:]+\s+)[a-z0-9_]+(\s*=\s*[a-z0-9]+)?(?=,|$)", RegexOptions.IgnoreCase);
         protected static readonly Regex NotNameChar = new Regex("[^[a-z0-9_]]*", RegexOptions.IgnoreCase);
 
-        private readonly Dictionary<string, string> _knownTypes;
+        protected readonly Dictionary<string, string> _knownTypes;
         public static readonly Dictionary<string, string> Founded = new Dictionary<string, string>();
+        public static readonly Dictionary<string, ParsedClass> FoundedClass = new Dictionary<string, ParsedClass>();
         public static readonly List<SearchTask> UnknownTypes = new List<SearchTask>();
         private Dictionary<string, string> _methodDescriptions = new Dictionary<string, string>();
 
-        private Dictionary<string, string> MethodDescriptions
+        public Dictionary<string, string> MethodDescriptions
         {
             get
             {
-                if (_methodDescriptions == null)
+                if (_methodDescriptions == null || _methodDescriptions.Count == 0)
                 {
                     _methodDescriptions = GetMethodDescriptions().Result;
                 }
@@ -37,48 +41,12 @@ namespace Converter.Golos.Converters
             }
         }
 
+        protected readonly CashParser _cashParser;
 
-        protected BaseConverter(Dictionary<string, string> knownTypes)
+        protected BaseConverter(Dictionary<string, string> knownTypes, CashParser cashParser)
         {
             _knownTypes = knownTypes;
-        }
-
-        public ParsedClass FindAndParse(SearchTask searchTask, string projName, string[] extensions, bool isApi)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(searchTask.SearchLine))
-                    return null;
-
-                var classes = CashParser.FindAndParse(searchTask, projName, extensions, isApi);
-
-                foreach (var parsedClass in classes)
-                {
-                    ExtendPreParsedClass(parsedClass);
-
-                    foreach (var newTask in UnknownTypes)
-                    {
-                        if (string.IsNullOrEmpty(newTask.SearchDir))
-                            newTask.SearchDir = searchTask.SearchDir;
-                    }
-
-                    if (!parsedClass.Fields.Any() && parsedClass.Inherit.Count == 1 && (parsedClass.Inherit[0].IsArray || _knownTypes.ContainsKey(parsedClass.Inherit[0].CppName)))
-                    {
-                        if (Founded.ContainsKey(parsedClass.CppName))
-                            Founded[parsedClass.CppName] = parsedClass.Inherit[0].Name;
-                        else
-                            Founded.Add(parsedClass.CppName, parsedClass.Inherit[0].Name);
-                        UnknownTypes.Add(new SearchTask { SearchLine = parsedClass.CppName, Converter = KnownConverter.None });
-                    }
-
-                    return parsedClass;
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"{searchTask.SearchDir} | {searchTask.SearchLine}", e);
-            }
-            return null;
+            _cashParser = cashParser;
         }
 
         private async Task<Dictionary<string, string>> GetMethodDescriptions()
@@ -99,7 +67,7 @@ namespace Converter.Golos.Converters
                     {
                         var methodJObject = JObject.Parse(method.Value.ToString());
                         var desc = JObject.Parse(methodJObject["desc"].ToString());
-                        var enDesc = desc["en"].ToString();
+                        var enDesc = desc["ru"].ToString();
                         if (!result.ContainsKey(method.Name))
                         {
                             result.Add(method.Name, enDesc);
@@ -115,9 +83,9 @@ namespace Converter.Golos.Converters
             return new Dictionary<string, string>();
         }
 
-        public void PrintToFile(ParsedClass converted, string projName, string searchDir, string absPathToFile, string storeResultDir)
+        public void PrintToFile(ParsedClass converted, string searchDir, string absPathToFile, string storeResultDir)
         {
-            var outDir = $"{storeResultDir}\\{projName}\\";
+            var outDir = $"{storeResultDir}\\{ProjName}\\";
             switch (converted.ObjectType)
             {
                 case ObjectType.Class:
@@ -136,7 +104,7 @@ namespace Converter.Golos.Converters
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
 
-            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, projName, absPathToFile, searchDir));
+            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir));
             foreach (var itm in UnknownTypes)
             {
                 if (string.IsNullOrEmpty(itm.SearchDir))
@@ -144,23 +112,15 @@ namespace Converter.Golos.Converters
             }
         }
 
-        public ParsedClass Parse(string text, bool isApi)
-        {
-            var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            var preParseClass = CashParser.TryParseClass(lines, isApi);
-            ExtendPreParsedClass(preParseClass);
-            return preParseClass;
-        }
-
         #region ParseText
 
-        private void ExtendPreParsedClass(ParsedClass parsedClass)
+        protected void ExtendPreParsedClass(ParsedClass parsedClass)
         {
             if (parsedClass == null)
                 return;
 
             if (!string.IsNullOrEmpty(parsedClass.CppName))
-                parsedClass.Name = CashParser.ToTitleCase(parsedClass.CppName);
+                parsedClass.Name = _cashParser.ToTitleCase(parsedClass.CppName);
             if (!string.IsNullOrEmpty(parsedClass.CppInherit))
                 parsedClass.Inherit = new List<ParsedType> { GetKnownTypeOrDefault(parsedClass.CppInherit) };
 
@@ -174,19 +134,19 @@ namespace Converter.Golos.Converters
             {
                 string templateName = null;
                 if (parsedClass.IsTemplate)
-                    templateName = CashParser.Unpack(parsedClass.Template, 1);
+                    templateName = _cashParser.Unpack(parsedClass.Template, 1);
 
                 for (var i = 0; i < parsedClass.Fields.Count; i++)
                 {
                     var preParsedElement = parsedClass.Fields[i];
-                    parsedClass.Fields[i] = TryParseElement(preParsedElement, templateName);
+                    parsedClass.Fields[i] = TryParseElement(preParsedElement, templateName, parsedClass.ObjectType);
                 }
             }
 
             parsedClass.Fields.RemoveAll(i => i == null);
         }
 
-        protected abstract PreParsedElement TryParseElement(PreParsedElement preParsedElement, string templateName);
+        protected abstract PreParsedElement TryParseElement(PreParsedElement preParsedElement, string templateName, ObjectType objectType);
 
         protected ParsedType GetKnownTypeOrDefault(string type, string templateName = null)
         {
@@ -197,7 +157,7 @@ namespace Converter.Golos.Converters
 
             if (type.StartsWith("optional<"))
             {
-                type = CashParser.Unpack(type, 1);
+                type = _cashParser.Unpack(type, 1);
                 isOptional = true;
             }
 
@@ -234,7 +194,7 @@ namespace Converter.Golos.Converters
             if (!NotNameChar.IsMatch(type))
             {
                 AddTypeToTask(type);
-                return new ParsedType { CppName = type, Name = CashParser.ToTitleCase(type), IsOptional = isOptional };
+                return new ParsedType { CppName = type, Name = _cashParser.ToTitleCase(type), IsOptional = isOptional };
             }
 
             return new ParsedType { CppName = type, Name = "object", IsOptional = isOptional };
@@ -244,7 +204,7 @@ namespace Converter.Golos.Converters
         {
             if (!Founded.ContainsKey(type))
             {
-                Founded.Add(type, CashParser.ToTitleCase(type));
+                Founded.Add(type, _cashParser.ToTitleCase(type));
                 if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
                 {
                     var task = new SearchTask
@@ -262,7 +222,7 @@ namespace Converter.Golos.Converters
             if (type.StartsWith("map<")) //TODO: research is needed
                 return new ParsedType { CppName = type, Name = "object" };
 
-            var unpacked = CashParser.Unpack(type, 1);
+            var unpacked = _cashParser.Unpack(type, 1);
             ParsedType parsedType;
             if (type.StartsWith("array<")) //TODO: research is needed
             {
@@ -283,7 +243,7 @@ namespace Converter.Golos.Converters
                 return parsedType;
             }
 
-            var chArray = CashParser.SplitParams(unpacked);
+            var chArray = _cashParser.SplitParams(unpacked);
             var tmpl = type.Remove(type.IndexOf('<'));
             parsedType = tmpl.Equals("pair")
                 ? new ParsedType { Name = "KeyValuePair" }
@@ -333,7 +293,7 @@ namespace Converter.Golos.Converters
                 var param = new ParsedParams()
                 {
                     CppName = name,
-                    Name = CashParser.ToTitleCase(name, false),
+                    Name = _cashParser.ToTitleCase(name, false),
                     Default = defaultValue,
                     CppType = typeMatches[i].Value,
                     Type = GetKnownTypeOrDefault(typeMatches[i].Value)
@@ -369,7 +329,7 @@ namespace Converter.Golos.Converters
             var rez = new ParsedParams()
             {
                 CppName = name,
-                Name = CashParser.ToTitleCase(name, false),
+                Name = _cashParser.ToTitleCase(name, false),
                 Default = defaultValue,
                 CppType = typeMatche.Value,
                 Type = GetKnownTypeOrDefault(typeMatche.Value)
@@ -381,7 +341,7 @@ namespace Converter.Golos.Converters
 
         #region PrintClass
 
-        private void PrinNamespace(StringBuilder sb, ParsedClass parsedClass, string projName)
+        private void PrinNamespace(StringBuilder sb, ParsedClass parsedClass)
         {
             switch (parsedClass.ObjectType)
             {
@@ -390,10 +350,10 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using Ditch.Core;");
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
-                        sb.AppendLine($"using Ditch.{projName}.Objects;");
+                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{projName}.Objects");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
                         break;
                     }
                 case ObjectType.Enum:
@@ -401,7 +361,7 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using Ditch.Core.Helpers;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{projName}.Objects");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
                         break;
                     }
                 case ObjectType.Api:
@@ -410,9 +370,9 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
                         sb.AppendLine("using Ditch.Core.JsonRpc;");
-                        sb.AppendLine($"using Ditch.{projName}.Objects;");
+                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{projName}.Api");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Api");
                         break;
                     }
             }
@@ -420,14 +380,14 @@ namespace Converter.Golos.Converters
             sb.AppendLine("{");
         }
 
-        public string PrintParsedClass(ParsedClass parsedClass, string projName, string absPathToFile, string searchDir)
+        public string PrintParsedClass(ParsedClass parsedClass, string absPathToFile, string searchDir)
         {
             var sb = new StringBuilder();
-            PrinNamespace(sb, parsedClass, projName);
+            PrinNamespace(sb, parsedClass);
             AddClassName(sb, parsedClass, absPathToFile, 4);
             string templateName = null;
             if (parsedClass.IsTemplate)
-                templateName = CashParser.Unpack(parsedClass.Template, 1);
+                templateName = _cashParser.Unpack(parsedClass.Template, 1);
 
             var doc = string.Empty;
             if (parsedClass.ObjectType == ObjectType.Api && !string.IsNullOrEmpty(searchDir))
@@ -571,7 +531,7 @@ namespace Converter.Golos.Converters
                 sb.AppendLine($"{indent}public JsonRpcResponse{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")} {parsedElement.Name}({string.Join(", ", parsedFunc.Params)}{(parsedClass.ObjectType == ObjectType.Api ? $"{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken token" : string.Empty)})");
                 sb.AppendLine($"{indent}{{");
 
-                sb.Append($"{indent}    return CallRequest{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")}(");
+                sb.Append($"{indent}    return CustomGetRequest{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")}(");
                 if (parsedClass.ObjectType == ObjectType.Api)
                     sb.Append($"KnownApiNames.{parsedClass.Name}, ");
 

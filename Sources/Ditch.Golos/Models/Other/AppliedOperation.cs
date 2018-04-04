@@ -1,7 +1,8 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// applied_operation
@@ -36,6 +37,6 @@ namespace Ditch.Golos.Models.Other
         public DateTime Timestamp { get; set; }
 
         [JsonProperty("op")]
-        public object[] Op { get; set; }
+        public JArray Op { get; set; }
     }
 }

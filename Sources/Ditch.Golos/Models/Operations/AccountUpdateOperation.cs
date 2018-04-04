@@ -1,6 +1,6 @@
 ﻿using System;
 using Ditch.Golos.Helpers;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Operations

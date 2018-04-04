@@ -2,7 +2,7 @@
 using Ditch.Golos.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// authority

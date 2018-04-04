@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Models.ApiObj;
+using Ditch.Golos.Models.Objects;
 
 namespace Ditch.Golos
 {
     /// <summary>
-    /// private_message_api
-    /// libraries\plugins\private_message\include\golos\private_message\private_message_plugin.hpp
+    /// private_message
+    /// plugins\private_message\include\golos\plugins\private_message\private_message_plugin.hpp
     /// </summary>
     public partial class OperationManager
     {
@@ -23,7 +23,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MessageApiObj[]> GetInbox(string to, object newest, UInt16 limit, CancellationToken token)
         {
-            return CallRequest<MessageApiObj[]>(KnownApiNames.PrivateMessageApi, "get_inbox", new object[] { to, newest, limit }, token);
+            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_inbox", new object[] { to, newest, limit }, token);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<MessageApiObj[]> GetOutbox(string from, object newest, UInt16 limit, CancellationToken token)
         {
-            return CallRequest<MessageApiObj[]>(KnownApiNames.PrivateMessageApi, "get_outbox", new object[] { from, newest, limit }, token);
+            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_outbox", new object[] { from, newest, limit }, token);
         }
     }
 }

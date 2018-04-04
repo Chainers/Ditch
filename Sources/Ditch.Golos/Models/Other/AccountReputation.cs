@@ -1,10 +1,10 @@
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// account_reputation
-    /// libraries\plugins\follow\include\golos\follow\follow_api.hpp
+    /// plugins\follow\include\golos\plugins\follow\follow_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class AccountReputation

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /**
      * @brief This operation is used to whitelist and blacklist accounts, primarily for transacting in whitelisted ass     ets

@@ -1,31 +1,21 @@
-using System;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// order
-    /// libraries\app\include\steemit\app\database_api.hpp
+    /// plugins\market_history\include\golos\plugins\market_history\market_history_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class Order
     {
-
         /// <summary>
-        /// API name: order_price
+        /// API name: price
         /// 
         /// </summary>
-        /// <returns>API type: price</returns>
-        [JsonProperty("order_price")]
-        public Price OrderPrice { get; set; }
-
-        /// <summary>
-        /// API name: real_price
-        /// dollars per steem
-        /// </summary>
         /// <returns>API type: double</returns>
-        [JsonProperty("real_price")]
-        public double RealPrice { get; set; }
+        [JsonProperty("price")]
+        public double Price { get; set; }
 
         /// <summary>
         /// API name: steem
@@ -42,13 +32,5 @@ namespace Ditch.Golos.Models.Other
         /// <returns>API type: share_type</returns>
         [JsonProperty("sbd")]
         public object Sbd { get; set; }
-
-        /// <summary>
-        /// API name: created
-        /// 
-        /// </summary>
-        /// <returns>API type: time_point_sec</returns>
-        [JsonProperty("created")]
-        public DateTime Created { get; set; }
     }
 }

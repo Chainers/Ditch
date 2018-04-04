@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Converter.Steem.Converters;
 using Converter.Core;
+using Converter.Core.Models;
 
 namespace Converter.Steem
 {
@@ -12,8 +13,9 @@ namespace Converter.Steem
         private readonly Regex _fieldRules = new Regex(@"^[a-z0-9<,>_:]+\s+[a-z0-9_]+(\s*=\s*[a-z_0-9-<,>()\s]+)?;", RegexOptions.IgnoreCase);
         private readonly Regex _notTypeChar = new Regex("[^[a-z0-9_:<,>]]*", RegexOptions.IgnoreCase);
 
-        public StructConverter(Dictionary<string, string> knownTypes) : base(knownTypes) { }
-
+        public StructConverter(Dictionary<string, string> knownTypes) 
+            : base(knownTypes, new CashParser()) { }
+   
         public ParsedClass FindAndParse(SearchTask searchTask, string[] extensions, bool isApi)
         {
             try
@@ -21,7 +23,7 @@ namespace Converter.Steem
                 if (string.IsNullOrWhiteSpace(searchTask.SearchLine))
                     return null;
 
-                var classes = CashParser.FindAndParse(searchTask, extensions, isApi);
+                var classes = _cashParser.FindAndParse(searchTask, extensions, isApi);
 
                 foreach (var parsedClass in classes)
                 {
@@ -92,7 +94,7 @@ namespace Converter.Steem
             var field = new PreParsedElement
             {
                 Type = GetKnownTypeOrDefault(cppType, templateName),
-                Name = CashParser.ToTitleCase(name),
+                Name = _cashParser.ToTitleCase(name),
                 CppName = name,
                 Comment = coment,
                 MainComment = preParsedElement.MainComment

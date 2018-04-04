@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Converter.Golos
+namespace Converter.Core.Models
 {
     public class SearchInFile
     {

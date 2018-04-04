@@ -6,7 +6,7 @@ namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// account_bandwidth_object
-    /// golos-0.16.3\libraries\chain\include\steemit\chain\account_object.hpp
+    /// libraries\chain\include\golos\chain\account_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class AccountBandwidthObject

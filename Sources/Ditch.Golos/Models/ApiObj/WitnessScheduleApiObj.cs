@@ -1,7 +1,6 @@
-﻿using Ditch.Golos.Models.Objects;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// witness_schedule_api_obj

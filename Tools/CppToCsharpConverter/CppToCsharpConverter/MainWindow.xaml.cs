@@ -6,8 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Newtonsoft.Json;
-using Converter.Steem;
 using Converter.Core;
+using Converter.Golos;
 
 namespace CppToCsharpConverter
 {
@@ -137,34 +137,5 @@ namespace CppToCsharpConverter
         }
 
         #endregion
-
-        #region Convert
-
-        protected void OutputContentChanged()
-        {
-            try
-            {
-                var structConverter = new StructConverter(SettingsViewModel.KnownTypes);
-                var converted = structConverter.Parse(Input.Text, false);
-                Output.Text = structConverter.PrintParsedClass(converted, string.Empty, string.Empty);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Input_OnKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                OutputContentChanged();
-        }
-
-        private void Input_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            OutputContentChanged();
-        }
-
-        #endregion Convert
     }
 }

@@ -11,78 +11,57 @@
     </Window.Resources>
 
     <Grid>
-        <TabControl>
-            <TabItem x:Name="Automation" Header="Automation" KeyDown="UIElement_OnKeyDown">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="46"/>
-                        <RowDefinition Height="23"/>
-                    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="46"/>
+            <RowDefinition Height="23"/>
+        </Grid.RowDefinitions>
 
-                    <ListBox ItemsSource="{Binding (SearchTasks)}" Grid.Row="0" Grid.ColumnSpan="4"  >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate DataType="core:SearchTask">
-                                <StackPanel  Orientation="Horizontal" Margin="3">
-                                    <StackPanel Style="{DynamicResource MainStackPanel}">
-                                        <Label Content="Конвертер:" Style="{DynamicResource LabelBold}"/>
-                                        <TextBox Text="{Binding Converter}" Style="{DynamicResource TextBoxCenter}"  />
-                                    </StackPanel>
-                                    <StackPanel Style="{DynamicResource MainStackPanel}"  Margin="50 0 0 0">
-                                        <Label Content="Директория:" Style="{DynamicResource LabelBold}"/>
-                                        <TextBox Text="{Binding SearchDir}" Style="{DynamicResource TextBoxCenter}"  />
-                                    </StackPanel>
-                                    <StackPanel Style="{DynamicResource MainStackPanel}" Margin="10 0 0 0">
-                                        <Label Content="Поиск:" Style="{DynamicResource LabelBold}"/>
-                                        <TextBox Text="{Binding SearchLine}" Style="{DynamicResource TextBoxCenter}"  />
-                                    </StackPanel>
-                                    <StackPanel Style="{DynamicResource MainStackPanel}" Margin="10 0 0 0">
-                                        <Label Content="Найдено в:" Style="{DynamicResource LabelBold}"/>
-                                        <TextBox Text="{Binding FullPath}" Style="{DynamicResource TextBoxCenter}"  />
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+        <ListBox ItemsSource="{Binding (SearchTasks)}" Grid.Row="0" Grid.ColumnSpan="4"  >
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="core:SearchTask">
+                    <StackPanel  Orientation="Horizontal" Margin="3">
+                        <StackPanel Style="{DynamicResource MainStackPanel}">
+                            <Label Content="Конвертер:" Style="{DynamicResource LabelBold}"/>
+                            <TextBox Text="{Binding Converter}" Style="{DynamicResource TextBoxCenter}"  />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource MainStackPanel}"  Margin="50 0 0 0">
+                            <Label Content="Директория:" Style="{DynamicResource LabelBold}"/>
+                            <TextBox Text="{Binding SearchDir}" Style="{DynamicResource TextBoxCenter}"  />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource MainStackPanel}" Margin="10 0 0 0">
+                            <Label Content="Поиск:" Style="{DynamicResource LabelBold}"/>
+                            <TextBox Text="{Binding SearchLine}" Style="{DynamicResource TextBoxCenter}"  />
+                        </StackPanel>
+                        <StackPanel Style="{DynamicResource MainStackPanel}" Margin="10 0 0 0">
+                            <Label Content="Найдено в:" Style="{DynamicResource LabelBold}"/>
+                            <TextBox Text="{Binding FullPath}" Style="{DynamicResource TextBoxCenter}"  />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-                    <Grid Grid.Row="1" Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="160"/>
-                            <ColumnDefinition Width="120"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                        <Button  x:Name="Clear"  Grid.Row="0" Grid.Column="3"  Content="Очистить список" Style="{DynamicResource Button }"  Click="ClearItems" />
+            <Button  x:Name="Clear"  Grid.Row="0" Grid.Column="3"  Content="Очистить список" Style="{DynamicResource Button }"  Click="ClearItems" />
 
-                        <ComboBox x:Name="DirBox"  Grid.Row="1" Grid.Column="0"    ItemsSource="{Binding KnownDirectories}" IsEditable="True" LostFocus="DirLostFocus" Style="{DynamicResource ComboBoxBase}"/>
-                        <TextBox  x:Name="SearchBox"  Grid.Row="1" Grid.Column="1"   />
-                        <ComboBox x:Name="ConverterBox"  Grid.Row="1" Grid.Column="2"   Style="{DynamicResource ComboBoxBase}"/>
-                        <Button  x:Name="AddLine" Grid.Row="1" Grid.Column="3"   Content="Добавить" Style="{DynamicResource Button }"  Click="AddLineClick" />
-                    </Grid>
+            <ComboBox x:Name="DirBox"  Grid.Row="1" Grid.Column="0"    ItemsSource="{Binding KnownDirectories}" IsEditable="True" LostFocus="DirLostFocus" Style="{DynamicResource ComboBoxBase}"/>
+            <TextBox  x:Name="SearchBox"  Grid.Row="1" Grid.Column="1"   />
+            <ComboBox x:Name="ConverterBox"  Grid.Row="1" Grid.Column="2"   Style="{DynamicResource ComboBoxBase}"/>
+            <Button  x:Name="AddLine" Grid.Row="1" Grid.Column="3"   Content="Добавить" Style="{DynamicResource Button }"  Click="AddLineClick" />
+        </Grid>
 
-                    <Button Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0" Content="Старт!" Style="{DynamicResource Button }"  Click="Button_Click"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Convert">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="260*"/>
-                        <ColumnDefinition Width="109*"/>
-                        <ColumnDefinition Width="151*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="18"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBox x:Name="Input" Grid.Column="0" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" ToolTip="Input" LostFocus="Input_OnLostFocus" KeyUp="Input_OnKeyUp"/>
-                    <TextBox x:Name="Output" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" ToolTip="Output" Grid.ColumnSpan="2"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
+        <Button Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0" Content="Старт!" Style="{DynamicResource Button }"  Click="Button_Click"/>
     </Grid>
 </Window>

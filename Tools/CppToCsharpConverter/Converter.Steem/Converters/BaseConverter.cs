@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Converter.Core;
+using Converter.Core.Models;
 
 namespace Converter.Steem.Converters
 {
@@ -40,10 +41,12 @@ namespace Converter.Steem.Converters
             }
         }
 
+        protected readonly CashParser _cashParser;
 
-        protected BaseConverter(Dictionary<string, string> knownTypes)
+        protected BaseConverter(Dictionary<string, string> knownTypes, CashParser cashParser)
         {
             _knownTypes = knownTypes;
+            _cashParser = cashParser;
         }
 
         private async Task<Dictionary<string, string>> GetMethodDescriptions()
@@ -109,13 +112,13 @@ namespace Converter.Steem.Converters
             }
         }
 
-        public ParsedClass Parse(string text, bool isApi)
-        {
-            var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            var preParseClass = CashParser.TryParseClass(lines, isApi);
-            ExtendPreParsedClass(preParseClass);
-            return preParseClass;
-        }
+        //public ParsedClass Parse(string text, bool isApi)
+        //{
+        //    var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        //    var preParseClass = _cashParser.TryParseClass(lines, ,isApi);
+        //    ExtendPreParsedClass(preParseClass);
+        //    return preParseClass;
+        //}
 
         #region ParseText
 
@@ -125,7 +128,7 @@ namespace Converter.Steem.Converters
                 return;
 
             if (!string.IsNullOrEmpty(parsedClass.CppName))
-                parsedClass.Name = CashParser.ToTitleCase(parsedClass.CppName);
+                parsedClass.Name = _cashParser.ToTitleCase(parsedClass.CppName);
             if (!string.IsNullOrEmpty(parsedClass.CppInherit))
                 parsedClass.Inherit = new List<ParsedType> { GetKnownTypeOrDefault(parsedClass.CppInherit) };
 
@@ -139,7 +142,7 @@ namespace Converter.Steem.Converters
             {
                 string templateName = null;
                 if (parsedClass.IsTemplate)
-                    templateName = CashParser.Unpack(parsedClass.Template, 1);
+                    templateName = _cashParser.Unpack(parsedClass.Template, 1);
 
                 for (var i = 0; i < parsedClass.Fields.Count; i++)
                 {
@@ -162,7 +165,7 @@ namespace Converter.Steem.Converters
 
             if (type.StartsWith("optional<"))
             {
-                type = CashParser.Unpack(type, 1);
+                type = _cashParser.Unpack(type, 1);
                 isOptional = true;
             }
 
@@ -199,7 +202,7 @@ namespace Converter.Steem.Converters
             if (!NotNameChar.IsMatch(type))
             {
                 AddTypeToTask(type);
-                return new ParsedType { CppName = type, Name = CashParser.ToTitleCase(type), IsOptional = isOptional };
+                return new ParsedType { CppName = type, Name = _cashParser.ToTitleCase(type), IsOptional = isOptional };
             }
 
             return new ParsedType { CppName = type, Name = "object", IsOptional = isOptional };
@@ -209,7 +212,7 @@ namespace Converter.Steem.Converters
         {
             if (!Founded.ContainsKey(type))
             {
-                Founded.Add(type, CashParser.ToTitleCase(type));
+                Founded.Add(type, _cashParser.ToTitleCase(type));
                 if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
                 {
                     var task = new SearchTask
@@ -227,7 +230,7 @@ namespace Converter.Steem.Converters
             if (type.StartsWith("map<")) //TODO: research is needed
                 return new ParsedType { CppName = type, Name = "object" };
 
-            var unpacked = CashParser.Unpack(type, 1);
+            var unpacked = _cashParser.Unpack(type, 1);
             ParsedType parsedType;
             if (type.StartsWith("array<")) //TODO: research is needed
             {
@@ -248,7 +251,7 @@ namespace Converter.Steem.Converters
                 return parsedType;
             }
 
-            var chArray = CashParser.SplitParams(unpacked);
+            var chArray = _cashParser.SplitParams(unpacked);
             var tmpl = type.Remove(type.IndexOf('<'));
             parsedType = tmpl.Equals("pair")
                 ? new ParsedType { Name = "KeyValuePair" }
@@ -298,7 +301,7 @@ namespace Converter.Steem.Converters
                 var param = new ParsedParams()
                 {
                     CppName = name,
-                    Name = CashParser.ToTitleCase(name, false),
+                    Name = _cashParser.ToTitleCase(name, false),
                     Default = defaultValue,
                     CppType = typeMatches[i].Value,
                     Type = GetKnownTypeOrDefault(typeMatches[i].Value)
@@ -334,7 +337,7 @@ namespace Converter.Steem.Converters
             var rez = new ParsedParams()
             {
                 CppName = name,
-                Name = CashParser.ToTitleCase(name, false),
+                Name = _cashParser.ToTitleCase(name, false),
                 Default = defaultValue,
                 CppType = typeMatche.Value,
                 Type = GetKnownTypeOrDefault(typeMatche.Value)
@@ -385,6 +388,7 @@ namespace Converter.Steem.Converters
             sb.AppendLine("{");
         }
 
+
         public string PrintParsedClass(ParsedClass parsedClass, string absPathToFile, string searchDir)
         {
             var sb = new StringBuilder();
@@ -392,7 +396,7 @@ namespace Converter.Steem.Converters
             AddClassName(sb, parsedClass, absPathToFile, 4);
             string templateName = null;
             if (parsedClass.IsTemplate)
-                templateName = CashParser.Unpack(parsedClass.Template, 1);
+                templateName = _cashParser.Unpack(parsedClass.Template, 1);
 
             var doc = string.Empty;
             if (parsedClass.ObjectType == ObjectType.Api && !string.IsNullOrEmpty(searchDir))

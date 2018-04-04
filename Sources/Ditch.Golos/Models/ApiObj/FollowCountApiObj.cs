@@ -1,11 +1,11 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// follow_count_api_obj
-    /// libraries\plugins\follow\include\golos\follow\follow_api.hpp
+    /// plugins\follow\include\golos\plugins\follow\follow_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class FollowCountApiObj
@@ -34,5 +34,8 @@ namespace Ditch.Golos.Models.ApiObj
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("following_count")]
         public UInt32 FollowingCount {get; set;}
+
+        [JsonProperty("limit")]
+        public UInt32 Limit {get; set;}
     }
 }

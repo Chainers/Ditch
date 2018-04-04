@@ -48,13 +48,7 @@
     <Compile Include="CashParser.cs" />
     <Compile Include="ConverterManager.cs" />
     <Compile Include="Grabber.cs" />
-    <Compile Include="ParsedClass.cs" />
-    <Compile Include="ParsedFunc.cs" />
-    <Compile Include="ParsedParams.cs" />
-    <Compile Include="ParsedType.cs" />
-    <Compile Include="PreParsedElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchInFile.cs" />
     <Compile Include="Converters\StructConverter.cs" />
   </ItemGroup>
   <ItemGroup>

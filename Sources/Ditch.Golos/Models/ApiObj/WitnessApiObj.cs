@@ -1,8 +1,7 @@
 using System;
-using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.ApiObj
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// witness_api_obj

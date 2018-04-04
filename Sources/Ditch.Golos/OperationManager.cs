@@ -9,7 +9,6 @@ using Ditch.Golos.Helpers;
 using Ditch.Golos.JsonRpc;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -20,10 +19,10 @@ namespace Ditch.Golos
         private readonly JsonSerializerSettings _jsonSerializerSettings;
         private readonly IConnectionManager _connectionManager;
         private List<string> _urls;
-
-        public byte[] ChainId { get; private set; }
-        public bool IsConnected => _connectionManager.IsConnected;
         private readonly Config _config;
+
+        public byte[] ChainId { get; set; }
+        public bool IsConnected => _connectionManager.IsConnected;
 
         #region Constructors
 
@@ -72,7 +71,6 @@ namespace Ditch.Golos
                     //todo nothing
                 }
             }
-
             return string.Empty;
         }
 
@@ -147,59 +145,46 @@ namespace Ditch.Golos
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string method, CancellationToken token, params object[] data)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
+            var jsonRpc = new JsonRpcRequest(api, method);
             return _connectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string method, CancellationToken token, params object[] data)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
-            return _connectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Api method</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CallRequest(string api, string method, object[] data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
-            return _connectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Api method</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CallRequest<T>(string api, string method, object[] data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute<T>(jsonRpc, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">api name</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse CustomGetRequest(string api, string method, object[] data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
+            return _connectionManager.Execute(jsonRpc, token);
         }
 
         /// <summary>
@@ -234,7 +219,7 @@ namespace Ditch.Golos
 
             return transaction;
         }
-        
+
         public virtual bool TryLoadConfig(CancellationToken token)
         {
             var resp = GetConfig<JObject>(token);
