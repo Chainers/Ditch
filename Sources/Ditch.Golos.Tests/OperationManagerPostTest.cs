@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Helpers;
-using Ditch.Golos.Models.Enums;
-using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System.Globalization;
+using Ditch.Golos.Models.Enums;
+using Ditch.Golos.Models.Objects;
+using Ditch.Golos.Models.Operations;
 
 namespace Ditch.Golos.Tests
 {
@@ -152,15 +152,11 @@ namespace Ditch.Golos.Tests
         [Test]
         public void PostWithBeneficiariesTest()
         {
-            var manager = Api;
             var user = User;
-
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, SbdSymbol, new Beneficiary("steepshot", 1000));
+            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
 
-            var response = VersionHelper.GetHardfork(Version) > 16
-                ? Post(user.PostingKeys, false, op, op2)
-                : Post(user.PostingKeys, false, op);
+            var response = Post(user.PostingKeys, false, op, op2);
 
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -241,6 +237,7 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
+        [Ignore("unavailable for VerifyAuthority")]
         public async Task AccountUpdateTest()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
@@ -256,11 +253,36 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
+        [Ignore("unavailable for VerifyAuthority. not tested")]
+        public async Task WitnessUpdateOperationTest()
+        {
+            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", "GLS1111111111111111111111111111111114T1Anm", new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test]
+        [Ignore("unavailable for VerifyAuthority")]
         public async Task TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test, Sequential]
+        [TestCase("277.126 SBD", 277126, 3, "SBD")]
+        [TestCase("0 SBD", 0, 0, "SBD")]
+        [TestCase("0", 0, 0, "")]
+        [TestCase("123 SBD", 123, 0, "SBD")]
+        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
+        public void ParseTestTest(string test, long value, byte precision, string currency)
+        {
+            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+            Assert.IsTrue(asset.Value == value);
+            Assert.IsTrue(asset.Precision == precision);
+            Assert.IsTrue(asset.Currency == currency);
+            Assert.IsTrue(test.Equals(asset.ToString()));
         }
     }
 }

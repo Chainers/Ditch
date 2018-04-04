@@ -1,4 +1,6 @@
-﻿namespace Ditch.Golos.Helpers
+﻿using Ditch.Golos.Models.Operations;
+
+namespace Ditch.Golos.Helpers
 {
     public static class VersionHelper
     {

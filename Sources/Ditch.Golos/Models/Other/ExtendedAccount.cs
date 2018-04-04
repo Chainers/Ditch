@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ditch.Golos.Models.ApiObj;
 using Newtonsoft.Json;
+using Ditch.Golos.Models.ApiObject;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     ///  extended_account 
-    /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
+    /// plugins\database_api\include\golos\plugins\database_api\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ExtendedAccount : AccountApiObj
+    public partial class ExtendedAccount : AccountApiObject
     {
         // bdType : asset
         /// <summary>

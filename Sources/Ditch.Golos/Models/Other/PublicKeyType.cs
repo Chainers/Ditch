@@ -3,7 +3,7 @@ using Ditch.Core.Helpers;
 using Ditch.Golos.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     [JsonConverter(typeof(ToStringConverter))]
     public partial class PublicKeyType : IComplexString

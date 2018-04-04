@@ -5,7 +5,7 @@ namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// bucket_object
-    /// libraries\plugins\blockchain_statistics\include\golos\blockchain_statistics\blockchain_statistics_plugin.hpp
+    /// plugins\blockchain_statistics\include\golos\plugins\blockchain_statistics\bucket_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class BucketObject

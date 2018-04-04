@@ -3,7 +3,7 @@ using Ditch.Golos.Helpers;
 using Ditch.Golos.Models.Operations;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// transaction

@@ -1,8 +1,7 @@
 using System;
-using Ditch.Golos.Models.ApiObj;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// discussion

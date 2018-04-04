@@ -1,20 +1,28 @@
 ﻿using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     /// <summary>
     /// price
-    /// golos-0.16.3\libraries\protocol\include\steemit\protocol\asset.hpp
+    /// libraries\protocol\include\golos\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class Price
     {
 
-        // bdType : asset
+        /// <summary>
+        /// API name: base
+        /// 
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("base")]
         public Asset Base { get; set; }
 
-        // bdType : asset
+        /// <summary>
+        /// API name: quote
+        /// 
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("quote")]
         public Asset Quote { get; set; }
     }

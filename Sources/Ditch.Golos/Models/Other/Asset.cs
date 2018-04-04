@@ -3,7 +3,7 @@ using System.Globalization;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Other
+namespace Ditch.Golos.Models.Objects
 {
     [JsonConverter(typeof(ToStringConverter))]
     public partial class Asset : IComparable<Asset>, IEquatable<Asset>, IComplexString
