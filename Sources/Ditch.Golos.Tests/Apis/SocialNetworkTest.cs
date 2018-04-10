@@ -378,7 +378,8 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 1024,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByTrending(query, CancellationToken.None);
             Console.WriteLine(resp.Error);
@@ -669,6 +670,58 @@ namespace Ditch.Golos.Tests.Apis
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_all_content_replies()
+        {
+            var query = new DiscussionQuery()
+            {
+                TruncateBody = 100,
+                Limit = 2
+            };
+
+            var trending = Api.GetDiscussionsByTrending(query, CancellationToken.None);
+            var post = trending.Result[0];
+
+            var resp = Api.GetAllContentReplies(post.Author, post.Url, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { User.Login, "spasibo-golos" }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_discussions_by_children()
+        {
+            var query = new DiscussionQuery()
+            {
+                TruncateBody = 100,
+                Limit = 2
+            };
+
+            var resp = Api.GetDiscussionsByChildren(query, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
+        public void get_languages()
+        {
+            var resp = Api.GetLanguages(CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
         //[Test]
