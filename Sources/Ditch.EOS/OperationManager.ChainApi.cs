@@ -99,9 +99,19 @@ namespace Ditch.EOS
             return await CustomPostRequest<AbiJsonToBinResult>(endpoint, abiJsonToBinParams, token);
         }
 
-
-        //Serialize back binary hex to json.
-        //$ curl http://127.0.0.1:8888/v1/chain/abi_bin_to_json -X POST -d '{"code":"currency", "action":"transfer", "binargs":"000000008093dd74000000000094dd74e803000000000000"}'
+        /// <summary>
+        /// Serialize back binary hex to json.
+        /// 
+        /// curl http://127.0.0.1:8888/v1/chain/abi_bin_to_json -X POST -d '{"code":"currency", "action":"transfer", "binargs":"000000008093dd74000000000094dd74e803000000000000"}'
+        /// </summary>
+        /// <param name="abiBinToJsonParams"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<AbiBinToJsonResult>> AbiBinToJson(AbiBinToJsonParams abiBinToJsonParams, CancellationToken token)
+        {
+            var endpoint = "v1/chain/abi_bin_to_json";
+            return await CustomPostRequest<AbiBinToJsonResult>(endpoint, abiBinToJsonParams, token);
+        }
 
         //This method expects a transaction in JSON format and will attempt to apply it to the blockchain,
 

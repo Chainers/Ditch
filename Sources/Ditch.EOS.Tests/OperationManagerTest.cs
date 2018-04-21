@@ -92,7 +92,7 @@ namespace Ditch.EOS.Tests
             var tableRowsParams = new GetTableRowsParams()
             {
                 Scope = "inita",
-                Code = "currency",
+                Code = "hackathon",
                 Table = "account",
                 Json = true,
                 LowerBound = "0",
@@ -131,6 +131,27 @@ namespace Ditch.EOS.Tests
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_json_to_bin", abiJsonToBinParams, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+        
+        [Test]
+        public async Task AbiBinToJsonTest()
+        {
+            var abiBinToJsonParams = new AbiBinToJsonParams()
+            {
+                Code = "hackathon",
+                Action = "transfer",
+                Binargs = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
+            };
+
+            var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsTrue(resp.IsSuccess);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));
