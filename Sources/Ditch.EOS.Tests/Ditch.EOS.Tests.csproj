@@ -53,9 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OperationManagerTest.cs" />
-    <Compile Include="SerializeHelperTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
