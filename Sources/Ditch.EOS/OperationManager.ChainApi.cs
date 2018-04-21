@@ -113,12 +113,33 @@ namespace Ditch.EOS
             return await CustomPostRequest<AbiBinToJsonResult>(endpoint, abiBinToJsonParams, token);
         }
 
-        //This method expects a transaction in JSON format and will attempt to apply it to the blockchain,
+        /// <summary>
+        /// This method expects a transaction in JSON format and will attempt to apply it to the blockchain
+        /// 
+        /// curl http://localhost:8888/v1/chain/push_transaction -X POST -d '{"ref_block_num":"100","ref_block_prefix":"137469861","expiration":"2017-09-25T06:28:49","scope":["initb","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["initb","initc"],"authorization":[{"account":"initb","permission":"active"}],"data":"000000000041934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}'
+        /// </summary>
+        /// <param name="pushTransactionParams"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<OperationResult<PushTransactionResults>> PushTransaction(object pushTransactionParams, CancellationToken token)
+        {
+            var endpoint = "v1/chain/push_transaction";
+            return await CustomPostRequest<PushTransactionResults>(endpoint, pushTransactionParams, token);
+        }
 
-
-        // /v1/chain/abi_json_to_bin	{"code":"currency","action":"transfer","args":{"from":"currency","to":"test1","amount":"100500.0000 VIM"}}
-
-        // /v1/wallet/get_public_keys	
+        /// <summary>
+        /// This method push multiple transactions at once.
+        /// 
+        /// curl http://localhost:8888/v1/chain/push_transaction -X POST -d '[{"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["initb","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["initb","initc"],"authorization":[{"account":"initb","permission":"active"}],"data":"000000000041934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}, {"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["inita","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["inita","initc"],"authorization":[{"account":"inita","permission":"active"}],"data":"000000008040934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}]'
+        /// </summary>
+        /// <param name="pushTransactionParams"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<OperationResult<PushTransactionResults[]>> PushTransactions(object[] pushTransactionParams, CancellationToken token)
+        {
+            var endpoint = "v1/chain/push_transaction";
+            return await CustomPostRequest<PushTransactionResults[]>(endpoint, pushTransactionParams, token);
+        }
 
         /// <summary>
         /// 
@@ -130,21 +151,6 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetRequiredKeysResult>> GetRequiredKeys(GetRequiredKeysParams getRequiredKeysParams, CancellationToken token)
         {
             var endpoint = "v1/chain/get_required_keys";
-            return await CustomPostRequest<GetRequiredKeysResult>(endpoint, getRequiredKeysParams, token);
-        }
-
-        // /v1/wallet/sign_transaction[{"expiration":"2018-04-10T12:26:15","region":0,"ref_block_num":44,"ref_block_prefix":104196284,"max_net_usage_words":0,"max_kcpu_usage":0,"delay_sec":0,"context_free_actions":[],"actions":[{"account":"currency","name":"transfer","authorization":[{"actor":"currency","permission":"active"}],"data":"0000001e4d75af46000000008090b1ca4015e73b000000000456494d00000000"}],"signatures":[],"context_free_data":[]},["EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7"],"0000000000000000000000000000000000000000000000000000000000000000"]
-        // /v1/chain/push_transaction	{"signatures":["EOSK8C1tDRbfzAbV7cmRCBnj9FuKQNxac9UTH4NzzEA11ZQ3LALhpZwoWKH491d75TjBGvLMEzmTzCAoNMuneGrjTgMJaAeZK"],"compression":"none","packed_context_free_data":"","packed_trx":"67adcc5a00002c00bce8350600000000010000001e4d75af46000000572d3ccdcd010000001e4d75af4600000000a8ed3232200000001e4d75af46000000008090b1ca4015e73b000000000456494d00000000"}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="getRequiredKeysParams"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<OperationResult<GetRequiredKeysResult>> PushTransaction(GetRequiredKeysParams getRequiredKeysParams, CancellationToken token)
-        {
-            var endpoint = "v1/chain/push_transaction";
             return await CustomPostRequest<GetRequiredKeysResult>(endpoint, getRequiredKeysParams, token);
         }
     }
