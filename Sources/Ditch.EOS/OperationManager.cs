@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -84,26 +85,13 @@ namespace Ditch.EOS
         }
 
 
-        public async Task<OperationResult<T>> CustomPostRequest<T>(string endpoint, Dictionary<string, object> parameters, CancellationToken token)
-        {
-            HttpContent content = null;
-            if (parameters != null && parameters.Count > 0)
-            {
-                var param = JsonNetConverter.Serialize(parameters);
-                content = new StringContent(param, Encoding.UTF8, "application/json");
-            }
-
-            var url = $"{_url}/{endpoint}";
-            var response = await _client.PostAsync(url, content, token);
-            return await CreateResult<T>(response, token);
-        }
-
-        public async Task<OperationResult<T>> CustomPostRequest<T, TData>(string endpoint, TData data, CancellationToken token)
+        public async Task<OperationResult<T>> CustomPostRequest<T>(string endpoint, object data, CancellationToken token)
         {
             HttpContent content = null;
             if (data != null)
             {
                 var param = JsonNetConverter.Serialize(data);
+                Debug.WriteLine(param);
                 content = new StringContent(param, Encoding.UTF8, "application/json");
             }
 
@@ -123,6 +111,7 @@ namespace Ditch.EOS
                 response.StatusCode != HttpStatusCode.Created)
             {
                 var content = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(content);
                 result.Error = new HttpError(response.StatusCode, content);
                 return result;
             }

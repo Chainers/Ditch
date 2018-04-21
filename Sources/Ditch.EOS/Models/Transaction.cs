@@ -1,63 +1,35 @@
-﻿using System;
-using Ditch.Core.Attributes;
-using Ditch.Core.Helpers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
+    /**
+    *  A transaction consits of a set of messages which must all be applied or
+    *  all are rejected. These messages have access to data within the given
+    *  read and write scopes.
+    */
+
     /// <summary>
     /// transaction
-    /// libraries\protocol\include\steemit\protocol\transaction.hpp
+    /// libraries\chain\include\eosio\chain\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Transaction
+    public partial class Transaction : TransactionHeader
     {
-        [MessageOrder(0)]
-        public byte[] ChainId { get; set; } = new byte[0]; //64
 
         /// <summary>
-        /// API name: ref_block_num
-        /// = 0;
-        /// </summary>
-        /// <returns>API type: uint16_t</returns>
-        [MessageOrder(1)]
-        [JsonProperty("ref_block_num")]
-        public UInt16 RefBlockNum { get; set; }
-
-        /// <summary>
-        /// API name: ref_block_prefix
-        /// = 0;
-        /// </summary>
-        /// <returns>API type: uint32_t</returns>
-        [MessageOrder(2)]
-        [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
-
-        /// <summary>
-        /// API name: expiration
+        /// API name: context_free_actions
         /// 
         /// </summary>
-        /// <returns>API type: time_point_sec</returns>
-        [MessageOrder(3)]
-        [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
+        /// <returns>API type: action</returns>
+        [JsonProperty("context_free_actions")]
+        public Action[] ContextFreeActions { get; set; }
 
         /// <summary>
-        /// API name: operations
+        /// API name: actions
         /// 
         /// </summary>
-        /// <returns>API type: operation</returns>
-        [JsonProperty("operations")]
-        [MessageOrder(4)]
-        public BaseOperation[] BaseOperations { get; set; }
-
-        /// <summary>
-        /// API name: extensions
-        /// 
-        /// </summary>
-        /// <returns>API type: extensions_type</returns>
-        [JsonProperty("extensions")]
-        [MessageOrder(5)]
-        public object[] Extensions { get; set; } = new object[0];
+        /// <returns>API type: action</returns>
+        [JsonProperty("actions")]
+        public Action[] Actions { get; set; }
     }
 }

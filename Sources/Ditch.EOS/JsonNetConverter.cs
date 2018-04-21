@@ -42,7 +42,7 @@ namespace Ditch.EOS
             {
                 NamingStrategy = new SnakeCaseNamingStrategy()
             };
-            serializer.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK";
+            serializer.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
         }
     }
 }
