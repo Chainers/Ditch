@@ -70,9 +70,20 @@ namespace Ditch.EOS
             return await CustomPostRequest<GetCodeResults>(endpoint, codeParams, token);
         }
 
-        //Fetch smart contract data from an account.
-        //$ curl  http://127.0.0.1:8888/v1/chain/get_table_rows -X POST -d '{"scope":"inita", "code":"currency", "table":"account", "json": true}'
-        //$ curl http://127.0.0.1:8888/v1/chain/get_table_rows -X POST -d '{"scope":"inita", "code":"currency", "table":"account", "json": true, "lower_bound":0, "upper_bound":-1, "limit":10}'
+        /// <summary>
+        /// Fetch smart contract data from an account.
+        /// 
+        /// curl  http://127.0.0.1:8888/v1/chain/get_table_rows -X POST -d '{"scope":"inita", "code":"currency", "table":"account", "json": true}'
+        /// curl http://127.0.0.1:8888/v1/chain/get_table_rows -X POST -d '{"scope":"inita", "code":"currency", "table":"account", "json": true, "lower_bound":0, "upper_bound":-1, "limit":10}'
+        /// </summary>
+        /// <param name="tableRowsParams"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<GetTableRowsResult>> GetTableRows(GetTableRowsParams tableRowsParams, CancellationToken token)
+        {
+            var endpoint = "v1/chain/get_table_rows";
+            return await CustomPostRequest<GetTableRowsResult>(endpoint, tableRowsParams, token);
+        }
 
         /// <summary>
         /// Serialize json to binary hex. The resulting binary hex is usually used for the data field in push_transaction.
@@ -82,10 +93,10 @@ namespace Ditch.EOS
         /// <param name="abiJsonToBinParams"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<object>> AbiJsonToBin(AbiJsonToBinParams abiJsonToBinParams, CancellationToken token)
+        public async Task<OperationResult<AbiJsonToBinResult>> AbiJsonToBin(AbiJsonToBinParams abiJsonToBinParams, CancellationToken token)
         {
             var endpoint = "v1/chain/abi_json_to_bin";
-            return await CustomPostRequest<object>(endpoint, abiJsonToBinParams, token);
+            return await CustomPostRequest<AbiJsonToBinResult>(endpoint, abiJsonToBinParams, token);
         }
 
 

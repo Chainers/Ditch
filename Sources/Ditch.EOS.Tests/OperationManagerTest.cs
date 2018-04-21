@@ -73,7 +73,7 @@ namespace Ditch.EOS.Tests
         {
             var codeParams = new GetCodeParams
             {
-                AccountName = "eosio"
+                AccountName = "hackathon"
             };
             var resp = await Api.GetCode(codeParams, CancellationToken.None);
             Console.WriteLine(resp.Error);
@@ -87,18 +87,41 @@ namespace Ditch.EOS.Tests
         }
 
         [Test]
+        public async Task GetTableRowsTest()
+        {
+            var tableRowsParams = new GetTableRowsParams()
+            {
+                Scope = "inita",
+                Code = "currency",
+                Table = "account",
+                Json = true,
+                LowerBound = "0",
+                UpperBound = "-1",
+                Limit = 10,
+            };
+            var resp = await Api.GetTableRows(tableRowsParams, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsTrue(resp.IsSuccess);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+
+            var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_table_rows", tableRowsParams, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
+
+        [Test]
         public async Task AbiJsonToBinTest()
         {
             var abiJsonToBinParams = new AbiJsonToBinParams
             {
-                Code = "hackaton",
+                Code = "hackathon",
                 Action = "transfer",
                 Args = new Transfer
                 {
                     From = "test1",
                     To = "test1",
-                    Quantity = "1000 VIM",
-                    //Memo = "test transfer"
+                    Amount = "1000 VIM",
                 }
             };
 

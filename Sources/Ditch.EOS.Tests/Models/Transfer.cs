@@ -33,14 +33,6 @@ namespace Ditch.EOS.Tests.Models
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("amount")]
-        public Asset Quantity { get; set; }
-
-        /// <summary>
-        /// API name: memo
-        /// 
-        /// </summary>
-        /// <returns>API type: string</returns>
-        //[JsonProperty("memo")]
-        //public string Memo { get; set; }
+        public Asset Amount { get; set; }
     }
 }
