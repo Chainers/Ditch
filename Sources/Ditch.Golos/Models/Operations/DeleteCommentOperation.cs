@@ -1,4 +1,4 @@
-﻿using Ditch.Golos.Helpers;
+﻿using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Operations

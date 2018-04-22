@@ -9,6 +9,7 @@ using Ditch.Golos.Helpers;
 using Ditch.Golos.JsonRpc;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Operations;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

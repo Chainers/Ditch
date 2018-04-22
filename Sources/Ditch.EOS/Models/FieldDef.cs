@@ -1,10 +1,6 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic; 
-using Ditch.Golos.Objects;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Objects
+namespace Ditch.EOS.Models
 {
     /// <summary>
     /// field_def

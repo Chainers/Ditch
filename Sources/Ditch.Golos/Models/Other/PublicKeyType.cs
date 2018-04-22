@@ -1,9 +1,9 @@
-﻿using Ditch.Core.Converters;
+﻿using Ditch.Core.Attributes;
+using Ditch.Core.Converters;
 using Ditch.Core.Helpers;
-using Ditch.Golos.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     [JsonConverter(typeof(ToStringConverter))]
     public partial class PublicKeyType : IComplexString

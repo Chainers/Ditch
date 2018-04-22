@@ -1,8 +1,8 @@
 ﻿using System;
-using Ditch.Golos.Helpers;
+using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /// <summary>
     /// chain_properties
@@ -32,6 +32,5 @@ namespace Ditch.Golos.Models.Objects
         }
 
         public ChainProperties() { }
-
     }
 }

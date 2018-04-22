@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /**
      * @class discussion_query

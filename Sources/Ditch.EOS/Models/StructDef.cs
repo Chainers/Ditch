@@ -1,4 +1,3 @@
-using Ditch.Golos.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models

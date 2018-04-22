@@ -1,4 +1,4 @@
-﻿using Ditch.Steem.Helpers;
+﻿using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Operations

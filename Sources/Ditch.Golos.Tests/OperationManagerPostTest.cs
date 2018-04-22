@@ -11,8 +11,8 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Globalization;
 using Ditch.Golos.Models.Enums;
-using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Operations;
+using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos.Tests
 {

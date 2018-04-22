@@ -1,5 +1,4 @@
 ﻿using Ditch.Core.Attributes;
-using Ditch.Core.Helpers;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models

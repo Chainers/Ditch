@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models.ApiObj;
