@@ -3,7 +3,7 @@ using System.Linq;
 using Ditch.Core.Helpers;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /// <summary>
     /// signed_transaction

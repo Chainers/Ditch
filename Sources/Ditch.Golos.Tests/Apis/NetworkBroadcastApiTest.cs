@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Golos.Models.Enums;
-using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Operations;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

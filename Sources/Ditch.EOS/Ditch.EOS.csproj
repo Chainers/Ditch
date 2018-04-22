@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>.net standard client for EOS blockchain (https://eosio.github.io/eos/group__eosiorpc.html)</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj" />
+  </ItemGroup>
+
+</Project>

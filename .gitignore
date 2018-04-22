@@ -289,3 +289,4 @@ __pycache__/
 *.xsd.cs
 Sources/Ditch.Steem.Tests/app.config
 Sources/Ditch.Golos.Tests/app.config
+Sources/Ditch.EOS.Tests/app.config

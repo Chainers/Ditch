@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Ditch.Golos.Models.Objects;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

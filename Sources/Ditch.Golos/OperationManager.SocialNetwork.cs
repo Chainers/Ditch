@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Golos.Models.ApiObj;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Other;
 using Newtonsoft.Json.Linq;

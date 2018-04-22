@@ -1,7 +1,8 @@
 using System;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.ApiObj
 {
     /// <summary>
     /// savings_withdraw_api_obj

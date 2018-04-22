@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Golos.Models.ApiObj;
+using Ditch.Golos.Models.Objects;
+using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /// <summary>
     /// state
