@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Results
 {
     /// <summary>
     /// push_transaction_results

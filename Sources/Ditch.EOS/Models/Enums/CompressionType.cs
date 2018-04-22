@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Enums
 {
     /// <summary>
     /// compression_type

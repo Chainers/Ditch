@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Results
 {
     /// <summary>
     /// abi_json_to_bin_result

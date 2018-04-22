@@ -1,13 +1,13 @@
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Params
 {
     /// <summary>
-    /// abi_bin_to_json_params
+    /// abi_json_to_bin_params
     /// plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AbiBinToJsonParams
+    public partial class AbiJsonToBinParams
     {
 
         /// <summary>
@@ -27,11 +27,11 @@ namespace Ditch.EOS.Models
         public string Action { get; set; }
 
         /// <summary>
-        /// API name: binargs
+        /// API name: args
         /// 
         /// </summary>
-        /// <returns>API type: char</returns>
-        [JsonProperty("binargs")]
-        public string Binargs { get; set; }
+        /// <returns>API type: variant</returns>
+        [JsonProperty("args")]
+        public object Args { get; set; }
     }
 }

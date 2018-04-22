@@ -1,3 +1,4 @@
+using Ditch.EOS.Models.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models

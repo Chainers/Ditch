@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Results
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class GetInfoResult

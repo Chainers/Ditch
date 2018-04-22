@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Params
 {
     /// <summary>
     /// get_table_rows_params

@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.EOS.Models;
+using Ditch.EOS.Models.Params;
+using Ditch.EOS.Models.Results;
 
 namespace Ditch.EOS
 {

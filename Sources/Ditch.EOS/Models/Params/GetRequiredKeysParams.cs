@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Params
 {
     /// <summary>
     /// get_required_keys_params

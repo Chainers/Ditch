@@ -1,13 +1,13 @@
 using Newtonsoft.Json;
 
-namespace Ditch.EOS.Models
+namespace Ditch.EOS.Models.Params
 {
     /// <summary>
-    /// get_account_results
+    /// get_account_params
     /// plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetAccountResults
+    public partial class GetAccountParams
     {
 
         /// <summary>
@@ -17,13 +17,5 @@ namespace Ditch.EOS.Models
         /// <returns>API type: name</returns>
         [JsonProperty("account_name")]
         public string AccountName {get; set;}
-
-        /// <summary>
-        /// API name: permissions
-        /// 
-        /// </summary>
-        /// <returns>API type: permission</returns>
-        [JsonProperty("permissions")]
-        public Permission[] Permissions {get; set;}
     }
 }

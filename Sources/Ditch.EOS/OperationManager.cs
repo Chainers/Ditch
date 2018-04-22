@@ -13,7 +13,7 @@ namespace Ditch.EOS
 {
     public partial class OperationManager
     {
-        private readonly JsonNetConverter JsonNetConverter;
+        private readonly JsonNetConverter _jsonNetConverter;
 
         private readonly HttpClient _client;
         private List<string> _urls;
@@ -24,7 +24,7 @@ namespace Ditch.EOS
 
         public OperationManager(long maxResponseContentBufferSize = 256000)
         {
-            JsonNetConverter = new JsonNetConverter();
+            _jsonNetConverter = new JsonNetConverter();
             _client = new HttpClient
             {
                 MaxResponseContentBufferSize = maxResponseContentBufferSize
@@ -90,7 +90,7 @@ namespace Ditch.EOS
             HttpContent content = null;
             if (data != null)
             {
-                var param = JsonNetConverter.Serialize(data);
+                var param = _jsonNetConverter.Serialize(data);
                 Debug.WriteLine(param);
                 content = new StringContent(param, Encoding.UTF8, "application/json");
             }
@@ -126,7 +126,7 @@ namespace Ditch.EOS
                 if (mediaType.Equals("application/json"))
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    result.Result = JsonNetConverter.Deserialize<T>(content);
+                    result.Result = _jsonNetConverter.Deserialize<T>(content);
                 }
                 else
                 {
