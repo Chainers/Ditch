@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ditch.EOS - Ditch documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">Ditch documentation</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Libraries <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../Ditch.Steem/">Ditch.Steem</a>
+</li>
+                            
+<li >
+    <a href="../Ditch.Golos/">Ditch.Golos</a>
+</li>
+                            
+<li >
+    <a href="../Ditch.Core/">Ditch.Core</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Ditch.EOS</a>
+</li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="../../donate/">Donate</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../Ditch.Core/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../../donate/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#operationmanager">OperationManager</a></li>
+        <li class="main "><a href="#abidef">AbiDef</a></li>
+        <li class="main "><a href="#action">Action</a></li>
+        <li class="main "><a href="#actiondef">ActionDef</a></li>
+        <li class="main "><a href="#authority">Authority</a></li>
+        <li class="main "><a href="#blockheader">BlockHeader</a></li>
+        <li class="main "><a href="#clausepair">ClausePair</a></li>
+        <li class="main "><a href="#fielddef">FieldDef</a></li>
+        <li class="main "><a href="#keyweight">KeyWeight</a></li>
+        <li class="main "><a href="#packedtransaction">PackedTransaction</a></li>
+        <li class="main "><a href="#permission">Permission</a></li>
+        <li class="main "><a href="#permissionlevel">PermissionLevel</a></li>
+        <li class="main "><a href="#permissionlevelweight">PermissionLevelWeight</a></li>
+        <li class="main "><a href="#producerkey">ProducerKey</a></li>
+        <li class="main "><a href="#producerschedule">ProducerSchedule</a></li>
+        <li class="main "><a href="#publickey">PublicKey</a></li>
+        <li class="main "><a href="#regionsummary">RegionSummary</a></li>
+        <li class="main "><a href="#shardlock">ShardLock</a></li>
+        <li class="main "><a href="#shardsummary">ShardSummary</a></li>
+        <li class="main "><a href="#signedblock">SignedBlock</a></li>
+        <li class="main "><a href="#signedblockheader">SignedBlockHeader</a></li>
+        <li class="main "><a href="#signedblocksummary">SignedBlockSummary</a></li>
+        <li class="main "><a href="#signedtransaction">SignedTransaction</a></li>
+        <li class="main "><a href="#structdef">StructDef</a></li>
+        <li class="main "><a href="#tabledef">TableDef</a></li>
+        <li class="main "><a href="#transaction">Transaction</a></li>
+        <li class="main "><a href="#transactionheader">TransactionHeader</a></li>
+        <li class="main "><a href="#transactionreceipt">TransactionReceipt</a></li>
+        <li class="main "><a href="#typedef">TypeDef</a></li>
+        <li class="main "><a href="#abibintojsonresult">AbiBinToJsonResult</a></li>
+        <li class="main "><a href="#abijsontobinresult">AbiJsonToBinResult</a></li>
+        <li class="main "><a href="#getaccountresults">GetAccountResults</a></li>
+        <li class="main "><a href="#getblockresult">GetBlockResult</a></li>
+        <li class="main "><a href="#getcoderesults">GetCodeResults</a></li>
+        <li class="main "><a href="#getrequiredkeysresult">GetRequiredKeysResult</a></li>
+        <li class="main "><a href="#gettablerowsresult">GetTableRowsResult</a></li>
+        <li class="main "><a href="#pushtransactionresults">PushTransactionResults</a></li>
+        <li class="main "><a href="#abibintojsonparams">AbiBinToJsonParams</a></li>
+        <li class="main "><a href="#abijsontobinparams">AbiJsonToBinParams</a></li>
+        <li class="main "><a href="#getaccountparams">GetAccountParams</a></li>
+        <li class="main "><a href="#getcodeparams">GetCodeParams</a></li>
+        <li class="main "><a href="#getrequiredkeysparams">GetRequiredKeysParams</a></li>
+        <li class="main "><a href="#gettablerowsparams">GetTableRowsParams</a></li>
+        <li class="main "><a href="#compressiontype">CompressionType</a></li>
+        <li class="main "><a href="#statusenum">StatusEnum</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p><a id="Ditch.EOS.OperationManager"></a></p>
+<h2 id="operationmanager">OperationManager</h2>
+<p><em>class Ditch.EOS.OperationManager</em></p>
+<p>https://eosio.github.io/eos/group__eosiorpc.html</p>
+<p><strong>Methods</strong></p>
+<p><a id="Ditch.EOS.OperationManager.GetInfo(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;GetInfoResult&gt;&gt;</em> <strong>GetInfo</strong> <em>(CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.GetBlock(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;SignedBlock&gt;&gt;</em> <strong>GetBlock</strong> <em>(String blockNumOrId, CancellationToken token)</em><br />
+  Get information related to a block.</li>
+</ul>
+<p>curl http://127.0.0.1:8888/v1/chain/get_block -X POST -d '{"block_num_or_id":5}'
+ curl http://127.0.0.1:8888/v1/chain/get_block -X POST -d '{"block_num_or_id":0000000445a9f27898383fd7de32835d5d6a978cc14ce40d9f327b5329de796b}'  </p>
+<p><a id="Ditch.EOS.OperationManager.GetAccount(Ditch.EOS.Models.Params.GetAccountParams,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;GetAccountResults&gt;&gt;</em> <strong>GetAccount</strong> <em>(GetAccountParams accountParams, CancellationToken token)</em><br />
+  Get information related to an account.</li>
+</ul>
+<p>curl http://127.0.0.1:8888/v1/chain/get_account -X POST -d '{"account_name":"inita"}'  </p>
+<p><a id="Ditch.EOS.OperationManager.GetCode(Ditch.EOS.Models.Params.GetCodeParams,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;GetCodeResults&gt;&gt;</em> <strong>GetCode</strong> <em>(GetCodeParams codeParams, CancellationToken token)</em><br />
+  Fetch smart contract code.</li>
+</ul>
+<p>curl http://127.0.0.1:8888/v1/chain/get_code -X POST -d '{"account_name":"currency"}'  </p>
+<p><a id="Ditch.EOS.OperationManager.GetTableRows(Ditch.EOS.Models.Params.GetTableRowsParams,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;GetTableRowsResult&gt;&gt;</em> <strong>GetTableRows</strong> <em>(GetTableRowsParams tableRowsParams, CancellationToken token)</em><br />
+  Fetch smart contract data from an account.</li>
+</ul>
+<p>curl  http://127.0.0.1:8888/v1/chain/get_table_rows -X POST -d '{"scope":"inita", "code":"currency", "table":"account", "json": true}'
+curl http://127.0.0.1:8888/v1/chain/get_table_rows -X POST -d '{"scope":"inita", "code":"currency", "table":"account", "json": true, "lower_bound":0, "upper_bound":-1, "limit":10}'  </p>
+<p><a id="Ditch.EOS.OperationManager.AbiJsonToBin(Ditch.EOS.Models.Params.AbiJsonToBinParams,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;AbiJsonToBinResult&gt;&gt;</em> <strong>AbiJsonToBin</strong> <em>(AbiJsonToBinParams abiJsonToBinParams, CancellationToken token)</em><br />
+  Serialize json to binary hex. The resulting binary hex is usually used for the data field in push_transaction.</li>
+</ul>
+<p>curl http://127.0.0.1:8888/v1/chain/abi_json_to_bin -X POST -d '{"code":"currency", "action":"transfer", "args":{"from":"initb", "to":"initc", "quantity":1000}}'  </p>
+<p><a id="Ditch.EOS.OperationManager.AbiBinToJson(Ditch.EOS.Models.Params.AbiBinToJsonParams,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;AbiBinToJsonResult&gt;&gt;</em> <strong>AbiBinToJson</strong> <em>(AbiBinToJsonParams abiBinToJsonParams, CancellationToken token)</em><br />
+  Serialize back binary hex to json.</li>
+</ul>
+<p>curl http://127.0.0.1:8888/v1/chain/abi_bin_to_json -X POST -d '{"code":"currency", "action":"transfer", "binargs":"000000008093dd74000000000094dd74e803000000000000"}'  </p>
+<p><a id="Ditch.EOS.OperationManager.PushTransaction(System.Object,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;PushTransactionResults&gt;&gt;</em> <strong>PushTransaction</strong> <em>(Object pushTransactionParams, CancellationToken token)</em><br />
+  This method expects a transaction in JSON format and will attempt to apply it to the blockchain</li>
+</ul>
+<p>curl http://localhost:8888/v1/chain/push_transaction -X POST -d '{"ref_block_num":"100","ref_block_prefix":"137469861","expiration":"2017-09-25T06:28:49","scope":["initb","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["initb","initc"],"authorization":[{"account":"initb","permission":"active"}],"data":"000000000041934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}'  </p>
+<p><a id="Ditch.EOS.OperationManager.PushTransactions(System.Object[],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;PushTransactionResults[]&gt;&gt;</em> <strong>PushTransactions</strong> <em>(Object[] pushTransactionParams, CancellationToken token)</em><br />
+  This method push multiple transactions at once.</li>
+</ul>
+<p>curl http://localhost:8888/v1/chain/push_transaction -X POST -d '[{"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["initb","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["initb","initc"],"authorization":[{"account":"initb","permission":"active"}],"data":"000000000041934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}, {"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["inita","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["inita","initc"],"authorization":[{"account":"inita","permission":"active"}],"data":"000000008040934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}]'  </p>
+<p><a id="Ditch.EOS.OperationManager.GetRequiredKeys(Ditch.EOS.Models.Params.GetRequiredKeysParams,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;GetRequiredKeysResult&gt;&gt;</em> <strong>GetRequiredKeys</strong> <em>(GetRequiredKeysParams getRequiredKeysParams, CancellationToken token)</em><br />
+  /v1/chain/get_required_keys   {"transaction":{"expiration":"2018-04-10T12:26:15","region":0,"ref_block_num":44,"ref_block_prefix":104196284,"max_net_usage_words":0,"max_kcpu_usage":0,"delay_sec":0,"context_free_actions":[],"actions":[{"account":"currency","name":"transfer","authorization":[{"actor":"currency","permission":"active"}],"data":"0000001e4d75af46000000008090b1ca4015e73b000000000456494d00000000"}]},"available_keys":["EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV","EOS7drQWvc7Mn7NK2PivjbAqLXMyBpvSNnZWnZC3CS61g1dhVK57o","EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7"]}  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.TryConnectTo(System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>String</em> <strong>TryConnectTo</strong> <em>(List&lt;String&gt; urls, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.CustomGetRequest(System.String,System.Collections.Generic.Dictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;T&gt;&gt;</em> <strong>CustomGetRequest</strong> <em>(String endpoint, Dictionary&lt;String, Object&gt; parameters, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.CustomGetRequest(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;T&gt;&gt;</em> <strong>CustomGetRequest</strong> <em>(String endpoint, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.CustomPostRequest(System.String,System.Object,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;T&gt;&gt;</em> <strong>CustomPostRequest</strong> <em>(String endpoint, Object data, CancellationToken token)</em>  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.WalletCreate(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;String&gt;&gt;</em> <strong>WalletCreate</strong> <em>(String name, CancellationToken token)</em><br />
+  WalletCreate a new wallet with the given name  </li>
+</ul>
+<p><a id="Ditch.EOS.OperationManager.WalletOpen(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;VoidResponse&gt;&gt;</em> <strong>WalletOpen</strong> <em>(String name, CancellationToken token)</em><br />
+  Open an existing wallet of the given name</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/open -X POST -d '"default"'  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletLock(System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;VoidResponse&gt;&gt;</em> <strong>WalletLock</strong> <em>(String name, CancellationToken token)</em><br />
+  Lock a wallet of the given name</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/lock -X POST -d '"default"'  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletLockAll(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;VoidResponse&gt;&gt;</em> <strong>WalletLockAll</strong> <em>(CancellationToken token)</em><br />
+  Lock a wallets</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/lock_all  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletUnlock(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;VoidResponse&gt;&gt;</em> <strong>WalletUnlock</strong> <em>(String name, String password, CancellationToken token)</em><br />
+  Unlock a wallet with the given name and password</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/unlock -X POST -d '["default", "PW5KFWYKqvt63d4iNvedfDEPVZL227D3RQ1zpVFzuUwhMAJmRAYyX"]'  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletImportKey(System.String,System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;VoidResponse&gt;&gt;</em> <strong>WalletImportKey</strong> <em>(String name, String password, CancellationToken token)</em><br />
+  Import a private key to the wallet of the given name</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/import_key -X POST -d '["default","5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"]'  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletList(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;String[]&gt;&gt;</em> <strong>WalletList</strong> <em>(CancellationToken token)</em><br />
+  List all wallets</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/list_wallets  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletListKeys(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;String[][]&gt;&gt;</em> <strong>WalletListKeys</strong> <em>(CancellationToken token)</em><br />
+  List all key pairs across all wallets</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/list_keys  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletGetPublicKeys(System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;String[]&gt;&gt;</em> <strong>WalletGetPublicKeys</strong> <em>(CancellationToken token)</em><br />
+  List all public keys across all wallets</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/get_public_keys  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletSetTimeout(System.Int64,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;VoidResponse&gt;&gt;</em> <strong>WalletSetTimeout</strong> <em>(Int64 seconds, CancellationToken token)</em><br />
+  Set wallet auto lock timeout(in seconds)</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/set_timeout -X POST -d '10'  </p>
+<p><a id="Ditch.EOS.OperationManager.WalletSignTrx(Ditch.EOS.Models.SignedTransaction,System.String[],System.String,System.Threading.CancellationToken)"></a></p>
+<ul>
+<li><em>Task&lt;OperationResult&lt;SignedTransaction&gt;&gt;</em> <strong>WalletSignTrx</strong> <em>(SignedTransaction trx, String[] publicKeys, String chainId, CancellationToken token)</em><br />
+  Sign transaction given an array of transaction, require public keys, and chain id</li>
+</ul>
+<p>curl http://localhost:8889/v1/wallet/sign_transaction -X POST -d '[{"ref_block_num":21453,"ref_block_prefix":3165644999,"expiration":"2017-12-08T10:28:49","scope":["initb","initc"],"read_scope":[],"messages":[{"code":"currency","type":"transfer","authorization":[{"account":"initb","permission":"active"}],"data":"000000008093dd74000000000094dd74e803000000000000"}],"signatures":[]}, ["EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"], ""]'  </p>
+<hr />
+<p><a id="Ditch.EOS.Models.AbiDef"></a></p>
+<h2 id="abidef">AbiDef</h2>
+<p><em>class Ditch.EOS.Models.AbiDef</em></p>
+<p>abi_def
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.AbiDef.Types"></a></p>
+<ul>
+<li><em>TypeDef[]</em> <strong>Types</strong><br />
+  API name: types  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.AbiDef.Structs"></a></p>
+<ul>
+<li><em>StructDef[]</em> <strong>Structs</strong><br />
+  API name: structs  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.AbiDef.Actions"></a></p>
+<ul>
+<li><em>ActionDef[]</em> <strong>Actions</strong><br />
+  API name: actions  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.AbiDef.Tables"></a></p>
+<ul>
+<li><em>TableDef[]</em> <strong>Tables</strong><br />
+  API name: tables  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.AbiDef.RicardianClauses"></a></p>
+<ul>
+<li><em>ClausePair[]</em> <strong>RicardianClauses</strong><br />
+  API name: ricardian_clauses  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Action"></a></p>
+<h2 id="action">Action</h2>
+<p><em>class Ditch.EOS.Models.Action</em></p>
+<p>action
+contracts\eosiolib\action.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Action.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong><br />
+  API name: account  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Action.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong><br />
+  API name: name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Action.Authorization"></a></p>
+<ul>
+<li><em>PermissionLevel[]</em> <strong>Authorization</strong><br />
+  API name: authorization  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Action.Data"></a></p>
+<ul>
+<li><em>String</em> <strong>Data</strong><br />
+  API name: data  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.ActionDef"></a></p>
+<h2 id="actiondef">ActionDef</h2>
+<p><em>class Ditch.EOS.Models.ActionDef</em></p>
+<p>action_def
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.ActionDef.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong><br />
+  API name: name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ActionDef.Type"></a></p>
+<ul>
+<li><em>String</em> <strong>Type</strong><br />
+  API name: type  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ActionDef.RicardianContract"></a></p>
+<ul>
+<li><em>String</em> <strong>RicardianContract</strong><br />
+  API name: ricardian_contract  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Authority"></a></p>
+<h2 id="authority">Authority</h2>
+<p><em>class Ditch.EOS.Models.Authority</em></p>
+<p>authority
+contracts\eosio.system\native.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Authority.Threshold"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Threshold</strong><br />
+  API name: threshold  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Authority.Keys"></a></p>
+<ul>
+<li><em>KeyWeight[]</em> <strong>Keys</strong><br />
+  API name: keys  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Authority.Accounts"></a></p>
+<ul>
+<li><em>PermissionLevelWeight[]</em> <strong>Accounts</strong><br />
+  API name: accounts  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.BlockHeader"></a></p>
+<h2 id="blockheader">BlockHeader</h2>
+<p><em>class Ditch.EOS.Models.BlockHeader</em></p>
+<p>block_header
+contracts\eosio.system\eosio.system.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.BlockHeader.BlockNum"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>BlockNum</strong><br />
+  API name: block_num  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.Previous"></a></p>
+<ul>
+<li><em>String</em> <strong>Previous</strong><br />
+  API name: previous  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.Timestamp"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Timestamp</strong><br />
+  API name: timestamp  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.TransactionMroot"></a></p>
+<ul>
+<li><em>String</em> <strong>TransactionMroot</strong><br />
+  API name: transaction_mroot  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.ActionMroot"></a></p>
+<ul>
+<li><em>String</em> <strong>ActionMroot</strong><br />
+  API name: action_mroot  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.BlockMroot"></a></p>
+<ul>
+<li><em>String</em> <strong>BlockMroot</strong><br />
+  API name: block_mroot  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.Producer"></a></p>
+<ul>
+<li><em>String</em> <strong>Producer</strong><br />
+  API name: producer  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.ScheduleVersion"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>ScheduleVersion</strong><br />
+  API name: schedule_version  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.BlockHeader.NewProducers"></a></p>
+<ul>
+<li><em>ProducerSchedule</em> <strong>NewProducers</strong><br />
+  API name: new_producers  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.ClausePair"></a></p>
+<h2 id="clausepair">ClausePair</h2>
+<p><em>class Ditch.EOS.Models.ClausePair</em></p>
+<p>clause_pair
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.ClausePair.Id"></a></p>
+<ul>
+<li><em>String</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ClausePair.Body"></a></p>
+<ul>
+<li><em>String</em> <strong>Body</strong><br />
+  API name: body  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.FieldDef"></a></p>
+<h2 id="fielddef">FieldDef</h2>
+<p><em>class Ditch.EOS.Models.FieldDef</em></p>
+<p>field_def
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.FieldDef.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong><br />
+  API name: name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.FieldDef.Type"></a></p>
+<ul>
+<li><em>String</em> <strong>Type</strong><br />
+  API name: type  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.KeyWeight"></a></p>
+<h2 id="keyweight">KeyWeight</h2>
+<p><em>class Ditch.EOS.Models.KeyWeight</em></p>
+<p>key_weight
+contracts\eosio.system\native.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.KeyWeight.Key"></a></p>
+<ul>
+<li><em>PublicKey</em> <strong>Key</strong><br />
+  API name: key  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.KeyWeight.Weight"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Weight</strong><br />
+  API name: weight  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.PackedTransaction"></a></p>
+<h2 id="packedtransaction">PackedTransaction</h2>
+<p><em>class Ditch.EOS.Models.PackedTransaction</em></p>
+<p>packed_transaction
+libraries\chain\include\eosio\chain\transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.PackedTransaction.Signatures"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Signatures</strong><br />
+  API name: signatures  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.PackedTransaction.Compression"></a></p>
+<ul>
+<li><em>CompressionType</em> <strong>Compression</strong><br />
+  API name: compression  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.PackedTransaction.PackedContextFreeData"></a></p>
+<ul>
+<li><em>Char</em> <strong>PackedContextFreeData</strong><br />
+  API name: packed_context_free_data  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.PackedTransaction.PackedTrx"></a></p>
+<ul>
+<li><em>Char</em> <strong>PackedTrx</strong><br />
+  API name: packed_trx  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Permission"></a></p>
+<h2 id="permission">Permission</h2>
+<p><em>class Ditch.EOS.Models.Permission</em></p>
+<p>permission
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Permission.PermName"></a></p>
+<ul>
+<li><em>String</em> <strong>PermName</strong><br />
+  API name: perm_name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Permission.Parent"></a></p>
+<ul>
+<li><em>String</em> <strong>Parent</strong><br />
+  API name: parent  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Permission.RequiredAuth"></a></p>
+<ul>
+<li><em>Authority</em> <strong>RequiredAuth</strong><br />
+  API name: required_auth  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.PermissionLevel"></a></p>
+<h2 id="permissionlevel">PermissionLevel</h2>
+<p><em>class Ditch.EOS.Models.PermissionLevel</em></p>
+<p>permission_level
+contracts\eosiolib\action.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.PermissionLevel.Actor"></a></p>
+<ul>
+<li><em>String</em> <strong>Actor</strong><br />
+  API name: actor  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.PermissionLevel.Permission"></a></p>
+<ul>
+<li><em>String</em> <strong>Permission</strong><br />
+  API name: permission  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.PermissionLevelWeight"></a></p>
+<h2 id="permissionlevelweight">PermissionLevelWeight</h2>
+<p><em>class Ditch.EOS.Models.PermissionLevelWeight</em></p>
+<p>permission_level_weight
+contracts\eosio.system\native.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.PermissionLevelWeight.Permission"></a></p>
+<ul>
+<li><em>PermissionLevel</em> <strong>Permission</strong><br />
+  API name: permission  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.PermissionLevelWeight.Weight"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Weight</strong><br />
+  API name: weight  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.ProducerKey"></a></p>
+<h2 id="producerkey">ProducerKey</h2>
+<p><em>class Ditch.EOS.Models.ProducerKey</em></p>
+<p>producer_key
+contracts\eosiolib\privileged.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.ProducerKey.ProducerName"></a></p>
+<ul>
+<li><em>String</em> <strong>ProducerName</strong><br />
+  API name: producer_name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ProducerKey.BlockSigningKey"></a></p>
+<ul>
+<li><em>PublicKey</em> <strong>BlockSigningKey</strong><br />
+  API name: block_signing_key  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.ProducerSchedule"></a></p>
+<h2 id="producerschedule">ProducerSchedule</h2>
+<p><em>class Ditch.EOS.Models.ProducerSchedule</em></p>
+<p>producer_schedule
+contracts\eosiolib\privileged.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.ProducerSchedule.Version"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Version</strong><br />
+  API name: version
+= 0; ///&lt; sequentially incrementing version number  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ProducerSchedule.Producers"></a></p>
+<ul>
+<li><em>ProducerKey[]</em> <strong>Producers</strong><br />
+  API name: producers  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.PublicKey"></a></p>
+<h2 id="publickey">PublicKey</h2>
+<p><em>class Ditch.EOS.Models.PublicKey</em></p>
+<p>public_key
+contracts\eosiolib\public_key.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.PublicKey.Type"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Type</strong><br />
+  API name: type  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.PublicKey.Data"></a></p>
+<ul>
+<li><em>Char[]</em> <strong>Data</strong><br />
+  API name: data  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.RegionSummary"></a></p>
+<h2 id="regionsummary">RegionSummary</h2>
+<p><em>class Ditch.EOS.Models.RegionSummary</em></p>
+<p>region_summary
+libraries\chain\include\eosio\chain\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.RegionSummary.Region"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Region</strong><br />
+  API name: region
+= 0;  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.RegionSummary.CyclesSummary"></a></p>
+<ul>
+<li><em>ShardSummary[][]</em> <strong>CyclesSummary</strong><br />
+  API name: cycles_summary  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.ShardLock"></a></p>
+<h2 id="shardlock">ShardLock</h2>
+<p><em>class Ditch.EOS.Models.ShardLock</em></p>
+<p>shard_lock
+libraries\chain\include\eosio\chain\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.ShardLock.Account"></a></p>
+<ul>
+<li><em>String</em> <strong>Account</strong><br />
+  API name: account  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ShardLock.Scope"></a></p>
+<ul>
+<li><em>String</em> <strong>Scope</strong><br />
+  API name: scope  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.ShardSummary"></a></p>
+<h2 id="shardsummary">ShardSummary</h2>
+<p><em>class Ditch.EOS.Models.ShardSummary</em></p>
+<p>shard_summary
+libraries\chain\include\eosio\chain\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.ShardSummary.ReadLocks"></a></p>
+<ul>
+<li><em>ShardLock[]</em> <strong>ReadLocks</strong><br />
+  API name: read_locks  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ShardSummary.WriteLocks"></a></p>
+<ul>
+<li><em>ShardLock[]</em> <strong>WriteLocks</strong><br />
+  API name: write_locks  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.ShardSummary.Transactions"></a></p>
+<ul>
+<li><em>TransactionReceipt[]</em> <strong>Transactions</strong><br />
+  API name: transactions
+new or generated transactions  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.SignedBlock"></a></p>
+<h2 id="signedblock">SignedBlock</h2>
+<p><em>class Ditch.EOS.Models.SignedBlock: Ditch.EOS.Models.SignedBlockSummary</em></p>
+<p>signed_block
+libraries\chain\include\eosio\chain\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.SignedBlock.InputTransactions"></a></p>
+<ul>
+<li><em>PackedTransaction[]</em> <strong>InputTransactions</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.SignedBlockHeader"></a></p>
+<h2 id="signedblockheader">SignedBlockHeader</h2>
+<p><em>class Ditch.EOS.Models.SignedBlockHeader: Ditch.EOS.Models.BlockHeader</em></p>
+<p>signed_block_header
+libraries\chain\include\eosio\chain\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.SignedBlockHeader.Id"></a></p>
+<ul>
+<li><em>String</em> <strong>Id</strong><br />
+  API name: block_id_type  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.SignedBlockHeader.RefBlockPrefix"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RefBlockPrefix</strong><br />
+  API name: block_id_type  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.SignedBlockHeader.ProducerSignature"></a></p>
+<ul>
+<li><em>String</em> <strong>ProducerSignature</strong><br />
+  API name: producer_signature  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.SignedBlockSummary"></a></p>
+<h2 id="signedblocksummary">SignedBlockSummary</h2>
+<p><em>class Ditch.EOS.Models.SignedBlockSummary: Ditch.EOS.Models.SignedBlockHeader</em></p>
+<p>signed_block_summary
+libraries\chain\include\eosio\chain\block.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.SignedBlockSummary.Regions"></a></p>
+<ul>
+<li><em>RegionSummary[]</em> <strong>Regions</strong><br />
+  API name: regions  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.SignedTransaction"></a></p>
+<h2 id="signedtransaction">SignedTransaction</h2>
+<p><em>class Ditch.EOS.Models.SignedTransaction: Ditch.EOS.Models.Transaction</em></p>
+<p>signed_transaction
+transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.SignedTransaction.Signatures"></a></p>
+<ul>
+<li><em>String[]</em> <strong>Signatures</strong><br />
+  API name: signatures  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.SignedTransaction.ContextFreeData"></a></p>
+<ul>
+<li><em>Byte[]</em> <strong>ContextFreeData</strong><br />
+  API name: context_free_data
+for each context-free action, there is an entry here  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.StructDef"></a></p>
+<h2 id="structdef">StructDef</h2>
+<p><em>class Ditch.EOS.Models.StructDef</em></p>
+<p>struct_def
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.StructDef.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong><br />
+  API name: name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.StructDef.Base"></a></p>
+<ul>
+<li><em>String</em> <strong>Base</strong><br />
+  API name: base  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.StructDef.Fields"></a></p>
+<ul>
+<li><em>FieldDef[]</em> <strong>Fields</strong><br />
+  API name: fields  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.TableDef"></a></p>
+<h2 id="tabledef">TableDef</h2>
+<p><em>class Ditch.EOS.Models.TableDef</em></p>
+<p>table_def
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.TableDef.Name"></a></p>
+<ul>
+<li><em>String</em> <strong>Name</strong><br />
+  API name: name
+the name of the table  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TableDef.IndexType"></a></p>
+<ul>
+<li><em>String</em> <strong>IndexType</strong><br />
+  API name: index_type
+the kind of index, i64, i128i128, etc  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TableDef.KeyNames"></a></p>
+<ul>
+<li><em>String[]</em> <strong>KeyNames</strong><br />
+  API name: key_names
+names for the keys defined by key_types  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TableDef.KeyTypes"></a></p>
+<ul>
+<li><em>String[]</em> <strong>KeyTypes</strong><br />
+  API name: key_types
+the type of key parameters  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TableDef.Type"></a></p>
+<ul>
+<li><em>String</em> <strong>Type</strong><br />
+  API name: type
+type of binary data stored in this table  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Transaction"></a></p>
+<h2 id="transaction">Transaction</h2>
+<p><em>class Ditch.EOS.Models.Transaction: Ditch.EOS.Models.TransactionHeader</em></p>
+<p>transaction
+libraries\chain\include\eosio\chain\transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Transaction.ContextFreeActions"></a></p>
+<ul>
+<li><em>Action[]</em> <strong>ContextFreeActions</strong><br />
+  API name: context_free_actions  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Transaction.Actions"></a></p>
+<ul>
+<li><em>Action[]</em> <strong>Actions</strong><br />
+  API name: actions  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.TransactionHeader"></a></p>
+<h2 id="transactionheader">TransactionHeader</h2>
+<p><em>class Ditch.EOS.Models.TransactionHeader</em></p>
+<p>transaction_header
+libraries\chain\include\eosio\chain\transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.TransactionHeader.Expiration"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Expiration</strong><br />
+  API name: expiration
+the time at which a transaction expires  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionHeader.Region"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>Region</strong><br />
+  API name: region
+= 0U; ///&lt; the computational memory region this transaction applies to.  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionHeader.RefBlockNum"></a></p>
+<ul>
+<li><em>UInt16</em> <strong>RefBlockNum</strong><br />
+  API name: ref_block_num
+= 0U; ///&lt; specifies a block num in the last 2^16 blocks.  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionHeader.RefBlockPrefix"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RefBlockPrefix</strong><br />
+  API name: ref_block_prefix
+= 0UL; ///&lt; specifies the lower 32 bits of the blockid at get_ref_blocknum  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionHeader.MaxNetUsageWords"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MaxNetUsageWords</strong><br />
+  API name: max_net_usage_words
+= 0UL; /// upper limit on total network bandwidth (in 8 byte words) billed for this transaction  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionHeader.MaxKcpuUsage"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>MaxKcpuUsage</strong><br />
+  API name: max_kcpu_usage
+= 0UL; /// upper limit on the total number of kilo CPU usage units billed for this transaction  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionHeader.DelaySec"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>DelaySec</strong><br />
+  API name: delay_sec
+= 0UL; /// number of seconds to delay this transaction for during which it may be canceled.  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.TransactionReceipt"></a></p>
+<h2 id="transactionreceipt">TransactionReceipt</h2>
+<p><em>class Ditch.EOS.Models.TransactionReceipt</em></p>
+<p>transaction_receipt
+libraries\chain\include\eosio\chain\transaction.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.TransactionReceipt.Status"></a></p>
+<ul>
+<li><em>StatusEnum</em> <strong>Status</strong><br />
+  API name: status  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionReceipt.KcpuUsage"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>KcpuUsage</strong><br />
+  API name: kcpu_usage  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionReceipt.NetUsageWords"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>NetUsageWords</strong><br />
+  API name: net_usage_words  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TransactionReceipt.Id"></a></p>
+<ul>
+<li><em>String</em> <strong>Id</strong><br />
+  API name: id  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.TypeDef"></a></p>
+<h2 id="typedef">TypeDef</h2>
+<p><em>class Ditch.EOS.Models.TypeDef</em></p>
+<p>type_def
+libraries\chain\include\eosio\chain\contracts\types.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.TypeDef.NewTypeName"></a></p>
+<ul>
+<li><em>String</em> <strong>NewTypeName</strong><br />
+  API name: new_type_name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.TypeDef.Type"></a></p>
+<ul>
+<li><em>String</em> <strong>Type</strong><br />
+  API name: type  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.AbiBinToJsonResult"></a></p>
+<h2 id="abibintojsonresult">AbiBinToJsonResult</h2>
+<p><em>class Ditch.EOS.Models.Results.AbiBinToJsonResult</em></p>
+<p>abi_bin_to_json_result
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.AbiBinToJsonResult.Args"></a></p>
+<ul>
+<li><em>Object</em> <strong>Args</strong><br />
+  API name: args  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.AbiBinToJsonResult.RequiredScope"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RequiredScope</strong><br />
+  API name: required_scope  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.AbiBinToJsonResult.RequiredAuth"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RequiredAuth</strong><br />
+  API name: required_auth  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.AbiJsonToBinResult"></a></p>
+<h2 id="abijsontobinresult">AbiJsonToBinResult</h2>
+<p><em>class Ditch.EOS.Models.Results.AbiJsonToBinResult</em></p>
+<p>abi_json_to_bin_result
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.AbiJsonToBinResult.Binargs"></a></p>
+<ul>
+<li><em>String</em> <strong>Binargs</strong><br />
+  API name: binargs  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.AbiJsonToBinResult.RequiredScope"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RequiredScope</strong><br />
+  API name: required_scope  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.AbiJsonToBinResult.RequiredAuth"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RequiredAuth</strong><br />
+  API name: required_auth  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.GetAccountResults"></a></p>
+<h2 id="getaccountresults">GetAccountResults</h2>
+<p><em>class Ditch.EOS.Models.Results.GetAccountResults</em></p>
+<p>get_account_results
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.GetAccountResults.AccountName"></a></p>
+<ul>
+<li><em>String</em> <strong>AccountName</strong><br />
+  API name: account_name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetAccountResults.Permissions"></a></p>
+<ul>
+<li><em>Permission[]</em> <strong>Permissions</strong><br />
+  API name: permissions  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult"></a></p>
+<h2 id="getblockresult">GetBlockResult</h2>
+<p><em>class Ditch.EOS.Models.Results.GetBlockResult</em></p>
+<p>https://eosio.github.io/eos/group__eosiorpc.html</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.Previous"></a></p>
+<ul>
+<li><em>String</em> <strong>Previous</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.Timestamp"></a></p>
+<ul>
+<li><em>DateTime</em> <strong>Timestamp</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.TransactionMerkleRoot"></a></p>
+<ul>
+<li><em>String</em> <strong>TransactionMerkleRoot</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.ActionMerkleRoot"></a></p>
+<ul>
+<li><em>String</em> <strong>ActionMerkleRoot</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.BlockMerkleRoot"></a></p>
+<ul>
+<li><em>String</em> <strong>BlockMerkleRoot</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.ScheduleVersion"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>ScheduleVersion</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.Producer"></a></p>
+<ul>
+<li><em>String</em> <strong>Producer</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.ProducerChanges"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>ProducerChanges</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.ProducerSignature"></a></p>
+<ul>
+<li><em>String</em> <strong>ProducerSignature</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.Cycles"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Cycles</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.Id"></a></p>
+<ul>
+<li><em>String</em> <strong>Id</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.BlockNum"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>BlockNum</strong>  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetBlockResult.RefBlockPrefix"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>RefBlockPrefix</strong>  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.GetCodeResults"></a></p>
+<h2 id="getcoderesults">GetCodeResults</h2>
+<p><em>class Ditch.EOS.Models.Results.GetCodeResults</em></p>
+<p>get_code_results
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.GetCodeResults.AccountName"></a></p>
+<ul>
+<li><em>String</em> <strong>AccountName</strong><br />
+  API name: account_name  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetCodeResults.Wast"></a></p>
+<ul>
+<li><em>String</em> <strong>Wast</strong><br />
+  API name: wast  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetCodeResults.CodeHash"></a></p>
+<ul>
+<li><em>Object</em> <strong>CodeHash</strong><br />
+  API name: code_hash  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetCodeResults.Abi"></a></p>
+<ul>
+<li><em>AbiDef</em> <strong>Abi</strong><br />
+  API name: abi  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.GetRequiredKeysResult"></a></p>
+<h2 id="getrequiredkeysresult">GetRequiredKeysResult</h2>
+<p><em>class Ditch.EOS.Models.Results.GetRequiredKeysResult</em></p>
+<p>get_required_keys_result
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.GetRequiredKeysResult.RequiredKeys"></a></p>
+<ul>
+<li><em>String[]</em> <strong>RequiredKeys</strong><br />
+  API name: required_keys  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.GetTableRowsResult"></a></p>
+<h2 id="gettablerowsresult">GetTableRowsResult</h2>
+<p><em>class Ditch.EOS.Models.Results.GetTableRowsResult</em></p>
+<p>get_table_rows_result
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.GetTableRowsResult.Rows"></a></p>
+<ul>
+<li><em>Object[]</em> <strong>Rows</strong><br />
+  API name: rows
+one row per item, either encoded as hex String or JSON object  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.GetTableRowsResult.More"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>More</strong><br />
+  API name: more
+= false; ///&lt; true if last element in data is not the end and sizeof data()&lt; limit  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Results.PushTransactionResults"></a></p>
+<h2 id="pushtransactionresults">PushTransactionResults</h2>
+<p><em>class Ditch.EOS.Models.Results.PushTransactionResults</em></p>
+<p>push_transaction_results
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Results.PushTransactionResults.TransactionId"></a></p>
+<ul>
+<li><em>String</em> <strong>TransactionId</strong><br />
+  API name: transaction_id  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Results.PushTransactionResults.Processed"></a></p>
+<ul>
+<li><em>Object</em> <strong>Processed</strong><br />
+  API name: processed  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Params.AbiBinToJsonParams"></a></p>
+<h2 id="abibintojsonparams">AbiBinToJsonParams</h2>
+<p><em>class Ditch.EOS.Models.Params.AbiBinToJsonParams</em></p>
+<p>abi_bin_to_json_params
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Params.AbiBinToJsonParams.Code"></a></p>
+<ul>
+<li><em>String</em> <strong>Code</strong><br />
+  API name: code  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.AbiBinToJsonParams.Action"></a></p>
+<ul>
+<li><em>String</em> <strong>Action</strong><br />
+  API name: action  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.AbiBinToJsonParams.Binargs"></a></p>
+<ul>
+<li><em>String</em> <strong>Binargs</strong><br />
+  API name: binargs  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Params.AbiJsonToBinParams"></a></p>
+<h2 id="abijsontobinparams">AbiJsonToBinParams</h2>
+<p><em>class Ditch.EOS.Models.Params.AbiJsonToBinParams</em></p>
+<p>abi_json_to_bin_params
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Params.AbiJsonToBinParams.Code"></a></p>
+<ul>
+<li><em>String</em> <strong>Code</strong><br />
+  API name: code  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.AbiJsonToBinParams.Action"></a></p>
+<ul>
+<li><em>String</em> <strong>Action</strong><br />
+  API name: action  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.AbiJsonToBinParams.Args"></a></p>
+<ul>
+<li><em>Object</em> <strong>Args</strong><br />
+  API name: args  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Params.GetAccountParams"></a></p>
+<h2 id="getaccountparams">GetAccountParams</h2>
+<p><em>class Ditch.EOS.Models.Params.GetAccountParams</em></p>
+<p>get_account_params
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Params.GetAccountParams.AccountName"></a></p>
+<ul>
+<li><em>String</em> <strong>AccountName</strong><br />
+  API name: account_name  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Params.GetCodeParams"></a></p>
+<h2 id="getcodeparams">GetCodeParams</h2>
+<p><em>class Ditch.EOS.Models.Params.GetCodeParams</em></p>
+<p>get_code_params
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Params.GetCodeParams.AccountName"></a></p>
+<ul>
+<li><em>String</em> <strong>AccountName</strong><br />
+  API name: account_name  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Params.GetRequiredKeysParams"></a></p>
+<h2 id="getrequiredkeysparams">GetRequiredKeysParams</h2>
+<p><em>class Ditch.EOS.Models.Params.GetRequiredKeysParams</em></p>
+<p>get_required_keys_params
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Params.GetRequiredKeysParams.Transaction"></a></p>
+<ul>
+<li><em>Object</em> <strong>Transaction</strong><br />
+  API name: transaction  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetRequiredKeysParams.AvailableKeys"></a></p>
+<ul>
+<li><em>String[]</em> <strong>AvailableKeys</strong><br />
+  API name: available_keys  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams"></a></p>
+<h2 id="gettablerowsparams">GetTableRowsParams</h2>
+<p><em>class Ditch.EOS.Models.Params.GetTableRowsParams</em></p>
+<p>get_table_rows_params
+plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp</p>
+<p><strong>Properties and Fields</strong></p>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.Json"></a></p>
+<ul>
+<li><em>Boolean</em> <strong>Json</strong><br />
+  API name: json
+= false;  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.Code"></a></p>
+<ul>
+<li><em>String</em> <strong>Code</strong><br />
+  API name: code  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.Scope"></a></p>
+<ul>
+<li><em>String</em> <strong>Scope</strong><br />
+  API name: scope  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.Table"></a></p>
+<ul>
+<li><em>String</em> <strong>Table</strong><br />
+  API name: table  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.TableKey"></a></p>
+<ul>
+<li><em>String</em> <strong>TableKey</strong><br />
+  API name: table_key  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.LowerBound"></a></p>
+<ul>
+<li><em>String</em> <strong>LowerBound</strong><br />
+  API name: lower_bound  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.UpperBound"></a></p>
+<ul>
+<li><em>String</em> <strong>UpperBound</strong><br />
+  API name: upper_bound  </li>
+</ul>
+<p><a id="Ditch.EOS.Models.Params.GetTableRowsParams.Limit"></a></p>
+<ul>
+<li><em>UInt32</em> <strong>Limit</strong><br />
+  API name: limit
+= 10;  </li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Enums.CompressionType"></a></p>
+<h2 id="compressiontype">CompressionType</h2>
+<p><em>enum Ditch.EOS.Models.Enums.CompressionType</em></p>
+<p>compression_type
+libraries\chain\include\eosio\chain\transaction.hpp</p>
+<p><strong>Enum Values</strong></p>
+<ul>
+<li><strong>None</strong></li>
+<li><strong>Zlib</strong></li>
+</ul>
+<hr />
+<p><a id="Ditch.EOS.Models.Enums.StatusEnum"></a></p>
+<h2 id="statusenum">StatusEnum</h2>
+<p><em>enum Ditch.EOS.Models.Enums.StatusEnum</em></p>
+<p>status_enum
+libraries\chain\include\eosio\chain\transaction.hpp</p>
+<p><strong>Enum Values</strong></p>
+<ul>
+<li><strong>Executed</strong></li>
+<li><strong>SoftFail</strong></li>
+<li><strong>HardFail</strong></li>
+<li><strong>Delayed</strong></li>
+</ul>
+<hr /></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/require.js"></script>
+        <script src="../../search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>

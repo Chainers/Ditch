@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2018-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,19 +13,26 @@
         
     <url>
      <loc>/Libraries/Ditch.Steem/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2018-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/Libraries/Ditch.Golos/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2018-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/Libraries/Ditch.Core/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2018-04-22</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+<url>
+     <loc>/Libraries/Ditch.EOS/</loc>
+     <lastmod>2018-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -34,7 +41,7 @@
     
     <url>
      <loc>/donate/</loc>
-     <lastmod>2017-12-13</lastmod>
+     <lastmod>2018-04-22</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
