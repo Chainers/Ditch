@@ -1,5 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Ditch.Core.JsonRpc;
+using Ditch.EOS.Models;
 
 namespace Ditch.EOS
 {
@@ -11,8 +14,8 @@ namespace Ditch.EOS
         /// <summary>
         /// WalletCreate a new wallet with the given name
         /// 
-        //  curl http://localhost:8889/v1/wallet/create -X POST -d '"default"'
         /// </summary>
+        /// <param name="name"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         public async Task<OperationResult<string>> WalletCreate(string name, CancellationToken token)
@@ -21,16 +24,143 @@ namespace Ditch.EOS
             return await CustomPostRequest<string>(endpoint, name, token);
         }
 
+        /// <summary>
+        /// Open an existing wallet of the given name
+        /// 
+        /// curl http://localhost:8889/v1/wallet/open -X POST -d '"default"'
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletOpen(string name, CancellationToken token)
+        {
+            var endpoint = "v1/wallet/open";
+            return await CustomPostRequest<VoidResponse>(endpoint, name, token);
+        }
 
-        //    wallet_open
-        //wallet_lock
-        //    wallet_lock_all
-        //wallet_import_key
-        //    wallet_list
-        //wallet_list_keys
-        //    wallet_get_public_keys
-        //wallet_set_timeout
-        //    wallet_sign_trx
+        /// <summary>
+        /// Lock a wallet of the given name
+        /// 
+        /// curl http://localhost:8889/v1/wallet/lock -X POST -d '"default"'
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletLock(string name, CancellationToken token)
+        {
+            var endpoint = "v1/wallet/lock";
+            return await CustomPostRequest<VoidResponse>(endpoint, name, token);
+        }
 
+        /// <summary>
+        /// Lock a wallets
+        /// 
+        /// curl http://localhost:8889/v1/wallet/lock_all
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletLockAll(CancellationToken token)
+        {
+            var endpoint = "v1/wallet/lock_all";
+            return await CustomGetRequest<VoidResponse>(endpoint, token);
+        }
+
+        /// <summary>
+        /// Unlock a wallet with the given name and password
+        /// 
+        /// curl http://localhost:8889/v1/wallet/unlock -X POST -d '["default", "PW5KFWYKqvt63d4iNvedfDEPVZL227D3RQ1zpVFzuUwhMAJmRAYyX"]'
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletUnlock(string name, string password, CancellationToken token)
+        {
+            var endpoint = "v1/wallet/unlock";
+            return await CustomPostRequest<VoidResponse>(endpoint, new[] { name, password }, token);
+        }
+
+        /// <summary>
+        /// Import a private key to the wallet of the given name
+        /// 
+        /// curl http://localhost:8889/v1/wallet/import_key -X POST -d '["default","5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"]'
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletImportKey(string name, string password, CancellationToken token)
+        {
+            var endpoint = "v1/wallet/import_key";
+            return await CustomPostRequest<VoidResponse>(endpoint, new[] { name, password }, token);
+        }
+
+        /// <summary>
+        /// List all wallets
+        /// 
+        /// curl http://localhost:8889/v1/wallet/list_wallets
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<string[]>> WalletList(CancellationToken token)
+        {
+            var endpoint = "v1/wallet/list_wallets";
+            return await CustomGetRequest<string[]>(endpoint, token);
+        }
+
+        /// <summary>
+        /// List all key pairs across all wallets
+        /// 
+        /// curl http://localhost:8889/v1/wallet/list_keys
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<string[][]>> WalletListKeys(CancellationToken token)
+        {
+            var endpoint = "v1/wallet/list_keys";
+            return await CustomGetRequest<string[][]>(endpoint, token);
+        }
+
+        /// <summary>
+        /// List all public keys across all wallets
+        /// 
+        /// curl http://localhost:8889/v1/wallet/get_public_keys
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<string[]>> WalletGetPublicKeys(CancellationToken token)
+        {
+            var endpoint = "v1/wallet/get_public_keys";
+            return await CustomGetRequest<string[]>(endpoint, token);
+        }
+
+        /// <summary>
+        /// Set wallet auto lock timeout(in seconds)
+        /// 
+        /// curl http://localhost:8889/v1/wallet/set_timeout -X POST -d '10'
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletSetTimeout(long seconds, CancellationToken token)
+        {
+            var endpoint = "v1/wallet/set_timeout";
+            return await CustomPostRequest<VoidResponse>(endpoint, seconds, token);
+        }
+
+        /// <summary>
+        /// Sign transaction given an array of transaction, require public keys, and chain id
+        /// 
+        /// curl http://localhost:8889/v1/wallet/sign_transaction -X POST -d '[{"ref_block_num":21453,"ref_block_prefix":3165644999,"expiration":"2017-12-08T10:28:49","scope":["initb","initc"],"read_scope":[],"messages":[{"code":"currency","type":"transfer","authorization":[{"account":"initb","permission":"active"}],"data":"000000008093dd74000000000094dd74e803000000000000"}],"signatures":[]}, ["EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"], ""]'
+        /// </summary>
+        /// <param name="publicKeys"></param>
+        /// <param name="trx"></param>
+        /// <param name="chainId"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> WalletSignTrx(SignedTransaction trx, string[] publicKeys, string chainId, CancellationToken token)
+        {
+            var endpoint = "v1/wallet/sign_transaction";
+            return await CustomPostRequest<VoidResponse>(endpoint, new object[] { trx, publicKeys, chainId }, token);
+        }
     }
 }
