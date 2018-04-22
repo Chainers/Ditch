@@ -91,9 +91,9 @@ namespace Ditch.EOS.Tests
         {
             var tableRowsParams = new GetTableRowsParams()
             {
-                Scope = "inita",
+                Scope = "hackathon",
                 Code = "hackathon",
-                Table = "account",
+                Table = "accounts",
                 Json = true,
                 LowerBound = "0",
                 UpperBound = "-1",
@@ -157,73 +157,76 @@ namespace Ditch.EOS.Tests
             Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
-        //[Test]
-        //public async Task PushTransactionTest()
-        //{
-        //    var infoResp = await Api.GetInfo(CancellationToken.None);
-        //    var info = infoResp.Result;
+        [Ignore("you need to put your own data")]
+        [Test]
+        public async Task PushTransactionTest()
+        {
+            var infoResp = await Api.GetInfo(CancellationToken.None);
+            var info = infoResp.Result;
 
-        //    var pushTransactionParams = new SignedTransaction()
-        //    {
-        //        RefBlockNum = (ushort)(info.HeadBlockNum & 0xffff),
-        //        RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(info.HeadBlockId), 4),
-        //        Expiration = info.HeadBlockTime.AddSeconds(30),
+            var pushTransactionParams = new SignedTransaction()
+            {
+                RefBlockNum = (ushort)(info.HeadBlockNum & 0xffff),
+                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(info.HeadBlockId), 4),
+                Expiration = info.HeadBlockTime.AddSeconds(30),
 
-        //        MaxNetUsageWords = 0,
-        //        MaxKcpuUsage = 0,
-        //        DelaySec = 0,
-        //        ContextFreeActions = new EOS.Models.Action[0],
-        //        Actions = new[]
-        //        {
-        //            new EOS.Models.Action()
-        //            {
-        //                Account = "hackathon",
-        //                Name = "transfer",
-        //                Authorization = new[]
-        //                {
-        //                    new PermissionLevel
-        //                    {
-        //                        Actor = "test1",
-        //                        Permission = "active"
-        //                    }
-        //                },
-        //                Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000",
-        //            }
-        //        }
-        //    };
+                MaxNetUsageWords = 0,
+                MaxKcpuUsage = 0,
+                DelaySec = 0,
+                ContextFreeActions = new EOS.Models.Action[0],
+                Actions = new[]
+                {
+                    new EOS.Models.Action()
+                    {
+                        Account = "hackathon",
+                        Name = "transfer",
+                        Authorization = new[]
+                        {
+                            new PermissionLevel
+                            {
+                                Actor = "test1",
+                                Permission = "active"
+                            }
+                        },
+                        Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000",
+                    }
+                }
+            };
 
-        //    var resp = await Api.PushTransaction(pushTransactionParams, CancellationToken.None);
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsTrue(resp.IsSuccess);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var resp = await Api.PushTransaction(pushTransactionParams, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsTrue(resp.IsSuccess);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //    var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transaction", pushTransactionParams, CancellationToken.None);
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    Console.WriteLine("----------------------------------------------------------------------------");
-        //    Console.WriteLine(JsonConvert.SerializeObject(obj));
-        //}
+            var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transaction", pushTransactionParams, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
-        //[Test]
-        //public async Task PushTransactionsTest()
-        //{
-        //    var abiBinToJsonParams = new AbiBinToJsonParams()
-        //    {
-        //        Code = "hackathon",
-        //        Action = "transfer",
-        //        Binargs = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
-        //    };
+        [Ignore("you need to put your own data")]
+        [Test]
+        public async Task PushTransactionsTest()
+        {
+            var abiBinToJsonParams = new AbiBinToJsonParams()
+            {
+                Code = "hackathon",
+                Action = "transfer",
+                Binargs = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
+            };
 
-        //    var resp = await Api.PushTransactions(null, CancellationToken.None);
-        //    Console.WriteLine(resp.Error);
-        //    Assert.IsTrue(resp.IsSuccess);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            var resp = await Api.PushTransactions(null, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsTrue(resp.IsSuccess);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-        //    var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transactions", abiBinToJsonParams, CancellationToken.None);
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    Console.WriteLine("----------------------------------------------------------------------------");
-        //    Console.WriteLine(JsonConvert.SerializeObject(obj));
-        //}
+            var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transactions", abiBinToJsonParams, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
+        }
 
+        [Ignore("you need to put your own data")]
         [Test]
         public async Task GetRequiredKeysTest()
         {

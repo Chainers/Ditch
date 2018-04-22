@@ -139,6 +139,7 @@ namespace Ditch.EOS
         /// 
         /// curl http://localhost:8889/v1/wallet/set_timeout -X POST -d '10'
         /// </summary>
+        /// <param name="seconds"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletSetTimeout(long seconds, CancellationToken token)
@@ -157,10 +158,10 @@ namespace Ditch.EOS
         /// <param name="chainId"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletSignTrx(SignedTransaction trx, string[] publicKeys, string chainId, CancellationToken token)
+        public async Task<OperationResult<SignedTransaction>> WalletSignTrx(SignedTransaction trx, string[] publicKeys, string chainId, CancellationToken token)
         {
             var endpoint = "v1/wallet/sign_transaction";
-            return await CustomPostRequest<VoidResponse>(endpoint, new object[] { trx, publicKeys, chainId }, token);
+            return await CustomPostRequest<SignedTransaction>(endpoint, new object[] { trx, publicKeys, chainId }, token);
         }
     }
 }
