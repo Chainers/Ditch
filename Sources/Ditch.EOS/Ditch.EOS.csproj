@@ -3,10 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>.net standard client for EOS blockchain (https://eosio.github.io/eos/group__eosiorpc.html)</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj" />
+    <PackageReference Include="Ditch.Core" Version="3.1.1" />
   </ItemGroup>
 
 </Project>
