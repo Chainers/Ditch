@@ -1,3 +1,6 @@
+[Documentation](https://chainers.github.io/Ditch/)|[Site](https://ditch.surge.sh)|[Telegram (ru)](https://t.me/steepshot_ru)|[Telegram (en)](https://t.me/steepshot_en)|[Follow us (ru)](https://golos.io/@steepshot)|[Follow us (en)](https://steemit.com/@steepshot)
+---|---|---|---|---|---
+
 # Ditch
 The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain. 
 
@@ -53,22 +56,3 @@ The essence of the library is to generate a transaction according to the require
     //Follow
     var followOp = new FollowOperation(YouLogin, "someUserName", FollowType.Blog, YouLogin);
     var responce = _operationManager.BroadcastOperations(YouPrivateKeys, CancellationToken.None, followOp);
-
-## Sources
-
-The library is written based on the article https://steemit.com/steem/@xeroc/steem-transaction-signing-in-a-nutshell as well as the existing code:
-* https://github.com/steemit/steem
-* https://github.com/xeroc/piston-lib
-* https://github.com/xeroc/python-graphenelib
-
-## References
-
-* [Cryptography.ECDSA.Secp256k1 (>= 1.0.1)](https://github.com/Chainers/Cryptography.ECDSA)
-* [NETStandard.Library (>= 1.6.1)](https://www.nuget.org/packages/NETStandard.Library)
-* [Newtonsoft.Json (>= 10.0.3)](https://www.nuget.org/packages/Newtonsoft.Json)
-* [WebSocket4Net (>= 0.15.0-beta9)](https://www.nuget.org/packages/WebSocket4Net)
-
-## Feedback
-
-* https://t.me/steepshot_en
-* https://t.me/steepshot_ru
