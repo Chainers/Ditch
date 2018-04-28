@@ -9,7 +9,6 @@ using NUnit.Framework;
 using System.Threading;
 using Ditch.Core;
 using System.Globalization;
-using Ditch.Steem.Helpers;
 
 namespace Ditch.Steem.Tests
 {
@@ -20,7 +19,6 @@ namespace Ditch.Steem.Tests
         private bool IgnoreRequestWithBadData = true;
         protected readonly UserInfo User;
         protected readonly OperationManager Api;
-        protected int Version;
         protected string SbdSymbol = "SBD";
 
         public BaseTest()
@@ -30,12 +28,9 @@ namespace Ditch.Steem.Tests
             var jss = GetJsonSerializerSettings();
             var manager = new HttpManager(jss, 1024 * 1024);
             Api = new OperationManager(manager, jss);
-            var connectedTo = Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo));
-
-            var response = Api.GetHardforkVersion(CancellationToken.None);
-            Assert.IsFalse(response.IsError);
-            Version = VersionHelper.ToInteger(response.Result);
+            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

@@ -239,8 +239,15 @@ namespace Ditch.Steem
             if (!resp.IsError)
             {
                 var conf = resp.Result;
-                JToken jToken;
-                conf.TryGetValue(_config.ChainFieldName, out jToken);
+                JToken jToken = null;
+
+                foreach (var name in _config.ChainFieldName)
+                {
+                    conf.TryGetValue(name, out jToken);
+                    if (jToken != null)
+                        break;
+                }
+
                 if (jToken == null)
                     return false;
 
