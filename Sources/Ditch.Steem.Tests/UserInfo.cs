@@ -6,7 +6,6 @@ namespace Ditch.Steem.Tests
     public class UserInfo
     {
         private List<byte[]> _postingKeys;
-        private List<byte[]> _activeKeys;
 
         public string Login { get; set; } = string.Empty;
 
@@ -16,7 +15,7 @@ namespace Ditch.Steem.Tests
 
         public List<byte[]> PostingKeys => _postingKeys ?? (_postingKeys = new List<byte[]> { Base58.TryGetBytes(PostingWif) });
 
-        public List<byte[]> ActiveKeys => _activeKeys ?? (_activeKeys = new List<byte[]> { Base58.TryGetBytes(ActiveWif) });
+        public List<byte[]> ActiveKeys => _postingKeys ?? (_postingKeys = new List<byte[]> { Base58.TryGetBytes(ActiveWif) });
 
         public bool IsNsfw { get; set; } = false;
 

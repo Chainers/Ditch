@@ -8,8 +8,11 @@ using Ditch.Core.JsonRpc;
 using Ditch.Steem.Helpers;
 using Ditch.Steem.JsonRpc;
 using Ditch.Steem.Models.ApiObj;
+using Ditch.Steem.Models.Args;
+using Ditch.Steem.Models.Objects;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
+using Ditch.Steem.Models.Return;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -63,6 +66,9 @@ namespace Ditch.Steem
 
                     if (TryLoadConfig(token))
                         return url;
+
+                    if (_connectionManager.IsConnected)
+                        _connectionManager.Disconnect();
                 }
                 catch
                 {
@@ -101,7 +107,11 @@ namespace Ditch.Steem
                 return prop;
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return BroadcastTransaction(transaction, token);
+            var args = new BroadcastTransactionArgs()
+            {
+                Trx = transaction
+            };
+            return BroadcastTransaction(args, token);
         }
 
         /// <summary>
@@ -121,7 +131,11 @@ namespace Ditch.Steem
                 return prop;
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return BroadcastTransactionSynchronous(transaction, token);
+            var args = new BroadcastTransactionSynchronousArgs()
+            {
+                Trx = transaction
+            };
+            return BroadcastTransactionSynchronous(args, token);
         }
 
         /// <summary>
@@ -133,39 +147,60 @@ namespace Ditch.Steem
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
-            return CustomGetRequest<bool>("verify_authority", token, new[] { transaction });
+            var args = new VerifyAuthorityArgs()
+            {
+                Trx = transaction
+            };
+            return VerifyAuthority(args, token);
         }
 
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string method, CancellationToken token, params object[] data)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string method, CancellationToken token, params object[] data)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, method, data);
+            var jsonRpc = new JsonRpcRequest(api, method);
+            return _connectionManager.Execute<T>(jsonRpc, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse CustomGetRequest(string api, string method, object data, CancellationToken token)
+        {
+            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute(jsonRpc, token);
         }
 
@@ -173,32 +208,15 @@ namespace Ditch.Steem
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <param name="api">Api name</param>
-        /// <param name="method">Api method</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CallRequest(string api, string method, object[] data, CancellationToken token)
+        public JsonRpcResponse CustomGetRequest(string api, string method, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
+            var jsonRpc = new JsonRpcRequest(api, method);
             return _connectionManager.Execute(jsonRpc, token);
         }
-
-        /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Api method</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CallRequest<T>(string api, string method, object[] data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, "call", new object[] { api, method, data });
-            return _connectionManager.Execute<T>(jsonRpc, token);
-        }
-
 
         /// <summary>
         /// 
@@ -209,7 +227,7 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyApiObj propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var transaction = new SignedTransaction
             {

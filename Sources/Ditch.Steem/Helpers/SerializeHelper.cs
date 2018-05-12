@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Ditch.Core.Attributes;
+using Newtonsoft.Json;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
-using Newtonsoft.Json;
+using Ditch.Core.Attributes;
 
 namespace Ditch.Steem.Helpers
 {
@@ -138,16 +138,37 @@ namespace Ditch.Steem.Helpers
                 stream.WriteByte((byte)val);
                 return;
             }
-            if (type == typeof(Asset))
+            if (type == typeof(AssetSymbolType))
             {
-                var typed = (Asset)val;
-                var buf = BitConverter.GetBytes(typed.Value);
-                stream.Write(buf, 0, buf.Length);
-                stream.WriteByte(typed.Precision);
-                buf = Encoding.UTF8.GetBytes(typed.Currency);
-                stream.Write(buf, 0, buf.Length);
-                for (var i = buf.Length; i < 7; i++)
-                    stream.WriteByte(0);
+                var typed = (AssetSymbolType)val;
+
+                switch (typed.AssetNum)
+                {
+                    case Config.SteemAssetNumSteem:
+                        {
+                            var buf = BitConverter.GetBytes(Config.SteemSymbolSer);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                    case Config.SteemAssetNumSbd:
+                        {
+                            var buf = BitConverter.GetBytes(Config.SbdSymbolSer);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                    case Config.SteemAssetNumVests:
+                        {
+                            var buf = BitConverter.GetBytes(Config.VestsSymbolSer);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                    default:
+                        {
+                            var buf = BitConverter.GetBytes(typed.AssetNum);
+                            stream.Write(buf, 0, buf.Length);
+                            break;
+                        }
+                }
                 return;
             }
             if (type == typeof(String))
@@ -164,8 +185,7 @@ namespace Ditch.Steem.Helpers
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            var container = val as KeyContainer;
-            if (container != null)
+            if (val is KeyContainer container)
             {
                 var typed = container;
                 foreach (var value in typed)

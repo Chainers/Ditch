@@ -70,14 +70,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseTest.cs" />
+    <Compile Include="Apis\WitnessApiTest.cs" />
+    <Compile Include="Apis\BlockApiTest.cs" />
     <Compile Include="Apis\DatabaseApiTest.cs" />
     <Compile Include="Apis\FollowApiTest.cs" />
-    <Compile Include="Apis\LoginApiTest.cs" />
     <Compile Include="Apis\MarketHistoryApiTest.cs" />
     <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
     <Compile Include="Apis\AccountByKeyApiTest.cs" />
-    <Compile Include="Apis\PrivateMessageApi.cs" />
+    <Compile Include="Apis\TagsApiTest.cs" />
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="InfoTest.cs" />
     <Compile Include="OperationManagerConnectionTest.cs" />
     <Compile Include="OperationManagerPostTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

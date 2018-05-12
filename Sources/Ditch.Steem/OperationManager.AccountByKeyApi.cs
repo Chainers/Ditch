@@ -1,27 +1,27 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Models.Other;
+using Ditch.Steem.Models.Args;
+using Ditch.Steem.Models.Return;
 
 namespace Ditch.Steem
 {
     /// <summary>
     /// account_by_key_api
-    /// libraries\plugins\account_by_key\include\steemit\account_by_key\account_by_key_api.hpp
+    /// libraries\plugins\apis\account_by_key_api\include\steem\plugins\account_by_key_api\account_by_key_api.hpp
     /// </summary>
     public partial class OperationManager
     {
-
         /// <summary>
         /// API name: get_key_references
         /// 
         /// </summary>
-        /// <param name="keys">API type: vector&lt;public_key_type></param>
+        /// <param name="args">API type: get_block_header_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[][]> GetKeyReferences(PublicKeyType[] keys, CancellationToken token)
+        public JsonRpcResponse<GetKeyReferencesReturn> GetKeyReferences(GetKeyReferencesArgs args, CancellationToken token)
         {
-            return CallRequest<string[][]>(KnownApiNames.AccountByKeyApi, "get_key_references", new object[] { keys }, token);
+            return CustomGetRequest<GetKeyReferencesReturn>(KnownApiNames.AccountByKeyApi, "get_key_references", args, token);
         }
     }
 }

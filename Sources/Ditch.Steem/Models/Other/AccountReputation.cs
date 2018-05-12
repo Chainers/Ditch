@@ -4,7 +4,7 @@ namespace Ditch.Steem.Models.Other
 {
     /// <summary>
     /// account_reputation
-    /// libraries\plugins\follow\include\steemit\follow\follow_api.hpp
+    /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class AccountReputation
@@ -13,7 +13,7 @@ namespace Ditch.Steem.Models.Other
         /// API name: account
         /// 
         /// </summary>
-        /// <returns>API type: string</returns>
+        /// <returns>API type: account_name_type</returns>
         [JsonProperty("account")]
         public string Account {get; set;}
 

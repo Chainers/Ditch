@@ -5,7 +5,7 @@ namespace Ditch.Steem.Models.Other
 {
     /// <summary>
     /// blog_entry
-    /// libraries\plugins\follow\include\steemit\follow\follow_api.hpp
+    /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class BlogEntry
@@ -14,7 +14,7 @@ namespace Ditch.Steem.Models.Other
         /// API name: author
         /// 
         /// </summary>
-        /// <returns>API type: string</returns>
+        /// <returns>API type: account_name_type</returns>
         [JsonProperty("author")]
         public string Author {get; set;}
 
@@ -30,7 +30,7 @@ namespace Ditch.Steem.Models.Other
         /// API name: blog
         /// 
         /// </summary>
-        /// <returns>API type: string</returns>
+        /// <returns>API type: account_name_type</returns>
         [JsonProperty("blog")]
         public string Blog {get; set;}
 

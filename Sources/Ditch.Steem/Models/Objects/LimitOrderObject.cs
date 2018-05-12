@@ -1,6 +1,6 @@
 using System;
-using Newtonsoft.Json;
 using Ditch.Steem.Models.Other;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Objects
 {

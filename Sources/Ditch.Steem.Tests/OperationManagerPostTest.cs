@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Ditch.Core.Errors;
 using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
+using Ditch.Steem.Models.Enums;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models;
+using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
 
@@ -94,11 +96,18 @@ namespace Ditch.Steem.Tests
 
         private bool IsFollow(string autor)
         {
-            var resp = Api.GetFollowing(User.Login, autor, FollowType.Blog, 1, CancellationToken.None);
+            var args = new GetFollowingArgs()
+            {
+                Account = User.Login,
+                Start = autor,
+                Limit = 1,
+                Type = FollowType.Blog
+            };
+            var resp = Api.GetFollowing(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            return resp.Result.Length > 0 && resp.Result[0].Following == autor;
+            return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
         }
 
         [Test]
@@ -139,7 +148,12 @@ namespace Ditch.Steem.Tests
 
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = Api.GetContent(author, permlink, CancellationToken.None);
+            var args = new GetDiscussionArgs()
+            {
+                Author = author,
+                Permlink = permlink
+            };
+            var resp = Api.GetDiscussion(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
@@ -152,7 +166,7 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            var popt = new BeneficiariesOperation(user.Login, op.Permlink, SbdSymbol, new Beneficiary("steepshot", 1000));
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
             var response = Post(user.PostingKeys, false, op, popt);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -180,13 +194,18 @@ namespace Ditch.Steem.Tests
 
             var op = new PostOperation("test", user.Login, new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(new[] { "test", "spam" }));
             var response = Post(user.PostingKeys, true, op);
+
             Assert.IsTrue(response.IsError);
             Console.WriteLine(response.GetErrorMessage());
+
             Assert.IsTrue(response.Error is ResponseError);
             var typedError = (ResponseError)response.Error;
+
             Assert.IsTrue(typedError.Data.Code == 10);
+
             var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
             Console.WriteLine(match.Value);
+
             Assert.IsTrue(match.Success);
             Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
         }
@@ -245,12 +264,16 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task AccountUpdateTest()
         {
-            var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            var args = new FindAccountsArgs()
+            {
+                Accounts = new[] { User.Login }
+            };
+            var resp = Api.FindAccounts(args, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var acc = resp.Result[0];
+            var acc = resp.Result.Accounts[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
             var response = Post(User.ActiveKeys, false, op);
@@ -258,11 +281,10 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        [Ignore("test work only for real broadcast transaction")]
         public async Task TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, "korzunav", new Asset("0.001 SBD"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch). Thanks for your work!");
-            var response = Post(User.ActiveKeys, true, op);
+            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
     }

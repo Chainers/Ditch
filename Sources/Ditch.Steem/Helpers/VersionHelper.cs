@@ -10,11 +10,10 @@ namespace Ditch.Steem.Helpers
 
             var mhr = version.Split('.');
 
-            int major, hardfork, release;
-            if (mhr.Length != 3 || !int.TryParse(mhr[0], out major) || !int.TryParse(mhr[1], out hardfork) || !int.TryParse(mhr[2], out release))
+            if (mhr.Length != 3 || !int.TryParse(mhr[0], out var major) || !int.TryParse(mhr[1], out var hardfork) || !int.TryParse(mhr[2], out var release))
                 return -1;
 
-            var ver = 0;
+            int ver;
             ver = (0 | major) << 8;
             ver = (ver | hardfork) << 16;
             ver = ver | release;

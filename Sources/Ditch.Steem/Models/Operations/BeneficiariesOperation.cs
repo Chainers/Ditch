@@ -23,7 +23,7 @@ namespace Ditch.Steem.Models.Operations
         [JsonProperty("beneficiaries")]
         [MessageOrder(10)]
         public Beneficiary[] BeneficiariesContainer { get; set; }
-        
+
         public BeneficiaryContainer(Beneficiary[] beneficiaries)
         {
             BeneficiariesContainer = beneficiaries;
@@ -52,9 +52,20 @@ namespace Ditch.Steem.Models.Operations
     public class BeneficiariesOperation : CommentOptionsOperation
     {
         public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
-            : base(author, permlink, new Asset(1000000000, 3, currency), 10000, true, true, SetBeneficiaries(beneficiaries))
+            : base(author, permlink, new Asset(1000000000, Config.SteemAssetNumSbd), 10000, true, true, SetBeneficiaries(beneficiaries))
         {
         }
+        
+        public BeneficiariesOperation(string author, string permlink, Asset maxAcceptedPayout, params Beneficiary[] beneficiaries)
+            : base(author, permlink, maxAcceptedPayout, 10000, true, true, SetBeneficiaries(beneficiaries))
+        {
+        }
+
+        public BeneficiariesOperation(string author, string permlink, Asset maxAcceptedPayout, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params Beneficiary[] beneficiaries)
+            : base(author, permlink, maxAcceptedPayout, percentSteemDollars, allowVotes, allowCurationRewards, SetBeneficiaries(beneficiaries))
+        {
+        }
+
 
         private static object[] SetBeneficiaries(Beneficiary[] beneficiaries)
         {

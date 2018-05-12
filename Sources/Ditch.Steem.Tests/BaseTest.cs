@@ -9,6 +9,9 @@ using NUnit.Framework;
 using System.Threading;
 using Ditch.Core;
 using System.Globalization;
+using Ditch.Steem.Models.Other;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Enums;
 
 namespace Ditch.Steem.Tests
 {
@@ -17,11 +20,11 @@ namespace Ditch.Steem.Tests
         protected const string AppVersion = "ditch / 2.2.12";
 
         private bool IgnoreRequestWithBadData = true;
-        protected readonly UserInfo User;
-        protected readonly OperationManager Api;
+        protected static UserInfo User;
+        protected static OperationManager Api;
         protected string SbdSymbol = "SBD";
 
-        public BaseTest()
+        static BaseTest()
         {
             User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
@@ -115,6 +118,18 @@ namespace Ditch.Steem.Tests
         {
             var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
             return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
+        }
+
+
+        protected SignedTransaction GetSignedTransaction()
+        {
+            var user = User;
+            var autor = "steepshot";
+
+            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            return transaction;
         }
     }
 }
