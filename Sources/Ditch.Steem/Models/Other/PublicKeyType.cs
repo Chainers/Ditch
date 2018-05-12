@@ -1,6 +1,6 @@
-﻿using Ditch.Core.Converters;
+﻿using Ditch.Core.Attributes;
+using Ditch.Core.Converters;
 using Ditch.Core.Helpers;
-using Ditch.Steem.Helpers;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other

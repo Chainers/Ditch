@@ -6,9 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
-using Ditch.Steem.Models;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
+using Ditch.Core.Attributes;
 
 namespace Ditch.Steem.Helpers
 {

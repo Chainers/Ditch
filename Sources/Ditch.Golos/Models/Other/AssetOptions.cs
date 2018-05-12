@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /**
      * @brief The asset_options struct contains options available on all assets in the network

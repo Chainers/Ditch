@@ -2,7 +2,7 @@ using System;
 using Ditch.Golos.Models.ApiObject;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /// <summary>
     /// comment_feed_entry

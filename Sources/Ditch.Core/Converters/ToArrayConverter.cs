@@ -15,13 +15,8 @@ namespace Ditch.Core.Converters
         {
             if (CanConvert(objectType))
             {
-                var buf = new object[3];
-                buf[0] = reader.ReadAsString();
-                buf[1] = (byte)reader.ReadAsInt32();
-                buf[2] = reader.ReadAsString();
-                reader.Read(); //end;
                 var entity = (IComplexArray)Activator.CreateInstance(objectType);
-                entity.InitFromArray(buf);
+                entity.ReadJson(reader, serializer);
                 return entity;
             }
 
@@ -32,16 +27,15 @@ namespace Ditch.Core.Converters
         {
             if (CanConvert(value.GetType()))
             {
-                var buf = ((IComplexArray)value).ToArray();
-                writer.WriteRawValue($"[\"{buf[0]}\",{buf[1]},\"{buf[2]}\"]");
+                ((IComplexArray)value).WriteJson(writer, serializer);
             }
         }
     }
 
     public interface IComplexArray
     {
-        void InitFromArray(object[] value);
+        void ReadJson(JsonReader reader, JsonSerializer serializer);
 
-        object[] ToArray();
+        void WriteJson(JsonWriter write, JsonSerializer serializer);
     }
 }

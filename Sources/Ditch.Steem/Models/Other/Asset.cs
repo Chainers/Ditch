@@ -1,7 +1,8 @@
 ﻿using System;
+using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
-using Ditch.Steem.Helpers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch.Steem.Models.Other
 {
@@ -36,15 +37,16 @@ namespace Ditch.Steem.Models.Other
 
         #region IComplexArray
 
-        public void InitFromArray(object[] value)
+        public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            Amount = long.Parse((string)value[0]);
-            Symbol = new AssetSymbolType((string)value[2], (byte)value[1]);
+            var arr = serializer.Deserialize<JArray>(reader);
+            Amount = arr[0].Value<long>();
+            Symbol = new AssetSymbolType(arr[2].Value<string>(), arr[1].Value<byte>());
         }
 
-        public object[] ToArray()
+        public void WriteJson(JsonWriter write, JsonSerializer serializer)
         {
-            return new object[] { Amount.ToString(), Symbol.Decimals(), Symbol.ToNaiString() };
+            write.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
         }
 
         #endregion

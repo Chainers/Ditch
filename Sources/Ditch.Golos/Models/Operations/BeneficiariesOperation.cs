@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ditch.Golos.Helpers;
-using Ditch.Golos.Models.Objects;
+using Ditch.Core.Attributes;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Operations

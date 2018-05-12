@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Golos.Models.ApiObj;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Other;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch.Golos
 {
@@ -383,6 +384,47 @@ namespace Ditch.Golos
         public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit }, token);
+        }
+
+        /// <summary>
+        /// API name: get_all_content_replies
+        /// 
+        /// </summary>
+        /// <param name="author">API type: std::string</param>
+        /// <param name="permlink">API type: std::string</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: discussion</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<Discussion[]> GetAllContentReplies(string author, string permlink, CancellationToken token)
+        {
+            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { author, permlink }, token);
+        }
+
+        /// <summary>
+        /// API name: get_discussions_by_children
+        /// Used to retrieve the list of discussions sorted by children posts amount
+        /// 
+        /// </summary>
+        /// <param name="query">API type: discussion_query</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: discussion  Vector of discussions sorted by children posts amount</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
+        {
+            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, token);
+        }
+
+
+        /// <summary>
+        /// API name: get_languages
+        /// 
+        /// </summary>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: discussion  Vector of discussions sorted by children posts amount</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<JObject> GetLanguages(CancellationToken token)
+        {
+            return CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_languages", token);
         }
     }
 }

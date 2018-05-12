@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ditch.Steem.Helpers;
+using Ditch.Core.Attributes;
 using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 

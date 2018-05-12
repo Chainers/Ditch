@@ -12,49 +12,43 @@ namespace Ditch.Steem.Tests
     public class OperationManagerConnectionTest : BaseTest
     {
 
+        /// <summary>
+        /// https://www.steem.center/index.php?title=Public_Websocket_Servers
+        /// </summary>
+        /// <param name="url"></param>
         [Test]
-        public void NodeTest()
+        [TestCase("https://api.steemit.com")]
+        [TestCase("https://steemd.steemit.com")]
+        [TestCase("https://steemd.steemitstage.com")]
+        [TestCase("https://steemd.steemitdev.com")]
+        [TestCase("https://steemd.privex.io")]
+        [TestCase("https://gtg.steem.house:8090")]
+        [TestCase("https://rpc.steemliberator.com")]
+        [TestCase("https://node.steem.ws")]
+        [TestCase("https://steemd.minnowsupportproject.org")]
+        [TestCase("https://rpc.buildteam.io")]
+        [TestCase("https://steemd.pevo.science")]
+        [TestCase("https://steemd.steemgigs.org")]
+        [TestCase("https://rpc.buildteam.io")]
+        [TestCase("https://steemd2.steepshot.org")]
+        [TestCase("https://steemd.steepshot.org")]
+        public void NodeTest(string url)
         {
-            //https://www.steem.center/index.php?title=Public_Websocket_Servers
-            var urls = new List<string> {
-                "https://api.steemit.com",
-                "https://steemd.steemit.com",
-                "https://steemd.steemitstage.com",
-                "https://steemd.steemitdev.com",
-                "https://steemd.privex.io",
-                "https://gtg.steem.house:8090",
-                "https://rpc.steemliberator.com",
-                "https://node.steem.ws",
-                "https://steemd.minnowsupportproject.org",
-                "https://rpc.buildteam.io",
-                "https://steemd.pevo.science",
-                "https://steemd.steemgigs.org",
-                "https://rpc.buildteam.io",
-                "https://steemd2.steepshot.org",
-            };
-
             var jss = GetJsonSerializerSettings();
             var connectionManager = new HttpManager(jss);
             var manager = new OperationManager(connectionManager, jss);
 
             var sw = new Stopwatch();
-            //test all urls
-            for (var i = 0; i < urls.Count; i++)
-            {
-                var buf = new List<string>() { urls[i] };
-                sw.Restart();
+            var urls = new List<string> { url };
+            sw.Restart();
+            var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
+            sw.Stop();
 
-                var url = manager.TryConnectTo(buf, CancellationToken.None);
+            Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
+            Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
 
-                sw.Stop();
-
-                Console.WriteLine($"{i} {(manager.IsConnected ? "conected" : "Not connected")} to {urls[i]} {sw.ElapsedMilliseconds}");
-
-                if (manager.IsConnected)
-                {
-                    Assert.IsNotNull(manager.ChainId, "ChainId null");
-                }
-            }
+            if (manager.IsConnected)
+                Assert.IsNotNull(manager.ChainId, "ChainId null");
         }
 
         [Test]

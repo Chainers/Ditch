@@ -9,9 +9,9 @@ using NUnit.Framework;
 using System.Threading;
 using Ditch.Core;
 using System.Globalization;
-using Ditch.Steem.Models.Enums;
-using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Enums;
 
 namespace Ditch.Steem.Tests
 {
@@ -20,8 +20,9 @@ namespace Ditch.Steem.Tests
         protected const string AppVersion = "ditch / 2.2.12";
 
         private bool IgnoreRequestWithBadData = true;
-        protected static readonly UserInfo User;
-        protected static readonly OperationManager Api;
+        protected static UserInfo User;
+        protected static OperationManager Api;
+        protected string SbdSymbol = "SBD";
 
         static BaseTest()
         {
@@ -30,7 +31,9 @@ namespace Ditch.Steem.Tests
             var jss = GetJsonSerializerSettings();
             var manager = new HttpManager(jss, 1024 * 1024);
             Api = new OperationManager(manager, jss);
-            Api.TryConnectTo(new List<string> { ConfigurationManager.AppSettings["Url"] }, CancellationToken.None);
+            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
         }
 
         protected static JsonSerializerSettings GetJsonSerializerSettings()

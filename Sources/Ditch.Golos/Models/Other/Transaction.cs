@@ -1,9 +1,9 @@
 ﻿using System;
-using Ditch.Golos.Helpers;
+using Ditch.Core.Attributes;
 using Ditch.Golos.Models.Operations;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /// <summary>
     /// transaction

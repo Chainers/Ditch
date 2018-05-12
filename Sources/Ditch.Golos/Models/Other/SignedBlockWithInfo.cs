@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Models.Objects
+namespace Ditch.Golos.Models.Other
 {
     /// <summary>
     /// signed_block_with_info

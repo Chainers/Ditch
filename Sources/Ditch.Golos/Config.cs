@@ -2,6 +2,6 @@
 {
     public class Config
     {
-        public string ChainFieldName { get; set; } = "STEEMIT_CHAIN_ID";
+        public string[] ChainFieldName { get; set; } = new[] { "STEEM_CHAIN_ID", "STEEMIT_CHAIN_ID" };
     }
 }

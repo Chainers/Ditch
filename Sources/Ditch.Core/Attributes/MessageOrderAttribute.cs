@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ditch.Steem.Helpers
+namespace Ditch.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class MessageOrderAttribute : Attribute

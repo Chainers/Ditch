@@ -9,6 +9,7 @@ using Ditch.Golos.Helpers;
 using Ditch.Golos.JsonRpc;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Operations;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -226,8 +227,15 @@ namespace Ditch.Golos
             if (!resp.IsError)
             {
                 var conf = resp.Result;
-                JToken jToken;
-                conf.TryGetValue(_config.ChainFieldName, out jToken);
+                JToken jToken = null;
+
+                foreach (var name in _config.ChainFieldName)
+                {
+                    conf.TryGetValue(name, out jToken);
+                    if (jToken != null)
+                        break;
+                }
+
                 if (jToken == null)
                     return false;
 

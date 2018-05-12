@@ -14,36 +14,26 @@ namespace Ditch.Golos.Tests
     public class OperationManagerConnectionTest
     {
         [Test]
-        public void WssNodeTest()
+        [TestCase("wss://ws.golos.io")]
+        [TestCase("wss://ws.testnet.golos.io")]
+        [TestCase("wss://golosd.steepshot.org")]
+        public void NodeTest(string url)
         {
-            var urls = new List<string> {
-                "wss://ws.golos.io",
-                "wss://ws.testnet.golos.io",
-                "wss://golosd.steepshot.org"
-            };
-
             var jss = GetJsonSerializerSettings();
             var connectionManager = new WebSocketManager(jss);
             var manager = new OperationManager(connectionManager, jss);
 
             var sw = new Stopwatch();
-            //test all urls
-            for (var i = 0; i < urls.Count; i++)
-            {
-                var buf = new List<string>() { urls[i] };
-                sw.Restart();
+            var urls = new List<string> { url };
+            sw.Restart();
+            var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
+            sw.Stop();
 
-                var url = manager.TryConnectTo(buf, CancellationToken.None);
+            Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
+            Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
 
-                sw.Stop();
-
-                Console.WriteLine($"{i} {(manager.IsConnected ? "conected" : "Not connected")} to {urls[i]} {sw.ElapsedMilliseconds}");
-
-                if (manager.IsConnected)
-                {
-                    Assert.IsNotNull(manager.ChainId, "ChainId null");
-                }
-            }
+            if (manager.IsConnected)
+                Assert.IsNotNull(manager.ChainId, "ChainId null");
         }
 
         [Test]
