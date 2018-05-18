@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Ditch.Golos.Tests
 {
     [TestFixture]
-    public class OperationManagerConnectionTest
+    public class ConnectionTest
     {
         [Test]
         [TestCase("wss://ws.golos.io")]
@@ -19,7 +19,7 @@ namespace Ditch.Golos.Tests
         [TestCase("wss://golosd.steepshot.org")]
         public void NodeTest(string url)
         {
-            var jss = GetJsonSerializerSettings();
+            var jss = BaseTest.GetJsonSerializerSettings();
             var connectionManager = new WebSocketManager(jss);
             var manager = new OperationManager(connectionManager, jss);
 
@@ -41,7 +41,7 @@ namespace Ditch.Golos.Tests
         {
             var urls = new List<string> { "https://public-ws.golos.io", "https://golosd.steepshot.org" };
 
-            var jss = GetJsonSerializerSettings();
+            var jss = BaseTest.GetJsonSerializerSettings();
             var connectionManager = new HttpManager(jss);
             var manager = new OperationManager(connectionManager, jss);
 
@@ -70,7 +70,7 @@ namespace Ditch.Golos.Tests
         {
             var urls = new List<string> { "https://public-ws.golos.io", "https://golosd.steepshot.org" };
 
-            var jss = GetJsonSerializerSettings();
+            var jss = BaseTest.GetJsonSerializerSettings();
             var manager = new OperationManager(new HttpManager(jss), jss);
 
             var sw = new Stopwatch();
@@ -97,7 +97,7 @@ namespace Ditch.Golos.Tests
         {
             var urls = new List<string> { "wss://ws.golos.io" };
 
-            var jss = GetJsonSerializerSettings();
+            var jss = BaseTest.GetJsonSerializerSettings();
             var manager = new OperationManager(new WebSocketManager(jss), jss);
 
             var sw = new Stopwatch();
@@ -118,16 +118,6 @@ namespace Ditch.Golos.Tests
                     Console.WriteLine($"{i} not conected to {url} {sw.ElapsedMilliseconds}");
                 }
             }
-        }
-
-        protected static JsonSerializerSettings GetJsonSerializerSettings()
-        {
-            var rez = new JsonSerializerSettings
-            {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
-                Culture = CultureInfo.InvariantCulture
-            };
-            return rez;
         }
     }
 }

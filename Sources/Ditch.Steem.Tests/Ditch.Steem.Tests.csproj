@@ -80,8 +80,8 @@
     <Compile Include="Apis\TagsApiTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="InfoTest.cs" />
-    <Compile Include="OperationManagerConnectionTest.cs" />
-    <Compile Include="OperationManagerPostTest.cs" />
+    <Compile Include="ConnectionTest.cs" />
+    <Compile Include="OperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />
   </ItemGroup>

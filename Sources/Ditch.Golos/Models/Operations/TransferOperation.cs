@@ -4,13 +4,9 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Operations
 {
-    /**
-     * @ingroup operations
-     *
-     * @brief Transfers STEEM from one account to another.
-     */
-
     /// <summary>
+    /// Transfers STEEM from one account to another.
+    /// 
     /// transfer_operation
     /// libraries\protocol\include\steemit\protocol\steem_operations.hpp
     /// </summary>
@@ -67,7 +63,13 @@ namespace Ditch.Golos.Models.Operations
         public string Memo { get; set; }
 
 
-
+        /// <summary>
+        /// Transfers STEEM from one account to another.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="amount"></param>
+        /// <param name="memo"></param>
         public TransferOperation(string from, string to, Asset amount, string memo)
         {
             From = from;

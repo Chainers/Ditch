@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Ditch.Core.Helpers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
 {
@@ -12,8 +9,6 @@ namespace Ditch.Golos.Models.Other
     [JsonObject(MemberSerialization.OptIn)]
     public partial class SignedTransaction : Transaction
     {
-        #region for json
-
         private object[][] _operations;
 
         [JsonProperty("operations")]
@@ -43,12 +38,7 @@ namespace Ditch.Golos.Models.Other
         /// 
         /// </summary>
         /// <returns>API type: signature_type (typedef fc::array&lt;unsigned char, 65> compact_signature;)</returns>
-        public List<byte[]> Signatures { get; set; } = new List<byte[]>();
-
-        #endregion for json
-
-
         [JsonProperty("signatures")]
-        public string[] SignaturesStr => Signatures.Select(Hex.ToString).ToArray();
+        public string[] Signatures { get; set; }
     }
 }

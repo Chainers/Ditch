@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other
 {
-    [JsonConverter(typeof(ToStringConverter))]
-    public partial class PublicKeyType : IComplexString
+    [JsonConverter(typeof(CustomConverter))]
+    public partial class PublicKeyType : ICustomJson
     {
         public const string AddressPrefix = "STM";
 
@@ -22,17 +22,6 @@ namespace Ditch.Steem.Models.Other
         {
             _value = value;
         }
-        
-       
-        public void InitFromString(string value)
-        {
-            _value = value;
-        }
-
-        public override string ToString()
-        {
-            return _value;
-        }
 
         private byte[] ToBytes()
         {
@@ -44,5 +33,19 @@ namespace Ditch.Steem.Models.Other
             var dec = Base58.CutLastBytes(s, 4);
             return dec;
         }
+
+        #region ICustomJson
+
+        public void ReadJson(JsonReader reader, JsonSerializer serializer)
+        {
+            _value = reader.Value.ToString();
+        }
+
+        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
+        {
+            writer.WriteValue(_value);
+        }
+
+        #endregion
     }
 }

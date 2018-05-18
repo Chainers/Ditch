@@ -46,7 +46,11 @@ namespace Ditch.Golos.Tests.Apis
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            Assert.IsFalse(string.IsNullOrEmpty((string)resp.Result[0][0]));
+
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_blog_authors", new object[] { User.Login }, CancellationToken.None);
+            TestPropetries(resp.Result.GetType(), obj.Result);
+            Console.WriteLine("----------------------------------------------------------------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]

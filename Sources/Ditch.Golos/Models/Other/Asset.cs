@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
 {
-    [JsonConverter(typeof(ToStringConverter))]
-    public partial class Asset : IComparable<Asset>, IEquatable<Asset>, IComplexString
+    [JsonConverter(typeof(CustomConverter))]
+    public partial class Asset : ICustomJson
     {
         public long Value { get; private set; }
 
@@ -17,7 +17,10 @@ namespace Ditch.Golos.Models.Other
 
         public Asset() { }
 
-        public Asset(string value) { InitFromString(value); }
+        public Asset(string value)
+        {
+            InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+        }
 
         public Asset(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
@@ -31,135 +34,7 @@ namespace Ditch.Golos.Models.Other
             Precision = precision;
         }
 
-
-        public static Asset operator +(Asset asset1, Asset asset2)
-        {
-            if (asset1.Currency.Equals(asset2.Currency))
-            {
-                if (asset1.Precision > asset2.Precision)
-                {
-                    var buf = asset2.Value * (10 ^ (asset1.Precision - asset2.Precision));
-                    return new Asset(asset1.Value + buf, asset1.Precision, asset1.Currency);
-                }
-                if (asset1.Precision < asset2.Precision)
-                {
-                    var buf = asset1.Value * (10 ^ (asset2.Precision - asset1.Precision));
-                    return new Asset(buf + asset2.Value, asset2.Precision, asset1.Currency);
-                }
-                return new Asset(asset1.Value + asset2.Value, asset1.Precision, asset1.Currency);
-            }
-            throw new ArithmeticException("Attempt adding values with different Currency type.");
-        }
-
-        public static Asset operator -(Asset asset1, Asset asset2)
-        {
-            if (asset1.Currency.Equals(asset2.Currency))
-            {
-                if (asset1.Precision > asset2.Precision)
-                {
-                    var buf = asset2.Value * (10 ^ (asset1.Precision - asset2.Precision));
-                    return new Asset(asset1.Value - buf, asset1.Precision, asset1.Currency);
-                }
-                if (asset1.Precision < asset2.Precision)
-                {
-                    var buf = asset1.Value * (10 ^ (asset2.Precision - asset1.Precision));
-                    return new Asset(buf - asset2.Value, asset2.Precision, asset1.Currency);
-                }
-                return new Asset(asset1.Value - asset2.Value, asset1.Precision, asset1.Currency);
-            }
-
-            throw new ArithmeticException("Attempt subtract values with different Currency type.");
-        }
-
-
-        public static bool operator >(Asset asset1, Asset asset2)
-        {
-            return CompareTo(asset1, asset2) > 0;
-        }
-
-        public static bool operator >=(Asset asset1, Asset asset2)
-        {
-            return CompareTo(asset1, asset2) >= 0;
-        }
-
-        public static bool operator <(Asset asset1, Asset asset2)
-        {
-            return CompareTo(asset1, asset2) < 0;
-        }
-
-        public static bool operator <=(Asset asset1, Asset asset2)
-        {
-            return CompareTo(asset1, asset2) <= 0;
-        }
-
-        public static bool operator ==(Asset asset1, Asset asset2)
-        {
-            return CompareTo(asset1, asset2) == 0;
-        }
-
-        public static bool operator !=(Asset asset1, Asset asset2)
-        {
-            return CompareTo(asset1, asset2) != 0;
-        }
-
-
-        public static implicit operator Asset(string value)
-        {
-            return new Asset(value);
-        }
-
-        public static implicit operator Asset(double value)
-        {
-            return new Asset(value.ToString(CultureInfo.InvariantCulture));
-        }
-
-        public static implicit operator string(Asset value)
-        {
-            return value.ToString();
-        }
-
-        public int CompareTo(Asset other)
-        {
-            return CompareTo(this, other);
-        }
-
-        public static int CompareTo(Asset first, Asset other)
-        {
-            if (!string.IsNullOrEmpty(first.Currency) && !string.IsNullOrEmpty(other.Currency) && !first.Currency.Equals(other.Currency, StringComparison.OrdinalIgnoreCase))
-                throw new InvalidCastException($"Invalid compare {first} and {other}");
-
-            if (other.Value == first.Value && other.Precision == first.Precision)
-                return 0;
-
-            var dThis = first.Value / Math.Pow(10, first.Precision);
-            var dOther = other.Value / Math.Pow(10, other.Precision);
-            return dThis.CompareTo(dOther);
-        }
-
-        public bool Equals(Asset other)
-        {
-            return CompareTo(other) == 0;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Asset)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Value.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Currency != null ? Currency.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ Precision.GetHashCode();
-                return hashCode;
-            }
-        }
-
+     
         public string ToString(string numberDecimalSeparator)
         {
             var dig = Value.ToString();
@@ -174,19 +49,8 @@ namespace Ditch.Golos.Models.Other
             }
             return string.IsNullOrEmpty(Currency) ? dig : $"{dig} {Currency}";
         }
+        
 
-        public double ToDouble()
-        {
-            return Value / Math.Pow(10, Precision);
-        }
-
-
-        #region ToStringConverter
-
-        public void InitFromString(string value)
-        {
-            InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-        }
 
         public void InitFromString(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
@@ -203,11 +67,20 @@ namespace Ditch.Golos.Models.Other
             Currency = kv.Length > 1 ? kv[1].ToUpper() : string.Empty;
         }
 
-        public override string ToString()
+        #region ICustomJson
+
+        public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            return ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+            var value = reader.Value.ToString();
+            InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
         }
 
-        #endregion ToStringConverter
+        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
+        {
+            var value = ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+            writer.WriteValue(value);
+        }
+
+        #endregion
     }
 }

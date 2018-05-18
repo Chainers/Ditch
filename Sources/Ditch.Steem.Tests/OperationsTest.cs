@@ -10,7 +10,6 @@ using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models.Enums;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Ditch.Steem.Models;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
@@ -18,7 +17,7 @@ using Ditch.Steem.Models.Other;
 namespace Ditch.Steem.Tests
 {
     [TestFixture]
-    public class OperationManagerPostTest : BaseTest
+    public class OperationsTest : BaseTest
     {
         private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
         private const bool IsVerify = true;
@@ -31,84 +30,7 @@ namespace Ditch.Steem.Tests
             return Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
         }
 
-        [Test]
-        public async Task FollowUnfollowTest()
-        {
-            var user = User;
-            var autor = "steepshot";
-
-
-            var isFollow = IsFollow(autor);
-
-            var op = isFollow
-                ? new UnfollowOperation(user.Login, autor, user.Login)
-                : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
-            isFollow = !isFollow;
-
-            op = isFollow
-                ? new UnfollowOperation(user.Login, autor, user.Login)
-                : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
-            isFollow = !isFollow;
-
-            var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
-            op = new FollowOperation(user.Login, autor, fType, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
-            isFollow = !isFollow;
-
-            fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
-            op = new FollowOperation(user.Login, autor, fType, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
-        }
-
-        private bool IsFollow(string autor)
-        {
-            var args = new GetFollowingArgs()
-            {
-                Account = User.Login,
-                Start = autor,
-                Limit = 1,
-                Type = FollowType.Blog
-            };
-            var resp = Api.GetFollowing(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-            return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
-        }
+        #region Vote
 
         [Test]
         public async Task VoteTest()
@@ -231,6 +153,159 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
+        #endregion
+
+        #region Transfer
+
+        [Test]
+        public async Task TransferOperationTest()
+        {
+            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+        #region TransferToVesting
+
+        [Test]
+        public async Task TransferToVestingOperationTest()
+        {
+            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSteem));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+        #region WithdrawVesting
+
+        [Test]
+        public async Task WithdrawVestingOperationTest()
+        {
+            var op = new WithdrawVestingOperation(User.Login, new Asset(1, Config.SteemAssetNumVests));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+        //LimitOrderCreate,
+        //LimitOrderCancel,
+        //FeedPublish,
+        //Convert,
+        //AccountCreate,
+        //AccountUpdate,
+        //WitnessUpdate,
+        //AccountWitnessVote,
+        //AccountWitnessProxy,
+        //Pow,
+        //Custom,
+        //ReportOverProduction,
+        //DeleteComment,
+        //CustomJson,
+        //CommentOptions,
+        //SetWithdrawVestingRoute,
+        //LimitOrderCreate2,
+        //ChallengeAuthority,
+        //ProveAuthority,
+        //RequestAccountRecovery,
+        //RecoverAccount,
+        //ChangeRecoveryAccount,
+        //EscrowTransfer,
+        //EscrowDispute,
+        //EscrowRelease,
+        //Pow2,
+        //EscrowApprove,
+        //TransferToSavings,
+        //TransferFromSavings,
+        //CancelTransferFromSavings,
+        //CustomBinaryOperation,
+        //DeclineVotingRightsOperation,
+        //ResetAccountOperation,
+        //SetResetAccountOperation,
+        //AccountCreateWithDelegation,
+
+        [Test]
+        public async Task FollowUnfollowTest()
+        {
+            var user = User;
+            var autor = "steepshot";
+
+
+            var isFollow = IsFollow(autor);
+
+            var op = isFollow
+                ? new UnfollowOperation(user.Login, autor, user.Login)
+                : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            var response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(1000);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+            isFollow = !isFollow;
+
+            op = isFollow
+                ? new UnfollowOperation(user.Login, autor, user.Login)
+                : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
+            response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(1000);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+            isFollow = !isFollow;
+
+            var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
+            op = new FollowOperation(user.Login, autor, fType, user.Login);
+            response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(1000);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+            isFollow = !isFollow;
+
+            fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
+            op = new FollowOperation(user.Login, autor, fType, user.Login);
+            response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            if (!IsVerify)
+            {
+                await Task.Delay(1000);
+                var isFollow2 = IsFollow(autor);
+                Assert.IsTrue(IsVerify | isFollow != isFollow2);
+            }
+        }
+
+        private bool IsFollow(string autor)
+        {
+            var args = new GetFollowingArgs()
+            {
+                Account = User.Login,
+                Start = autor,
+                Limit = 1,
+                Type = FollowType.Blog
+            };
+            var resp = Api.GetFollowing(args, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
+        }
+
         [Test]
         public void RepostTest()
         {
@@ -281,9 +356,55 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        public async Task TransferOperationTest()
+        public async Task AccountCreateTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            var op = new AccountCreateOperation
+            {
+                Fee = new Asset(1, Config.SteemAssetNumSteem),
+                Creator = User.Login,
+                NewAccountName = "",
+                Owner = new Authority
+                {
+                    WeightThreshold = 1,
+                    AccountAuths = new object[0],
+                    KeyAuths = new[]
+                    {
+                        new object[]
+                        {
+                            "STM5rLPLgzHt719b9onLVqSuSLicrNKWGU52vbs4W5mCiP3qvVHuF",
+                            1
+                        }
+                    }
+                },
+                Active = new Authority
+                {
+                    WeightThreshold = 1,
+                    AccountAuths = new object[0],
+                    KeyAuths = new[]
+                    {
+                        new object[]
+                        {
+                            "STM6yrr9Z2Prg9wH41H2YKantY1q97CAmTaAvkjRZgdY6KAt4xiGE",
+                            1
+                        }
+                    }
+                },
+                Posting = new Authority
+                {
+                    WeightThreshold = 1,
+                    AccountAuths = new object[0],
+                    KeyAuths = new[]
+                    {
+                        new object[]
+                        {
+                            "STM7DZEy6KayieQUUZE7t1Xe2N5JnPmXTfc84Hz3g8cMGkPYhZNdo",
+                            1
+                        }
+                    }
+                },
+                MemoKey = new PublicKeyType("STM8j2PbM5pfcUViCXt9Xj1wmGdQVDcFhZkedVxsutpBXF46cNmPB"),
+                JsonMetadata = "",
+            };
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

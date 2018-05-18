@@ -82,8 +82,8 @@
     <Compile Include="Apis\MarketHistoryApiTest.cs" />
     <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
     <Compile Include="Apis\PrivateMessageApi.cs" />
-    <Compile Include="OperationManagerConnectionTest.cs" />
-    <Compile Include="OperationManagerPostTest.cs" />
+    <Compile Include="ConnectionTest.cs" />
+    <Compile Include="OperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />
   </ItemGroup>

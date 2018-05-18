@@ -66,7 +66,6 @@ namespace Ditch.Golos.Models.Operations
         {
         }
 
-
         private static object[] SetBeneficiaries(Beneficiary[] beneficiaries)
         {
             return new object[]

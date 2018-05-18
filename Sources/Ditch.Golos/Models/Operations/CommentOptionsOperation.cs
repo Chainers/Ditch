@@ -49,13 +49,8 @@ namespace Ditch.Golos.Models.Operations
         /// </summary>
         /// <returns>API type: asset&lt;Major, Hardfork, Release></returns>
         [JsonProperty("max_accepted_payout")]
-        public string MaxAcceptedPayoutStr { get; set; }
         [MessageOrder(40)]
-        public Asset MaxAcceptedPayout
-        {
-            get => MaxAcceptedPayoutStr;
-            set => MaxAcceptedPayoutStr = value;
-        }
+        public Asset MaxAcceptedPayout { get; set; }
 
         /// <summary>
         /// API name: percent_steem_dollars

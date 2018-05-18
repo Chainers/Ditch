@@ -338,15 +338,16 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_transaction()
         {
-            var op = Api.GetOpsInBlock(2, false, CancellationToken.None);
+            var op = Api.GetAccountHistory(User.Login, 1, 1, CancellationToken.None);
             Assert.IsFalse(op.IsError);
+            var trxId = op.Result[0].Value.TrxId;
 
-            var resp = Api.GetTransaction(op.Result[0].TrxId, CancellationToken.None);
+            var resp = Api.GetTransaction(trxId, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { op.Result[0].TrxId }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { trxId }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(JsonConvert.SerializeObject(obj));

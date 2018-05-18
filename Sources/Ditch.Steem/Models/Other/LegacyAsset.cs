@@ -8,9 +8,9 @@ namespace Ditch.Steem.Models.Other
     /// legacy_asset
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api_legacy_asset.hpp
     /// </summary>
-    [JsonConverter(typeof(ToArrayConverter))]
+    [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class LegacyAsset : IComplexArray
+    public partial class LegacyAsset : ICustomJson
     {
         /// <summary>
         /// API name: amount
@@ -29,7 +29,7 @@ namespace Ditch.Steem.Models.Other
         public AssetSymbolType Symbol { get; set; }
 
 
-        #region IComplexArray
+        #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
@@ -38,9 +38,9 @@ namespace Ditch.Steem.Models.Other
             Symbol = new AssetSymbolType(arr[2].Value<string>(), arr[1].Value<byte>());
         }
 
-        public void WriteJson(JsonWriter write, JsonSerializer serializer)
+        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            write.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
+            writer.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
         }
 
         #endregion

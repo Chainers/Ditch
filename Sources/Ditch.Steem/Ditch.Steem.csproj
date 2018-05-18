@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.1.0-alpha</Version>
+    <Version>3.1.1-alpha</Version>
     <Authors>Chainers, KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://chainers.github.io/Ditch</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
-    <PackageReleaseNotes>Support for Steem v0.19.4RC1</PackageReleaseNotes>
+    <PackageReleaseNotes>walet operations</PackageReleaseNotes>
     <AssemblyVersion>3.1.0.0</AssemblyVersion>
     <FileVersion>3.1.0.0</FileVersion>
   </PropertyGroup>
@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256k1" Version="1.0.1" />
-    <PackageReference Include="Ditch.Core" Version="3.1.1" />
+    <PackageReference Include="Ditch.Core" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>

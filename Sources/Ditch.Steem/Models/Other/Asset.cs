@@ -6,8 +6,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Ditch.Steem.Models.Other
 {
-    [JsonConverter(typeof(ToArrayConverter))]
-    public partial class Asset : IComplexArray
+    [JsonConverter(typeof(CustomConverter))]
+    public partial class Asset : ICustomJson
     {
         /// <summary>
         /// API name: amount
@@ -35,7 +35,7 @@ namespace Ditch.Steem.Models.Other
 
         public Asset() { }
 
-        #region IComplexArray
+        #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
@@ -44,9 +44,9 @@ namespace Ditch.Steem.Models.Other
             Symbol = new AssetSymbolType(arr[2].Value<string>(), arr[1].Value<byte>());
         }
 
-        public void WriteJson(JsonWriter write, JsonSerializer serializer)
+        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            write.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
+            writer.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
         }
 
         #endregion

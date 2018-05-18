@@ -58,9 +58,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: std::vector<std::pair<std::string, uint32_t>>;</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[][]> GetBlogAuthors(string blogAccount, CancellationToken token)
+        public JsonRpcResponse<ReblogCount[]> GetBlogAuthors(string blogAccount, CancellationToken token)
         {
-            return CustomGetRequest<object[][]>(KnownApiNames.Follow, "get_blog_authors", new object[] { blogAccount }, token);
+            return CustomGetRequest<ReblogCount[]>(KnownApiNames.Follow, "get_blog_authors", new object[] { blogAccount }, token);
         }
 
         /// <summary>

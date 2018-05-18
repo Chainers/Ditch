@@ -100,7 +100,7 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperations(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse BroadcastOperations(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
@@ -124,7 +124,7 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperationsSynchronous(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
@@ -147,7 +147,7 @@ namespace Ditch.Steem
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
             var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
@@ -227,7 +227,7 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IEnumerable<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var transaction = new SignedTransaction
             {
@@ -241,11 +241,13 @@ namespace Ditch.Steem
             var msg = SerializeHelper.TransactionToMessage(transaction);
             var data = Secp256k1Manager.GetMessageHash(msg);
 
-            foreach (var userPrivateKey in userPrivateKeys)
+            transaction.Signatures = new string[userPrivateKeys.Count];
+            for (int i = 0; i < userPrivateKeys.Count; i++)
             {
                 token.ThrowIfCancellationRequested();
+                var userPrivateKey = userPrivateKeys[i];
                 var sig = Secp256k1Manager.SignCompressedCompact(data, userPrivateKey);
-                transaction.Signatures.Add(sig);
+                transaction.Signatures[i] = Hex.ToString(sig);
             }
 
             return transaction;

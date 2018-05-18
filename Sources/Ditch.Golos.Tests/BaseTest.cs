@@ -32,7 +32,7 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
         }
 
-        protected static JsonSerializerSettings GetJsonSerializerSettings()
+        public static JsonSerializerSettings GetJsonSerializerSettings()
         {
             var rez = new JsonSerializerSettings
             {

@@ -9,7 +9,7 @@ using Ditch.Core;
 namespace Ditch.Steem.Tests
 {
     [TestFixture]
-    public class OperationManagerConnectionTest : BaseTest
+    public class ConnectionTest
     {
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Ditch.Steem.Tests
         [TestCase("https://steemd.steepshot.org")]
         public void NodeTest(string url)
         {
-            var jss = GetJsonSerializerSettings();
+            var jss = BaseTest.GetJsonSerializerSettings();
             var connectionManager = new HttpManager(jss);
             var manager = new OperationManager(connectionManager, jss);
 
@@ -71,7 +71,7 @@ namespace Ditch.Steem.Tests
                 "https://steemd2.steepshot.org",
             };
 
-            var jss = GetJsonSerializerSettings();
+            var jss = BaseTest.GetJsonSerializerSettings();
             var manager = new OperationManager(new HttpManager(jss), jss);
 
             var sw = new Stopwatch();
@@ -84,35 +84,6 @@ namespace Ditch.Steem.Tests
                 Assert.IsTrue(manager.IsConnected, "Not connected");
                 Assert.IsNotNull(manager.ChainId, "ChainId null");
                 await Task.Delay(3000);
-            }
-        }
-
-        [Test]
-        public async Task TryConnectToWssTest()
-        {
-            var urls = new List<string> { "wss://steemd.steemit.com", "wss://steemd2.steepshot.org" };
-
-            var jss = GetJsonSerializerSettings();
-            var manager = new OperationManager(new WebSocketManager(jss), jss);
-
-            var sw = new Stopwatch();
-            for (var i = 0; i < 5; i++)
-            {
-                Console.WriteLine($"{i} conect to golos.");
-                sw.Restart();
-                var url = manager.TryConnectTo(urls, CancellationToken.None);
-                sw.Stop();
-
-                if (manager.IsConnected)
-                {
-                    Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
-                    Assert.IsNotNull(manager.ChainId, "ChainId null");
-                    await Task.Delay(3000);
-                }
-                else
-                {
-                    Console.WriteLine("Not connected");
-                }
             }
         }
     }

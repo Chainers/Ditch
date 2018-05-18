@@ -17,7 +17,7 @@ using Ditch.Golos.Models.Other;
 namespace Ditch.Golos.Tests
 {
     [TestFixture]
-    public class OperationManagerPostTest : BaseTest
+    public class OperationsTest : BaseTest
     {
         private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
         private const bool IsVerify = true;
@@ -29,6 +29,211 @@ namespace Ditch.Golos.Tests
 
             return Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
         }
+
+        #region Vote
+
+        [Test]
+        public async Task VoteTest()
+        {
+            var user = User;
+            var autor = "joseph.kalu";
+            var permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
+
+            var voteState = GetVoteState(autor, permlink, user);
+
+            for (var i = 0; i < 3; i++)
+            {
+                var op = voteState < 0
+                    ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote)
+                    : voteState > 0
+                        ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
+                        : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
+
+                var response = Post(user.PostingKeys, false, op);
+                Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+                if (!IsVerify)
+                {
+                    await Task.Delay(3000);
+                    var voteState2 = GetVoteState(autor, permlink, user);
+                    Assert.IsTrue(op.Weight == voteState2);
+                }
+
+                if (voteState == 0)
+                    voteState = VoteOperation.MaxUpVote;
+                else if (voteState > 0)
+                    voteState = VoteOperation.MaxFlagVote;
+                else
+                    voteState = 0;
+            }
+        }
+
+        private int GetVoteState(string author, string permlink, UserInfo user)
+        {
+            var resp = Api.GetContent(author, permlink, CancellationToken.None);
+            Console.WriteLine(resp.Error);
+            Assert.IsFalse(resp.IsError);
+            var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
+            return vote?.Percent ?? 0;
+        }
+
+        #endregion
+
+        #region Comment
+
+        [Test]
+        public void DeleteCommentTest()
+        {
+            var user = User;
+            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
+            var response = Post(user.PostingKeys, false, op);
+            Console.WriteLine(response.Error);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+
+            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
+            response = Post(user.PostingKeys, false, op2);
+            Console.WriteLine(response.Error);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test]
+        public void PostWithBeneficiariesTest()
+        {
+            var user = User;
+            var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
+            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
+
+            var response = Post(user.PostingKeys, false, op, op2);
+
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        [Test]
+        public void PostFailByTitleSizeTest()
+        {
+            var user = User;
+
+            var op = new PostOperation("test", user.Login, new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(new[] { "test", "spam" }));
+            var response = Post(user.PostingKeys, true, op);
+            Assert.IsTrue(response.IsError);
+            Console.WriteLine(response.GetErrorMessage());
+            Assert.IsTrue(response.Error is ResponseError);
+            var typedError = (ResponseError)response.Error;
+            Assert.IsTrue(typedError.Data.Code == 10);
+            var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
+            Console.WriteLine(match.Value);
+            Assert.IsTrue(match.Success);
+            Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
+        }
+
+        [Test]
+        public void ReplyTest()
+        {
+            var user = User;
+
+            var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
+            Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
+            var response = Post(user.PostingKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+        #region Transfer
+
+        [Test]
+        public async Task TransferOperationTest()
+        {
+            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+        #region TransferToVesting
+
+        [Test]
+        public async Task TransferToVestingOperationTest()
+        {
+            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset("0.001 GOLOS"));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+        #region WithdrawVesting
+
+        [Test]
+        public async Task WithdrawVestingOperationTest()
+        {
+            var op = new WithdrawVestingOperation(User.Login, new Asset("0.001 GESTS"));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+
+        //WithdrawVesting,
+
+        //LimitOrderCreate,
+        //LimitOrderCancel,
+
+        //FeedPublish,
+        //Convert,
+
+        //AccountCreate,
+        //AccountUpdate,
+
+        //WitnessUpdate,
+        //AccountWitnessVote,
+        //AccountWitnessProxy,
+
+        //Pow,
+
+        //Custom,
+
+        //ReportOverProduction,
+
+        //DeleteComment,
+        //CustomJson,
+        //CommentOptions,
+        //SetWithdrawVestingRoute,
+        //LimitOrderCreate2,
+        //ChallengeAuthority,
+        //ProveAuthority,
+        //RequestAccountRecovery,
+        //RecoverAccount,
+        //ChangeRecoveryAccount,
+        //EscrowTransfer,
+        //EscrowDispute,
+        //EscrowRelease,
+        //Pow2,
+        //EscrowApprove,
+        //TransferToSavings,
+        //TransferFromSavings,
+        //CancelTransferFromSavings,
+        //CustomBinary,
+        //DeclineVotingRights,
+        //ResetAccount,
+        //SetResetAccount,
+
+        ///// virtual operations below this point
+        //FillConvertRequest,
+        //AuthorReward,
+        //CurationReward,
+        //CommentReward,
+        //LiquidityReward,
+        //Interest,
+        //FillVestingWithdraw,
+        //FillOrder,
+        //ShutdownWitness,
+        //FillTransferFromSavings,
+        //Hardfork,
+        //CommentPayoutUpdate,
+        //CommentBenefactorReward
 
         [Test]
         public async Task FollowUnfollowTest()
@@ -102,110 +307,6 @@ namespace Ditch.Golos.Tests
             return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
-
-        [Test]
-        public async Task VoteTest()
-        {
-            var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
-
-            var voteState = GetVoteState(autor, permlink, user);
-
-            for (var i = 0; i < 3; i++)
-            {
-                var op = voteState < 0
-                      ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote)
-                      : voteState > 0
-                      ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
-                      : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
-
-                var response = Post(user.PostingKeys, false, op);
-                Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-                if (!IsVerify)
-                {
-                    await Task.Delay(3000);
-                    var voteState2 = GetVoteState(autor, permlink, user);
-                    Assert.IsTrue(op.Weight == voteState2);
-                }
-
-                if (voteState == 0)
-                    voteState = VoteOperation.MaxUpVote;
-                else if (voteState > 0)
-                    voteState = VoteOperation.MaxFlagVote;
-                else
-                    voteState = 0;
-            }
-        }
-
-        private int GetVoteState(string author, string permlink, UserInfo user)
-        {
-            var resp = Api.GetContent(author, permlink, CancellationToken.None);
-            Console.WriteLine(resp.Error);
-            Assert.IsFalse(resp.IsError);
-            var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
-            return vote?.Percent ?? 0;
-        }
-
-
-        [Test]
-        public void PostWithBeneficiariesTest()
-        {
-            var user = User;
-            var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
-
-            var response = Post(user.PostingKeys, false, op, op2);
-
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
-        [Test]
-        public void DeleteCommentTest()
-        {
-            var user = User;
-            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            var response = Post(user.PostingKeys, false, op);
-            Console.WriteLine(response.Error);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            response = Post(user.PostingKeys, false, op2);
-            Console.WriteLine(response.Error);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
-        [Test]
-        public void PostFailByTitleSizeTest()
-        {
-            var user = User;
-
-            var op = new PostOperation("test", user.Login, new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(new[] { "test", "spam" }));
-            var response = Post(user.PostingKeys, true, op);
-            Assert.IsTrue(response.IsError);
-            Console.WriteLine(response.GetErrorMessage());
-            Assert.IsTrue(response.Error is ResponseError);
-            var typedError = (ResponseError)response.Error;
-            Assert.IsTrue(typedError.Data.Code == 10);
-            var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
-            Console.WriteLine(match.Value);
-            Assert.IsTrue(match.Success);
-            Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
-        }
-
-
-        [Test]
-        public void ReplyTest()
-        {
-            var user = User;
-
-            var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
         [Test]
         public void RepostTest()
         {
@@ -237,7 +338,6 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
-        [Ignore("unavailable for VerifyAuthority")]
         public async Task AccountUpdateTest()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
@@ -253,19 +353,9 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
-        [Ignore("unavailable for VerifyAuthority. not tested")]
         public async Task WitnessUpdateOperationTest()
         {
             var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", "GLS1111111111111111111111111111111114T1Anm", new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
-        [Test]
-        [Ignore("unavailable for VerifyAuthority")]
-        public async Task TransferOperationTest()
-        {
-            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "ditch test transfer");
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -282,7 +372,7 @@ namespace Ditch.Golos.Tests
             Assert.IsTrue(asset.Value == value);
             Assert.IsTrue(asset.Precision == precision);
             Assert.IsTrue(asset.Currency == currency);
-            Assert.IsTrue(test.Equals(asset.ToString()));
+            Assert.IsTrue(test.Equals(asset.ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)));
         }
     }
 }

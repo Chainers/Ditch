@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
-    [JsonConverter(typeof(ToStringConverter))]
-    public partial class Asset : IComparable<Asset>, IEquatable<Asset>, IComplexString
+    [JsonConverter(typeof(CustomConverter))]
+    public partial class Asset : IComparable<Asset>, IEquatable<Asset>, ICustomJson
     {
         public long Value { get; private set; }
 
@@ -17,7 +17,7 @@ namespace Ditch.EOS.Models
 
         public Asset() { }
 
-        public Asset(string value) { InitFromString(value); }
+        public Asset(string value) { InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator); }
 
         public Asset(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
@@ -181,12 +181,6 @@ namespace Ditch.EOS.Models
         }
 
 
-        #region ToStringConverter
-
-        public void InitFromString(string value)
-        {
-            InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-        }
 
         public void InitFromString(string value, string numberDecimalSeparator, string numberGroupSeparator)
         {
@@ -203,11 +197,21 @@ namespace Ditch.EOS.Models
             Currency = kv.Length > 1 ? kv[1].ToUpper() : string.Empty;
         }
 
-        public override string ToString()
+
+        #region ICustomJson
+
+        public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            return ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+            var value = reader.Value.ToString();
+            InitFromString(value, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
         }
 
-        #endregion ToStringConverter
+        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
+        {
+            var value = ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+            writer.WriteValue(value);
+        }
+
+        #endregion
     }
 }
