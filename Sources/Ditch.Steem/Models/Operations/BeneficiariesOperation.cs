@@ -51,11 +51,11 @@ namespace Ditch.Steem.Models.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class BeneficiariesOperation : CommentOptionsOperation
     {
-        public BeneficiariesOperation(string author, string permlink, string currency, params Beneficiary[] beneficiaries)
+        public BeneficiariesOperation(string author, string permlink, params Beneficiary[] beneficiaries)
             : base(author, permlink, new Asset(1000000000, Config.SteemAssetNumSbd), 10000, true, true, SetBeneficiaries(beneficiaries))
         {
         }
-        
+
         public BeneficiariesOperation(string author, string permlink, Asset maxAcceptedPayout, params Beneficiary[] beneficiaries)
             : base(author, permlink, maxAcceptedPayout, 10000, true, true, SetBeneficiaries(beneficiaries))
         {
