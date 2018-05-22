@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="Login" value="***********" />
+    <add key="PostingWif" value="5**************************************************" />
+    <add key="ActiveWif" value="5**************************************************" />
+    <add key="Url" value="wss://eu.openledger.info/ws" />
+  </appSettings>
+</configuration>
