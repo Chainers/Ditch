@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Ditch.Core.Helpers
+namespace Ditch.Core
 {
     public class OperationHelper
     {

@@ -7,8 +7,8 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Ditch.EOS.Tests.Models;
 using Ditch.EOS.Models;
-using Ditch.Core.Helpers;
 using Ditch.EOS.Models.Params;
+using Cryptography.ECDSA;
 
 namespace Ditch.EOS.Tests
 {

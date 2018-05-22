@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using Newtonsoft.Json;
 using Ditch.Core.Errors;
+using Ditch.Core.Interfaces;
 
 namespace Ditch.Core
 {

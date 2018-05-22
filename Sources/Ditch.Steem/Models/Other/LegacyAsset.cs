@@ -1,6 +1,8 @@
+using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace Ditch.Steem.Models.Other
 {
@@ -17,17 +19,24 @@ namespace Ditch.Steem.Models.Other
         /// 
         /// </summary>
         /// <returns>API type: share_type</returns>
-      //  [JsonProperty("amount")]
-        public object Amount { get; set; }
+        [MessageOrder(10)]
+        public long Amount { get; set; }
 
         /// <summary>
         /// API name: symbol
         /// = STEEM_SYMBOL;
         /// </summary>
         /// <returns>API type: asset_symbol_type</returns>
-      //  [JsonProperty("symbol")]
+        [MessageOrder(20)]
         public AssetSymbolType Symbol { get; set; }
 
+        public LegacyAsset(long amount, UInt32 assetNum)
+        {
+            Amount = amount;
+            Symbol = new AssetSymbolType(assetNum);
+        }
+
+        public LegacyAsset() { }
 
         #region ICustomJson
 
@@ -40,10 +49,13 @@ namespace Ditch.Steem.Models.Other
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            writer.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
+            writer.WriteStartArray();
+            writer.WriteValue(Amount.ToString());
+            writer.WriteValue(Symbol.Decimals());
+            writer.WriteValue(Symbol.ToNaiString());
+            writer.WriteEndArray();
         }
 
         #endregion
-
     }
 }

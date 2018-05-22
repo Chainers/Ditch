@@ -1,3 +1,4 @@
+using Ditch.Core.Attributes;
 using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
@@ -22,6 +23,7 @@ namespace Ditch.Steem.Models.Operations
         /// 
         /// </summary>
         /// <returns>API type: account_name_type</returns>
+        [MessageOrder(20)]
         [JsonProperty("from")]
         public string From { get; set; }
 
@@ -30,6 +32,7 @@ namespace Ditch.Steem.Models.Operations
         /// if null, then same as from
         /// </summary>
         /// <returns>API type: account_name_type</returns>
+        [MessageOrder(30)]
         [JsonProperty("to")]
         public string To { get; set; }
 
@@ -38,6 +41,7 @@ namespace Ditch.Steem.Models.Operations
         /// must be STEEM
         /// </summary>
         /// <returns>API type: asset</returns>
+        [MessageOrder(40)]
         [JsonProperty("amount")]
         public Asset Amount { get; set; }
 

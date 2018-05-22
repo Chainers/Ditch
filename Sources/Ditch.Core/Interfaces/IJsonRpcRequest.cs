@@ -1,4 +1,4 @@
-﻿namespace Ditch.Core.JsonRpc
+﻿namespace Ditch.Core.Interfaces
 {
     public interface IJsonRpcRequest
     {

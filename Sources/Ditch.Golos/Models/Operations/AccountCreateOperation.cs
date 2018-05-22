@@ -1,12 +1,12 @@
 ﻿using Ditch.Core.Attributes;
-using Ditch.Steem.Models.Other;
+using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Models.Operations
+namespace Ditch.Golos.Models.Operations
 {
     /// <summary>
     /// account_create_operation
-    /// libraries\protocol\include\steem\protocol\steem_operations.hpp
+    /// libraries\protocol\include\golos\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public partial class AccountCreateOperation : BaseOperation
@@ -86,7 +86,6 @@ namespace Ditch.Steem.Models.Operations
         [MessageOrder(90)]
         [JsonProperty("json_metadata")]
         public string JsonMetadata { get; set; }
-
 
 
         public AccountCreateOperation()

@@ -5,14 +5,16 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.Errors;
-using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Globalization;
+using Ditch.Core;
 using Ditch.Golos.Models.Enums;
 using Ditch.Golos.Models.Operations;
 using Ditch.Golos.Models.Other;
+using Cryptography.ECDSA;
+using Base58 = Ditch.Core.Base58;
 
 namespace Ditch.Golos.Tests
 {
@@ -109,24 +111,6 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
-        public void PostFailByTitleSizeTest()
-        {
-            var user = User;
-
-            var op = new PostOperation("test", user.Login, new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(new[] { "test", "spam" }));
-            var response = Post(user.PostingKeys, true, op);
-            Assert.IsTrue(response.IsError);
-            Console.WriteLine(response.GetErrorMessage());
-            Assert.IsTrue(response.Error is ResponseError);
-            var typedError = (ResponseError)response.Error;
-            Assert.IsTrue(typedError.Data.Code == 10);
-            var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
-            Console.WriteLine(match.Value);
-            Assert.IsTrue(match.Success);
-            Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
-        }
-
-        [Test]
         public void ReplyTest()
         {
             var user = User;
@@ -187,7 +171,20 @@ namespace Ditch.Golos.Tests
         //AccountCreate,
         //AccountUpdate,
 
-        //WitnessUpdate,
+        #region WitnessUpdate
+
+        [Test]
+        public async Task WitnessUpdateTest()
+        {
+            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
+
+
         //AccountWitnessVote,
         //AccountWitnessProxy,
 
@@ -352,14 +349,6 @@ namespace Ditch.Golos.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-        [Test]
-        public async Task WitnessUpdateOperationTest()
-        {
-            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", "GLS1111111111111111111111111111111114T1Anm", new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
-        }
-
         [Test, Sequential]
         [TestCase("277.126 SBD", 277126, 3, "SBD")]
         [TestCase("0 SBD", 0, 0, "SBD")]
@@ -373,6 +362,46 @@ namespace Ditch.Golos.Tests
             Assert.IsTrue(asset.Precision == precision);
             Assert.IsTrue(asset.Currency == currency);
             Assert.IsTrue(test.Equals(asset.ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)));
+        }
+
+        [Test]
+        public async Task AccountCreateTest()
+        {
+            var name = "userlogin";
+
+            var op = new AccountCreateOperation
+            {
+                Fee = new Asset(3000, 3, "GBG"),
+                Creator = User.Login,
+                NewAccountName = User.Login,
+                JsonMetadata = "",
+            };
+
+            var privateKey = Secp256K1Manager.GenerateRandomKey();
+            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
+
+            var subWif = Base58.GetSubWif(name, privateWif, "owner");
+            var pk = Base58.DecodePrivateWif(subWif);
+            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "active");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "posting");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "memo");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.MemoKey = new PublicKeyType(subPublicKey);
+
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
     }
 }

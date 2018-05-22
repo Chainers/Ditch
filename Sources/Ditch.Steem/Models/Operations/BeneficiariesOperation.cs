@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Ditch.Core.Attributes;
+using Ditch.Core.Models;
 using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Operations
 {
-    public class KeyContainer : List<object>
-    {
-        public KeyContainer(byte key, object value)
-        {
-            Add(key);
-            Add(value);
-        }
-    }
-
     [JsonObject(MemberSerialization.OptIn)]
     public class BeneficiaryContainer : INamedContainer
     {

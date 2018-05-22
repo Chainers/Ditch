@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Ditch.Core.Errors;
+using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using SuperSocket.ClientEngine;

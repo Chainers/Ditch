@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Ditch.Core.Helpers;
+﻿using Ditch.Core;
+using System.Collections.Generic;
 
 namespace Ditch.Golos.Tests
 {
@@ -14,9 +14,9 @@ namespace Ditch.Golos.Tests
 
         public string ActiveWif { get; set; } = string.Empty;
 
-        public List<byte[]> PostingKeys => _postingKeys ?? (_postingKeys = new List<byte[]> { Base58.TryGetBytes(PostingWif) });
+        public List<byte[]> PostingKeys => _postingKeys ?? (_postingKeys = new List<byte[]> { Base58.DecodePrivateWif(PostingWif) });
 
-        public List<byte[]> ActiveKeys => _activeKeys ?? (_activeKeys = new List<byte[]> { Base58.TryGetBytes(ActiveWif) });
+        public List<byte[]> ActiveKeys => _activeKeys ?? (_activeKeys = new List<byte[]> { Base58.DecodePrivateWif(ActiveWif) });
 
         public bool IsNsfw { get; set; } = false;
 

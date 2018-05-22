@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Ditch.Core.Errors;
-using Ditch.Core.Helpers;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models.Enums;
 using Newtonsoft.Json;
@@ -13,6 +11,9 @@ using NUnit.Framework;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
+using Ditch.Core;
+using Cryptography.ECDSA;
+using Base58 = Ditch.Core.Base58;
 
 namespace Ditch.Steem.Tests
 {
@@ -108,30 +109,6 @@ namespace Ditch.Steem.Tests
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
 
-
-        [Test]
-        public void PostFailByTitleSizeTest()
-        {
-            var user = User;
-
-            var op = new PostOperation("test", user.Login, new string('t', 666), "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(new[] { "test", "spam" }));
-            var response = Post(user.PostingKeys, true, op);
-
-            Assert.IsTrue(response.IsError);
-            Console.WriteLine(response.GetErrorMessage());
-
-            Assert.IsTrue(response.Error is ResponseError);
-            var typedError = (ResponseError)response.Error;
-
-            Assert.IsTrue(typedError.Data.Code == 10);
-
-            var match = _errorMsg.Match(typedError.Data.Stack[0].Format);
-            Console.WriteLine(match.Value);
-
-            Assert.IsTrue(match.Success);
-            Assert.IsTrue(match.Value.Equals("Title larger than size limit"));
-        }
-
         [Test]
         public void RuPostTest()
         {
@@ -197,7 +174,19 @@ namespace Ditch.Steem.Tests
         //Convert,
         //AccountCreate,
         //AccountUpdate,
-        //WitnessUpdate,
+
+        #region WitnessUpdate
+
+        [Test]
+        public async Task WitnessUpdateTest()
+        {
+            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, new LegacyAsset(1, Config.SteemAssetNumSteem), 131072), new Asset(1, Config.SteemAssetNumSteem));
+            var response = Post(User.ActiveKeys, false, op);
+            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+        }
+
+        #endregion
+
         //AccountWitnessVote,
         //AccountWitnessProxy,
         //Pow,
@@ -358,53 +347,39 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task AccountCreateTest()
         {
+            var name = "userlogin";
+
             var op = new AccountCreateOperation
             {
-                Fee = new Asset(1, Config.SteemAssetNumSteem),
+                Fee = new Asset(3000, Config.SteemAssetNumSteem),
                 Creator = User.Login,
-                NewAccountName = "",
-                Owner = new Authority
-                {
-                    WeightThreshold = 1,
-                    AccountAuths = new object[0],
-                    KeyAuths = new[]
-                    {
-                        new object[]
-                        {
-                            "STM5rLPLgzHt719b9onLVqSuSLicrNKWGU52vbs4W5mCiP3qvVHuF",
-                            1
-                        }
-                    }
-                },
-                Active = new Authority
-                {
-                    WeightThreshold = 1,
-                    AccountAuths = new object[0],
-                    KeyAuths = new[]
-                    {
-                        new object[]
-                        {
-                            "STM6yrr9Z2Prg9wH41H2YKantY1q97CAmTaAvkjRZgdY6KAt4xiGE",
-                            1
-                        }
-                    }
-                },
-                Posting = new Authority
-                {
-                    WeightThreshold = 1,
-                    AccountAuths = new object[0],
-                    KeyAuths = new[]
-                    {
-                        new object[]
-                        {
-                            "STM7DZEy6KayieQUUZE7t1Xe2N5JnPmXTfc84Hz3g8cMGkPYhZNdo",
-                            1
-                        }
-                    }
-                },
-                MemoKey = new PublicKeyType("STM8j2PbM5pfcUViCXt9Xj1wmGdQVDcFhZkedVxsutpBXF46cNmPB"),
+                NewAccountName = User.Login,
                 JsonMetadata = "",
             };
+
+            var privateKey = Secp256K1Manager.GenerateRandomKey();
+            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
+
+            var subWif = Base58.GetSubWif(name, privateWif, "owner");
+            var pk = Base58.DecodePrivateWif(subWif);
+            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "active");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "posting");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "memo");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.MemoKey = new PublicKeyType(subPublicKey);
+
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }

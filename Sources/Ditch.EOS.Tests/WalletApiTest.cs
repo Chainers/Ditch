@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Ditch.EOS.Models;
 using NUnit.Framework;
 using Newtonsoft.Json;
-using Ditch.Core.Helpers;
+using Cryptography.ECDSA;
 
 namespace Ditch.EOS.Tests
 {

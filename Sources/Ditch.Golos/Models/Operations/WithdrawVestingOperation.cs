@@ -1,3 +1,4 @@
+using Ditch.Core.Attributes;
 using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
@@ -21,6 +22,7 @@ namespace Ditch.Golos.Models.Operations
         /// 
         /// </summary>
         /// <returns>API type: account_name_type</returns>
+        [MessageOrder(20)]
         [JsonProperty("account")]
         public string Account { get; set; }
 
@@ -29,6 +31,7 @@ namespace Ditch.Golos.Models.Operations
         /// 
         /// </summary>
         /// <returns>API type: asset</returns>
+        [MessageOrder(30)]
         [JsonProperty("vesting_shares")]
         public Asset VestingShares { get; set; }
 

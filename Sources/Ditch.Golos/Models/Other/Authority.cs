@@ -1,5 +1,6 @@
 ﻿using System;
 using Ditch.Core.Attributes;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
@@ -19,11 +20,18 @@ namespace Ditch.Golos.Models.Other
         // bdType : account_authority_map
         [JsonProperty("account_auths")]
         [MessageOrder(20)]
-        public object AccountAuths { get; set; }
+        public MapContainer<string, UInt16> AccountAuths { get; set; }
 
         // bdType : key_authority_map
         [JsonProperty("key_auths")]
         [MessageOrder(30)]
-        public object[][] KeyAuths { get; set; }
+        public MapContainer<PublicKeyType, UInt16> KeyAuths { get; set; }
+
+        public Authority()
+        {
+            WeightThreshold = 1;
+            AccountAuths = new MapContainer<string, ushort>();
+            KeyAuths = new MapContainer<PublicKeyType, ushort>();
+        }
     }
 }

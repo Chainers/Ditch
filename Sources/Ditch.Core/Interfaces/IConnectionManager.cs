@@ -2,7 +2,7 @@
 using System.Threading;
 using Ditch.Core.JsonRpc;
 
-namespace Ditch.Core
+namespace Ditch.Core.Interfaces
 {
     public interface IConnectionManager
     {

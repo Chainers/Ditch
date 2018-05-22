@@ -1,5 +1,5 @@
 ﻿
-namespace Ditch.Core.Helpers
+namespace Ditch.Core
 {
     public static class Transliteration
     {

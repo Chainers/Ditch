@@ -714,12 +714,12 @@ namespace Ditch.Steem.Tests.Apis
             var accounts = Api.FindAccounts(findAccountsArgs, CancellationToken.None);
             Console.WriteLine(accounts.Error);
             Assert.IsFalse(accounts.IsError);
-            var pKey = (string)accounts.Result.Accounts[0].Posting.KeyAuths[0][0];
+            var pKey = accounts.Result.Accounts[0].Posting.KeyAuths[0].Key;
 
             var args = new GetRequiredSignaturesArgs()
             {
                 Trx = GetSignedTransaction(),
-                AvailableKeys = new PublicKeyType[] { new PublicKeyType(pKey) }
+                AvailableKeys = new[] { pKey }
             };
             var resp = Api.GetRequiredSignatures(args, CancellationToken.None);
             Console.WriteLine(resp.Error);

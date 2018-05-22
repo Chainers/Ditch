@@ -46,14 +46,14 @@ namespace Ditch.Golos.Tests
         {
             var propNames = GetPropertyNames(type);
 
-            var chSet = jObject.Children();
+            var jNames = jObject.Properties().Select(p => p.Name);
 
             var msg = new List<string>();
-            foreach (JProperty jtoken in chSet)
+            foreach (var name in jNames)
             {
-                if (!propNames.Contains(jtoken.Name))
+                if (!propNames.Contains(name))
                 {
-                    msg.Add($"Missing {jtoken}");
+                    msg.Add($"Missing {name}");
                 }
             }
 

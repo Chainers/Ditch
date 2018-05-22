@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
+using System.Text;
 using Ditch.Core.Converters;
+using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
 {
     [JsonConverter(typeof(CustomConverter))]
-    public partial class Asset : ICustomJson
+    public partial class Asset : ICustomJson, ICustomSerializer
     {
         public long Value { get; private set; }
 
@@ -34,7 +37,7 @@ namespace Ditch.Golos.Models.Other
             Precision = precision;
         }
 
-     
+
         public string ToString(string numberDecimalSeparator)
         {
             var dig = Value.ToString();
@@ -49,7 +52,7 @@ namespace Ditch.Golos.Models.Other
             }
             return string.IsNullOrEmpty(Currency) ? dig : $"{dig} {Currency}";
         }
-        
+
 
 
         public void InitFromString(string value, string numberDecimalSeparator, string numberGroupSeparator)
@@ -82,5 +85,24 @@ namespace Ditch.Golos.Models.Other
         }
 
         #endregion
+
+        #region ICustomSerializer
+
+        public void Serializer(Stream stream, IMessageSerializer serializeHelper)
+        {
+            var buf = BitConverter.GetBytes(Value);
+            stream.Write(buf, 0, buf.Length);
+
+            stream.WriteByte(Precision);
+
+            buf = Encoding.UTF8.GetBytes(Currency);
+            stream.Write(buf, 0, buf.Length);
+            for (var i = buf.Length; i < 7; i++)
+                stream.WriteByte(0);
+        }
+
+        #endregion
+
+
     }
 }

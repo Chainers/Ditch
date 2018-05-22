@@ -46,7 +46,11 @@ namespace Ditch.Steem.Models.Other
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            writer.WriteRawValue($"[\"{Amount}\",{Symbol.Decimals()},\"{Symbol.ToNaiString()}\"]");
+            writer.WriteStartArray();
+            writer.WriteValue(Amount.ToString());
+            writer.WriteValue(Symbol.Decimals());
+            writer.WriteValue(Symbol.ToNaiString());
+            writer.WriteEndArray();
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 
 namespace Ditch.Golos.Models.Other
 {

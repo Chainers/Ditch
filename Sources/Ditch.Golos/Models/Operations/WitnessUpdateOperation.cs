@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Operations
     {
         public override OperationType Type => OperationType.WitnessUpdate;
 
-        public override string TypeName => "account_update";
+        public override string TypeName => "witness_update";
 
         [MessageOrder(20)]
         [JsonProperty("owner")]
@@ -21,7 +21,7 @@ namespace Ditch.Golos.Models.Operations
 
         [MessageOrder(40)]
         [JsonProperty("block_signing_key")]
-        public string BlockSigningKey { get; set; }
+        public PublicKeyType BlockSigningKey { get; set; }
 
         [MessageOrder(50)]
         [JsonProperty("props")]
@@ -32,7 +32,7 @@ namespace Ditch.Golos.Models.Operations
         public Asset Fee { get; set; }
 
 
-        public WitnessUpdateOperation(string owner, string url, string blockSigningKey, ChainProperties props, Asset fee)
+        public WitnessUpdateOperation(string owner, string url, PublicKeyType blockSigningKey, ChainProperties props, Asset fee)
         {
             Owner = owner;
             Url = url;

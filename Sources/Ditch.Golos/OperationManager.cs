@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
-using Ditch.Core.Helpers;
+using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Helpers;
 using Ditch.Golos.JsonRpc;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Operations;
@@ -18,6 +17,7 @@ namespace Ditch.Golos
     public partial class OperationManager
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings;
+        private readonly MessageSerializer _messageSerializer;
         private readonly IConnectionManager _connectionManager;
         private List<string> _urls;
         private readonly Config _config;
@@ -32,6 +32,7 @@ namespace Ditch.Golos
             _jsonSerializerSettings = jsonSerializerSettings;
             _connectionManager = connectionManage;
             _config = config;
+            _messageSerializer = new MessageSerializer();
         }
 
         public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
@@ -208,15 +209,15 @@ namespace Ditch.Golos
                 BaseOperations = operations
             };
 
-            var msg = SerializeHelper.TransactionToMessage(transaction);
-            var data = Secp256k1Manager.GetMessageHash(msg);
-            
+            var msg = _messageSerializer.Serialize<SignedTransaction>(transaction);
+            var data = Sha256Manager.GetHash(msg);
+
             transaction.Signatures = new string[userPrivateKeys.Count];
             for (int i = 0; i < userPrivateKeys.Count; i++)
             {
                 token.ThrowIfCancellationRequested();
                 var userPrivateKey = userPrivateKeys[i];
-                var sig = Secp256k1Manager.SignCompressedCompact(data, userPrivateKey);
+                var sig = Secp256K1Manager.SignCompressedCompact(data, userPrivateKey);
                 transaction.Signatures[i] = Hex.ToString(sig);
             }
 

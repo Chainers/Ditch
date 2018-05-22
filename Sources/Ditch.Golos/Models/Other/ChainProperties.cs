@@ -11,18 +11,18 @@ namespace Ditch.Golos.Models.Other
     [JsonObject(MemberSerialization.OptIn)]
     public partial class ChainProperties
     {
-        // bdType : uint16_t | = steemit_default_sbd_interest_rate;
+        [JsonProperty("account_creation_fee")]
         [MessageOrder(10)]
+        public Asset AccountCreationFee { get; set; }
+        
+        [JsonProperty("maximum_block_size")]
+        [MessageOrder(20)]
+        public UInt32 MaximumBlockSize { get; set; }
+
+        // bdType : uint16_t | = steemit_default_sbd_interest_rate;
+        [MessageOrder(30)]
         [JsonProperty("sbd_interest_rate")]
         public UInt16 SbdInterestRate { get; set; }
-
-        [JsonProperty("account_creation_fee")]
-        [MessageOrder(20)]
-        public Asset AccountCreationFee { get; set; }
-
-        [JsonProperty("maximum_block_size")]
-        [MessageOrder(30)]
-        public UInt32 MaximumBlockSize { get; set; }
 
         public ChainProperties(UInt16 sbdInterestRate, Asset accountCreationFee, UInt32 maximumBlockSize)
         {

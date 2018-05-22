@@ -6,62 +6,27 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Ditch.Core.Attributes;
-using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
+using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace Ditch.Golos.Helpers
+namespace Ditch.Core
 {
-    internal class SerializeHelper
+    public class MessageSerializer : IMessageSerializer
     {
-        private static IEnumerable<PropertyInfo> GetPropertiesForMessage(Type type)
-        {
-            var props = type.GetRuntimeProperties();
-            var kvarray = new List<KeyValuePair<int, PropertyInfo>>();
-            foreach (var prop in props)
-            {
-                var order = prop.GetCustomAttribute<MessageOrderAttribute>();
-                if (order != null)
-                {
-                    kvarray.Add(new KeyValuePair<int, PropertyInfo>(order.Value, prop));
-                }
-            }
-
-            return kvarray.OrderBy(i => i.Key).Select(p => p.Value);
-        }
-
-        public static byte[] TransactionToMessage(Transaction transaction)
+        public byte[] Serialize<T>(object obj)
         {
             using (var ms = new MemoryStream())
             {
-                var props = GetPropertiesForMessage(typeof(Transaction));
+                var props = GetPropertiesForMessage(typeof(T));
                 foreach (var prop in props)
                 {
-                    AddToMessageStream(ms, prop, transaction);
+                    AddToMessageStream(ms, prop, obj);
                 }
                 return ms.ToArray();
             }
         }
 
-        private static void AddToMessageStream(Stream stream, PropertyInfo prop, object val)
-        {
-            var intype = prop.PropertyType;
-            var inval = prop.GetValue(val);
-
-            if (inval == null)
-            {
-                var order = prop.GetCustomAttribute<JsonPropertyAttribute>();
-                if (order?.NullValueHandling == NullValueHandling.Ignore)
-                {
-                    stream.WriteByte(0);
-                    return;
-                }
-            }
-
-            AddToMessageStream(stream, intype, inval);
-        }
-
-        private static void AddToMessageStream(Stream stream, Type type, object val)
+        public virtual void AddToMessageStream(Stream stream, Type type, object val)
         {
             if (type == typeof(bool))
             {
@@ -133,28 +98,6 @@ namespace Ditch.Golos.Helpers
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(OperationType))
-            {
-                var buf = (OperationType)val;
-                stream.WriteByte((byte)buf);
-                return;
-            }
-            if (type == typeof(Asset))
-            {
-                var typed = (Asset)val;
-
-                var buf = BitConverter.GetBytes(typed.Value);
-                stream.Write(buf, 0, buf.Length);
-
-                stream.WriteByte(typed.Precision);
-
-                buf = Encoding.UTF8.GetBytes(typed.Currency);
-                stream.Write(buf, 0, buf.Length);
-                for (var i = buf.Length; i < 7; i++)
-                    stream.WriteByte(0);
-
-                return;
-            }
             if (type == typeof(String))
             {
                 var typed = (string)val;
@@ -169,14 +112,14 @@ namespace Ditch.Golos.Helpers
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            var container = val as KeyContainer;
-            if (container != null)
+            if (val is ICustomSerializer customSerializer)
             {
-                var typed = container;
-                foreach (var value in typed)
-                {
-                    AddToMessageStream(stream, value.GetType(), value);
-                }
+                customSerializer.Serializer(stream, this);
+                return;
+            }
+            if (type.IsEnum)
+            {
+                stream.WriteByte((byte)val);
                 return;
             }
             if (type.IsArray)
@@ -207,13 +150,47 @@ namespace Ditch.Golos.Helpers
 
         }
 
+        protected IEnumerable<PropertyInfo> GetPropertiesForMessage(Type type)
+        {
+            var props = type.GetRuntimeProperties();
+            var kvarray = new List<KeyValuePair<int, PropertyInfo>>();
+            foreach (var prop in props)
+            {
+                var order = prop.GetCustomAttribute<MessageOrderAttribute>();
+                if (order != null)
+                {
+                    kvarray.Add(new KeyValuePair<int, PropertyInfo>(order.Value, prop));
+                }
+            }
+
+            return kvarray.OrderBy(i => i.Key).Select(p => p.Value);
+        }
+
+        protected void AddToMessageStream(Stream stream, PropertyInfo prop, object val)
+        {
+            var intype = prop.PropertyType;
+            var inval = prop.GetValue(val);
+
+            if (inval == null)
+            {
+                var order = prop.GetCustomAttribute<JsonPropertyAttribute>();
+                if (order?.NullValueHandling == NullValueHandling.Ignore)
+                {
+                    stream.WriteByte(0);
+                    return;
+                }
+            }
+
+            AddToMessageStream(stream, intype, inval);
+        }
+
         /// <summary>
         /// Сonverts a number to a minimal byte array
         /// *peeped  https://github.com/xeroc/python-graphenelib/blob/master/graphenebase/types.py
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        private static byte[] VarInt(int n)
+        protected byte[] VarInt(int n)
         {
             //get array len
             var i = 1;

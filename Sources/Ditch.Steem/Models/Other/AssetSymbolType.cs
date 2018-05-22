@@ -1,6 +1,7 @@
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
-using Ditch.Core.Attributes;
+using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other
@@ -10,7 +11,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\protocol\include\steem\protocol\asset_symbol.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetSymbolType
+    public partial class AssetSymbolType : ICustomSerializer
     {
         private static readonly Regex ValidateRegex = new Regex("(?<=^@@)[0-9]{9}$");
 
@@ -19,7 +20,6 @@ namespace Ditch.Steem.Models.Other
         /// = 0;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
-        [MessageOrder(10)]
         public UInt32 AssetNum { get; set; }
 
 
@@ -132,5 +132,36 @@ namespace Ditch.Steem.Models.Other
             x = t[x + d0];
             return (byte)(x / 10);
         }
+
+        #region ICustomSerializer
+
+        public void Serializer(Stream stream, IMessageSerializer serializeHelper)
+        {
+            switch (AssetNum)
+            {
+                case Config.SteemAssetNumSteem:
+                    {
+                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), Config.SteemSymbolSer);
+                        break;
+                    }
+                case Config.SteemAssetNumSbd:
+                    {
+                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), Config.SbdSymbolSer);
+                        break;
+                    }
+                case Config.SteemAssetNumVests:
+                    {
+                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), Config.VestsSymbolSer);
+                        break;
+                    }
+                default:
+                    {
+                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), AssetNum);
+                        break;
+                    }
+            }
+        }
+
+        #endregion
     }
 }

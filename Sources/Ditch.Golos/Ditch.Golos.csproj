@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.1.3-alpha</Version>
+    <Version>3.1.3</Version>
     <Authors>Chainers, KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Copyright></Copyright>
@@ -22,8 +22,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cryptography.ECDSA.Secp256k1" Version="1.0.1" />
-    <PackageReference Include="Ditch.Core" Version="3.1.2" />
+    <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.0" />
+    <PackageReference Include="Ditch.Core" Version="3.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

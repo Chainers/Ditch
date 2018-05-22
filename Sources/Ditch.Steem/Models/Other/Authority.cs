@@ -1,4 +1,6 @@
 ﻿using System;
+using Ditch.Core.Attributes;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other
@@ -12,15 +14,25 @@ namespace Ditch.Steem.Models.Other
     {
 
         // bdType : uint32_t | = 0;
+        [MessageOrder(10)]
         [JsonProperty("weight_threshold")]
         public UInt32 WeightThreshold { get; set; }
 
         // bdType : account_authority_map
+        [MessageOrder(20)]
         [JsonProperty("account_auths")]
-        public object AccountAuths { get; set; }
+        public MapContainer<string, UInt16> AccountAuths { get; set; }
 
         // bdType : key_authority_map
+        [MessageOrder(30)]
         [JsonProperty("key_auths")]
-        public object[][] KeyAuths { get; set; }
+        public MapContainer<PublicKeyType, UInt16> KeyAuths { get; set; }
+
+        public Authority()
+        {
+            WeightThreshold = 1;
+            AccountAuths = new MapContainer<string, ushort>();
+            KeyAuths = new MapContainer<PublicKeyType, ushort>();
+        }
     }
 }

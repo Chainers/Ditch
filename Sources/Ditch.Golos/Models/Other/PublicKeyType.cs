@@ -1,49 +1,44 @@
 ﻿using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
-using Ditch.Core.Helpers;
 using Newtonsoft.Json;
+using Ditch.Core;
 
 namespace Ditch.Golos.Models.Other
 {
     [JsonConverter(typeof(CustomConverter))]
     public partial class PublicKeyType : ICustomJson
     {
-        public const string AddressPrefix = "GLS";
-
-        private string _value;
+        public const string Prefix = "GLS";
 
         [MessageOrder(1)]
-        public byte[] Data => ToBytes();
+        public byte[] Data { get; set; }
 
 
         public PublicKeyType() { }
 
         public PublicKeyType(string value)
         {
-            _value = value;
+            Data = Base58.DecodePublicWif(value, Prefix);
         }
 
-        private byte[] ToBytes()
+        public PublicKeyType(byte[] data)
         {
-            if (!_value.StartsWith(AddressPrefix))
-                return new byte[0];
-
-            var buf = _value.Remove(0, 3);
-            var s = Base58.Decode(buf);
-            var dec = Base58.CutLastBytes(s, 4);
-            return dec;
+            Data = data;
         }
+
 
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            _value = reader.Value.ToString();
+            var value = reader.Value.ToString();
+            Data = Base58.DecodePublicWif(value, Prefix);
         }
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            writer.WriteValue(_value);
+            var wif = Base58.EncodePublicWif(Data, Prefix);
+            writer.WriteValue(wif);
         }
 
         #endregion

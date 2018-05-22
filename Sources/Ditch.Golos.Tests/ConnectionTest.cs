@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests
