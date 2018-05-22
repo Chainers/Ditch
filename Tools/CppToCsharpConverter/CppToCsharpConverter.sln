@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.Golos", "Converte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.Core", "Converter.Core\Converter.Core.csproj", "{0D7A1DDF-3CE4-4EFE-8136-026A00F1591E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.BitShares", "Converter.BitShares\Converter.BitShares.csproj", "{67D61733-5379-465C-9287-47F46846555F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0D7A1DDF-3CE4-4EFE-8136-026A00F1591E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D7A1DDF-3CE4-4EFE-8136-026A00F1591E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D7A1DDF-3CE4-4EFE-8136-026A00F1591E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D61733-5379-465C-9287-47F46846555F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D61733-5379-465C-9287-47F46846555F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D61733-5379-465C-9287-47F46846555F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D61733-5379-465C-9287-47F46846555F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

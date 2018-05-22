@@ -10,11 +10,11 @@ using Converter.Core;
 using Converter.Core.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Converter.Golos.Converters
+namespace Converter.BitShares.Converters
 {
     public abstract class BaseConverter
     {
-        public const string ProjName = "Golos";
+        public const string ProjName = "BitShares";
 
         private const string Url = "https://raw.githubusercontent.com/gropox/steemjsgui/master/src/steemjs/api/types.json";
         private static readonly Regex NamespacePref = new Regex(@"\b[a-z]+::", RegexOptions.IgnoreCase);
@@ -29,11 +29,11 @@ namespace Converter.Golos.Converters
         public static readonly List<SearchTask> UnknownTypes = new List<SearchTask>();
         private Dictionary<string, string> _methodDescriptions = new Dictionary<string, string>();
 
-        public Dictionary<string, string> MethodDescriptions
+        private Dictionary<string, string> MethodDescriptions
         {
             get
             {
-                if (_methodDescriptions == null || _methodDescriptions.Count == 0)
+                if (_methodDescriptions == null)
                 {
                     _methodDescriptions = GetMethodDescriptions().Result;
                 }
@@ -67,7 +67,7 @@ namespace Converter.Golos.Converters
                     {
                         var methodJObject = JObject.Parse(method.Value.ToString());
                         var desc = JObject.Parse(methodJObject["desc"].ToString());
-                        var enDesc = desc["ru"].ToString();
+                        var enDesc = desc["en"].ToString();
                         if (!result.ContainsKey(method.Name))
                         {
                             result.Add(method.Name, enDesc);
@@ -111,6 +111,14 @@ namespace Converter.Golos.Converters
                     itm.SearchDir = searchDir;
             }
         }
+
+        //public ParsedClass Parse(string text, bool isApi)
+        //{
+        //    var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        //    var preParseClass = _cashParser.TryParseClass(lines, ,isApi);
+        //    ExtendPreParsedClass(preParseClass);
+        //    return preParseClass;
+        //}
 
         #region ParseText
 
@@ -371,14 +379,16 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using System.Collections.Generic; ");
                         sb.AppendLine("using Ditch.Core.JsonRpc;");
                         sb.AppendLine($"using Ditch.{ProjName}.Models;");
+                        sb.AppendLine("using System.Threading;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{ProjName}.Api");
+                        sb.AppendLine($"namespace Ditch.{ProjName}");
                         break;
                     }
             }
 
             sb.AppendLine("{");
         }
+
 
         public string PrintParsedClass(ParsedClass parsedClass, string absPathToFile, string searchDir)
         {
@@ -469,6 +479,13 @@ namespace Converter.Golos.Converters
                 sb.AppendLine();
             }
 
+            var isVoidType = false;
+            if (parsedClass.ObjectType == ObjectType.Api && parsedFunc != null && parsedFunc.Params.Any())
+            {
+                var paramName = parsedFunc.Params[0].Type.Name;
+                isVoidType = (FoundedClass.ContainsKey(paramName) && FoundedClass[paramName].Inherit.Any(i => i.Name.Equals("VoidType")));
+            }
+
             var comment = parsedElement.Comment ?? string.Empty;
             //comment = comment.Replace("\\", $@"/// {Environment.NewLine}");
 
@@ -492,15 +509,16 @@ namespace Converter.Golos.Converters
 
             if (parsedFunc != null)
             {
-                foreach (var itm in parsedFunc.Params)
-                {
-                    sb.Append($"{indent}/// <param name=\"{itm.Name}\">API type: {TypeCorrection(itm.CppType)}");
+                if (!isVoidType)
+                    foreach (var itm in parsedFunc.Params)
+                    {
+                        sb.Append($"{indent}/// <param name=\"{itm.Name}\">API type: {TypeCorrection(itm.CppType)}");
 
-                    if (briefComment != null && briefComment.Params.ContainsKey(itm.CppName))
-                        sb.Append(briefComment.Params[itm.CppName].Replace(Environment.NewLine, $"{Environment.NewLine}{indent}/// "));
+                        if (briefComment != null && briefComment.Params.ContainsKey(itm.CppName))
+                            sb.Append(briefComment.Params[itm.CppName].Replace(Environment.NewLine, $"{Environment.NewLine}{indent}/// "));
 
-                    sb.AppendLine("</param>");
-                }
+                        sb.AppendLine("</param>");
+                    }
 
                 if (parsedClass.ObjectType == ObjectType.Api)
                     sb.AppendLine($"{indent}/// <param name=\"token\">Throws a <see cref=\"T:System.OperationCanceledException\" /> if this token has had cancellation requested.</param>");
@@ -528,7 +546,22 @@ namespace Converter.Golos.Converters
             var type = GetTypeForPrint(parsedElement.Type, templateName);
             if (parsedFunc != null)
             {
-                sb.AppendLine($"{indent}public JsonRpcResponse{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")} {parsedElement.Name}({string.Join(", ", parsedFunc.Params)}{(parsedClass.ObjectType == ObjectType.Api ? $"{(parsedFunc.Params.Any() ? ", " : string.Empty)}CancellationToken token" : string.Empty)})");
+                sb.Append(indent + "public JsonRpcResponse");
+                if (!type.Equals("void", StringComparison.OrdinalIgnoreCase))
+                    sb.Append($"<{type}>");
+
+                if (parsedClass.ObjectType == ObjectType.Api)
+                {
+                    sb.Append($" {parsedElement.Name}(");
+                    if (parsedFunc.Params.Any() && !isVoidType)
+                        sb.Append($"{string.Join(", ", parsedFunc.Params)}, ");
+
+                    sb.AppendLine("CancellationToken token)");
+                }
+                else
+                {
+                    sb.AppendLine($" {parsedElement.Name}({string.Join(", ", parsedFunc.Params)})");
+                }
                 sb.AppendLine($"{indent}{{");
 
                 sb.Append($"{indent}    return CustomGetRequest{(type.Equals("void", StringComparison.OrdinalIgnoreCase) ? string.Empty : $"<{type}>")}(");
@@ -537,14 +570,24 @@ namespace Converter.Golos.Converters
 
                 sb.Append($"\"{parsedElement.CppName}\"");
 
-
-                sb.Append(", new object[] {");
-                if (parsedFunc.Params.Any())
-                    sb.Append(string.Join(", ", parsedFunc.Params.Select(i => i.Name)));
-                sb.Append("}");
-
                 if (parsedClass.ObjectType == ObjectType.Api)
+                {
+                    if (parsedFunc.Params.Any() && !isVoidType)
+                    {
+                        sb.Append(", new object[]{");
+                        sb.Append(string.Join(", ", parsedFunc.Params.Select(i => i.Name)));
+                        sb.Append(", }");
+                    }
                     sb.Append(", token");
+                }
+                else
+                {
+                    sb.Append(", new object[] {");
+                    if (parsedFunc.Params.Any())
+                        sb.Append(string.Join(", ", parsedFunc.Params.Select(i => i.Name)));
+                    sb.Append("}");
+                }
+
                 sb.AppendLine(");");
                 sb.AppendLine($"{indent}}}");
             }

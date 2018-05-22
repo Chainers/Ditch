@@ -111,6 +111,10 @@
     <Resource Include="SettingsViewModel.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Converter.BitShares\Converter.BitShares.csproj">
+      <Project>{67d61733-5379-465c-9287-47f46846555f}</Project>
+      <Name>Converter.BitShares</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Converter.Core\Converter.Core.csproj">
       <Project>{0d7a1ddf-3ce4-4efe-8136-026a00f1591e}</Project>
       <Name>Converter.Core</Name>

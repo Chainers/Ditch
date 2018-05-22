@@ -3,36 +3,32 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Ditch.Core;
-using Xunit;
-using Xunit.Abstractions;
+using NUnit.Framework;
 
 namespace Ditch.BitShares.Tests
 {
-    public class ConnectionTest : BaseTest
+    [TestFixture()]
+    public class ConnectionTest
     {
-        public ConnectionTest(ITestOutputHelper output) : base(output)
-        {
-        }
-
         /// <summary>
         /// https://www.steem.center/index.php?title=Public_Websocket_Servers
         /// </summary>
         /// <param name="url"></param>
-        [Theory]
-        [InlineData("wss://eu.openledger.info/ws")]
-        [InlineData("wss://bitshares.crypto.fans/ws")]
-        [InlineData("wss://dex.rnglab.org")]
-        [InlineData("wss://dexnode.net/ws")]
-        [InlineData("wss://la.dexnode.net/ws")]
-        [InlineData("wss://openledger.hk/ws")]
-        [InlineData("wss://bitshares.openledger.info/ws")]
-        [InlineData("wss://ws.gdex.top")]
-        [InlineData("wss://bit.btsabc.org/ws")]
-        [InlineData("wss://node.testnet.bitshares.eu")]
-        [InlineData("wss://bts.ai.la/ws")]
-        [InlineData("wss://bitshares.apasia.tech/ws")]
-        [InlineData("wss://bitshares.dacplay.org/ws")]
-        [InlineData("wss://japan.bitshares.apasia.tech/ws")]
+        [Test]
+        [TestCase("wss://eu.openledger.info/ws")]
+        [TestCase("wss://bitshares.crypto.fans/ws")]
+        [TestCase("wss://dex.rnglab.org")]
+        [TestCase("wss://dexnode.net/ws")]
+        [TestCase("wss://la.dexnode.net/ws")]
+        [TestCase("wss://openledger.hk/ws")]
+        [TestCase("wss://bitshares.openledger.info/ws")]
+        [TestCase("wss://ws.gdex.top")]
+        [TestCase("wss://bit.btsabc.org/ws")]
+        [TestCase("wss://node.testnet.bitshares.eu")]
+        [TestCase("wss://bts.ai.la/ws")]
+        [TestCase("wss://bitshares.apasia.tech/ws")]
+        [TestCase("wss://bitshares.dacplay.org/ws")]
+        [TestCase("wss://japan.bitshares.apasia.tech/ws")]
         public void NodeTest(string url)
         {
             var jss = BaseTest.GetJsonSerializerSettings();
