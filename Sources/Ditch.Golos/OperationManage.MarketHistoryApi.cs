@@ -7,16 +7,15 @@ using Ditch.Golos.Models.Other;
 namespace Ditch.Golos
 {
     /// <summary>
-    /// market_history_api
-    /// libraries\plugins\market_history\include\golos\market_history\market_history_api.hpp
+    /// market_history
+    /// plugins\market_history\include\golos\plugins\market_history\market_history_plugin.hpp
     /// </summary>
     public partial class OperationManager
     {
+
         /// <summary>
         /// API name: get_market_history
-        /// Returns the market history for the internal SBD:STEEM market.
-        ///
-        /// *Returns the market history for the internal market.
+        /// *Возвращает историю рынка для внутреннего рынка
         /// 
         /// </summary>
         /// <param name="bucketSeconds">API type: uint32_t The size of buckets the history is broken into. The bucket size must be configured in the plugin options.</param>
@@ -32,6 +31,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_market_history_buckets
+        /// *Возвращает размер секунд стакана(среза), отслеживаемых плагином.
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -44,6 +44,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_open_orders
+        /// *Отображает список заявок на внутренней бирже на покупку и продажу в сети для указанного пользователя.
         /// 
         /// </summary>
         /// <param name="owner">API type: string</param>
@@ -56,7 +57,9 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// Gets the current order book for STEEM:SBD market
+        /// API name: get_order_book
+        /// *Отображает список заявок на внутренней бирже на покупку и продажу в сети
+        /// 
         /// </summary>
         /// <param name="limit">Maximum number of orders for each side of the spread to return -- Must not exceed 1000</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -68,7 +71,21 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_order_book_extended
+        /// 
+        /// </summary>
+        /// <param name="arg0">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: order_book_extended</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<OrderBookExtended> GetOrderBookExtended(UInt32 arg0, CancellationToken token)
+        {
+            return CustomGetRequest<OrderBookExtended>(KnownApiNames.MarketHistory, "get_order_book_extended", new object[] { arg0 }, token);
+        }
+
+        /// <summary>
         /// API name: get_recent_trades
+        /// *Возвращает N последних сделок для внутреннего рынка
         /// 
         /// </summary>
         /// <param name="limit">API type: uint32_t</param>
@@ -82,9 +99,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_ticker
-        /// Returns the ticker for the market assetA:assetB
-        ///
-        /// *Returns the market ticker for the internal market
+        /// *Возвращает рыночный тикет для внутреннего рынка
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -97,10 +112,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_trade_history
-        /// Returns recent trades for the market assetA:assetB
-        /// Note: Currently, timezone offsets are not supported. The time must be UTC.
-        ///
-        /// *Returns the trade history for the internal market.
+        /// *Возвращает историю торговли для внутреннего рынка
         /// 
         /// </summary>
         /// <param name="start">API type: fc::time_point_sec Start time as a UNIX timestamp</param>
@@ -116,9 +128,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_volume
-        /// Returns the 24 hour volume for the market assetA:assetB
-        ///
-        /// *Returns the market volume for the past 24 hours
+        /// *Возвращает объем рынка за последние 24 часа
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>

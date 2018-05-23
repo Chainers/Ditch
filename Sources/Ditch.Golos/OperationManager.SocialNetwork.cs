@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Core.Models;
-using Ditch.Golos.Models.ApiObj;
 using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Other;
-using Newtonsoft.Json.Linq;
 
 namespace Ditch.Golos
 {
@@ -23,21 +20,6 @@ namespace Ditch.Golos
     /// </summary>
     public partial class OperationManager
     {
-
-        /// <summary>
-        ///     API name: get_trending_tags
-        ///     *Returns a list of tags (tags) that include word combinations
-        /// </summary>
-        /// <param name="afterTag">API type: std::string</param>
-        /// <param name="limit">API type: uint32_t</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: tag_api_obj</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string afterTag, uint limit, CancellationToken token)
-        {
-            return CustomGetRequest<TagApiObj[]>(KnownApiNames.SocialNetworkApi, "get_trending_tags", new object[] { afterTag, limit }, token);
-        }
-
         /// <summary>
         /// API name: get_trending_categories
         /// *Returns sorted by value tags starting with a given or similar to it.
@@ -102,12 +84,13 @@ namespace Ditch.Golos
         /// </summary>
         /// <param name="author">API type: std::string</param>
         /// <param name="permlink">API type: std::string</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: vote_state if permlink is "" then it will return all votes for author</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoteState[]> GetActiveVotes(string author, string permlink, CancellationToken token)
+        public JsonRpcResponse<VoteState[]> GetActiveVotes(string author, string permlink, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<VoteState[]>(KnownApiNames.SocialNetworkApi, "get_active_votes", new object[] { author, permlink }, token);
+            return CustomGetRequest<VoteState[]>(KnownApiNames.SocialNetworkApi, "get_active_votes", new object[] { author, permlink, voteLimit }, token);
         }
 
         /// <summary>
@@ -116,12 +99,13 @@ namespace Ditch.Golos
         /// 
         /// </summary>
         /// <param name="voter">API type: std::string</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_vote</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter, CancellationToken token)
+        public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<AccountVote[]>(KnownApiNames.SocialNetworkApi, "get_account_votes", new object[] { voter }, token);
+            return CustomGetRequest<AccountVote[]>(KnownApiNames.SocialNetworkApi, "get_account_votes", new object[] { voter, voteLimit }, token);
         }
 
         /// <summary>
@@ -131,12 +115,13 @@ namespace Ditch.Golos
         /// </summary>
         /// <param name="author">API type: std::string</param>
         /// <param name="permlink">API type: std::string</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, CancellationToken token)
+        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<Discussion>(KnownApiNames.SocialNetworkApi, "get_content", new object[] { author, permlink }, token);
+            return CustomGetRequest<Discussion>(KnownApiNames.SocialNetworkApi, "get_content", new object[] { author, permlink, voteLimit }, token);
         }
 
         /// <summary>
@@ -146,27 +131,13 @@ namespace Ditch.Golos
         /// </summary>
         /// <param name="parent">API type: std::string</param>
         /// <param name="parentPermlink">API type: std::string</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetContentReplies(string parent, string parentPermlink, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetContentReplies(string parent, string parentPermlink, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_content_replies", new object[] { parent, parentPermlink }, token);
-        }
-
-        /// <summary>
-        /// API name: get_tags_used_by_author
-        /// Used to retrieve top 1000 tags list used by an author sorted by most frequently used
-        ///
-        /// 
-        /// </summary>
-        /// <param name="author">API type: std::string select tags of this author</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>vector of top 1000 tags used by an author sorted by most frequently used</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MapContainer<string, UInt32>> GetTagsUsedByAuthor(string author, CancellationToken token)
-        {
-            return CustomGetRequest<MapContainer<string, UInt32>>(KnownApiNames.SocialNetworkApi, "get_tags_used_by_author", new object[] { author }, token);
+            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_content_replies", new object[] { parent, parentPermlink, voteLimit }, token);
         }
 
         /// <summary>
@@ -347,7 +318,6 @@ namespace Ditch.Golos
         }
 
 
-
         /// <summary>
         /// API name: get_replies_by_last_update
         /// *Return the active discussions with the highest cumulative pending payouts without respect to category, total  pending payout means the pending payout of all children as well.
@@ -356,35 +326,37 @@ namespace Ditch.Golos
         /// <param name="startAuthor">API type: account_name_type</param>
         /// <param name="startPermlink">API type: std::string</param>
         /// <param name="limit">API type: uint32_t</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion Return the active discussions with the highest cumulative pending payouts without respect to category, total
         /// pending payout means the pending payout of all children as well.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, UInt32 limit, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { startAuthor, startPermlink, limit }, token);
+            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { startAuthor, startPermlink, limit, voteLimit }, token);
         }
 
-        /// <summary>
-        /// API name: get_discussions_by_author_before_date
-        /// This method is used to fetch all posts/comments by start_author that occur after before_date and start_permlink with up to limit being returned.
+        ///  <summary>
+        ///  API name: get_discussions_by_author_before_date
+        ///  This method is used to fetch all posts/comments by start_author that occur after before_date and start_permlink with up to limit being returned.
+        ///  
+        ///  If start_permlink is empty then only before_date will be considered. If both are specified the eariler to the two metrics will be used. This
+        ///  should allow easy pagination.
         /// 
-        /// If start_permlink is empty then only before_date will be considered. If both are specified the eariler to the two metrics will be used. This
-        /// should allow easy pagination.
-        ///
-        /// *Displays a limited number of user publications
-        /// 
-        /// </summary>
-        /// <param name="author">API type: std::string</param>
-        /// <param name="startPermlink">API type: std::string</param>
-        /// <param name="beforeDate">API type: time_point_sec</param>
-        /// <param name="limit">API type: uint32_t</param>
+        ///  *Displays a limited number of user publications
+        ///  
+        ///  </summary>
+        ///  <param name="author">API type: std::string</param>
+        ///  <param name="startPermlink">API type: std::string</param>
+        ///  <param name="beforeDate">API type: time_point_sec</param>
+        ///  <param name="limit">API type: uint32_t</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: discussion</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)
+        ///  <returns>API type: discussion</returns>
+        ///  <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit }, token);
+            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit, voteLimit }, token);
         }
 
         /// <summary>
@@ -393,12 +365,13 @@ namespace Ditch.Golos
         /// </summary>
         /// <param name="author">API type: std::string</param>
         /// <param name="permlink">API type: std::string</param>
+        /// <param name="voteLimit"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetAllContentReplies(string author, string permlink, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetAllContentReplies(string author, string permlink, UInt16 voteLimit, CancellationToken token)
         {
-            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { author, permlink }, token);
+            return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { author, permlink, voteLimit }, token);
         }
 
         /// <summary>
@@ -413,19 +386,6 @@ namespace Ditch.Golos
         public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, token);
-        }
-
-
-        /// <summary>
-        /// API name: get_languages
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: discussion  Vector of discussions sorted by children posts amount</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<JObject> GetLanguages(CancellationToken token)
-        {
-            return CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_languages", token);
         }
     }
 }

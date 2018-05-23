@@ -74,6 +74,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\OperationHistoryTest.cs" />
+    <Compile Include="Apis\AccountHistoryTest.cs" />
+    <Compile Include="Apis\TagsTest.cs" />
+    <Compile Include="Apis\WitnessApiTest.cs" />
     <Compile Include="Apis\SocialNetworkTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="Apis\AccountByKeyApiTest.cs" />

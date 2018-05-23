@@ -3,6 +3,7 @@ using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models.ApiObject;
 using Ditch.Golos.Models.Enums;
+using Ditch.Golos.Models.Objects;
 using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos
@@ -17,13 +18,14 @@ namespace Ditch.Golos
 
     /// <summary>
     /// database_api
-    /// libraries\application\include\golos\application\database_api.hpp
+    /// plugins\database_api\include\golos\plugins\database_api\plugin.hpp
     /// </summary>
     public partial class OperationManager
     {
+
         /// <summary>
         /// API name: get_account_bandwidth
-        /// *Displays user actions based on type
+        /// *Отображает действия пользователя в зависимости от типа
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -38,9 +40,8 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_account_count
-        /// Get the total number of accounts registered with the blockchain
         ///
-        /// *Returns the number of registered users.
+        /// *Возвращает количество зарегестрированных пользователей.
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -52,55 +53,10 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_account_history
-        /// Account operations have sequence numbers from 0 to N where N is the most recent operation.
-        ///
-        /// *The history of all user actions on the network in the form of transactions. If from = -1, then are last {limit+1} history elements are shown. Parameter limit should be less or equals {from} (except from = -1). This is because elements preceding {from} are shown.
-        /// 
-        /// </summary>
-        /// <param name="account">API type: std::string</param>
-        /// <param name="from">API type: uint64_t - the absolute sequence number, -1 means most recent, limit is the number of operations before from.</param>
-        /// <param name="limit">API type: uint32_t - the maximum number of items that can be queried (0 to 1000], must be less than from</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: get_account_history_return_type</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetAccountHistoryReturnType> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
-        {
-            return CustomGetRequest<GetAccountHistoryReturnType>(KnownApiNames.DatabaseApi, "get_account_history", new object[] { account, from, limit }, token);
-        }
-
-        /// <summary>
-        /// API name: get_accounts
-        /// *Returns data for specified accounts
-        /// 
-        /// </summary>
-        /// <param name="names">API type: std::vector&lt;std::string></param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: extended_account</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(string[] names, CancellationToken token)
-        {
-            return CustomGetRequest<ExtendedAccount[]>(KnownApiNames.DatabaseApi, "get_accounts", new object[] { names }, token);
-        }
-
-        /// <summary>
-        /// API name: get_active_witnesses
-        /// *Displays a list of all active delegates.
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: account_name_type</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> GetActiveWitnesses(CancellationToken token)
-        {
-            return CustomGetRequest<string[]>(KnownApiNames.DatabaseApi, "get_active_witnesses", token);
-        }
-
-        /// <summary>
         /// API name: get_block
         /// Retrieve a full, signed block
         ///
-        /// *Returns block for given number
+        /// *Возвращает все данные о блоке включая транзакции
         /// 
         /// </summary>
         /// <param name="blockNum">API type: uint32_t Height of the block to be returned</param>
@@ -116,7 +72,7 @@ namespace Ditch.Golos
         /// API name: get_block_header
         /// Retrieve a block header
         /// 
-        /// *Returns block for given number
+        /// *Возвращает все данные о блоке
         /// 
         /// </summary>
         /// <param name="blockNum">API type: uint32_t Height of the block whose header should be returned</param>
@@ -130,7 +86,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_chain_properties
-        /// *Displays the commission for creating the user, the maximum block size and the GBG interest rate.
+        /// *Отображает комиссию за создание пользователя, максимальный размер блока и процентную ставку GBG.
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -145,7 +101,7 @@ namespace Ditch.Golos
         /// API name: get_config
         /// Retrieve compile-time constants
         ///
-        /// *Displays the current node configuration.
+        /// *Отображает текущую конфигурацию узла.
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -158,7 +114,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_conversion_requests
-        /// *Returns the current requests for conversion by the specified user
+        /// *Возвращает текущие запросы на конвертацию указанным пользователем
         /// 
         /// </summary>
         /// <param name="accountName">API type: std::string</param>
@@ -171,23 +127,22 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_current_median_history_price
-        /// *Displays the current median price of conversion
+        /// API name: get_database_info
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: price_17</returns>
+        /// <returns>API type: database_info</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice(CancellationToken token)
+        public JsonRpcResponse<DatabaseInfo> GetDatabaseInfo(CancellationToken token)
         {
-            return CustomGetRequest<Price>(KnownApiNames.DatabaseApi, "get_current_median_history_price", token);
+            return CustomGetRequest<DatabaseInfo>(KnownApiNames.DatabaseApi, "get_database_info", new object[] { }, token);
         }
 
         /// <summary>
         /// API name: get_dynamic_global_properties
         /// Retrieve the current @ref dynamic_global_property_object
         ///
-        /// *Displays information about the current network status.
+        /// *Отображает информацию о текущем состоянии сети
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -200,7 +155,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_escrow
-        /// *Returns the operations implemented through mediation.
+        /// *Возвращает операции реализованные с помощью посредничества.
         /// 
         /// </summary>
         /// <param name="from">API type: std::string</param>
@@ -214,21 +169,24 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_feed_history
-        /// *Displays the conversion history
+        /// API name: get_expiring_vesting_delegations
+        /// Получить список возвращаемых (отозванных и «замороженных») «делегирований» аккаунта
         /// 
         /// </summary>
+        /// <param name="account">аккаунт, возвращающий «делегирования»</param>
+        /// <param name="from"> начальное время возврата «делегирований» (для пагинации)</param>
+        /// <param name="limit">количество возвращаемых элементов(для пагинации). необязательный аргумент.по умолчанию = 100.макс. 1000</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: feed_history_api_object</returns>
+        /// <returns>API type: vesting_delegation_expiration_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FeedHistoryApiObject> GetFeedHistory(CancellationToken token)
+        public JsonRpcResponse<VestingDelegationExpirationObject[]> GetExpiringVestingDelegations(string account, DateTime from, UInt32 limit, CancellationToken token)
         {
-            return CustomGetRequest<FeedHistoryApiObject>(KnownApiNames.DatabaseApi, "get_feed_history", token);
+            return CustomGetRequest<VestingDelegationExpirationObject[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { account, from, limit }, token);
         }
 
         /// <summary>
         /// API name: get_hardfork_version
-        /// *Displays the current version of the network.
+        /// *Отображает текущую версию сети.
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -240,21 +198,8 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_miner_queue
-        /// *Creates a list of the miners waiting to enter the DPOW chain to create the block.
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: account_name_type</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> GetMinerQueue(CancellationToken token)
-        {
-            return CustomGetRequest<string[]>(KnownApiNames.DatabaseApi, "get_miner_queue", token);
-        }
-
-        /// <summary>
         /// API name: get_next_scheduled_hardfork
-        /// *Displays the date and version of HardFork
+        /// *Отображает дату и версию HardFork
         /// 
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
@@ -266,25 +211,8 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_ops_in_block
-        /// Get sequence of operations included/generated within a particular block
-        ///
-        /// *Returns all operations in the block, if the parameter 'onlyVirtual' is true, then returns only the virtual operations
-        /// 
-        /// </summary>
-        /// <param name="blockNum">API type: uint32_t Height of the block whose generated virtual operations should be returned</param>
-        /// <param name="onlyVirtual">API type: bool Whether to only include virtual operations in returned results (default: true)</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: applied_operation sequence of operations included/generated within the block</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual, CancellationToken token)
-        {
-            return CustomGetRequest<AppliedOperation[]>(KnownApiNames.DatabaseApi, "get_ops_in_block", new object[] { blockNum, onlyVirtual }, token);
-        }
-
-        /// <summary>
         /// API name: get_owner_history
-        /// *Displays the user name if he changed the ownership of the blockchain
+        /// *Отображает имя пользователя если он изменил право собственности на блокчейн
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -298,11 +226,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_potential_signatures
-        /// This method will return the set of all public keys that could possibly sign for a given transaction.  This call can
-        /// be used by wallets to filter their set of public keys to just the relevant subset prior to calling @ref get_required_signatures
-        /// to get the minimum subset.
-        ///
-        /// *Displays the potential key for this transaction.
+        /// *Отображает потенциальный ключ для данной транзакции.
         /// 
         /// </summary>
         /// <param name="trx">API type: signed_transaction</param>
@@ -315,8 +239,23 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_proposed_transactions
+        /// 
+        /// </summary>
+        /// <param name="arg0">API type: string</param>
+        /// <param name="arg1">API type: uint32_t</param>
+        /// <param name="arg2">API type: uint32_t</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: proposal_api_object</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<ProposalApiObject[]> GetProposedTransactions(string arg0, UInt32 arg1, UInt32 arg2, CancellationToken token)
+        {
+            return CustomGetRequest<ProposalApiObject[]>(KnownApiNames.DatabaseApi, "get_proposed_transactions", new object[] { arg0, arg1, arg2 }, token);
+        }
+
+        /// <summary>
         /// API name: get_recovery_request
-        /// *Returns true if the user is in recovery status.
+        /// *Возвращает true если пользователь в статусе на восстановление.
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -330,9 +269,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_required_signatures
-        /// This API will take a partially signed transaction and a set of public keys that the owner has the ability to sign for
-        /// and return the minimal subset of public keys that should add signatures to the transaction.
-        ///
+        /// *Возвращает список ключей которыми может быть подписанна указанная транзакция, на основании списка предоставленных ключей(второй параметр)
         /// 
         /// </summary>
         /// <param name="trx">API type: signed_transaction</param>
@@ -347,7 +284,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_savings_withdraw_from
-        /// *Returns the output data from 'SAFE' for this user
+        /// *Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -361,7 +298,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_savings_withdraw_to
-        /// *Returns the output data from 'SAFE' for this user
+        /// *Возвращает данные о выводах из 'СЕЙФА' для данного пользователя
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -374,24 +311,10 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_transaction
-        /// *Displays transaction details for the specified transaction ID.
-        /// 
-        /// </summary>
-        /// <param name="trxId">API type: transaction_id_type</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: annotated_signed_transaction</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(string trxId, CancellationToken token)
-        {
-            return CustomGetRequest<AnnotatedSignedTransaction>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { trxId }, token);
-        }
-
-        /// <summary>
         /// API name: get_transaction_hex
         /// Get a hexdump of the serialized binary form of a transaction
         ///
-        /// *Displays the HEX transaction string.
+        /// *Отображает HEX строку транзакции.
         /// 
         /// </summary>
         /// <param name="trx">API type: signed_transaction</param>
@@ -404,8 +327,24 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_vesting_delegations
+        /// Получить «делегирования» аккаунта (делегированные другим аккаунтам или же полученные от других аккаунтов)
+        /// </summary>
+        /// <param name="account">аккаунт, для которого получаем «делегирования». в зависимости от type (см. ниже) отправитель или получатель</param>
+        /// <param name="from">начальный аккаунт, парный в операции делегирования. в зависимости от type (см. ниже) получатель или отправитель (для пагинации)</param>
+        /// <param name="limit">количество возвращаемых элементов (для пагинации). необязательный аргумент. по умолчанию = 100, макс. 1000</param>
+        /// <param name="type">какие «делегирования» требуется получить: "delegated" — делегированные, "received" — полученные. необязательный аргумент. по умолчанию = "delegated"</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: vesting_delegation_api_object</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<VestingDelegationObject[]> GetVestingDelegations(string account, string from, UInt32 limit, DelegationsType type, CancellationToken token)
+        {
+            return CustomGetRequest<VestingDelegationObject[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { account, from, limit, type }, token);
+        }
+
+        /// <summary>
         /// API name: get_withdraw_routes
-        /// *Returns all transfers to the user's account, depending on the type
+        /// *Возвращает все переводы на счету пользователя в зависимости от типа
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -419,89 +358,10 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// API name: get_witness_by_account
-        /// Get the witness owned by a given account
-        ///
-        /// *Displays data about the delegate (if it is) according to the data from the request
-        /// 
-        /// </summary>
-        /// <param name="accountName">API type: std::string The name of the account whose witness should be retrieved</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: witness_api_object The witness object, or null if the account does not have a witness</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject> GetWitnessByAccount(string accountName, CancellationToken token)
-        {
-            return CustomGetRequest<WitnessApiObject>(KnownApiNames.DatabaseApi, "get_witness_by_account", new object[] { accountName }, token);
-        }
-
-        /// <summary>
-        /// API name: get_witness_count
-        /// Get the total number of witnesses registered with the blockchain
-        ///
-        /// *Displays the number of delegates.
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: uint64_t</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<UInt64> GetWitnessCount(CancellationToken token)
-        {
-            return CustomGetRequest<UInt64>(KnownApiNames.DatabaseApi, "get_witness_count", token);
-        }
-
-        /// <summary>
-        /// API name: get_witness_schedule
-        /// *Displays the current delegation status.
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: witness_schedule_api_object</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessScheduleApiObject> GetWitnessSchedule(CancellationToken token)
-        {
-            return CustomGetRequest<WitnessScheduleApiObject>(KnownApiNames.DatabaseApi, "get_witness_schedule", token);
-        }
-
-        /// <summary>
-        /// API name: get_witnesses
-        /// Get a list of witnesses by ID
-        ///
-        /// *Displays delegate data according to the specified ID
-        /// 
-        /// </summary>
-        /// <param name="witnessIds">API type: std::vector&lt;witness_object::id_type> IDs of the witnesses to retrieve</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: witness_api_object The witnesses corresponding to the provided IDs
-        /// 
-        /// This function has semantics identical to @ref get_objects</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject[]> GetWitnesses(object[] witnessIds, CancellationToken token)
-        {
-            return CustomGetRequest<WitnessApiObject[]>(KnownApiNames.DatabaseApi, "get_witnesses", new object[] { witnessIds }, token);
-        }
-
-        /// <summary>
-        /// API name: get_witnesses_by_vote
-        /// This method is used to fetch witnesses with pagination.
-        ///
-        /// *Displays a limited list of delegates approving the vote.
-        /// 
-        /// </summary>
-        /// <param name="from">API type: std::string</param>
-        /// <param name="limit">API type: uint32_t</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: witness_api_object an array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject[]> GetWitnessesByVote(string from, UInt32 limit, CancellationToken token)
-        {
-            return CustomGetRequest<WitnessApiObject[]>(KnownApiNames.DatabaseApi, "get_witnesses_by_vote", new object[] { from, limit }, token);
-        }
-
-        /// <summary>
         /// API name: lookup_account_names
         /// Get a list of accounts by name
         ///
-        /// *Returns data for specified accounts
+        /// *Возращает данные по заданным аккаунтам
         /// 
         /// </summary>
         /// <param name="accountNames">API type: std::vector&lt;std::string> Names of the accounts to retrieve</param>
@@ -519,7 +379,7 @@ namespace Ditch.Golos
         /// API name: lookup_accounts
         /// Get names and IDs for registered accounts
         ///
-        /// *Returns the names of users close to the phrase.
+        /// *Возвращает имена пользователей близких к шаблону.
         /// 
         /// </summary>
         /// <param name="lowerBoundName">API type: std::string Lower bound of the first name to return</param>
@@ -530,23 +390,6 @@ namespace Ditch.Golos
         public JsonRpcResponse<string[]> LookupAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<string[]>(KnownApiNames.DatabaseApi, "lookup_accounts", new object[] { lowerBoundName, limit }, token);
-        }
-
-        /// <summary>
-        /// API name: lookup_witness_accounts
-        /// Get names and IDs for registered witnesses
-        ///
-        /// *Displays a limited list of users who have announced their intention to work as a delegate.
-        /// 
-        /// </summary>
-        /// <param name="lowerBoundName">API type: std::string Lower bound of the first name to return</param>
-        /// <param name="limit">API type: uint32_t Maximum number of results to return -- must not exceed 1000</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: account_name_type Map of witness names to corresponding IDs</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
-        {
-            return CustomGetRequest<string[]>(KnownApiNames.DatabaseApi, "lookup_witness_accounts", new object[] { lowerBoundName, limit }, token);
         }
 
         /// <summary>
@@ -566,7 +409,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: verify_account_authority
-        /// *Return true if the signers have enough authority to authorize an account
+        /// *Возвращает  true, если у пользователя есть достаточные полномочия для авторизации учетной записи
         /// 
         /// </summary>
         /// <param name="name">API type: std::string</param>
@@ -581,7 +424,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: verify_authority
-        /// *Returns TRUE if the transaction is signed correctly
+        /// *Возвращает TRUE если транзакция подписана правильно
         /// 
         /// </summary>
         /// <param name="trx">API type: signed_transaction</param>

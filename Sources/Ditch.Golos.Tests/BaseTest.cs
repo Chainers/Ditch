@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Globalization;
+using Ditch.Core.Errors;
 
 namespace Ditch.Golos.Tests
 {
@@ -114,6 +115,22 @@ namespace Ditch.Golos.Tests
         {
             var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
             return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
+        }
+
+        protected void WriteLine(string s)
+        {
+            Console.WriteLine(s);
+        }
+
+        protected void WriteLine(object o)
+        {
+            var str = JsonConvert.SerializeObject(o, Formatting.Indented);
+            Console.WriteLine(str);
+        }
+
+        protected void WriteLine(ErrorInfo errorInfo)
+        {
+            Console.WriteLine(errorInfo);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Ditch.Golos.Tests
 
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = Api.GetContent(author, permlink, CancellationToken.None);
+            var resp = Api.GetContent(author, permlink, 100, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
@@ -300,7 +300,7 @@ namespace Ditch.Golos.Tests
             var resp = Api.GetFollowing(User.Login, author, FollowType.Blog, 1, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Console.WriteLine(resp.Result);
             return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
@@ -340,7 +340,7 @@ namespace Ditch.Golos.Tests
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
             Console.WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Console.WriteLine(resp.Result);
 
             var acc = resp.Result[0];
 

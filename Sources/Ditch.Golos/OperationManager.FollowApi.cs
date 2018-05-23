@@ -8,7 +8,6 @@ using Ditch.Golos.Models.Other;
 
 namespace Ditch.Golos
 {
-
     /// <summary>
     /// follow
     /// plugins\follow\include\golos\plugins\follow\plugin.hpp
@@ -18,7 +17,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_account_reputations
-        /// *Returns data about the reputation of users filtered by template.
+        /// *Возвращает данные о репутации пользователей отфильтрованных по шаблону.
         /// 
         /// </summary>
         /// <param name="lowerBoundName">API type: std::string</param>
@@ -32,8 +31,22 @@ namespace Ditch.Golos
         }
 
         /// <summary>
+        /// API name: get_accounts
+        /// *Возращает данные по заданным аккаунтам
+        /// 
+        /// </summary>
+        /// <param name="arg0">API type: vector&lt;std::string></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: extended_account</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse<ExtendedAccount[]> GetAccounts(string[] arg0, CancellationToken token)
+        {
+            return CustomGetRequest<ExtendedAccount[]>(KnownApiNames.Follow, "get_accounts", new object[] { arg0 }, token);
+        }
+
+        /// <summary>
         /// API name: get_blog
-        /// *Returns the complete record data from the blog of the specified user.
+        /// *Возвращает полные данные о записях из блога указанного пользователя.
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -49,9 +62,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_blog_authors
-        /// Gets a list of authors that have had their content reblogged on a given blog account
-        ///
-        /// *Returns the list of authors and the number of reposts of this author by the user.
+        /// *Возвращает список авторов и количество репостов этого автора пользователем.
         /// 
         /// </summary>
         /// <param name="blogAccount">API type: account_name_type</param>
@@ -65,7 +76,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_blog_entries
-        /// *Returns brief information about records from the blog of the specified user.
+        /// *Возвращает краткие данные о записях из блога указанного пользователя.
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -81,7 +92,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_feed
-        /// *Returns the complete record data from the specified user's tape.
+        /// *Возвращает полные данные о записях из ленты указанного пользователя.
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -97,7 +108,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_feed_entries
-        /// *Returns brief information about records from the specified user's tape
+        /// *Возвращает краткие данные о записях из ленты указанного пользователя
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -113,7 +124,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_follow_count
-        /// *Returns information about the number of subscribers and subscriptions of the specified user.
+        /// *Возвращает данные о количестве подписчиков и подписок указанного пользователя.
         /// 
         /// </summary>
         /// <param name="account">API type: std::string</param>
@@ -127,7 +138,7 @@ namespace Ditch.Golos
 
         /// <summary>
         /// API name: get_followers
-        /// *Returns the list: Either all of the subscribers of the user are 'following'. Or, if the user name is specified, the list of matching subscribers is returned in the parameter 'startFollower'.
+        /// *Возвращает список: Либо всех подписчиков пользователя 'following'. Либо если указано имя пользователя в параметре 'startFollower' возвращается список совпадающих подписчиков.
         /// 
         /// </summary>
         /// <param name="to">API type: std::string</param>
@@ -157,12 +168,10 @@ namespace Ditch.Golos
         {
             return CustomGetRequest<FollowApiObject[]>(KnownApiNames.Follow, "get_following", new object[] { from, start, type, limit }, token);
         }
-       
+
         /// <summary>
         /// API name: get_reblogged_by
-        /// Gets list of accounts that have reblogged a particular post
-        ///
-        /// *Returns the list of users who either created the record or made it a repost.
+        /// *Возвращает список пользователей которые либо создали запись либо сделали её репост.
         /// 
         /// </summary>
         /// <param name="author">API type: std::string</param>
@@ -174,6 +183,5 @@ namespace Ditch.Golos
         {
             return CustomGetRequest<string[]>(KnownApiNames.Follow, "get_reblogged_by", new object[] { author, permlink }, token);
         }
-
     }
 }
