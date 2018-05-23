@@ -59,7 +59,7 @@ namespace Ditch.BitShares
                     if (string.IsNullOrEmpty(connectedTo))
                         continue;
 
-                    if (TryLoadConfig(token))
+                    if (TryLoadChainId(token))
                         return url;
 
                     if (_connectionManager.IsConnected)
@@ -248,27 +248,12 @@ namespace Ditch.BitShares
         //    return transaction;
         //}
 
-        public virtual bool TryLoadConfig(CancellationToken token)
+        public virtual bool TryLoadChainId(CancellationToken token)
         {
-            var resp = GetConfig<JObject>(token);
+            var resp = GetChainId(token);
             if (!resp.IsError)
             {
-                //var conf = resp.Result;
-                //JToken jToken = null;
-
-                //foreach (var name in _config.ChainFieldName)
-                //{
-                //    conf.TryGetValue(name, out jToken);
-                //    if (jToken != null)
-                //        break;
-                //}
-
-                //if (jToken == null)
-                //    return false;
-
-                //var str = jToken.Value<string>();
-                //ChainId = Hex.HexToBytes(str);
-
+                ChainId = Hex.HexToBytes(resp.Result);
                 return true;
             }
             return false;
