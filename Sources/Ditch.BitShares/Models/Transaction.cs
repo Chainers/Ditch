@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
+using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -47,6 +48,8 @@ namespace Ditch.BitShares.Models
     [JsonObject(MemberSerialization.OptIn)]
     public partial class Transaction
     {
+        [MessageOrder(10)]
+        public byte[] ChainId { get; set; } = new byte[0]; //64
 
         /**
          * Least significant 16 bits from the reference block number. If @ref relative_expiration is zero, this field
@@ -58,6 +61,7 @@ namespace Ditch.BitShares.Models
         /// = 0;
         /// </summary>
         /// <returns>API type: uint16_t</returns>
+        [MessageOrder(20)]
         [JsonProperty("ref_block_num")]
         public UInt16 RefBlockNum { get; set; }
 
@@ -72,6 +76,7 @@ namespace Ditch.BitShares.Models
         /// = 0;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
+        [MessageOrder(20)]
         [JsonProperty("ref_block_prefix")]
         public UInt32 RefBlockPrefix { get; set; }
 
@@ -85,6 +90,7 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
+        [MessageOrder(30)]
         [JsonProperty("expiration")]
         public DateTime Expiration { get; set; }
 
@@ -94,13 +100,15 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: operation</returns>
         [JsonProperty("operations")]
-        public BaseOperation[] Operations { get; set; }
+        [MessageOrder(40)]
+        public BaseOperation[] BaseOperations { get; set; }
 
         /// <summary>
         /// API name: extensions
         /// 
         /// </summary>
         /// <returns>API type: extensions_type</returns>
+        [MessageOrder(50)]
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
     }

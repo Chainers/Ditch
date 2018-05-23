@@ -54,7 +54,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: block_id_type</returns>
         [JsonProperty("head_block_id")]
-        public object HeadBlockId { get; set; }
+        public string HeadBlockId { get; set; }
 
         /// <summary>
         /// API name: time
