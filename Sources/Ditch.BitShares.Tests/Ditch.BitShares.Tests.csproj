@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\WalletApiTest.cs" />
     <Compile Include="Apis\DatabaseApiTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="ConnectionTest.cs" />
@@ -77,19 +78,19 @@
     <Compile Include="UserInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="app.config.template" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ditch.BitShares\Ditch.BitShares.csproj">
+      <Project>{8e5d2936-e2ca-4ebc-b866-5047a9d7041d}</Project>
+      <Name>Ditch.BitShares</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj">
       <Project>{15294a4e-300e-460d-b229-7a20a5796d1f}</Project>
       <Name>Ditch.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ditch.BitShares\Ditch.BitShares.csproj">
-      <Project>{6c914f23-d72b-4a98-824c-51358fda0796}</Project>
-      <Name>Ditch.BitShares</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="app.config.template" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />

@@ -119,6 +119,16 @@ namespace Ditch.BitShares.Tests
         }
 
 
+        protected void WriteLine(string s)
+        {
+            Console.WriteLine(s);
+        }
+
+        protected void WriteLine(object o)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
+        }
+
         //protected SignedTransaction GetSignedTransaction()
         //{
         //    var user = User;
