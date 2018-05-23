@@ -5,6 +5,7 @@ using Ditch.Core.JsonRpc;
 using Ditch.BitShares.Models;
 using System.Threading;
 using Ditch.BitShares.Models.Operations;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch.BitShares
 {
@@ -184,9 +185,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: chain_id_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetChainId(CancellationToken token)
+        public JsonRpcResponse<string> GetChainId(CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.DatabaseApi, "get_chain_id", token);
+            return CustomGetRequest<string>(KnownApiNames.DatabaseApi, "get_chain_id", token);
         }
 
         /// <summary>

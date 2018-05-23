@@ -2,6 +2,7 @@
 {
     public enum KnownApiNames
     {
-        DatabaseApi = 0
+        DatabaseApi = 0,
+        WalletApi = 1,
     }
 }

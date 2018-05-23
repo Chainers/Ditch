@@ -144,11 +144,6 @@ namespace Ditch.BitShares.Tests.Apis
             WriteLine(resp.Error);
             Assert.IsFalse(resp.IsError);
             WriteLine(resp.Result);
-
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_chain_id", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
-            WriteLine(JsonConvert.SerializeObject(obj));
         }
 
         [Test]
