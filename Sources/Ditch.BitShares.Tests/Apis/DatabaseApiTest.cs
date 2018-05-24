@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Ditch.BitShares.Models;
+﻿using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -720,7 +718,7 @@ namespace Ditch.BitShares.Tests.Apis
             Assert.IsFalse(resp.IsError);
             WriteLine(resp.Result);
 
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_all_workers", CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_all_workers", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             WriteLine("----------------------------------------------------------------------------");
             WriteLine(JsonConvert.SerializeObject(obj));

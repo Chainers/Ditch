@@ -1,7 +1,3 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models

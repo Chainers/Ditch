@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Ditch.BitShares.Models;
+﻿using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;

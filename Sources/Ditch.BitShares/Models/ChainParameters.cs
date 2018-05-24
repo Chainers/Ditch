@@ -1,7 +1,4 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -14,7 +11,7 @@ namespace Ditch.BitShares.Models
     public partial class ChainParameters
     {
 
-        /** using a smart ref breaks the circular dependency created between operations and the fee schedule */
+        ///** using a smart ref breaks the circular dependency created between operations and the fee schedule */
 
         /// <summary>
         /// API name: current_fees
@@ -22,7 +19,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: smart_ref</returns>
         [JsonProperty("current_fees")]
-        public FeeSchedule[] CurrentFees { get; set; }
+        public FeeSchedule CurrentFees { get; set; }
 
         /// <summary>
         /// API name: block_interval

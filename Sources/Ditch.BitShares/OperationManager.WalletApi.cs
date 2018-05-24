@@ -1,10 +1,10 @@
-﻿using Ditch.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Ditch.Core.JsonRpc;
-using Ditch.BitShares.Models;
 using System.Threading;
+using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
+using Ditch.Core.JsonRpc;
+using Ditch.Core.Models;
 
 namespace Ditch.BitShares
 {
@@ -371,7 +371,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetObject(ObjectIdType id, CancellationToken token)
+        public JsonRpcResponse<object> GetObject(object id, CancellationToken token)
         {
             return CustomGetRequest<object>(KnownApiNames.WalletApi, "get_object", new object[] { id, }, token);
         }
@@ -390,7 +390,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: string</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string> GetPrivateKey(object pubkey, CancellationToken token)
+        public JsonRpcResponse<string> GetPrivateKey(PublicKeyType pubkey, CancellationToken token)
         {
             return CustomGetRequest<string>(KnownApiNames.WalletApi, "get_private_key", new object[] { pubkey, }, token);
         }
@@ -623,9 +623,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: map&lt;public_key_type,string></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> DumpPrivateKeys(CancellationToken token)
+        public JsonRpcResponse<MapContainer<PublicKeyType, string>> DumpPrivateKeys(CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.WalletApi, "dump_private_keys", token);
+            return CustomGetRequest<MapContainer<PublicKeyType, string>>(KnownApiNames.WalletApi, "dump_private_keys", token);
         }
 
 
@@ -829,7 +829,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: signed_transaction</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<SignedTransaction> RegisterAccount(string name, object owner, object active, string registrarAccount, string referrerAccount, UInt32 referrerPercent, bool broadcast, CancellationToken token)
+        public JsonRpcResponse<SignedTransaction> RegisterAccount(string name, PublicKeyType owner, PublicKeyType active, string registrarAccount, string referrerAccount, UInt32 referrerPercent, bool broadcast, CancellationToken token)
         {
             return CustomGetRequest<SignedTransaction>(KnownApiNames.WalletApi, "register_account", new object[] { name, owner, active, registrarAccount, referrerAccount, referrerPercent, broadcast, }, token);
         }
@@ -935,9 +935,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> CreateBlindAccount(string label, string brainKey, CancellationToken token)
+        public JsonRpcResponse<PublicKeyType> CreateBlindAccount(string label, string brainKey, CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.WalletApi, "create_blind_account", new object[] { label, brainKey, }, token);
+            return CustomGetRequest<PublicKeyType>(KnownApiNames.WalletApi, "create_blind_account", new object[] { label, brainKey, }, token);
         }
 
         /// <summary>
@@ -961,9 +961,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: map&lt;string,public_key_type> all blind accounts */</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetBlindAccounts(CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, PublicKeyType>> GetBlindAccounts(CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.WalletApi, "get_blind_accounts", token);
+            return CustomGetRequest<MapContainer<string, PublicKeyType>>(KnownApiNames.WalletApi, "get_blind_accounts", token);
         }
 
         /// <summary>
@@ -973,9 +973,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: map&lt;string,public_key_type> all blind accounts for which this wallet has the private key */</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetMyBlindAccounts(CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, PublicKeyType>> GetMyBlindAccounts(CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.WalletApi, "get_my_blind_accounts", token);
+            return CustomGetRequest<MapContainer<string, PublicKeyType>>(KnownApiNames.WalletApi, "get_my_blind_accounts", token);
         }
 
         /// <summary>
@@ -986,9 +986,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type the public key associated with the given label */</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> GetPublicKey(string label, CancellationToken token)
+        public JsonRpcResponse<PublicKeyType> GetPublicKey(string label, CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.WalletApi, "get_public_key", new object[] { label, }, token);
+            return CustomGetRequest<PublicKeyType>(KnownApiNames.WalletApi, "get_public_key", new object[] { label, }, token);
         }
 
 
@@ -1102,7 +1102,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: signed_transaction</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<SignedTransaction> CancelOrder(ObjectIdType orderId, bool broadcast, CancellationToken token)
+        public JsonRpcResponse<SignedTransaction> CancelOrder(object orderId, bool broadcast, CancellationToken token)
         {
             return CustomGetRequest<SignedTransaction>(KnownApiNames.WalletApi, "cancel_order", new object[] { orderId, broadcast, }, token);
         }

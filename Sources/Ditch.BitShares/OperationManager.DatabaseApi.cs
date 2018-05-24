@@ -1,11 +1,8 @@
-﻿using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.Core.JsonRpc;
-using Ditch.BitShares.Models;
+﻿using System;
 using System.Threading;
+using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
-using Newtonsoft.Json.Linq;
+using Ditch.Core.JsonRpc;
 
 namespace Ditch.BitShares
 {
@@ -40,7 +37,7 @@ namespace Ditch.BitShares
         /// 
         /// If any of the provided IDs does not map to an object, a null variant is returned in its position.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> GetObjects<T>(ObjectIdType[] ids, CancellationToken token)
+        public JsonRpcResponse<T> GetObjects<T>(object[] ids, CancellationToken token)
         {
             return CustomGetRequest<T>(KnownApiNames.DatabaseApi, "get_objects", new object[] { ids, }, token);
         }
@@ -218,7 +215,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_id_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetKeyReferences(object[] key, CancellationToken token)
+        public JsonRpcResponse<object[]> GetKeyReferences(PublicKeyType[] key, CancellationToken token)
         {
             return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_key_references", new object[] { key, }, token);
         }
@@ -866,7 +863,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> LookupVoteIds(VoteIdType[] votes, CancellationToken token)
+        public JsonRpcResponse<object[]> LookupVoteIds(object[] votes, CancellationToken token)
         {
             return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "lookup_vote_ids", new object[] { votes, }, token);
         }
@@ -908,9 +905,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetRequiredSignatures(SignedTransaction trx, object[] availableKeys, CancellationToken token)
+        public JsonRpcResponse<PublicKeyType[]> GetRequiredSignatures(SignedTransaction trx, PublicKeyType[] availableKeys, CancellationToken token)
         {
-            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { trx, availableKeys, }, token);
+            return CustomGetRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_required_signatures", new object[] { trx, availableKeys, }, token);
         }
 
 
@@ -928,9 +925,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: public_key_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<PublicKeyType[]> GetPotentialSignatures(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { trx, }, token);
+            return CustomGetRequest<PublicKeyType[]>(KnownApiNames.DatabaseApi, "get_potential_signatures", new object[] { trx, }, token);
         }
 
         /// <summary>
@@ -968,7 +965,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bool true if the signers have enough authority to authorize an account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAccountAuthority(string nameOrId, object[] signers, CancellationToken token)
+        public JsonRpcResponse<bool> VerifyAccountAuthority(string nameOrId, PublicKeyType[] signers, CancellationToken token)
         {
             return CustomGetRequest<bool>(KnownApiNames.DatabaseApi, "verify_account_authority", new object[] { nameOrId, signers, }, token);
         }

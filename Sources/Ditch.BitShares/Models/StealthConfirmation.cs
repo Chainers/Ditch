@@ -1,7 +1,3 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -28,7 +24,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("one_time_key")]
-        public object OneTimeKey { get; set; }
+        public PublicKeyType OneTimeKey { get; set; }
 
         /// <summary>
         /// API name: to
@@ -36,7 +32,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("to", NullValueHandling = NullValueHandling.Ignore)]
-        public object To { get; set; }
+        public PublicKeyType To { get; set; }
 
         /// <summary>
         /// API name: encrypted_memo

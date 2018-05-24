@@ -1,7 +1,4 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -114,7 +111,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: vote_id_type</returns>
         [JsonProperty("vote_for")]
-        public VoteIdType VoteFor { get; set; }
+        public object VoteFor { get; set; }
 
         /// Voting ID which represents disapproval of this worker
 
@@ -124,7 +121,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: vote_id_type</returns>
         [JsonProperty("vote_against")]
-        public VoteIdType VoteAgainst { get; set; }
+        public object VoteAgainst { get; set; }
 
         /// <summary>
         /// API name: total_votes_for

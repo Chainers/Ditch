@@ -1,7 +1,4 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -20,7 +17,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("from", NullValueHandling = NullValueHandling.Ignore)]
-        public object From { get; set; }
+        public PublicKeyType From { get; set; }
 
         /// <summary>
         /// API name: amount

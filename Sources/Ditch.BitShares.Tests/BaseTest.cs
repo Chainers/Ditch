@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using Ditch.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Threading;
-using Ditch.Core;
-using System.Globalization;
-using Ditch.BitShares.Models;
 
 namespace Ditch.BitShares.Tests
 {

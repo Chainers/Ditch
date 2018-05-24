@@ -1,7 +1,3 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -69,6 +65,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: object_id_type</returns>
         [JsonProperty("id")]
-        public ObjectIdType Id { get; set; }
+        public object Id { get; set; }
     }
 }

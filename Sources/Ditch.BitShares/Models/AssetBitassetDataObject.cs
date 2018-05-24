@@ -1,7 +1,5 @@
-using Ditch.Core;
 using System;
 using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 

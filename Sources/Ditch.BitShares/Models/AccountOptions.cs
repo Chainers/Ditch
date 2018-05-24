@@ -1,7 +1,4 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -26,7 +23,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("memo_key")]
-        public object MemoKey { get; set; }
+        public PublicKeyType MemoKey { get; set; }
 
         /// If this field is set to an account ID other than GRAPHENE_PROXY_TO_SELF_ACCOUNT,
         /// then this account's votes will be ignored; its stake
@@ -72,7 +69,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: flat_set</returns>
         [JsonProperty("votes")]
-        public VoteIdType[] Votes { get; set; }
+        public object[] Votes { get; set; }
 
         /// <summary>
         /// API name: extensions

@@ -1,7 +1,4 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -56,7 +53,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: vote_id_type</returns>
         [JsonProperty("vote_id")]
-        public VoteIdType VoteId { get; set; }
+        public object VoteId { get; set; }
 
         /// <summary>
         /// API name: total_votes

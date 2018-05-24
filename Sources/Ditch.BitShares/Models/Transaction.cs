@@ -1,7 +1,4 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
 using Ditch.Core.Attributes;
 using Newtonsoft.Json;

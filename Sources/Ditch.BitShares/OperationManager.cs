@@ -9,7 +9,6 @@ using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Ditch.BitShares
 {
