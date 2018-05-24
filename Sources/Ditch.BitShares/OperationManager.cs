@@ -106,25 +106,25 @@ namespace Ditch.BitShares
             return BroadcastTransaction(transaction, token);
         }
 
-        ///// <summary>
-        ///// Create and Broadcast a transaction to the network
-        ///// 
-        ///// This call will not return until the transaction is included in a block. 
-        ///// </summary>
-        ///// <param name="userPrivateKeys"></param>
-        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        ///// <param name="operations"></param>
-        ///// <returns></returns>
-        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        //public JsonRpcResponse BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
-        //{
-        //    var prop = GetDynamicGlobalProperties(token);
-        //    if (prop.IsError)
-        //        return prop;
+        /// <summary>
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// This call will not return until the transaction is included in a block. 
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public JsonRpcResponse BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        {
+            var prop = GetDynamicGlobalProperties(token);
+            if (prop.IsError)
+                return prop;
 
-        //    var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-        //    return BroadcastTransactionSynchronous(transaction, token);
-        //}
+            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            return BroadcastTransactionSynchronous(transaction, token);
+        }
 
         /// <summary>
         /// Execute custom user method
@@ -155,7 +155,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(KnownApiNames api, string method, object[] data, CancellationToken token)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute<T>(jsonRpc, token);
@@ -170,7 +170,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(KnownApiNames api, string method, CancellationToken token)
+        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
             return _connectionManager.Execute<T>(jsonRpc, token);
@@ -185,7 +185,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(KnownApiNames api, string method, object[] data, CancellationToken token)
+        public JsonRpcResponse CustomGetRequest(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
             return _connectionManager.Execute(jsonRpc, token);
@@ -199,7 +199,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(KnownApiNames api, string method, CancellationToken token)
+        public JsonRpcResponse CustomGetRequest(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
             return _connectionManager.Execute(jsonRpc, token);

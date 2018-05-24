@@ -70,6 +70,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\HistoryApiTest.cs" />
+    <Compile Include="Apis\NetworkBroadcastApiTest.cs" />
     <Compile Include="Apis\WalletApiTest.cs" />
     <Compile Include="Apis\DatabaseApiTest.cs" />
     <Compile Include="BaseTest.cs" />
