@@ -15,7 +15,7 @@ namespace Ditch.BitShares
     public partial class OperationManager
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private readonly MessageSerializer _messageSerializer;
+        public readonly MessageSerializer MessageSerializer;
         private readonly IConnectionManager _connectionManager;
         private List<string> _urls;
 
@@ -30,7 +30,7 @@ namespace Ditch.BitShares
             _jsonSerializerSettings = jsonSerializerSettings;
             _connectionManager = connectionManage;
             _config = config;
-            _messageSerializer = new MessageSerializer();
+            MessageSerializer = new MessageSerializer();
         }
 
         public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
@@ -225,7 +225,7 @@ namespace Ditch.BitShares
                 BaseOperations = operations
             };
 
-            var msg = _messageSerializer.Serialize<SignedTransaction>(transaction);
+            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
             var data = Sha256Manager.GetHash(msg);
 
             transaction.Signatures = new string[userPrivateKeys.Count];

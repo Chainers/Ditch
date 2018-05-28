@@ -43,6 +43,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: signature_type</returns>
         [JsonProperty("signatures")]
-        public string[] Signatures { get; set; }
+        public string[] Signatures { get; set; } = new string[0];
     }
 }

@@ -19,7 +19,7 @@ namespace Ditch.BitShares.Tests
         private bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
-        protected string SbdSymbol = "SBD";
+        protected string SbdSymbol = "BTS";
 
         static BaseTest()
         {

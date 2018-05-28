@@ -76,6 +76,7 @@
     <Compile Include="Apis\DatabaseApiTest.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="ConnectionTest.cs" />
+    <Compile Include="SerializationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />
   </ItemGroup>

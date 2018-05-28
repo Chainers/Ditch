@@ -107,6 +107,6 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: extensions_type</returns>
         [MessageOrder(50)]
         [JsonProperty("extensions")]
-        public object[] Extensions { get; set; }
+        public object[] Extensions { get; set; } = new object[0];
     }
 }
