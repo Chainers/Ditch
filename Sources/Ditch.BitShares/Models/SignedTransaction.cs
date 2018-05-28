@@ -30,7 +30,7 @@ namespace Ditch.BitShares.Models
                 for (var i = 0; i < BaseOperations.Length; i++)
                 {
                     var op = BaseOperations[i];
-                    buf[i] = new object[] { op.TypeName, op };
+                    buf[i] = new object[] { (int)op.Type, op };
                 }
                 return buf;
             }

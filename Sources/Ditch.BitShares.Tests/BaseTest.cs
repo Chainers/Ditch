@@ -26,7 +26,8 @@ namespace Ditch.BitShares.Tests
             User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
             // Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
             var jss = GetJsonSerializerSettings();
-            var manager = new WebSocketManager(jss, 1024 * 1024);
+            // var manager = new WebSocketManager(jss, 1024 * 1024);
+            var manager = new HttpManager(jss);
             Api = new OperationManager(manager, jss);
             var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
             var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
@@ -37,7 +38,7 @@ namespace Ditch.BitShares.Tests
         {
             var rez = new JsonSerializerSettings
             {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                // DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
                 Culture = CultureInfo.InvariantCulture
             };
             return rez;

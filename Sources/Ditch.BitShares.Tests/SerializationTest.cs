@@ -16,9 +16,9 @@ namespace Ditch.BitShares.Tests
             return new SignedTransaction
             {
                 ChainId = Api.ChainId,
-                RefBlockNum = 1234,
-                RefBlockPrefix = 5678,
-                Expiration = DateTime.Now.AddSeconds(30),
+                RefBlockNum = 5446,
+                RefBlockPrefix = 1867525305,
+                Expiration = DateTime.Parse("2018-05-28T10:14:18"),
                 BaseOperations = new BaseOperation[0],
             };
         }
@@ -47,20 +47,42 @@ namespace Ditch.BitShares.Tests
             var token = CancellationToken.None;
             var op = new AccountCreateOperation
             {
+                Fee = new Asset()
+                {
+                    Amount = 58516,
+                    AssetId = new AssetIdType(1, 3, 0)
+                },
+                Registrar = "1.2.22760",
+                Referrer = "1.2.22760",
+                ReferrerPercent = 7000,
+                Name = "test-account-nano",
+                Owner = new Authority(new PublicKeyType("TEST6FcnaaaP7eZWqUs5VHRPMwjD69V1SFAAVoJRHiq3YEJ7tVgyQc", "TEST")),
+                Active = new Authority(new PublicKeyType("TEST6KCYpvc3syCbsRaofXLffEXoLDKixN2SLUCLPz4XubmptGNFfe", "TEST")),
+                Options = new AccountOptions()
+                {
+                    MemoKey = new PublicKeyType("TEST6HWVwXazrgS3MsWZvvSV6qdRbc8GS7KpdfDw8mAcNug4RcPv3v", "TEST"),
+                    VotingAccount = "1.2.5",
+                    NumWitness = 0,
+                    NumCommittee = 0,
+                    Votes = new object[0],
+                    Extensions = new object[0],
+                },
+                Extensions = new object(),
 
             };
 
             var transaction = GetTransaction();
             transaction.BaseOperations = new[] { op };
 
-            var msg = Api.GetTransactionHex(transaction, token);
-            var msg2 = Api.MessageSerializer.Serialize<SignedTransaction>(transaction);
-            var arr2 = Hex.ToString(msg2);
+            //var msgHex = Api.GetTransactionHex(transaction, token);
+            //Assert.IsFalse(msgHex.IsError, JsonConvert.SerializeObject(msgHex.Error, Formatting.Indented));
+            //var msg = Hex.ToString(Api.ChainId) + msgHex.Result;
 
-            Assert.IsFalse(msg.IsError);
+            var sMsg = Api.MessageSerializer.Serialize<SignedTransaction>(transaction);
+            var msg2 = Hex.ToString(sMsg);
 
-            var arr = Hex.HexToBytes(msg.Result);
-            var data = Sha256Manager.GetHash(arr);
+            //Assert.IsTrue(msg.Equals(msg2));
         }
     }
 }
+

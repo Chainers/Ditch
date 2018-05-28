@@ -11,5 +11,8 @@ namespace Ditch.BitShares.Models.Operations
         public abstract OperationType Type { get; }
 
         public abstract string TypeName { get; }
+
+        [JsonProperty("prefix", NullValueHandling = NullValueHandling.Ignore)]
+        public string Prefix { get; set; }
     }
 }

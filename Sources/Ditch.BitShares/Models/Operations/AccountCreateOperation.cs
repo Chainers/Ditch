@@ -26,7 +26,7 @@ namespace Ditch.BitShares.Models.Operations
         /// <returns>API type: asset</returns>
         [MessageOrder(20)]
         [JsonProperty("fee")]
-        public object Fee { get; set; }
+        public Asset Fee { get; set; }
 
         /// <summary>
         /// API name: registrar

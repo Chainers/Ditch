@@ -5,19 +5,25 @@ using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
 {
+    [JsonConverter(typeof(CustomConverter))]
     public class PublicKeyType : ICustomJson
     {
-        public const string Prefix = "BTS";
+        public string Prefix = "BTS";
 
         [MessageOrder(1)]
         public byte[] Data { get; set; }
-
 
         public PublicKeyType() { }
 
         public PublicKeyType(string value)
         {
             Data = Base58.DecodePublicWif(value, Prefix);
+        }
+
+        public PublicKeyType(string value, string prefix)
+        {
+            Prefix = prefix;
+            Data = Base58.DecodePublicWif(value, prefix);
         }
 
         public PublicKeyType(byte[] data)
