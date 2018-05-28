@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -22,6 +23,7 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: public_key_type</returns>
+        [MessageOrder(10)]
         [JsonProperty("memo_key")]
         public PublicKeyType MemoKey { get; set; }
 
@@ -34,8 +36,9 @@ namespace Ditch.BitShares.Models
         /// = GRAPHENE_PROXY_TO_SELF_ACCOUNT;
         /// </summary>
         /// <returns>API type: account_id_type</returns>
+        [MessageOrder(20)]
         [JsonProperty("voting_account")]
-        public object VotingAccount { get; set; }
+        public AccountIdType VotingAccount { get; set; }
 
 
         /// The number of active witnesses this account votes the blockchain should appoint
@@ -46,6 +49,7 @@ namespace Ditch.BitShares.Models
         /// = 0;
         /// </summary>
         /// <returns>API type: uint16_t</returns>
+        [MessageOrder(30)]
         [JsonProperty("num_witness")]
         public UInt16 NumWitness { get; set; }
 
@@ -57,6 +61,7 @@ namespace Ditch.BitShares.Models
         /// = 0;
         /// </summary>
         /// <returns>API type: uint16_t</returns>
+        [MessageOrder(40)]
         [JsonProperty("num_committee")]
         public UInt16 NumCommittee { get; set; }
 
@@ -68,6 +73,7 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: flat_set</returns>
+        [MessageOrder(50)]
         [JsonProperty("votes")]
         public object[] Votes { get; set; }
 
@@ -76,6 +82,7 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: extensions_type</returns>
+        [MessageOrder(60)]
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
     }

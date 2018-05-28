@@ -61,7 +61,7 @@ namespace Ditch.BitShares.Tests
                 Options = new AccountOptions()
                 {
                     MemoKey = new PublicKeyType("TEST6HWVwXazrgS3MsWZvvSV6qdRbc8GS7KpdfDw8mAcNug4RcPv3v", "TEST"),
-                    VotingAccount = "1.2.5",
+                    VotingAccount = new AccountIdType(1, 2, 5),
                     NumWitness = 0,
                     NumCommittee = 0,
                     Votes = new object[0],
