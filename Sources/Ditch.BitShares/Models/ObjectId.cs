@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
+using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -9,8 +11,9 @@ namespace Ditch.BitShares.Models
     /// object_id
     /// libraries\db\include\graphene\db\object_id.hpp
     /// </summary>
+    [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ObjectId : ICustomJson
+    public partial class ObjectId : ICustomJson, ICustomSerializer
     {
         /// <summary>
         /// API name: space_id
@@ -48,6 +51,15 @@ namespace Ditch.BitShares.Models
             TypeId = typeId;
             Instance = instance;
         }
+
+        #region ICustomSerializer
+
+        public void Serializer(Stream stream, IMessageSerializer serializeHelper)
+        {
+            serializeHelper.AddToMessageStream(stream, typeof(string), $"{SpaceId}.{TypeId}.{Instance}");
+        }
+
+        #endregion
 
         #region ICustomJson
 

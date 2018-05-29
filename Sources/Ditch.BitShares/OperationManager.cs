@@ -226,6 +226,7 @@ namespace Ditch.BitShares
             };
 
             var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
+            var rez = Hex.HexToBytes(GetTransactionHex(transaction, CancellationToken.None).Result);
             var data = Sha256Manager.GetHash(msg);
 
             transaction.Signatures = new string[userPrivateKeys.Count];

@@ -8,12 +8,15 @@ namespace Ditch.BitShares.Models
     [JsonConverter(typeof(CustomConverter))]
     public class PublicKeyType : ICustomJson
     {
-        public string Prefix = "BTS";
+        public string Prefix = "TEST";
 
         [MessageOrder(1)]
         public byte[] Data { get; set; }
 
-        public PublicKeyType() { }
+        public PublicKeyType()
+        {
+            Data = new byte[0];
+        }
 
         public PublicKeyType(string value)
         {

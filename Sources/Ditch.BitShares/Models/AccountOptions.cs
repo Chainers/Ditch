@@ -85,5 +85,13 @@ namespace Ditch.BitShares.Models
         [MessageOrder(60)]
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
+
+        public AccountOptions()
+        {
+            MemoKey = new PublicKeyType();
+            VotingAccount = new AccountIdType();
+            Votes = new object[0];
+            Extensions = new object[0];
+        }
     }
 }

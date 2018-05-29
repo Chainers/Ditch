@@ -21,6 +21,8 @@ namespace Ditch.BitShares.JsonRpc
                 Interlocked.Exchange(ref _id, 0);
 
             Message = $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",[]],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
+
+            UnityEngine.Debug.Log(Message);
         }
 
         public JsonRpcRequest(string api, string method, string paramData)
@@ -33,6 +35,8 @@ namespace Ditch.BitShares.JsonRpc
                 Message = $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",[]],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
             else
                 Message = $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",{paramData}],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
+
+            UnityEngine.Debug.Log(Message);
         }
 
         public JsonRpcRequest(JsonSerializerSettings jsonSerializerSettings, string api, string method, object[] data)
