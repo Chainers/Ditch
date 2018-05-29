@@ -112,6 +112,9 @@ namespace Ditch.Core
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var stringResponse = response.Content.ReadAsStringAsync().Result;
+
+                UnityEngine.Debug.Log(stringResponse);
+
                 var prop = JsonRpcResponse.FromString(stringResponse, _jsonSerializerSettings);
                 return prop;
             }

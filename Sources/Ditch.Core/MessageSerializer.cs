@@ -28,6 +28,11 @@ namespace Ditch.Core
 
         public virtual void AddToMessageStream(Stream stream, Type type, object val)
         {
+            if (null == val)
+            {
+                UnityEngine.Debug.Log("NULL VALUE of Type = " + type.ToString());
+                return;
+            }
             if (type == typeof(bool))
             {
                 stream.WriteByte((byte)((bool)val ? 1 : 0));
@@ -98,7 +103,7 @@ namespace Ditch.Core
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(String))
+            if (type == typeof(String) || val.GetType() == typeof(string))
             {
                 var typed = (string)val;
                 if (string.IsNullOrEmpty(typed))
@@ -112,11 +117,34 @@ namespace Ditch.Core
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (val is ICustomSerializer customSerializer)
+            //if (val is ICustomSerializer customSerializer)
+            //{
+            //    customSerializer.Serializer(stream, this);
+            //    return;
+            //}
+
+            //if (type is ICustomSerializer)
+            //{
+            //    (val as ICustomSerializer).Serializer(stream, this);
+            //    return;
+            //}
+
+            //if (type.IsInterface)
+            //{
+            //    if (typeof(ICustomSerializer).IsAssignableFrom(type))
+            //    {
+            //        ((ICustomSerializer)val).Serializer(stream, this);
+            //        return;
+            //    }
+            //}
+
+            ICustomSerializer customSerializer = val as ICustomSerializer;
+            if (null != customSerializer)
             {
                 customSerializer.Serializer(stream, this);
                 return;
             }
+
             if (type.IsEnum)
             {
                 stream.WriteByte((byte)val);
