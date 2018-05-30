@@ -12,7 +12,7 @@ namespace Ditch.BitShares.Models
     /// </summary>
     [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class AssetIdType : ObjectId, ICustomSerializer, ICustomJson
+    public class AssetIdType : ObjectId, /*ICustomSerializer,*/ ICustomJson
     {
 
         public AssetIdType()
@@ -24,14 +24,14 @@ namespace Ditch.BitShares.Models
         {
         }
 
-        #region ICustomSerializer
+        //#region ICustomSerializer
 
-        public void Serializer(Stream stream, IMessageSerializer serializeHelper)
-        {
-            serializeHelper.AddToMessageStream(stream, typeof(string), $"{SpaceId}.{TypeId}.{Instance}");
-        }
+        //public void Serializer(Stream stream, IMessageSerializer serializeHelper)
+        //{
+        //    serializeHelper.AddToMessageStream(stream, typeof(string), $"{SpaceId}.{TypeId}.{Instance}");
+        //}
 
-        #endregion
+        //#endregion
 
         #region ICustomJson
 

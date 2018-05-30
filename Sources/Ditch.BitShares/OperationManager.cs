@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.BitShares.JsonRpc;
@@ -218,16 +219,60 @@ namespace Ditch.BitShares
         {
             var transaction = new SignedTransaction
             {
-                ChainId = ChainId,
+                //ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
                 Expiration = propertyApiObj.Time.AddSeconds(30),
                 BaseOperations = operations
             };
 
-            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
             var rez = Hex.HexToBytes(GetTransactionHex(transaction, CancellationToken.None).Result);
-            var data = Sha256Manager.GetHash(msg);
+            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
+
+            string strRez = string.Empty;
+            int limit;
+            if (rez.Length > msg.Length)
+            {
+                limit = rez.Length;
+            } else
+            {
+                limit = msg.Length;
+            }
+
+            for (int i=0; i < limit; i++)
+            {
+                if (i >= rez.Length || i >= msg.Length)
+                {
+                    if (rez.Length > msg.Length)
+                    {
+                        strRez += "[" + i.ToString() + "] " + Hex.HexToInteger(new byte[] { rez[i] }).ToString() + "\n";
+                    } else
+                    {
+                        strRez += "[" + i.ToString() + "]     " + Hex.HexToInteger(new byte[] { msg[i] }).ToString() + "\n";
+                    }
+                } else
+                {
+                    strRez += "[" + i.ToString() + "] " + Hex.HexToInteger(new byte[] { rez[i] }).ToString() + " " + Hex.HexToInteger(new byte[] { msg[i] }).ToString() + "\n";
+                }
+            }
+
+            UnityEngine.Debug.Log(strRez);
+            UnityEngine.Debug.Log("LOCAL HEX =  " + Hex.ToString(msg));
+            UnityEngine.Debug.Log("REMOTE HEX = " + Hex.ToString(rez));
+
+            byte[] rez2 = new byte[ChainId.Length + rez.Length];
+            for (int i=0; i < rez2.Length; i++)
+            {
+                if (i < ChainId.Length)
+                {
+                    rez2[i] = ChainId[i];
+                } else
+                {
+                    rez2[i] = rez[i - ChainId.Length];
+                }
+            }
+
+            var data = Sha256Manager.GetHash(rez);
 
             transaction.Signatures = new string[userPrivateKeys.Count];
             for (int i = 0; i < userPrivateKeys.Count; i++)

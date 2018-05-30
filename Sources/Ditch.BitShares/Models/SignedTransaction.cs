@@ -1,3 +1,4 @@
+using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -42,6 +43,7 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: signature_type</returns>
+        [MessageOrder(60)]
         [JsonProperty("signatures")]
         public string[] Signatures { get; set; } = new string[0];
     }

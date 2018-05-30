@@ -34,6 +34,11 @@ namespace Ditch.BitShares.Models
             Data = data;
         }
 
+        public PublicKeyType(byte[] data, string prefix)
+        {
+            Prefix = prefix;
+            Data = data;
+        }
 
         #region ICustomJson
 

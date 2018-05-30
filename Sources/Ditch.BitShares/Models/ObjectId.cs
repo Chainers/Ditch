@@ -56,7 +56,8 @@ namespace Ditch.BitShares.Models
 
         public void Serializer(Stream stream, IMessageSerializer serializeHelper)
         {
-            serializeHelper.AddToMessageStream(stream, typeof(string), $"{SpaceId}.{TypeId}.{Instance}");
+            //https://developers.google.com/protocol-buffers/docs/encoding
+            serializeHelper.AddToMessageStream(stream, typeof(byte[]), serializeHelper.VarInt((int)Instance));
         }
 
         #endregion
