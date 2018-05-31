@@ -12,5 +12,6 @@
         public const string NetworkBroadcastApi = "network_broadcast_api";
         public const string TagsApi = "tags_api";
         public const string WitnessApi = "witness_api";
+        public const string AccountHistoryApi = "account_history_api";
     }
 }
