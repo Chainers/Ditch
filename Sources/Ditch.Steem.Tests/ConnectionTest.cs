@@ -9,8 +9,10 @@ using Ditch.Core;
 namespace Ditch.Steem.Tests
 {
     [TestFixture]
-    public class ConnectionTest
+    public class ConnectionTest : BaseTest
     {
+        [OneTimeSetUp]
+        protected override void OneTimeSetUp() { }
 
         /// <summary>
         /// https://www.steem.center/index.php?title=Public_Websocket_Servers
@@ -44,7 +46,7 @@ namespace Ditch.Steem.Tests
             var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
             sw.Stop();
 
-            Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
+            WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
             Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
 
             if (manager.IsConnected)
@@ -80,7 +82,7 @@ namespace Ditch.Steem.Tests
                 sw.Restart();
                 var url = manager.TryConnectTo(urls, CancellationToken.None);
                 sw.Stop();
-                Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
+                WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
                 Assert.IsTrue(manager.IsConnected, "Not connected");
                 Assert.IsNotNull(manager.ChainId, "ChainId null");
                 await Task.Delay(3000);

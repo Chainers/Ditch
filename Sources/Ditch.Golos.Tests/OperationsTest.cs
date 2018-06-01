@@ -73,7 +73,7 @@ namespace Ditch.Golos.Tests
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
             var resp = Api.GetContent(author, permlink, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
             return vote?.Percent ?? 0;
@@ -88,14 +88,14 @@ namespace Ditch.Golos.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            var response = Post(user.PostingKeys, false, op);
-            Console.WriteLine(response.Error);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var resp = Post(user.PostingKeys, false, op);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
 
             var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            response = Post(user.PostingKeys, false, op2);
-            Console.WriteLine(response.Error);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            resp = Post(user.PostingKeys, false, op2);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
         }
 
         [Test]
@@ -298,9 +298,9 @@ namespace Ditch.Golos.Tests
         private bool IsFollow(string author)
         {
             var resp = Api.GetFollowing(User.Login, author, FollowType.Blog, 1, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
             return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
@@ -338,9 +338,9 @@ namespace Ditch.Golos.Tests
         public async Task AccountUpdateTest()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var acc = resp.Result[0];
 

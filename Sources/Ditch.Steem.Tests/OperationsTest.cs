@@ -77,7 +77,7 @@ namespace Ditch.Steem.Tests
                 Permlink = permlink
             };
             var resp = Api.GetDiscussion(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
             return vote?.Percent ?? 0;
@@ -99,14 +99,14 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            var response = Post(user.PostingKeys, false, op);
-            Console.WriteLine(response.Error);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var resp = Post(user.PostingKeys, false, op);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
 
             var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            response = Post(user.PostingKeys, false, op2);
-            Console.WriteLine(response.Error);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            resp = Post(user.PostingKeys, false, op2);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
         }
 
         [Test]
@@ -289,9 +289,8 @@ namespace Ditch.Steem.Tests
                 Type = FollowType.Blog
             };
             var resp = Api.GetFollowing(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
             return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
         }
 
@@ -333,9 +332,8 @@ namespace Ditch.Steem.Tests
                 Accounts = new[] { User.Login }
             };
             var resp = Api.FindAccounts(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var acc = resp.Result.Accounts[0];
 

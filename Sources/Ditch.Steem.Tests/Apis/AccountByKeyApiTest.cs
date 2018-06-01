@@ -21,9 +21,8 @@ namespace Ditch.Steem.Tests.Apis
                 Keys = new[] { pubKey }
             };
             var resp = Api.GetKeyReferences(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
     }
 }

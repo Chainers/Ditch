@@ -23,9 +23,9 @@ namespace Ditch.Golos.Tests.Apis
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
 
             var resp = Api.BroadcastTransaction(transaction, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Test]
@@ -40,9 +40,9 @@ namespace Ditch.Golos.Tests.Apis
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
 
             var resp = Api.BroadcastTransactionSynchronous(transaction, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace Ditch.Golos.Tests.Apis
         public void broadcast_block()
         {
             var resp = Api.BroadcastBlock(new SignedBlock(), CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
     }
 }

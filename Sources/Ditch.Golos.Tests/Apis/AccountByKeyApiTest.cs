@@ -14,9 +14,9 @@ namespace Ditch.Golos.Tests.Apis
             var respTest = Api.GetAccounts(new[] { User.Login }, CancellationToken.None);
             var pKey = respTest.Result[0].Owner.KeyAuths;
             var resp = Api.GetKeyReferences(new[] { pKey[0].Key }, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
     }
 }

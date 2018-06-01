@@ -20,14 +20,14 @@ namespace Ditch.EOS.Tests
         public async Task GetInfoTest()
         {
             var resp = await Api.GetInfo(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomGetRequest<JObject>("v1/chain/get_info", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -35,9 +35,9 @@ namespace Ditch.EOS.Tests
         {
             var block_num_or_id = "1";
             var resp = await Api.GetBlock(block_num_or_id, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var parameters = new Dictionary<string, object>()
             {
@@ -45,8 +45,8 @@ namespace Ditch.EOS.Tests
             };
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_block", parameters, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
 
@@ -58,15 +58,15 @@ namespace Ditch.EOS.Tests
                 AccountName = "test1"
             };
             var resp = await Api.GetAccount(accountParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_account", accountParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -77,14 +77,14 @@ namespace Ditch.EOS.Tests
                 AccountName = "hackathon"
             };
             var resp = await Api.GetCode(codeParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_code", codeParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -101,14 +101,14 @@ namespace Ditch.EOS.Tests
                 Limit = 10,
             };
             var resp = await Api.GetTableRows(tableRowsParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_table_rows", tableRowsParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -127,14 +127,14 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.AbiJsonToBin(abiJsonToBinParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_json_to_bin", abiJsonToBinParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -148,14 +148,14 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Ignore("you need to put your own data")]
@@ -195,14 +195,14 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.PushTransaction(pushTransactionParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transaction", pushTransactionParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Ignore("you need to put your own data")]
@@ -217,14 +217,14 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.PushTransactions(null, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transactions", abiBinToJsonParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Ignore("you need to put your own data")]
@@ -267,14 +267,14 @@ namespace Ditch.EOS.Tests
                 AvailableKeys = new[] { "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS7drQWvc7Mn7NK2PivjbAqLXMyBpvSNnZWnZC3CS61g1dhVK57o", "EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7" }
             };
             var resp = await Api.GetRequiredKeys(getRequiredKeysParams, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
     }
 }

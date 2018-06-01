@@ -14,70 +14,70 @@ namespace Ditch.Golos.Tests.Apis
         public void get_trending_tags()
         {
             var resp = Api.GetTrendingTags(User.Login, 3, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_trending_categories()
         {
             var resp = Api.GetTrendingCategories(string.Empty, 3, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_best_categories()
         {
             var resp = Api.GetBestCategories(string.Empty, 3, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_best_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_active_categories()
         {
             var resp = Api.GetActiveCategories(User.Login, 3, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_active_categories", new object[] { User.Login, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_recent_categories()
         {
             var resp = Api.GetRecentCategories(string.Empty, 3, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_recent_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         //[Test]
@@ -85,9 +85,9 @@ namespace Ditch.Golos.Tests.Apis
         //public void get_free_memory()
         //{
         //    var resp = Api.GetFreeMemory(CancellationToken.None);
-        //    Console.WriteLine(resp.Error);
+        //    WriteLine(resp);
         //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //    WriteLine(resp);
         //}
 
         //[Test]
@@ -96,18 +96,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetRewardFund(User.Login, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_reward_fund", new object[] { User.Login }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -117,18 +117,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetNameCost(User.Login, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_name_cost", new object[] { User.Login }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -138,13 +138,13 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetAccountBalances(User.Login, new string[0], CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -154,18 +154,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetVestingDelegations(User.Login, string.Empty, 10, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_vesting_delegations", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -175,18 +175,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetExpiringVestingDelegations(User.Login, new DateTime(2017, 01, 01), 100, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100 }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -196,18 +196,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetAssets(new[] { "GBG", "GOLOS" }, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_assets", new object[] { new[] { "GBG" } }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -217,18 +217,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetAssetsByIssuer("b1acksun", CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_assets_by_issuer", new object[] { "b1acksun" }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -238,18 +238,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetAssetsDynamicData(new[] { "GBG" }, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_assets_dynamic_data", new object[] { new[] { "GBG" } }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -259,18 +259,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetBitassetsData(new[] { "GBG" }, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_bitassets_data", new object[] { new[] { "GBG" } }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -280,18 +280,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.ListAssets(string.Empty, 10, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "list_assets", new object[] { string.Empty, 1 }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -300,28 +300,28 @@ namespace Ditch.Golos.Tests.Apis
         {
             var permlink = "test";
             var resp = Api.GetActiveVotes(User.Login, permlink, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_active_votes", new object[] { User.Login, permlink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_account_votes()
         {
             var resp = Api.GetAccountVotes(User.Login, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_account_votes", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -333,14 +333,14 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetContent(author, permlink, CancellationToken.None);
             Assert.IsTrue(resp != null);
             Assert.IsTrue(resp.Result != null);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_content", new object[] { author, permlink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -349,28 +349,28 @@ namespace Ditch.Golos.Tests.Apis
             var parent = "";
             var parentPermink = "";
             var resp = Api.GetContentReplies(parent, parentPermink, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_content_replies", new object[] { parent, parentPermink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_tags_used_by_author()
         {
             var resp = Api.GetTagsUsedByAuthor(User.Login, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -382,14 +382,14 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2
             };
             var resp = Api.GetDiscussionsByTrending(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_trending", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -401,14 +401,14 @@ namespace Ditch.Golos.Tests.Apis
             };
 
             var resp = Api.GetDiscussionsByCreated(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_created", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -419,14 +419,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByActive(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_active", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -437,14 +437,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByCashout(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_cashout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -455,14 +455,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         //[Test]
@@ -475,18 +475,18 @@ namespace Ditch.Golos.Tests.Apis
         //            SelectAuthors = new[] { User.Login }
         //        };
         //        var resp = Api.GetPostDiscussionsByPayout(query, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -500,18 +500,18 @@ namespace Ditch.Golos.Tests.Apis
         //            SelectAuthors = new[] { User.Login }
         //        };
         //        var resp = Api.GetCommentDiscussionsByPayout(query, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
 
@@ -523,14 +523,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByVotes(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_votes", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         //[Test]
@@ -541,14 +541,14 @@ namespace Ditch.Golos.Tests.Apis
         //        SelectAuthors = new[] { User.Login }
         //    };
         //    var resp = Api.GetDiscussionsByChildren(query, CancellationToken.None);
-        //    Console.WriteLine(resp.Error);
+        //    WriteLine(resp);
         //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //    WriteLine(resp);
 
         //    var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
         //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    Console.WriteLine("----------------------------------------------------------------------------");
-        //    Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //    WriteLine("----------------------------------------------------------------------------");
+        //    WriteLine(obj);
         //}
 
         [Test]
@@ -559,14 +559,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByHot(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_hot", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -577,14 +577,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByFeed(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_feed", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -595,14 +595,14 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByBlog(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_blog", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -613,14 +613,14 @@ namespace Ditch.Golos.Tests.Apis
                 StartAuthor = User.Login
             };
             var resp = Api.GetDiscussionsByComments(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_comments", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -631,28 +631,28 @@ namespace Ditch.Golos.Tests.Apis
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByPromoted(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_promoted", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_replies_by_last_update()
         {
             var resp = Api.GetRepliesByLastUpdate(User.Login, string.Empty, 10, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -661,15 +661,15 @@ namespace Ditch.Golos.Tests.Apis
             ushort count = 3;
             var dt = DateTime.Now;
             var resp = Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
             Assert.IsTrue(resp.Result.Length <= count);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { User.Login, string.Empty, dt, count }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -685,14 +685,14 @@ namespace Ditch.Golos.Tests.Apis
             var post = trending.Result[0];
 
             var resp = Api.GetAllContentReplies(post.Author, post.Url, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { User.Login, "spasibo-golos" }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -705,23 +705,23 @@ namespace Ditch.Golos.Tests.Apis
             };
 
             var resp = Api.GetDiscussionsByChildren(query, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_languages()
         {
             var resp = Api.GetLanguages(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         //[Test]
@@ -730,14 +730,14 @@ namespace Ditch.Golos.Tests.Apis
         //{
         //    var parmlink = "";
         //    var resp = Api.GetPayoutExtensionCost(User.Login, parmlink, new DateTime(2017, 1, 1), CancellationToken.None);
-        //    Console.WriteLine(resp.Error);
+        //    WriteLine(resp);
         //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //    WriteLine(resp);
 
         //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_payout_extension_cost", new object[] { User.Login, parmlink, new DateTime(2017, 1, 1) }, CancellationToken.None);
         //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    Console.WriteLine("----------------------------------------------------------------------------");
-        //    Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //    WriteLine("----------------------------------------------------------------------------");
+        //    WriteLine(obj);
         //}
 
         //[Test]
@@ -746,15 +746,15 @@ namespace Ditch.Golos.Tests.Apis
         //{
         //    var parmlink = "";
         //    var resp = Api.GetPayoutExtensionTime(User.Login, parmlink, new Asset(0, 3, "GBG"), CancellationToken.None);
-        //    Console.WriteLine(resp.Error);
+        //    WriteLine(resp);
         //    Assert.IsFalse(resp.IsError);
-        //    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //    WriteLine(resp);
 
         //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_payout_extension_time", new object[] { User.Login, parmlink, new Asset(0, 3, "GBG") },
         //        CancellationToken.None);
         //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    Console.WriteLine("----------------------------------------------------------------------------");
-        //    Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //    WriteLine("----------------------------------------------------------------------------");
+        //    WriteLine(obj);
         //}
 
         //[Test]
@@ -763,18 +763,18 @@ namespace Ditch.Golos.Tests.Apis
         //    if (VersionHelper.GetHardfork(Api.Version) > 16)
         //    {
         //        var resp = Api.GetProposedTransactions(User.Login, CancellationToken.None);
-        //        Console.WriteLine(resp.Error);
+        //        WriteLine(resp);
         //        Assert.IsFalse(resp.IsError);
-        //        Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+        //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_proposed_transactions", new object[] { User.Login }, CancellationToken.None);
         //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        Console.WriteLine("----------------------------------------------------------------------------");
-        //        Console.WriteLine(JsonConvert.SerializeObject(obj));
+        //        WriteLine("----------------------------------------------------------------------------");
+        //        WriteLine(obj);
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Added in hf 17");
+        //        WriteLine("Added in hf 17");
         //    }
         //}
     }

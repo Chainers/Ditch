@@ -7,20 +7,27 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Ditch.Core.JsonRpc;
 
 namespace Ditch.EOS.Tests
 {
     public class BaseTest
     {
-        protected readonly OperationManager Api;
+        protected static OperationManager Api;
         private bool IgnoreRequestWithBadData = true;
 
-        public BaseTest()
+
+        [OneTimeSetUp]
+        protected virtual void OneTimeSetUp()
         {
-            Api = new OperationManager();
-            var url = ConfigurationManager.AppSettings["Url"];
-            var connectedTo = Api.TryConnectTo(new List<string> { url }, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Сan`t connect to the node. ({url})");
+            if (Api == null)
+            {
+                Api = new OperationManager();
+                var url = ConfigurationManager.AppSettings["Url"];
+                var connectedTo = Api.TryConnectTo(new List<string> { url }, CancellationToken.None);
+            }
+
+            //Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
         protected void TestPropetries(Type type, JObject jObject)
@@ -88,6 +95,27 @@ namespace Ditch.EOS.Tests
                 }
             }
             return resp;
+        }
+
+        protected void WriteLine(string s)
+        {
+            WriteLine(s);
+        }
+
+        protected void WriteLine(JsonRpcResponse r)
+        {
+            if (r.IsError)
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+        }
+
+        protected void WriteLine<T>(OperationResult<T> r)
+        {
+            if (r.IsSuccess)
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
         }
     }
 }

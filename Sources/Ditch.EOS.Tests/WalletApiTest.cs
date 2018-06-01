@@ -15,20 +15,20 @@ namespace Ditch.EOS.Tests
         public async Task CreateTest()
         {
             var name = $"testname{DateTime.Now.ToString("yyyyMMddhhmmss")}";
-            Console.WriteLine(name);
+            WriteLine(name);
             var resp = await Api.WalletCreate(name, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Test]
         public async Task WalletOpenTest()
         {
             var name = "testname";
-            Console.WriteLine(name);
+            WriteLine(name);
             var resp = await Api.WalletOpen(name, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
         }
 
@@ -36,9 +36,9 @@ namespace Ditch.EOS.Tests
         public async Task WalletLockTest()
         {
             var name = "testname";
-            Console.WriteLine(name);
+            WriteLine(name);
             var resp = await Api.WalletLock(name, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
         }
 
@@ -46,7 +46,7 @@ namespace Ditch.EOS.Tests
         public async Task WalletLockAllTest()
         {
             var resp = await Api.WalletLockAll(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
         }
 
@@ -56,7 +56,7 @@ namespace Ditch.EOS.Tests
             var name = "testname20180422094827";
             var password = "PW5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
             var resp = await Api.WalletUnlock(name, password, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
         }
 
@@ -67,7 +67,7 @@ namespace Ditch.EOS.Tests
             var name = "testname20180422094827";
             var password = "5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
             var resp = await Api.WalletImportKey(name, password, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
         }
 
@@ -75,36 +75,36 @@ namespace Ditch.EOS.Tests
         public async Task WalletListTest()
         {
             var resp = await Api.WalletList(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Test]
         public async Task WalletListKeysTest()
         {
             var resp = await Api.WalletListKeys(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Test]
         public async Task WalletGetPublicKeysTest()
         {
             var resp = await Api.WalletGetPublicKeys(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Test]
         public async Task WalletSetTimeoutTest()
         {
             var resp = await Api.WalletSetTimeout(10, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
 
         [Ignore("you need to put your own data")]
@@ -148,9 +148,9 @@ namespace Ditch.EOS.Tests
             var chainId = "";
 
             var resp = await Api.WalletSignTrx(trx, publicKeys, chainId, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            WriteLine(resp);
         }
     }
 }

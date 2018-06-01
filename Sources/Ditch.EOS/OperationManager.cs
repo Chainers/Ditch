@@ -19,7 +19,6 @@ namespace Ditch.EOS
         private List<string> _urls;
         private string _url;
 
-
         #region Constructors
 
         public OperationManager(long maxResponseContentBufferSize = 256000)

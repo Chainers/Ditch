@@ -20,14 +20,13 @@ namespace Ditch.Steem.Tests.Apis
                 Type = BandwidthType.Forum
             };
             var resp = Api.GetAccountBandwidth(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
-
+            
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_account_bandwidth", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -35,14 +34,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetReserveRatioArgs();
             var resp = Api.GetReserveRatio(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_reserve_ratio", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
     }
 }
