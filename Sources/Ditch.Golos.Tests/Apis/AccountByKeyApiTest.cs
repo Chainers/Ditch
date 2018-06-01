@@ -16,7 +16,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetKeyReferences(new[] { pKey[0].Key }, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
     }
 }

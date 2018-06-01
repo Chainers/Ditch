@@ -18,17 +18,14 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Post, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Market, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Forum, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_account_bandwidth", new object[] { User.Login, BandwidthType.Forum }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -42,7 +39,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetAccountCount(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -53,7 +49,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetAccountHistory(User.Login, from, limit, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -62,7 +57,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetAccounts(new[] { User.Login }, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_accounts", new object[] { new[] { User.Login } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -76,7 +70,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetActiveWitnesses(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -85,7 +78,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetBlock(42, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_block", new object[] { 42 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -99,7 +91,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetBlockHeader(42, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_block_header", new object[] { 42 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -113,7 +104,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetChainProperties(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_chain_properties", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -127,7 +117,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetConfig<JObject>(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -136,7 +125,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetConversionRequests(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_conversion_requests", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -150,7 +138,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetCurrentMedianHistoryPrice(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_current_median_history_price", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -164,7 +151,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -178,7 +164,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetEscrow(User.Login, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_escrow", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -192,7 +177,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetFeedHistory(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_feed_history", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -206,7 +190,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetHardforkVersion(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -215,7 +198,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetMinerQueue(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -224,7 +206,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetNextScheduledHardfork(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_next_scheduled_hardfork", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -239,7 +220,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetOpsInBlock(id, false, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_ops_in_block", new object[] { id, false }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -253,7 +233,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetOwnerHistory(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_owner_history", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -274,7 +253,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetPotentialSignatures(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -283,7 +261,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetRecoveryRequest(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_recovery_request", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -304,7 +281,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetRequiredSignatures(transaction, new PublicKeyType[0], CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -313,7 +289,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetSavingsWithdrawFrom(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_savings_withdraw_from", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -327,7 +302,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetSavingsWithdrawTo(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -345,7 +319,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTransaction(trxId, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction", new object[] { trxId }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -366,7 +339,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTransactionHex(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -399,7 +371,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetWitnessByAccount(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_by_account", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -413,7 +384,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetWitnessCount(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -422,7 +392,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetWitnessSchedule(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_schedule", new object[] { }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -440,7 +409,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetWitnesses(new[] { witnes.Result[0].Id }, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_witnesses", new object[] { new[] { witnes.Result[0].Id } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -454,7 +422,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetWitnessesByVote(string.Empty, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_witnesses_by_vote", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -468,7 +435,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "lookup_account_names", new object[] { new[] { User.Login } }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -483,7 +449,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.LookupAccounts(User.Login, limit, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
         }
 
@@ -493,7 +458,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.LookupWitnessAccounts(string.Empty, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -502,7 +466,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.SetBlockAppliedCallback(null, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "set_block_applied_callback", new object[] { null }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -517,7 +480,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.VerifyAccountAuthority(User.Login, new PublicKeyType[0], CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -533,7 +495,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.VerifyAuthority(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
     }
 }

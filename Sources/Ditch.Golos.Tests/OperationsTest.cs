@@ -300,7 +300,6 @@ namespace Ditch.Golos.Tests
             var resp = Api.GetFollowing(User.Login, author, FollowType.Blog, 1, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
             return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
@@ -340,7 +339,6 @@ namespace Ditch.Golos.Tests
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var acc = resp.Result[0];
 

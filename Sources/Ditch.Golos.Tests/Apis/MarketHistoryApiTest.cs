@@ -15,7 +15,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetMarketHistory(100, new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistory, "get_market_history", new object[] { 100, new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -29,7 +28,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetMarketHistoryBuckets(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -38,7 +36,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetOpenOrders(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistory, "get_open_orders", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -52,7 +49,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetOrderBook(100, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.MarketHistory, "get_order_book", new object[] { 100 },
                 CancellationToken.None);
@@ -68,7 +64,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetRecentTrades(3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistory, "get_recent_trades", new object[] { 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -82,7 +77,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTicker(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.MarketHistory, "get_ticker", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -96,7 +90,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTradeHistory(new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistory, "get_trade_history", new object[] { new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -110,7 +103,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetVolume(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.MarketHistory, "get_volume", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);

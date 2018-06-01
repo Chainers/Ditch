@@ -16,7 +16,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTrendingTags(User.Login, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -30,7 +29,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTrendingCategories(string.Empty, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -44,7 +42,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetBestCategories(string.Empty, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_best_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -58,7 +55,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetActiveCategories(User.Login, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_active_categories", new object[] { User.Login, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -72,7 +68,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetRecentCategories(string.Empty, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_recent_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -302,7 +297,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetActiveVotes(User.Login, permlink, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_active_votes", new object[] { User.Login, permlink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -316,7 +310,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetAccountVotes(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_account_votes", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -335,7 +328,6 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsTrue(resp.Result != null);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_content", new object[] { author, permlink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -351,7 +343,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetContentReplies(parent, parentPermink, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_content_replies", new object[] { parent, parentPermink }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -365,7 +356,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetTagsUsedByAuthor(User.Login, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -384,7 +374,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByTrending(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_trending", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -403,7 +392,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByCreated(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_created", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -421,7 +409,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByActive(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_active", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -439,7 +426,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByCashout(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_cashout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -457,7 +443,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -525,7 +510,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByVotes(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_votes", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -561,7 +545,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByHot(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_hot", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -579,7 +562,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByFeed(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_feed", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -597,7 +579,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByBlog(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_blog", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -615,7 +596,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByComments(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_comments", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -633,7 +613,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByPromoted(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_promoted", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -647,7 +626,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetRepliesByLastUpdate(User.Login, string.Empty, 10, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -663,7 +641,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
             Assert.IsTrue(resp.Result.Length <= count);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { User.Login, string.Empty, dt, count }, CancellationToken.None);
@@ -687,7 +664,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetAllContentReplies(post.Author, post.Url, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { User.Login, "spasibo-golos" }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -707,7 +683,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetDiscussionsByChildren(query, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
@@ -721,7 +696,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.GetLanguages(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         //[Test]

@@ -25,7 +25,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.BroadcastTransaction(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -42,7 +41,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.BroadcastTransactionSynchronous(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
 
         [Test]
@@ -52,7 +50,6 @@ namespace Ditch.Golos.Tests.Apis
             var resp = Api.BroadcastBlock(new SignedBlock(), CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp);
         }
     }
 }
