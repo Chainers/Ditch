@@ -7,6 +7,7 @@ using Ditch.BitShares.JsonRpc;
 using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
 using Ditch.Core;
+using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
@@ -206,6 +207,12 @@ namespace Ditch.BitShares
             return _connectionManager.Execute(jsonRpc, token);
         }
 
+        public class RequiredFees
+        {
+            public ulong amount;
+            public string asset_id;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -226,64 +233,108 @@ namespace Ditch.BitShares
                 BaseOperations = operations
             };
 
-            var rez = Hex.HexToBytes(GetTransactionHex(transaction, CancellationToken.None).Result);
-            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
+            var reqRez = GetRequiredFees(transaction.BaseOperations, (operations[0] as AccountCreateOperation).Fee.AssetId, CancellationToken.None);
+            if (!reqRez.IsError)
+            {
+                (operations[0] as AccountCreateOperation).Fee.Amount = JsonConvert.DeserializeObject<RequiredFees>(reqRez.Result[0].ToString()).amount;
+            }
+
+            VerifyAccountAuthority(
+                "nano-blockchain", 
+                new PublicKeyType[] {
+                    new PublicKeyType("TEST6HWVwXazrgS3MsWZvvSV6qdRbc8GS7KpdfDw8mAcNug4RcPv3v"),
+                    //new PublicKeyType("TEST7AX8Ewg85sudNVfwqGcCDEAGnhwyVMgvrWW6bkQT5aDm5fdELM")
+                }, 
+                CancellationToken.None
+            );
+
+            GetPotentialSignatures(transaction, CancellationToken.None);
+
+            GetRequiredSignatures(
+                transaction,
+                new PublicKeyType[] {
+                    new PublicKeyType("TEST6HWVwXazrgS3MsWZvvSV6qdRbc8GS7KpdfDw8mAcNug4RcPv3v"),
+                    new PublicKeyType("TEST7AX8Ewg85sudNVfwqGcCDEAGnhwyVMgvrWW6bkQT5aDm5fdELM")
+                },
+                CancellationToken.None
+            );
+
+            var remoteHex = Hex.HexToBytes(GetTransactionHex(transaction, CancellationToken.None).Result);
+            var localHex = MessageSerializer.Serialize<SignedTransaction>(transaction);
 
             string strRez = string.Empty;
             int limit;
-            if (rez.Length > msg.Length)
+            if (remoteHex.Length > localHex.Length)
             {
-                limit = rez.Length;
+                limit = remoteHex.Length;
             } else
             {
-                limit = msg.Length;
+                limit = localHex.Length;
             }
 
             for (int i=0; i < limit; i++)
             {
-                if (i >= rez.Length || i >= msg.Length)
+                if (i >= remoteHex.Length || i >= localHex.Length)
                 {
-                    if (rez.Length > msg.Length)
+                    if (remoteHex.Length > localHex.Length)
                     {
-                        strRez += "[" + i.ToString() + "] " + Hex.HexToInteger(new byte[] { rez[i] }).ToString() + "\n";
+                        strRez += "[" + i.ToString() + "] " + Hex.HexToInteger(new byte[] { remoteHex[i] }).ToString() + "\n";
                     } else
                     {
-                        strRez += "[" + i.ToString() + "]     " + Hex.HexToInteger(new byte[] { msg[i] }).ToString() + "\n";
+                        strRez += "[" + i.ToString() + "]     " + Hex.HexToInteger(new byte[] { localHex[i] }).ToString() + "\n";
                     }
                 } else
                 {
-                    strRez += "[" + i.ToString() + "] " + Hex.HexToInteger(new byte[] { rez[i] }).ToString() + " " + Hex.HexToInteger(new byte[] { msg[i] }).ToString() + "\n";
+                    strRez += "[" + i.ToString() + "] " + Hex.HexToInteger(new byte[] { remoteHex[i] }).ToString() + " " + Hex.HexToInteger(new byte[] { localHex[i] }).ToString() + "\n";
                 }
             }
 
             UnityEngine.Debug.Log(strRez);
-            UnityEngine.Debug.Log("LOCAL HEX =  " + Hex.ToString(msg));
-            UnityEngine.Debug.Log("REMOTE HEX = " + Hex.ToString(rez));
+            UnityEngine.Debug.Log("LOCAL HEX =  " + Hex.ToString(localHex));
+            UnityEngine.Debug.Log("REMOTE HEX = " + Hex.ToString(remoteHex));
+            
+            //for (int i=0; i < localHex.Length; i++)
+            //{
+            //    localHex[i] = 0;
+            //}
 
-            byte[] rez2 = new byte[ChainId.Length + rez.Length];
-            for (int i=0; i < rez2.Length; i++)
-            {
-                if (i < ChainId.Length)
-                {
-                    rez2[i] = ChainId[i];
-                } else
-                {
-                    rez2[i] = rez[i - ChainId.Length];
-                }
-            }
-
-            var data = Sha256Manager.GetHash(rez);
-
+            var data = Sha256Manager.GetHash(Hex.Join(ChainId, localHex));
+            
             transaction.Signatures = new string[userPrivateKeys.Count];
             for (int i = 0; i < userPrivateKeys.Count; i++)
             {
                 token.ThrowIfCancellationRequested();
                 var userPrivateKey = userPrivateKeys[i];
                 var sig = Secp256K1Manager.SignCompressedCompact(data, userPrivateKey);
+
                 transaction.Signatures[i] = Hex.ToString(sig);
             }
 
             return transaction;
+        }
+
+        public static string ConvertHex(String hexString)
+        {
+            try
+            {
+                string ascii = string.Empty;
+
+                for (int i = 0; i < hexString.Length; i += 2)
+                {
+                    String hs = string.Empty;
+
+                    hs = hexString.Substring(i, 2);
+                    uint decval = System.Convert.ToUInt32(hs, 16);
+                    char character = System.Convert.ToChar(decval);
+                    ascii += character;
+
+                }
+
+                return ascii;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+            return string.Empty;
         }
 
         public virtual bool TryLoadChainId(CancellationToken token)

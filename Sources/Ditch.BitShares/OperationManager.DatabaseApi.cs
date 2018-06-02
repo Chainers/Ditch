@@ -890,7 +890,6 @@ namespace Ditch.BitShares
             return CustomGetRequest<string>(KnownApiNames.DatabaseApi, "get_transaction_hex", new object[] { trx, }, token);
         }
 
-
         /**
          *  This API will take a partially signed transaction and a set of public keys that the owner has the ability to sign for
          *  and return the minimal subset of public keys that should add signatures to the transaction.
@@ -1005,7 +1004,7 @@ namespace Ditch.BitShares
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<object[]> GetRequiredFees(BaseOperation[] ops, object id, CancellationToken token)
         {
-            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_fees", new object[] { ops, id, }, token);
+            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_fees", new object[] { new object[] { ops }, id, }, token);
         }
 
         ///////////////////////////
