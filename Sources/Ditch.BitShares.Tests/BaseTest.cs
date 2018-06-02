@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core;
+using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -23,8 +24,8 @@ namespace Ditch.BitShares.Tests
 
         static BaseTest()
         {
-            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
-            // Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
+            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], Wif = ConfigurationManager.AppSettings["Wif"] };
+            // Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
             var jss = GetJsonSerializerSettings();
             // var manager = new WebSocketManager(jss, 1024 * 1024);
             var manager = new HttpManager(jss);
@@ -117,18 +118,7 @@ namespace Ditch.BitShares.Tests
             var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
             return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
         }
-
-
-        protected void WriteLine(string s)
-        {
-            Console.WriteLine(s);
-        }
-
-        protected void WriteLine(object o)
-        {
-            Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
-        }
-
+        
         //protected SignedTransaction GetSignedTransaction()
         //{
         //    var user = User;
@@ -136,8 +126,21 @@ namespace Ditch.BitShares.Tests
 
         //    var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
         //    var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-        //    var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+        //    var transaction = Api.CreateTransaction(prop.Result, user.PrivateKeys, CancellationToken.None, op);
         //    return transaction;
         //}
+
+        protected void WriteLine(string s)
+        {
+            Console.WriteLine(s);
+        }
+
+        protected void WriteLine(JsonRpcResponse r)
+        {
+            if (r.IsError)
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+        }
     }
 }

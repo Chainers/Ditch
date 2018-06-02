@@ -40,7 +40,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("borrower")]
-        public object Borrower { get; set; }
+        public AccountIdType Borrower { get; set; }
 
         /// <summary>
         /// API name: collateral

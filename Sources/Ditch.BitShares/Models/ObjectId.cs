@@ -1,6 +1,7 @@
 using System;
-using Ditch.Core.Attributes;
+using System.IO;
 using Ditch.Core.Converters;
+using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -9,16 +10,15 @@ namespace Ditch.BitShares.Models
     /// object_id
     /// libraries\db\include\graphene\db\object_id.hpp
     /// </summary>
+    [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ObjectId : ICustomJson
+    public partial class ObjectId : ICustomJson, ICustomSerializer
     {
         /// <summary>
         /// API name: space_id
         /// = SpaceID;
         /// </summary>
         /// <returns>API type: uint8_t</returns>
-        [MessageOrder(10)]
-        [JsonProperty("space_id")]
         public byte SpaceId { get; set; }
 
         /// <summary>
@@ -26,8 +26,6 @@ namespace Ditch.BitShares.Models
         /// = TypeID;
         /// </summary>
         /// <returns>API type: uint8_t</returns>
-        [MessageOrder(20)]
-        [JsonProperty("type_id")]
         public byte TypeId { get; set; }
 
         /// <summary>
@@ -35,8 +33,6 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
-        [MessageOrder(20)]
-        [JsonProperty("instance")]
         public UInt32 Instance { get; set; }
 
 
@@ -49,11 +45,47 @@ namespace Ditch.BitShares.Models
             Instance = instance;
         }
 
+
+        #region ICustomSerializer
+
+        public void Serializer(Stream stream, IMessageSerializer serializeHelper)
+        {
+            //https://developers.google.com/protocol-buffers/docs/encoding
+            var t = VarInt((int)Instance);
+            serializeHelper.AddToMessageStream(stream, typeof(byte[]), t);
+        }
+
+        protected byte[] VarInt(int n)
+        {
+            //get array len
+            var i = 1;
+            var k = n;
+            while (k >= 0x80)
+            {
+                k >>= 7;
+                i++;
+            }
+
+            var data = new byte[i];
+            i = 0;
+
+            while (n >= 0x80)
+            {
+                data[i++] = (byte)(0x80 | (n & 0x7f));
+                n >>= 7;
+            }
+
+            data[i] += (byte)n;
+            return data;
+        }
+
+        #endregion ICustomSerializer
+
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            var value = reader.ReadAsString();
+            var value = serializer.Deserialize<string>(reader);
             if (string.IsNullOrEmpty(value))
                 return;
 
@@ -68,6 +100,7 @@ namespace Ditch.BitShares.Models
         {
             writer.WriteValue($"{SpaceId}.{TypeId}.{Instance}");
         }
+
         #endregion ICustomJson
     }
 }

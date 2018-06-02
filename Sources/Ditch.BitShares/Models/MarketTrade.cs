@@ -57,7 +57,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("side1_account_id")]
-        public object Side1AccountId { get; set; }
+        public AccountIdType Side1AccountId { get; set; }
 
         /// <summary>
         /// API name: side2_account_id
@@ -65,6 +65,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("side2_account_id")]
-        public object Side2AccountId { get; set; }
+        public AccountIdType Side2AccountId { get; set; }
     }
 }

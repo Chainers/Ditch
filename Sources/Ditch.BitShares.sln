@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.Steem", "Ditch.Steem\Ditch.Steem.csproj", "{6C914F23-D72B-4A98-824C-51358FDA0796}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.Golos", "Ditch.Golos\Ditch.Golos.csproj", "{F60D2578-C1B5-437B-813A-924CF616F83A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.Core", "Ditch.Core\Ditch.Core.csproj", "{15294A4E-300E-460D-B229-7A20A5796D1F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.BitShares", "Ditch.BitShares\Ditch.BitShares.csproj", "{8E5D2936-E2CA-4EBC-B866-5047A9D7041D}"
@@ -19,14 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6C914F23-D72B-4A98-824C-51358FDA0796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C914F23-D72B-4A98-824C-51358FDA0796}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C914F23-D72B-4A98-824C-51358FDA0796}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C914F23-D72B-4A98-824C-51358FDA0796}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F60D2578-C1B5-437B-813A-924CF616F83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F60D2578-C1B5-437B-813A-924CF616F83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F60D2578-C1B5-437B-813A-924CF616F83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F60D2578-C1B5-437B-813A-924CF616F83A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15294A4E-300E-460D-B229-7A20A5796D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15294A4E-300E-460D-B229-7A20A5796D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15294A4E-300E-460D-B229-7A20A5796D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU

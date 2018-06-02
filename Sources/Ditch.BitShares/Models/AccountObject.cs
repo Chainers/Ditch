@@ -63,7 +63,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("registrar")]
-        public object Registrar { get; set; }
+        public AccountIdType Registrar { get; set; }
 
         /// The account credited as referring this account. Receives a percentage of referral rewards.
 
@@ -73,7 +73,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("referrer")]
-        public object Referrer { get; set; }
+        public AccountIdType Referrer { get; set; }
 
         /// The lifetime member at the top of the referral tree. Receives a percentage of referral rewards.
 
@@ -83,7 +83,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("lifetime_referrer")]
-        public object LifetimeReferrer { get; set; }
+        public AccountIdType LifetimeReferrer { get; set; }
 
 
         /// Percentage of fee which should go to network.
@@ -209,7 +209,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("whitelisted_accounts")]
-        public object[] WhitelistedAccounts { get; set; }
+        public AccountIdType[] WhitelistedAccounts { get; set; }
 
         /// <summary>
         /// API name: blacklisted_accounts
@@ -217,7 +217,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("blacklisted_accounts")]
-        public object[] BlacklistedAccounts { get; set; }
+        public AccountIdType[] BlacklistedAccounts { get; set; }
 
         ///@}
 

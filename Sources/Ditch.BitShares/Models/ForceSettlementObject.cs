@@ -40,7 +40,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("owner")]
-        public object Owner { get; set; }
+        public AccountIdType Owner { get; set; }
 
         /// <summary>
         /// API name: balance

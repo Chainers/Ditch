@@ -34,7 +34,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: flat_map<account_id_type,weight_type></returns>
         [MessageOrder(20)]
         [JsonProperty("account_auths")]
-        public MapContainer<object, UInt16> AccountAuths { get; set; }
+        public MapContainer<AccountIdType, UInt16> AccountAuths { get; set; }
 
         /// <summary>
         /// API name: key_auths
@@ -59,7 +59,7 @@ namespace Ditch.BitShares.Models
         public Authority()
         {
             WeightThreshold = 1;
-            AccountAuths = new MapContainer<object, ushort>();
+            AccountAuths = new MapContainer<AccountIdType, ushort>();
             KeyAuths = new MapContainer<PublicKeyType, ushort>();
             AddressAuths = new MapContainer<object, UInt16>();
         }

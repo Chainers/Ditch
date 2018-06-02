@@ -52,8 +52,8 @@ namespace Ditch.BitShares.Tests
                     Amount = 58516,
                     AssetId = new AssetIdType(1, 3, 0)
                 },
-                Registrar = "1.2.22760",
-                Referrer = "1.2.22760",
+                Registrar = new AccountIdType(1, 2, 22765),
+                Referrer = new AccountIdType(1, 2, 22765),
                 ReferrerPercent = 7000,
                 Name = "test-account-nano",
                 Owner = new Authority(new PublicKeyType("TEST6FcnaaaP7eZWqUs5VHRPMwjD69V1SFAAVoJRHiq3YEJ7tVgyQc", "TEST")),
@@ -62,26 +62,20 @@ namespace Ditch.BitShares.Tests
                 {
                     MemoKey = new PublicKeyType("TEST6HWVwXazrgS3MsWZvvSV6qdRbc8GS7KpdfDw8mAcNug4RcPv3v", "TEST"),
                     VotingAccount = new AccountIdType(1, 2, 5),
-                    NumWitness = 0,
-                    NumCommittee = 0,
-                    Votes = new object[0],
-                    Extensions = new object[0],
                 },
-                Extensions = new object(),
-
             };
 
             var transaction = GetTransaction();
             transaction.BaseOperations = new[] { op };
 
-            //var msgHex = Api.GetTransactionHex(transaction, token);
-            //Assert.IsFalse(msgHex.IsError, JsonConvert.SerializeObject(msgHex.Error, Formatting.Indented));
-            //var msg = Hex.ToString(Api.ChainId) + msgHex.Result;
+            var msgHex = Api.GetTransactionHex(transaction, token);
+            Assert.IsFalse(msgHex.IsError, JsonConvert.SerializeObject(msgHex.Error, Formatting.Indented));
+            var msg = Hex.ToString(Api.ChainId) + msgHex.Result.Remove(msgHex.Result.Length - 2);
 
             var sMsg = Api.MessageSerializer.Serialize<SignedTransaction>(transaction);
             var msg2 = Hex.ToString(sMsg);
 
-            //Assert.IsTrue(msg.Equals(msg2));
+            Assert.IsTrue(msg.Equals(msg2));
         }
     }
 }

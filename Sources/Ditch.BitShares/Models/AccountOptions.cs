@@ -51,7 +51,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(30)]
         [JsonProperty("num_witness")]
-        public UInt16 NumWitness { get; set; }
+        public UInt16 NumWitness { get; set; } = 0;
 
         /// The number of active committee members this account votes the blockchain should appoint
         /// Must not exceed the actual number of committee members voted for in @ref votes
@@ -63,7 +63,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(40)]
         [JsonProperty("num_committee")]
-        public UInt16 NumCommittee { get; set; }
+        public UInt16 NumCommittee { get; set; } = 0;
 
         /// This is the list of vote IDs this account votes for. The weight of these votes is determined by this
         /// account's balance of core asset.
@@ -75,7 +75,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: flat_set</returns>
         [MessageOrder(50)]
         [JsonProperty("votes")]
-        public object[] Votes { get; set; }
+        public object[] Votes { get; set; } = new object[0];
 
         /// <summary>
         /// API name: extensions
@@ -84,6 +84,6 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: extensions_type</returns>
         [MessageOrder(60)]
         [JsonProperty("extensions")]
-        public object[] Extensions { get; set; }
+        public object[] Extensions { get; set; } = new object[0];
     }
 }

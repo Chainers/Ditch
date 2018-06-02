@@ -14,14 +14,14 @@ namespace Ditch.BitShares.Tests.Apis
         {
             var args = new SignedTransaction();
             var resp = Api.BroadcastTransaction(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            Console.WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", new[] { args }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            Console.WriteLine(obj);
         }
 
         [Test]
@@ -29,14 +29,14 @@ namespace Ditch.BitShares.Tests.Apis
         {
             var args = new SignedTransaction();
             var resp = Api.BroadcastTransactionSynchronous(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            Console.WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", new[] { args }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            Console.WriteLine(obj);
         }
 
         [Test]
@@ -44,14 +44,14 @@ namespace Ditch.BitShares.Tests.Apis
         {
             var args = new SignedBlock();
             var resp = Api.BroadcastBlock(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            Console.WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", new[] { args }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            Console.WriteLine(obj);
         }
     }
 }

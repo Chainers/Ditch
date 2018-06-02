@@ -31,12 +31,20 @@ namespace Ditch.BitShares.Models
             Data = data;
         }
 
+        public PublicKeyType(byte[] data, string prefix)
+        {
+            Prefix = prefix;
+            Data = data;
+        }
 
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            var value = reader.Value.ToString();
+            var value = serializer.Deserialize<string>(reader);
+            if (value.StartsWith("TEST"))
+                Prefix = "TEST";
+
             Data = Base58.DecodePublicWif(value, Prefix);
         }
 

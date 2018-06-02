@@ -40,7 +40,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("worker_account")]
-        public object WorkerAccount { get; set; }
+        public AccountIdType WorkerAccount { get; set; }
 
         /// Time at which this worker begins receiving pay, if elected
 

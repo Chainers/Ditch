@@ -74,7 +74,11 @@ namespace Ditch.Core.JsonRpc
     public class JsonRpcResponse<T> : JsonRpcResponse
     {
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
-        public new T Result { get; set; }
+        public new T Result
+        {
+            get => (T)base.Result;
+            set => base.Result = value;
+        }
 
         public new static JsonRpcResponse<T> FromString(string obj, JsonSerializerSettings serializerSettings)
         {

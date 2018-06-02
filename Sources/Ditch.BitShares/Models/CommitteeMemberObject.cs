@@ -45,7 +45,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("committee_member_account")]
-        public object CommitteeMemberAccount { get; set; }
+        public AccountIdType CommitteeMemberAccount { get; set; }
 
         /// <summary>
         /// API name: vote_id

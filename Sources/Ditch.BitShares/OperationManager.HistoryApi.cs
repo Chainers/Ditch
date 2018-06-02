@@ -31,9 +31,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>A list of operations performed by account, ordered from most recent to oldest.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OperationHistoryObject[]> GetAccountHistory(object account, object stop, UInt32 limit, object start, CancellationToken token)
+        public JsonRpcResponse<OperationHistoryObject[]> GetAccountHistory(AccountIdType account, object stop, UInt32 limit, object start, CancellationToken token)
         {
-            return CustomGetRequest<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_account_history", new[] { account, }, token);
+            return CustomGetRequest<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_account_history", new[] { account, stop, limit, start }, token);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: history_operation_detail history_operation_detail</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<HistoryOperationDetail> GetAccountHistoryByOperations(object account, UInt16[] operationTypes, UInt32 start, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<HistoryOperationDetail> GetAccountHistoryByOperations(AccountIdType account, UInt16[] operationTypes, UInt32 start, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<HistoryOperationDetail>(KnownApiNames.HistoryApi, "get_account_history_by_operations", new object[] { account, operationTypes, start, limit, }, token);
         }
@@ -67,7 +67,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: operation_history_object A list of operations performed by account, ordered from most recent to oldest.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OperationHistoryObject[]> GetRelativeAccountHistory(object account, UInt32 stop, UInt32 limit, UInt32 start, CancellationToken token)
+        public JsonRpcResponse<OperationHistoryObject[]> GetRelativeAccountHistory(AccountIdType account, UInt32 stop, UInt32 limit, UInt32 start, CancellationToken token)
         {
             return CustomGetRequest<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_relative_account_history", new object[] { account, stop, limit, start, }, token);
         }

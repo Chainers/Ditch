@@ -63,7 +63,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("issuer")]
-        public object Issuer { get; set; }
+        public AccountIdType Issuer { get; set; }
 
         /// <summary>
         /// API name: options
@@ -101,6 +101,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("buyback_account", NullValueHandling = NullValueHandling.Ignore)]
-        public object BuybackAccount { get; set; }
+        public AccountIdType BuybackAccount { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("witness_account")]
-        public object WitnessAccount { get; set; }
+        public AccountIdType WitnessAccount { get; set; }
 
         /// <summary>
         /// API name: last_aslot

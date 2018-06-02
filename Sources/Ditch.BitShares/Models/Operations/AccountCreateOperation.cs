@@ -35,7 +35,7 @@ namespace Ditch.BitShares.Models.Operations
         /// <returns>API type: account_id_type</returns>
         [MessageOrder(30)]
         [JsonProperty("registrar")]
-        public object Registrar { get; set; }
+        public AccountIdType Registrar { get; set; }
 
 
         /// This account receives a portion of the fee split between registrar and referrer. Must be a member.
@@ -47,7 +47,7 @@ namespace Ditch.BitShares.Models.Operations
         /// <returns>API type: account_id_type</returns>
         [MessageOrder(40)]
         [JsonProperty("referrer")]
-        public object Referrer { get; set; }
+        public AccountIdType Referrer { get; set; }
 
         /// Of the fee split between registrar and referrer, this percentage goes to the referrer. The rest goes to the
         /// registrar.
@@ -104,6 +104,6 @@ namespace Ditch.BitShares.Models.Operations
         /// <returns>API type: extension</returns>
         [MessageOrder(100)]
         [JsonProperty("extensions")]
-        public object Extensions { get; set; }
+        public object[] Extensions { get; set; } = new object[0];
     }
 }

@@ -39,7 +39,7 @@ namespace Ditch.BitShares.Models.Operations
         /// <returns>API type: account_id_type</returns>
         [MessageOrder(30)]
         [JsonProperty("account_id")]
-        public object AccountId { get; set; }
+        public AccountIdType AccountId { get; set; }
 
         /// <summary>
         /// API name: pays

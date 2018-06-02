@@ -103,6 +103,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("proposer")]
-        public object Proposer { get; set; }
+        public AccountIdType Proposer { get; set; }
     }
 }

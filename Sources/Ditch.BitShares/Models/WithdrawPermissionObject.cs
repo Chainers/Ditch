@@ -47,7 +47,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("withdraw_from_account")]
-        public object WithdrawFromAccount { get; set; }
+        public AccountIdType WithdrawFromAccount { get; set; }
 
         /// The account authorized to make withdrawals from @ref withdraw_from_account
 
@@ -57,7 +57,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("authorized_account")]
-        public object AuthorizedAccount { get; set; }
+        public AccountIdType AuthorizedAccount { get; set; }
 
         /// The maximum amount which may be withdrawn per period. All withdrawals must be of this asset type
 

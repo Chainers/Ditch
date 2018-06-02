@@ -12,28 +12,26 @@
 //        public void info()
 //        {
 //            var resp = Api.Info(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "info", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        [Test]
 //        public void about()
 //        {
 //            var resp = Api.About(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "about", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -41,38 +39,36 @@
 //        //{
 //        //    var args = new UInt32();
 //        //    var resp = Api.GetBlock(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_block", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void get_account_count()
 //        {
 //            var resp = Api.GetAccountCount(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 //        }
 
 //        [Test]
 //        public void list_my_accounts()
 //        {
 //            var resp = Api.ListMyAccounts(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "list_my_accounts",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -80,7 +76,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ListAccounts(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -88,7 +84,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -96,7 +92,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ListAccountBalances(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -104,7 +100,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -112,7 +108,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ListAssets(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -120,7 +116,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -128,7 +124,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetAccountHistory(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -136,7 +132,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -144,7 +140,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetRelativeAccountHistory(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -152,7 +148,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -160,7 +156,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetMarketHistory(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -168,7 +164,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -176,7 +172,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetLimitOrders(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -184,7 +180,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -192,7 +188,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetCallOrders(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -200,7 +196,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -208,7 +204,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetSettleOrders(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -216,7 +212,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -224,7 +220,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetCollateralBids(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -232,22 +228,21 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void get_global_properties()
 //        {
 //            var resp = Api.GetGlobalProperties(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_global_properties",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -255,7 +250,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetAccountHistoryByOperations(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -263,22 +258,21 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void get_dynamic_global_properties()
 //        {
 //            var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_dynamic_global_properties",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -286,7 +280,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetAccount(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -294,7 +288,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -302,14 +296,14 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_asset", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -317,7 +311,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetBitassetData(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -325,7 +319,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -333,7 +327,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetAccountId(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -341,7 +335,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -349,7 +343,7 @@
 //        //{
 //        //    var args = new ObjectIdType();
 //        //    var resp = Api.GetObject(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -357,7 +351,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -365,7 +359,7 @@
 //        //{
 //        //    var args = new PublicKeyType();
 //        //    var resp = Api.GetPrivateKey(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -373,21 +367,20 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void begin_builder_transaction()
 //        {
 //            var resp = Api.BeginBuilderTransaction(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "begin_builder_transaction", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -395,7 +388,7 @@
 //        //{
 //        //    var args = new UInt16();
 //        //    var resp = Api.AddOperationToBuilderTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -403,7 +396,7 @@
 //        //        args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -411,7 +404,7 @@
 //        //{
 //        //    var args = new UInt16();
 //        //    var resp = Api.ReplaceOperationInBuilderTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -419,7 +412,7 @@
 //        //        args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -427,7 +420,7 @@
 //        //{
 //        //    var args = new UInt16();
 //        //    var resp = Api.PreviewBuilderTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -435,7 +428,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -443,7 +436,7 @@
 //        //{
 //        //    var args = new UInt16();
 //        //    var resp = Api.SignBuilderTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -451,7 +444,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -459,7 +452,7 @@
 //        //{
 //        //    var args = new SignedTransaction();
 //        //    var resp = Api.BroadcastTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -467,7 +460,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -475,7 +468,7 @@
 //        //{
 //        //    var args = new UInt16();
 //        //    var resp = Api.RemoveBuilderTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -483,49 +476,46 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void is_new()
 //        {
 //            var resp = Api.IsNew(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "is_new", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        [Test]
 //        public void is_locked()
 //        {
 //            var resp = Api.IsLocked(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "is_locked", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        [Test]
 //        public void lockTest()
 //        {
 //            var resp = Api.Lock(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "lock", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -533,14 +523,14 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.Unlock(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "unlock", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -548,7 +538,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.SetPassword(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -556,36 +546,34 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void dump_private_keys()
 //        {
 //            var resp = Api.DumpPrivateKeys(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dump_private_keys",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        [Test]
 //        public void help()
 //        {
 //            var resp = Api.Help(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "help", CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -593,29 +581,28 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.Gethelp(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "gethelp", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void suggest_brain_key()
 //        {
 //            var resp = Api.SuggestBrainKey(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "suggest_brain_key",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -623,7 +610,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.DeriveOwnerKeysFromBrainKey(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -631,7 +618,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -639,7 +626,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.IsPublicKeyRegistered(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -647,7 +634,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -655,7 +642,7 @@
 //        //{
 //        //    var args = new SignedTransaction();
 //        //    var resp = Api.SerializeTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -663,7 +650,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -671,7 +658,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ImportKey(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -679,7 +666,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -687,7 +674,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ImportAccounts(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -695,7 +682,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -703,7 +690,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ImportAccountKeys(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -711,7 +698,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -719,7 +706,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ImportBalance(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -727,7 +714,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -735,7 +722,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.NormalizeBrainKey(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -743,7 +730,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -751,7 +738,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.RegisterAccount(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -759,7 +746,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -767,7 +754,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.UpgradeAccount(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -775,7 +762,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -783,7 +770,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.CreateAccountWithBrainKey(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -791,7 +778,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -799,14 +786,14 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.Transfer(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "transfer", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -814,14 +801,14 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.SignMemo(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "sign_memo", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -829,14 +816,14 @@
 //        //{
 //        //    var args = new MemoData();
 //        //    var resp = Api.ReadMemo(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "read_memo", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -844,7 +831,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.CreateBlindAccount(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -852,7 +839,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -860,7 +847,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetBlindBalances(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -868,37 +855,35 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void get_blind_accounts()
 //        {
 //            var resp = Api.GetBlindAccounts(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_blind_accounts",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        [Test]
 //        public void get_my_blind_accounts()
 //        {
 //            var resp = Api.GetMyBlindAccounts(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_my_blind_accounts",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 
 //        //[Test]
@@ -906,7 +891,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetPublicKey(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -914,7 +899,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -922,7 +907,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.BlindHistory(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -930,7 +915,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -938,7 +923,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ReceiveBlindTransfer(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -946,7 +931,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -954,7 +939,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.BlindTransfer(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -962,7 +947,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -970,7 +955,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.SellAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -978,7 +963,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -986,7 +971,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.BorrowAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -994,7 +979,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1002,7 +987,7 @@
 //        //{
 //        //    var args = new ObjectIdType();
 //        //    var resp = Api.CancelOrder(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1010,7 +995,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1018,7 +1003,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.CreateAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1026,7 +1011,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1034,7 +1019,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.IssueAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1042,7 +1027,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1050,7 +1035,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.UpdateAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1058,7 +1043,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1066,7 +1051,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.UpdateBitasset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1074,7 +1059,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1082,7 +1067,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.UpdateAssetFeedProducers(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1090,7 +1075,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1098,7 +1083,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.PublishAssetFeed(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1106,7 +1091,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1114,7 +1099,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.FundAssetFeePool(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1122,7 +1107,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1130,7 +1115,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ReserveAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1138,7 +1123,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1146,7 +1131,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GlobalSettleAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1154,7 +1139,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1162,7 +1147,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.SettleAsset(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1170,7 +1155,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1178,7 +1163,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.BidCollateral(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1186,7 +1171,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1194,7 +1179,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.WhitelistAccount(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1202,7 +1187,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1210,7 +1195,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.CreateCommitteeMember(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1218,7 +1203,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1226,7 +1211,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ListWitnesses(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1234,7 +1219,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1242,7 +1227,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.ListCommitteeMembers(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1250,7 +1235,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1258,7 +1243,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetWitness(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1266,7 +1251,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1274,7 +1259,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetCommitteeMember(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1282,7 +1267,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1290,7 +1275,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.CreateWitness(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1298,7 +1283,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1306,7 +1291,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.UpdateWitness(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1314,7 +1299,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1322,7 +1307,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetVestingBalances(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1330,7 +1315,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1338,7 +1323,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.VoteForCommitteeMember(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1346,7 +1331,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1354,7 +1339,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.VoteForWitness(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1362,7 +1347,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1370,7 +1355,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.SetVotingProxy(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1378,7 +1363,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1386,7 +1371,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.SetDesiredWitnessAndCommitteeMemberCount(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1394,7 +1379,7 @@
 //        //        "set_desired_witness_and_committee_member_count", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1402,7 +1387,7 @@
 //        //{
 //        //    var args = new SignedTransaction();
 //        //    var resp = Api.SignTransaction(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1410,7 +1395,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1418,7 +1403,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetPrototypeOperation(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1426,7 +1411,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1434,7 +1419,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.GetOrderBook(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1442,7 +1427,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1450,7 +1435,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.DbgMakeUia(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1458,7 +1443,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1466,7 +1451,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.DbgMakeMia(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1474,7 +1459,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1482,7 +1467,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.DbgPushBlocks(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1490,7 +1475,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1498,7 +1483,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.DbgGenerateBlocks(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1506,7 +1491,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1514,7 +1499,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.DbgStreamJsonObjects(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1522,7 +1507,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1530,7 +1515,7 @@
 //        //{
 //        //    var args = new object();
 //        //    var resp = Api.DbgUpdateObject(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1538,7 +1523,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1546,7 +1531,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.FloodNetwork(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1554,7 +1539,7 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        //[Test]
@@ -1562,7 +1547,7 @@
 //        //{
 //        //    var args = new string();
 //        //    var resp = Api.NetworkAddNodes(args, CancellationToken.None);
-//        //    WriteLine(resp.Error);
+//        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
 //        //    WriteLine(resp.Result);
 
@@ -1570,22 +1555,21 @@
 //        //        CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
 //        //    WriteLine("----------------------------------------------------------------------------");
-//        //    WriteLine(JsonConvert.SerializeObject(obj));
+//        //    WriteLine(obj);
 //        //}
 
 //        [Test]
 //        public void network_get_connected_peers()
 //        {
 //            var resp = Api.NetworkGetConnectedPeers(CancellationToken.None);
-//            WriteLine(resp.Error);
+//            WriteLine(resp);
 //            Assert.IsFalse(resp.IsError);
-//            WriteLine(resp.Result);
 
 //            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "network_get_connected_peers",
 //                CancellationToken.None);
 //            TestPropetries(resp.Result.GetType(), obj.Result);
 //            WriteLine("----------------------------------------------------------------------------");
-//            WriteLine(JsonConvert.SerializeObject(obj));
+//            WriteLine(obj);
 //        }
 //    }
 //}

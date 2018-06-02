@@ -40,7 +40,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("bidder")]
-        public object Bidder {get; set;}
+        public AccountIdType Bidder {get; set;}
 
         /// <summary>
         /// API name: inv_swan_price

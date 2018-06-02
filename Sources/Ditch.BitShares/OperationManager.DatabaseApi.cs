@@ -3,6 +3,7 @@ using System.Threading;
 using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
 using Ditch.Core.JsonRpc;
+using Ditch.Core.Models;
 
 namespace Ditch.BitShares
 {
@@ -249,7 +250,7 @@ namespace Ditch.BitShares
         /// 
         /// This function has semantics identical to @ref get_objects</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountObject[]> GetAccounts(object[] accountIds, CancellationToken token)
+        public JsonRpcResponse<AccountObject[]> GetAccounts(AccountIdType[] accountIds, CancellationToken token)
         {
             return CustomGetRequest<AccountObject[]>(KnownApiNames.DatabaseApi, "get_accounts", new object[] { accountIds, }, token);
         }
@@ -295,9 +296,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_id_type all accounts that referr to the key or account id in their owner or active authorities.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetAccountReferences(object accountId, CancellationToken token)
+        public JsonRpcResponse<AccountIdType[]> GetAccountReferences(AccountIdType accountId, CancellationToken token)
         {
-            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_account_references", new object[] { accountId, }, token);
+            return CustomGetRequest<AccountIdType[]>(KnownApiNames.DatabaseApi, "get_account_references", new object[] { accountId, }, token);
         }
 
         /// <summary>
@@ -328,9 +329,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: map&lt;string,account_id_type> Map of account names to corresponding IDs</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> LookupAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, AccountIdType>> LookupAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.DatabaseApi, "lookup_accounts", new object[] { lowerBoundName, limit, }, token);
+            return CustomGetRequest<MapContainer<string, AccountIdType>>(KnownApiNames.DatabaseApi, "lookup_accounts", new object[] { lowerBoundName, limit, }, token);
         }
 
         //////////////
@@ -348,7 +349,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset Balances of the account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetAccountBalances(object id, object[] assets, CancellationToken token)
+        public JsonRpcResponse<object[]> GetAccountBalances(AccountIdType id, object[] assets, CancellationToken token)
         {
             return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_account_balances", new object[] { id, assets, }, token);
         }
@@ -404,7 +405,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: vesting_balance_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VestingBalanceObject[]> GetVestingBalances(object accountId, CancellationToken token)
+        public JsonRpcResponse<VestingBalanceObject[]> GetVestingBalances(AccountIdType accountId, CancellationToken token)
         {
             return CustomGetRequest<VestingBalanceObject[]>(KnownApiNames.DatabaseApi, "get_vesting_balances", new object[] { accountId, }, token);
         }
@@ -555,7 +556,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: call_order_object all open margin positions for a given account id.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CallOrderObject[]> GetMarginPositions(object id, CancellationToken token)
+        public JsonRpcResponse<CallOrderObject[]> GetMarginPositions(AccountIdType id, CancellationToken token)
         {
             return CustomGetRequest<CallOrderObject[]>(KnownApiNames.DatabaseApi, "get_margin_positions", new object[] { id, }, token);
         }
@@ -696,7 +697,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: witness_object The witness object, or null if the account does not have a witness</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessObject> GetWitnessByAccount(object account, CancellationToken token)
+        public JsonRpcResponse<WitnessObject> GetWitnessByAccount(AccountIdType account, CancellationToken token)
         {
             return CustomGetRequest<WitnessObject>(KnownApiNames.DatabaseApi, "get_witness_by_account", new object[] { account, }, token);
         }
@@ -762,7 +763,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: committee_member_object The committee_member object, or null if the account does not have a committee_member</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CommitteeMemberObject> GetCommitteeMemberByAccount(object account, CancellationToken token)
+        public JsonRpcResponse<CommitteeMemberObject> GetCommitteeMemberByAccount(AccountIdType account, CancellationToken token)
         {
             return CustomGetRequest<CommitteeMemberObject>(KnownApiNames.DatabaseApi, "get_committee_member_by_account", new object[] { account, }, token);
         }
@@ -825,7 +826,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: worker_object The worker object, or null if the account does not have a worker</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WorkerObject[]> GetWorkersByAccount(object account, CancellationToken token)
+        public JsonRpcResponse<WorkerObject[]> GetWorkersByAccount(AccountIdType account, CancellationToken token)
         {
             return CustomGetRequest<WorkerObject[]>(KnownApiNames.DatabaseApi, "get_workers_by_account", new object[] { account, }, token);
         }
@@ -1020,7 +1021,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: proposal_object the set of proposed transactions relevant to the specified account id.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ProposalObject[]> GetProposedTransactions(object id, CancellationToken token)
+        public JsonRpcResponse<ProposalObject[]> GetProposedTransactions(AccountIdType id, CancellationToken token)
         {
             return CustomGetRequest<ProposalObject[]>(KnownApiNames.DatabaseApi, "get_proposed_transactions", new object[] { id, }, token);
         }
@@ -1058,7 +1059,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: withdraw_permission_object Withdraw permission objects for the account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WithdrawPermissionObject[]> GetWithdrawPermissionsByGiver(object account, object start, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<WithdrawPermissionObject[]> GetWithdrawPermissionsByGiver(AccountIdType account, object start, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<WithdrawPermissionObject[]>(KnownApiNames.DatabaseApi, "get_withdraw_permissions_by_giver", new object[] { account, start, limit, }, token);
         }
@@ -1075,7 +1076,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: withdraw_permission_object Withdraw permission objects for the account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WithdrawPermissionObject[]> GetWithdrawPermissionsByRecipient(object account, object start, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<WithdrawPermissionObject[]> GetWithdrawPermissionsByRecipient(AccountIdType account, object start, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<WithdrawPermissionObject[]>(KnownApiNames.DatabaseApi, "get_withdraw_permissions_by_recipient", new object[] { account, start, limit, }, token);
         }
