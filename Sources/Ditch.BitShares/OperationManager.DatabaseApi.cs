@@ -349,7 +349,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset Balances of the account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetAccountBalances(AccountIdType id, object[] assets, CancellationToken token)
+        public JsonRpcResponse<object[]> GetAccountBalances(AccountIdType id, AssetIdType[] assets, CancellationToken token)
         {
             return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_account_balances", new object[] { id, assets, }, token);
         }
@@ -366,7 +366,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: asset</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetNamedAccountBalances(string name, object[] assets, CancellationToken token)
+        public JsonRpcResponse<object[]> GetNamedAccountBalances(string name, AssetIdType[] assets, CancellationToken token)
         {
             return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_named_account_balances", new object[] { name, assets, }, token);
         }
@@ -440,7 +440,7 @@ namespace Ditch.BitShares
         /// 
         /// This function has semantics identical to @ref get_objects</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AssetObject[]> GetAssets(object[] assetIds, CancellationToken token)
+        public JsonRpcResponse<AssetObject[]> GetAssets(AssetIdType[] assetIds, CancellationToken token)
         {
             return CustomGetRequest<AssetObject[]>(KnownApiNames.DatabaseApi, "get_assets", new object[] { assetIds, }, token);
         }
@@ -494,7 +494,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: limit_order_object The limit orders, ordered from least price to greatest</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<LimitOrderObject[]> GetLimitOrders(object a, object b, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<LimitOrderObject[]> GetLimitOrders(AssetIdType a, AssetIdType b, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<LimitOrderObject[]>(KnownApiNames.DatabaseApi, "get_limit_orders", new object[] { a, b, limit, }, token);
         }
@@ -510,7 +510,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: call_order_object The call orders, ordered from earliest to be called to latest</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CallOrderObject[]> GetCallOrders(object a, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<CallOrderObject[]> GetCallOrders(AssetIdType a, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<CallOrderObject[]>(KnownApiNames.DatabaseApi, "get_call_orders", new object[] { a, limit, }, token);
         }
@@ -526,7 +526,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: force_settlement_object The settle orders, ordered from earliest settlement date to latest</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ForceSettlementObject[]> GetSettleOrders(object a, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<ForceSettlementObject[]> GetSettleOrders(AssetIdType a, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<ForceSettlementObject[]>(KnownApiNames.DatabaseApi, "get_settle_orders", new object[] { a, limit, }, token);
         }
@@ -543,7 +543,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: collateral_bid_object The settle orders, ordered from earliest settlement date to latest</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CollateralBidObject[]> GetCollateralBids(object asset, UInt32 limit, UInt32 start, CancellationToken token)
+        public JsonRpcResponse<CollateralBidObject[]> GetCollateralBids(AssetIdType asset, UInt32 limit, UInt32 start, CancellationToken token)
         {
             return CustomGetRequest<CollateralBidObject[]>(KnownApiNames.DatabaseApi, "get_collateral_bids", new object[] { asset, limit, start, }, token);
         }
@@ -1004,9 +1004,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object[]> GetRequiredFees(BaseOperation[] ops, object id, CancellationToken token)
+        public JsonRpcResponse<object[]> GetRequiredFees(BaseOperation[] ops, AssetIdType id, CancellationToken token)
         {
-            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_fees", new object[] { ops, id, }, token);
+            return CustomGetRequest<object[]>(KnownApiNames.DatabaseApi, "get_required_fees", new object[] { new[] { ops }, id, }, token);
         }
 
         ///////////////////////////

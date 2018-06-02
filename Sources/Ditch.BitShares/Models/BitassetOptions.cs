@@ -80,7 +80,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: asset_id_type</returns>
         [JsonProperty("short_backing_asset")]
-        public object ShortBackingAsset { get; set; }
+        public AssetIdType ShortBackingAsset { get; set; }
 
         /// <summary>
         /// API name: extensions

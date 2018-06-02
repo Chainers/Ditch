@@ -82,7 +82,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_history_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OrderHistoryObject[]> GetFillOrderHistory(object a, object b, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<OrderHistoryObject[]> GetFillOrderHistory(AssetIdType a, AssetIdType b, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<OrderHistoryObject[]>(KnownApiNames.HistoryApi, "get_fill_order_history", new object[] { a, b, limit, }, token);
         }
@@ -99,7 +99,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bucket_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BucketObject[]> GetMarketHistory(object a, object b, UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)
+        public JsonRpcResponse<BucketObject[]> GetMarketHistory(AssetIdType a, AssetIdType b, UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)
         {
             return CustomGetRequest<BucketObject[]>(KnownApiNames.HistoryApi, "get_market_history", new object[] { a, b, bucketSeconds, start, end, }, token);
         }

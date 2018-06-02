@@ -33,7 +33,7 @@ namespace Ditch.BitShares.Tests
             {
                 Fee = new Asset()
                 {
-                    Amount = 58516,
+                    Amount = 100000,
                     AssetId = new AssetIdType(1, 3, 0)
                 },
                 Registrar = new AccountIdType(1, 2, 22765),
@@ -48,8 +48,8 @@ namespace Ditch.BitShares.Tests
                     VotingAccount = new AccountIdType(1, 2, 5),
                 },
             };
-
-            var response = Post(User.PrivateKeys, false, op);
+            
+            var response = Post(User.PrivateKeys, true, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
     }

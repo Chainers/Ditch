@@ -17,7 +17,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: asset_id_type</returns>
         [JsonProperty("base")]
-        public object Base { get; set; }
+        public AssetIdType Base { get; set; }
 
         /// <summary>
         /// API name: quote
@@ -25,7 +25,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: asset_id_type</returns>
         [JsonProperty("quote")]
-        public object Quote { get; set; }
+        public AssetIdType Quote { get; set; }
 
         /// <summary>
         /// API name: seconds

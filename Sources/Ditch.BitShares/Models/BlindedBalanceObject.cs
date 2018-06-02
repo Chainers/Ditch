@@ -47,7 +47,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: asset_id_type</returns>
         [JsonProperty("asset_id")]
-        public object AssetId { get; set; }
+        public AssetIdType AssetId { get; set; }
 
         /// <summary>
         /// API name: owner
