@@ -32,9 +32,8 @@ namespace Ditch.BitShares.Tests
             var name = "userlogin";
             var key = Secp256K1Manager.GenerateRandomKey();
             var pwif = "P" + Base58.EncodePrivateWif(key);
-
-            var token = CancellationToken.None;
-            var user = new AccountIdType(1, 2, 22765);
+            
+            var user = User.Account.Id;
 
             var op = new AccountCreateOperation
             {

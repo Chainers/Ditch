@@ -19,6 +19,8 @@ namespace Ditch.BitShares.Models
     [JsonObject(MemberSerialization.OptIn)]
     public partial class AccountObject : AbstractObject<AccountObject>
     {
+        [JsonProperty("id")]
+        public AccountIdType Id { get; set; }
 
         /// <summary>
         /// API name: space_id

@@ -41,7 +41,7 @@
 //        //    var resp = Api.GetBlock(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_block", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -78,7 +78,7 @@
 //        //    var resp = Api.ListAccounts(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "list_accounts", args,
 //        //        CancellationToken.None);
@@ -94,7 +94,7 @@
 //        //    var resp = Api.ListAccountBalances(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "list_account_balances", args,
 //        //        CancellationToken.None);
@@ -110,7 +110,7 @@
 //        //    var resp = Api.ListAssets(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "list_assets", args,
 //        //        CancellationToken.None);
@@ -126,7 +126,7 @@
 //        //    var resp = Api.GetAccountHistory(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_account_history", args,
 //        //        CancellationToken.None);
@@ -142,7 +142,7 @@
 //        //    var resp = Api.GetRelativeAccountHistory(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_relative_account_history", args,
 //        //        CancellationToken.None);
@@ -158,7 +158,7 @@
 //        //    var resp = Api.GetMarketHistory(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_market_history", args,
 //        //        CancellationToken.None);
@@ -174,7 +174,7 @@
 //        //    var resp = Api.GetLimitOrders(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_limit_orders", args,
 //        //        CancellationToken.None);
@@ -190,7 +190,7 @@
 //        //    var resp = Api.GetCallOrders(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_call_orders", args,
 //        //        CancellationToken.None);
@@ -206,7 +206,7 @@
 //        //    var resp = Api.GetSettleOrders(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_settle_orders", args,
 //        //        CancellationToken.None);
@@ -222,7 +222,7 @@
 //        //    var resp = Api.GetCollateralBids(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_collateral_bids", args,
 //        //        CancellationToken.None);
@@ -252,7 +252,7 @@
 //        //    var resp = Api.GetAccountHistoryByOperations(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_account_history_by_operations", args,
 //        //        CancellationToken.None);
@@ -282,7 +282,7 @@
 //        //    var resp = Api.GetAccount(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_account", args,
 //        //        CancellationToken.None);
@@ -298,7 +298,7 @@
 //        //    var resp = Api.GetAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_asset", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -313,7 +313,7 @@
 //        //    var resp = Api.GetBitassetData(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_bitasset_data", args,
 //        //        CancellationToken.None);
@@ -329,7 +329,7 @@
 //        //    var resp = Api.GetAccountId(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_account_id", args,
 //        //        CancellationToken.None);
@@ -345,7 +345,7 @@
 //        //    var resp = Api.GetObject(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_object", args,
 //        //        CancellationToken.None);
@@ -361,7 +361,7 @@
 //        //    var resp = Api.GetPrivateKey(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_private_key", args,
 //        //        CancellationToken.None);
@@ -390,7 +390,7 @@
 //        //    var resp = Api.AddOperationToBuilderTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "add_operation_to_builder_transaction",
 //        //        args, CancellationToken.None);
@@ -406,7 +406,7 @@
 //        //    var resp = Api.ReplaceOperationInBuilderTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "replace_operation_in_builder_transaction",
 //        //        args, CancellationToken.None);
@@ -422,7 +422,7 @@
 //        //    var resp = Api.PreviewBuilderTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "preview_builder_transaction", args,
 //        //        CancellationToken.None);
@@ -438,7 +438,7 @@
 //        //    var resp = Api.SignBuilderTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "sign_builder_transaction", args,
 //        //        CancellationToken.None);
@@ -454,7 +454,7 @@
 //        //    var resp = Api.BroadcastTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "broadcast_transaction", args,
 //        //        CancellationToken.None);
@@ -470,7 +470,7 @@
 //        //    var resp = Api.RemoveBuilderTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "remove_builder_transaction", args,
 //        //        CancellationToken.None);
@@ -525,7 +525,7 @@
 //        //    var resp = Api.Unlock(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "unlock", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -540,7 +540,7 @@
 //        //    var resp = Api.SetPassword(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "set_password", args,
 //        //        CancellationToken.None);
@@ -583,7 +583,7 @@
 //        //    var resp = Api.Gethelp(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "gethelp", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -612,7 +612,7 @@
 //        //    var resp = Api.DeriveOwnerKeysFromBrainKey(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "derive_owner_keys_from_brain_key", args,
 //        //        CancellationToken.None);
@@ -628,7 +628,7 @@
 //        //    var resp = Api.IsPublicKeyRegistered(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "is_public_key_registered", args,
 //        //        CancellationToken.None);
@@ -644,7 +644,7 @@
 //        //    var resp = Api.SerializeTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "serialize_transaction", args,
 //        //        CancellationToken.None);
@@ -660,7 +660,7 @@
 //        //    var resp = Api.ImportKey(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "import_key", args,
 //        //        CancellationToken.None);
@@ -676,7 +676,7 @@
 //        //    var resp = Api.ImportAccounts(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "import_accounts", args,
 //        //        CancellationToken.None);
@@ -692,7 +692,7 @@
 //        //    var resp = Api.ImportAccountKeys(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "import_account_keys", args,
 //        //        CancellationToken.None);
@@ -708,7 +708,7 @@
 //        //    var resp = Api.ImportBalance(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "import_balance", args,
 //        //        CancellationToken.None);
@@ -724,7 +724,7 @@
 //        //    var resp = Api.NormalizeBrainKey(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "normalize_brain_key", args,
 //        //        CancellationToken.None);
@@ -740,7 +740,7 @@
 //        //    var resp = Api.RegisterAccount(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "register_account", args,
 //        //        CancellationToken.None);
@@ -756,7 +756,7 @@
 //        //    var resp = Api.UpgradeAccount(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "upgrade_account", args,
 //        //        CancellationToken.None);
@@ -772,7 +772,7 @@
 //        //    var resp = Api.CreateAccountWithBrainKey(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "create_account_with_brain_key", args,
 //        //        CancellationToken.None);
@@ -788,7 +788,7 @@
 //        //    var resp = Api.Transfer(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "transfer", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -803,7 +803,7 @@
 //        //    var resp = Api.SignMemo(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "sign_memo", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -818,7 +818,7 @@
 //        //    var resp = Api.ReadMemo(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "read_memo", args, CancellationToken.None);
 //        //    TestPropetries(resp.Result.GetType(), obj.Result);
@@ -833,7 +833,7 @@
 //        //    var resp = Api.CreateBlindAccount(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "create_blind_account", args,
 //        //        CancellationToken.None);
@@ -849,7 +849,7 @@
 //        //    var resp = Api.GetBlindBalances(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_blind_balances", args,
 //        //        CancellationToken.None);
@@ -893,7 +893,7 @@
 //        //    var resp = Api.GetPublicKey(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_public_key", args,
 //        //        CancellationToken.None);
@@ -909,7 +909,7 @@
 //        //    var resp = Api.BlindHistory(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "blind_history", args,
 //        //        CancellationToken.None);
@@ -925,7 +925,7 @@
 //        //    var resp = Api.ReceiveBlindTransfer(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "receive_blind_transfer", args,
 //        //        CancellationToken.None);
@@ -941,7 +941,7 @@
 //        //    var resp = Api.BlindTransfer(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "blind_transfer", args,
 //        //        CancellationToken.None);
@@ -957,7 +957,7 @@
 //        //    var resp = Api.SellAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "sell_asset", args,
 //        //        CancellationToken.None);
@@ -973,7 +973,7 @@
 //        //    var resp = Api.BorrowAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "borrow_asset", args,
 //        //        CancellationToken.None);
@@ -989,7 +989,7 @@
 //        //    var resp = Api.CancelOrder(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "cancel_order", args,
 //        //        CancellationToken.None);
@@ -1005,7 +1005,7 @@
 //        //    var resp = Api.CreateAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "create_asset", args,
 //        //        CancellationToken.None);
@@ -1021,7 +1021,7 @@
 //        //    var resp = Api.IssueAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "issue_asset", args,
 //        //        CancellationToken.None);
@@ -1037,7 +1037,7 @@
 //        //    var resp = Api.UpdateAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "update_asset", args,
 //        //        CancellationToken.None);
@@ -1053,7 +1053,7 @@
 //        //    var resp = Api.UpdateBitasset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "update_bitasset", args,
 //        //        CancellationToken.None);
@@ -1069,7 +1069,7 @@
 //        //    var resp = Api.UpdateAssetFeedProducers(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "update_asset_feed_producers", args,
 //        //        CancellationToken.None);
@@ -1085,7 +1085,7 @@
 //        //    var resp = Api.PublishAssetFeed(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "publish_asset_feed", args,
 //        //        CancellationToken.None);
@@ -1101,7 +1101,7 @@
 //        //    var resp = Api.FundAssetFeePool(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "fund_asset_fee_pool", args,
 //        //        CancellationToken.None);
@@ -1117,7 +1117,7 @@
 //        //    var resp = Api.ReserveAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "reserve_asset", args,
 //        //        CancellationToken.None);
@@ -1133,7 +1133,7 @@
 //        //    var resp = Api.GlobalSettleAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "global_settle_asset", args,
 //        //        CancellationToken.None);
@@ -1149,7 +1149,7 @@
 //        //    var resp = Api.SettleAsset(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "settle_asset", args,
 //        //        CancellationToken.None);
@@ -1165,7 +1165,7 @@
 //        //    var resp = Api.BidCollateral(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "bid_collateral", args,
 //        //        CancellationToken.None);
@@ -1181,7 +1181,7 @@
 //        //    var resp = Api.WhitelistAccount(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "whitelist_account", args,
 //        //        CancellationToken.None);
@@ -1197,7 +1197,7 @@
 //        //    var resp = Api.CreateCommitteeMember(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "create_committee_member", args,
 //        //        CancellationToken.None);
@@ -1213,7 +1213,7 @@
 //        //    var resp = Api.ListWitnesses(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "list_witnesses", args,
 //        //        CancellationToken.None);
@@ -1229,7 +1229,7 @@
 //        //    var resp = Api.ListCommitteeMembers(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "list_committee_members", args,
 //        //        CancellationToken.None);
@@ -1245,7 +1245,7 @@
 //        //    var resp = Api.GetWitness(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_witness", args,
 //        //        CancellationToken.None);
@@ -1261,7 +1261,7 @@
 //        //    var resp = Api.GetCommitteeMember(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_committee_member", args,
 //        //        CancellationToken.None);
@@ -1277,7 +1277,7 @@
 //        //    var resp = Api.CreateWitness(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "create_witness", args,
 //        //        CancellationToken.None);
@@ -1293,7 +1293,7 @@
 //        //    var resp = Api.UpdateWitness(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "update_witness", args,
 //        //        CancellationToken.None);
@@ -1309,7 +1309,7 @@
 //        //    var resp = Api.GetVestingBalances(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_vesting_balances", args,
 //        //        CancellationToken.None);
@@ -1325,7 +1325,7 @@
 //        //    var resp = Api.VoteForCommitteeMember(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "vote_for_committee_member", args,
 //        //        CancellationToken.None);
@@ -1341,7 +1341,7 @@
 //        //    var resp = Api.VoteForWitness(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "vote_for_witness", args,
 //        //        CancellationToken.None);
@@ -1357,7 +1357,7 @@
 //        //    var resp = Api.SetVotingProxy(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "set_voting_proxy", args,
 //        //        CancellationToken.None);
@@ -1373,7 +1373,7 @@
 //        //    var resp = Api.SetDesiredWitnessAndCommitteeMemberCount(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi,
 //        //        "set_desired_witness_and_committee_member_count", args, CancellationToken.None);
@@ -1389,7 +1389,7 @@
 //        //    var resp = Api.SignTransaction(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "sign_transaction", args,
 //        //        CancellationToken.None);
@@ -1405,7 +1405,7 @@
 //        //    var resp = Api.GetPrototypeOperation(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_prototype_operation", args,
 //        //        CancellationToken.None);
@@ -1421,7 +1421,7 @@
 //        //    var resp = Api.GetOrderBook(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "get_order_book", args,
 //        //        CancellationToken.None);
@@ -1437,7 +1437,7 @@
 //        //    var resp = Api.DbgMakeUia(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dbg_make_uia", args,
 //        //        CancellationToken.None);
@@ -1453,7 +1453,7 @@
 //        //    var resp = Api.DbgMakeMia(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dbg_make_mia", args,
 //        //        CancellationToken.None);
@@ -1469,7 +1469,7 @@
 //        //    var resp = Api.DbgPushBlocks(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dbg_push_blocks", args,
 //        //        CancellationToken.None);
@@ -1485,7 +1485,7 @@
 //        //    var resp = Api.DbgGenerateBlocks(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dbg_generate_blocks", args,
 //        //        CancellationToken.None);
@@ -1501,7 +1501,7 @@
 //        //    var resp = Api.DbgStreamJsonObjects(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dbg_stream_json_objects", args,
 //        //        CancellationToken.None);
@@ -1517,7 +1517,7 @@
 //        //    var resp = Api.DbgUpdateObject(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "dbg_update_object", args,
 //        //        CancellationToken.None);
@@ -1533,7 +1533,7 @@
 //        //    var resp = Api.FloodNetwork(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "flood_network", args,
 //        //        CancellationToken.None);
@@ -1549,7 +1549,7 @@
 //        //    var resp = Api.NetworkAddNodes(args, CancellationToken.None);
 //        //    WriteLine(resp);
 //        //    Assert.IsFalse(resp.IsError);
-//        //    WriteLine(resp.Result);
+//        //    WriteLine(resp);
 
 //        //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WalletApi, "network_add_nodes", args,
 //        //        CancellationToken.None);

@@ -12,13 +12,12 @@ namespace Ditch.BitShares.Tests.Apis
         [Test]
         public void get_account_history()
         {
-            var args = new AccountIdType(1, 2, 22765);
-            var resp = Api.GetAccountHistory(args, null, 100, null, CancellationToken.None);
+            var resp = Api.GetAccountHistory(User.Account.Id, null, 100, null, CancellationToken.None);
             Console.WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.HistoryApi, "get_account_history", new object[] { args, null, 100, null, }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.HistoryApi, "get_account_history", new object[] { User.Account.Id, null, 100, null, }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             Console.WriteLine("----------------------------------------------------------------------------");
             Console.WriteLine(obj);

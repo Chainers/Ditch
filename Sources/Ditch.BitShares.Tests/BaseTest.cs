@@ -36,6 +36,11 @@ namespace Ditch.BitShares.Tests
             var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
             var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
             Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
+
+            var acc = Api.GetAccountByName(User.Login, CancellationToken.None);
+            Assert.IsFalse(acc.IsError);
+
+            User.Account = acc.Result;
         }
 
         public static JsonSerializerSettings GetJsonSerializerSettings()

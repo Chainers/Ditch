@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ditch.BitShares.Models;
 using Ditch.Core;
 
 namespace Ditch.BitShares.Tests
@@ -9,6 +10,8 @@ namespace Ditch.BitShares.Tests
         private List<byte[]> _ownerKeys;
 
         public string Login { get; set; } = string.Empty;
+
+        public AccountObject Account { get; set; }
 
         public string ActiveWif { get; set; } = string.Empty;
 
