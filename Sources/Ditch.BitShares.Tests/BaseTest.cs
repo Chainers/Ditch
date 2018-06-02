@@ -15,8 +15,6 @@ namespace Ditch.BitShares.Tests
 {
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 2.2.12";
-
         private bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
@@ -24,8 +22,13 @@ namespace Ditch.BitShares.Tests
 
         static BaseTest()
         {
-            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], Wif = ConfigurationManager.AppSettings["Wif"] };
-            // Assert.IsFalse(string.IsNullOrEmpty(User.Wif));
+            User = new UserInfo
+            {
+                Login = ConfigurationManager.AppSettings["Login"],
+                ActiveWif = ConfigurationManager.AppSettings["ActiveWif"],
+                OwnerWif = ConfigurationManager.AppSettings["OwnerWif"]
+            };
+            // Assert.IsFalse(string.IsNullOrEmpty(User.ActiveWif));
             var jss = GetJsonSerializerSettings();
             // var manager = new WebSocketManager(jss, 1024 * 1024);
             var manager = new HttpManager(jss);
@@ -112,23 +115,6 @@ namespace Ditch.BitShares.Tests
             }
             return resp;
         }
-
-        protected string GetMeta(string[] tags)
-        {
-            var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
-            return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
-        }
-        
-        //protected SignedTransaction GetSignedTransaction()
-        //{
-        //    var user = User;
-        //    var autor = "steepshot";
-
-        //    var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-        //    var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-        //    var transaction = Api.CreateTransaction(prop.Result, user.PrivateKeys, CancellationToken.None, op);
-        //    return transaction;
-        //}
 
         protected void WriteLine(string s)
         {

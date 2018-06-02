@@ -26,11 +26,6 @@ namespace Ditch.BitShares.Models
             Data = Base58.DecodePublicWif(value, prefix);
         }
 
-        public PublicKeyType(byte[] data)
-        {
-            Data = data;
-        }
-
         public PublicKeyType(byte[] data, string prefix)
         {
             Prefix = prefix;

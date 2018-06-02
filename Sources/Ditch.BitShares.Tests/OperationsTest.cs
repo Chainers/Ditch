@@ -29,6 +29,13 @@ namespace Ditch.BitShares.Tests
         [Test]
         public async Task AccountCreateOperationTest()
         {
+            var name = "userlogin";
+            var key = Secp256K1Manager.GenerateRandomKey();
+            var pwif = "P" + Base58.EncodePrivateWif(key);
+
+            var token = CancellationToken.None;
+            var user = new AccountIdType(1, 2, 22765);
+
             var op = new AccountCreateOperation
             {
                 Fee = new Asset()
@@ -36,20 +43,32 @@ namespace Ditch.BitShares.Tests
                     Amount = 100000,
                     AssetId = new AssetIdType(1, 3, 0)
                 },
-                Registrar = new AccountIdType(1, 2, 22765),
-                Referrer = new AccountIdType(1, 2, 22765),
-                ReferrerPercent = 7000,
-                Name = "test-account-nano",
-                Owner = new Authority(new PublicKeyType("TEST6FcnaaaP7eZWqUs5VHRPMwjD69V1SFAAVoJRHiq3YEJ7tVgyQc", "TEST")),
-                Active = new Authority(new PublicKeyType("TEST6KCYpvc3syCbsRaofXLffEXoLDKixN2SLUCLPz4XubmptGNFfe", "TEST")),
+                Registrar = user,
+                Referrer = user,
+                ReferrerPercent = 10000,
+                Name = name,
                 Options = new AccountOptions()
                 {
-                    MemoKey = new PublicKeyType("TEST6HWVwXazrgS3MsWZvvSV6qdRbc8GS7KpdfDw8mAcNug4RcPv3v", "TEST"),
                     VotingAccount = new AccountIdType(1, 2, 5),
                 },
             };
-            
-            var response = Post(User.PrivateKeys, true, op);
+
+            var subWif = Base58.GetSubWif(name, pwif, "owner");
+            var pk = Base58.DecodePrivateWif(subWif);
+            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Owner = new Authority(new PublicKeyType(subPublicKey, "TEST"));
+
+            subWif = Base58.GetSubWif(name, pwif, "active");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Active = new Authority(new PublicKeyType(subPublicKey, "TEST"));
+
+            subWif = Base58.GetSubWif(name, pwif, "memo");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Options.MemoKey = new PublicKeyType(subPublicKey, "TEST");
+
+            var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
     }
