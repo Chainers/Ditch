@@ -29,14 +29,6 @@ namespace Ditch.BitShares.Tests
         [Test]
         public async Task AccountCreateOperationTest()
         {
-            var privateKey = Secp256K1Manager.GenerateRandomKey();
-            var privateWif = Base58.EncodePrivateWif(privateKey);
-            var k = Base58.DecodePrivateWif(privateWif);
-
-            var tt = Hex.ToString(privateKey);
-            var ktt = Hex.ToString(k);
-            Assert.IsTrue(tt.Equals(ktt));
-
             var op = new AccountCreateOperation
             {
                 Fee = new Asset()
