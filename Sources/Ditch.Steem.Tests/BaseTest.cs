@@ -9,12 +9,14 @@ using NUnit.Framework;
 using System.Threading;
 using Ditch.Core;
 using System.Globalization;
+using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models.Other;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Enums;
 
 namespace Ditch.Steem.Tests
 {
+    [TestFixture]
     public class BaseTest
     {
         protected const string AppVersion = "ditch / 2.2.12";
@@ -24,16 +26,26 @@ namespace Ditch.Steem.Tests
         protected static OperationManager Api;
         protected string SbdSymbol = "SBD";
 
-        static BaseTest()
+        [OneTimeSetUp]
+        protected virtual void OneTimeSetUp()
         {
-            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
-            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
-            var jss = GetJsonSerializerSettings();
-            var manager = new HttpManager(jss, 1024 * 1024);
-            Api = new OperationManager(manager, jss);
-            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
+            if (User == null)
+            {
+                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+            }
+            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
+
+            if (Api == null)
+            {
+                var jss = GetJsonSerializerSettings();
+                var manager = new HttpManager(jss, 1024 * 1024);
+                Api = new OperationManager(manager, jss);
+
+                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+                var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+            }
+
+            Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
         public static JsonSerializerSettings GetJsonSerializerSettings()
@@ -130,6 +142,19 @@ namespace Ditch.Steem.Tests
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
             return transaction;
+        }
+
+        protected void WriteLine(string s)
+        {
+            Console.WriteLine(s);
+        }
+
+        protected void WriteLine(JsonRpcResponse r)
+        {
+            if (r.IsError)
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
     }
 }

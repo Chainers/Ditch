@@ -9,8 +9,11 @@ using NUnit.Framework;
 namespace Ditch.Golos.Tests
 {
     [TestFixture]
-    public class ConnectionTest
+    public class ConnectionTest : BaseTest
     {
+        [OneTimeSetUp]
+        protected override void OneTimeSetUp() { }
+
         [Test]
         [TestCase("wss://ws.golos.io")]
         [TestCase("wss://ws.testnet.golos.io")]
@@ -27,7 +30,7 @@ namespace Ditch.Golos.Tests
             var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
             sw.Stop();
 
-            Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
+            WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
             Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
 
             if (manager.IsConnected)
@@ -54,7 +57,7 @@ namespace Ditch.Golos.Tests
 
                 sw.Stop();
 
-                Console.WriteLine($"{i} {(manager.IsConnected ? "conected" : "Not connected")} to {urls[i]} {sw.ElapsedMilliseconds}");
+                WriteLine($"{i} {(manager.IsConnected ? "conected" : "Not connected")} to {urls[i]} {sw.ElapsedMilliseconds}");
 
                 if (manager.IsConnected)
                 {
@@ -79,13 +82,13 @@ namespace Ditch.Golos.Tests
                 sw.Stop();
                 if (manager.IsConnected)
                 {
-                    Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
+                    WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
                     Assert.IsNotNull(manager.ChainId, "ChainId null");
                     await Task.Delay(3000);
                 }
                 else
                 {
-                    Console.WriteLine($"{i} not conected {sw.ElapsedMilliseconds}");
+                    WriteLine($"{i} not conected {sw.ElapsedMilliseconds}");
                 }
             }
         }
@@ -101,19 +104,19 @@ namespace Ditch.Golos.Tests
             var sw = new Stopwatch();
             for (var i = 0; i < 5; i++)
             {
-                Console.WriteLine($"{i} conect to golos.");
+                WriteLine($"{i} conect to golos.");
                 sw.Restart();
                 var url = manager.TryConnectTo(urls, CancellationToken.None);
                 sw.Stop();
                 if (manager.IsConnected)
                 {
-                    Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
+                    WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
                     Assert.IsNotNull(manager.ChainId, "ChainId null");
                     await Task.Delay(3000);
                 }
                 else
                 {
-                    Console.WriteLine($"{i} not conected to {url} {sw.ElapsedMilliseconds}");
+                    WriteLine($"{i} not conected to {url} {sw.ElapsedMilliseconds}");
                 }
             }
         }

@@ -20,9 +20,8 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = GetSignedTransaction()
             };
             var resp = Api.BroadcastTransaction(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
         [Test]
@@ -34,9 +33,8 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = GetSignedTransaction()
             };
             var resp = Api.BroadcastTransactionSynchronous(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
         [Test]
@@ -48,14 +46,13 @@ namespace Ditch.Steem.Tests.Apis
                 Block = new SignedBlock()
             };
             var resp = Api.BroadcastBlock(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
     }
 }

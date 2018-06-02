@@ -16,93 +16,86 @@ namespace Ditch.Steem.Tests.Apis
         public void get_config()
         {
             var resp = Api.GetConfig<JObject>(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
         }
 
         [Test]
         public void get_dynamic_global_properties()
         {
             var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_witness_schedule()
         {
             var resp = Api.GetWitnessSchedule(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_schedule", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_hardfork_properties()
         {
             var resp = Api.GetHardforkProperties(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_hardfork_properties", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_reward_funds()
         {
             var resp = Api.GetRewardFunds(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_reward_funds", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_current_price_feed()
         {
             var resp = Api.GetCurrentPriceFeed(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_current_price_feed", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_feed_history()
         {
             var resp = Api.GetFeedHistory(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_feed_history", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -110,14 +103,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new ListWitnessesArgs();
             var resp = Api.ListWitnesses(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_witnesses", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -128,14 +120,13 @@ namespace Ditch.Steem.Tests.Apis
                 Owners = new[] { User.Login }
             };
             var resp = Api.FindWitnesses(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_witnesses", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -148,28 +139,26 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListWitnessVotes(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_witness_votes", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
         public void get_active_witnesses()
         {
             var resp = Api.GetActiveWitnesses(CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_active_witnesses", CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -177,14 +166,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new ListAccountsArgs();
             var resp = Api.ListAccounts(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_accounts", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -195,14 +183,13 @@ namespace Ditch.Steem.Tests.Apis
                 Accounts = new[] { User.Login }
             };
             var resp = Api.FindAccounts(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_accounts", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -214,14 +201,13 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListOwnerHistories(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_owner_histories", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -229,14 +215,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new FindOwnerHistoriesArgs();
             var resp = Api.FindOwnerHistories(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_owner_histories", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -249,14 +234,13 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByAccount
             };
             var resp = Api.ListAccountRecoveryRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_account_recovery_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -267,14 +251,13 @@ namespace Ditch.Steem.Tests.Apis
                 Accounts = new[] { User.Login }
             };
             var resp = Api.FindAccountRecoveryRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_account_recovery_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -285,14 +268,13 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByAccount
             };
             var resp = Api.ListChangeRecoveryAccountRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_change_recovery_account_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -303,14 +285,13 @@ namespace Ditch.Steem.Tests.Apis
                 Accounts = new[] { User.Login }
             };
             var resp = Api.FindChangeRecoveryAccountRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_change_recovery_account_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -324,14 +305,13 @@ namespace Ditch.Steem.Tests.Apis
             };
 
             var resp = Api.ListEscrows(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_escrows", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -339,14 +319,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new FindEscrowsArgs();
             var resp = Api.FindEscrows(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_escrows", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -359,14 +338,13 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListWithdrawVestingRoutes(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_withdraw_vesting_routes", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -378,14 +356,13 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByWithdrawRoute
             };
             var resp = Api.FindWithdrawVestingRoutes(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_withdraw_vesting_routes", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -399,14 +376,13 @@ namespace Ditch.Steem.Tests.Apis
             };
 
             var resp = Api.ListSavingsWithdrawals(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_savings_withdrawals", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -414,14 +390,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new FindSavingsWithdrawalsArgs();
             var resp = Api.FindSavingsWithdrawals(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_savings_withdrawals", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -434,14 +409,13 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListVestingDelegations(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_vesting_delegations", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -449,14 +423,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new FindVestingDelegationsArgs();
             var resp = Api.FindVestingDelegations(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_vesting_delegations", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -469,14 +442,13 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListVestingDelegationExpirations(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_vesting_delegation_expirations", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -484,14 +456,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new FindVestingDelegationExpirationsArgs();
             var resp = Api.FindVestingDelegationExpirations(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_vesting_delegation_expirations", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -504,14 +475,13 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListSbdConversionRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_sbd_conversion_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -519,14 +489,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new FindSbdConversionRequestsArgs();
             var resp = Api.FindSbdConversionRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_sbd_conversion_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -537,14 +506,13 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByAccount
             };
             var resp = Api.ListDeclineVotingRightsRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_decline_voting_rights_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -555,14 +523,13 @@ namespace Ditch.Steem.Tests.Apis
                 Accounts = new[] { User.Login }
             };
             var resp = Api.FindDeclineVotingRightsRequests(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_decline_voting_rights_requests", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -576,14 +543,13 @@ namespace Ditch.Steem.Tests.Apis
             };
 
             var resp = Api.ListComments(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_comments", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -594,14 +560,13 @@ namespace Ditch.Steem.Tests.Apis
                 Comments = new[] { new[] { "steepshot", "steepshot-updates-join-ios-closed-beta-testing-full-screen-mode-for-desktops-sponsors-incentives-and-more" } }
             };
             var resp = Api.FindComments(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_comments", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -619,14 +584,13 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.ListVotes(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_votes", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -638,14 +602,13 @@ namespace Ditch.Steem.Tests.Apis
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
             var resp = Api.FindVotes(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_votes", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -658,14 +621,13 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByAccount
             };
             var resp = Api.ListLimitOrders(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_limit_orders", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -676,14 +638,13 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login
             };
             var resp = Api.FindLimitOrders(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_limit_orders", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -694,14 +655,13 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = GetSignedTransaction()
             };
             var resp = Api.GetTransactionHex(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction_hex", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -712,7 +672,7 @@ namespace Ditch.Steem.Tests.Apis
                 Accounts = new[] { User.Login }
             };
             var accounts = Api.FindAccounts(findAccountsArgs, CancellationToken.None);
-            Console.WriteLine(accounts.Error);
+            WriteLine(accounts);
             Assert.IsFalse(accounts.IsError);
             var pKey = accounts.Result.Accounts[0].Posting.KeyAuths[0].Key;
 
@@ -722,14 +682,13 @@ namespace Ditch.Steem.Tests.Apis
                 AvailableKeys = new[] { pKey }
             };
             var resp = Api.GetRequiredSignatures(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_required_signatures", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -740,14 +699,13 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = GetSignedTransaction()
             };
             var resp = Api.GetPotentialSignatures(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_potential_signatures", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -758,14 +716,13 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = GetSignedTransaction()
             };
             var resp = Api.VerifyAuthority(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "verify_authority", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -778,14 +735,13 @@ namespace Ditch.Steem.Tests.Apis
                 Signers = new PublicKeyType[0]
             };
             var resp = Api.VerifyAccountAuthority(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "verify_account_authority", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -794,14 +750,13 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new VerifySignaturesArgs();
             var resp = Api.VerifySignatures(args, CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "verify_signatures", args, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
-            Console.WriteLine("----------------------------------------------------------------------------");
-            Console.WriteLine(JsonConvert.SerializeObject(obj));
+            WriteLine("----------------------------------------------------------------------------");
+            WriteLine(obj);
         }
 
         [Test]
@@ -819,14 +774,13 @@ namespace Ditch.Steem.Tests.Apis
                 if (isEnableSmt)
                 {
                     var resp = Api.GetSmtNextIdentifier(CancellationToken.None);
-                    Console.WriteLine(resp.Error);
+                    WriteLine(resp);
                     Assert.IsFalse(resp.IsError);
-                    Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
 
                     var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_smt_next_identifier", CancellationToken.None);
                     TestPropetries(resp.Result.GetType(), obj.Result);
-                    Console.WriteLine("----------------------------------------------------------------------------");
-                    Console.WriteLine(JsonConvert.SerializeObject(obj));
+                    WriteLine("----------------------------------------------------------------------------");
+                    WriteLine(obj);
                 }
             }
         }

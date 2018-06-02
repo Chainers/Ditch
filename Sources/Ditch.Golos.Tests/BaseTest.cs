@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System.Globalization;
+using Ditch.Core.JsonRpc;
 
 namespace Ditch.Golos.Tests
 {
@@ -17,20 +18,32 @@ namespace Ditch.Golos.Tests
         protected const string AppVersion = "ditch / 3.0.2";
 
         private bool IgnoreRequestWithBadData = true;
-        protected static readonly UserInfo User;
-        protected static readonly OperationManager Api;
+        protected static UserInfo User;
+        protected static OperationManager Api;
 
-        static BaseTest()
+
+        [OneTimeSetUp]
+        protected virtual void OneTimeSetUp()
         {
-            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
-            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
-            var jss = GetJsonSerializerSettings();
-            //Api = new OperationManager(new HttpManager(jss), jss);
-            Api = new OperationManager(new WebSocketManager(jss), jss);
-            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
+            if (User == null)
+            {
+                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+            }
+            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
+
+            if (Api == null)
+            {
+                var jss = GetJsonSerializerSettings();
+                var manager = new WebSocketManager(jss, 1024 * 1024);
+                Api = new OperationManager(manager, jss);
+
+                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+                var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+            }
+
+            Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
+
 
         public static JsonSerializerSettings GetJsonSerializerSettings()
         {
@@ -114,6 +127,19 @@ namespace Ditch.Golos.Tests
         {
             var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
             return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
+        }
+
+        protected void WriteLine(string s)
+        {
+            Console.WriteLine(s);
+        }
+
+        protected void WriteLine(JsonRpcResponse r)
+        {
+            if (r.IsError)
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
     }
 }

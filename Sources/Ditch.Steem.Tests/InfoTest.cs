@@ -12,18 +12,18 @@ namespace Ditch.Steem.Tests
         public void get_methods()
         {
             var resp = Api.CustomGetRequest(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
+            WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
         }
 
         [Test]
         public void get_signature()
         {
             var resp = Api.CustomGetRequest(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None);
-            Console.WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            Console.WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
+            WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
         }
 
         private class Method
