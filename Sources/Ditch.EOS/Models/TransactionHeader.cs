@@ -26,7 +26,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class TransactionHeader
+    public class TransactionHeader
     {
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("region")]
-        public UInt16 Region { get; set; }
+        public ushort Region { get; set; }
 
         /// <summary>
         /// API name: ref_block_num
@@ -51,7 +51,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("ref_block_num")]
-        public UInt16 RefBlockNum { get; set; }
+        public ushort RefBlockNum { get; set; }
 
         /// <summary>
         /// API name: ref_block_prefix
@@ -59,7 +59,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
 
         /// <summary>
         /// API name: max_net_usage_words
@@ -67,7 +67,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("max_net_usage_words")]
-        public UInt32 MaxNetUsageWords { get; set; }
+        public uint MaxNetUsageWords { get; set; }
 
         /// <summary>
         /// API name: max_kcpu_usage
@@ -75,7 +75,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("max_kcpu_usage")]
-        public UInt32 MaxKcpuUsage { get; set; }
+        public uint MaxKcpuUsage { get; set; }
 
         /// <summary>
         /// API name: delay_sec
@@ -83,6 +83,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("delay_sec")]
-        public UInt32 DelaySec { get; set; }
+        public uint DelaySec { get; set; }
     }
 }

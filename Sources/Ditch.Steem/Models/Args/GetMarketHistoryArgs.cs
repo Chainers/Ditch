@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\market_history_api\include\steem\plugins\market_history_api\market_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetMarketHistoryArgs
+    public class GetMarketHistoryArgs
     {
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("bucket_seconds")]
-        public UInt32 BucketSeconds {get; set;}
+        public uint BucketSeconds {get; set;}
 
         /// <summary>
         /// API name: start

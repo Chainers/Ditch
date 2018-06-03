@@ -16,7 +16,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\market_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ForceSettlementObject
+    public class ForceSettlementObject
     {
 
         /// <summary>

@@ -1,8 +1,8 @@
-﻿using Cryptography.ECDSA;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Cryptography.ECDSA;
 
 namespace Ditch.Core
 {
@@ -65,7 +65,7 @@ namespace Ditch.Core
             var dec = CutLastBytes(s, CheckSumSizeInBytes);
 
             var checksum = DoubleHash(dec);
-            for (int i = 0; i < CheckSumSizeInBytes; i++)
+            for (var i = 0; i < CheckSumSizeInBytes; i++)
             {
                 if (checksum[i] != s[s.Length - CheckSumSizeInBytes + i])
                     throw new ArithmeticException("Invalide data");

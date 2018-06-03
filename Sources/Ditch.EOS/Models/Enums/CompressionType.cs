@@ -21,6 +21,6 @@ namespace Ditch.EOS.Models.Enums
         /// API name: zlib
         /// 1
         /// </summary>
-        Zlib,
+        Zlib
     }
 }

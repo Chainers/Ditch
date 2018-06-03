@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models.Params
     /// plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetRequiredKeysParams
+    public class GetRequiredKeysParams
     {
 
         /// <summary>

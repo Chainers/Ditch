@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Core.Errors
 {
@@ -29,7 +28,7 @@ namespace Ditch.Core.Errors
         /// Default constructor of class
         /// </summary>
         protected ErrorInfo()
-            : this(String.Empty)
+            : this(string.Empty)
         {
         }
 

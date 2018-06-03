@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using Ditch.Core;
+using Ditch.Core.JsonRpc;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Threading;
-using Ditch.Core;
-using System.Globalization;
-using Ditch.Core.JsonRpc;
-using Ditch.Steem.Models.Other;
-using Ditch.Steem.Models.Operations;
-using Ditch.Steem.Models.Enums;
 
 namespace Ditch.Steem.Tests
 {
@@ -21,7 +21,7 @@ namespace Ditch.Steem.Tests
     {
         protected const string AppVersion = "ditch / 2.2.12";
 
-        private bool IgnoreRequestWithBadData = true;
+        private const bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
         protected string SbdSymbol = "SBD";
@@ -42,7 +42,7 @@ namespace Ditch.Steem.Tests
                 Api = new OperationManager(manager, jss);
 
                 var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+                Api.TryConnectTo(urls, CancellationToken.None);
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
@@ -136,7 +136,7 @@ namespace Ditch.Steem.Tests
         protected SignedTransaction GetSignedTransaction()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
@@ -151,10 +151,9 @@ namespace Ditch.Steem.Tests
 
         protected void WriteLine(JsonRpcResponse r)
         {
-            if (r.IsError)
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
-            else
-                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            Console.WriteLine(r.IsError
+                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
+                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
     }
 }

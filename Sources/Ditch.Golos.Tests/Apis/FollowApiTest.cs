@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using Ditch.Golos.Models.Enums;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -105,7 +103,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_followers()
         {
-            ushort count = 3;
+            const ushort count = 3;
             var resp = Api.GetFollowers(User.Login, string.Empty, FollowType.Blog, count, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -126,7 +124,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_following()
         {
-            ushort count = 3;
+            const ushort count = 3;
             var resp = Api.GetFollowing(User.Login, string.Empty, FollowType.Blog, count, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);

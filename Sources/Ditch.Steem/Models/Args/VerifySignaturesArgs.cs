@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\database_api\include\steem\plugins\database_api\database_api_args.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class VerifySignaturesArgs
+    public class VerifySignaturesArgs
     {
 
         /// <summary>

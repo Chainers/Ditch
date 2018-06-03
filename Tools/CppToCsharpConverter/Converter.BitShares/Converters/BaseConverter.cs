@@ -433,7 +433,7 @@ namespace Converter.BitShares.Converters
                 case ObjectType.Class:
                     {
                         sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
-                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
                         break;
                     }
                 case ObjectType.Enum:

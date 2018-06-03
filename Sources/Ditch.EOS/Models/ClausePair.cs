@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\contracts\types.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ClausePair
+    public class ClausePair
     {
 
         /// <summary>

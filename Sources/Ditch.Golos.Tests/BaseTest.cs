@@ -1,15 +1,15 @@
-﻿using Ditch.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Ditch.Core;
+using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Globalization;
-using Ditch.Core.JsonRpc;
 
 namespace Ditch.Golos.Tests
 {
@@ -17,7 +17,7 @@ namespace Ditch.Golos.Tests
     {
         protected const string AppVersion = "ditch / 3.0.2";
 
-        private bool IgnoreRequestWithBadData = true;
+        private const bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
 
@@ -38,7 +38,7 @@ namespace Ditch.Golos.Tests
                 Api = new OperationManager(manager, jss);
 
                 var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
+                Api.TryConnectTo(urls, CancellationToken.None);
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
@@ -136,10 +136,9 @@ namespace Ditch.Golos.Tests
 
         protected void WriteLine(JsonRpcResponse r)
         {
-            if (r.IsError)
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
-            else
-                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            Console.WriteLine(r.IsError
+                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
+                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
     }
 }

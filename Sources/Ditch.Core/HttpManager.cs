@@ -1,14 +1,11 @@
-﻿using Ditch.Core.JsonRpc;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using Newtonsoft.Json;
 using Ditch.Core.Errors;
 using Ditch.Core.Interfaces;
+using Ditch.Core.JsonRpc;
+using Newtonsoft.Json;
 
 namespace Ditch.Core
 {
@@ -16,10 +13,10 @@ namespace Ditch.Core
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings;
         private readonly HttpClient _client;
-        private string _url;
 
+        public string UrlToConnect { get; private set; }
 
-        public bool IsConnected => !string.IsNullOrEmpty(_url);
+        public bool IsConnected => !string.IsNullOrEmpty(UrlToConnect);
 
         /// <summary>
         /// Manager for http connections
@@ -35,56 +32,55 @@ namespace Ditch.Core
             };
         }
 
+        public HttpManager(JsonSerializerSettings jsonSerializerSettings, HttpClient client)
+        {
+            _jsonSerializerSettings = jsonSerializerSettings;
+            _client = client;
+        }
+
 
         /// <summary>
         /// Connects and checks http status
         /// </summary>  
-        /// <param name="endpoin">The Uri the request is sent to.</param>
+        /// <param name="requestUrl">The Uri the request is sent to.</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Url which will be used for data transfer (empty if none)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string ConnectTo(string endpoin, CancellationToken token)
+        public bool TryConnectTo(string requestUrl, CancellationToken token)
         {
-            _url = string.Empty;
-            var rez = _client.GetAsync(endpoin, token).Result;
-            if (rez.StatusCode == HttpStatusCode.OK)
-                _url = endpoin;
-
-            return _url;
+            UrlToConnect = string.Empty;
+            try
+            {
+                var rez = _client.GetAsync(requestUrl, token).Result;
+                if (rez.StatusCode == HttpStatusCode.OK)
+                {
+                    UrlToConnect = requestUrl;
+                    return true;
+                }
+            }
+            catch
+            {
+                //todo nothing
+            }
+            return false;
         }
 
         /// <summary>
         /// Connects and checks http status
         /// </summary>
-        /// <param name="urls">The Uri the request is sent to.</param>
+        /// <param name="requestUrls">The Uri the request is sent to.</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Url which will be used for data transfer (empty if none)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string ConnectTo(IEnumerable<string> urls, CancellationToken token)
+        public bool TryConnectTo(IEnumerable<string> requestUrls, CancellationToken token)
         {
-            var rez = new List<KeyValuePair<string, long>>();
-            var sw = new Stopwatch();
-            var min = long.MaxValue;
-
-            foreach (var url in urls)
+            foreach (var url in requestUrls)
             {
-                sw.Restart();
-                var buf = _client.GetAsync(url, token).Result;
-                sw.Stop();
-                if (buf.StatusCode == HttpStatusCode.OK)
-                {
-                    min = Math.Min(min, sw.ElapsedMilliseconds);
-                    rez.Add(new KeyValuePair<string, long>(url, sw.ElapsedMilliseconds));
-                }
+                if (TryConnectTo(url, CancellationToken.None))
+                    return true;
             }
 
-            if (min != long.MaxValue)
-            {
-                _url = rez.First(i => i.Value == min).Key;
-                return _url;
-            }
-
-            return string.Empty;
+            return false;
         }
 
         /// <summary>
@@ -92,7 +88,7 @@ namespace Ditch.Core
         /// </summary>
         public void Disconnect()
         {
-            _url = string.Empty;
+            UrlToConnect = string.Empty;
         }
 
         /// <summary>
@@ -104,11 +100,11 @@ namespace Ditch.Core
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
-            if (string.IsNullOrEmpty(_url))
+            if (string.IsNullOrEmpty(UrlToConnect))
                 return null;
 
             var content = new StringContent(jsonRpc.Message);
-            var response = _client.PostAsync(_url, content, token).Result;
+            var response = _client.PostAsync(UrlToConnect, content, token).Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var stringResponse = response.Content.ReadAsStringAsync().Result;
@@ -129,7 +125,7 @@ namespace Ditch.Core
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
-            if (string.IsNullOrEmpty(_url))
+            if (string.IsNullOrEmpty(UrlToConnect))
                 return null;
 
             var response = Execute(jsonRpc, token);

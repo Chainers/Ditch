@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -7,7 +6,7 @@ using Newtonsoft.Json.Linq;
 namespace Ditch.Steem.Models.Other
 {
     [JsonConverter(typeof(CustomConverter))]
-    public partial class Asset : ICustomJson
+    public class Asset : ICustomJson
     {
         /// <summary>
         /// API name: amount
@@ -27,7 +26,7 @@ namespace Ditch.Steem.Models.Other
         public AssetSymbolType Symbol { get; set; }
 
 
-        public Asset(long amount, UInt32 assetNum)
+        public Asset(long amount, uint assetNum)
         {
             Amount = amount;
             Symbol = new AssetSymbolType(assetNum);

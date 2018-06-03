@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class RewardFundObject
+    public class RewardFundObject
     {
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_curation_rewards")]
-        public UInt16 PercentCurationRewards { get; set; }
+        public ushort PercentCurationRewards { get; set; }
 
         /// <summary>
         /// API name: percent_content_rewards
@@ -65,6 +65,6 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_content_rewards")]
-        public UInt16 PercentContentRewards { get; set; }
+        public ushort PercentContentRewards { get; set; }
     }
 }

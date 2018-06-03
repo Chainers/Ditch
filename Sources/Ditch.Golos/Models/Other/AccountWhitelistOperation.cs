@@ -27,7 +27,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\protocol\include\golos\protocol\operations\account_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountWhitelistOperation
+    public class AccountWhitelistOperation
     {
 
 

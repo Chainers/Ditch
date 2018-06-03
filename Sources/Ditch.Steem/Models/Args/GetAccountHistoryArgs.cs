@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetAccountHistoryArgs
+    public class GetAccountHistoryArgs
     {
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("start")]
-        public UInt64 Start { get; set; }
+        public ulong Start { get; set; }
 
         /// <summary>
         /// API name: limit
@@ -33,6 +32,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit { get; set; }
+        public uint Limit { get; set; }
     }
 }

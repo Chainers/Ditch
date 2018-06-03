@@ -11,10 +11,10 @@ namespace Ditch.EOS.Models.Results
         public string ServerVersion { get; set; }
 
         [JsonProperty("head_block_num")]
-        public UInt32 HeadBlockNum { get; set; }
+        public uint HeadBlockNum { get; set; }
 
         [JsonProperty("last_irreversible_block_num")]
-        public UInt32 LastIrreversibleBlockNum { get; set; }
+        public uint LastIrreversibleBlockNum { get; set; }
 
         [JsonProperty("head_block_id")]
         public string HeadBlockId { get; set; }

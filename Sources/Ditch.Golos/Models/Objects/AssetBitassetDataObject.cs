@@ -16,7 +16,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\asset_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetBitassetDataObject
+    public class AssetBitassetDataObject
     {
 
         /// <summary>

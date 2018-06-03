@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models.ApiObj;
 using Ditch.Golos.Models.Enums;
@@ -26,7 +25,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_reputation</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountReputation[]> GetAccountReputations(string lowerBoundName, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<AccountReputation[]> GetAccountReputations(string lowerBoundName, uint limit, CancellationToken token)
         {
             return CustomGetRequest<AccountReputation[]>(KnownApiNames.Follow, "get_account_reputations", new object[] { lowerBoundName, limit }, token);
         }
@@ -42,7 +41,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: comment_blog_entry</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CommentBlogEntry[]> GetBlog(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<CommentBlogEntry[]> GetBlog(string account, uint entryId, ushort limit, CancellationToken token)
         {
             return CustomGetRequest<CommentBlogEntry[]>(KnownApiNames.Follow, "get_blog", new object[] { account, entryId, limit }, token);
         }
@@ -56,7 +55,7 @@ namespace Ditch.Golos
         /// </summary>
         /// <param name="blogAccount">API type: account_name_type</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>API type: std::vector<std::pair<std::string, uint32_t>>;</returns>
+        /// <returns>API type: std::vector&lt;std::pair&lt;std::string, uint32_t>>;</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<ReblogCount[]> GetBlogAuthors(string blogAccount, CancellationToken token)
         {
@@ -74,7 +73,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: blog_entry</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BlogEntry[]> GetBlogEntries(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<BlogEntry[]> GetBlogEntries(string account, uint entryId, ushort limit, CancellationToken token)
         {
             return CustomGetRequest<BlogEntry[]>(KnownApiNames.Follow, "get_blog_entries", new object[] { account, entryId, limit }, token);
         }
@@ -90,7 +89,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: comment_feed_entry</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CommentFeedEntry[]> GetFeed(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<CommentFeedEntry[]> GetFeed(string account, uint entryId, ushort limit, CancellationToken token)
         {
             return CustomGetRequest<CommentFeedEntry[]>(KnownApiNames.Follow, "get_feed", new object[] { account, entryId, limit }, token);
         }
@@ -106,7 +105,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: feed_entry</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FeedEntry[]> GetFeedEntries(string account, UInt32 entryId, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<FeedEntry[]> GetFeedEntries(string account, uint entryId, ushort limit, CancellationToken token)
         {
             return CustomGetRequest<FeedEntry[]>(KnownApiNames.Follow, "get_feed_entries", new object[] { account, entryId, limit }, token);
         }
@@ -137,7 +136,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: follow_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FollowApiObject[]> GetFollowers(string to, string start, FollowType type, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<FollowApiObject[]> GetFollowers(string to, string start, FollowType type, ushort limit, CancellationToken token)
         {
             return CustomGetRequest<FollowApiObject[]>(KnownApiNames.Follow, "get_followers", new object[] { to, start, type, limit }, token);
         }
@@ -153,7 +152,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: follow_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FollowApiObject[]> GetFollowing(string from, string start, FollowType type, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<FollowApiObject[]> GetFollowing(string from, string start, FollowType type, ushort limit, CancellationToken token)
         {
             return CustomGetRequest<FollowApiObject[]>(KnownApiNames.Follow, "get_following", new object[] { from, start, type, limit }, token);
         }

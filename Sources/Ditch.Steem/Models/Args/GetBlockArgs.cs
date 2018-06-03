@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args
@@ -10,7 +9,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\block_api\include\steem\plugins\block_api\block_api_args.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetBlockArgs
+    public class GetBlockArgs
     {
 
         /// <summary>
@@ -19,6 +18,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_num")]
-        public UInt32 BlockNum {get; set;}
+        public uint BlockNum {get; set;}
     }
 }

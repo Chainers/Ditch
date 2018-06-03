@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.Other
     /// plugins\market_history\include\golos\plugins\market_history\market_history_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class MarketTrade
+    public class MarketTrade
     {
 
         /// <summary>

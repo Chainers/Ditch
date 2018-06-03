@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -49,16 +48,15 @@ namespace Ditch.EOS
                 try
                 {
                     var rez = _client.GetAsync(url, token).Result;
-                    if (rez?.StatusCode != null)
-                    {
-                        _url = url;
-                        break;
-                    }
+                    if (rez?.StatusCode == null)
+                        continue;
+
+                    _url = url;
+                    break;
                 }
-                catch (Exception e)
+                catch
                 {
                     //todo nothing
-                    var t = e.Message;
                 }
             }
             return _url;

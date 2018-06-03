@@ -1,8 +1,6 @@
-using System;
 using System.Threading;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Enums;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -14,7 +12,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_account_bandwidth()
         {
-            var args = new GetAccountBandwidthArgs()
+            var args = new GetAccountBandwidthArgs
             {
                 Account = User.Login,
                 Type = BandwidthType.Forum

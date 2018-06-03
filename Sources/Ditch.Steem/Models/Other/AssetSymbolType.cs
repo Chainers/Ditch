@@ -11,7 +11,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\protocol\include\steem\protocol\asset_symbol.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetSymbolType : ICustomSerializer
+    public class AssetSymbolType : ICustomSerializer
     {
         private static readonly Regex ValidateRegex = new Regex("(?<=^@@)[0-9]{9}$");
 
@@ -20,10 +20,10 @@ namespace Ditch.Steem.Models.Other
         /// = 0;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
-        public UInt32 AssetNum { get; set; }
+        public uint AssetNum { get; set; }
 
 
-        public AssetSymbolType(UInt32 assetNum)
+        public AssetSymbolType(uint assetNum)
         {
             AssetNum = assetNum;
         }
@@ -34,11 +34,11 @@ namespace Ditch.Steem.Models.Other
             if (!m.Success)
                 throw new InvalidCastException();
 
-            UInt32 assetNum = UInt32.Parse(m.Value);
+            var assetNum = uint.Parse(m.Value);
             AssetNum = AssetNumFromNai(assetNum, decimalPlaces);
         }
 
-        private UInt32 AssetNumFromNai(UInt32 nai, byte decimalPlaces)
+        private static uint AssetNumFromNai(uint nai, byte decimalPlaces)
         {
             var naiDataDigits = nai / 10;
 
@@ -66,9 +66,9 @@ namespace Ditch.Steem.Models.Other
             return x.ToString("@@000000000");
         }
 
-        private UInt32 ToNai()
+        private uint ToNai()
         {
-            UInt32 naiDataDigits;
+            uint naiDataDigits;
 
             // Can be replaced with some clever bitshifting
             switch (AssetNum)
@@ -91,7 +91,7 @@ namespace Ditch.Steem.Models.Other
             return naiDataDigits * 10 + naiCheckDigit;
         }
 
-        private byte DammChecksum_8Digit(UInt32 value)
+        private static byte DammChecksum_8Digit(uint value)
         {
             byte[] t =
             {
@@ -107,22 +107,22 @@ namespace Ditch.Steem.Models.Other
                 20, 50, 80, 10, 40, 30, 60, 70, 90, 0
             };
 
-            UInt32 q0 = value / 10;
-            UInt32 d0 = value % 10;
-            UInt32 q1 = q0 / 10;
-            UInt32 d1 = q0 % 10;
-            UInt32 q2 = q1 / 10;
-            UInt32 d2 = q1 % 10;
-            UInt32 q3 = q2 / 10;
-            UInt32 d3 = q2 % 10;
-            UInt32 q4 = q3 / 10;
-            UInt32 d4 = q3 % 10;
-            UInt32 q5 = q4 / 10;
-            UInt32 d5 = q4 % 10;
-            UInt32 d6 = q5 % 10;
-            UInt32 d7 = q5 / 10;
+            var q0 = value / 10;
+            var d0 = value % 10;
+            var q1 = q0 / 10;
+            var d1 = q0 % 10;
+            var q2 = q1 / 10;
+            var d2 = q1 % 10;
+            var q3 = q2 / 10;
+            var d3 = q2 % 10;
+            var q4 = q3 / 10;
+            var d4 = q3 % 10;
+            var q5 = q4 / 10;
+            var d5 = q4 % 10;
+            var d6 = q5 % 10;
+            var d7 = q5 / 10;
 
-            byte x = t[d7];
+            var x = t[d7];
             x = t[x + d6];
             x = t[x + d5];
             x = t[x + d4];
@@ -141,22 +141,22 @@ namespace Ditch.Steem.Models.Other
             {
                 case Config.SteemAssetNumSteem:
                     {
-                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), Config.SteemSymbolSer);
+                        serializeHelper.AddToMessageStream(stream, typeof(ulong), Config.SteemSymbolSer);
                         break;
                     }
                 case Config.SteemAssetNumSbd:
                     {
-                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), Config.SbdSymbolSer);
+                        serializeHelper.AddToMessageStream(stream, typeof(ulong), Config.SbdSymbolSer);
                         break;
                     }
                 case Config.SteemAssetNumVests:
                     {
-                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), Config.VestsSymbolSer);
+                        serializeHelper.AddToMessageStream(stream, typeof(ulong), Config.VestsSymbolSer);
                         break;
                     }
                 default:
                     {
-                        serializeHelper.AddToMessageStream(stream, typeof(UInt64), AssetNum);
+                        serializeHelper.AddToMessageStream(stream, typeof(ulong), AssetNum);
                         break;
                     }
             }

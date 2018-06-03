@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Operations
     /// libraries\protocol\include\steemit\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DeleteCommentOperation : BaseOperation
+    public class DeleteCommentOperation : BaseOperation
     {
         public override string TypeName => "delete_comment";
         public override OperationType Type => OperationType.DeleteComment;

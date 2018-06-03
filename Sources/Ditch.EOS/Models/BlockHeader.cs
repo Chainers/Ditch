@@ -8,7 +8,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosio.system\eosio.system.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BlockHeader
+    public class BlockHeader
     {
         /// <summary>
         /// API name: block_num
@@ -16,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_num")]
-        public UInt32 BlockNum { get; set; }
+        public uint BlockNum { get; set; }
 
         /// <summary>
         /// API name: previous
@@ -72,7 +72,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("schedule_version")]
-        public UInt32 ScheduleVersion { get; set; }
+        public uint ScheduleVersion { get; set; }
 
         /// <summary>
         /// API name: new_producers

@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetBlogEntriesArgs : GetFeedEntriesArgs
+    public class GetBlogEntriesArgs : GetFeedEntriesArgs
     {
     }
 }

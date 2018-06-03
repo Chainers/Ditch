@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.Other
     /// plugins\follow\include\golos\plugins\follow\follow_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BlogEntry
+    public class BlogEntry
     {
 
         /// <summary>
@@ -49,6 +49,6 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("entry_id")]
-        public UInt32 EntryId {get; set;}
+        public uint EntryId {get; set;}
     }
 }

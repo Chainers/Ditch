@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ShardLock
+    public class ShardLock
     {
 
         /// <summary>

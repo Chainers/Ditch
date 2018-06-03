@@ -10,7 +10,7 @@ namespace Ditch.Golos.Models.ApiObj
     /// libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SavingsWithdrawApiObj
+    public class SavingsWithdrawApiObj
     {
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Ditch.Golos.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("request_id")]
-        public UInt32 RequestId { get; set; }
+        public uint RequestId { get; set; }
 
         /// <summary>
         /// API name: amount

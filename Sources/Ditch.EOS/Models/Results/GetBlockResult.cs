@@ -25,7 +25,7 @@ namespace Ditch.EOS.Models.Results
         public string BlockMerkleRoot { get; set; }
 
         [JsonProperty("schedule_version")]
-        public UInt32 ScheduleVersion { get; set; }
+        public uint ScheduleVersion { get; set; }
 
         [JsonProperty("producer")]
         public string Producer { get; set; }
@@ -43,9 +43,9 @@ namespace Ditch.EOS.Models.Results
         public string Id { get; set; }
 
         [JsonProperty("block_num")]
-        public UInt32 BlockNum { get; set; }
+        public uint BlockNum { get; set; }
 
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
     }
 }

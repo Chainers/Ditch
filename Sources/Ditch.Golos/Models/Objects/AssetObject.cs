@@ -16,7 +16,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\asset_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetObject
+    public class AssetObject
     {
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Ditch.Golos.Models.Objects
         [JsonProperty("asset_name")]
         public string AssetName { get; set; }
 
-        /// Maximum number of digits after the decimal point (must be <= 12)
+        /// Maximum number of digits after the decimal point (must be &lt;= 12)
 
         /// <summary>
         /// API name: precision

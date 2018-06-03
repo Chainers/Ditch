@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -16,7 +15,7 @@ namespace Ditch.Golos.Tests.Apis
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
 
-            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistory, "get_market_history", new object[] { 100, new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.MarketHistory, "get_market_history", new object[] { 100, new DateTime(2017, 4, 2), new DateTime(2017, 4, 3) }, CancellationToken.None);
             TestPropetries(resp.Result.GetType(), obj.Result);
             WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);

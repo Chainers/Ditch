@@ -19,7 +19,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DynamicGlobalPropertyObject
+    public class DynamicGlobalPropertyObject
     {
         /// <summary>
         /// API name: id
@@ -35,7 +35,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("head_block_number")]
-        public UInt32 HeadBlockNumber { get; set; }
+        public uint HeadBlockNumber { get; set; }
 
         /// <summary>
         /// API name: head_block_id
@@ -70,7 +70,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_pow")]
-        public UInt64 TotalPow { get; set; }
+        public ulong TotalPow { get; set; }
 
 
         /**
@@ -83,7 +83,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("num_pow_witnesses")]
-        public UInt32 NumPowWitnesses { get; set; }
+        public uint NumPowWitnesses { get; set; }
 
         /// <summary>
         /// API name: virtual_supply
@@ -167,7 +167,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("sbd_interest_rate")]
-        public UInt16 SbdInterestRate { get; set; }
+        public ushort SbdInterestRate { get; set; }
 
         /// <summary>
         /// API name: sbd_print_rate
@@ -175,7 +175,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("sbd_print_rate")]
-        public UInt16 SbdPrintRate { get; set; }
+        public ushort SbdPrintRate { get; set; }
 
 
         /**
@@ -192,7 +192,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("average_block_size")]
-        public UInt32 AverageBlockSize { get; set; }
+        public uint AverageBlockSize { get; set; }
 
 
         /**
@@ -209,7 +209,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
 
 
         /**
@@ -223,7 +223,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("current_aslot")]
-        public UInt64 CurrentAslot { get; set; }
+        public ulong CurrentAslot { get; set; }
 
 
         /**
@@ -251,7 +251,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_irreversible_block_num")]
-        public UInt32 LastIrreversibleBlockNum { get; set; }
+        public uint LastIrreversibleBlockNum { get; set; }
 
 
         /**
@@ -269,7 +269,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("max_virtual_bandwidth")]
-        public UInt64 MaxVirtualBandwidth { get; set; }
+        public ulong MaxVirtualBandwidth { get; set; }
 
 
         /**
@@ -284,7 +284,7 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("current_reserve_ratio")]
-        public UInt64 CurrentReserveRatio { get; set; }
+        public ulong CurrentReserveRatio { get; set; }
 
 
         /**
@@ -298,6 +298,6 @@ namespace Ditch.Golos.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("vote_regeneration_per_day")]
-        public UInt32 VoteRegenerationPerDay { get; set; }
+        public uint VoteRegenerationPerDay { get; set; }
     }
 }

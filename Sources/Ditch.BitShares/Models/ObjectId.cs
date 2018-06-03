@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Ditch.Core;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
@@ -51,32 +52,8 @@ namespace Ditch.BitShares.Models
         public void Serializer(Stream stream, IMessageSerializer serializeHelper)
         {
             //https://developers.google.com/protocol-buffers/docs/encoding
-            var t = VarInt((int)Instance);
+            var t = MessageSerializer.VarInt((int)Instance);
             serializeHelper.AddToMessageStream(stream, typeof(byte[]), t);
-        }
-
-        protected byte[] VarInt(int n)
-        {
-            //get array len
-            var i = 1;
-            var k = n;
-            while (k >= 0x80)
-            {
-                k >>= 7;
-                i++;
-            }
-
-            var data = new byte[i];
-            i = 0;
-
-            while (n >= 0x80)
-            {
-                data[i++] = (byte)(0x80 | (n & 0x7f));
-                n >>= 7;
-            }
-
-            data[i] += (byte)n;
-            return data;
         }
 
         #endregion ICustomSerializer

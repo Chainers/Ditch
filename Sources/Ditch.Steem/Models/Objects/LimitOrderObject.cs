@@ -18,7 +18,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steemit\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class LimitOrderObject
+    public class LimitOrderObject
     {
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("orderid")]
-        public UInt32 Orderid { get; set; }
+        public uint Orderid { get; set; }
 
         /// <summary>
         /// API name: for_sale

@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\tags_api\include\steem\plugins\tags_api\tags_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetDiscussionsByActiveReturn : DiscussionQueryResult
+    public class GetDiscussionsByActiveReturn : DiscussionQueryResult
     {
     }
 }

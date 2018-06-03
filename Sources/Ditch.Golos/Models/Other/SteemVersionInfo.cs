@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\application\include\golos\application\api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SteemVersionInfo
+    public class SteemVersionInfo
     {
 
         /// <summary>

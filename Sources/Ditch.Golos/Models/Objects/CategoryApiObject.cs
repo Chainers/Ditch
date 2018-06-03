@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Objects
     /// golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CategoryApiObject
+    public class CategoryApiObject
     {
 
         // bdType : category_id_type
@@ -30,7 +30,7 @@ namespace Ditch.Golos.Models.Objects
 
         // bdType : uint32_t
         [JsonProperty("discussions")]
-        public UInt32 Discussions { get; set; }
+        public uint Discussions { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("last_update")]

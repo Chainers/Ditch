@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Objects
@@ -12,7 +11,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steem\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WithdrawVestingRouteObject
+    public class WithdrawVestingRouteObject
     {
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent")]
-        public UInt16 Percent {get; set;}
+        public ushort Percent {get; set;}
 
         /// <summary>
         /// API name: auto_vest

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
@@ -13,7 +12,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\protocol\include\golos\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class PriceFeed
+    public class PriceFeed
     {
 
         /**
@@ -63,7 +62,7 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("maintenance_collateral_ratio")]
-        public UInt16 MaintenanceCollateralRatio { get; set; }
+        public ushort MaintenanceCollateralRatio { get; set; }
 
 
         /** Fixed point between 1.000 and 10.000, implied fixed point denominator is GRAPHENE_COLLATERAL_RATIO_DENOM */
@@ -74,6 +73,6 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("maximum_short_squeeze_ratio")]
-        public UInt16 MaximumShortSqueezeRatio { get; set; }
+        public ushort MaximumShortSqueezeRatio { get; set; }
     }
 }

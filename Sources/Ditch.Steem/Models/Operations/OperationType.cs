@@ -45,6 +45,6 @@
         DeclineVotingRightsOperation,
         ResetAccountOperation,
         SetResetAccountOperation,
-        AccountCreateWithDelegation,
+        AccountCreateWithDelegation
     }
 }

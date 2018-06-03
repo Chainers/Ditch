@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiWitnessScheduleObject
+    public class ApiWitnessScheduleObject
     {
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("next_shuffle_block_num")]
-        public UInt32 NextShuffleBlockNum {get; set;}
+        public uint NextShuffleBlockNum {get; set;}
 
         /// <summary>
         /// API name: current_shuffled_witnesses
@@ -82,7 +82,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("witness_pay_normalization_factor")]
-        public UInt32 WitnessPayNormalizationFactor {get; set;}
+        public uint WitnessPayNormalizationFactor {get; set;}
 
         /// <summary>
         /// API name: median_props

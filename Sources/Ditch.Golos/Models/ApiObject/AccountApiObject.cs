@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.ApiObject
     /// plugins\database_api\include\golos\plugins\database_api\api_objects\account_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountApiObject
+    public class AccountApiObject
     {
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("comment_count")]
-        public UInt32 CommentCount {get; set;}
+        public uint CommentCount {get; set;}
 
         /// <summary>
         /// API name: lifetime_vote_count
@@ -178,7 +178,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("lifetime_vote_count")]
-        public UInt32 LifetimeVoteCount {get; set;}
+        public uint LifetimeVoteCount {get; set;}
 
         /// <summary>
         /// API name: post_count
@@ -186,7 +186,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("post_count")]
-        public UInt32 PostCount {get; set;}
+        public uint PostCount {get; set;}
 
         /// <summary>
         /// API name: can_vote
@@ -202,7 +202,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("voting_power")]
-        public UInt16 VotingPower {get; set;}
+        public ushort VotingPower {get; set;}
 
         /// <summary>
         /// API name: last_vote_time
@@ -378,7 +378,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("withdraw_routes")]
-        public UInt16 WithdrawRoutes {get; set;}
+        public ushort WithdrawRoutes {get; set;}
 
         /// <summary>
         /// API name: proxied_vsf_votes
@@ -394,7 +394,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("witnesses_voted_for")]
-        public UInt16 WitnessesVotedFor {get; set;}
+        public ushort WitnessesVotedFor {get; set;}
 
         /// <summary>
         /// API name: average_bandwidth

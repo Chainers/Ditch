@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\database_api\include\steem\plugins\database_api\database_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiHardforkPropertyObject
+    public class ApiHardforkPropertyObject
     {
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_hardfork")]
-        public UInt32 LastHardfork {get; set;}
+        public uint LastHardfork {get; set;}
 
         /// <summary>
         /// API name: current_hardfork_version

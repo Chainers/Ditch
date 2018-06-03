@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.ApiObj
     /// golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ConvertRequestApiObj : ConvertRequestObject
+    public class ConvertRequestApiObj : ConvertRequestObject
     {
     }
 }

@@ -29,6 +29,7 @@ namespace Ditch.EOS.Errors
                 return match.Value.Replace("\",\"", Environment.NewLine);
 
             match = ErrorJson2.Match(content);
+
             if (match.Success)
                 return match.Value;
 

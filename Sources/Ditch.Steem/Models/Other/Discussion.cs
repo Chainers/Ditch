@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Discussion
+    public class Discussion
     {
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("children")]
-        public UInt32 Children {get; set;}
+        public uint Children {get; set;}
 
         /// <summary>
         /// API name: net_rshares
@@ -185,7 +185,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_vote_weight")]
-        public UInt64 TotalVoteWeight {get; set;}
+        public ulong TotalVoteWeight {get; set;}
 
         /// <summary>
         /// API name: reward_weight
@@ -193,7 +193,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("reward_weight")]
-        public UInt16 RewardWeight {get; set;}
+        public ushort RewardWeight {get; set;}
 
         /// <summary>
         /// API name: total_payout_value
@@ -225,7 +225,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("net_votes")]
-        public Int32 NetVotes {get; set;}
+        public int NetVotes {get; set;}
 
         /// <summary>
         /// API name: root_author
@@ -257,7 +257,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_steem_dollars")]
-        public UInt16 PercentSteemDollars {get; set;}
+        public ushort PercentSteemDollars {get; set;}
 
         /// <summary>
         /// API name: allow_replies
@@ -361,7 +361,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("body_length")]
-        public UInt32 BodyLength {get; set;}
+        public uint BodyLength {get; set;}
 
         /// <summary>
         /// API name: reblogged_by

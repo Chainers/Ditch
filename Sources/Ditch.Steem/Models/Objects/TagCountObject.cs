@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Objects
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\tags_api\include\steem\plugins\tags_api\tags_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class TagCountObject
+    public class TagCountObject
     {
 
         /// <summary>
@@ -25,6 +24,6 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("count")]
-        public UInt32 Count {get; set;}
+        public uint Count {get; set;}
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
-using Newtonsoft.Json;
+using Ditch.Steem.Models.Args;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Ditch.Steem.Models.Args;
 
 namespace Ditch.Steem.Tests.Apis
 {
@@ -53,7 +52,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_trade_history()
         {
-            var args = new GetTradeHistoryArgs()
+            var args = new GetTradeHistoryArgs
             {
                 Start = new DateTime(2017, 4, 2),
                 End = new DateTime(2017, 6, 2),
@@ -86,11 +85,11 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_market_history()
         {
-            var args = new GetMarketHistoryArgs()
+            var args = new GetMarketHistoryArgs
             {
                 Start = new DateTime(2017, 4, 2),
                 BucketSeconds = 100,
-                End = new DateTime(2017, 6, 2),
+                End = new DateTime(2017, 6, 2)
             };
             var resp = Api.GetMarketHistory(args, CancellationToken.None);
             WriteLine(resp);

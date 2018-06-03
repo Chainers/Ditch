@@ -15,7 +15,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\proposal_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ProposalObject
+    public class ProposalObject
     {
 
         /// <summary>

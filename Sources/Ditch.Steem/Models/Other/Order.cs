@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Order
+    public class Order
     {
 
         /// <summary>

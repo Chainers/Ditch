@@ -48,7 +48,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: category_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObject[]> GetTrendingCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<CategoryApiObject[]> GetTrendingCategories(string after, uint limit, CancellationToken token)
         {
             return CustomGetRequest<CategoryApiObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_categories", new object[] { after, limit }, token);
         }
@@ -62,7 +62,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: category_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObject[]> GetBestCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<CategoryApiObject[]> GetBestCategories(string after, uint limit, CancellationToken token)
         {
             return CustomGetRequest<CategoryApiObject[]>(KnownApiNames.SocialNetworkApi, "get_best_categories", new object[] { after, limit }, token);
         }
@@ -76,7 +76,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: category_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObject[]> GetActiveCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<CategoryApiObject[]> GetActiveCategories(string after, uint limit, CancellationToken token)
         {
             return CustomGetRequest<CategoryApiObject[]>(KnownApiNames.SocialNetworkApi, "get_active_categories", new object[] { after, limit }, token);
         }
@@ -90,7 +90,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: category_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<CategoryApiObject[]> GetRecentCategories(string after, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<CategoryApiObject[]> GetRecentCategories(string after, uint limit, CancellationToken token)
         {
             return CustomGetRequest<CategoryApiObject[]>(KnownApiNames.SocialNetworkApi, "get_recent_categories", new object[] { after, limit }, token);
         }
@@ -164,9 +164,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>vector of top 1000 tags used by an author sorted by most frequently used</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MapContainer<string, UInt32>> GetTagsUsedByAuthor(string author, CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, uint>> GetTagsUsedByAuthor(string author, CancellationToken token)
         {
-            return CustomGetRequest<MapContainer<string, UInt32>>(KnownApiNames.SocialNetworkApi, "get_tags_used_by_author", new object[] { author }, token);
+            return CustomGetRequest<MapContainer<string, uint>>(KnownApiNames.SocialNetworkApi, "get_tags_used_by_author", new object[] { author }, token);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Ditch.Golos
         /// <returns>API type: discussion Return the active discussions with the highest cumulative pending payouts without respect to category, total
         /// pending payout means the pending payout of all children as well.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, uint limit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { startAuthor, startPermlink, limit }, token);
         }
@@ -382,7 +382,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, uint limit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit }, token);
         }

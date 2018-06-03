@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Golos.Models.Other;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -293,7 +292,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_active_votes()
         {
-            var permlink = "test";
+            const string permlink = "test";
             var resp = Api.GetActiveVotes(User.Login, permlink, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -320,8 +319,8 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_content()
         {
-            var author = "steepshot";
-            var permlink = "znakomtes-steepshot-io";
+            const string author = "steepshot";
+            const string permlink = "znakomtes-steepshot-io";
 
             var resp = Api.GetContent(author, permlink, CancellationToken.None);
             Assert.IsTrue(resp != null);
@@ -338,8 +337,8 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_content_replies()
         {
-            var parent = "";
-            var parentPermink = "";
+            const string parent = "";
+            const string parentPermink = "";
             var resp = Api.GetContentReplies(parent, parentPermink, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -366,7 +365,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_trending()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 1024,
                 Limit = 2
@@ -384,7 +383,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_created()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -402,7 +401,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_active()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -419,7 +418,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_cashout()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -436,7 +435,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_payout()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -503,7 +502,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_votes()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -538,7 +537,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_hot()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -555,7 +554,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_feed()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -572,7 +571,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_blog()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -589,7 +588,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_comments()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 StartAuthor = User.Login
             };
@@ -606,7 +605,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_promoted()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 SelectAuthors = new[] { User.Login }
             };
@@ -636,7 +635,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_author_before_date()
         {
-            ushort count = 3;
+            const ushort count = 3;
             var dt = DateTime.Now;
             var resp = Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count, CancellationToken.None);
             WriteLine(resp);
@@ -652,7 +651,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_all_content_replies()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
                 Limit = 2
@@ -674,7 +673,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_children()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
                 Limit = 2

@@ -10,7 +10,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\protocol\include\steemit\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Transaction
+    public class Transaction
     {
         [MessageOrder(0)]
         public byte[] ChainId { get; set; } = new byte[0]; //64
@@ -22,7 +22,7 @@ namespace Ditch.Steem.Models.Other
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(1)]
         [JsonProperty("ref_block_num")]
-        public UInt16 RefBlockNum { get; set; }
+        public ushort RefBlockNum { get; set; }
 
         /// <summary>
         /// API name: ref_block_prefix
@@ -31,7 +31,7 @@ namespace Ditch.Steem.Models.Other
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(2)]
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
 
         /// <summary>
         /// API name: expiration

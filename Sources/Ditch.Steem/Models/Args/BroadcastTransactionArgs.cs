@@ -1,4 +1,3 @@
-using System;
 using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\network_broadcast_api\include\steem\plugins\network_broadcast_api\network_broadcast_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BroadcastTransactionArgs
+    public class BroadcastTransactionArgs
     {
 
         /// <summary>
@@ -26,6 +25,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("max_block_age")]
-        public Int32 MaxBlockAge { get; set; } = -1;
+        public int MaxBlockAge { get; set; } = -1;
     }
 }

@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiFeedHistoryObject
+    public class ApiFeedHistoryObject
     {
 
         /// <summary>

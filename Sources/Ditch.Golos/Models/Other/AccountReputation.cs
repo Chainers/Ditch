@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// plugins\follow\include\golos\plugins\follow\follow_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountReputation
+    public class AccountReputation
     {
 
         /// <summary>

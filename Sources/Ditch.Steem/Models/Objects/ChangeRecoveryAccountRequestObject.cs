@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steem\chain\account_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ChangeRecoveryAccountRequestObject
+    public class ChangeRecoveryAccountRequestObject
     {
 
         /// <summary>

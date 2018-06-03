@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.ApiObj
     /// libraries\plugins\private_message\include\golos\private_message\private_message_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class MessageApiObj
+    public class MessageApiObj
     {
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Ditch.Golos.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("sent_time")]
-        public UInt64 SentTime { get; set; }
+        public ulong SentTime { get; set; }
 
         /// <summary>
         /// API name: receive_time
@@ -74,7 +74,7 @@ namespace Ditch.Golos.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("checksum")]
-        public UInt32 Checksum { get; set; }
+        public uint Checksum { get; set; }
 
         /// <summary>
         /// API name: encrypted_message

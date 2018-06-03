@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
@@ -8,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\protocol\include\golos\protocol\operations\comment_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BeneficiaryRouteType
+    public class BeneficiaryRouteType
     {
 
         /// <summary>
@@ -25,6 +24,6 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("weight")]
-        public UInt16 Weight {get; set;}
+        public ushort Weight {get; set;}
     }
 }

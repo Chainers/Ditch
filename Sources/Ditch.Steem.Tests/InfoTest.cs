@@ -1,7 +1,7 @@
-﻿using System.Threading;
-using NUnit.Framework;
-using System;
+﻿using System;
+using System.Threading;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Ditch.Steem.Tests
 {

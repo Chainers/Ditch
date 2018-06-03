@@ -38,39 +38,39 @@ namespace Ditch.Core
                 stream.WriteByte((byte)val);
                 return;
             }
-            if (type == typeof(Int16))
+            if (type == typeof(short))
             {
-                var buf = BitConverter.GetBytes((Int16)val);
+                var buf = BitConverter.GetBytes((short)val);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(UInt16))
+            if (type == typeof(ushort))
             {
-                var buf = BitConverter.GetBytes((UInt16)val);
+                var buf = BitConverter.GetBytes((ushort)val);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(Int32))
+            if (type == typeof(int))
             {
-                var buf = BitConverter.GetBytes((Int32)val);
+                var buf = BitConverter.GetBytes((int)val);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(UInt32))
+            if (type == typeof(uint))
             {
-                var buf = BitConverter.GetBytes((UInt32)val);
+                var buf = BitConverter.GetBytes((uint)val);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(Int64))
+            if (type == typeof(long))
             {
-                var buf = BitConverter.GetBytes((Int64)val);
+                var buf = BitConverter.GetBytes((long)val);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(UInt64))
+            if (type == typeof(ulong))
             {
-                var buf = BitConverter.GetBytes((UInt64)val);
+                var buf = BitConverter.GetBytes((ulong)val);
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
@@ -88,17 +88,17 @@ namespace Ditch.Core
             }
             if (type == typeof(DateTime))
             {
-                var buf = BitConverter.GetBytes((Int32)(((DateTime)val).Ticks / 10000000 - 62135596800)); // 01.01.1970
+                var buf = BitConverter.GetBytes((int)(((DateTime)val).Ticks / 10000000 - 62135596800)); // 01.01.1970
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(Byte[]))
+            if (type == typeof(byte[]))
             {
                 var buf = (byte[])val;
                 stream.Write(buf, 0, buf.Length);
                 return;
             }
-            if (type == typeof(String))
+            if (type == typeof(string))
             {
                 var typed = (string)val;
                 if (string.IsNullOrEmpty(typed))
@@ -190,7 +190,7 @@ namespace Ditch.Core
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        protected byte[] VarInt(int n)
+        public static byte[] VarInt(int n)
         {
             //get array len
             var i = 1;

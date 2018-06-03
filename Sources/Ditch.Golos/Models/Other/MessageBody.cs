@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\plugins\private_message\include\golos\private_message\private_message_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class MessageBody
+    public class MessageBody
     {
 
         /// <summary>

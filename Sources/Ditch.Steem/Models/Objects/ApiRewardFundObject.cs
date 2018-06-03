@@ -10,7 +10,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiRewardFundObject
+    public class ApiRewardFundObject
     {
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_curation_rewards")]
-        public UInt16 PercentCurationRewards {get; set;}
+        public ushort PercentCurationRewards {get; set;}
 
         /// <summary>
         /// API name: percent_content_rewards
@@ -75,7 +75,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_content_rewards")]
-        public UInt16 PercentContentRewards {get; set;}
+        public ushort PercentContentRewards {get; set;}
 
         /// <summary>
         /// API name: author_reward_curve

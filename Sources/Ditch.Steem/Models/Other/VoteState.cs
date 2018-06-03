@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// steem-0.19.1\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class VoteState
+    public class VoteState
     {
 
         // bdType : string
@@ -17,15 +17,15 @@ namespace Ditch.Steem.Models.Other
 
         // bdType : uint64_t | = 0;
         [JsonProperty("weight")]
-        public UInt64 Weight { get; set; }
+        public ulong Weight { get; set; }
 
         // bdType : int64_t | = 0;
         [JsonProperty("rshares")]
-        public Int64 Rshares { get; set; }
+        public long Rshares { get; set; }
 
         // bdType : int16_t | = 0;
         [JsonProperty("percent")]
-        public Int16 Percent { get; set; }
+        public short Percent { get; set; }
 
         // bdType : share_type | = 0;
         [JsonProperty("reputation")]

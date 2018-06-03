@@ -10,12 +10,12 @@ namespace Ditch.Golos.Models.ApiObj
     /// golos-0.16.3\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CommentApiObj
+    public class CommentApiObj
     {
 
         // bdType : comment_id_type
         [JsonProperty("id")]
-        public UInt64 Id { get; set; }
+        public ulong Id { get; set; }
 
         // bdType : string
         [JsonProperty("category")]
@@ -71,7 +71,7 @@ namespace Ditch.Golos.Models.ApiObj
 
         // bdType : uint32_t | = 0;
         [JsonProperty("children")]
-        public UInt32 Children { get; set; }
+        public uint Children { get; set; }
 
         // bdType : uint128_t
         [JsonProperty("children_rshares2")]
@@ -103,11 +103,11 @@ namespace Ditch.Golos.Models.ApiObj
 
         // bdType : uint64_t | = 0;
         [JsonProperty("total_vote_weight")]
-        public UInt64 TotalVoteWeight { get; set; }
+        public ulong TotalVoteWeight { get; set; }
 
         // bdType : uint16_t | = 0;
         [JsonProperty("reward_weight")]
-        public UInt16 RewardWeight { get; set; }
+        public ushort RewardWeight { get; set; }
 
         // bdType : asset
         [JsonProperty("total_payout_value")]
@@ -123,11 +123,11 @@ namespace Ditch.Golos.Models.ApiObj
 
         // bdType : int32_t | = 0;
         [JsonProperty("net_votes")]
-        public Int32 NetVotes { get; set; }
+        public int NetVotes { get; set; }
 
         // bdType : comment_id_type
         [JsonProperty("root_comment")]
-        public UInt64 RootComment { get; set; }
+        public ulong RootComment { get; set; }
 
         // bdType : comment_mode
         [JsonProperty("mode")]
@@ -139,7 +139,7 @@ namespace Ditch.Golos.Models.ApiObj
 
         // bdType : uint16_t | = 0;
         [JsonProperty("percent_steem_dollars")]
-        public UInt16 PercentSteemDollars { get; set; }
+        public ushort PercentSteemDollars { get; set; }
 
         // bdType : bool | = false;
         [JsonProperty("allow_replies")]

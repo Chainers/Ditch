@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\protocol\include\golos\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Price
+    public class Price
     {
 
         /// <summary>

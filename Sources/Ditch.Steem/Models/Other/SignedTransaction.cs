@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\protocol\include\steemit\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedTransaction : Transaction
+    public class SignedTransaction : Transaction
     {
         private object[][] _operations;
 
@@ -39,6 +39,6 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: signature_type (typedef fc::array&lt;unsigned char, 65> compact_signature;)</returns>
         [JsonProperty("signatures")]
-        public string[] Signatures { get; set; }
+        public string[] Signatures { get; set; } = new string[0];
     }
 }
