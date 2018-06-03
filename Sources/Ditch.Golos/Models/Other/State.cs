@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Other
     /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class State
+    public class State
     {
 
         // bdType : string

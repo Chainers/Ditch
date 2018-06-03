@@ -1,9 +1,8 @@
 using System;
 using System.Threading;
-using Newtonsoft.Json;
+using Ditch.Steem.Models.Args;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Ditch.Steem.Models.Args;
 
 namespace Ditch.Steem.Tests.Apis
 {
@@ -28,7 +27,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_tags_used_by_author()
         {
-            var args = new GetTagsUsedByAuthorArgs()
+            var args = new GetTagsUsedByAuthorArgs
             {
                 Author = User.Login
             };
@@ -45,10 +44,10 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussion()
         {
-            var args = new GetDiscussionArgs()
+            var args = new GetDiscussionArgs
             {
                 Author = "steepshot",
-                Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
+                Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
             var resp = Api.GetDiscussion(args, CancellationToken.None);
             WriteLine(resp);
@@ -63,10 +62,10 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_content_replies()
         {
-            var args = new GetContentRepliesArgs()
+            var args = new GetContentRepliesArgs
             {
                 Author = "steepshot",
-                Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
+                Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
             var resp = Api.GetContentReplies(args, CancellationToken.None);
             WriteLine(resp);
@@ -207,11 +206,11 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_feed()
         {
-            var args = new GetDiscussionsByFeedArgs()
+            var args = new GetDiscussionsByFeedArgs
             {
                 Tag = "photo",
                 SelectAuthors = new[] {User.Login},
-                FilterTags = new string[] {"steepshot"}
+                FilterTags = new[] {"steepshot"}
             };
             var resp = Api.GetDiscussionsByFeed(args, CancellationToken.None);
             WriteLine(resp);
@@ -226,11 +225,11 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_blog()
         {
-            var args = new GetDiscussionsByBlogArgs()
+            var args = new GetDiscussionsByBlogArgs
             {
                 Tag = "photo",
                 SelectAuthors = new[] { User.Login },
-                FilterTags = new string[] { "steepshot" }
+                FilterTags = new[] { "steepshot" }
             };
             var resp = Api.GetDiscussionsByBlog(args, CancellationToken.None);
             WriteLine(resp);
@@ -245,7 +244,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_comments()
         {
-            var args = new GetDiscussionsByCommentsArgs()
+            var args = new GetDiscussionsByCommentsArgs
             {
                 StartAuthor = User.Login
             };
@@ -262,9 +261,9 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_promoted()
         {
-            var args = new GetDiscussionsByPromotedArgs()
+            var args = new GetDiscussionsByPromotedArgs
             {
-                ParentAuthor = "steepshot",
+                ParentAuthor = "steepshot"
             };
             var resp = Api.GetDiscussionsByPromoted(args, CancellationToken.None);
             WriteLine(resp);
@@ -279,7 +278,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_replies_by_last_update()
         {
-            var args = new GetRepliesByLastUpdateArgs()
+            var args = new GetRepliesByLastUpdateArgs
             {
                 StartParentAuthor = "steepshot",
                 StartPermlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
@@ -298,7 +297,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_discussions_by_author_before_date()
         {
-            var args = new GetDiscussionsByAuthorBeforeDateArgs()
+            var args = new GetDiscussionsByAuthorBeforeDateArgs
             {
                 Author = "steepshot",
                 StartPermlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
@@ -318,7 +317,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_active_votes()
         {
-            var args = new GetActiveVotesArgs()
+            var args = new GetActiveVotesArgs
             {
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
                 Author = "steepshot"

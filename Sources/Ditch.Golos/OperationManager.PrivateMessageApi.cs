@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models.ApiObj;
 
@@ -21,9 +20,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: message_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MessageApiObj[]> GetInbox(string to, object newest, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<MessageApiObj[]> GetInbox(string to, object newest, ushort limit, CancellationToken token)
         {
-            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_inbox", new object[] { to, newest, limit }, token);
+            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_inbox", new[] { to, newest, limit }, token);
         }
 
         /// <summary>
@@ -36,9 +35,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: message_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MessageApiObj[]> GetOutbox(string from, object newest, UInt16 limit, CancellationToken token)
+        public JsonRpcResponse<MessageApiObj[]> GetOutbox(string from, object newest, ushort limit, CancellationToken token)
         {
-            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_outbox", new object[] { from, newest, limit }, token);
+            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_outbox", new[] { from, newest, limit }, token);
         }
     }
 }

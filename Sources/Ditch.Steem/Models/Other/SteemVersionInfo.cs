@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\app\include\steemit\app\api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SteemVersionInfo
+    public class SteemVersionInfo
     {
 
         /// <summary>

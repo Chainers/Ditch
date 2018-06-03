@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Enums;
 using Ditch.Steem.Models.Other;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -115,7 +113,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_witnesses()
         {
-            var args = new FindWitnessesArgs()
+            var args = new FindWitnessesArgs
             {
                 Owners = new[] { User.Login }
             };
@@ -132,7 +130,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_witness_votes()
         {
-            var args = new ListWitnessVotesArgs()
+            var args = new ListWitnessVotesArgs
             {
                 Order = SortOrderType.ByAccountWitness,
                 Start = new object[0],
@@ -178,7 +176,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_accounts()
         {
-            var args = new FindAccountsArgs()
+            var args = new FindAccountsArgs
             {
                 Accounts = new[] { User.Login }
             };
@@ -195,7 +193,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_owner_histories()
         {
-            var args = new ListOwnerHistoriesArgs()
+            var args = new ListOwnerHistoriesArgs
             {
                 Start = new object[0],
                 Limit = 3
@@ -227,7 +225,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_account_recovery_requests()
         {
-            var args = new ListAccountRecoveryRequestsArgs()
+            var args = new ListAccountRecoveryRequestsArgs
             {
                 Start = User.Login,
                 Limit = 3,
@@ -246,7 +244,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_account_recovery_requests()
         {
-            var args = new FindAccountRecoveryRequestsArgs()
+            var args = new FindAccountRecoveryRequestsArgs
             {
                 Accounts = new[] { User.Login }
             };
@@ -263,7 +261,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_change_recovery_account_requests()
         {
-            var args = new ListChangeRecoveryAccountRequestsArgs()
+            var args = new ListChangeRecoveryAccountRequestsArgs
             {
                 Order = SortOrderType.ByAccount
             };
@@ -280,7 +278,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_change_recovery_account_requests()
         {
-            var args = new FindChangeRecoveryAccountRequestsArgs()
+            var args = new FindChangeRecoveryAccountRequestsArgs
             {
                 Accounts = new[] { User.Login }
             };
@@ -297,7 +295,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_escrows()
         {
-            var args = new ListEscrowsArgs()
+            var args = new ListEscrowsArgs
             {
                 Start = new object[0],
                 Limit = 3,
@@ -331,7 +329,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_withdraw_vesting_routes()
         {
-            var args = new ListWithdrawVestingRoutesArgs()
+            var args = new ListWithdrawVestingRoutesArgs
             {
                 Order = SortOrderType.ByWithdrawRoute,
                 Start = new object[0],
@@ -350,7 +348,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_withdraw_vesting_routes()
         {
-            var args = new FindWithdrawVestingRoutesArgs()
+            var args = new FindWithdrawVestingRoutesArgs
             {
                 Account = User.Login,
                 Order = SortOrderType.ByWithdrawRoute
@@ -368,7 +366,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_savings_withdrawals()
         {
-            var args = new ListSavingsWithdrawalsArgs()
+            var args = new ListSavingsWithdrawalsArgs
             {
                 Start = new object[0],
                 Limit = 3,
@@ -402,7 +400,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_vesting_delegations()
         {
-            var args = new ListVestingDelegationsArgs()
+            var args = new ListVestingDelegationsArgs
             {
                 Order = SortOrderType.ByDelegation,
                 Start = new object[0],
@@ -435,7 +433,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_vesting_delegation_expirations()
         {
-            var args = new ListVestingDelegationExpirationsArgs()
+            var args = new ListVestingDelegationExpirationsArgs
             {
                 Order = SortOrderType.ByExpiration,
                 Start = new object[0],
@@ -468,7 +466,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_sbd_conversion_requests()
         {
-            var args = new ListSbdConversionRequestsArgs()
+            var args = new ListSbdConversionRequestsArgs
             {
                 Order = SortOrderType.ByAccount,
                 Start = new object[0],
@@ -501,7 +499,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_decline_voting_rights_requests()
         {
-            var args = new ListDeclineVotingRightsRequestsArgs()
+            var args = new ListDeclineVotingRightsRequestsArgs
             {
                 Order = SortOrderType.ByAccount
             };
@@ -518,7 +516,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_decline_voting_rights_requests()
         {
-            var args = new FindDeclineVotingRightsRequestsArgs()
+            var args = new FindDeclineVotingRightsRequestsArgs
             {
                 Accounts = new[] { User.Login }
             };
@@ -535,7 +533,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_comments()
         {
-            var args = new ListCommentsArgs()
+            var args = new ListCommentsArgs
             {
                 Start = new object[0],
                 Limit = 3,
@@ -555,7 +553,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_comments()
         {
-            var args = new FindCommentsArgs()
+            var args = new FindCommentsArgs
             {
                 Comments = new[] { new[] { "steepshot", "steepshot-updates-join-ios-closed-beta-testing-full-screen-mode-for-desktops-sponsors-incentives-and-more" } }
             };
@@ -572,7 +570,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_votes()
         {
-            var args = new ListVotesArgs()
+            var args = new ListVotesArgs
             {
                 Order = SortOrderType.ByCommentVoter,
                 Start = new object[]
@@ -596,7 +594,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_votes()
         {
-            var args = new FindVotesArgs()
+            var args = new FindVotesArgs
             {
                 Author = "steepshot",
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
@@ -614,7 +612,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void list_limit_orders()
         {
-            var args = new ListLimitOrdersArgs()
+            var args = new ListLimitOrdersArgs
             {
                 Start = new object[0],
                 Limit = 3,
@@ -633,7 +631,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void find_limit_orders()
         {
-            var args = new FindLimitOrdersArgs()
+            var args = new FindLimitOrdersArgs
             {
                 Account = User.Login
             };
@@ -650,7 +648,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_transaction_hex()
         {
-            var args = new GetTransactionHexArgs()
+            var args = new GetTransactionHexArgs
             {
                 Trx = GetSignedTransaction()
             };
@@ -667,7 +665,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_required_signatures()
         {
-            var findAccountsArgs = new FindAccountsArgs()
+            var findAccountsArgs = new FindAccountsArgs
             {
                 Accounts = new[] { User.Login }
             };
@@ -676,7 +674,7 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(accounts.IsError);
             var pKey = accounts.Result.Accounts[0].Posting.KeyAuths[0].Key;
 
-            var args = new GetRequiredSignaturesArgs()
+            var args = new GetRequiredSignaturesArgs
             {
                 Trx = GetSignedTransaction(),
                 AvailableKeys = new[] { pKey }
@@ -694,7 +692,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_potential_signatures()
         {
-            var args = new GetPotentialSignaturesArgs()
+            var args = new GetPotentialSignaturesArgs
             {
                 Trx = GetSignedTransaction()
             };
@@ -729,7 +727,7 @@ namespace Ditch.Steem.Tests.Apis
         [Ignore("It did not take off...")]
         public void verify_account_authority()
         {
-            var args = new VerifyAccountAuthorityArgs()
+            var args = new VerifyAccountAuthorityArgs
             {
                 Account = User.Login,
                 Signers = new PublicKeyType[0]
@@ -763,25 +761,25 @@ namespace Ditch.Steem.Tests.Apis
         public void get_smt_next_identifier()
         {
             var confResp = Api.GetConfig<JObject>(CancellationToken.None);
-            if (!confResp.IsError)
+            if (confResp.IsError)
+                return;
+
+            var conf = confResp.Result;
+
+            JToken jToken;
+            conf.TryGetValue("STEEM_ENABLE_SMT", out jToken);
+            var isEnableSmt = jToken != null && jToken.Value<bool>();
+
+            if (isEnableSmt)
             {
-                var conf = confResp.Result;
+                var resp = Api.GetSmtNextIdentifier(CancellationToken.None);
+                WriteLine(resp);
+                Assert.IsFalse(resp.IsError);
 
-                JToken jToken;
-                conf.TryGetValue("STEEM_ENABLE_SMT", out jToken);
-                var isEnableSmt = jToken != null && jToken.Value<bool>();
-
-                if (isEnableSmt)
-                {
-                    var resp = Api.GetSmtNextIdentifier(CancellationToken.None);
-                    WriteLine(resp);
-                    Assert.IsFalse(resp.IsError);
-
-                    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_smt_next_identifier", CancellationToken.None);
-                    TestPropetries(resp.Result.GetType(), obj.Result);
-                    WriteLine("----------------------------------------------------------------------------");
-                    WriteLine(obj);
-                }
+                var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_smt_next_identifier", CancellationToken.None);
+                TestPropetries(resp.Result.GetType(), obj.Result);
+                WriteLine("----------------------------------------------------------------------------");
+                WriteLine(obj);
             }
         }
     }

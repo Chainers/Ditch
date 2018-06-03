@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args
@@ -13,7 +12,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class EnumVirtualOpsArgs
+    public class EnumVirtualOpsArgs
     {
 
         /// <summary>
@@ -22,7 +21,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_range_begin")]
-        public UInt32 BlockRangeBegin { get; set; }
+        public uint BlockRangeBegin { get; set; }
 
         /// <summary>
         /// API name: block_range_end
@@ -30,6 +29,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_range_end")]
-        public UInt32 BlockRangeEnd { get; set; }
+        public uint BlockRangeEnd { get; set; }
     }
 }

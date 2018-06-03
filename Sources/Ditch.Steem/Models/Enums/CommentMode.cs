@@ -9,5 +9,5 @@ namespace Ditch.Steem.Models.Enums
         FirstPayout,
         SecondPayout,
         Archived
-    };
+    }
 }

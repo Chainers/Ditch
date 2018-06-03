@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\witness_api\include\steem\plugins\witness_api\witness_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetReserveRatioReturn : ReserveRatioObject
+    public class GetReserveRatioReturn : ReserveRatioObject
     {
     }
 }

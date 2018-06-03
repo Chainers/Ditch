@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
@@ -60,7 +59,7 @@ namespace Ditch.Golos.Models.Operations
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(50)]
         [JsonProperty("percent_steem_dollars")]
-        public UInt16 PercentSteemDollars { get; set; }
+        public ushort PercentSteemDollars { get; set; }
 
         /// <summary>
         /// API name: allow_votes
@@ -90,7 +89,7 @@ namespace Ditch.Golos.Models.Operations
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
 
-        public CommentOptionsOperation(string author, string permlink, Asset maxAcceptedPayout, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
+        public CommentOptionsOperation(string author, string permlink, Asset maxAcceptedPayout, ushort percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
         {
             Author = author;
             Permlink = permlink;

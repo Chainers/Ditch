@@ -15,6 +15,6 @@ namespace Ditch.Golos.Models.Enums
         /// API name: owner
         /// posting
         /// </summary>
-        Owner,
+        Owner
     }
 }

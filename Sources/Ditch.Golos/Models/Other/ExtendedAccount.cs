@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ditch.Golos.Models.ApiObject;
 using Newtonsoft.Json;
 
@@ -10,7 +9,7 @@ namespace Ditch.Golos.Models.Other
     /// plugins\database_api\include\golos\plugins\database_api\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ExtendedAccount : AccountApiObject
+    public class ExtendedAccount : AccountApiObject
     {
         // bdType : asset
         /// <summary>
@@ -55,11 +54,11 @@ namespace Ditch.Golos.Models.Other
 
         // bdType : vector<pair<string,uint32_t>>
         [JsonProperty("tags_usage")]
-        public KeyValuePair<string, UInt32>[] TagsUsage { get; set; }
+        public KeyValuePair<string, uint>[] TagsUsage { get; set; }
 
         // bdType : vector<pair<account_name_type,uint32_t>>
         [JsonProperty("guest_bloggers")]
-        public KeyValuePair<string, UInt32>[] GuestBloggers { get; set; }
+        public KeyValuePair<string, uint>[] GuestBloggers { get; set; }
 
         // bdType : optional<map<uint32_t,extended_limit_order>>
         [JsonProperty("open_orders")]

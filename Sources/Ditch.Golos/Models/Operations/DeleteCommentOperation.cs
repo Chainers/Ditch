@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.Operations
     /// libraries\protocol\include\golos\protocol\operations\comment_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DeleteCommentOperation : BaseOperation
+    public class DeleteCommentOperation : BaseOperation
     {
         public override string TypeName => "delete_comment";
         public override OperationType Type => OperationType.DeleteComment;

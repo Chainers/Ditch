@@ -189,6 +189,6 @@ namespace Ditch.Steem.Models.Enums
         /// API name: by_price
         /// 
         /// </summary>
-        ByPrice,
+        ByPrice
     }
 }

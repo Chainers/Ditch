@@ -8,7 +8,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class PackedTransaction
+    public class PackedTransaction
     {
 
         /// <summary>

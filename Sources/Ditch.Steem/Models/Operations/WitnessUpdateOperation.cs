@@ -17,7 +17,7 @@ namespace Ditch.Steem.Models.Operations
     /// If the block_signing_key is null then the witness is removed from contention.The network will pick the top 21 witnesses for producing blocks.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WitnessUpdateOperation : BaseOperation
+    public class WitnessUpdateOperation : BaseOperation
     {
         public override OperationType Type => OperationType.WitnessUpdate;
 

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.ApiObj
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.ApiObj
     /// libraries\plugins\follow\include\steemit\follow\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class FollowCountApiObj
+    public class FollowCountApiObj
     {
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace Ditch.Steem.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("follower_count")]
-        public UInt32 FollowerCount {get; set;}
+        public uint FollowerCount {get; set;}
 
         /// <summary>
         /// API name: following_count
@@ -33,6 +32,6 @@ namespace Ditch.Steem.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("following_count")]
-        public UInt32 FollowingCount {get; set;}
+        public uint FollowingCount {get; set;}
     }
 }

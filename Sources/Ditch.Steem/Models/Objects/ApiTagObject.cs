@@ -1,4 +1,3 @@
-using System;
 using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiTagObject
+    public class ApiTagObject
     {
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("net_votes")]
-        public Int32 NetVotes {get; set;}
+        public int NetVotes {get; set;}
 
         /// <summary>
         /// API name: top_posts
@@ -42,7 +41,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("top_posts")]
-        public UInt32 TopPosts {get; set;}
+        public uint TopPosts {get; set;}
 
         /// <summary>
         /// API name: comments
@@ -50,7 +49,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("comments")]
-        public UInt32 Comments {get; set;}
+        public uint Comments {get; set;}
 
         /// <summary>
         /// API name: trending

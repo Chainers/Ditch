@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Golos.Models.Enums;
 using Ditch.Golos.Models.Operations;
 using Ditch.Golos.Models.Other;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis
@@ -16,7 +14,7 @@ namespace Ditch.Golos.Tests.Apis
         public void broadcast_transaction()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
@@ -32,7 +30,7 @@ namespace Ditch.Golos.Tests.Apis
         public void broadcast_transaction_synchronous()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);

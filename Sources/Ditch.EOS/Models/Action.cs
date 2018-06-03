@@ -12,7 +12,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosiolib\action.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Action
+    public class Action
     {
 
         /// <summary>

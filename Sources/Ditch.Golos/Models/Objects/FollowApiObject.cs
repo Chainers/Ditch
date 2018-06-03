@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.Objects
     /// plugins\follow\include\golos\plugins\follow\follow_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class FollowApiObject
+    public class FollowApiObject
     {
 
         // bdType : string

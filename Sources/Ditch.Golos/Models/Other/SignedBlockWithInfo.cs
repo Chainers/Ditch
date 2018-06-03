@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\wallet\include\golos\wallet\wallet.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockWithInfo : SignedBlock
+    public class SignedBlockWithInfo : SignedBlock
     {
 
         /// <summary>

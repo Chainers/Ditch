@@ -1,31 +1,31 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace Ditch.EOS.Tests
 {
     public class BaseTest
     {
         protected static OperationManager Api;
-        private bool IgnoreRequestWithBadData = true;
+        private const bool IgnoreRequestWithBadData = true;
 
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
         {
-            if (Api == null)
-            {
-                Api = new OperationManager();
-                var url = ConfigurationManager.AppSettings["Url"];
-                var connectedTo = Api.TryConnectTo(new List<string> { url }, CancellationToken.None);
-            }
+            if (Api != null)
+                return;
+
+            Api = new OperationManager();
+            var url = ConfigurationManager.AppSettings["Url"];
+            Api.TryConnectTo(new List<string> { url }, CancellationToken.None);
 
             //Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
@@ -99,23 +99,21 @@ namespace Ditch.EOS.Tests
 
         protected void WriteLine(string s)
         {
-            WriteLine(s);
+            Console.WriteLine(s);
         }
 
         protected void WriteLine(JsonRpcResponse r)
         {
-            if (r.IsError)
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
-            else
-                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            Console.WriteLine(r.IsError
+                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
+                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
 
         protected void WriteLine<T>(OperationResult<T> r)
         {
-            if (r.IsSuccess)
-                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
-            else
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            Console.WriteLine(r.IsSuccess
+                ? JsonConvert.SerializeObject(r.Result, Formatting.Indented)
+                : JsonConvert.SerializeObject(r.Error, Formatting.Indented));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Ditch.Golos.Models.Operations
     /// libraries\protocol\include\golos\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WithdrawVestingOperation : BaseOperation
+    public class WithdrawVestingOperation : BaseOperation
     {
         public override OperationType Type => OperationType.WithdrawVesting;
 

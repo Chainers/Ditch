@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// steem-0.19.1\libraries\app\include\steemit\app\applied_operation.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AppliedOperation
+    public class AppliedOperation
     {
 
         // bdType : transaction_id_type
@@ -17,19 +17,19 @@ namespace Ditch.Steem.Models.Other
 
         // bdType : uint32_t | = 0;
         [JsonProperty("block")]
-        public UInt32 Block { get; set; }
+        public uint Block { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("trx_in_block")]
-        public UInt32 TrxInBlock { get; set; }
+        public uint TrxInBlock { get; set; }
 
         // bdType : uint16_t | = 0;
         [JsonProperty("op_in_trx")]
-        public UInt16 OpInTrx { get; set; }
+        public ushort OpInTrx { get; set; }
 
         // bdType : uint64_t | = 0;
         [JsonProperty("virtual_op")]
-        public UInt64 VirtualOp { get; set; }
+        public ulong VirtualOp { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("timestamp")]

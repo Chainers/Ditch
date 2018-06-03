@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.ApiObject
     /// plugins\database_api\include\golos\plugins\database_api\api_objects\savings_withdraw_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SavingsWithdrawApiObject
+    public class SavingsWithdrawApiObject
     {
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Ditch.Golos.Models.ApiObject
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("request_id")]
-        public UInt32 RequestId {get; set;}
+        public uint RequestId {get; set;}
 
         /// <summary>
         /// API name: amount

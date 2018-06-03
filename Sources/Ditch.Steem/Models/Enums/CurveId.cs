@@ -35,6 +35,6 @@ namespace Ditch.Steem.Models.Enums
         /// API name: square_root
         /// 
         /// </summary>
-        SquareRoot,
+        SquareRoot
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Return
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\network_broadcast_api\include\steem\plugins\network_broadcast_api\network_broadcast_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BroadcastTransactionSynchronousReturn
+    public class BroadcastTransactionSynchronousReturn
     {
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace Ditch.Steem.Models.Return
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("block_num")]
-        public Int32 BlockNum {get; set;}
+        public int BlockNum {get; set;}
 
         /// <summary>
         /// API name: trx_num
@@ -33,7 +32,7 @@ namespace Ditch.Steem.Models.Return
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("trx_num")]
-        public Int32 TrxNum {get; set;}
+        public int TrxNum {get; set;}
 
         /// <summary>
         /// API name: expired

@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
 {
@@ -8,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ReblogCount
+    public class ReblogCount
     {
 
         /// <summary>
@@ -25,6 +24,6 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("count")]
-        public UInt32 Count { get; set; }
+        public uint Count { get; set; }
     }
 }

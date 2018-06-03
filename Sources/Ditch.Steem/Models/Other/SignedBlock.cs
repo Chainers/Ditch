@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Other
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlock : SignedBlockHeader
+    public class SignedBlock : SignedBlockHeader
     {
         // bdType : vector<signed_transaction>
         [JsonProperty("transactions")]

@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// golos-0.16.3\libraries\protocol\include\steemit\protocol\block_header.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockHeader : BlockHeader
+    public class SignedBlockHeader : BlockHeader
     {
         // bdType : signature_type
         [JsonProperty("witness_signature")]

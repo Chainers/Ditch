@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.ApiObject
     /// plugins\database_api\include\golos\plugins\database_api\forward.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountBandwidthApiObject : AccountBandwidthObject
+    public class AccountBandwidthApiObject : AccountBandwidthObject
     {
     }
 }

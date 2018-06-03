@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
 {
@@ -8,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// golos-0.16.3\libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WithdrawRoute
+    public class WithdrawRoute
     {
 
         // bdType : string
@@ -21,7 +20,7 @@ namespace Ditch.Golos.Models.Other
 
         // bdType : uint16_t
         [JsonProperty("percent")]
-        public UInt16 Percent { get; set; }
+        public ushort Percent { get; set; }
 
         // bdType : bool
         [JsonProperty("auto_vest")]

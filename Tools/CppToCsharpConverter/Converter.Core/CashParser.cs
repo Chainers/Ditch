@@ -12,16 +12,16 @@ namespace Converter.Core
     public class CashParser
     {
         protected const string SubDirName = "JsonCash";
-        protected static readonly Regex TypeDefName = new Regex(@"(?<=^\s*typedef\s+[a-z0-9<>:,_]+\s+)[a-z0-9_]+", RegexOptions.IgnoreCase);
-        protected static readonly Regex TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[a-z0-9<>:,_]+", RegexOptions.IgnoreCase);
-        protected static readonly Regex CommentRegex = new Regex(@"^\s*(\*|/)+");
-        protected static readonly Regex TemplateRegexp = new Regex(@"^\s*template<", RegexOptions.IgnoreCase);
-        protected static readonly Regex StartBodyRegex = new Regex(@"(?<=^[^/]*){");
-        protected static readonly Regex ClassRegex = new Regex(@"(?<=^\s*(class|struct|enum)\s+)[a-z_0-9]+", RegexOptions.IgnoreCase);
-        protected static readonly Regex EnumRegex = new Regex(@"^\s*enum\s+", RegexOptions.IgnoreCase);
-        protected static readonly Regex InheritRegex = new Regex(@"(?<=^\s*(class|struct)\s+[a-z_0-9]+\s*:\s*public\s+)[a-z:_<>\s]*(?=\s*\{)", RegexOptions.IgnoreCase);
-        protected static readonly Regex StartPrivateRegex = new Regex(@"^\s*private\s*:");
-        protected static readonly Regex ApiMethod = new Regex(@"(?<=\()[a-z_]*(?=\))");
+        protected Regex TypeDefName;
+        protected Regex TypeDefType;
+        protected Regex CommentRegex;
+        protected Regex TemplateRegexp;
+        protected Regex StartBodyRegex;
+        protected Regex ClassRegex;
+        protected Regex EnumRegex;
+        protected Regex InheritRegex;
+        protected Regex StartPrivateRegex;
+        protected Regex ApiMethod;
 
         private readonly Grabber _grabber;
         private readonly string _projName;
@@ -30,6 +30,17 @@ namespace Converter.Core
         {
             _grabber = grabber;
             _projName = projName;
+
+            TypeDefName = new Regex(@"(?<=^\s*typedef\s+[a-z0-9<>:,_]+\s+)[a-z0-9_]+", RegexOptions.IgnoreCase);
+            TypeDefType = new Regex(@"(?<=^\s*typedef\s+)[a-z0-9<>:,_]+", RegexOptions.IgnoreCase);
+            CommentRegex = new Regex(@"^\s*(\*|/)+");
+            TemplateRegexp = new Regex(@"^\s*template<", RegexOptions.IgnoreCase);
+            StartBodyRegex = new Regex(@"(?<=^[^/]*){");
+            ClassRegex = new Regex(@"(?<=^\s*(class|struct|enum)\s+)[a-z_0-9]+", RegexOptions.IgnoreCase);
+            EnumRegex = new Regex(@"^\s*enum\s+", RegexOptions.IgnoreCase);
+            InheritRegex = new Regex(@"(?<=^\s*(class|struct)\s+[a-z_0-9]+\s*:\s*public\s+)[a-z:_<>\s]*(?=\s*\{)", RegexOptions.IgnoreCase);
+            StartPrivateRegex = new Regex(@"^\s*private\s*:");
+            ApiMethod = new Regex(@"(?<=\()[a-z_]*(?=\))");
         }
 
 
@@ -379,7 +390,7 @@ namespace Converter.Core
             return false;
         }
 
-        private PreParsedElement TryParseMethod(IList<string> lines, int index, out int end)
+        protected virtual PreParsedElement TryParseMethod(IList<string> lines, int index, out int end)
         {
             end = index + 1;
             if (index >= lines.Count)
@@ -388,7 +399,7 @@ namespace Converter.Core
             var text = lines[index].Trim();
 
             var match = ApiMethod.Match(text);
-            if (!match.Success)
+            if (!match.Success || string.IsNullOrWhiteSpace(match.Value))
                 return null;
 
             return new PreParsedElement
@@ -397,7 +408,7 @@ namespace Converter.Core
             };
         }
 
-        private string NormalizeType(string text)
+        protected string NormalizeType(string text)
         {
             if (text.Length < 3)
                 return text;

@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace Ditch.Golos.Models.Other
 {
     [JsonConverter(typeof(CustomConverter))]
-    public partial class Asset : ICustomJson, ICustomSerializer
+    public class Asset : ICustomJson, ICustomSerializer
     {
         public long Value { get; private set; }
 

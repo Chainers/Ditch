@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,21 +19,16 @@ namespace Ditch.Golos.Tests
         [TestCase("wss://golosd.steepshot.org")]
         public void NodeTest(string url)
         {
-            var jss = BaseTest.GetJsonSerializerSettings();
-            var connectionManager = new WebSocketManager(jss);
-            var manager = new OperationManager(connectionManager, jss);
+            var manager = new OperationManager();
 
             var sw = new Stopwatch();
             var urls = new List<string> { url };
             sw.Restart();
-            var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
+            manager.TryConnectTo(urls, CancellationToken.None);
             sw.Stop();
 
             WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
             Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
-
-            if (manager.IsConnected)
-                Assert.IsNotNull(manager.ChainId, "ChainId null");
         }
 
         [Test]
@@ -42,7 +36,7 @@ namespace Ditch.Golos.Tests
         {
             var urls = new List<string> { "https://public-ws.golos.io", "https://golosd.steepshot.org" };
 
-            var jss = BaseTest.GetJsonSerializerSettings();
+            var jss = GetJsonSerializerSettings();
             var connectionManager = new HttpManager(jss);
             var manager = new OperationManager(connectionManager, jss);
 
@@ -50,11 +44,9 @@ namespace Ditch.Golos.Tests
             //test all urls
             for (var i = 0; i < urls.Count; i++)
             {
-                var buf = new List<string>() { urls[i] };
+                var buf = new List<string> { urls[i] };
                 sw.Restart();
-
-                var url = manager.TryConnectTo(buf, CancellationToken.None);
-
+                manager.TryConnectTo(buf, CancellationToken.None);
                 sw.Stop();
 
                 WriteLine($"{i} {(manager.IsConnected ? "conected" : "Not connected")} to {urls[i]} {sw.ElapsedMilliseconds}");
@@ -71,7 +63,7 @@ namespace Ditch.Golos.Tests
         {
             var urls = new List<string> { "https://public-ws.golos.io", "https://golosd.steepshot.org" };
 
-            var jss = BaseTest.GetJsonSerializerSettings();
+            var jss = GetJsonSerializerSettings();
             var manager = new OperationManager(new HttpManager(jss), jss);
 
             var sw = new Stopwatch();
@@ -98,8 +90,7 @@ namespace Ditch.Golos.Tests
         {
             var urls = new List<string> { "wss://ws.golos.io" };
 
-            var jss = BaseTest.GetJsonSerializerSettings();
-            var manager = new OperationManager(new WebSocketManager(jss), jss);
+            var manager = new OperationManager();
 
             var sw = new Stopwatch();
             for (var i = 0; i < 5; i++)

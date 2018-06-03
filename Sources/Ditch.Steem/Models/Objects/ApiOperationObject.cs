@@ -1,17 +1,14 @@
-using Ditch.Core;
 using System;
-using System.Collections.Generic;
-using Ditch.Steem.Models;
 using Newtonsoft.Json;
 
-namespace Ditch.Steem.Models
+namespace Ditch.Steem.Models.Objects
 {
     /// <summary>
     /// api_operation_object
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiOperationObject
+    public class ApiOperationObject
     {
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block")]
-        public UInt32 Block { get; set; }
+        public uint Block { get; set; }
 
         /// <summary>
         /// API name: trx_in_block
@@ -36,7 +33,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("trx_in_block")]
-        public UInt32 TrxInBlock { get; set; }
+        public uint TrxInBlock { get; set; }
 
         /// <summary>
         /// API name: op_in_trx
@@ -44,7 +41,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("op_in_trx")]
-        public UInt32 OpInTrx { get; set; }
+        public uint OpInTrx { get; set; }
 
         /// <summary>
         /// API name: virtual_op
@@ -52,7 +49,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("virtual_op")]
-        public UInt32 VirtualOp { get; set; }
+        public uint VirtualOp { get; set; }
 
         /// <summary>
         /// API name: timestamp

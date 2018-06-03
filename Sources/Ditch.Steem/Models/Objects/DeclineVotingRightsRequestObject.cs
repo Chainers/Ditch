@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steem\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DeclineVotingRightsRequestObject
+    public class DeclineVotingRightsRequestObject
     {
 
         /// <summary>

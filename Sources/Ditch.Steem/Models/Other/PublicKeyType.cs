@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Ditch.Steem.Models.Other
 {
     [JsonConverter(typeof(CustomConverter))]
-    public partial class PublicKeyType : ICustomJson
+    public class PublicKeyType : ICustomJson
     {
         public const string Prefix = "STM";
 

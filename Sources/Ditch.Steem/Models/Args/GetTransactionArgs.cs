@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetTransactionArgs
+    public class GetTransactionArgs
     {
 
         /// <summary>

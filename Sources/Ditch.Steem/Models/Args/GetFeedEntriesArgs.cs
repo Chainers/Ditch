@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetFeedEntriesArgs
+    public class GetFeedEntriesArgs
     {
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("start_entry_id")]
-        public UInt32 StartEntryId {get; set;}
+        public uint StartEntryId {get; set;}
 
         /// <summary>
         /// API name: limit
@@ -33,6 +32,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit {get; set;}
+        public uint Limit {get; set;}
     }
 }

@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.ApiObj
     /// golos-0.16.3\libraries\protocol\include\steemit\protocol\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockApiObj : SignedBlock
+    public class SignedBlockApiObj : SignedBlock
     {
 
         // bdType : block_id_type

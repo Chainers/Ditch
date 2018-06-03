@@ -19,7 +19,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<string>> WalletCreate(string name, CancellationToken token)
         {
-            var endpoint = "v1/wallet/create";
+            const string endpoint = "v1/wallet/create";
             return await CustomPostRequest<string>(endpoint, name, token);
         }
 
@@ -33,7 +33,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletOpen(string name, CancellationToken token)
         {
-            var endpoint = "v1/wallet/open";
+            const string endpoint = "v1/wallet/open";
             return await CustomPostRequest<VoidResponse>(endpoint, name, token);
         }
 
@@ -47,7 +47,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletLock(string name, CancellationToken token)
         {
-            var endpoint = "v1/wallet/lock";
+            const string endpoint = "v1/wallet/lock";
             return await CustomPostRequest<VoidResponse>(endpoint, name, token);
         }
 
@@ -60,7 +60,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletLockAll(CancellationToken token)
         {
-            var endpoint = "v1/wallet/lock_all";
+            const string endpoint = "v1/wallet/lock_all";
             return await CustomGetRequest<VoidResponse>(endpoint, token);
         }
 
@@ -75,7 +75,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletUnlock(string name, string password, CancellationToken token)
         {
-            var endpoint = "v1/wallet/unlock";
+            const string endpoint = "v1/wallet/unlock";
             return await CustomPostRequest<VoidResponse>(endpoint, new[] { name, password }, token);
         }
 
@@ -90,7 +90,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletImportKey(string name, string password, CancellationToken token)
         {
-            var endpoint = "v1/wallet/import_key";
+            const string endpoint = "v1/wallet/import_key";
             return await CustomPostRequest<VoidResponse>(endpoint, new[] { name, password }, token);
         }
 
@@ -103,7 +103,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<string[]>> WalletList(CancellationToken token)
         {
-            var endpoint = "v1/wallet/list_wallets";
+            const string endpoint = "v1/wallet/list_wallets";
             return await CustomGetRequest<string[]>(endpoint, token);
         }
 
@@ -116,7 +116,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<string[][]>> WalletListKeys(CancellationToken token)
         {
-            var endpoint = "v1/wallet/list_keys";
+            const string endpoint = "v1/wallet/list_keys";
             return await CustomGetRequest<string[][]>(endpoint, token);
         }
 
@@ -129,7 +129,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<string[]>> WalletGetPublicKeys(CancellationToken token)
         {
-            var endpoint = "v1/wallet/get_public_keys";
+            const string endpoint = "v1/wallet/get_public_keys";
             return await CustomGetRequest<string[]>(endpoint, token);
         }
 
@@ -143,7 +143,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<VoidResponse>> WalletSetTimeout(long seconds, CancellationToken token)
         {
-            var endpoint = "v1/wallet/set_timeout";
+            const string endpoint = "v1/wallet/set_timeout";
             return await CustomPostRequest<VoidResponse>(endpoint, seconds, token);
         }
 
@@ -159,7 +159,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<SignedTransaction>> WalletSignTrx(SignedTransaction trx, string[] publicKeys, string chainId, CancellationToken token)
         {
-            var endpoint = "v1/wallet/sign_transaction";
+            const string endpoint = "v1/wallet/sign_transaction";
             return await CustomPostRequest<SignedTransaction>(endpoint, new object[] { trx, publicKeys, chainId }, token);
         }
     }

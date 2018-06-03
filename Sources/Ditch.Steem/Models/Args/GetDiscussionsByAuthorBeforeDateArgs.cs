@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\tags_api\include\steem\plugins\tags_api\tags_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetDiscussionsByAuthorBeforeDateArgs
+    public class GetDiscussionsByAuthorBeforeDateArgs
     {
 
         /// <summary>
@@ -41,6 +41,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit {get; set;}
+        public uint Limit {get; set;}
     }
 }

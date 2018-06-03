@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\protocol\include\golos\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedTransaction : Transaction
+    public class SignedTransaction : Transaction
     {
         private object[][] _operations;
 

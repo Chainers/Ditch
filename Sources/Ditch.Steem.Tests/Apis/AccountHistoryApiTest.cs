@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using Ditch.Steem.Models.Args;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -13,7 +11,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_ops_in_block()
         {
-            var args = new GetOpsInBlockArgs()
+            var args = new GetOpsInBlockArgs
             {
                 BlockNum = 2,
                 OnlyVirtual = false
@@ -31,7 +29,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_transaction()
         {
-            var args = new GetTransactionArgs()
+            var args = new GetTransactionArgs
             {
                 Id = ""
             };
@@ -48,7 +46,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_account_history()
         {
-            var args = new GetAccountHistoryArgs()
+            var args = new GetAccountHistoryArgs
             {
                 Account = User.Login
             };
@@ -65,7 +63,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void enum_virtual_ops()
         {
-            var args = new EnumVirtualOpsArgs()
+            var args = new EnumVirtualOpsArgs
             {
                 BlockRangeBegin = 2,
                 BlockRangeEnd = 20

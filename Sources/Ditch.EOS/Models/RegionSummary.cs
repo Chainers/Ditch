@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -8,7 +7,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class RegionSummary
+    public class RegionSummary
     {
 
         /// <summary>
@@ -17,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("region")]
-        public UInt16 Region { get; set; }
+        public ushort Region { get; set; }
 
         /// <summary>
         /// API name: cycles_summary

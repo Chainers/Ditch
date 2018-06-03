@@ -1,4 +1,4 @@
-using System;
+using Ditch.Steem.Models.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Return
@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class EnumVirtualOpsReturn
+    public class EnumVirtualOpsReturn
     {
 
         /// <summary>
@@ -25,6 +25,6 @@ namespace Ditch.Steem.Models.Return
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("next_block_range_begin")]
-        public UInt32 NextBlockRangeBegin { get; set; }
+        public uint NextBlockRangeBegin { get; set; }
     }
 }

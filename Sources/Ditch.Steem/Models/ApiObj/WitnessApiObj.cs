@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.ApiObj
     /// libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WitnessApiObj
+    public class WitnessApiObj
     {
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Ditch.Steem.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("total_missed")]
-        public UInt32 TotalMissed { get; set; }
+        public uint TotalMissed { get; set; }
 
         /// <summary>
         /// API name: last_aslot
@@ -58,7 +58,7 @@ namespace Ditch.Steem.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("last_aslot")]
-        public UInt64 LastAslot { get; set; }
+        public ulong LastAslot { get; set; }
 
         /// <summary>
         /// API name: last_confirmed_block_num
@@ -66,7 +66,7 @@ namespace Ditch.Steem.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("last_confirmed_block_num")]
-        public UInt64 LastConfirmedBlockNum { get; set; }
+        public ulong LastConfirmedBlockNum { get; set; }
 
         /// <summary>
         /// API name: pow_worker
@@ -74,7 +74,7 @@ namespace Ditch.Steem.Models.ApiObj
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("pow_worker")]
-        public UInt64 PowWorker { get; set; }
+        public ulong PowWorker { get; set; }
 
         /// <summary>
         /// API name: signing_key

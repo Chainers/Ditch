@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
+using Cryptography.ECDSA;
+using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Models.Enums;
-using Newtonsoft.Json;
-using NUnit.Framework;
 using Ditch.Steem.Models.Args;
+using Ditch.Steem.Models.Enums;
 using Ditch.Steem.Models.Operations;
 using Ditch.Steem.Models.Other;
-using Ditch.Core;
-using Cryptography.ECDSA;
+using NUnit.Framework;
 using Base58 = Ditch.Core.Base58;
 
 namespace Ditch.Steem.Tests
@@ -20,25 +16,21 @@ namespace Ditch.Steem.Tests
     [TestFixture]
     public class OperationsTest : BaseTest
     {
-        private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
-        private const bool IsVerify = true;
-
-        private JsonRpcResponse Post(List<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
+        private static JsonRpcResponse Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
-            if (!IsVerify || isNeedBroadcast)
-                return Api.BroadcastOperations(postingKeys, CancellationToken.None, op);
-
-            return Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+            return isNeedBroadcast 
+                ? Api.BroadcastOperations(postingKeys, CancellationToken.None, op) 
+                : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
         }
 
         #region Vote
 
         [Test]
-        public async Task VoteTest()
+        public void VoteTest()
         {
             var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "fkkl";
+            const string autor = "joseph.kalu";
+            const string permlink = "fkkl";
 
             var voteState = GetVoteState(autor, permlink, user);
 
@@ -53,13 +45,6 @@ namespace Ditch.Steem.Tests
                 var response = Post(user.PostingKeys, false, op);
                 Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-                if (!IsVerify)
-                {
-                    await Task.Delay(3000);
-                    var voteState2 = GetVoteState(autor, permlink, user);
-                    Assert.IsTrue(op.Weight == voteState2);
-                }
-
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
                 else if (voteState > 0)
@@ -71,7 +56,7 @@ namespace Ditch.Steem.Tests
 
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var args = new GetDiscussionArgs()
+            var args = new GetDiscussionArgs
             {
                 Author = author,
                 Permlink = permlink
@@ -135,7 +120,7 @@ namespace Ditch.Steem.Tests
         #region Transfer
 
         [Test]
-        public async Task TransferOperationTest()
+        public void TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
             var response = Post(User.ActiveKeys, false, op);
@@ -147,7 +132,7 @@ namespace Ditch.Steem.Tests
         #region TransferToVesting
 
         [Test]
-        public async Task TransferToVestingOperationTest()
+        public void TransferToVestingOperationTest()
         {
             var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSteem));
             var response = Post(User.ActiveKeys, false, op);
@@ -159,7 +144,7 @@ namespace Ditch.Steem.Tests
         #region WithdrawVesting
 
         [Test]
-        public async Task WithdrawVestingOperationTest()
+        public void WithdrawVestingOperationTest()
         {
             var op = new WithdrawVestingOperation(User.Login, new Asset(1, Config.SteemAssetNumVests));
             var response = Post(User.ActiveKeys, false, op);
@@ -178,7 +163,7 @@ namespace Ditch.Steem.Tests
         #region WitnessUpdate
 
         [Test]
-        public async Task WitnessUpdateTest()
+        public void WitnessUpdateTest()
         {
             var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, new LegacyAsset(1, Config.SteemAssetNumSteem), 131072), new Asset(1, Config.SteemAssetNumSteem));
             var response = Post(User.ActiveKeys, false, op);
@@ -217,10 +202,10 @@ namespace Ditch.Steem.Tests
         //AccountCreateWithDelegation,
 
         [Test]
-        public async Task FollowUnfollowTest()
+        public void FollowUnfollowTest()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
 
             var isFollow = IsFollow(autor);
@@ -231,12 +216,6 @@ namespace Ditch.Steem.Tests
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
             isFollow = !isFollow;
 
             op = isFollow
@@ -245,12 +224,6 @@ namespace Ditch.Steem.Tests
             response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
             isFollow = !isFollow;
 
             var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
@@ -258,30 +231,17 @@ namespace Ditch.Steem.Tests
             response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
             isFollow = !isFollow;
 
             fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
             response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(IsVerify | isFollow != isFollow2);
-            }
         }
 
         private bool IsFollow(string autor)
         {
-            var args = new GetFollowingArgs()
+            var args = new GetFollowingArgs
             {
                 Account = User.Login,
                 Start = autor,
@@ -325,9 +285,9 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        public async Task AccountUpdateTest()
+        public void AccountUpdateTest()
         {
-            var args = new FindAccountsArgs()
+            var args = new FindAccountsArgs
             {
                 Accounts = new[] { User.Login }
             };
@@ -343,16 +303,16 @@ namespace Ditch.Steem.Tests
         }
 
         [Test]
-        public async Task AccountCreateTest()
+        public void AccountCreateTest()
         {
-            var name = "userlogin";
+            const string name = "userlogin";
 
             var op = new AccountCreateOperation
             {
                 Fee = new Asset(3000, Config.SteemAssetNumSteem),
                 Creator = User.Login,
                 NewAccountName = User.Login,
-                JsonMetadata = "",
+                JsonMetadata = ""
             };
 
             var privateKey = Secp256K1Manager.GenerateRandomKey();

@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\application\include\golos\application\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountVote
+    public class AccountVote
     {
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("weight")]
-        public UInt64 Weight {get; set;}
+        public ulong Weight {get; set;}
 
         /// <summary>
         /// API name: rshares
@@ -33,7 +33,7 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("rshares")]
-        public Int64 Rshares {get; set;}
+        public long Rshares {get; set;}
 
         /// <summary>
         /// API name: percent
@@ -41,7 +41,7 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: int16_t</returns>
         [JsonProperty("percent")]
-        public Int16 Percent {get; set;}
+        public short Percent {get; set;}
 
         /// <summary>
         /// API name: time

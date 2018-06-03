@@ -350,10 +350,10 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using Ditch.Core;");
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
-                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
+                        sb.AppendLine($"using Ditch.{ProjName}.Models;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Models");
                         break;
                     }
                 case ObjectType.Enum:
@@ -361,7 +361,7 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using Ditch.Core.Helpers;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Models");
                         break;
                     }
                 case ObjectType.Api:
@@ -370,7 +370,7 @@ namespace Converter.Golos.Converters
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
                         sb.AppendLine("using Ditch.Core.JsonRpc;");
-                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
+                        sb.AppendLine($"using Ditch.{ProjName}.Models;");
                         sb.AppendLine();
                         sb.AppendLine($"namespace Ditch.{ProjName}.Api");
                         break;
@@ -423,7 +423,7 @@ namespace Converter.Golos.Converters
                 case ObjectType.Class:
                     {
                         sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
-                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
                         break;
                     }
                 case ObjectType.Enum:
@@ -434,7 +434,7 @@ namespace Converter.Golos.Converters
                     }
                 case ObjectType.Api:
                     {
-                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public partial class OperationManager");
                         break;
                     }
             }

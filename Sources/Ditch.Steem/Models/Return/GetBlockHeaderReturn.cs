@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\block_api\include\steem\plugins\block_api\block_api_args.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetBlockHeaderReturn
+    public class GetBlockHeaderReturn
     {
 
         /// <summary>

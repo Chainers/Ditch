@@ -16,11 +16,11 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlock : SignedBlockSummary
+    public class SignedBlock : SignedBlockSummary
     {
 
 
-        /// this is loaded and indexed into map<id,trx> that is referenced by summary; order doesn't matter
+        /// this is loaded and indexed into map&lt;id,trx> that is referenced by summary; order doesn't matter
 
         /// <summary>
         /// API name: input_transactions

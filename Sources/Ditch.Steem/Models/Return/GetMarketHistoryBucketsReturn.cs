@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Return
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\market_history_api\include\steem\plugins\market_history_api\market_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetMarketHistoryBucketsReturn
+    public class GetMarketHistoryBucketsReturn
     {
 
         /// <summary>
@@ -17,6 +16,6 @@ namespace Ditch.Steem.Models.Return
         /// </summary>
         /// <returns>API type: flat_set</returns>
         [JsonProperty("bucket_sizes")]
-        public UInt32[] BucketSizes {get; set;}
+        public uint[] BucketSizes {get; set;}
     }
 }

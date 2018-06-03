@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Ditch.Core.Errors;
-using Ditch.Core.JsonRpc;
-using Newtonsoft.Json;
-using NUnit.Framework;
+﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Threading;
+using Cryptography.ECDSA;
 using Ditch.Core;
+using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models.Enums;
 using Ditch.Golos.Models.Operations;
 using Ditch.Golos.Models.Other;
-using Cryptography.ECDSA;
+using NUnit.Framework;
 using Base58 = Ditch.Core.Base58;
 
 namespace Ditch.Golos.Tests
@@ -21,25 +16,21 @@ namespace Ditch.Golos.Tests
     [TestFixture]
     public class OperationsTest : BaseTest
     {
-        private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
-        private const bool IsVerify = true;
-
-        private JsonRpcResponse Post(List<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
+        private static JsonRpcResponse Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
-            if (!IsVerify || isNeedBroadcast)
-                return Api.BroadcastOperations(postingKeys, CancellationToken.None, op);
-
-            return Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+            return isNeedBroadcast
+                ? Api.BroadcastOperations(postingKeys, CancellationToken.None, op)
+                : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
         }
 
         #region Vote
 
         [Test]
-        public async Task VoteTest()
+        public void VoteTest()
         {
             var user = User;
-            var autor = "joseph.kalu";
-            var permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
+            const string autor = "joseph.kalu";
+            const string permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
 
             var voteState = GetVoteState(autor, permlink, user);
 
@@ -53,13 +44,6 @@ namespace Ditch.Golos.Tests
 
                 var response = Post(user.PostingKeys, false, op);
                 Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-                if (!IsVerify)
-                {
-                    await Task.Delay(3000);
-                    var voteState2 = GetVoteState(autor, permlink, user);
-                    Assert.IsTrue(op.Weight == voteState2);
-                }
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -126,7 +110,7 @@ namespace Ditch.Golos.Tests
         #region Transfer
 
         [Test]
-        public async Task TransferOperationTest()
+        public void TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
             var response = Post(User.ActiveKeys, false, op);
@@ -138,7 +122,7 @@ namespace Ditch.Golos.Tests
         #region TransferToVesting
 
         [Test]
-        public async Task TransferToVestingOperationTest()
+        public void TransferToVestingOperationTest()
         {
             var op = new TransferToVestingOperation(User.Login, User.Login, new Asset("0.001 GOLOS"));
             var response = Post(User.ActiveKeys, false, op);
@@ -150,7 +134,7 @@ namespace Ditch.Golos.Tests
         #region WithdrawVesting
 
         [Test]
-        public async Task WithdrawVestingOperationTest()
+        public void WithdrawVestingOperationTest()
         {
             var op = new WithdrawVestingOperation(User.Login, new Asset("0.001 GESTS"));
             var response = Post(User.ActiveKeys, false, op);
@@ -174,7 +158,7 @@ namespace Ditch.Golos.Tests
         #region WitnessUpdate
 
         [Test]
-        public async Task WitnessUpdateTest()
+        public void WitnessUpdateTest()
         {
             var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
             var response = Post(User.ActiveKeys, false, op);
@@ -233,10 +217,10 @@ namespace Ditch.Golos.Tests
         //CommentBenefactorReward
 
         [Test]
-        public async Task FollowUnfollowTest()
+        public void FollowUnfollowTest()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
 
             var isFollow = IsFollow(autor);
@@ -247,12 +231,6 @@ namespace Ditch.Golos.Tests
             var response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(isFollow != isFollow2);
-            }
             isFollow = !isFollow;
 
             op = isFollow
@@ -261,12 +239,6 @@ namespace Ditch.Golos.Tests
             response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(isFollow != isFollow2);
-            }
             isFollow = !isFollow;
 
             var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
@@ -274,25 +246,12 @@ namespace Ditch.Golos.Tests
             response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
 
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(isFollow != isFollow2);
-            }
             isFollow = !isFollow;
 
             fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
             response = Post(user.PostingKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
-
-            if (!IsVerify)
-            {
-                await Task.Delay(1000);
-                var isFollow2 = IsFollow(autor);
-                Assert.IsTrue(isFollow != isFollow2);
-            }
         }
 
         private bool IsFollow(string author)
@@ -334,7 +293,7 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
-        public async Task AccountUpdateTest()
+        public void AccountUpdateTest()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
             WriteLine(resp);
@@ -363,16 +322,16 @@ namespace Ditch.Golos.Tests
         }
 
         [Test]
-        public async Task AccountCreateTest()
+        public void AccountCreateTest()
         {
-            var name = "userlogin";
+            const string name = "userlogin";
 
             var op = new AccountCreateOperation
             {
                 Fee = new Asset(3000, 3, "GBG"),
                 Creator = User.Login,
                 NewAccountName = User.Login,
-                JsonMetadata = "",
+                JsonMetadata = ""
             };
 
             var privateKey = Secp256K1Manager.GenerateRandomKey();

@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.ApiObject
     /// plugins\database_api\include\golos\plugins\database_api\api_objects\account_recovery_request_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountRecoveryRequestApiObject
+    public class AccountRecoveryRequestApiObject
     {
 
         /// <summary>

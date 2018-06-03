@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\plugins\market_history\include\steemit\market_history\market_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class MarketVolume
+    public class MarketVolume
     {
         /// <summary>
         /// API name: steem_volume

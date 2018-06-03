@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ditch.Steem.Models.ApiObj;
 using Newtonsoft.Json;
 
@@ -10,7 +9,7 @@ namespace Ditch.Steem.Models.Other
     /// steem-0.19.1\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ExtendedAccount : AccountApiObj
+    public class ExtendedAccount : AccountApiObj
     {
         // bdType : asset
         /// <summary>
@@ -55,11 +54,11 @@ namespace Ditch.Steem.Models.Other
 
         // bdType : vector<pair<string,uint32_t>>
         [JsonProperty("tags_usage")]
-        public KeyValuePair<string, UInt32>[] TagsUsage { get; set; }
+        public KeyValuePair<string, uint>[] TagsUsage { get; set; }
 
         // bdType : vector<pair<account_name_type,uint32_t>>
         [JsonProperty("guest_bloggers")]
-        public KeyValuePair<string, UInt32>[] GuestBloggers { get; set; }
+        public KeyValuePair<string, uint>[] GuestBloggers { get; set; }
 
         // bdType : optional<map<uint32_t,extended_limit_order>>
         [JsonProperty("open_orders")]

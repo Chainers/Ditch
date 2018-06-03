@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -8,7 +7,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosiolib\public_key.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class PublicKey
+    public class PublicKey
     {
 
         /// <summary>
@@ -17,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("type")]
-        public UInt32 Type {get; set;}
+        public uint Type {get; set;}
 
         /// <summary>
         /// API name: data

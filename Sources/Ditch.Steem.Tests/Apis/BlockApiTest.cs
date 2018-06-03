@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using Ditch.Steem.Models.Args;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -13,7 +11,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_block_header()
         {
-            var args = new GetBlockHeaderArgs()
+            var args = new GetBlockHeaderArgs
             {
                 BlockNum = 1
             };
@@ -30,7 +28,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_block()
         {
-            var args = new GetBlockArgs()
+            var args = new GetBlockArgs
             {
                 BlockNum = 1
             };

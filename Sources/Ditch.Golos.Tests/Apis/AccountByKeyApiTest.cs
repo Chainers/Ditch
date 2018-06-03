@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Newtonsoft.Json;
+﻿using System.Threading;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis

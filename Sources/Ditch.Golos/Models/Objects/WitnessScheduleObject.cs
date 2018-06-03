@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Golos.Models.Other;
+﻿using Ditch.Golos.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Objects
@@ -9,7 +8,7 @@ namespace Ditch.Golos.Models.Objects
     /// golos-0.16.3\libraries\chain\include\steemit\chain\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WitnessScheduleObject
+    public class WitnessScheduleObject
     {
 
         // bdType : id_type
@@ -22,7 +21,7 @@ namespace Ditch.Golos.Models.Objects
 
         // bdType : uint32_t | = 1;
         [JsonProperty("next_shuffle_block_num")]
-        public UInt32 NextShuffleBlockNum { get; set; }
+        public uint NextShuffleBlockNum { get; set; }
 
         // bdType : array<account_name_type,steemit_max_witnesses>
         [JsonProperty("current_shuffled_witnesses")]
@@ -46,7 +45,7 @@ namespace Ditch.Golos.Models.Objects
 
         // bdType : uint32_t | = 25;
         [JsonProperty("witness_pay_normalization_factor")]
-        public UInt32 WitnessPayNormalizationFactor { get; set; }
+        public uint WitnessPayNormalizationFactor { get; set; }
 
         // bdType : chain_properties
         [JsonProperty("median_props")]

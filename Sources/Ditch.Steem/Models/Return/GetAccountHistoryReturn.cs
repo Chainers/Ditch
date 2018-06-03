@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetAccountHistoryReturn
+    public class GetAccountHistoryReturn
     {
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\network_broadcast_api\include\steem\plugins\network_broadcast_api\network_broadcast_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BroadcastTransactionSynchronousArgs : BroadcastTransactionArgs
+    public class BroadcastTransactionSynchronousArgs : BroadcastTransactionArgs
     {
     }
 }

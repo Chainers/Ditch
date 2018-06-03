@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ConvertRequestObject
+    public class ConvertRequestObject
     {
 
         // bdType : id_type
@@ -25,7 +25,7 @@ namespace Ditch.Golos.Models.Objects
         /// id set by owner,the owner,requestid pair must be unique
         /// </summary>
         [JsonProperty("requestid")]
-        public UInt32 Requestid { get; set; }
+        public uint Requestid { get; set; }
 
         // bdType : asset
         [JsonProperty("amount")]

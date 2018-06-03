@@ -19,6 +19,7 @@ namespace Ditch.Core
         private readonly ManualResetEvent _socketCloseEvent;
         private WebSocket _webSocket;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
+        public string UrlToConnect { get; private set; }
 
         /// <summary>
         /// Timeout in milliseconds waiting for WebSocket request to execute. Default is 30000.
@@ -56,21 +57,35 @@ namespace Ditch.Core
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Url which will be used for data transfer (empty if none)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string ConnectTo(string url, CancellationToken token)
+        public bool TryConnectTo(string url, CancellationToken token)
         {
-            Disconnect();
+            try
+            {
+                Disconnect();
 
-            _webSocket = new WebSocket(url);
-            _webSocket.Opened += WebSocketOpened;
-            _webSocket.Closed += WebSocketClosed;
-            _webSocket.MessageReceived += WebSocketMessageReceived;
-            _webSocket.Error += WebSocketOnError;
-            _webSocket.EnableAutoSendPing = true;
-            _webSocket.Open();
+                _webSocket = new WebSocket(url);
+                _webSocket.Opened += WebSocketOpened;
+                _webSocket.Closed += WebSocketClosed;
+                _webSocket.MessageReceived += WebSocketMessageReceived;
+                _webSocket.Error += WebSocketOnError;
+                _webSocket.EnableAutoSendPing = true;
+                _webSocket.Open();
 
-            var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitConnectTimeout);
-            token.ThrowIfCancellationRequested();
-            return t == 1 ? url : string.Empty;
+                var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitConnectTimeout);
+                token.ThrowIfCancellationRequested();
+
+                if (t == 1)
+                {
+                    UrlToConnect = url;
+                    return true;
+                }
+            }
+            catch
+            {
+                //todo nothing
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -80,17 +95,15 @@ namespace Ditch.Core
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Url which will be used for data transfer (empty if none)</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string ConnectTo(IEnumerable<string> urls, CancellationToken token)
+        public bool TryConnectTo(IEnumerable<string> urls, CancellationToken token)
         {
             foreach (var url in urls)
             {
                 token.ThrowIfCancellationRequested();
-
-                var connectedTo = ConnectTo(url, token);
-                if (!string.IsNullOrWhiteSpace(connectedTo))
-                    return connectedTo;
+                if (TryConnectTo(url, token))
+                    return true;
             }
-            return string.Empty;
+            return false;
         }
 
         /// <summary>
@@ -98,6 +111,7 @@ namespace Ditch.Core
         /// </summary>
         public void Disconnect()
         {
+            UrlToConnect = string.Empty;
             if (_webSocket != null && (_webSocket.State == WebSocketState.Open || _webSocket.State == WebSocketState.Connecting))
             {
                 _webSocket.Close();
@@ -183,14 +197,13 @@ namespace Ditch.Core
                     {
                         var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketCloseEvent }, 1000);
                         token.ThrowIfCancellationRequested();
-                        if (t == 1)
-                        {
-                            _webSocket.Open();
-                            t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
-                            token.ThrowIfCancellationRequested();
-                            return t == 1;
-                        }
-                        return false;
+                        if (t != 1)
+                            return false;
+
+                        _webSocket.Open();
+                        t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitResponceTimeout);
+                        token.ThrowIfCancellationRequested();
+                        return t == 1;
                     }
                 case WebSocketState.Connecting:
                     {
@@ -223,7 +236,7 @@ namespace Ditch.Core
             _socketCloseEvent.Set();
         }
 
-        private void WebSocketOnError(object sender, ErrorEventArgs errorEventArgs)
+        private static void WebSocketOnError(object sender, ErrorEventArgs errorEventArgs)
         {
             Debug.WriteLine($"{errorEventArgs.Exception.Message} | {errorEventArgs.Exception.StackTrace}");
         }

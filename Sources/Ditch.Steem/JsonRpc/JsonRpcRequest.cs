@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
@@ -17,7 +16,7 @@ namespace Ditch.Steem.JsonRpc
         public JsonRpcRequest(string api, string method)
         {
             Id = Interlocked.Increment(ref _id);
-            if (Id == Int32.MaxValue)
+            if (Id == int.MaxValue)
                 Interlocked.Exchange(ref _id, 0);
 
             Message = $"{{\"jsonrpc\":\"2.0\",\"method\":\"{api}.{method}\",\"id\":{Id}}}";
@@ -26,7 +25,7 @@ namespace Ditch.Steem.JsonRpc
         public JsonRpcRequest(string api, string method, string data = "[]")
         {
             Id = Interlocked.Increment(ref _id);
-            if (Id == Int32.MaxValue)
+            if (Id == int.MaxValue)
                 Interlocked.Exchange(ref _id, 0);
 
             Message = $"{{\"jsonrpc\":\"2.0\",\"method\":\"{api}.{method}\",\"params\":{data},\"id\":{Id}}}";

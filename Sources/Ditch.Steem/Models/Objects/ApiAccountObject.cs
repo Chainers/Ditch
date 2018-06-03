@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiAccountObject
+    public class ApiAccountObject
     {
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("comment_count")]
-        public UInt32 CommentCount {get; set;}
+        public uint CommentCount {get; set;}
 
         /// <summary>
         /// API name: lifetime_vote_count
@@ -146,7 +146,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("lifetime_vote_count")]
-        public UInt32 LifetimeVoteCount {get; set;}
+        public uint LifetimeVoteCount {get; set;}
 
         /// <summary>
         /// API name: post_count
@@ -154,7 +154,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("post_count")]
-        public UInt32 PostCount {get; set;}
+        public uint PostCount {get; set;}
 
         /// <summary>
         /// API name: can_vote
@@ -170,7 +170,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("voting_power")]
-        public UInt16 VotingPower {get; set;}
+        public ushort VotingPower {get; set;}
 
         /// <summary>
         /// API name: last_vote_time
@@ -378,7 +378,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("withdraw_routes")]
-        public UInt16 WithdrawRoutes {get; set;}
+        public ushort WithdrawRoutes {get; set;}
 
         /// <summary>
         /// API name: proxied_vsf_votes
@@ -394,7 +394,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("witnesses_voted_for")]
-        public UInt16 WitnessesVotedFor {get; set;}
+        public ushort WitnessesVotedFor {get; set;}
 
         /// <summary>
         /// API name: last_post

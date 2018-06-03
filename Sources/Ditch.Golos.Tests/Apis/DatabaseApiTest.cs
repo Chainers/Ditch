@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Golos.Models.Enums;
 using Ditch.Golos.Models.Operations;
 using Ditch.Golos.Models.Other;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -44,8 +42,8 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_account_history()
         {
-            UInt64 from = 3;
-            UInt32 limit = 3;
+            const ulong from = 3;
+            const uint limit = 3;
             var resp = Api.GetAccountHistory(User.Login, from, limit, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -216,7 +214,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_ops_in_block()
         {
-            uint id = 2;
+            const uint id = 2;
             var resp = Api.GetOpsInBlock(id, false, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -244,7 +242,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_potential_signatures()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
@@ -272,7 +270,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_required_signatures()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
@@ -330,7 +328,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_transaction_hex()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
@@ -445,7 +443,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void lookup_accounts()
         {
-            UInt32 limit = 3;
+            const uint limit = 3;
             var resp = Api.LookupAccounts(User.Login, limit, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -486,7 +484,7 @@ namespace Ditch.Golos.Tests.Apis
         public void verify_authority()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);

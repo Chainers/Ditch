@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Operations
     /// libraries\protocol\include\golos\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountCreateOperation : BaseOperation
+    public class AccountCreateOperation : BaseOperation
     {
         public override OperationType Type => OperationType.AccountCreate;
 

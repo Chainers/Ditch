@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\plugins\market_history\include\golos\market_history\order_history_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class OrderHistoryObject
+    public class OrderHistoryObject
     {
 
         /// <summary>

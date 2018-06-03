@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models
     /// transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedTransaction : Transaction
+    public class SignedTransaction : Transaction
     {
 
         /// <summary>

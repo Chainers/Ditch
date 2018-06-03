@@ -1,12 +1,12 @@
-﻿using Ditch.Core.Attributes;
+﻿using Ditch.Core;
+using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
-using Ditch.Core;
 
 namespace Ditch.Golos.Models.Other
 {
     [JsonConverter(typeof(CustomConverter))]
-    public partial class PublicKeyType : ICustomJson
+    public class PublicKeyType : ICustomJson
     {
         public const string Prefix = "GLS";
 

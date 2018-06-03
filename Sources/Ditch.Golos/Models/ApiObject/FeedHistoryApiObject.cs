@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models.ApiObject
     /// plugins\database_api\include\golos\plugins\database_api\api_objects\feed_history_api_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class FeedHistoryApiObject
+    public class FeedHistoryApiObject
     {
 
         /// <summary>

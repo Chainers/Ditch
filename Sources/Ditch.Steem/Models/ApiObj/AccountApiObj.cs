@@ -9,11 +9,11 @@ namespace Ditch.Steem.Models.ApiObj
     /// steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountApiObj
+    public class AccountApiObj
     {
         // bdType : account_id_type
         [JsonProperty("id")]
-        public UInt64 Id { get; set; }
+        public ulong Id { get; set; }
 
         // bdType : account_name_type
         [JsonProperty("name")]
@@ -102,15 +102,15 @@ namespace Ditch.Steem.Models.ApiObj
 
         // bdType : uint32_t | = 0;
         [JsonProperty("comment_count")]
-        public UInt32 CommentCount { get; set; }
+        public uint CommentCount { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("lifetime_vote_count")]
-        public UInt32 LifetimeVoteCount { get; set; }
+        public uint LifetimeVoteCount { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("post_count")]
-        public UInt32 PostCount { get; set; }
+        public uint PostCount { get; set; }
 
         // bdType : bool | = false;
         [JsonProperty("can_vote")]
@@ -121,7 +121,7 @@ namespace Ditch.Steem.Models.ApiObj
         /// Current voting power of this account, it falls after every vote
         /// </summary>
         [JsonProperty("voting_power")]
-        public UInt16 VotingPower { get; set; }
+        public ushort VotingPower { get; set; }
 
         // bdType : time_point_sec
         /// <summary>
@@ -288,7 +288,7 @@ namespace Ditch.Steem.Models.ApiObj
 
         // bdType : uint16_t | = 0;
         [JsonProperty("withdraw_routes")]
-        public UInt16 WithdrawRoutes { get; set; }
+        public ushort WithdrawRoutes { get; set; }
 
         // bdType : vector<share_type>
         [JsonProperty("proxied_vsf_votes")]
@@ -296,7 +296,7 @@ namespace Ditch.Steem.Models.ApiObj
 
         // bdType : uint16_t
         [JsonProperty("witnesses_voted_for")]
-        public UInt16 WitnessesVotedFor { get; set; }
+        public ushort WitnessesVotedFor { get; set; }
 
         // bdType : share_type | = 0;
         [JsonProperty("average_bandwidth")]

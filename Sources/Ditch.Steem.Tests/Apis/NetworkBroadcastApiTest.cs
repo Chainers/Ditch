@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Other;
-using Newtonsoft.Json;
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 namespace Ditch.Steem.Tests.Apis
 {
@@ -15,7 +13,7 @@ namespace Ditch.Steem.Tests.Apis
         [Ignore("Real transaction")]
         public void broadcast_transaction()
         {
-            var args = new BroadcastTransactionArgs()
+            var args = new BroadcastTransactionArgs
             {
                 Trx = GetSignedTransaction()
             };
@@ -28,7 +26,7 @@ namespace Ditch.Steem.Tests.Apis
         [Ignore("Real transaction")]
         public void broadcast_transaction_synchronous()
         {
-            var args = new BroadcastTransactionSynchronousArgs()
+            var args = new BroadcastTransactionSynchronousArgs
             {
                 Trx = GetSignedTransaction()
             };
@@ -41,7 +39,7 @@ namespace Ditch.Steem.Tests.Apis
         [Ignore("Real transaction")]
         public void broadcast_block()
         {
-            var args = new BroadcastBlockArgs()
+            var args = new BroadcastBlockArgs
             {
                 Block = new SignedBlock()
             };

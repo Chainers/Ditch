@@ -1,4 +1,3 @@
-using System;
 using Ditch.Golos.Models.ApiObj;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.Golos.Models.Other
     /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Discussion : CommentApiObj
+    public class Discussion : CommentApiObj
     {
 
         // bdType : string
@@ -58,7 +57,7 @@ namespace Ditch.Golos.Models.Other
 
         // bdType : uint32_t | = 0;
         [JsonProperty("body_length")]
-        public UInt32 BodyLength { get; set; }
+        public uint BodyLength { get; set; }
 
         // bdType : vector<account_name_type>
         [JsonProperty("reblogged_by")]

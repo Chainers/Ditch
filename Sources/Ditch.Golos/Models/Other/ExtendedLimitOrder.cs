@@ -7,7 +7,7 @@ namespace Ditch.Golos.Models.Other
     /// libraries\app\include\steemit\app\state.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ExtendedLimitOrder
+    public class ExtendedLimitOrder
     {
 
         /// <summary>

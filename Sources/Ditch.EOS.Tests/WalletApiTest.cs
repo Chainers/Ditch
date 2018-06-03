@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cryptography.ECDSA;
 using Ditch.EOS.Models;
 using NUnit.Framework;
-using Newtonsoft.Json;
-using Cryptography.ECDSA;
+using Action = Ditch.EOS.Models.Action;
 
 namespace Ditch.EOS.Tests
 {
@@ -14,7 +14,7 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task CreateTest()
         {
-            var name = $"testname{DateTime.Now.ToString("yyyyMMddhhmmss")}";
+            var name = $"testname{DateTime.Now:yyyyMMddhhmmss}";
             WriteLine(name);
             var resp = await Api.WalletCreate(name, CancellationToken.None);
             WriteLine(resp);
@@ -25,7 +25,7 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task WalletOpenTest()
         {
-            var name = "testname";
+            const string name = "testname";
             WriteLine(name);
             var resp = await Api.WalletOpen(name, CancellationToken.None);
             WriteLine(resp);
@@ -35,7 +35,7 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task WalletLockTest()
         {
-            var name = "testname";
+            const string name = "testname";
             WriteLine(name);
             var resp = await Api.WalletLock(name, CancellationToken.None);
             WriteLine(resp);
@@ -53,8 +53,8 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task WalletUnlockTest()
         {
-            var name = "testname20180422094827";
-            var password = "PW5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
+            const string name = "testname20180422094827";
+            const string password = "PW5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
             var resp = await Api.WalletUnlock(name, password, CancellationToken.None);
             WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
@@ -64,8 +64,8 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task WalletImportKeyTest()
         {
-            var name = "testname20180422094827";
-            var password = "5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
+            const string name = "testname20180422094827";
+            const string password = "5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
             var resp = await Api.WalletImportKey(name, password, CancellationToken.None);
             WriteLine(resp);
             Assert.IsTrue(resp.IsSuccess);
@@ -123,10 +123,10 @@ namespace Ditch.EOS.Tests
                 MaxNetUsageWords = 0,
                 MaxKcpuUsage = 0,
                 DelaySec = 0,
-                ContextFreeActions = new EOS.Models.Action[0],
+                ContextFreeActions = new Action[0],
                 Actions = new[]
                     {
-                        new EOS.Models.Action()
+                        new Action
                         {
                             Account = "hackathon",
                             Name = "transfer",
@@ -138,14 +138,14 @@ namespace Ditch.EOS.Tests
                                     Permission = "active"
                                 }
                             },
-                            Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000",
+                            Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
                         }
                     },
                 Signatures = new string[0],
                 ContextFreeData = new byte[0]
             };
-            var publicKeys = new[] { "" };
-            var chainId = "";
+            var publicKeys = new[] { string.Empty };
+            var chainId = string.Empty;
 
             var resp = await Api.WalletSignTrx(trx, publicKeys, chainId, CancellationToken.None);
             WriteLine(resp);

@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\witness_api\include\steem\plugins\witness_api\witness_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetAccountBandwidthArgs
+    public class GetAccountBandwidthArgs
     {
 
         /// <summary>

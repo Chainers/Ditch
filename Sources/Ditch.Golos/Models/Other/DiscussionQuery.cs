@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models.Other
@@ -14,7 +13,7 @@ namespace Ditch.Golos.Models.Other
     /// plugins\social_network\include\golos\plugins\social_network\api_object\discussion_query.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DiscussionQuery
+    public class DiscussionQuery
     {
 
         /// <summary>
@@ -23,7 +22,7 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit { get; set; }
+        public uint Limit { get; set; }
 
         /// <summary>
         /// API name: select_authors
@@ -55,7 +54,7 @@ namespace Ditch.Golos.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("truncate_body")]
-        public UInt32 TruncateBody { get; set; }
+        public uint TruncateBody { get; set; }
 
         /// <summary>
         /// API name: start_author

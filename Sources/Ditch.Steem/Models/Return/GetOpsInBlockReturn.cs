@@ -1,3 +1,4 @@
+using Ditch.Steem.Models.Objects;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Return
@@ -7,7 +8,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\account_history_api\include\steem\plugins\account_history_api\account_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetOpsInBlockReturn
+    public class GetOpsInBlockReturn
     {
 
         /// <summary>

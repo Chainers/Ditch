@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\blockchain_statistics\include\steemit\blockchain_statistics\blockchain_statistics_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BucketObject
+    public class BucketObject
     {
         /// <summary>
         /// API name: id
@@ -32,7 +32,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("seconds")]
-        public UInt32 Seconds {get; set;}
+        public uint Seconds {get; set;}
 
         /// <summary>
         /// API name: blocks
@@ -40,7 +40,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("blocks")]
-        public UInt32 Blocks {get; set;}
+        public uint Blocks {get; set;}
 
         /// <summary>
         /// API name: bandwidth
@@ -48,7 +48,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("bandwidth")]
-        public UInt32 Bandwidth {get; set;}
+        public uint Bandwidth {get; set;}
 
         /// <summary>
         /// API name: operations
@@ -56,7 +56,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("operations")]
-        public UInt32 Operations {get; set;}
+        public uint Operations {get; set;}
 
         /// <summary>
         /// API name: transactions
@@ -64,7 +64,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("transactions")]
-        public UInt32 Transactions {get; set;}
+        public uint Transactions {get; set;}
 
         /// <summary>
         /// API name: transfers
@@ -72,7 +72,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("transfers")]
-        public UInt32 Transfers {get; set;}
+        public uint Transfers {get; set;}
 
         /// <summary>
         /// API name: steem_transferred
@@ -104,7 +104,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("paid_accounts_created")]
-        public UInt32 PaidAccountsCreated {get; set;}
+        public uint PaidAccountsCreated {get; set;}
 
         /// <summary>
         /// API name: mined_accounts_created
@@ -112,7 +112,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("mined_accounts_created")]
-        public UInt32 MinedAccountsCreated {get; set;}
+        public uint MinedAccountsCreated {get; set;}
 
         /// <summary>
         /// API name: root_comments
@@ -120,7 +120,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("root_comments")]
-        public UInt32 RootComments {get; set;}
+        public uint RootComments {get; set;}
 
         /// <summary>
         /// API name: root_comment_edits
@@ -128,7 +128,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("root_comment_edits")]
-        public UInt32 RootCommentEdits {get; set;}
+        public uint RootCommentEdits {get; set;}
 
         /// <summary>
         /// API name: root_comments_deleted
@@ -136,7 +136,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("root_comments_deleted")]
-        public UInt32 RootCommentsDeleted {get; set;}
+        public uint RootCommentsDeleted {get; set;}
 
         /// <summary>
         /// API name: replies
@@ -144,7 +144,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("replies")]
-        public UInt32 Replies {get; set;}
+        public uint Replies {get; set;}
 
         /// <summary>
         /// API name: reply_edits
@@ -152,7 +152,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("reply_edits")]
-        public UInt32 ReplyEdits {get; set;}
+        public uint ReplyEdits {get; set;}
 
         /// <summary>
         /// API name: replies_deleted
@@ -160,7 +160,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("replies_deleted")]
-        public UInt32 RepliesDeleted {get; set;}
+        public uint RepliesDeleted {get; set;}
 
         /// <summary>
         /// API name: new_root_votes
@@ -168,7 +168,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("new_root_votes")]
-        public UInt32 NewRootVotes {get; set;}
+        public uint NewRootVotes {get; set;}
 
         /// <summary>
         /// API name: changed_root_votes
@@ -176,7 +176,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("changed_root_votes")]
-        public UInt32 ChangedRootVotes {get; set;}
+        public uint ChangedRootVotes {get; set;}
 
         /// <summary>
         /// API name: new_reply_votes
@@ -184,7 +184,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("new_reply_votes")]
-        public UInt32 NewReplyVotes {get; set;}
+        public uint NewReplyVotes {get; set;}
 
         /// <summary>
         /// API name: changed_reply_votes
@@ -192,7 +192,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("changed_reply_votes")]
-        public UInt32 ChangedReplyVotes {get; set;}
+        public uint ChangedReplyVotes {get; set;}
 
         /// <summary>
         /// API name: payouts
@@ -200,7 +200,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("payouts")]
-        public UInt32 Payouts {get; set;}
+        public uint Payouts {get; set;}
 
         /// <summary>
         /// API name: sbd_paid_to_authors
@@ -240,7 +240,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("transfers_to_vesting")]
-        public UInt32 TransfersToVesting {get; set;}
+        public uint TransfersToVesting {get; set;}
 
         /// <summary>
         /// API name: steem_vested
@@ -256,7 +256,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("new_vesting_withdrawal_requests")]
-        public UInt32 NewVestingWithdrawalRequests {get; set;}
+        public uint NewVestingWithdrawalRequests {get; set;}
 
         /// <summary>
         /// API name: modified_vesting_withdrawal_requests
@@ -264,7 +264,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("modified_vesting_withdrawal_requests")]
-        public UInt32 ModifiedVestingWithdrawalRequests {get; set;}
+        public uint ModifiedVestingWithdrawalRequests {get; set;}
 
         /// <summary>
         /// API name: vesting_withdraw_rate_delta
@@ -280,7 +280,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("vesting_withdrawals_processed")]
-        public UInt32 VestingWithdrawalsProcessed {get; set;}
+        public uint VestingWithdrawalsProcessed {get; set;}
 
         /// <summary>
         /// API name: finished_vesting_withdrawals
@@ -288,7 +288,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("finished_vesting_withdrawals")]
-        public UInt32 FinishedVestingWithdrawals {get; set;}
+        public uint FinishedVestingWithdrawals {get; set;}
 
         /// <summary>
         /// API name: vests_withdrawn
@@ -312,7 +312,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("sbd_conversion_requests_created")]
-        public UInt32 SbdConversionRequestsCreated {get; set;}
+        public uint SbdConversionRequestsCreated {get; set;}
 
         /// <summary>
         /// API name: sbd_to_be_converted
@@ -328,7 +328,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("sbd_conversion_requests_filled")]
-        public UInt32 SbdConversionRequestsFilled {get; set;}
+        public uint SbdConversionRequestsFilled {get; set;}
 
         /// <summary>
         /// API name: steem_converted
@@ -344,7 +344,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit_orders_created")]
-        public UInt32 LimitOrdersCreated {get; set;}
+        public uint LimitOrdersCreated {get; set;}
 
         /// <summary>
         /// API name: limit_orders_filled
@@ -352,7 +352,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit_orders_filled")]
-        public UInt32 LimitOrdersFilled {get; set;}
+        public uint LimitOrdersFilled {get; set;}
 
         /// <summary>
         /// API name: limit_orders_cancelled
@@ -360,7 +360,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit_orders_cancelled")]
-        public UInt32 LimitOrdersCancelled {get; set;}
+        public uint LimitOrdersCancelled {get; set;}
 
         /// <summary>
         /// API name: total_pow
@@ -368,7 +368,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("total_pow")]
-        public UInt32 TotalPow {get; set;}
+        public uint TotalPow {get; set;}
 
         /// <summary>
         /// API name: estimated_hashpower

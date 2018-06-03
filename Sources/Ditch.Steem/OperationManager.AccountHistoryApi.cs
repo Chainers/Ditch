@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Models;
 using Ditch.Steem.Models.Args;
 using Ditch.Steem.Models.Return;
 

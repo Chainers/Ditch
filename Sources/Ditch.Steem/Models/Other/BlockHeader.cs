@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\block_header.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BlockHeader
+    public class BlockHeader
     {
 
         // bdType : block_id_type

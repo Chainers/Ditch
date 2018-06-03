@@ -25,7 +25,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bucket_object A list of market history buckets.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BucketObject[]> GetMarketHistory(UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)
+        public JsonRpcResponse<BucketObject[]> GetMarketHistory(uint bucketSeconds, DateTime start, DateTime end, CancellationToken token)
         {
             return CustomGetRequest<BucketObject[]>(KnownApiNames.MarketHistory, "get_market_history", new object[] { bucketSeconds, start, end }, token);
         }
@@ -37,9 +37,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: flat_set</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<UInt32[]> GetMarketHistoryBuckets(CancellationToken token)
+        public JsonRpcResponse<uint[]> GetMarketHistoryBuckets(CancellationToken token)
         {
-            return CustomGetRequest<UInt32[]>(KnownApiNames.MarketHistory, "get_market_history_buckets", new object[] { }, token);
+            return CustomGetRequest<uint[]>(KnownApiNames.MarketHistory, "get_market_history_buckets", new object[] { }, token);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_book</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OrderBook> GetOrderBook(UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<OrderBook> GetOrderBook(uint limit, CancellationToken token)
         {
             return CustomGetRequest<OrderBook>(KnownApiNames.MarketHistory, "get_order_book", new object[] { limit }, token);
         }
@@ -75,7 +75,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_trade</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTrade[]> GetRecentTrades(UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<MarketTrade[]> GetRecentTrades(uint limit, CancellationToken token)
         {
             return CustomGetRequest<MarketTrade[]>(KnownApiNames.MarketHistory, "get_recent_trades", new object[] { limit }, token);
         }
@@ -109,7 +109,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_trade Recent transactions in the market</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTrade[]> GetTradeHistory(DateTime start, DateTime stop, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<MarketTrade[]> GetTradeHistory(DateTime start, DateTime stop, uint limit, CancellationToken token)
         {
             return CustomGetRequest<MarketTrade[]>(KnownApiNames.MarketHistory, "get_trade_history", new object[] { start, stop, limit }, token);
         }

@@ -10,7 +10,7 @@ namespace Ditch.Steem.Models.Objects
     /// steem-0.19.1\libraries\chain\include\steemit\chain\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DynamicGlobalPropertyObject
+    public class DynamicGlobalPropertyObject
     {
         // bdType : id_type
         [JsonProperty("id")]
@@ -18,7 +18,7 @@ namespace Ditch.Steem.Models.Objects
 
         // bdType : uint32_t | = 0;
         [JsonProperty("head_block_number")]
-        public UInt32 HeadBlockNumber { get; set; }
+        public uint HeadBlockNumber { get; set; }
 
         //block_id_type
         [JsonProperty("head_block_id")]
@@ -34,11 +34,11 @@ namespace Ditch.Steem.Models.Objects
 
         // bdType : uint64_t | = -1;
         [JsonProperty("total_pow")]
-        public UInt64 TotalPow { get; set; }
+        public ulong TotalPow { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("num_pow_witnesses")]
-        public UInt32 NumPowWitnesses { get; set; }
+        public uint NumPowWitnesses { get; set; }
 
         // bdType : asset | = asset(0, steem_symbol);
         [JsonProperty("virtual_supply")]
@@ -92,23 +92,23 @@ namespace Ditch.Steem.Models.Objects
 
         // bdType : uint16_t | = 0;
         [JsonProperty("sbd_interest_rate")]
-        public UInt16 SbdInterestRate { get; set; }
+        public ushort SbdInterestRate { get; set; }
 
         // bdType : uint16_t | = steemit_100_percent;
         [JsonProperty("sbd_print_rate")]
-        public UInt16 SbdPrintRate { get; set; }
+        public ushort SbdPrintRate { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("average_block_size")]
-        public UInt32 AverageBlockSize { get; set; }
+        public uint AverageBlockSize { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
 
         // bdType : uint64_t | = 0;
         [JsonProperty("current_aslot")]
-        public UInt64 CurrentAslot { get; set; }
+        public ulong CurrentAslot { get; set; }
 
         //uint128_t
         [JsonProperty("recent_slots_filled")]
@@ -123,22 +123,22 @@ namespace Ditch.Steem.Models.Objects
 
         // bdType : uint32_t | = 0;
         [JsonProperty("last_irreversible_block_num")]
-        public UInt32 LastIrreversibleBlockNum { get; set; }
+        public uint LastIrreversibleBlockNum { get; set; }
 
         // bdType : uint64_t | = 0;
         [JsonProperty("max_virtual_bandwidth")]
-        public UInt64 MaxVirtualBandwidth { get; set; }
+        public ulong MaxVirtualBandwidth { get; set; }
 
         // bdType : uint64_t | = 1;
         [JsonProperty("current_reserve_ratio")]
-        public UInt64 CurrentReserveRatio { get; set; }
+        public ulong CurrentReserveRatio { get; set; }
 
         // bdType : uint32_t | = 40;
         [JsonProperty("vote_regeneration_per_day")]
-        public UInt32 VoteRegenerationPerDay { get; set; }
+        public uint VoteRegenerationPerDay { get; set; }
 
         // bdType : uint32_t | = 40;
         [JsonProperty("vote_power_reserve_rate")]
-        public UInt32 VotePowerReserveRate { get; set; }
+        public uint VotePowerReserveRate { get; set; }
     }
 }

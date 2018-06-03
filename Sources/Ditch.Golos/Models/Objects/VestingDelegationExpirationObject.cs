@@ -9,7 +9,7 @@ namespace Ditch.Golos.Models.Objects
     /// libraries\chain\include\golos\chain\objects\account_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class VestingDelegationExpirationObject
+    public class VestingDelegationExpirationObject
     {
 
         /// <summary>

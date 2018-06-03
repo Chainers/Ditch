@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Return
     /// libraries\plugins\apis\market_history_api\include\steem\plugins\market_history_api\market_history_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetTickerReturn
+    public class GetTickerReturn
     {
 
         /// <summary>

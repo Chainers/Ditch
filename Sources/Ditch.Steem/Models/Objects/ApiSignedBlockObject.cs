@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\block_api\include\steem\plugins\block_api\block_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiSignedBlockObject : SignedBlock
+    public class ApiSignedBlockObject : SignedBlock
     {
 
         /// <summary>

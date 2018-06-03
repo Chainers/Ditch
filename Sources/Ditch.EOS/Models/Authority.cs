@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -8,7 +7,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosio.system\native.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Authority
+    public class Authority
     {
 
         /// <summary>
@@ -17,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("threshold")]
-        public UInt32 Threshold {get; set;}
+        public uint Threshold {get; set;}
 
         /// <summary>
         /// API name: keys
