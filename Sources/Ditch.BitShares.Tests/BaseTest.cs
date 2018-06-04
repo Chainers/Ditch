@@ -20,27 +20,35 @@ namespace Ditch.BitShares.Tests
         protected static OperationManager Api;
         protected string SbdSymbol = "BTS";
 
-        static BaseTest()
+        [OneTimeSetUp]
+        protected virtual void OneTimeSetUp()
         {
-            User = new UserInfo
+            if (User == null)
             {
-                Login = ConfigurationManager.AppSettings["Login"],
-                ActiveWif = ConfigurationManager.AppSettings["ActiveWif"],
-                OwnerWif = ConfigurationManager.AppSettings["OwnerWif"]
-            };
-            // Assert.IsFalse(string.IsNullOrEmpty(User.ActiveWif));
-            var jss = GetJsonSerializerSettings();
-            // var manager = new WebSocketManager(jss, 1024 * 1024);
-            var manager = new HttpManager(jss);
-            Api = new OperationManager(manager, jss);
-            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"],
+                    ActiveWif = ConfigurationManager.AppSettings["ActiveWif"],
+                    OwnerWif = ConfigurationManager.AppSettings["OwnerWif"]
+                };
+                Assert.IsFalse(string.IsNullOrEmpty(User.ActiveWif), "empty ActiveWif");
+            }
 
-            var acc = Api.GetAccountByName(User.Login, CancellationToken.None);
-            Assert.IsFalse(acc.IsError);
+            if (Api == null)
+            {
+                var jss = GetJsonSerializerSettings();
+                var manager = new HttpManager(jss, 1024 * 1024);
+                Api = new OperationManager(manager, jss);
 
-            User.Account = acc.Result;
+                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+                Api.TryConnectTo(urls, CancellationToken.None);
+
+                var acc = Api.GetAccountByName(User.Login, CancellationToken.None);
+                Assert.IsFalse(acc.IsError);
+                User.Account = acc.Result;
+            }
+
+            Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
         public static JsonSerializerSettings GetJsonSerializerSettings()

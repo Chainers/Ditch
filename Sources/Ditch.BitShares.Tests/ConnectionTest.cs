@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Ditch.Core;
 using NUnit.Framework;
 
 namespace Ditch.BitShares.Tests
@@ -31,14 +30,12 @@ namespace Ditch.BitShares.Tests
         [TestCase("wss://japan.bitshares.apasia.tech/ws")]
         public void NodeTest(string url)
         {
-            var jss = BaseTest.GetJsonSerializerSettings();
-            var connectionManager = new WebSocketManager(jss);
-            var manager = new OperationManager(connectionManager, jss);
+            var manager = new OperationManager();
 
             var sw = new Stopwatch();
             var urls = new List<string> { url };
             sw.Restart();
-            var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
+            manager.TryConnectTo(urls, CancellationToken.None);
             sw.Stop();
 
             Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");

@@ -14,76 +14,50 @@ namespace Ditch.BitShares
 {
     public partial class OperationManager
     {
-        private readonly JsonSerializerSettings _jsonSerializerSettings;
-        public readonly MessageSerializer MessageSerializer;
-        private readonly IConnectionManager _connectionManager;
-        private List<string> _urls;
+        private byte[] _chainId;
+        public JsonSerializerSettings JsonSerializerSettings { get; }
+        public MessageSerializer MessageSerializer { get; }
+        public IConnectionManager ConnectionManager { get; }
 
-        public byte[] ChainId { get; private set; }
-        public bool IsConnected => _connectionManager.IsConnected;
-        private readonly Config _config;
+        public byte[] ChainId
+        {
+            get => _chainId ?? (_chainId = TryLoadChainId(CancellationToken.None));
+            set => _chainId = value;
+        }
+
+        public bool IsConnected => ConnectionManager.IsConnected;
+
 
         #region Constructors
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, Config config)
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
+            : this(connectionManage, jsonSerializerSettings, new MessageSerializer()) { }
+
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, MessageSerializer serializer)
         {
-            _jsonSerializerSettings = jsonSerializerSettings;
-            _connectionManager = connectionManage;
-            _config = config;
-            MessageSerializer = new MessageSerializer();
+            JsonSerializerSettings = jsonSerializerSettings;
+            ConnectionManager = connectionManage;
+            MessageSerializer = serializer;
         }
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
-            : this(connectionManage, jsonSerializerSettings, new Config())
+        public OperationManager()
         {
+            MessageSerializer = new MessageSerializer();
+            JsonSerializerSettings = new JsonSerializerSettings();
+            ConnectionManager = new WebSocketManager(JsonSerializerSettings);
         }
 
         #endregion Constructors
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="urls"></param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string TryConnectTo(List<string> urls, CancellationToken token)
+        public bool TryConnectTo(string endpoin, CancellationToken token)
         {
-            _urls = urls;
-
-            foreach (var url in urls)
-            {
-                try
-                {
-                    var connectedTo = _connectionManager.ConnectTo(url, token);
-                    if (string.IsNullOrEmpty(connectedTo))
-                        continue;
-
-                    if (TryLoadChainId(token))
-                        return url;
-
-                    if (_connectionManager.IsConnected)
-                        _connectionManager.Disconnect();
-                }
-                catch
-                {
-                    //todo nothing
-                }
-            }
-
-            return string.Empty;
+            return ConnectionManager.TryConnectTo(endpoin, token);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string RetryConnect(CancellationToken token)
+        public bool TryConnectTo(IEnumerable<string> urls, CancellationToken token)
         {
-            return TryConnectTo(_urls, token);
+            return ConnectionManager.TryConnectTo(urls, token);
         }
 
         /// <summary>
@@ -157,8 +131,8 @@ namespace Ditch.BitShares
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
-            return _connectionManager.Execute<T>(jsonRpc, token);
+            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
+            return ConnectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
@@ -173,7 +147,7 @@ namespace Ditch.BitShares
         public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
-            return _connectionManager.Execute<T>(jsonRpc, token);
+            return ConnectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
@@ -187,8 +161,8 @@ namespace Ditch.BitShares
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse CustomGetRequest(string api, string method, object[] data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
-            return _connectionManager.Execute(jsonRpc, token);
+            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
+            return ConnectionManager.Execute(jsonRpc, token);
         }
 
         /// <summary>
@@ -202,7 +176,7 @@ namespace Ditch.BitShares
         public JsonRpcResponse CustomGetRequest(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
-            return _connectionManager.Execute(jsonRpc, token);
+            return ConnectionManager.Execute(jsonRpc, token);
         }
 
         /// <summary>
@@ -240,15 +214,14 @@ namespace Ditch.BitShares
             return transaction;
         }
 
-        public virtual bool TryLoadChainId(CancellationToken token)
+        public byte[] TryLoadChainId(CancellationToken token)
         {
             var resp = GetChainId(token);
             if (!resp.IsError)
             {
-                ChainId = Hex.HexToBytes(resp.Result);
-                return true;
+                return Hex.HexToBytes(resp.Result);
             }
-            return false;
+            return new byte[0];
         }
     }
 }
