@@ -156,6 +156,12 @@ namespace CppToCsharpConverter
                         var list = manager.Execute(tasts.ToList(), storeResultDir);
                         tasks.AddRange(list);
                     }
+                    if (tasts.Key.IndexOf("eos", StringComparison.OrdinalIgnoreCase) > 0)
+                    {
+                        var manager = new Converter.Steem.ConverterManager(SettingsViewModel.KnownTypes);
+                        var list = manager.Execute(tasts.ToList(), storeResultDir);
+                        tasks.AddRange(list);
+                    }
                 }
 
                 return tasks;
