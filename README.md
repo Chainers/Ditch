@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Chainers/Ditch.svg?branch=master)](https://travis-ci.org/Chainers/Ditch)
+
 [Documentation](https://chainers.github.io/Ditch/)|[Site](https://ditch.surge.sh)|[Telegram (ru)](https://t.me/steepshot_ru)|[Telegram (en)](https://t.me/steepshot_en)|[Follow us (ru)](https://golos.io/@steepshot)|[Follow us (en)](https://steemit.com/@steepshot)
 ---|---|---|---|---|---
 
@@ -5,7 +7,7 @@
 The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain. 
 
 ## Supported chains:
- * Golos (hf 0.17.1)
+ * Golos (hf 0.18.0)
  * Steem (hf 0.19.4)
  * EOS (DAWN 3.0)
   
