@@ -1,4 +1,3 @@
-using System;
 using Ditch.EOS.Models.Enums;
 using Newtonsoft.Json;
 
@@ -14,7 +13,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class TransactionReceipt
+    public class TransactionReceipt
     {
 
         /// <summary>
@@ -31,7 +30,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("kcpu_usage")]
-        public UInt32 KcpuUsage { get; set; }
+        public uint KcpuUsage { get; set; }
 
         /// <summary>
         /// API name: net_usage_words
@@ -39,7 +38,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("net_usage_words")]
-        public UInt32 NetUsageWords { get; set; }
+        public uint NetUsageWords { get; set; }
 
         /// <summary>
         /// API name: id

@@ -6,30 +6,39 @@
     /// </summary>
     public enum OperationType : byte
     {
-        Vote = 0,
+        Vote,
         Comment,
+
         Transfer,
         TransferToVesting,
         WithdrawVesting,
+
         LimitOrderCreate,
         LimitOrderCancel,
+
         FeedPublish,
         Convert,
+
         AccountCreate,
         AccountUpdate,
+
         WitnessUpdate,
         AccountWitnessVote,
         AccountWitnessProxy,
+
         Pow,
+
         Custom,
+
         ReportOverProduction,
+
         DeleteComment,
         CustomJson,
         CommentOptions,
         SetWithdrawVestingRoute,
         LimitOrderCreate2,
-        ChallengeAuthority,
-        ProveAuthority,
+        PlaceholderA,               // A new op can go here
+        PlaceholderB,               // A new op can go here
         RequestAccountRecovery,
         RecoverAccount,
         ChangeRecoveryAccount,
@@ -41,10 +50,42 @@
         TransferToSavings,
         TransferFromSavings,
         CancelTransferFromSavings,
-        CustomBinaryOperation,
-        DeclineVotingRightsOperation,
-        ResetAccountOperation,
-        SetResetAccountOperation,
+        CustomBinary,
+        DeclineVotingRights,
+        ResetAccount,
+        SetResetAccount,
+        ClaimRewardBalance,
+        DelegateVestingShares,
         AccountCreateWithDelegation,
+        WitnessSetProperties,
+
+        //# ifdef STEEM_ENABLE_SMT
+        //        /// SMT operations
+        //        ClaimRewardBalance2,
+
+        //        SmtSetup,
+        //        SmtCapReveal,
+        //        SmtRefund,
+        //        SmtSetupEmissions,
+        //        SmtSetSetupParameters,
+        //        SmtSetRuntimeParameters,
+        //        SmtCreate,
+        //#endif
+        /// virtual operations below this point
+        FillConvertRequest,
+        AuthorReward,
+        CurationReward,
+        CommentReward,
+        LiquidityReward,
+        Interest,
+        FillVestingWithdraw,
+        FillOrder,
+        ShutdownWitness,
+        FillTransferFromSavings,
+        Hardfork,
+        CommentPayoutUpdate,
+        ReturnVestingDelegation,
+        CommentBenefactorReward,
+        ProducerReward
     }
 }

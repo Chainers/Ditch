@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosiolib\privileged.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ProducerKey
+    public class ProducerKey
     {
 
         /// <summary>

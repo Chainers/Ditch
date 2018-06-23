@@ -33,7 +33,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockSummary : SignedBlockHeader
+    public class SignedBlockSummary : SignedBlockHeader
     {
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other
@@ -9,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ChainProperties
+    public class ChainProperties
     {
 
         // bdType : asset | =
@@ -29,11 +28,11 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         [MessageOrder(20)]
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
 
         // bdType : uint16_t | = steemit_default_sbd_interest_rate;
         [MessageOrder(30)]
         [JsonProperty("sbd_interest_rate")]
-        public UInt16 SbdInterestRate { get; set; }
+        public ushort SbdInterestRate { get; set; }
     }
 }

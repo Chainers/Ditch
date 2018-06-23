@@ -28,126 +28,128 @@ namespace Ditch.Core
 
         public virtual void AddToMessageStream(Stream stream, Type type, object val)
         {
-            if (type == typeof(bool))
+            switch (val)
             {
-                stream.WriteByte((byte)((bool)val ? 1 : 0));
-                return;
+                case bool typed:
+                    {
+                        stream.WriteByte((byte)(typed ? 1 : 0));
+                        return;
+                    }
+                case byte typed:
+                    {
+                        stream.WriteByte(typed);
+                        return;
+                    }
+                case short typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case ushort typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case int typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case uint typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case long typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case ulong typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case float typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case double typed:
+                    {
+                        var buf = BitConverter.GetBytes(typed);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case DateTime typed:
+                    {
+                        var buf = BitConverter.GetBytes((int)(typed.Ticks / 10000000 - 62135596800)); // 01.01.1970
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case byte[] typed:
+                    {
+                        stream.Write(typed, 0, typed.Length);
+                        return;
+                    }
+                case string typed:
+                    {
+                        if (string.IsNullOrEmpty(typed))
+                        {
+                            stream.WriteByte(0);
+                            return;
+                        }
+                        var buf = Encoding.UTF8.GetBytes(typed);
+                        var buflen = VarInt(buf.Length);
+                        stream.Write(buflen, 0, buflen.Length);
+                        stream.Write(buf, 0, buf.Length);
+                        return;
+                    }
+                case ICustomSerializer typed:
+                    {
+                        typed.Serializer(stream, this);
+                        return;
+                    }
+                default:
+                    {
+                        if (type.IsEnum)
+                        {
+                            stream.WriteByte((byte)val);
+                            return;
+                        }
+                        if (type.IsArray)
+                        {
+                            var typed = (ICollection)val;
+                            if (typed == null)
+                                return;
+                            var buf = VarInt(typed.Count);
+                            stream.Write(buf, 0, buf.Length);
+                            foreach (var value in typed)
+                            {
+                                AddToMessageStream(stream, value.GetType(), value);
+                            }
+                            return;
+                        }
+                        if (type.IsClass)
+                        {
+                            var chType = val.GetType();
+                            var properties = GetPropertiesForMessage(chType);
+                            foreach (var prop in properties)
+                            {
+                                AddToMessageStream(stream, prop, val);
+                            }
+                            return;
+                        }
+                        throw new NotImplementedException();
+                    }
             }
-            if (type == typeof(byte))
-            {
-                stream.WriteByte((byte)val);
-                return;
-            }
-            if (type == typeof(Int16))
-            {
-                var buf = BitConverter.GetBytes((Int16)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(UInt16))
-            {
-                var buf = BitConverter.GetBytes((UInt16)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(Int32))
-            {
-                var buf = BitConverter.GetBytes((Int32)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(UInt32))
-            {
-                var buf = BitConverter.GetBytes((UInt32)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(Int64))
-            {
-                var buf = BitConverter.GetBytes((Int64)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(UInt64))
-            {
-                var buf = BitConverter.GetBytes((UInt64)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(float))
-            {
-                var buf = BitConverter.GetBytes((float)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(double))
-            {
-                var buf = BitConverter.GetBytes((double)val);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(DateTime))
-            {
-                var buf = BitConverter.GetBytes((Int32)(((DateTime)val).Ticks / 10000000 - 62135596800)); // 01.01.1970
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(Byte[]))
-            {
-                var buf = (byte[])val;
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (type == typeof(String))
-            {
-                var typed = (string)val;
-                if (string.IsNullOrEmpty(typed))
-                {
-                    stream.WriteByte(0);
-                    return;
-                }
-                var buf = Encoding.UTF8.GetBytes(typed);
-                var buflen = VarInt(buf.Length);
-                stream.Write(buflen, 0, buflen.Length);
-                stream.Write(buf, 0, buf.Length);
-                return;
-            }
-            if (val is ICustomSerializer customSerializer)
-            {
-                customSerializer.Serializer(stream, this);
-                return;
-            }
-            if (type.IsEnum)
-            {
-                stream.WriteByte((byte)val);
-                return;
-            }
-            if (type.IsArray)
-            {
-                var typed = (ICollection)val;
-                if (typed == null)
-                    return;
-                var buf = VarInt(typed.Count);
-                stream.Write(buf, 0, buf.Length);
-                foreach (var value in typed)
-                {
-                    AddToMessageStream(stream, value.GetType(), value);
-                }
-                return;
-            }
-            if (type.IsClass)
-            {
-                var chType = val.GetType();
-                var properties = GetPropertiesForMessage(chType);
-                foreach (var prop in properties)
-                {
-                    AddToMessageStream(stream, prop, val);
-                }
-                return;
-            }
-
-            throw new NotImplementedException();
-
         }
 
         protected IEnumerable<PropertyInfo> GetPropertiesForMessage(Type type)
@@ -190,7 +192,7 @@ namespace Ditch.Core
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        protected byte[] VarInt(int n)
+        public static byte[] VarInt(int n)
         {
             //get array len
             var i = 1;

@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steem\chain\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WitnessVoteObject
+    public class WitnessVoteObject
     {
 
         /// <summary>

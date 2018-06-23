@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.ApiObj
     /// steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class FeedHistoryApiObj
+    public class FeedHistoryApiObj
     {
 
         // bdType : feed_history_id_type

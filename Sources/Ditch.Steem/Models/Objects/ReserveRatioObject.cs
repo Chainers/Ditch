@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Objects
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\witness\include\steem\plugins\witness\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ReserveRatioObject
+    public class ReserveRatioObject
     {
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("average_block_size")]
-        public Int32 AverageBlockSize {get; set;}
+        public int AverageBlockSize {get; set;}
 
         
       /**
@@ -51,7 +50,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("current_reserve_ratio")]
-        public Int64 CurrentReserveRatio {get; set;}
+        public long CurrentReserveRatio {get; set;}
 
         
       /**

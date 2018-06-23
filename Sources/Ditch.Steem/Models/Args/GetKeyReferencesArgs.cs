@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\account_by_key_api\include\steem\plugins\account_by_key_api\account_by_key_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetKeyReferencesArgs
+    public class GetKeyReferencesArgs
     {
 
         /// <summary>

@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using Converter.Core;
-using Converter.Golos;
 
 namespace CppToCsharpConverter
 {
     public partial class MainWindow
     {
         private const string FileName = "SettingsViewModel.txt";
-        private readonly ConverterManager _converterManager;
         private SettingsViewModel SettingsViewModel { get; set; }
 
         public MainWindow()
@@ -26,7 +26,6 @@ namespace CppToCsharpConverter
 
             ConverterBox.ItemsSource = Enum.GetValues(typeof(KnownConverter));
             ConverterBox.SelectedIndex = 0;
-            _converterManager = new ConverterManager(SettingsViewModel.KnownTypes);
         }
 
         private void Load()
@@ -70,7 +69,7 @@ namespace CppToCsharpConverter
                 var txt = JsonConvert.SerializeObject(SettingsViewModel);
                 if (!File.Exists(FileName))
                     File.Create(FileName);
-                File.WriteAllText(FileName, JsonBeautifier.Beautify(txt));
+                File.WriteAllText(FileName, JsonBeautifier.Beautify(txt), Encoding.UTF8);
             }
         }
 
@@ -132,7 +131,41 @@ namespace CppToCsharpConverter
                 {
                     //skip
                 }
-                return _converterManager.Execute(SettingsViewModel.SearchTasks, storeResultDir);
+
+                var gt = SettingsViewModel.SearchTasks.GroupBy(t => t.SearchDir);
+
+                var tasks = new List<SearchTask>();
+                foreach (var tasts in gt)
+                {
+                    if (tasts.Key.IndexOf("BitShares", StringComparison.OrdinalIgnoreCase) > 0)
+                    {
+                        var manager = new Converter.BitShares.ConverterManager(SettingsViewModel.KnownTypes);
+                        var list = manager.Execute(tasts.ToList(), storeResultDir);
+                        tasks.AddRange(list);
+                    }
+
+                    if (tasts.Key.IndexOf("Golos", StringComparison.OrdinalIgnoreCase) > 0)
+                    {
+                        var manager = new Converter.Golos.ConverterManager(SettingsViewModel.KnownTypes);
+                        var list = manager.Execute(tasts.ToList(), storeResultDir);
+                        tasks.AddRange(list);
+                    }
+
+                    if (tasts.Key.IndexOf("Steem", StringComparison.OrdinalIgnoreCase) > 0)
+                    {
+                        var manager = new Converter.Steem.ConverterManager(SettingsViewModel.KnownTypes);
+                        var list = manager.Execute(tasts.ToList(), storeResultDir);
+                        tasks.AddRange(list);
+                    }
+                    if (tasts.Key.IndexOf("eos", StringComparison.OrdinalIgnoreCase) > 0)
+                    {
+                        var manager = new Converter.Steem.ConverterManager(SettingsViewModel.KnownTypes);
+                        var list = manager.Execute(tasts.ToList(), storeResultDir);
+                        tasks.AddRange(list);
+                    }
+                }
+
+                return tasks;
             });
         }
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading;
-using Ditch.Golos.Models.Enums;
-using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
-using Newtonsoft.Json;
+﻿using System.Threading;
+using Ditch.Golos.Models;
+using Ditch.Golos.Operations;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis
@@ -23,9 +20,8 @@ namespace Ditch.Golos.Tests.Apis
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
 
             var resp = Api.BroadcastTransaction(transaction, CancellationToken.None);
-            WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp.Result);
         }
 
         [Test]
@@ -40,9 +36,8 @@ namespace Ditch.Golos.Tests.Apis
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
 
             var resp = Api.BroadcastTransactionSynchronous(transaction, CancellationToken.None);
-            WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp.Result);
         }
 
         [Test]
@@ -50,9 +45,8 @@ namespace Ditch.Golos.Tests.Apis
         public void broadcast_block()
         {
             var resp = Api.BroadcastBlock(new SignedBlock(), CancellationToken.None);
-            WriteLine(resp.Error);
+            WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(resp.Result);
         }
     }
 }

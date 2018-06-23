@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models.Results
     /// plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class PushTransactionResults
+    public class PushTransactionResults
     {
 
         /// <summary>

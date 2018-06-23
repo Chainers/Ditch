@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.ApiObj
     /// category_api_obj
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CategoryApiObj
+    public class CategoryApiObj
     {
 
         // bdType : category_id_type
@@ -29,7 +29,7 @@ namespace Ditch.Steem.Models.ApiObj
 
         // bdType : uint32_t
         [JsonProperty("discussions")]
-        public UInt32 Discussions { get; set; }
+        public uint Discussions { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("last_update")]

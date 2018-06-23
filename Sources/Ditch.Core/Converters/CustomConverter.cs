@@ -13,14 +13,12 @@ namespace Ditch.Core.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (CanConvert(objectType))
-            {
-                var entity = (ICustomJson)Activator.CreateInstance(objectType);
-                entity.ReadJson(reader, serializer);
-                return entity;
-            }
+            if (!CanConvert(objectType))
+                return null;
 
-            return null;
+            var entity = (ICustomJson)Activator.CreateInstance(objectType);
+            entity.ReadJson(reader, serializer);
+            return entity;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

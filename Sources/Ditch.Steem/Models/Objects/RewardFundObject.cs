@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steemit\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class RewardFundObject
+    public class RewardFundObject
     {
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_curation_rewards")]
-        public UInt16 PercentCurationRewards { get; set; }
+        public ushort PercentCurationRewards { get; set; }
 
         /// <summary>
         /// API name: percent_content_rewards
@@ -74,7 +74,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_content_rewards")]
-        public UInt16 PercentContentRewards { get; set; }
+        public ushort PercentContentRewards { get; set; }
 
         /// <summary>
         /// API name: author_reward_curve

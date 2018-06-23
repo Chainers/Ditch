@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class LegacyChainProperties
+    public class LegacyChainProperties
     {
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         [MessageOrder(20)]
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
         
         /// <summary>
         /// API name: sbd_interest_rate
@@ -36,9 +35,9 @@ namespace Ditch.Steem.Models.Other
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(30)]
         [JsonProperty("sbd_interest_rate")]
-        public UInt16 SbdInterestRate {get; set;}
+        public ushort SbdInterestRate {get; set;}
 
-        public LegacyChainProperties(UInt16 sbdInterestRate, LegacyAsset accountCreationFee, UInt32 maximumBlockSize)
+        public LegacyChainProperties(ushort sbdInterestRate, LegacyAsset accountCreationFee, uint maximumBlockSize)
         {
             SbdInterestRate = sbdInterestRate;
             AccountCreationFee = accountCreationFee;

@@ -6,9 +6,8 @@ using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.JsonRpc;
-using Ditch.Golos.Models.Objects;
-using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models;
+using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -16,75 +15,43 @@ namespace Ditch.Golos
 {
     public partial class OperationManager
     {
-        private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private readonly MessageSerializer _messageSerializer;
-        private readonly IConnectionManager _connectionManager;
-        private List<string> _urls;
-        private readonly Config _config;
+        public JsonSerializerSettings JsonSerializerSettings { get; }
+        public MessageSerializer MessageSerializer { get; }
+        public IConnectionManager ConnectionManager { get; }
 
-        public byte[] ChainId { get; set; }
-        public bool IsConnected => _connectionManager.IsConnected;
+        public byte[] ChainId { get; set; } = Hex.HexToBytes("782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12");
+
+        public bool IsConnected => ConnectionManager.IsConnected;
 
         #region Constructors
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, Config config)
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
+            : this(connectionManage, jsonSerializerSettings, new MessageSerializer()) { }
+
+        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, MessageSerializer serializer)
         {
-            _jsonSerializerSettings = jsonSerializerSettings;
-            _connectionManager = connectionManage;
-            _config = config;
-            _messageSerializer = new MessageSerializer();
+            JsonSerializerSettings = jsonSerializerSettings;
+            ConnectionManager = connectionManage;
+            MessageSerializer = serializer;
         }
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
-            : this(connectionManage, jsonSerializerSettings, new Config())
+        public OperationManager()
         {
+            MessageSerializer = new MessageSerializer();
+            JsonSerializerSettings = new JsonSerializerSettings();
+            ConnectionManager = new WebSocketManager(JsonSerializerSettings);
         }
 
         #endregion Constructors
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="urls"></param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string TryConnectTo(List<string> urls, CancellationToken token)
+        public bool TryConnectTo(string endpoin, CancellationToken token)
         {
-            _urls = urls;
-
-            foreach (var url in urls)
-            {
-                try
-                {
-                    var connectedTo = _connectionManager.ConnectTo(url, token);
-                    if (string.IsNullOrEmpty(connectedTo))
-                        continue;
-
-                    if (TryLoadConfig(token))
-                        return url;
-
-                    if (_connectionManager.IsConnected)
-                        _connectionManager.Disconnect();
-                }
-                catch
-                {
-                    //todo nothing
-                }
-            }
-            return string.Empty;
+            return ConnectionManager.TryConnectTo(endpoin, token);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string RetryConnect(CancellationToken token)
+        public bool TryConnectTo(IEnumerable<string> urls, CancellationToken token)
         {
-            return TryConnectTo(_urls, token);
+            return ConnectionManager.TryConnectTo(urls, token);
         }
 
         /// <summary>
@@ -155,7 +122,7 @@ namespace Ditch.Golos
         public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
-            return _connectionManager.Execute<T>(jsonRpc, token);
+            return ConnectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
@@ -170,8 +137,8 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
-            return _connectionManager.Execute<T>(jsonRpc, token);
+            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
+            return ConnectionManager.Execute<T>(jsonRpc, token);
         }
 
         /// <summary>
@@ -185,8 +152,8 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse CustomGetRequest(string api, string method, object[] data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(_jsonSerializerSettings, api, method, data);
-            return _connectionManager.Execute(jsonRpc, token);
+            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
+            return ConnectionManager.Execute(jsonRpc, token);
         }
 
         /// <summary>
@@ -209,11 +176,11 @@ namespace Ditch.Golos
                 BaseOperations = operations
             };
 
-            var msg = _messageSerializer.Serialize<SignedTransaction>(transaction);
+            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
             var data = Sha256Manager.GetHash(msg);
 
             transaction.Signatures = new string[userPrivateKeys.Count];
-            for (int i = 0; i < userPrivateKeys.Count; i++)
+            for (var i = 0; i < userPrivateKeys.Count; i++)
             {
                 token.ThrowIfCancellationRequested();
                 var userPrivateKey = userPrivateKeys[i];
@@ -224,30 +191,27 @@ namespace Ditch.Golos
             return transaction;
         }
 
-        public virtual bool TryLoadConfig(CancellationToken token)
+        public byte[] TryLoadChainId(string[] chainFieldName, CancellationToken token)
         {
             var resp = GetConfig<JObject>(token);
-            if (!resp.IsError)
+            if (resp.IsError)
+                return new byte[0];
+
+            var conf = resp.Result;
+            JToken jToken = null;
+
+            foreach (var name in chainFieldName)
             {
-                var conf = resp.Result;
-                JToken jToken = null;
-
-                foreach (var name in _config.ChainFieldName)
-                {
-                    conf.TryGetValue(name, out jToken);
-                    if (jToken != null)
-                        break;
-                }
-
-                if (jToken == null)
-                    return false;
-
-                var str = jToken.Value<string>();
-                ChainId = Hex.HexToBytes(str);
-
-                return true;
+                conf.TryGetValue(name, out jToken);
+                if (jToken != null)
+                    break;
             }
-            return false;
+
+            if (jToken == null)
+                return new byte[0];
+
+            var str = jToken.Value<string>();
+            return Hex.HexToBytes(str);
         }
     }
 }

@@ -44,9 +44,9 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_block_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
+        public JsonRpcResponse<VoidResponse> BroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
         {
-            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
+            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
         }
     }
 }

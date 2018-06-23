@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Core.Models;
 using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
@@ -30,9 +29,9 @@ namespace Ditch.Steem.Models.Operations
 
         [MessageOrder(20)]
         [JsonProperty("weight")]
-        public UInt16 Weight { get; set; }
+        public ushort Weight { get; set; }
 
-        public Beneficiary(string account, UInt16 weight)
+        public Beneficiary(string account, ushort weight)
         {
             Account = account;
             Weight = weight;
@@ -52,7 +51,7 @@ namespace Ditch.Steem.Models.Operations
         {
         }
 
-        public BeneficiariesOperation(string author, string permlink, Asset maxAcceptedPayout, UInt16 percentSteemDollars, bool allowVotes, bool allowCurationRewards, params Beneficiary[] beneficiaries)
+        public BeneficiariesOperation(string author, string permlink, Asset maxAcceptedPayout, ushort percentSteemDollars, bool allowVotes, bool allowCurationRewards, params Beneficiary[] beneficiaries)
             : base(author, permlink, maxAcceptedPayout, percentSteemDollars, allowVotes, allowCurationRewards, SetBeneficiaries(beneficiaries))
         {
         }

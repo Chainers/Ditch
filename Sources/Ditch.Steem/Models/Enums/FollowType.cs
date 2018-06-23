@@ -27,6 +27,6 @@ namespace Ditch.Steem.Models.Enums
         /// API name: ignore
         /// 
         /// </summary>
-        Ignore,
+        Ignore
     }
 }

@@ -13,8 +13,7 @@ namespace Ditch.Steem.Helpers
             if (mhr.Length != 3 || !int.TryParse(mhr[0], out var major) || !int.TryParse(mhr[1], out var hardfork) || !int.TryParse(mhr[2], out var release))
                 return -1;
 
-            int ver;
-            ver = (0 | major) << 8;
+            var ver = (0 | major) << 8;
             ver = (ver | hardfork) << 16;
             ver = ver | release;
             return ver;

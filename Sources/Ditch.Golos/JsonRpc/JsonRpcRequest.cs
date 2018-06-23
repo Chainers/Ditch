@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 
@@ -7,7 +6,7 @@ namespace Ditch.Golos.JsonRpc
 {
     public struct JsonRpcRequest : IJsonRpcRequest
     {
-        private static int _id = 0;
+        private static int _id;
 
         public int Id { get; }
 
@@ -17,7 +16,7 @@ namespace Ditch.Golos.JsonRpc
         public JsonRpcRequest(string api, string method)
         {
             Id = Interlocked.Increment(ref _id);
-            if (Id == Int32.MaxValue)
+            if (Id == int.MaxValue)
                 Interlocked.Exchange(ref _id, 0);
 
             Message = $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",[]],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
@@ -26,13 +25,12 @@ namespace Ditch.Golos.JsonRpc
         public JsonRpcRequest(string api, string method, string paramData)
         {
             Id = Interlocked.Increment(ref _id);
-            if (Id == Int32.MaxValue)
+            if (Id == int.MaxValue)
                 Interlocked.Exchange(ref _id, 0);
 
-            if (string.IsNullOrEmpty(paramData))
-                Message = $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",[]],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
-            else
-                Message = $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",{paramData}],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
+            Message = string.IsNullOrEmpty(paramData)
+                ? $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",[]],\"jsonrpc\":\"2.0\",\"id\":{Id}}}"
+                : $"{{\"method\":\"call\",\"params\":[\"{api}\",\"{method}\",{paramData}],\"jsonrpc\":\"2.0\",\"id\":{Id}}}";
         }
 
         public JsonRpcRequest(JsonSerializerSettings jsonSerializerSettings, string api, string method, object[] data)

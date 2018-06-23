@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ShardSummary
+    public class ShardSummary
     {
 
         /// <summary>

@@ -1,39 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using Ditch.Core;
+using Ditch.Core.JsonRpc;
+using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models.Operations;
+using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System.Threading;
-using Ditch.Core;
-using System.Globalization;
-using Ditch.Steem.Models.Other;
-using Ditch.Steem.Models.Operations;
-using Ditch.Steem.Models.Enums;
 
 namespace Ditch.Steem.Tests
 {
+    [TestFixture]
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 2.2.12";
+        protected const string AppVersion = "ditch / 3.2.0-alpha";
 
-        private bool IgnoreRequestWithBadData = true;
+        private const bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
         protected string SbdSymbol = "SBD";
+        protected CancellationToken token = CancellationToken.None;
 
-        static BaseTest()
+        [OneTimeSetUp]
+        protected virtual void OneTimeSetUp()
         {
-            User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
-            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif));
-            var jss = GetJsonSerializerSettings();
-            var manager = new HttpManager(jss, 1024 * 1024);
-            Api = new OperationManager(manager, jss);
-            var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-            var connectedTo = Api.TryConnectTo(urls, CancellationToken.None);
-            Assert.IsFalse(string.IsNullOrEmpty(connectedTo), $"Enable connect to {string.Join(", ", urls)}");
+            if (User == null)
+            {
+                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+            }
+            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
+
+            if (Api == null)
+            {
+                var jss = GetJsonSerializerSettings();
+                var manager = new HttpManager(jss, 1024 * 1024);
+                Api = new OperationManager(manager, jss);
+
+                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
+                Api.TryConnectTo(urls, CancellationToken.None);
+            }
+
+            Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
         public static JsonSerializerSettings GetJsonSerializerSettings()
@@ -46,18 +59,49 @@ namespace Ditch.Steem.Tests
             return rez;
         }
 
-        protected void TestPropetries(Type type, JObject jObject)
+        protected void TestPropetries<T, T2>(JsonRpcResponse<T> resp, JsonRpcResponse<T2> obj)
         {
+            WriteLine(resp);
+            WriteLine(obj);
+
+            Assert.IsFalse(resp.IsError);
+
+            if (obj.Result == null)
+                throw new NullReferenceException("obj.Result");
+
+            var type = typeof(T);
+            object jObj = obj.Result;
+            if (type.IsArray)
+            {
+                var jArray = jObj as JArray;
+                if (jArray?.Count > 0)
+                {
+                    type = type.GetElementType();
+                    jObj = jArray.First.Value<JObject>();
+                }
+                else
+                {
+                    var jObject = obj as JObject[];
+                    if (jObject.Length > 0)
+                    {
+                        type = type.GetElementType();
+                        jObj = jObject[0];
+                    }
+                    else if (!IgnoreRequestWithBadData)
+                        throw new NullReferenceException("Impossible to do test for this input data!");
+                }
+            }
+
             var propNames = GetPropertyNames(type);
 
-            var chSet = jObject.Children();
+            var jNames = ((JObject)jObj).Properties().Select(p => p.Name);
 
             var msg = new List<string>();
-            foreach (JProperty jtoken in chSet)
+            foreach (var name in jNames)
             {
-                if (!propNames.Contains(jtoken.Name))
+                if (!propNames.Contains(name))
                 {
-                    msg.Add($"Missing {jtoken}");
+                    msg.Add($"Missing {name}");
                 }
             }
 
@@ -67,37 +111,6 @@ namespace Ditch.Steem.Tests
             }
         }
 
-        protected void TestPropetries(Type type, JArray jArray)
-        {
-            if (jArray == null)
-                throw new NullReferenceException("jArray");
-
-            if (type.IsArray)
-            {
-                if (jArray.Count > 0)
-                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
-
-        protected void TestPropetries(Type type, JObject[] jObject)
-        {
-            if (jObject == null)
-                throw new NullReferenceException("jObject");
-
-            if (type.IsArray)
-            {
-                if (jObject.Length > 0)
-                    TestPropetries(type.GetElementType(), jObject[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
 
         protected HashSet<string> GetPropertyNames(Type type)
         {
@@ -124,12 +137,26 @@ namespace Ditch.Steem.Tests
         protected SignedTransaction GetSignedTransaction()
         {
             var user = User;
-            var autor = "steepshot";
+            const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
             var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
             return transaction;
+        }
+
+        protected void WriteLine(string s)
+        {
+            Console.WriteLine("---------------");
+            Console.WriteLine(s);
+        }
+
+        protected void WriteLine(JsonRpcResponse r)
+        {
+            Console.WriteLine("---------------");
+            Console.WriteLine(r.IsError
+                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
+                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
     }
 }

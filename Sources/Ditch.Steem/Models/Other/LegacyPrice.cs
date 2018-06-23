@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api_legacy_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class LegacyPrice
+    public class LegacyPrice
     {
 
         /// <summary>

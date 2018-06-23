@@ -21,7 +21,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<GetInfoResult>> GetInfo(CancellationToken token)
         {
-            var endpoint = "v1/chain/get_info";
+            const string endpoint = "v1/chain/get_info";
             return await CustomGetRequest<GetInfoResult>(endpoint, token);
         }
 
@@ -36,11 +36,11 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<SignedBlock>> GetBlock(string blockNumOrId, CancellationToken token)
         {
-            var parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<string, object>
             {
                 {"block_num_or_id", blockNumOrId}
             };
-            var endpoint = "v1/chain/get_block";
+            const string endpoint = "v1/chain/get_block";
             return await CustomPostRequest<SignedBlock>(endpoint, parameters, token);
         }
 
@@ -54,7 +54,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<GetAccountResults>> GetAccount(GetAccountParams accountParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/get_account";
+            const string endpoint = "v1/chain/get_account";
             return await CustomPostRequest<GetAccountResults>(endpoint, accountParams, token);
         }
 
@@ -68,7 +68,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<GetCodeResults>> GetCode(GetCodeParams codeParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/get_code";
+            const string endpoint = "v1/chain/get_code";
             return await CustomPostRequest<GetCodeResults>(endpoint, codeParams, token);
         }
 
@@ -83,7 +83,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<GetTableRowsResult>> GetTableRows(GetTableRowsParams tableRowsParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/get_table_rows";
+            const string endpoint = "v1/chain/get_table_rows";
             return await CustomPostRequest<GetTableRowsResult>(endpoint, tableRowsParams, token);
         }
 
@@ -97,7 +97,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<AbiJsonToBinResult>> AbiJsonToBin(AbiJsonToBinParams abiJsonToBinParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/abi_json_to_bin";
+            const string endpoint = "v1/chain/abi_json_to_bin";
             return await CustomPostRequest<AbiJsonToBinResult>(endpoint, abiJsonToBinParams, token);
         }
 
@@ -111,7 +111,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<AbiBinToJsonResult>> AbiBinToJson(AbiBinToJsonParams abiBinToJsonParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/abi_bin_to_json";
+            const string endpoint = "v1/chain/abi_bin_to_json";
             return await CustomPostRequest<AbiBinToJsonResult>(endpoint, abiBinToJsonParams, token);
         }
 
@@ -125,7 +125,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<PushTransactionResults>> PushTransaction(object pushTransactionParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/push_transaction";
+            const string endpoint = "v1/chain/push_transaction";
             return await CustomPostRequest<PushTransactionResults>(endpoint, pushTransactionParams, token);
         }
 
@@ -139,7 +139,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<PushTransactionResults[]>> PushTransactions(object[] pushTransactionParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/push_transaction";
+            const string endpoint = "v1/chain/push_transaction";
             return await CustomPostRequest<PushTransactionResults[]>(endpoint, pushTransactionParams, token);
         }
 
@@ -152,7 +152,7 @@ namespace Ditch.EOS
         /// <returns></returns>
         public async Task<OperationResult<GetRequiredKeysResult>> GetRequiredKeys(GetRequiredKeysParams getRequiredKeysParams, CancellationToken token)
         {
-            var endpoint = "v1/chain/get_required_keys";
+            const string endpoint = "v1/chain/get_required_keys";
             return await CustomPostRequest<GetRequiredKeysResult>(endpoint, getRequiredKeysParams, token);
         }
     }

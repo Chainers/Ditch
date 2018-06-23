@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Ditch.Core;
 
 namespace Ditch.Steem.Tests
 {
     [TestFixture]
-    public class ConnectionTest
+    public class ConnectionTest : BaseTest
     {
+        [OneTimeSetUp]
+        protected override void OneTimeSetUp() { }
 
         /// <summary>
         /// https://www.steem.center/index.php?title=Public_Websocket_Servers
@@ -34,21 +34,20 @@ namespace Ditch.Steem.Tests
         [TestCase("https://steemd.steepshot.org")]
         public void NodeTest(string url)
         {
-            var jss = BaseTest.GetJsonSerializerSettings();
-            var connectionManager = new HttpManager(jss);
-            var manager = new OperationManager(connectionManager, jss);
+            var manager = new OperationManager();
+            var token = CancellationToken.None;
 
             var sw = new Stopwatch();
             var urls = new List<string> { url };
             sw.Restart();
-            var connectedTo = manager.TryConnectTo(urls, CancellationToken.None);
+            if (manager.TryConnectTo(urls, token))
+            {
+                manager.GetHardforkProperties(token);
+            }
             sw.Stop();
 
-            Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
+            WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
             Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
-
-            if (manager.IsConnected)
-                Assert.IsNotNull(manager.ChainId, "ChainId null");
         }
 
         [Test]
@@ -68,11 +67,10 @@ namespace Ditch.Steem.Tests
                 "https://steemd.pevo.science",
                 "https://steemd.steemgigs.org",
                 "https://rpc.buildteam.io",
-                "https://steemd2.steepshot.org",
+                "https://steemd2.steepshot.org"
             };
 
-            var jss = BaseTest.GetJsonSerializerSettings();
-            var manager = new OperationManager(new HttpManager(jss), jss);
+            var manager = new OperationManager();
 
             var sw = new Stopwatch();
             for (var i = 0; i < 5; i++)
@@ -80,9 +78,8 @@ namespace Ditch.Steem.Tests
                 sw.Restart();
                 var url = manager.TryConnectTo(urls, CancellationToken.None);
                 sw.Stop();
-                Console.WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
+                WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
                 Assert.IsTrue(manager.IsConnected, "Not connected");
-                Assert.IsNotNull(manager.ChainId, "ChainId null");
                 await Task.Delay(3000);
             }
         }

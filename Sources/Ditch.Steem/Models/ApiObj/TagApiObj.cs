@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Steem.Models.Other;
+﻿using Ditch.Steem.Models.Other;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.ApiObj
@@ -9,7 +8,7 @@ namespace Ditch.Steem.Models.ApiObj
     /// steem-0.19.1\libraries\app\include\steemit\app\steem_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class TagApiObj
+    public class TagApiObj
     {
 
         // bdType : string
@@ -26,15 +25,15 @@ namespace Ditch.Steem.Models.ApiObj
 
         // bdType : int32_t | = 0;
         [JsonProperty("net_votes")]
-        public Int32 NetVotes { get; set; }
+        public int NetVotes { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("top_posts")]
-        public UInt32 TopPosts { get; set; }
+        public uint TopPosts { get; set; }
 
         // bdType : uint32_t | = 0;
         [JsonProperty("comments")]
-        public UInt32 Comments { get; set; }
+        public uint Comments { get; set; }
 
         // bdType : uint128 | = 0;
         [JsonProperty("trending")]

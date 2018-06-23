@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiSavingsWithdrawObject
+    public class ApiSavingsWithdrawObject
     {
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("request_id")]
-        public UInt32 RequestId {get; set;}
+        public uint RequestId {get; set;}
 
         /// <summary>
         /// API name: amount

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other
@@ -12,7 +11,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\app\include\steemit\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DiscussionQuery
+    public class DiscussionQuery
     {
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit { get; set; }
+        public uint Limit { get; set; }
 
         /// <summary>
         /// API name: filter_tags
@@ -61,7 +60,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("truncate_body")]
-        public UInt32 TruncateBody { get; set; }
+        public uint TruncateBody { get; set; }
 
         /// <summary>
         /// API name: start_author

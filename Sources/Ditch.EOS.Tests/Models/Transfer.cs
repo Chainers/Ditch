@@ -8,7 +8,7 @@ namespace Ditch.EOS.Tests.Models
     /// 
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Transfer
+    public class Transfer
     {
 
         /// <summary>

@@ -27,6 +27,6 @@ namespace Ditch.Steem.Models.Enums
         /// API name: market
         /// Rate limiting for all other actions
         /// </summary>
-        Market,
+        Market
     }
 }

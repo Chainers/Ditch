@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\chain\include\steemit\chain\account_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class VestingDelegationExpirationObject
+    public class VestingDelegationExpirationObject
     {
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\condenser_api\include\steem\plugins\condenser_api\condenser_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiEscrowObject
+    public class ApiEscrowObject
     {
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("escrow_id")]
-        public UInt32 EscrowId {get; set;}
+        public uint EscrowId {get; set;}
 
         /// <summary>
         /// API name: from

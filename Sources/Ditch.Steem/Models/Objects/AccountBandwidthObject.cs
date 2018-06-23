@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\witness\include\steem\plugins\witness\witness_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountBandwidthObject
+    public class AccountBandwidthObject
     {
 
         /// <summary>

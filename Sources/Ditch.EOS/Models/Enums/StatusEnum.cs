@@ -33,6 +33,6 @@ namespace Ditch.EOS.Models.Enums
         /// API name: delayed
         /// 3 ///&lt; transaction delayed
         /// </summary>
-        Delayed,
+        Delayed
     }
 }

@@ -15,7 +15,7 @@ namespace Ditch.Steem.Models.Operations
     /// libraries\protocol\include\steemit\protocol\steem_operations.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class TransferOperation : BaseOperation
+    public class TransferOperation : BaseOperation
     {
         public override OperationType Type => OperationType.Transfer;
 

@@ -13,8 +13,7 @@
             if (mhr.Length != 3 || !int.TryParse(mhr[0], out major) || !int.TryParse(mhr[1], out hardfork) || !int.TryParse(mhr[2], out release))
                 return -1;
 
-            var ver = 0;
-            ver = (0 | major) << 8;
+            var ver = (0 | major) << 8;
             ver = (ver | hardfork) << 16;
             ver = ver | release;
             return ver;

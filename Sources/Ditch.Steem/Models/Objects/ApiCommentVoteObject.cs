@@ -8,7 +8,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\database_api\include\steem\plugins\database_api\database_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiCommentVoteObject
+    public class ApiCommentVoteObject
     {
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("weight")]
-        public UInt64 Weight {get; set;}
+        public ulong Weight {get; set;}
 
         /// <summary>
         /// API name: rshares
@@ -57,7 +57,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("rshares")]
-        public Int64 Rshares {get; set;}
+        public long Rshares {get; set;}
 
         /// <summary>
         /// API name: vote_percent
@@ -65,7 +65,7 @@ namespace Ditch.Steem.Models.Objects
         /// </summary>
         /// <returns>API type: int16_t</returns>
         [JsonProperty("vote_percent")]
-        public Int16 VotePercent {get; set;}
+        public short VotePercent {get; set;}
 
         /// <summary>
         /// API name: last_update

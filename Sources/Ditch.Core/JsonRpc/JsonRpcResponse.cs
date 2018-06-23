@@ -43,28 +43,29 @@ namespace Ditch.Core.JsonRpc
                 Id = Id,
                 Error = Error
             };
-            if (Result != null)
+
+            if (Result == null)
+                return rez;
+
+            var t = typeof(T);
+            switch (t.Name)
             {
-                var t = typeof(T);
-                switch (t.Name)
-                {
-                    case "Boolean":
-                    case "Byte":
-                    case "Int16":
-                    case "Int32":
-                    case "Int64":
-                    case "Double":
-                    case "String":
-                        {
-                            rez.Result = (T)Result;
-                            break;
-                        }
-                    default:
-                        {
-                            rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
-                            break;
-                        }
-                }
+                case "Boolean":
+                case "Byte":
+                case "Int16":
+                case "Int32":
+                case "Int64":
+                case "Double":
+                case "String":
+                    {
+                        rez.Result = (T)Result;
+                        break;
+                    }
+                default:
+                    {
+                        rez.Result = JsonConvert.DeserializeObject<T>(Result.ToString(), serializerSettings);
+                        break;
+                    }
             }
             return rez;
         }
@@ -74,7 +75,11 @@ namespace Ditch.Core.JsonRpc
     public class JsonRpcResponse<T> : JsonRpcResponse
     {
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
-        public new T Result { get; set; }
+        public new T Result
+        {
+            get => (T)base.Result;
+            set => base.Result = value;
+        }
 
         public new static JsonRpcResponse<T> FromString(string obj, JsonSerializerSettings serializerSettings)
         {

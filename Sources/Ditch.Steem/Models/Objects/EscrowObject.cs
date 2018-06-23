@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// steem-0.19.1\libraries\chain\include\steemit\chain\steem_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class EscrowObject
+    public class EscrowObject
     {
 
         // bdType : id_type
@@ -18,7 +18,7 @@ namespace Ditch.Steem.Models.Objects
 
         // bdType : uint32_t | = 20;
         [JsonProperty("escrow_id")]
-        public UInt32 EscrowId { get; set; }
+        public uint EscrowId { get; set; }
 
         // bdType : account_name_type
         [JsonProperty("from")]

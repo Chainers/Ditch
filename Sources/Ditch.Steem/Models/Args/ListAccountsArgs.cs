@@ -1,6 +1,5 @@
-using System;
-using Newtonsoft.Json;
 using Ditch.Steem.Models.Enums;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Args
 {
@@ -11,7 +10,7 @@ namespace Ditch.Steem.Models.Args
     /// libraries\plugins\apis\database_api\include\steem\plugins\database_api\database_api_args.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ListAccountsArgs
+    public class ListAccountsArgs
     {
 
         /// <summary>
@@ -28,7 +27,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit {get; set;}
+        public uint Limit {get; set;}
 
         /// <summary>
         /// API name: order

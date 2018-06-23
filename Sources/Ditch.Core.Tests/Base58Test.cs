@@ -1,5 +1,5 @@
-﻿using Cryptography.ECDSA;
-using System.Linq;
+﻿using System.Linq;
+using Cryptography.ECDSA;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -99,7 +99,7 @@ namespace Ditch.Core.Tests
             WriteLine(encodePublicWif);
             WriteLine(Hex.ToString(publicKey));
 
-            var name = "userlogin";
+            const string name = "userlogin";
             string[] roles = { "posting", "active", "owner", "memo" };
 
             foreach (var role in roles)

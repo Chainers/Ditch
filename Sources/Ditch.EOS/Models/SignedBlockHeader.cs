@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -8,7 +7,7 @@ namespace Ditch.EOS.Models
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockHeader : BlockHeader
+    public class SignedBlockHeader : BlockHeader
     {
         /// <summary>
         /// API name: block_id_type
@@ -24,7 +23,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: block_id_type</returns>
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
 
         /// <summary>
         /// API name: producer_signature

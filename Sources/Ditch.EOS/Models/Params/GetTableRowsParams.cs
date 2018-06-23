@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models.Params
@@ -8,7 +7,7 @@ namespace Ditch.EOS.Models.Params
     /// plugins\chain_plugin\include\eosio\chain_plugin\chain_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GetTableRowsParams
+    public class GetTableRowsParams
     {
 
         /// <summary>
@@ -75,6 +74,6 @@ namespace Ditch.EOS.Models.Params
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit { get; set; }
+        public uint Limit { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Ditch.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Ditch.Core;
 
 namespace Ditch.Golos.Tests
 {

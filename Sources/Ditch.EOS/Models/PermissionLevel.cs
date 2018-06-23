@@ -7,7 +7,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosiolib\action.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class PermissionLevel
+    public class PermissionLevel
     {
 
         /// <summary>

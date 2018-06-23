@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\plugins\apis\follow_api\include\steem\plugins\follow_api\follow_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CommentBlogEntry
+    public class CommentBlogEntry
     {
         /// <summary>
         /// API name: comment
@@ -41,6 +41,6 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("entry_id")]
-        public UInt32 EntryId {get; set;}
+        public uint EntryId {get; set;}
     }
 }

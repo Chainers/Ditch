@@ -102,7 +102,7 @@
 //            if (!Directory.Exists(outDir))
 //                Directory.CreateDirectory(outDir);
 
-//            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir));
+//            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir), Encoding.UTF8);
 //            foreach (var itm in UnknownTypes)
 //            {
 //                if (string.IsNullOrEmpty(itm.SearchDir))
@@ -353,21 +353,18 @@
 //            {
 //                case ObjectType.Class:
 //                    {
-//                        sb.AppendLine("using Ditch.Core;");
 //                        sb.AppendLine("using System;");
-//                        sb.AppendLine("using System.Collections.Generic; ");
-//                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
 //                        sb.AppendLine("using Newtonsoft.Json;");
 //                        sb.AppendLine();
-//                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
+//                        sb.AppendLine($"namespace Ditch.{ProjName}.Models");
 //                        break;
 //                    }
 //                case ObjectType.Enum:
 //                    {
-//                        sb.AppendLine("using Ditch.Core.Helpers;");
+//                        sb.AppendLine("using Ditch.Core.Converters;");
 //                        sb.AppendLine("using Newtonsoft.Json;");
 //                        sb.AppendLine();
-//                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
+//                        sb.AppendLine($"namespace Ditch.{ProjName}.Models");
 //                        break;
 //                    }
 //                case ObjectType.Api:
@@ -376,7 +373,7 @@
 //                        sb.AppendLine("using System;");
 //                        sb.AppendLine("using System.Collections.Generic; ");
 //                        sb.AppendLine("using Ditch.Core.JsonRpc;");
-//                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
+//                        sb.AppendLine($"using Ditch.{ProjName}.Models;");
 //                        sb.AppendLine();
 //                        sb.AppendLine($"namespace Ditch.{ProjName}.Api");
 //                        break;
@@ -429,7 +426,7 @@
 //                case ObjectType.Class:
 //                    {
 //                        sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
-//                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+//                        sb.AppendLine($"{indent}public class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
 //                        break;
 //                    }
 //                case ObjectType.Enum:
@@ -440,7 +437,7 @@
 //                    }
 //                case ObjectType.Api:
 //                    {
-//                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+//                        sb.AppendLine($"{indent}public partial class OperationManager" : string.Empty)}");
 //                        break;
 //                    }
 //            }

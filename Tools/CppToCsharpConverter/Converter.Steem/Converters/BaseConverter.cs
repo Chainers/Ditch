@@ -96,15 +96,15 @@ namespace Converter.Steem.Converters
                     }
                 case ObjectType.Api:
                     {
-                        outDir += "Api\\";
+                        outDir += "Apis\\";
                         break;
                     }
             }
 
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
-
-            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir));
+            
+            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir), Encoding.UTF8);
             foreach (var itm in UnknownTypes)
             {
                 if (string.IsNullOrEmpty(itm.SearchDir))
@@ -355,21 +355,18 @@ namespace Converter.Steem.Converters
             {
                 case ObjectType.Class:
                     {
-                        sb.AppendLine("using Ditch.Core;");
                         sb.AppendLine("using System;");
-                        sb.AppendLine("using System.Collections.Generic; ");
-                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Models");
                         break;
                     }
                 case ObjectType.Enum:
                     {
-                        sb.AppendLine("using Ditch.Core.Helpers;");
+                        sb.AppendLine("using Ditch.Core.Converters;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{ProjName}.Objects");
+                        sb.AppendLine($"namespace Ditch.{ProjName}.Models");
                         break;
                     }
                 case ObjectType.Api:
@@ -378,9 +375,9 @@ namespace Converter.Steem.Converters
                         sb.AppendLine("using System;");
                         sb.AppendLine("using System.Collections.Generic; ");
                         sb.AppendLine("using Ditch.Core.JsonRpc;");
-                        sb.AppendLine($"using Ditch.{ProjName}.Objects;");
+                        sb.AppendLine($"using Ditch.{ProjName}.Models;");
                         sb.AppendLine();
-                        sb.AppendLine($"namespace Ditch.{ProjName}.Api");
+                        sb.AppendLine($"namespace Ditch.{ProjName}");
                         break;
                     }
             }
@@ -432,7 +429,7 @@ namespace Converter.Steem.Converters
                 case ObjectType.Class:
                     {
                         sb.AppendLine($"{indent}[JsonObject(MemberSerialization.OptIn)]");
-                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public class {parsedClass.Name}{(parsedClass.IsTemplate ? parsedClass.Template : string.Empty)}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
                         break;
                     }
                 case ObjectType.Enum:
@@ -443,7 +440,7 @@ namespace Converter.Steem.Converters
                     }
                 case ObjectType.Api:
                     {
-                        sb.AppendLine($"{indent}public partial class {parsedClass.Name}{(parsedClass.Inherit.Any() ? $" : {string.Join(", ", parsedClass.Inherit)}" : string.Empty)}");
+                        sb.AppendLine($"{indent}public partial class OperationManager");
                         break;
                     }
             }
@@ -471,12 +468,12 @@ namespace Converter.Steem.Converters
                     parsedFunc.MainComment = Comment.RemoveBriefFromMainComment(parsedFunc.MainComment);
             }
 
-            if (!string.IsNullOrEmpty(parsedElement.MainComment))
-            {
-                sb.Append(indent);
-                sb.AppendLine(parsedElement.MainComment);
-                sb.AppendLine();
-            }
+            //if (!string.IsNullOrEmpty(parsedElement.MainComment))
+            //{
+            //    sb.Append(indent);
+            //    sb.AppendLine(parsedElement.MainComment);
+            //    sb.AppendLine();
+            //}
 
             var isVoidType = false;
             if (parsedClass.ObjectType == ObjectType.Api && parsedFunc != null)

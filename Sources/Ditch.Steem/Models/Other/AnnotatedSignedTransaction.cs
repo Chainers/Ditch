@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models.Other
@@ -8,7 +7,7 @@ namespace Ditch.Steem.Models.Other
     /// libraries\protocol\include\steemit\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AnnotatedSignedTransaction : SignedTransaction
+    public class AnnotatedSignedTransaction : SignedTransaction
     {
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_num")]
-        public UInt32 BlockNum {get; set;}
+        public uint BlockNum {get; set;}
 
         /// <summary>
         /// API name: transaction_num
@@ -33,6 +32,6 @@ namespace Ditch.Steem.Models.Other
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("transaction_num")]
-        public UInt32 TransactionNum {get; set;}
+        public uint TransactionNum {get; set;}
     }
 }

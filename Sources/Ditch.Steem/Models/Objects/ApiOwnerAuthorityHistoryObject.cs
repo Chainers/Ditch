@@ -9,7 +9,7 @@ namespace Ditch.Steem.Models.Objects
     /// libraries\plugins\apis\database_api\include\steem\plugins\database_api\database_api_objects.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ApiOwnerAuthorityHistoryObject
+    public class ApiOwnerAuthorityHistoryObject
     {
 
         /// <summary>

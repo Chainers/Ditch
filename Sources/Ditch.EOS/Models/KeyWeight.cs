@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -8,7 +7,7 @@ namespace Ditch.EOS.Models
     /// contracts\eosio.system\native.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class KeyWeight
+    public class KeyWeight
     {
 
         /// <summary>
@@ -25,6 +24,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: weight_type</returns>
         [JsonProperty("weight")]
-        public UInt16 Weight {get; set;}
+        public ushort Weight {get; set;}
     }
 }

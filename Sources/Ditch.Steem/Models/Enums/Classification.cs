@@ -33,6 +33,6 @@ namespace Ditch.Steem.Models.Enums
         /// API name: posting
         /// 3
         /// </summary>
-        Posting,
+        Posting
     }
 }
