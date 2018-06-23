@@ -21,9 +21,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "get_ops_in_block", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -38,9 +37,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "get_transaction", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -55,9 +53,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "get_account_history", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -73,9 +70,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "enum_virtual_ops", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

@@ -24,9 +24,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_followers", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -44,9 +43,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_following", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -61,9 +59,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_follow_count", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -80,9 +77,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_feed_entries", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -99,9 +95,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_feed", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -118,9 +113,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_blog_entries", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -137,9 +131,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_blog", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -155,9 +148,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_account_reputations", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -173,9 +165,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_reblogged_by", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -190,9 +181,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_blog_authors", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

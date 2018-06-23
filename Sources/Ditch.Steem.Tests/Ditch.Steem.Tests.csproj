@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\CondenserApiTest.cs" />
     <Compile Include="Apis\AccountHistoryApiTest.cs" />
     <Compile Include="Apis\WitnessApiTest.cs" />
     <Compile Include="Apis\BlockApiTest.cs" />

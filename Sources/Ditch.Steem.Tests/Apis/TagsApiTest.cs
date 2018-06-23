@@ -19,9 +19,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_trending_tags", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -36,9 +35,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_tags_used_by_author", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -54,9 +52,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussion", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -72,9 +69,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_content_replies", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -86,9 +82,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_post_discussions_by_payout", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -100,9 +95,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_comment_discussions_by_payout", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -114,9 +108,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_trending", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -128,9 +121,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_created", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -142,9 +134,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_active", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -156,9 +147,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_cashout", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -170,9 +160,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_votes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -184,9 +173,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_children", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -198,9 +186,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_hot", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -217,9 +204,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_feed", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -236,9 +222,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_blog", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -253,9 +238,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_comments", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -270,9 +254,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_promoted", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -289,9 +272,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_replies_by_last_update", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -309,9 +291,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_author_before_date", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -327,9 +308,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_active_votes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

@@ -25,9 +25,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomGetRequest<JObject>("v1/chain/get_info", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -44,9 +43,8 @@ namespace Ditch.EOS.Tests
                 {"block_num_or_id", blockNumOrId}
             };
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_block", parameters, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
 
@@ -64,9 +62,8 @@ namespace Ditch.EOS.Tests
 
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_account", accountParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -82,9 +79,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_code", codeParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -106,9 +102,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_table_rows", tableRowsParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -132,9 +127,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_json_to_bin", abiJsonToBinParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -153,9 +147,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Ignore("you need to put your own data")]
@@ -200,9 +193,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transaction", pushTransactionParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Ignore("you need to put your own data")]
@@ -222,9 +214,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transactions", abiBinToJsonParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Ignore("you need to put your own data")]
@@ -272,9 +263,8 @@ namespace Ditch.EOS.Tests
             WriteLine(resp);
 
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

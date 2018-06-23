@@ -26,9 +26,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -39,9 +38,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_witness_schedule", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -52,9 +50,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_hardfork_properties", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -65,9 +62,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_reward_funds", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -78,9 +74,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_current_price_feed", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -91,9 +86,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_feed_history", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -105,9 +99,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_witnesses", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -122,9 +115,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_witnesses", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -141,9 +133,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_witness_votes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -154,9 +145,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_active_witnesses", CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -168,9 +158,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_accounts", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -185,9 +174,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_accounts", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -203,9 +191,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_owner_histories", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -217,9 +204,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_owner_histories", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -236,9 +222,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_account_recovery_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -253,9 +238,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_account_recovery_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -270,9 +254,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_change_recovery_account_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -287,9 +270,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_change_recovery_account_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -307,9 +289,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_escrows", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -321,9 +302,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_escrows", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -340,9 +320,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_withdraw_vesting_routes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -358,9 +337,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_withdraw_vesting_routes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -378,9 +356,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_savings_withdrawals", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -392,9 +369,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_savings_withdrawals", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -411,9 +387,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_vesting_delegations", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -425,9 +400,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_vesting_delegations", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -444,9 +418,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_vesting_delegation_expirations", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -458,9 +431,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_vesting_delegation_expirations", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -477,9 +449,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_sbd_conversion_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -491,9 +462,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_sbd_conversion_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -508,9 +478,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_decline_voting_rights_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -525,9 +494,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_decline_voting_rights_requests", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -545,9 +513,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_comments", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -562,9 +529,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_comments", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -586,9 +552,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_votes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -604,9 +569,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_votes", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -623,9 +587,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "list_limit_orders", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -640,9 +603,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "find_limit_orders", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -657,9 +619,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_transaction_hex", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -684,9 +645,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_required_signatures", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -701,9 +661,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_potential_signatures", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -718,9 +677,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "verify_authority", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -737,9 +695,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "verify_account_authority", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -752,9 +709,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "verify_signatures", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -777,9 +733,8 @@ namespace Ditch.Steem.Tests.Apis
                 Assert.IsFalse(resp.IsError);
 
                 var obj = Api.CustomGetRequest<JObject>(KnownApiNames.DatabaseApi, "get_smt_next_identifier", CancellationToken.None);
-                TestPropetries(resp.Result.GetType(), obj.Result);
-                WriteLine("----------------------------------------------------------------------------");
                 WriteLine(obj);
+                TestPropetries(resp.Result.GetType(), obj.Result);
             }
         }
     }

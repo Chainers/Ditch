@@ -20,9 +20,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.BlockApi, "get_block_header", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -37,9 +36,8 @@ namespace Ditch.Steem.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.BlockApi, "get_block", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

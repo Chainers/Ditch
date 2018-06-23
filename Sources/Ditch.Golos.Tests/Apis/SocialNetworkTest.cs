@@ -17,9 +17,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -30,9 +29,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_trending_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -43,9 +41,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.SocialNetworkApi, "get_best_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -56,9 +53,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_active_categories", new object[] { User.Login, 3 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -69,9 +65,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_recent_categories", new object[] { string.Empty, 3 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         //[Test]
@@ -95,9 +90,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_reward_fund", new object[] { User.Login }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -116,9 +110,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_name_cost", new object[] { User.Login }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -153,9 +146,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_vesting_delegations", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -174,9 +166,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_expiring_vesting_delegations", new object[] { User.Login, new DateTime(2017, 01, 01), 100 }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -195,9 +186,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_assets", new object[] { new[] { "GBG" } }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -216,9 +206,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_assets_by_issuer", new object[] { "b1acksun" }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -237,9 +226,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_assets_dynamic_data", new object[] { new[] { "GBG" } }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -258,9 +246,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_bitassets_data", new object[] { new[] { "GBG" } }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -279,9 +266,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "list_assets", new object[] { string.Empty, 1 }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -298,9 +284,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_active_votes", new object[] { User.Login, permlink }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -311,9 +296,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_account_votes", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -329,9 +313,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_content", new object[] { author, permlink }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -344,9 +327,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_content_replies", new object[] { parent, parentPermink }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -357,9 +339,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -375,9 +356,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_trending", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -393,9 +373,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_created", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -410,9 +389,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_active", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -427,9 +405,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_cashout", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -444,9 +421,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         //[Test]
@@ -464,9 +440,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_post_discussions_by_payout", new object[] { query }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -489,9 +464,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_comment_discussions_by_payout", new object[] { query }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {
@@ -511,9 +485,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_votes", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         //[Test]
@@ -529,9 +502,8 @@ namespace Ditch.Golos.Tests.Apis
         //    WriteLine(resp);
 
         //    var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    WriteLine("----------------------------------------------------------------------------");
         //    WriteLine(obj);
+        //    TestPropetries(resp.Result.GetType(), obj.Result);
         //}
 
         [Test]
@@ -546,9 +518,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_hot", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -563,9 +534,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_feed", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -580,9 +550,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_blog", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -597,9 +566,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_comments", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -614,9 +582,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_promoted", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -627,9 +594,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { User.Login, string.Empty, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -643,9 +609,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsTrue(resp.Result.Length <= count);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_author_before_date", new object[] { User.Login, string.Empty, dt, count }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -665,9 +630,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { User.Login, "spasibo-golos" }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -684,9 +648,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -708,9 +671,8 @@ namespace Ditch.Golos.Tests.Apis
         //    WriteLine(resp);
 
         //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_payout_extension_cost", new object[] { User.Login, parmlink, new DateTime(2017, 1, 1) }, CancellationToken.None);
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    WriteLine("----------------------------------------------------------------------------");
         //    WriteLine(obj);
+        //    TestPropetries(resp.Result.GetType(), obj.Result);
         //}
 
         //[Test]
@@ -725,9 +687,8 @@ namespace Ditch.Golos.Tests.Apis
 
         //    var obj = Api.CustomGetRequest<JObject>(KnownApiNames.SocialNetworkApi, "get_payout_extension_time", new object[] { User.Login, parmlink, new Asset(0, 3, "GBG") },
         //        CancellationToken.None);
-        //    TestPropetries(resp.Result.GetType(), obj.Result);
-        //    WriteLine("----------------------------------------------------------------------------");
         //    WriteLine(obj);
+        //    TestPropetries(resp.Result.GetType(), obj.Result);
         //}
 
         //[Test]
@@ -741,9 +702,8 @@ namespace Ditch.Golos.Tests.Apis
         //        WriteLine(resp);
 
         //        var obj = Api.CustomGetRequest<JArray>(KnownApiNames.SocialNetworkApi, "get_proposed_transactions", new object[] { User.Login }, CancellationToken.None);
-        //        TestPropetries(resp.Result.GetType(), obj.Result);
-        //        WriteLine("----------------------------------------------------------------------------");
         //        WriteLine(obj);
+        //        TestPropetries(resp.Result.GetType(), obj.Result);
         //    }
         //    else
         //    {

@@ -17,9 +17,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_account_reputations", new object[] { User.Login, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -30,9 +29,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_blog", new object[] { User.Login, 0, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -43,9 +41,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_blog_authors", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -56,9 +53,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_blog_entries", new object[] { User.Login, 0, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -69,9 +65,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_feed", new object[] { User.Login, 0, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -82,9 +77,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_feed_entries", new object[] { User.Login, 0, 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -95,9 +89,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.Follow, "get_follow_count", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -116,9 +109,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsTrue(respNext.Result.First().Follower == resp.Result.Last().Follower);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_followers", new object[] { User.Login, string.Empty, FollowType.Blog, count }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -137,9 +129,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsTrue(respNext.Result.First().Following == resp.Result.Last().Following);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.Follow, "get_following", new object[] { User.Login, string.Empty, FollowType.Blog, count }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]

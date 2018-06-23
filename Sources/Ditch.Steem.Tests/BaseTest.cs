@@ -19,12 +19,13 @@ namespace Ditch.Steem.Tests
     [TestFixture]
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 2.2.12";
+        protected const string AppVersion = "ditch / 3.2.0-alpha";
 
         private const bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
         protected string SbdSymbol = "SBD";
+        protected CancellationToken token = CancellationToken.None;
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
@@ -62,14 +63,14 @@ namespace Ditch.Steem.Tests
         {
             var propNames = GetPropertyNames(type);
 
-            var chSet = jObject.Children();
+            var jNames = jObject.Properties().Select(p => p.Name);
 
             var msg = new List<string>();
-            foreach (JProperty jtoken in chSet)
+            foreach (var name in jNames)
             {
-                if (!propNames.Contains(jtoken.Name))
+                if (!propNames.Contains(name))
                 {
-                    msg.Add($"Missing {jtoken}");
+                    msg.Add($"Missing {name}");
                 }
             }
 
@@ -146,11 +147,13 @@ namespace Ditch.Steem.Tests
 
         protected void WriteLine(string s)
         {
+            Console.WriteLine("---------------");
             Console.WriteLine(s);
         }
 
         protected void WriteLine(JsonRpcResponse r)
         {
+            Console.WriteLine("---------------");
             Console.WriteLine(r.IsError
                 ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
                 : JsonConvert.SerializeObject(r.Result, Formatting.Indented));

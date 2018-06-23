@@ -17,9 +17,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.PrivateMessage, "get_inbox", new object[] { User.Login, new DateTime(2017, 1, 1), 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
 
         [Test]
@@ -30,9 +29,8 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(resp.IsError);
 
             var obj = Api.CustomGetRequest<JArray>(KnownApiNames.PrivateMessage, "get_outbox", new object[] { User.Login, new DateTime(2017, 1, 1), 10 }, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
             WriteLine(obj);
+            TestPropetries(resp.Result.GetType(), obj.Result);
         }
     }
 }

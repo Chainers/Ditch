@@ -24,7 +24,7 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("start")]
-        public ulong Start { get; set; }
+        public ulong Start { get; set; } = 0;
 
         /// <summary>
         /// API name: limit
@@ -32,6 +32,6 @@ namespace Ditch.Steem.Models.Args
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public uint Limit { get; set; }
+        public uint Limit { get; set; } = 1000;
     }
 }

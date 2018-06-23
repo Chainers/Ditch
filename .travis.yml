@@ -1,0 +1,6 @@
+language: csharp
+solution: ./Sources/Ditch.sln
+before_install:
+  - sudo apt-get install nunit-console
+before_script:
+  - nuget restore ./Sources/Ditch.sln
