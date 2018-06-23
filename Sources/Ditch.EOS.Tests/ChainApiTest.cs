@@ -20,31 +20,22 @@ namespace Ditch.EOS.Tests
         public async Task GetInfoTest()
         {
             var resp = await Api.GetInfo(CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomGetRequest<JObject>("v1/chain/get_info", CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Test]
         public async Task GetBlockTest()
         {
             const string blockNumOrId = "1";
-            var resp = await Api.GetBlock(blockNumOrId, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var parameters = new Dictionary<string, object>
             {
                 {"block_num_or_id", blockNumOrId}
             };
+
+            var resp = await Api.GetBlock(blockNumOrId, CancellationToken.None);
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_block", parameters, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
 
@@ -56,14 +47,8 @@ namespace Ditch.EOS.Tests
                 AccountName = "test1"
             };
             var resp = await Api.GetAccount(accountParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_account", accountParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Test]
@@ -74,13 +59,8 @@ namespace Ditch.EOS.Tests
                 AccountName = "hackathon"
             };
             var resp = await Api.GetCode(codeParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_code", codeParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Test]
@@ -97,13 +77,8 @@ namespace Ditch.EOS.Tests
                 Limit = 10
             };
             var resp = await Api.GetTableRows(tableRowsParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_table_rows", tableRowsParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Test]
@@ -122,13 +97,8 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.AbiJsonToBin(abiJsonToBinParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_json_to_bin", abiJsonToBinParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Test]
@@ -142,13 +112,8 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Ignore("you need to put your own data")]
@@ -188,13 +153,8 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.PushTransaction(pushTransactionParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transaction", pushTransactionParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Ignore("you need to put your own data")]
@@ -209,13 +169,8 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.PushTransactions(null, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transactions", abiBinToJsonParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Ignore("you need to put your own data")]
@@ -258,13 +213,8 @@ namespace Ditch.EOS.Tests
                 AvailableKeys = new[] { "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS7drQWvc7Mn7NK2PivjbAqLXMyBpvSNnZWnZC3CS61g1dhVK57o", "EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7" }
             };
             var resp = await Api.GetRequiredKeys(getRequiredKeysParams, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
-
             var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
     }
 }

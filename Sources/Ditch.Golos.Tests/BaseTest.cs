@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -55,11 +56,42 @@ namespace Ditch.Golos.Tests
             return rez;
         }
 
-        protected void TestPropetries(Type type, JObject jObject)
+        protected void TestPropetries<T, T2>(JsonRpcResponse<T> resp, JsonRpcResponse<T2> obj)
         {
+            WriteLine(resp);
+            WriteLine(obj);
+
+            Assert.IsFalse(resp.IsError);
+
+            if (obj.Result == null)
+                throw new NullReferenceException("obj.Result");
+
+            var type = typeof(T);
+            object jObj = obj.Result;
+            if (type.IsArray || typeof(IEnumerable).IsAssignableFrom(type))
+            {
+                var jArray = jObj as JArray;
+                if (jArray?.Count > 0)
+                {
+                    type = type.GetElementType();
+                    jObj = jArray.First.Value<JObject>();
+                }
+                else
+                {
+                    var jObject = obj as JObject[];
+                    if (jObject.Length > 0)
+                    {
+                        type = type.GetElementType();
+                        jObj = jObject[0];
+                    }
+                    else if (!IgnoreRequestWithBadData)
+                        throw new NullReferenceException("Impossible to do test for this input data!");
+                }
+            }
+
             var propNames = GetPropertyNames(type);
 
-            var jNames = jObject.Properties().Select(p => p.Name);
+            var jNames = ((JObject)jObj).Properties().Select(p => p.Name);
 
             var msg = new List<string>();
             foreach (var name in jNames)
@@ -74,38 +106,6 @@ namespace Ditch.Golos.Tests
             {
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
-        }
-
-        protected void TestPropetries(Type type, JArray jArray)
-        {
-            if (jArray == null)
-                throw new NullReferenceException("jArray");
-
-            if (type.IsArray)
-            {
-                if (jArray.Count > 0)
-                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
-
-        protected void TestPropetries(Type type, JObject[] jObject)
-        {
-            if (jObject == null)
-                throw new NullReferenceException("jObject");
-
-            if (type.IsArray)
-            {
-                if (jObject.Length > 0)
-                    TestPropetries(type.GetElementType(), jObject[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
         }
 
         protected HashSet<string> GetPropertyNames(Type type)

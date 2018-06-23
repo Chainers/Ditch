@@ -6,9 +6,8 @@ using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.JsonRpc;
-using Ditch.Golos.Models.Objects;
-using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models;
+using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

@@ -18,8 +18,7 @@ namespace Ditch.EOS.Tests
             WriteLine(name);
             var resp = await Api.WalletCreate(name, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -29,7 +28,7 @@ namespace Ditch.EOS.Tests
             WriteLine(name);
             var resp = await Api.WalletOpen(name, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -39,7 +38,7 @@ namespace Ditch.EOS.Tests
             WriteLine(name);
             var resp = await Api.WalletLock(name, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -47,7 +46,7 @@ namespace Ditch.EOS.Tests
         {
             var resp = await Api.WalletLockAll(CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -57,7 +56,7 @@ namespace Ditch.EOS.Tests
             const string password = "PW5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
             var resp = await Api.WalletUnlock(name, password, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Ignore("you need to put your own data")]
@@ -68,7 +67,7 @@ namespace Ditch.EOS.Tests
             const string password = "5KVaJ31DyAQnyyaVSsuQNyyLYqogdSBK51YaRAXbZroWtCQVCrE";
             var resp = await Api.WalletImportKey(name, password, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -76,8 +75,7 @@ namespace Ditch.EOS.Tests
         {
             var resp = await Api.WalletList(CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -85,8 +83,7 @@ namespace Ditch.EOS.Tests
         {
             var resp = await Api.WalletListKeys(CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -94,8 +91,7 @@ namespace Ditch.EOS.Tests
         {
             var resp = await Api.WalletGetPublicKeys(CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -103,8 +99,7 @@ namespace Ditch.EOS.Tests
         {
             var resp = await Api.WalletSetTimeout(10, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Ignore("you need to put your own data")]
@@ -149,8 +144,7 @@ namespace Ditch.EOS.Tests
 
             var resp = await Api.WalletSignTrx(trx, publicKeys, chainId, CancellationToken.None);
             WriteLine(resp);
-            Assert.IsTrue(resp.IsSuccess);
-            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
     }
 }

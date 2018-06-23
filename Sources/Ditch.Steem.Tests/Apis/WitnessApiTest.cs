@@ -18,12 +18,8 @@ namespace Ditch.Steem.Tests.Apis
                 Type = BandwidthType.Forum
             };
             var resp = Api.GetAccountBandwidth(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_account_bandwidth", args, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         [Test]
@@ -31,12 +27,8 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetReserveRatioArgs();
             var resp = Api.GetReserveRatio(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_reserve_ratio", args, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
     }
 }

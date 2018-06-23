@@ -22,12 +22,8 @@ namespace Ditch.Steem.Tests.Apis
                 Type = BandwidthType.Forum
             };
             var resp = Api.GetAccountBandwidth2(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.CondenserApi, "get_account_bandwidth", new object[] { args.Account, args.Type }, token);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
 
         //  "condenser_api.get_account_count",
@@ -41,9 +37,6 @@ namespace Ditch.Steem.Tests.Apis
                 Start = 3
             };
             var resp = Api.GetAccountHistory2(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             //var aargs = new object[] { args.Account, args.Limit, args.Start };
             //var obj = Api.CustomGetRequest<JArray>(KnownApiNames.CondenserApi, "get_account_history", aargs, token);
             //WriteLine(obj);
@@ -64,13 +57,9 @@ namespace Ditch.Steem.Tests.Apis
                 BlockNum = 22054347
             };
             var resp = Api.GetBlock2(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var aargs = new object[] { args.BlockNum };
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.CondenserApi, "get_block", aargs, token);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
         //  "condenser_api.get_block_header",
         //  "condenser_api.get_blog",
@@ -134,13 +123,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetTrendingTagsArgs();
             var resp = Api.GetTrendingTags2(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var aargs = new object[] { args.StartTag, args.Limit };
             var obj = Api.CustomGetRequest<JObject>(KnownApiNames.CondenserApi, "get_trending_tags", aargs, CancellationToken.None);
-            WriteLine(obj);
-            TestPropetries(resp.Result.GetType(), obj.Result);
+            TestPropetries(resp, obj);
         }
         //  "condenser_api.get_version",
         //  "condenser_api.get_vesting_delegations",

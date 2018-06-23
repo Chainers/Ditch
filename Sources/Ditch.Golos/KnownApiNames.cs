@@ -10,11 +10,16 @@
         public const string PrivateMessage = "private_message";
         public const string SocialNetworkApi = "social_network";
 
+
+        public const string Tags = "tags";
+        public const string WitnessApi = "witness_api";
+        public const string AccountHistory = "account_history";
+        public const string OperationHistory = "operation_history";
+
         //public const string AuthUtilApi = "auth_util";
         //public const string BlockInfoApi = "block_info";
         //public const string RawBlockApi = "raw_block";
         //public const string TestApi = "test_api";
-        //public const string AccountHistoryApi = "account_history";
         //chain
         //chain_api
         //debug_node

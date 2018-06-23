@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -68,7 +69,7 @@ namespace CppToCsharpConverter
                 var txt = JsonConvert.SerializeObject(SettingsViewModel);
                 if (!File.Exists(FileName))
                     File.Create(FileName);
-                File.WriteAllText(FileName, JsonBeautifier.Beautify(txt));
+                File.WriteAllText(FileName, JsonBeautifier.Beautify(txt), Encoding.UTF8);
             }
         }
 

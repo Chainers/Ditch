@@ -114,7 +114,7 @@ namespace Converter.Golos
                             sb.AppendLine("Подготовил: [@korzunav](https://golos.io/@korzunav).");
                             sb.AppendLine();
 
-                            File.WriteAllText(Path.Combine(apiObj, parsedClass.CppName) + ".md", sb.ToString());
+                            File.WriteAllText(Path.Combine(apiObj, parsedClass.CppName) + ".md", sb.ToString(), Encoding.UTF8);
                             break;
                         }
                     case ObjectType.Enum:
@@ -144,7 +144,7 @@ namespace Converter.Golos
                             sb.AppendLine("Подготовил: [@korzunav](https://golos.io/@korzunav).");
                             sb.AppendLine();
 
-                            File.WriteAllText(Path.Combine(apiObj, parsedClass.CppName) + ".md", sb.ToString());
+                            File.WriteAllText(Path.Combine(apiObj, parsedClass.CppName) + ".md", sb.ToString(), Encoding.UTF8);
                             break;
                         }
                     case ObjectType.Api:
@@ -211,7 +211,7 @@ namespace Converter.Golos
                             sb.AppendLine("Подготовил: [@korzunav](https://golos.io/@korzunav).");
                             sb.AppendLine();
 
-                            File.WriteAllText(Path.Combine(apiPath, parsedClass.CppName) + ".md", sb.ToString());
+                            File.WriteAllText(Path.Combine(apiPath, parsedClass.CppName) + ".md", sb.ToString(), Encoding.UTF8);
                             break;
                         }
                 }
@@ -297,7 +297,7 @@ namespace Converter.Golos
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                File.WriteAllText(Path.Combine(path, parsedClass.Name), sb.ToString());
+                File.WriteAllText(Path.Combine(path, parsedClass.Name), sb.ToString(), Encoding.UTF8);
             }
         }
 

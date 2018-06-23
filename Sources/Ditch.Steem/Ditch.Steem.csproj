@@ -23,12 +23,15 @@
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.0" />
-    <PackageReference Include="Ditch.Core" Version="3.2.0-alpha" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\Args\" />
     <Folder Include="Models\Return\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj" />
   </ItemGroup>
 
 </Project>

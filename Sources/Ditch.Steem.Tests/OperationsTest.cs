@@ -292,9 +292,6 @@ namespace Ditch.Steem.Tests
                 Accounts = new[] { User.Login }
             };
             var resp = Api.FindAccounts(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var acc = resp.Result.Accounts[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);

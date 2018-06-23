@@ -68,7 +68,7 @@ namespace Converter.Core
                 var parcedClass = TryParseClass(searchTask, text, isApi);
                 parcedClass.AbsPathToFile = searchTask.FullPath.Remove(0, searchTask.SearchDir.Length);
                 var json = JsonConvert.SerializeObject(parcedClass);
-                File.WriteAllText(cashFile, json);
+                File.WriteAllText(cashFile, json, Encoding.UTF8);
                 yield return parcedClass;
             }
         }

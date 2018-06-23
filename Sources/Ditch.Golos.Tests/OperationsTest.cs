@@ -5,9 +5,8 @@ using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Models.Enums;
-using Ditch.Golos.Models.Operations;
-using Ditch.Golos.Models.Other;
+using Ditch.Golos.Models;
+using Ditch.Golos.Operations;
 using NUnit.Framework;
 using Base58 = Ditch.Core.Base58;
 
@@ -56,8 +55,9 @@ namespace Ditch.Golos.Tests
 
         private int GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = Api.GetContent(author, permlink, CancellationToken.None);
+            var resp = Api.GetContent(author, permlink, 100, CancellationToken.None);
             WriteLine(resp);
+
             Assert.IsFalse(resp.IsError);
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
             return vote?.Percent ?? 0;
@@ -160,7 +160,7 @@ namespace Ditch.Golos.Tests
         [Test]
         public void WitnessUpdateTest()
         {
-            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
+            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainApiProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
             var response = Post(User.ActiveKeys, false, op);
             Assert.IsFalse(response.IsError, response.GetErrorMessage());
         }
@@ -257,8 +257,6 @@ namespace Ditch.Golos.Tests
         private bool IsFollow(string author)
         {
             var resp = Api.GetFollowing(User.Login, author, FollowType.Blog, 1, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
             return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
@@ -296,9 +294,6 @@ namespace Ditch.Golos.Tests
         public void AccountUpdateTest()
         {
             var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
             var acc = resp.Result[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);

@@ -30,17 +30,49 @@ namespace Ditch.EOS.Tests
             //Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
-        protected void TestPropetries(Type type, JObject jObject)
+        protected void TestPropetries<T, T2>(OperationResult<T> resp, OperationResult<T2> obj)
         {
+            WriteLine(resp);
+            WriteLine(obj);
+
+            Assert.IsFalse(resp.IsError);
+
+            if (obj.Result == null)
+                throw new NullReferenceException("obj.Result");
+
+            var type = typeof(T);
+            object jObj = obj.Result;
+            if (type.IsArray)
+            {
+                var jArray = jObj as JArray;
+                if (jArray?.Count > 0)
+                {
+                    type = type.GetElementType();
+                    jObj = jArray.First.Value<JObject>();
+                }
+                else
+                {
+                    var jObject = obj as JObject[];
+                    if (jObject.Length > 0)
+                    {
+                        type = type.GetElementType();
+                        jObj = jObject[0];
+                    }
+                    else if (!IgnoreRequestWithBadData)
+                        throw new NullReferenceException("Impossible to do test for this input data!");
+                }
+            }
+
             var propNames = GetPropertyNames(type);
-            var chSet = jObject.Children();
+
+            var jNames = ((JObject)jObj).Properties().Select(p => p.Name);
 
             var msg = new List<string>();
-            foreach (JProperty jtoken in chSet)
+            foreach (var name in jNames)
             {
-                if (!propNames.Contains(jtoken.Name))
+                if (!propNames.Contains(name))
                 {
-                    msg.Add($"Missing {jtoken}");
+                    msg.Add($"Missing {name}");
                 }
             }
 
@@ -48,38 +80,6 @@ namespace Ditch.EOS.Tests
             {
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
-        }
-
-        protected void TestPropetries(Type type, JArray jArray)
-        {
-            if (jArray == null)
-                throw new NullReferenceException("jArray");
-
-            if (type.IsArray)
-            {
-                if (jArray.Count > 0)
-                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
-
-        protected void TestPropetries(Type type, JObject[] jObject)
-        {
-            if (jObject == null)
-                throw new NullReferenceException("jObject");
-
-            if (type.IsArray)
-            {
-                if (jObject.Length > 0)
-                    TestPropetries(type.GetElementType(), jObject[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
         }
 
         protected HashSet<string> GetPropertyNames(Type type)
@@ -111,9 +111,9 @@ namespace Ditch.EOS.Tests
 
         protected void WriteLine<T>(OperationResult<T> r)
         {
-            Console.WriteLine(r.IsSuccess
-                ? JsonConvert.SerializeObject(r.Result, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            Console.WriteLine(r.IsError
+                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
+                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
         }
     }
 }
