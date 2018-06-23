@@ -13,11 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Steem.Tests", "Ditch.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Golos.Tests", "Ditch.Golos.Tests\Ditch.Golos.Tests.csproj", "{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Core.Tests", "Ditch.Core.Tests\Ditch.Core.Tests.csproj", "{55D4FDFB-8801-4176-BBDD-BA00027859F9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.EOS", "Ditch.EOS\Ditch.EOS.csproj", "{B060494D-D51A-4621-B315-F06FDC5200ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.EOS.Tests", "Ditch.EOS.Tests\Ditch.EOS.Tests.csproj", "{18D52367-9434-493C-928D-9755EDEEE97C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Core.Tests", "Ditch.Core.Tests\Ditch.Core.Tests.csproj", "{56C54FEE-3749-43A8-8D57-88A075193A45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,6 @@ Global
 		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55D4FDFB-8801-4176-BBDD-BA00027859F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55D4FDFB-8801-4176-BBDD-BA00027859F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55D4FDFB-8801-4176-BBDD-BA00027859F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55D4FDFB-8801-4176-BBDD-BA00027859F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B060494D-D51A-4621-B315-F06FDC5200ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B060494D-D51A-4621-B315-F06FDC5200ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B060494D-D51A-4621-B315-F06FDC5200ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +53,10 @@ Global
 		{18D52367-9434-493C-928D-9755EDEEE97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18D52367-9434-493C-928D-9755EDEEE97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18D52367-9434-493C-928D-9755EDEEE97C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
