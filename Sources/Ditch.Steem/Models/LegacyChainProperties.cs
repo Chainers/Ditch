@@ -18,7 +18,7 @@ namespace Ditch.Steem.Models
         /// <returns>API type: legacy_asset</returns>
         [MessageOrder(10)]
         [JsonProperty("account_creation_fee")]
-        public LegacyAsset AccountCreationFee {get; set;}
+        public Asset AccountCreationFee {get; set;}
 
         // bdType : uint32_t | = steemit_min_block_size_limit * 2;
         /// <summary>
@@ -37,7 +37,7 @@ namespace Ditch.Steem.Models
         [JsonProperty("sbd_interest_rate")]
         public ushort SbdInterestRate {get; set;}
 
-        public LegacyChainProperties(ushort sbdInterestRate, LegacyAsset accountCreationFee, uint maximumBlockSize)
+        public LegacyChainProperties(ushort sbdInterestRate, Asset accountCreationFee, uint maximumBlockSize)
         {
             SbdInterestRate = sbdInterestRate;
             AccountCreationFee = accountCreationFee;

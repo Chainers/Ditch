@@ -34,7 +34,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("reward_balance")]
-        public LegacyAsset RewardBalance {get; set;}
+        public Asset RewardBalance {get; set;}
 
         /// <summary>
         /// API name: recent_claims

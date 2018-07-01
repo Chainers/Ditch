@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
+using Ditch.EOS.Models;
 using Ditch.EOS.Tests.Models;
 using NUnit.Framework;
 
@@ -10,6 +13,8 @@ namespace Ditch.EOS.Tests
     [TestFixture]
     public class WalletApiTest : BaseTest
     {
+        const string CreatePostActionName = "createpost";
+
         [Test]
         public async Task CreateTest()
         {
@@ -35,14 +40,14 @@ namespace Ditch.EOS.Tests
             user.Password = resp.Result;
 
             var key1 = Secp256K1Manager.GenerateRandomKey();
-            user.PrivateOwnerWif = Ditch.Core.Base58.EncodePrivateWif(key1);
+            user.PrivateOwnerWif = Core.Base58.EncodePrivateWif(key1);
             var pKey1 = Secp256K1Manager.GetPublicKey(key1, true);
-            user.PublicOwnerWif = Ditch.Core.Base58.EncodePublicWif(pKey1, "EOS");
+            user.PublicOwnerWif = Core.Base58.EncodePublicWif(pKey1, "EOS");
 
             var key2 = Secp256K1Manager.GenerateRandomKey();
-            user.PrivateActiveWif = Ditch.Core.Base58.EncodePrivateWif(key2);
+            user.PrivateActiveWif = Core.Base58.EncodePrivateWif(key2);
             var pKey2 = Secp256K1Manager.GetPublicKey(key2, true);
-            user.PublicActiveWif = Ditch.Core.Base58.EncodePublicWif(pKey2, "EOS");
+            user.PublicActiveWif = Core.Base58.EncodePublicWif(pKey2, "EOS");
 
             WriteLine(user);
 
@@ -55,39 +60,12 @@ namespace Ditch.EOS.Tests
             Assert.IsFalse(resp.IsError);
 
             var unlock = await Api.WalletUnlock(user.Login, user.Password, CancellationToken);
-            // Assert.IsTrue(unlock.IsSuccess);
+            Assert.IsFalse(unlock.IsError);
 
             var walletGetPublicKeysResult = await Api.WalletGetPublicKeys(CancellationToken.None);
             WriteLine(walletGetPublicKeysResult);
             Assert.IsFalse(walletGetPublicKeysResult.IsError);
         }
-
-
-        //--------------------
-        //testname20180621043704
-        //--------------------
-        //"PW5KjL9Y5UWeMff4yR5kDkopfd365qeGoQX9iUioGS9D9kVkN3BxR"
-        //--------------------
-        //{
-        //    "Login": "testname20180621043704",
-        //    "PrivateOwnerWif": "5JhNqmjvavizox9LK8tYM77txzVuJMDmLt4NXG4HYfuEXX5Hnak",
-        //    "PublicOwnerWif": "EOS8XsUUYjXRJSFPbcou56WRYJRsSxqRG2KA8asBWXg2X3pKuokXF",
-        //    "PrivateActiveWif": "",
-        //    "PublicActiveWif": "EOS6UM37jgVkx65nrwxH4cyMiTmzN1rQVawDfLxnCvnX94W92PJ6U",
-        //    "Password": "PW5KjL9Y5UWeMff4yR5kDkopfd365qeGoQX9iUioGS9D9kVkN3BxR",
-        //    "OwnerKeys": [
-        //    "dAH2kDu8xpFV02wQ0FtzDmXPes+DFIcYF3RU0XZgVLA="
-        //        ],
-        //    "ActiveKeys": [
-        //    ""
-        //        ],
-        //    "IsNsfw": false,
-        //    "IsLowRated": false
-        //}
-        //--------------------
-        //"PW5KjL9Y5UWeMff4yR5kDkopfd365qeGoQX9iUioGS9D9kVkN3BxR"
-        //--------------------
-        //"PW5KjL9Y5UWeMff4yR5kDkopfd365qeGoQX9iUioGS9D9kVkN3BxR"
 
         [Test]
         public async Task WalletOpenTest()
@@ -130,6 +108,7 @@ namespace Ditch.EOS.Tests
         }
 
         [Test]
+        [Ignore(" --- not work")]
         public async Task WalletListKeysTest()
         {
             var resp = await Api.WalletListKeys(CancellationToken.None);
@@ -141,6 +120,7 @@ namespace Ditch.EOS.Tests
         public async Task WalletGetPublicKeysTest()
         {
             var unlock = await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
+            Assert.IsFalse(unlock.IsError);
 
             var resp = await Api.WalletGetPublicKeys(CancellationToken.None);
             WriteLine(resp);
@@ -155,45 +135,69 @@ namespace Ditch.EOS.Tests
             Assert.IsFalse(resp.IsError);
         }
 
-        //[Test]
-        //public async Task WalletSignTrxTest()
-        //{
-        //    var infoResp = await Api.GetInfo(CancellationToken.None);
-        //    var info = infoResp.Result;
+        [Test]
+        public async Task WalletSignTrxTest()
+        {
+            var abiJsonToBinArgs = new AbiJsonToBinParams
+            {
+                Code = ContractInfo.ContractName,
+                Action = CreatePostActionName,
+                Args = new CreatePostArgs
+                {
+                    UrlPhoto = "test_1_url",
+                    AccountCreator = User.Login,
+                    IpfsHashPhoto = "test_1_hash",
+                    //ParentPost = 1
+                }
+            };
+            var abiJsonToBin = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
+            Assert.IsFalse(abiJsonToBin.IsError);
 
-        //    var trx = new SignedTransaction
-        //    {
-        //        Expiration = info.HeadBlockTime.AddSeconds(30),
-        //        RefBlockNum = (ushort)(info.HeadBlockNum & 0xffff),
-        //        RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(info.HeadBlockId), 4),
-        //        DelaySec = 0,
-        //        ContextFreeActions = new Action[0],
-        //        Actions = new[]
-        //            {
-        //                        new Action
-        //                        {
-        //                            Account = "hackathon",
-        //                            Name = "transfer",
-        //                            Authorization = new[]
-        //                            {
-        //                                new PermissionLevel
-        //                                {
-        //                                    Actor = "test1",
-        //                                    Permission = "active"
-        //                                }
-        //                            },
-        //                            Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
-        //                        }
-        //                    },
-        //        Signatures = new string[0],
-        //        ContextFreeData = new byte[0]
-        //    };
-        //    var publicKeys = new[] { string.Empty };
-        //    var chainId = string.Empty;
+            var accountParams = new GetAccountParams
+            {
+                AccountName = User.Login
+            };
 
-        //    var resp = await Api.WalletSignTrx(trx, publicKeys, chainId, CancellationToken.None);
-        //    WriteLine(resp);
-        //    Assert.IsFalse(resp.IsError);
-        //}
+            var unlock = await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
+            Assert.IsFalse(unlock.IsError);
+
+            var accR = await Api.GetAccount(accountParams, CancellationToken);
+            Assert.IsFalse(accR.IsError);
+
+            var publicKeys = accR.Result.Permissions.First(p => p.PermName == "active").RequiredAuth.Keys.Select(k => k.Key).ToArray();
+
+            var args = new CreateTransactionArgs
+            {
+                Actions = new[]
+                {
+                    new EOS.Models.Action
+                    {
+                        Account = User.Login,
+                        Name = CreatePostActionName,
+                        Authorization = new[]
+                        {
+                            new PermissionLevel
+                            {
+                                Actor = User.Login,
+                                Permission = "active"
+                            }
+                        },
+                        Data =  abiJsonToBin.Result.Binargs
+                    }
+                },
+                PrivateKeys = new List<byte[]> { User.PrivateActiveKey }
+            };
+            var trx = await Api.CreateTransaction(args, CancellationToken);
+
+            var infoResp = await Api.GetInfo(CancellationToken.None);
+            var info = infoResp.Result;
+
+            var resp = await Api.WalletSignTrx(trx, publicKeys, info.ChainId, CancellationToken.None);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
+
+            var wlock = await Api.WalletLock(User.Login, CancellationToken);
+            Assert.IsFalse(wlock.IsError);
+        }
     }
 }

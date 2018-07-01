@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
+using Ditch.Steem.Helpers;
 using Ditch.Steem.Models;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
@@ -42,7 +43,12 @@ namespace Ditch.Steem.Tests
                 Api = new OperationManager(manager, jss);
 
                 var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                Api.TryConnectTo(urls, CancellationToken.None);
+                Assert.IsTrue(Api.TryConnectTo(urls, CancellationToken.None), "Enable connect to node");
+
+                var conf = Api.GetConfig<JObject>(CancellationToken.None);
+                var version = conf.Result.Value<string>("STEEM_BLOCKCHAIN_VERSION");
+                Assert.IsFalse(string.IsNullOrEmpty(version));
+                Config.BlockchainVersion = VersionHelper.ToInteger(version);
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
@@ -58,67 +64,73 @@ namespace Ditch.Steem.Tests
             return rez;
         }
 
-        protected void TestPropetries<T>(JsonRpcResponse<T> resp, JsonRpcResponse<JArray> obj)
+
+        protected void TestPropetries<T>(JsonRpcResponse<T> resp)
         {
             WriteLine(resp);
-            WriteLine(obj);
-
             Assert.IsFalse(resp.IsError);
-
-            var jResult = obj.Result;
-
-            if (jResult == null)
-                throw new NullReferenceException("obj.Result");
-
-            var type = typeof(T);
-            if (type.IsArray) //list
+#if DEBUG
+            if (resp.RawResponse.Contains("\"result\":{"))
             {
-                type = type.GetElementType();
-                var jObj = obj.Result.First.Value<JObject>();
-                Compare(type, jObj);
+                var obj = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse);
+                WriteLine(obj);
+
+
+                if (obj.Result == null)
+                    throw new NullReferenceException("obj.Result");
+
+                Compare(typeof(T), obj.Result);
             }
-            else //dictionary
+            else
             {
-                jResult = jResult.First().Value<JArray>();
+                var obj = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse);
+                WriteLine(obj);
+
+                Assert.IsFalse(resp.IsError);
+
+                var jResult = obj.Result;
+
                 if (jResult == null)
-                    throw new InvalidCastException(nameof(obj));
+                    throw new NullReferenceException("obj.Result");
 
-                while (type != null && !type.IsGenericType)
+                var type = typeof(T);
+                if (type.IsArray) //list
                 {
-                    type = type.BaseType;
+                    type = type.GetElementType();
+                    var jObj = obj.Result.First.Value<JObject>();
+                    Compare(type, jObj);
                 }
-
-                if (type == null)
-                    throw new InvalidCastException(nameof(obj));
-
-                var types = type.GenericTypeArguments;
-
-                if (types.Length != jResult.Count)
+                else //dictionary
                 {
-                    throw new InvalidCastException(nameof(obj));
-                }
+                    jResult = jResult.First().Value<JArray>();
+                    if (jResult == null)
+                        throw new InvalidCastException(nameof(obj));
 
-                for (var i = 0; i < types.Length; i++)
-                {
-                    var t = types[i];
-                    if (t.IsPrimitive)
-                        continue;
-                    Compare(t, jResult[i].Value<JObject>());
+                    while (type != null && !type.IsGenericType)
+                    {
+                        type = type.BaseType;
+                    }
+
+                    if (type == null)
+                        throw new InvalidCastException(nameof(obj));
+
+                    var types = type.GenericTypeArguments;
+
+                    if (types.Length != jResult.Count)
+                    {
+                        throw new InvalidCastException(nameof(obj));
+                    }
+
+                    for (var i = 0; i < types.Length; i++)
+                    {
+                        var t = types[i];
+                        if (t.IsPrimitive)
+                            continue;
+                        Compare(t, jResult[i].Value<JObject>());
+                    }
                 }
             }
-        }
-
-        protected void TestPropetries<T>(JsonRpcResponse<T> resp, JsonRpcResponse<JObject> obj)
-        {
-            WriteLine(resp);
-            WriteLine(obj);
-
-            Assert.IsFalse(resp.IsError);
-
-            if (obj.Result == null)
-                throw new NullReferenceException("obj.Result");
-
-            Compare(typeof(T), obj.Result);
+#endif
         }
 
         private void Compare(Type type, JObject jObj)
@@ -184,9 +196,19 @@ namespace Ditch.Steem.Tests
         protected void WriteLine(JsonRpcResponse r)
         {
             Console.WriteLine("---------------");
-            Console.WriteLine(r.IsError
-                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            if (r.IsError)
+            {
+
+#if DEBUG
+                Console.WriteLine($"Request:{Environment.NewLine}\t{r.RawRequest}{Environment.NewLine}Response:{Environment.NewLine}\t{r.RawResponse}");
+#else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+#endif
+            }
+            else
+            {
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            }
         }
     }
 }

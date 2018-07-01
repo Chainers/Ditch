@@ -103,16 +103,7 @@ namespace Ditch.Core
             if (string.IsNullOrEmpty(UrlToConnect))
                 return null;
 
-            var content = new StringContent(jsonRpc.Message);
-            var response = _client.PostAsync(UrlToConnect, content, token).Result;
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                var stringResponse = response.Content.ReadAsStringAsync().Result;
-                var prop = JsonRpcResponse.FromString(stringResponse, _jsonSerializerSettings);
-                return prop;
-            }
-
-            return new JsonRpcResponse { Error = new HttpResponseError((int)response.StatusCode, "Http Error") };
+            return Execute<VoidResponse>(jsonRpc, token);
         }
 
         /// <summary>
@@ -128,8 +119,28 @@ namespace Ditch.Core
             if (string.IsNullOrEmpty(UrlToConnect))
                 return null;
 
-            var response = Execute(jsonRpc, token);
-            return response.ToTyped<T>(_jsonSerializerSettings);
+            var content = new StringContent(jsonRpc.Message);
+            var response = _client.PostAsync(UrlToConnect, content, token).Result;
+            var stringResponse = response.Content.ReadAsStringAsync().Result;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, _jsonSerializerSettings);
+#if DEBUG
+                prop.RawRequest = jsonRpc.Message;
+                prop.RawResponse = stringResponse;
+#endif
+                return prop;
+            }
+
+            return new JsonRpcResponse<T>
+            {
+                Error = new HttpResponseError((int)response.StatusCode, "Http Error"),
+#if DEBUG
+                RawRequest = jsonRpc.Message,
+                RawResponse = stringResponse
+#endif
+            };
         }
     }
 }

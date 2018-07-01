@@ -169,9 +169,20 @@ namespace Ditch.EOS.Tests
         protected void WriteLine<T>(OperationResult<T> r)
         {
             Console.WriteLine("--------------------");
-            Console.WriteLine(r.IsError
-                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+
+            if (r.IsError)
+            {
+
+#if DEBUG
+                Console.WriteLine($"Request:{Environment.NewLine}\t{r.RawRequest}{Environment.NewLine}Response:{Environment.NewLine}\t{r.RawResponse}");
+#else
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+#endif
+            }
+            else
+            {
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            }
         }
 
         protected void WriteLine<T>(T r)

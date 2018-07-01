@@ -94,10 +94,10 @@ namespace Ditch.Steem
         //  "condenser_api.get_transaction",
         //  "condenser_api.get_transaction_hex",
         //  "condenser_api.get_trending_tags",
-        public JsonRpcResponse<GetTrendingTagsReturn> GetTrendingTags2(GetTrendingTagsArgs args, CancellationToken token)
+        public JsonRpcResponse<ApiTagObject[]> GetTrendingTags2(GetTrendingTagsArgs args, CancellationToken token)
         {
             var aargs = new object[] { args.StartTag, args.Limit };
-            return CustomGetRequest<GetTrendingTagsReturn>(KnownApiNames.CondenserApi, "get_trending_tags", aargs, token);
+            return CustomGetRequest<ApiTagObject[]>(KnownApiNames.CondenserApi, "get_trending_tags", aargs, token);
         }
         //  "condenser_api.get_version",
         //  "condenser_api.get_vesting_delegations",

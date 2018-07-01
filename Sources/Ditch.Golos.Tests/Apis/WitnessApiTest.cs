@@ -19,16 +19,14 @@ namespace Ditch.Golos.Tests.Apis
         public void get_current_median_history_price()
         {
             var resp = Api.GetCurrentMedianHistoryPrice(CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_current_median_history_price", new object[] { }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
         public void get_feed_history()
         {
             var resp = Api.GetFeedHistory(CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_feed_history", new object[] { }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -43,8 +41,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_witness_by_account()
         {
             var resp = Api.GetWitnessByAccount(User.Login, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_witness_by_account", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -59,8 +56,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_witness_schedule()
         {
             var resp = Api.GetWitnessSchedule(CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_witness_schedule", new object[] { }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -71,16 +67,14 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(witnes.IsError);
 
             var resp = Api.GetWitnesses(new[] { witnes.Result[0].Id }, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.WitnessApi, "get_witnesses", new object[] { new[] { witnes.Result[0].Id } }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
         public void get_witnesses_by_vote()
         {
             var resp = Api.GetWitnessesByVote(string.Empty, 3, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.WitnessApi, "get_witnesses_by_vote", new object[] { string.Empty, 3 }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]

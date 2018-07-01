@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using Ditch.Core.Errors;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SuperSocket.ClientEngine;
 using WebSocket4Net;
 
@@ -13,7 +13,7 @@ namespace Ditch.Core
 {
     public class WebSocketManager : IConnectionManager, IDisposable
     {
-        private readonly Dictionary<int, JsonRpcResponse> _responseDictionary;
+        private readonly Dictionary<int, string> _responseDictionary;
         private readonly Dictionary<int, ManualResetEvent> _manualResetEventDictionary;
         private readonly ManualResetEvent _socketOpenEvent;
         private readonly ManualResetEvent _socketCloseEvent;
@@ -44,7 +44,7 @@ namespace Ditch.Core
             WaitConnectTimeout = waitConnectTimeout;
             WaitResponceTimeout = waitResponceTimeout;
             _jsonSerializerSettings = jsonSerializerSettings;
-            _responseDictionary = new Dictionary<int, JsonRpcResponse>();
+            _responseDictionary = new Dictionary<int, string>();
             _manualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
             _socketOpenEvent = new ManualResetEvent(false);
             _socketCloseEvent = new ManualResetEvent(false);
@@ -126,7 +126,7 @@ namespace Ditch.Core
                 }
             }
         }
-
+        
         /// <summary>
         /// Sends request to specified url
         /// </summary>
@@ -136,43 +136,9 @@ namespace Ditch.Core
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
-            var waiter = new ManualResetEvent(false);
-            lock (_manualResetEventDictionary)
-            {
-                _manualResetEventDictionary.Add(jsonRpc.Id, waiter);
-            }
-            if (!OpenIfClosed(token))
-                return new JsonRpcResponse(new SystemError(ErrorCodes.ConnectionTimeoutError));
-
-            Debug.WriteLine($">>> {jsonRpc.Message}");
-            _webSocket.Send(jsonRpc.Message);
-
-            WaitHandle.WaitAny(new[] { token.WaitHandle, waiter }, WaitResponceTimeout);
-
-            lock (_manualResetEventDictionary)
-            {
-                if (_manualResetEventDictionary.ContainsKey(jsonRpc.Id))
-                    _manualResetEventDictionary.Remove(jsonRpc.Id);
-                waiter.Dispose();
-            }
-
-            JsonRpcResponse response = null;
-            lock (_responseDictionary)
-            {
-                if (_responseDictionary.ContainsKey(jsonRpc.Id))
-                {
-                    response = _responseDictionary[jsonRpc.Id];
-                    _responseDictionary.Remove(jsonRpc.Id);
-                }
-            }
-
-            token.ThrowIfCancellationRequested();
-
-            if (response == null)
-                return new JsonRpcResponse(new SystemError(ErrorCodes.ResponseTimeoutError));
-
-            return response;
+            return Execute<VoidResponse>(jsonRpc, token);
         }
+
 
         /// <summary>
         /// Sends request to specified url
@@ -184,10 +150,63 @@ namespace Ditch.Core
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token)
         {
-            var response = Execute(jsonRpc, token);
-            return response.ToTyped<T>(_jsonSerializerSettings);
-        }
+            var waiter = new ManualResetEvent(false);
+            lock (_manualResetEventDictionary)
+            {
+                _manualResetEventDictionary.Add(jsonRpc.Id, waiter);
+            }
+            if (!OpenIfClosed(token))
+                return new JsonRpcResponse<T>
+                {
+                    Error = new SystemError(ErrorCodes.ConnectionTimeoutError),
+#if DEBUG
+                    RawRequest = jsonRpc.Message,
+#endif
+                };
 
+            _webSocket.Send(jsonRpc.Message);
+
+            WaitHandle.WaitAny(new[] { token.WaitHandle, waiter }, WaitResponceTimeout);
+
+            lock (_manualResetEventDictionary)
+            {
+                if (_manualResetEventDictionary.ContainsKey(jsonRpc.Id))
+                    _manualResetEventDictionary.Remove(jsonRpc.Id);
+                waiter.Dispose();
+            }
+
+            JsonRpcResponse<T> response = null;
+            lock (_responseDictionary)
+            {
+                if (_responseDictionary.ContainsKey(jsonRpc.Id))
+                {
+                    var json = _responseDictionary[jsonRpc.Id];
+                    response = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(json, _jsonSerializerSettings);
+#if DEBUG
+                    response.RawResponse = json;
+#endif
+                    _responseDictionary.Remove(jsonRpc.Id);
+                }
+            }
+
+            token.ThrowIfCancellationRequested();
+
+            if (response == null)
+                return new JsonRpcResponse<T>
+                {
+                    Error = new SystemError(ErrorCodes.ResponseTimeoutError),
+#if DEBUG
+                    RawRequest = jsonRpc.Message,
+#endif
+                };
+
+#if DEBUG
+            response.RawRequest = jsonRpc.Message;
+#endif
+
+            return response;
+        }
+        
 
         private bool OpenIfClosed(CancellationToken token)
         {
@@ -238,25 +257,26 @@ namespace Ditch.Core
 
         private static void WebSocketOnError(object sender, ErrorEventArgs errorEventArgs)
         {
-            Debug.WriteLine($"{errorEventArgs.Exception.Message} | {errorEventArgs.Exception.StackTrace}");
+            //Debug.WriteLine($"{errorEventArgs.Exception.Message} | {errorEventArgs.Exception.StackTrace}");
         }
 
         private void WebSocketMessageReceived(object sender, MessageReceivedEventArgs e)
         {
-            Debug.WriteLine($"<<< {e.Message}");
-            var prop = JsonRpcResponse.FromString(e.Message, _jsonSerializerSettings);
+            var prop = JsonConvert.DeserializeObject<JObject>(e.Message);
+            var id = prop.Value<int>("id");
+
             lock (_manualResetEventDictionary)
             {
-                if (!_manualResetEventDictionary.ContainsKey(prop.Id)) return;
+                if (!_manualResetEventDictionary.ContainsKey(id)) return;
 
                 lock (_responseDictionary)
                 {
-                    if (_responseDictionary.ContainsKey(prop.Id))
-                        _responseDictionary[prop.Id] = prop;
+                    if (_responseDictionary.ContainsKey(id))
+                        _responseDictionary[id] = e.Message;
                     else
-                        _responseDictionary.Add(prop.Id, prop);
+                        _responseDictionary.Add(id, e.Message);
                 }
-                _manualResetEventDictionary[prop.Id].Set();
+                _manualResetEventDictionary[id].Set();
             }
         }
 

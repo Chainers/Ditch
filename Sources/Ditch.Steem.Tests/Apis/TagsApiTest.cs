@@ -15,8 +15,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetTrendingTagsArgs();
             var resp = Api.GetTrendingTags(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_trending_tags", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -27,8 +26,7 @@ namespace Ditch.Steem.Tests.Apis
                 Author = User.Login
             };
             var resp = Api.GetTagsUsedByAuthor(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_tags_used_by_author", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -40,8 +38,7 @@ namespace Ditch.Steem.Tests.Apis
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
             var resp = Api.GetDiscussion(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussion", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -53,8 +50,7 @@ namespace Ditch.Steem.Tests.Apis
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
             var resp = Api.GetContentReplies(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_content_replies", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -62,8 +58,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetPostDiscussionsByPayoutArgs();
             var resp = Api.GetPostDiscussionsByPayout(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_post_discussions_by_payout", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -71,8 +66,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetCommentDiscussionsByPayoutArgs();
             var resp = Api.GetCommentDiscussionsByPayout(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_comment_discussions_by_payout", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -80,8 +74,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByTrendingArgs();
             var resp = Api.GetDiscussionsByTrending(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_trending", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -89,8 +82,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByCreatedArgs();
             var resp = Api.GetDiscussionsByCreated(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_created", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -98,8 +90,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByActiveArgs();
             var resp = Api.GetDiscussionsByActive(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_active", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -107,8 +98,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByCashoutArgs();
             var resp = Api.GetDiscussionsByCashout(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_cashout", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -116,8 +106,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByVotesArgs();
             var resp = Api.GetDiscussionsByVotes(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_votes", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -125,8 +114,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByChildrenArgs();
             var resp = Api.GetDiscussionsByChildren(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_children", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -134,8 +122,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetDiscussionsByHotArgs();
             var resp = Api.GetDiscussionsByHot(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_hot", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -148,8 +135,7 @@ namespace Ditch.Steem.Tests.Apis
                 FilterTags = new[] {"steepshot"}
             };
             var resp = Api.GetDiscussionsByFeed(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_feed", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -162,8 +148,7 @@ namespace Ditch.Steem.Tests.Apis
                 FilterTags = new[] { "steepshot" }
             };
             var resp = Api.GetDiscussionsByBlog(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_blog", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -174,8 +159,7 @@ namespace Ditch.Steem.Tests.Apis
                 StartAuthor = User.Login
             };
             var resp = Api.GetDiscussionsByComments(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_comments", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -186,8 +170,7 @@ namespace Ditch.Steem.Tests.Apis
                 ParentAuthor = "steepshot"
             };
             var resp = Api.GetDiscussionsByPromoted(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_promoted", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -200,8 +183,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.GetRepliesByLastUpdate(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_replies_by_last_update", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -215,8 +197,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3
             };
             var resp = Api.GetDiscussionsByAuthorBeforeDate(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_discussions_by_author_before_date", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -228,8 +209,7 @@ namespace Ditch.Steem.Tests.Apis
                 Author = "steepshot"
             };
             var resp = Api.GetActiveVotes(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.TagsApi, "get_active_votes", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
     }
 }

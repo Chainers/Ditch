@@ -167,11 +167,5 @@ namespace Ditch.EOS
             var args = new object[] { trx, publicKeys, chainId };
             return await CustomPostRequest<SignedTransaction>(endpoint, args, token);
         }
-
-        public async Task<OperationResult<PackedTransaction>> WalletGetPackedTransaction(SignedTransaction trx,CancellationToken token)
-        {
-            string endpoint = $"{WalletUrl}/v1/vim/get_packed_transaction";
-            return await CustomPostRequest<PackedTransaction>(endpoint, trx, token);
-        }
     }
 }

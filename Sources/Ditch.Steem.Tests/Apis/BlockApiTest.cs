@@ -16,8 +16,7 @@ namespace Ditch.Steem.Tests.Apis
                 BlockNum = 1
             };
             var resp = Api.GetBlockHeader(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.BlockApi, "get_block_header", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -28,8 +27,7 @@ namespace Ditch.Steem.Tests.Apis
                 BlockNum = 1
             };
             var resp = Api.GetBlock(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.BlockApi, "get_block", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
     }
 }

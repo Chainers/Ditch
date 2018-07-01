@@ -152,12 +152,12 @@ namespace Ditch.EOS
                 Actions = args.Actions
             };
 
-            transaction.PackedTrx = MessageSerializer.Serialize<SignedTransaction>(transaction);
+            var packedTrx = MessageSerializer.Serialize<SignedTransaction>(transaction);
 
             var chainId = Hex.HexToBytes(info.ChainId);
-            byte[] msg = new byte[chainId.Length + transaction.PackedTrx.Length + 32];
+            byte[] msg = new byte[chainId.Length + packedTrx.Length + 32];
             Array.Copy(chainId, msg, chainId.Length);
-            Array.Copy(transaction.PackedTrx, 0, msg, chainId.Length, transaction.PackedTrx.Length);
+            Array.Copy(packedTrx, 0, msg, chainId.Length, packedTrx.Length);
             var sha256 = Sha256Manager.GetHash(msg);
 
             transaction.Signatures = new string[args.PrivateKeys.Count];
@@ -171,11 +171,43 @@ namespace Ditch.EOS
 
             return new PackedTransaction()
             {
-                PackedTrx = Hex.ToString(transaction.PackedTrx),
+                PackedTrx = Hex.ToString(packedTrx),
                 Signatures = transaction.Signatures,
                 PackedContextFreeData = "",
                 Compression = "none"
             };
+        }
+
+        public async Task<SignedTransaction> CreateTransaction(CreateTransactionArgs args, CancellationToken token)
+        {
+            //1
+            var infoResp = await GetInfo(token);
+            if (infoResp.IsError)
+                return null;
+
+            var info = infoResp.Result;
+
+            //2
+            var blockArgs = new GetBlockParams
+            {
+                BlockNumOrId = info.HeadBlockId
+            };
+            var getBlock = await GetBlock(blockArgs, token);
+            if (getBlock.IsError)
+                return null;
+
+            var block = getBlock.Result;
+
+            //3
+            var transaction = new SignedTransaction
+            {
+                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
+                RefBlockPrefix = block.RefBlockPrefix,
+                Expiration = block.Timestamp.Value.AddSeconds(30),
+                Actions = args.Actions
+            };
+
+            return transaction;
         }
     }
 }

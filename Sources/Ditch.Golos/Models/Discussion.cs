@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -38,6 +39,10 @@ namespace Ditch.Golos.Models
         // bdType : vector<vote_state>
         [JsonProperty("active_votes")]
         public VoteState[] ActiveVotes { get; set; }
+
+        // bdType :uint32_t
+        [JsonProperty("active_votes_count")]
+        public UInt32 active_votes_count { get; set; }
 
         // bdType : vector<string>
         /// <summary>

@@ -58,7 +58,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("amount")]
-        public LegacyAsset Amount {get; set;}
+        public Asset Amount {get; set;}
 
         /// <summary>
         /// API name: complete

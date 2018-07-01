@@ -202,7 +202,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("total_payout_value")]
-        public LegacyAsset TotalPayoutValue {get; set;}
+        public Asset TotalPayoutValue {get; set;}
 
         /// <summary>
         /// API name: curator_payout_value
@@ -210,7 +210,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("curator_payout_value")]
-        public LegacyAsset CuratorPayoutValue {get; set;}
+        public Asset CuratorPayoutValue {get; set;}
 
         /// <summary>
         /// API name: author_rewards
@@ -250,7 +250,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("max_accepted_payout")]
-        public LegacyAsset MaxAcceptedPayout {get; set;}
+        public Asset MaxAcceptedPayout {get; set;}
 
         /// <summary>
         /// API name: percent_steem_dollars
@@ -314,7 +314,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("pending_payout_value")]
-        public LegacyAsset PendingPayoutValue {get; set;}
+        public Asset PendingPayoutValue {get; set;}
 
         /// <summary>
         /// API name: total_pending_payout_value
@@ -322,7 +322,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("total_pending_payout_value")]
-        public LegacyAsset TotalPendingPayoutValue {get; set;}
+        public Asset TotalPendingPayoutValue {get; set;}
 
         /// <summary>
         /// API name: active_votes
@@ -354,7 +354,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("promoted")]
-        public LegacyAsset Promoted {get; set;}
+        public Asset Promoted {get; set;}
 
         /// <summary>
         /// API name: body_length

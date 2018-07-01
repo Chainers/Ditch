@@ -42,7 +42,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("vesting_shares")]
-        public LegacyAsset VestingShares {get; set;}
+        public Asset VestingShares {get; set;}
 
         /// <summary>
         /// API name: min_delegation_time

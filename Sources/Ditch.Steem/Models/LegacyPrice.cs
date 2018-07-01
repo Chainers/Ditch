@@ -16,7 +16,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("base")]
-        public LegacyAsset Base {get; set;}
+        public Asset Base {get; set;}
 
         /// <summary>
         /// API name: quote
@@ -24,6 +24,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("quote")]
-        public LegacyAsset Quote {get; set;}
+        public Asset Quote {get; set;}
     }
 }

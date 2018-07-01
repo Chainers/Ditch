@@ -43,8 +43,7 @@ namespace Ditch.Steem.Tests.Apis
                 Block = new SignedBlock()
             };
             var resp = Api.BroadcastBlock(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
     }
 }

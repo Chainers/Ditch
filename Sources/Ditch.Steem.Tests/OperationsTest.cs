@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
-using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models;
 using Ditch.Steem.Operations;
 using NUnit.Framework;
@@ -14,11 +13,14 @@ namespace Ditch.Steem.Tests
     [TestFixture]
     public class OperationsTest : BaseTest
     {
-        private static JsonRpcResponse Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
+        private void Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
-            return isNeedBroadcast 
-                ? Api.BroadcastOperations(postingKeys, CancellationToken.None, op) 
+            var response = isNeedBroadcast
+                ? Api.BroadcastOperations(postingKeys, CancellationToken.None, op)
                 : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+            WriteLine(response);
+
+            Assert.IsFalse(response.IsError);
         }
 
         #region Vote
@@ -40,8 +42,7 @@ namespace Ditch.Steem.Tests
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
                         : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
 
-                var response = Post(user.PostingKeys, false, op);
-                Assert.IsFalse(response.IsError, response.GetErrorMessage());
+                Post(user.PostingKeys, false, op);
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -72,9 +73,8 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
-            var response = Post(user.PostingKeys, false, op, popt);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(Config.BlockchainVersion, 1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
+            Post(user.PostingKeys, false, op, popt);
         }
 
         [Test]
@@ -82,14 +82,10 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            var resp = Post(user.PostingKeys, false, op);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            resp = Post(user.PostingKeys, false, op2);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
+            Post(user.PostingKeys, false, op2);
         }
 
         [Test]
@@ -98,8 +94,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -109,8 +104,7 @@ namespace Ditch.Steem.Tests
 
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         #endregion
@@ -120,9 +114,8 @@ namespace Ditch.Steem.Tests
         [Test]
         public void TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var op = new TransferOperation(User.Login, User.Login, new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -132,9 +125,8 @@ namespace Ditch.Steem.Tests
         [Test]
         public void TransferToVestingOperationTest()
         {
-            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSteem));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSteem));
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -144,9 +136,8 @@ namespace Ditch.Steem.Tests
         [Test]
         public void WithdrawVestingOperationTest()
         {
-            var op = new WithdrawVestingOperation(User.Login, new Asset(1, Config.SteemAssetNumVests));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var op = new WithdrawVestingOperation(User.Login, new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumVests));
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -163,9 +154,11 @@ namespace Ditch.Steem.Tests
         [Test]
         public void WitnessUpdateTest()
         {
-            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, new LegacyAsset(1, Config.SteemAssetNumSteem), 131072), new Asset(1, Config.SteemAssetNumSteem));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            var accountCreationFee = new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSteem);
+            var fee = new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSteem);
+
+            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -211,30 +204,26 @@ namespace Ditch.Steem.Tests
             var op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             isFollow = !isFollow;
 
             op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             isFollow = !isFollow;
 
             var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             isFollow = !isFollow;
 
             fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         private bool IsFollow(string autor)
@@ -258,8 +247,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new RePostOperation(user.Login, "joseph.kalu", "fkkl", user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -268,8 +256,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -278,8 +265,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, "StubLogin");
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsTrue(response.IsError);
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -293,8 +279,7 @@ namespace Ditch.Steem.Tests
             var acc = resp.Result.Accounts[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
 
         [Test]
@@ -304,7 +289,7 @@ namespace Ditch.Steem.Tests
 
             var op = new AccountCreateOperation
             {
-                Fee = new Asset(3000, Config.SteemAssetNumSteem),
+                Fee = new Asset(Config.BlockchainVersion, 3000, Config.SteemAssetNumSteem),
                 Creator = User.Login,
                 NewAccountName = User.Login,
                 JsonMetadata = ""
@@ -333,8 +318,7 @@ namespace Ditch.Steem.Tests
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.MemoKey = new PublicKeyType(subPublicKey);
 
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
     }
 }

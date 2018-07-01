@@ -74,7 +74,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("sbd_balance")]
-        public LegacyAsset SbdBalance {get; set;}
+        public Asset SbdBalance {get; set;}
 
         /// <summary>
         /// API name: steem_balance
@@ -82,7 +82,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("steem_balance")]
-        public LegacyAsset SteemBalance {get; set;}
+        public Asset SteemBalance {get; set;}
 
         /// <summary>
         /// API name: pending_fee
@@ -90,7 +90,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("pending_fee")]
-        public LegacyAsset PendingFee {get; set;}
+        public Asset PendingFee {get; set;}
 
         /// <summary>
         /// API name: to_approved

@@ -11,10 +11,9 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_methods()
         {
-            var resp = Api.CustomGetRequest(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None);
+            var resp = Api.CustomGetRequest<string[]>(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-            WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
         }
 
         [Test]

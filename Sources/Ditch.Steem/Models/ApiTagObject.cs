@@ -24,7 +24,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: legacy_asset</returns>
         [JsonProperty("total_payouts")]
-        public LegacyAsset TotalPayouts {get; set;}
+        public Asset TotalPayouts {get; set;}
 
         /// <summary>
         /// API name: net_votes

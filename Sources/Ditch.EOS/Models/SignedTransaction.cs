@@ -24,8 +24,5 @@ namespace Ditch.EOS.Models
         /// <returns>API type: bytes</returns>
         [JsonProperty("context_free_data")]
         public Bytes[] ContextFreeData { get; set; } = new Bytes[0];
-
-
-        public byte[] PackedTrx { get; set; }
     }
 }
