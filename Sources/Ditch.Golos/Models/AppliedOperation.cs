@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -34,7 +35,7 @@ namespace Ditch.Golos.Models
 
         // bdType : time_point_sec
         [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public TimePointSec Timestamp { get; set; }
 
         [JsonProperty("op")]
         public JArray Op { get; set; }

@@ -1,35 +1,41 @@
-﻿using Newtonsoft.Json;
+using System;
+using Ditch.Core.Attributes;
+using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
-    /**
-    *  A transaction consits of a set of messages which must all be applied or
-    *  all are rejected. These messages have access to data within the given
-    *  read and write scopes.
-    */
-
     /// <summary>
     /// transaction
-    /// libraries\chain\include\eosio\chain\transaction.hpp
+    /// contracts\eosiolib\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class Transaction : TransactionHeader
     {
-
         /// <summary>
         /// API name: context_free_actions
         /// 
         /// </summary>
-        /// <returns>API type: action</returns>
+        /// <returns>API type: vector<action></returns>
+        [MessageOrder(70)]
         [JsonProperty("context_free_actions")]
-        public Action[] ContextFreeActions { get; set; }
+        public Action[] ContextFreeActions { get; set; } = new Action[0];
 
         /// <summary>
         /// API name: actions
         /// 
         /// </summary>
-        /// <returns>API type: action</returns>
+        /// <returns>API type: vector<action></returns>
+        [MessageOrder(80)]
         [JsonProperty("actions")]
-        public Action[] Actions { get; set; }
+        public Action[] Actions { get; set; } = new Action[0];
+
+        /// <summary>
+        /// API name: transaction_extensions
+        /// 
+        /// </summary>
+        /// <returns>API type: extensions_type</returns>
+        [MessageOrder(90)]
+        [JsonProperty("transaction_extensions")]
+        public Tuple<UInt16, char[]>[] TransactionExtensions { get; set; } = new Tuple<ushort, char[]>[0];
     }
 }

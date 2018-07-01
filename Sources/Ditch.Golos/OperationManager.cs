@@ -172,7 +172,7 @@ namespace Ditch.Golos
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
-                Expiration = propertyApiObj.Time.AddSeconds(30),
+                Expiration = propertyApiObj.Time.Value.AddSeconds(30),
                 BaseOperations = operations
             };
 

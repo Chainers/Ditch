@@ -185,7 +185,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_savings_withdraw_to()
         {
             var resp = Api.GetSavingsWithdrawTo(User.Login, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to", new object[] { User.Login }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_savings_withdraw_to", new object[] { User.Login }, CancellationToken.None);
             TestPropetries(resp, obj);
         }
 
@@ -208,7 +208,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_vesting_delegations()
         {
             var resp = Api.GetVestingDelegations(User.Login, User.Login, 1, DelegationsType.Delegated, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { User.Login, User.Login, 1, DelegationsType.Delegated }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { User.Login, User.Login, 1, DelegationsType.Delegated }, CancellationToken.None);
             TestPropetries(resp, obj);
         }
 

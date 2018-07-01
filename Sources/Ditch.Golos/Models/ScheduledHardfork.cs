@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -25,6 +26,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("live_time")]
-        public DateTime LiveTime { get; set; }
+        public TimePointSec LiveTime { get; set; }
     }
 }

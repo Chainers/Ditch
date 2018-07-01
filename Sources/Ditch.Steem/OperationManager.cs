@@ -6,12 +6,8 @@ using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.JsonRpc;
-using Ditch.Steem.Models.ApiObj;
-using Ditch.Steem.Models.Args;
-using Ditch.Steem.Models.Objects;
-using Ditch.Steem.Models.Operations;
-using Ditch.Steem.Models.Other;
-using Ditch.Steem.Models.Return;
+using Ditch.Steem.Models;
+using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -202,7 +198,7 @@ namespace Ditch.Steem
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
-                Expiration = propertyApiObj.Time.AddSeconds(30),
+                Expiration = propertyApiObj.Time.Value.AddSeconds(30),
                 BaseOperations = operations
             };
 

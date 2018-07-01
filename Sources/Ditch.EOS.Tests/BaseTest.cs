@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.EOS.Tests.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -13,24 +14,96 @@ namespace Ditch.EOS.Tests
 {
     public class BaseTest
     {
+        protected static UserInfo User;
+        protected static ContractInfo ContractInfo;
+
         protected static OperationManager Api;
         private const bool IgnoreRequestWithBadData = true;
-
+        protected CancellationToken CancellationToken = CancellationToken.None;
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
         {
-            if (Api != null)
-                return;
+            if (User == null)
+            {
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"],
+                    PrivateOwnerWif = ConfigurationManager.AppSettings["PrivateOwnerWif"],
+                    PrivateActiveWif = ConfigurationManager.AppSettings["PrivateActiveWif"],
+                    Password = ConfigurationManager.AppSettings["Password"],
+                };
+            }
 
-            Api = new OperationManager();
-            var url = ConfigurationManager.AppSettings["Url"];
-            Api.TryConnectTo(new List<string> { url }, CancellationToken.None);
+            if (ContractInfo == null)
+            {
+                ContractInfo = new ContractInfo
+                {
+                    ContractName = ConfigurationManager.AppSettings["ContractName"],
+                };
+            }
 
-            //Assert.IsTrue(Api.IsConnected, "Enable connect to node");
+            if (Api == null)
+            {
+                Api = new OperationManager
+                {
+                    ChainUrl = ConfigurationManager.AppSettings["ChainUrl"],
+                    WalletUrl = ConfigurationManager.AppSettings["WalletUrl"]
+                };
+            }
         }
 
-        protected void TestPropetries<T, T2>(OperationResult<T> resp, OperationResult<T2> obj)
+        protected void TestPropetries<T>(OperationResult<T> resp, OperationResult<JArray> obj)
+        {
+            WriteLine(resp);
+            WriteLine(obj);
+
+            Assert.IsFalse(resp.IsError);
+
+            var jResult = obj.Result;
+
+            if (jResult == null)
+                throw new NullReferenceException("obj.Result");
+
+            var type = typeof(T);
+            if (type.IsArray) //list
+            {
+                type = type.GetElementType();
+                var jObj = obj.Result.First.Value<JObject>();
+                Compare(type, jObj);
+            }
+            else //dictionary
+            {
+                jResult = jResult.First().Value<JArray>();
+                if (jResult == null)
+                    throw new InvalidCastException(nameof(obj));
+
+                while (type != null && !type.IsGenericType)
+                {
+                    type = type.BaseType;
+                }
+
+                if (type == null)
+                    throw new InvalidCastException(nameof(obj));
+
+                var types = type.GenericTypeArguments;
+
+                if (types.Length != jResult.Count)
+                {
+                    throw new InvalidCastException(nameof(obj));
+                }
+
+                for (var i = 0; i < types.Length; i++)
+                {
+                    var t = types[i];
+                    if (t.IsPrimitive)
+                        continue;
+                    Compare(t, jResult[i].Value<JObject>());
+                }
+            }
+        }
+
+        protected void TestPropetries<T>(OperationResult<T> resp, OperationResult<JObject> obj)
         {
             WriteLine(resp);
             WriteLine(obj);
@@ -40,32 +113,13 @@ namespace Ditch.EOS.Tests
             if (obj.Result == null)
                 throw new NullReferenceException("obj.Result");
 
-            var type = typeof(T);
-            object jObj = obj.Result;
-            if (type.IsArray)
-            {
-                var jArray = jObj as JArray;
-                if (jArray?.Count > 0)
-                {
-                    type = type.GetElementType();
-                    jObj = jArray.First.Value<JObject>();
-                }
-                else
-                {
-                    var jObject = obj as JObject[];
-                    if (jObject.Length > 0)
-                    {
-                        type = type.GetElementType();
-                        jObj = jObject[0];
-                    }
-                    else if (!IgnoreRequestWithBadData)
-                        throw new NullReferenceException("Impossible to do test for this input data!");
-                }
-            }
+            Compare(typeof(T), obj.Result);
+        }
 
+        private void Compare(Type type, JObject jObj)
+        {
             var propNames = GetPropertyNames(type);
-
-            var jNames = ((JObject)jObj).Properties().Select(p => p.Name);
+            var jNames = jObj.Properties().Select(p => p.Name);
 
             var msg = new List<string>();
             foreach (var name in jNames)
@@ -81,6 +135,7 @@ namespace Ditch.EOS.Tests
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
         }
+
 
         protected HashSet<string> GetPropertyNames(Type type)
         {
@@ -99,11 +154,13 @@ namespace Ditch.EOS.Tests
 
         protected void WriteLine(string s)
         {
+            Console.WriteLine("--------------------");
             Console.WriteLine(s);
         }
 
         protected void WriteLine(JsonRpcResponse r)
         {
+            Console.WriteLine("--------------------");
             Console.WriteLine(r.IsError
                 ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
                 : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
@@ -111,9 +168,16 @@ namespace Ditch.EOS.Tests
 
         protected void WriteLine<T>(OperationResult<T> r)
         {
+            Console.WriteLine("--------------------");
             Console.WriteLine(r.IsError
                 ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
                 : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+        }
+
+        protected void WriteLine<T>(T r)
+        {
+            Console.WriteLine("--------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(r, Formatting.Indented));
         }
     }
 }

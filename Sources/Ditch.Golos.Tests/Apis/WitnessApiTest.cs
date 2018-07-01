@@ -71,7 +71,7 @@ namespace Ditch.Golos.Tests.Apis
             Assert.IsFalse(witnes.IsError);
 
             var resp = Api.GetWitnesses(new[] { witnes.Result[0].Id }, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject[]>(KnownApiNames.WitnessApi, "get_witnesses", new object[] { new[] { witnes.Result[0].Id } }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.WitnessApi, "get_witnesses", new object[] { new[] { witnes.Result[0].Id } }, CancellationToken.None);
             TestPropetries(resp, obj);
         }
 

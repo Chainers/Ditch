@@ -174,7 +174,7 @@ namespace Ditch.Golos.Tests.Apis
         public void get_trending_tags()
         {
             var resp = Api.GetTrendingTags(User.Login, 3, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject[]>(ApiName, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
+            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
             TestPropetries(resp, obj);
         }
 

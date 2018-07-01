@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -57,6 +58,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_bandwidth_update")]
-        public DateTime LastBandwidthUpdate { get; set; }
+        public TimePointSec LastBandwidthUpdate { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -24,6 +25,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: weight_type</returns>
         [JsonProperty("weight")]
-        public ushort Weight { get; set; }
+        public UInt16 Weight { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: account_name</returns>
         [JsonProperty("producer_name")]
-        public string ProducerName {get; set;}
+        public string ProducerName { get; set; }
 
         /// <summary>
         /// API name: block_signing_key
@@ -24,6 +24,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: public_key</returns>
         [JsonProperty("block_signing_key")]
-        public PublicKey BlockSigningKey {get; set;}
+        public PublicKey BlockSigningKey { get; set; }
     }
 }

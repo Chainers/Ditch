@@ -1,10 +1,15 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
+    /**
+     *  Defines both the order, account name, and signing keys of the active set of producers.
+     */
+
     /// <summary>
     /// producer_schedule
-    /// contracts\eosiolib\privileged.hpp
+    /// contracts\eosiolib\producer_schedule.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class ProducerSchedule
@@ -12,11 +17,11 @@ namespace Ditch.EOS.Models
 
         /// <summary>
         /// API name: version
-        /// = 0; ///&lt; sequentially incrementing version number
+        /// sequentially incrementing version number
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("version")]
-        public uint Version {get; set;}
+        public UInt32 Version { get; set; }
 
         /// <summary>
         /// API name: producers
@@ -24,6 +29,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: producer_key</returns>
         [JsonProperty("producers")]
-        public ProducerKey[] Producers {get; set;}
+        public ProducerKey[] Producers { get; set; }
     }
 }

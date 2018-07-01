@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -57,7 +58,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("ratification_deadline")]
-        public DateTime RatificationDeadline { get; set; }
+        public TimePointSec RatificationDeadline { get; set; }
 
         /// <summary>
         /// API name: escrow_expiration
@@ -65,7 +66,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("escrow_expiration")]
-        public DateTime EscrowExpiration { get; set; }
+        public TimePointSec EscrowExpiration { get; set; }
 
         /// <summary>
         /// API name: sbd_balance

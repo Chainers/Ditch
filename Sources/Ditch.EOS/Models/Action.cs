@@ -1,3 +1,4 @@
+using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -20,22 +21,25 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: account_name</returns>
+        [MessageOrder(10)]
         [JsonProperty("account")]
-        public string Account { get; set; }
+        public AccountName Account { get; set; }
 
         /// <summary>
         /// API name: name
         /// 
         /// </summary>
         /// <returns>API type: action_name</returns>
+        [MessageOrder(20)]
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public ActionName Name { get; set; }
 
         /// <summary>
         /// API name: authorization
         /// 
         /// </summary>
         /// <returns>API type: permission_level</returns>
+        [MessageOrder(30)]
         [JsonProperty("authorization")]
         public PermissionLevel[] Authorization { get; set; }
 
@@ -44,7 +48,8 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: bytes</returns>
+        [MessageOrder(40)]
         [JsonProperty("data")]
-        public string Data { get; set; }
+        public Bytes Data { get; set; }
     }
 }

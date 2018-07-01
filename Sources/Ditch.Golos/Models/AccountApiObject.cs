@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -81,7 +82,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_owner_update")]
-        public DateTime LastOwnerUpdate {get; set;}
+        public TimePointSec LastOwnerUpdate {get; set;}
 
         /// <summary>
         /// API name: last_account_update
@@ -89,7 +90,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_account_update")]
-        public DateTime LastAccountUpdate {get; set;}
+        public TimePointSec LastAccountUpdate {get; set;}
 
         /// <summary>
         /// API name: created
@@ -97,7 +98,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("created")]
-        public DateTime Created {get; set;}
+        public TimePointSec Created {get; set;}
 
         /// <summary>
         /// API name: mined
@@ -129,7 +130,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_owner_proved")]
-        public DateTime LastOwnerProved {get; set;}
+        public TimePointSec LastOwnerProved {get; set;}
 
         /// <summary>
         /// API name: last_active_proved
@@ -137,7 +138,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_active_proved")]
-        public DateTime LastActiveProved {get; set;}
+        public TimePointSec LastActiveProved {get; set;}
 
         /// <summary>
         /// API name: recovery_account
@@ -161,7 +162,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_account_recovery")]
-        public DateTime LastAccountRecovery {get; set;}
+        public TimePointSec LastAccountRecovery {get; set;}
 
         /// <summary>
         /// API name: comment_count
@@ -209,7 +210,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_vote_time")]
-        public DateTime LastVoteTime {get; set;}
+        public TimePointSec LastVoteTime {get; set;}
 
         /// <summary>
         /// API name: balance
@@ -249,7 +250,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("sbd_seconds_last_update")]
-        public DateTime SbdSecondsLastUpdate {get; set;}
+        public TimePointSec SbdSecondsLastUpdate {get; set;}
 
         /// <summary>
         /// API name: sbd_last_interest_payment
@@ -257,7 +258,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("sbd_last_interest_payment")]
-        public DateTime SbdLastInterestPayment {get; set;}
+        public TimePointSec SbdLastInterestPayment {get; set;}
 
         /// <summary>
         /// API name: savings_sbd_balance
@@ -281,7 +282,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("savings_sbd_seconds_last_update")]
-        public DateTime SavingsSbdSecondsLastUpdate {get; set;}
+        public TimePointSec SavingsSbdSecondsLastUpdate {get; set;}
 
         /// <summary>
         /// API name: savings_sbd_last_interest_payment
@@ -289,7 +290,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("savings_sbd_last_interest_payment")]
-        public DateTime SavingsSbdLastInterestPayment {get; set;}
+        public TimePointSec SavingsSbdLastInterestPayment {get; set;}
 
         /// <summary>
         /// API name: savings_withdraw_requests
@@ -353,7 +354,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("next_vesting_withdrawal")]
-        public DateTime NextVestingWithdrawal {get; set;}
+        public TimePointSec NextVestingWithdrawal {get; set;}
 
         /// <summary>
         /// API name: withdrawn
@@ -433,7 +434,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_bandwidth_update")]
-        public DateTime LastBandwidthUpdate {get; set;}
+        public TimePointSec LastBandwidthUpdate {get; set;}
 
         /// <summary>
         /// API name: last_market_bandwidth_update
@@ -441,7 +442,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_market_bandwidth_update")]
-        public DateTime LastMarketBandwidthUpdate {get; set;}
+        public TimePointSec LastMarketBandwidthUpdate {get; set;}
 
         /// <summary>
         /// API name: last_post
@@ -449,7 +450,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_post")]
-        public DateTime LastPost {get; set;}
+        public TimePointSec LastPost {get; set;}
 
         /// <summary>
         /// API name: last_root_post
@@ -457,7 +458,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_root_post")]
-        public DateTime LastRootPost {get; set;}
+        public TimePointSec LastRootPost {get; set;}
 
         /// <summary>
         /// API name: post_bandwidth

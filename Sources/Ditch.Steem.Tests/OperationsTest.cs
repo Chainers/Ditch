@@ -4,10 +4,8 @@ using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Models.Args;
-using Ditch.Steem.Models.Enums;
-using Ditch.Steem.Models.Operations;
-using Ditch.Steem.Models.Other;
+using Ditch.Steem.Models;
+using Ditch.Steem.Operations;
 using NUnit.Framework;
 using Base58 = Ditch.Core.Base58;
 

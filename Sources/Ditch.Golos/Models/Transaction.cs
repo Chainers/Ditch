@@ -1,5 +1,6 @@
 ﻿using System;
 using Ditch.Core.Attributes;
+using Ditch.Core.Models;
 using Ditch.Golos.Operations;
 using Newtonsoft.Json;
 
@@ -40,7 +41,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: time_point_sec</returns>
         [MessageOrder(3)]
         [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
+        public TimePointSec Expiration { get; set; }
 
         /// <summary>
         /// API name: operations

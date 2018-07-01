@@ -1,3 +1,7 @@
+using System;
+using Ditch.Core;
+using Ditch.Core.Attributes;
+using Ditch.Core.Converters;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -6,24 +10,41 @@ namespace Ditch.EOS.Models
     /// public_key
     /// contracts\eosiolib\public_key.hpp
     /// </summary>
-    [JsonObject(MemberSerialization.OptIn)]
-    public class PublicKey
+    [JsonConverter(typeof(CustomConverter))]
+    public class PublicKey : ICustomJson
     {
+        public string Prefix = "EOS";
 
-        /// <summary>
-        /// API name: type
-        /// 
-        /// </summary>
-        /// <returns>API type: unsigned_int</returns>
-        [JsonProperty("type")]
-        public uint Type {get; set;}
+        [MessageOrder(1)]
+        public byte[] Data { get; set; }
 
-        /// <summary>
-        /// API name: data
-        /// 
-        /// </summary>
-        /// <returns>API type: char</returns>
-        [JsonProperty("data")]
-        public char[] Data {get; set;}
+
+        public PublicKey() { }
+
+        public PublicKey(string value)
+        {
+            Data = Base58.DecodePublicWif(value, Prefix);
+        }
+
+        public PublicKey(byte[] data)
+        {
+            Data = data;
+        }
+        
+        #region ICustomJson
+
+        public void ReadJson(JsonReader reader, JsonSerializer serializer)
+        {
+            var value = reader.Value.ToString();
+            Data = Base58.DecodePublicWif(value, Prefix);
+        }
+
+        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
+        {
+            var wif = Base58.EncodePublicWif(Data, Prefix);
+            writer.WriteValue(wif);
+        }
+
+        #endregion
     }
 }

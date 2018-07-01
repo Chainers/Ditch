@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -25,7 +26,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public TimePointSec Timestamp { get; set; }
 
         /// <summary>
         /// API name: witness
