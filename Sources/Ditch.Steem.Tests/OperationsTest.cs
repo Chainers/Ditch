@@ -43,7 +43,7 @@ namespace Ditch.Steem.Tests
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
                         : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
 
-                Post(user.PostingKeys, true, op);
+                Post(user.PostingKeys, false, op);
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -74,6 +74,14 @@ namespace Ditch.Steem.Tests
 
         [Test]
         public void PostTest()
+        {
+            var user = User;
+            var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
+            Post(user.PostingKeys, false, op);
+        }
+
+        [Test]
+        public void PostWithBeneficiariesTest()
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));

@@ -10,7 +10,7 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class VoteOperation : BaseOperation
     {
-        public const string OperationName = "vote_operation_operation";
+        public const string OperationName = "vote_operation";
         public override string TypeName => OperationName;
 
         public const short MaxFlagVote = -10000;
