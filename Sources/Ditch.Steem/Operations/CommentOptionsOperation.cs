@@ -7,8 +7,10 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOptionsOperation : BaseOperation
     {
+        public const string OperationName = "comment_options_operation";
+        public override string TypeName => OperationName;
+
         public override OperationType Type => OperationType.CommentOptions;
-        public override string TypeName => "comment_options";
 
         [MessageOrder(20)]
         [JsonProperty("author")]

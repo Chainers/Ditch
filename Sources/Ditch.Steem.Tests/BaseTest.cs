@@ -20,12 +20,9 @@ namespace Ditch.Steem.Tests
     public class BaseTest
     {
         protected const string AppVersion = "ditch / 3.2.0-alpha";
-
-        private const bool IgnoreRequestWithBadData = true;
+        
         protected static UserInfo User;
         protected static OperationManager Api;
-        protected string SbdSymbol = "SBD";
-        protected CancellationToken token = CancellationToken.None;
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
@@ -58,12 +55,11 @@ namespace Ditch.Steem.Tests
         {
             var rez = new JsonSerializerSettings
             {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 Culture = CultureInfo.InvariantCulture
             };
             return rez;
         }
-
 
         protected void TestPropetries<T>(JsonRpcResponse<T> resp)
         {
@@ -72,23 +68,12 @@ namespace Ditch.Steem.Tests
 #if DEBUG
             if (resp.RawResponse.Contains("\"result\":{"))
             {
-                var obj = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse);
-                WriteLine(obj);
-
-
-                if (obj.Result == null)
-                    throw new NullReferenceException("obj.Result");
-
-                Compare(typeof(T), obj.Result);
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
+                Compare(typeof(T), jResult);
             }
             else
             {
-                var obj = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse);
-                WriteLine(obj);
-
-                Assert.IsFalse(resp.IsError);
-
-                var jResult = obj.Result;
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse).Result;
 
                 if (jResult == null)
                     throw new NullReferenceException("obj.Result");
@@ -97,14 +82,14 @@ namespace Ditch.Steem.Tests
                 if (type.IsArray) //list
                 {
                     type = type.GetElementType();
-                    var jObj = obj.Result.First.Value<JObject>();
+                    var jObj = jResult.First.Value<JObject>();
                     Compare(type, jObj);
                 }
                 else //dictionary
                 {
                     jResult = jResult.First().Value<JArray>();
                     if (jResult == null)
-                        throw new InvalidCastException(nameof(obj));
+                        throw new InvalidCastException(nameof(jResult));
 
                     while (type != null && !type.IsGenericType)
                     {
@@ -112,13 +97,13 @@ namespace Ditch.Steem.Tests
                     }
 
                     if (type == null)
-                        throw new InvalidCastException(nameof(obj));
+                        throw new InvalidCastException(nameof(jResult));
 
                     var types = type.GenericTypeArguments;
 
                     if (types.Length != jResult.Count)
                     {
-                        throw new InvalidCastException(nameof(obj));
+                        throw new InvalidCastException(nameof(jResult));
                     }
 
                     for (var i = 0; i < types.Length; i++)
@@ -183,7 +168,7 @@ namespace Ditch.Steem.Tests
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
             return transaction;
         }
 
@@ -198,17 +183,28 @@ namespace Ditch.Steem.Tests
             Console.WriteLine("---------------");
             if (r.IsError)
             {
-
-#if DEBUG
-                Console.WriteLine($"Request:{Environment.NewLine}\t{r.RawRequest}{Environment.NewLine}Response:{Environment.NewLine}\t{r.RawResponse}");
-#else
+                Console.WriteLine("Error:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
-#endif
             }
             else
             {
+                Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
             }
+#if DEBUG
+            Console.WriteLine("Request:");
+            Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
+#endif
+        }
+
+        private string JsonBeautify(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+                return json;
+            var obj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 }

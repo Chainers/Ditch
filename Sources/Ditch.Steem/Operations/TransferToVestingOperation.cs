@@ -13,10 +13,10 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class TransferToVestingOperation : BaseOperation
     {
+        public const string OperationName = "transfer_to_vesting_operation";
+        public override string TypeName => OperationName;
+
         public override OperationType Type => OperationType.TransferToVesting;
-
-        public override string TypeName => "transfer_to_vesting";
-
 
         /// <summary>
         /// API name: from

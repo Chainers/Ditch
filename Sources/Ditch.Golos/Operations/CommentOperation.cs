@@ -10,8 +10,9 @@ namespace Ditch.Golos.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
+        public const string OperationName = "comment";
         protected const int PermlinkCropCount = 40;
-        public override string TypeName => "comment";
+        public override string TypeName => OperationName;
 
         public override OperationType Type => OperationType.Comment;
 

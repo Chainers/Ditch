@@ -40,7 +40,7 @@ namespace Ditch.Core.Models
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            writer.WriteValue(Value);
+            writer.WriteValue(Value.ToString("O"));
         }
 
         #endregion

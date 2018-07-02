@@ -38,6 +38,6 @@ namespace Ditch.Golos.Models
         public TimePointSec Timestamp { get; set; }
 
         [JsonProperty("op")]
-        public JArray Op { get; set; }
+        public Operation Op { get; set; }
     }
 }

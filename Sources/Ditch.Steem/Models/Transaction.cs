@@ -50,7 +50,7 @@ namespace Ditch.Steem.Models
         /// <returns>API type: operation</returns>
         [JsonProperty("operations")]
         [MessageOrder(4)]
-        public BaseOperation[] BaseOperations { get; set; }
+        public Operation[] Operations { get; set; }
 
         /// <summary>
         /// API name: extensions

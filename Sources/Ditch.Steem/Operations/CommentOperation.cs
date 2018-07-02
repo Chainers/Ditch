@@ -9,7 +9,8 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentOperation : BaseOperation
     {
-        public override string TypeName => "comment";
+        public const string OperationName = "comment_operation";
+        public override string TypeName => OperationName;
 
         public override OperationType Type => OperationType.Comment;
 

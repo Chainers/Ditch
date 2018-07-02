@@ -14,8 +14,6 @@ namespace Ditch.Core.Interfaces
 
         void Disconnect();
 
-        JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token);
-
         JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token);
     }
 }

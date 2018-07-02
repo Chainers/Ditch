@@ -10,7 +10,9 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class DeleteCommentOperation : BaseOperation
     {
-        public override string TypeName => "delete_comment";
+        public const string OperationName = "delete_comment_operation";
+        public override string TypeName => OperationName;
+        
         public override OperationType Type => OperationType.DeleteComment;
 
         /// <summary>

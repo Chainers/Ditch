@@ -19,9 +19,10 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class WitnessUpdateOperation : BaseOperation
     {
-        public override OperationType Type => OperationType.WitnessUpdate;
+        public const string OperationName = "witness_update_operation";
+        public override string TypeName => OperationName;
 
-        public override string TypeName => "witness_update";
+        public override OperationType Type => OperationType.WitnessUpdate;
 
         /// <summary>
         /// API name: owner

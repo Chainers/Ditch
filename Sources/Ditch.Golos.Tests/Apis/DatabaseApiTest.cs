@@ -124,7 +124,7 @@ namespace Ditch.Golos.Tests.Apis
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
             var resp = Api.GetPotentialSignatures(transaction, CancellationToken.None);
             WriteLine(resp);
@@ -153,7 +153,7 @@ namespace Ditch.Golos.Tests.Apis
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
             var resp = Api.GetRequiredSignatures(transaction, new PublicKeyType[0], CancellationToken.None);
             WriteLine(resp);
@@ -182,7 +182,7 @@ namespace Ditch.Golos.Tests.Apis
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
             var resp = Api.GetTransactionHex(transaction, CancellationToken.None);
             WriteLine(resp);
@@ -244,7 +244,7 @@ namespace Ditch.Golos.Tests.Apis
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
             var resp = Api.VerifyAuthority(transaction, CancellationToken.None);
             WriteLine(resp);

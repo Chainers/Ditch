@@ -160,29 +160,31 @@ namespace Ditch.EOS.Tests
 
         protected void WriteLine(JsonRpcResponse r)
         {
-            Console.WriteLine("--------------------");
-            Console.WriteLine(r.IsError
-                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
-        }
-
-        protected void WriteLine<T>(OperationResult<T> r)
-        {
-            Console.WriteLine("--------------------");
-
+            Console.WriteLine("---------------");
             if (r.IsError)
             {
-
-#if DEBUG
-                Console.WriteLine($"Request:{Environment.NewLine}\t{r.RawRequest}{Environment.NewLine}Response:{Environment.NewLine}\t{r.RawResponse}");
-#else
+                Console.WriteLine("Error:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
-#endif
             }
             else
             {
+                Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
             }
+#if DEBUG
+            Console.WriteLine("Request:");
+            Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
+#endif
+        }
+
+        private string JsonBeautify(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+                return json;
+            var obj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
 
         protected void WriteLine<T>(T r)

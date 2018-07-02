@@ -16,9 +16,11 @@ namespace Ditch.Golos.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class AccountUpdateOperation : BaseOperation
     {
+        public const string OperationName = "account_update";
+
         public override OperationType Type => OperationType.AccountUpdate;
 
-        public override string TypeName => "account_update";
+        public override string TypeName => OperationName;
 
         /// <summary>
         /// API name: account

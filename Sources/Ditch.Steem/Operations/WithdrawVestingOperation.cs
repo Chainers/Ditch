@@ -13,9 +13,10 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class WithdrawVestingOperation : BaseOperation
     {
-        public override OperationType Type => OperationType.WithdrawVesting;
+        public const string OperationName = "withdraw_vesting_operation";
+        public override string TypeName => OperationName;
 
-        public override string TypeName => "withdraw_vesting";
+        public override OperationType Type => OperationType.WithdrawVesting;
 
         /// <summary>
         /// API name: account

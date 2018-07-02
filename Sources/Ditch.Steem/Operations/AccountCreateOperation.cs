@@ -11,9 +11,10 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class AccountCreateOperation : BaseOperation
     {
-        public override OperationType Type => OperationType.AccountCreate;
+        public const string OperationName = "account_create_operation";
+        public override string TypeName => OperationName;
 
-        public override string TypeName => "account_create";
+        public override OperationType Type => OperationType.AccountCreate;
 
         /// <summary>
         /// API name: fee

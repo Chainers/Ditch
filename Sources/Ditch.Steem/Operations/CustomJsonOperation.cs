@@ -6,10 +6,12 @@ namespace Ditch.Steem.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class CustomJsonOperation : BaseOperation
     {
+        public const string OperationName = "custom_json_operation";
+        public override string TypeName => OperationName;
+
         private string[] _requiredAuths;
         private string[] _requiredPostingAuths;
-
-        public override string TypeName => "custom_json";
+        
         public override OperationType Type => OperationType.CustomJson;
 
         [MessageOrder(20)]

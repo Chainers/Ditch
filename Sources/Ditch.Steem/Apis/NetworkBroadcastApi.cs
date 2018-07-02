@@ -18,9 +18,9 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_transaction_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
+        public JsonRpcResponse<VoidResponse> BroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
         {
-            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
+            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
         }
 
         /// <summary>

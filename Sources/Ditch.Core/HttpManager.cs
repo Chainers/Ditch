@@ -94,21 +94,6 @@ namespace Ditch.Core
         /// <summary>
         /// Sends request to specified url
         /// </summary>
-        /// <param name="jsonRpc">Request body</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns>JsonRpcResponse</returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse Execute(IJsonRpcRequest jsonRpc, CancellationToken token)
-        {
-            if (string.IsNullOrEmpty(UrlToConnect))
-                return null;
-
-            return Execute<VoidResponse>(jsonRpc, token);
-        }
-
-        /// <summary>
-        /// Sends request to specified url
-        /// </summary>
         /// <typeparam name="T">Some type for response deserialization</typeparam>
         /// <param name="jsonRpc">Request body</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>

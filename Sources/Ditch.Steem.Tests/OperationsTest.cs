@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
+using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models;
 using Ditch.Steem.Operations;
 using NUnit.Framework;
@@ -16,8 +17,8 @@ namespace Ditch.Steem.Tests
         private void Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
             var response = isNeedBroadcast
-                ? Api.BroadcastOperations(postingKeys, CancellationToken.None, op)
-                : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+                ? (JsonRpcResponse)Api.BroadcastOperations(postingKeys, op, CancellationToken.None)
+                : Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
             WriteLine(response);
 
             Assert.IsFalse(response.IsError);
@@ -42,7 +43,7 @@ namespace Ditch.Steem.Tests
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
                         : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
 
-                Post(user.PostingKeys, false, op);
+                Post(user.PostingKeys, true, op);
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -61,8 +62,11 @@ namespace Ditch.Steem.Tests
                 Permlink = permlink
             };
             var resp = Api.GetDiscussion(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
+            if (resp.IsError)
+            {
+                WriteLine(resp);
+                Assert.IsFalse(resp.IsError);
+            }
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
             return vote?.Percent ?? 0;
         }
@@ -236,8 +240,11 @@ namespace Ditch.Steem.Tests
                 Type = FollowType.Blog
             };
             var resp = Api.GetFollowing(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
+            if (resp.IsError)
+            {
+                WriteLine(resp);
+                Assert.IsFalse(resp.IsError);
+            }
             return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
         }
 

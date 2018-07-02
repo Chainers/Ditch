@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
@@ -38,7 +40,11 @@ namespace Ditch.Golos
         public OperationManager()
         {
             MessageSerializer = new MessageSerializer();
-            JsonSerializerSettings = new JsonSerializerSettings();
+            JsonSerializerSettings = new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Culture = CultureInfo.InvariantCulture
+            };
             ConnectionManager = new WebSocketManager(JsonSerializerSettings);
         }
 
@@ -64,13 +70,13 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperations(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse<VoidResponse> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return prop;
+                return new JsonRpcResponse<VoidResponse>(prop.Error);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations, token);
             return BroadcastTransaction(transaction, token);
         }
 
@@ -84,13 +90,13 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse<JObject> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return prop;
+                return new JsonRpcResponse<JObject>(prop.Error);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations, token);
             return BroadcastTransactionSynchronous(transaction, token);
         }
 
@@ -103,10 +109,10 @@ namespace Ditch.Golos
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAuthority(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        public JsonRpcResponse<bool> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
             var prop = new DynamicGlobalPropertyObject { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
-            var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
+            var transaction = CreateTransaction(prop, userPrivateKeys, testOps, token);
             return VerifyAuthority(transaction, token);
         }
 
@@ -142,21 +148,6 @@ namespace Ditch.Golos
         }
 
         /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">api name</param>
-        /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string api, string method, object[] data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
-            return ConnectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="propertyApiObj"></param>
@@ -165,7 +156,7 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             var transaction = new SignedTransaction
             {
@@ -173,7 +164,7 @@ namespace Ditch.Golos
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
                 Expiration = propertyApiObj.Time.Value.AddSeconds(30),
-                BaseOperations = operations
+                Operations = operations.Select(o => new Operation(o)).ToArray()
             };
 
             var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
@@ -189,6 +180,11 @@ namespace Ditch.Golos
             }
 
             return transaction;
+        }
+
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
+        {
+            return CreateTransaction(propertyApiObj, userPrivateKeys, new[] { operation }, token);
         }
 
         public byte[] TryLoadChainId(string[] chainFieldName, CancellationToken token)

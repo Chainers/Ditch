@@ -6,10 +6,12 @@ namespace Ditch.Golos.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class CustomJsonOperation : BaseOperation
     {
+        public const string OperationName = "custom_json";
+
         private string[] _requiredAuths;
         private string[] _requiredPostingAuths;
 
-        public override string TypeName => "custom_json";
+        public override string TypeName => OperationName;
         public override OperationType Type => OperationType.CustomJson;
 
         [MessageOrder(20)]
@@ -27,7 +29,7 @@ namespace Ditch.Golos.Operations
             get => _requiredPostingAuths ?? (_requiredPostingAuths = new string[0]);
             set => _requiredPostingAuths = value;
         }
-        
+
         [MessageOrder(40)]
         [JsonProperty("id")]
         public string Id { get; }

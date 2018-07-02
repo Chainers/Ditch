@@ -16,8 +16,6 @@ namespace Ditch.Golos.Tests
     public class BaseTest
     {
         protected const string AppVersion = "ditch / 3.2.0-alpha";
-
-        private const bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
 
@@ -27,8 +25,14 @@ namespace Ditch.Golos.Tests
         {
             if (User == null)
             {
-                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"],
+                    PostingWif = ConfigurationManager.AppSettings["PostingWif"],
+                    ActiveWif = ConfigurationManager.AppSettings["ActiveWif"]
+                };
             }
+
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
 
             if (Api == null)
@@ -48,7 +52,7 @@ namespace Ditch.Golos.Tests
         {
             var rez = new JsonSerializerSettings
             {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 Culture = CultureInfo.InvariantCulture
             };
             return rez;
@@ -61,23 +65,12 @@ namespace Ditch.Golos.Tests
 #if DEBUG
             if (resp.RawResponse.Contains("\"result\":{"))
             {
-                var obj = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse);
-                WriteLine(obj);
-
-
-                if (obj.Result == null)
-                    throw new NullReferenceException("obj.Result");
-
-                Compare(typeof(T), obj.Result);
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
+                Compare(typeof(T), jResult);
             }
             else
             {
-                var obj = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse);
-                WriteLine(obj);
-
-                Assert.IsFalse(resp.IsError);
-
-                var jResult = obj.Result;
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse).Result;
 
                 if (jResult == null)
                     throw new NullReferenceException("obj.Result");
@@ -86,14 +79,14 @@ namespace Ditch.Golos.Tests
                 if (type.IsArray) //list
                 {
                     type = type.GetElementType();
-                    var jObj = obj.Result.First.Value<JObject>();
+                    var jObj = jResult.First.Value<JObject>();
                     Compare(type, jObj);
                 }
                 else //dictionary
                 {
                     jResult = jResult.First().Value<JArray>();
                     if (jResult == null)
-                        throw new InvalidCastException(nameof(obj));
+                        throw new InvalidCastException(nameof(jResult));
 
                     while (type != null && !type.IsGenericType)
                     {
@@ -101,13 +94,13 @@ namespace Ditch.Golos.Tests
                     }
 
                     if (type == null)
-                        throw new InvalidCastException(nameof(obj));
+                        throw new InvalidCastException(nameof(jResult));
 
                     var types = type.GenericTypeArguments;
 
                     if (types.Length != jResult.Count)
                     {
-                        throw new InvalidCastException(nameof(obj));
+                        throw new InvalidCastException(nameof(jResult));
                     }
 
                     for (var i = 0; i < types.Length; i++)
@@ -138,7 +131,8 @@ namespace Ditch.Golos.Tests
 
             if (msg.Any())
             {
-                Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
+                Assert.Fail(
+                    $"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
         }
 
@@ -155,6 +149,7 @@ namespace Ditch.Golos.Tests
                     resp.Add(order.PropertyName);
                 }
             }
+
             return resp;
         }
 
@@ -175,17 +170,28 @@ namespace Ditch.Golos.Tests
             Console.WriteLine("---------------");
             if (r.IsError)
             {
-
-#if DEBUG
-                Console.WriteLine($"Request:{Environment.NewLine}\t{r.RawRequest}{Environment.NewLine}Response:{Environment.NewLine}\t{r.RawResponse}");
-#else
+                Console.WriteLine("Error:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
-#endif
             }
             else
             {
+                Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
             }
+#if DEBUG
+            Console.WriteLine("Request:");
+            Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
+#endif
+        }
+
+        private string JsonBeautify(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+                return json;
+            var obj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 }

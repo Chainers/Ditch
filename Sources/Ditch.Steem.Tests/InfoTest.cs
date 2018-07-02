@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -19,7 +20,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void get_signature()
         {
-            var resp = Api.CustomGetRequest(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None);
+            var resp = Api.CustomGetRequest<VoidResponse>(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));
