@@ -206,7 +206,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         ///  <returns>API type: discussion</returns>
         ///  <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, DateTime beforeDate, UInt32 limit, UInt16 voteLimit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, TimePointSec beforeDate, UInt32 limit, UInt16 voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit, voteLimit }, token);
         }

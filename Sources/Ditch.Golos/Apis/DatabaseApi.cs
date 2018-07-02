@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.Core.Models;
 using Ditch.Golos.Models;
 
 namespace Ditch.Golos
@@ -190,7 +191,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: vesting_delegation_expiration_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VestingDelegationExpirationApiObject[]> GetExpiringVestingDelegations(string account, DateTime from, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<VestingDelegationExpirationApiObject[]> GetExpiringVestingDelegations(string account, TimePointSec from, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<VestingDelegationExpirationApiObject[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { account, from, limit }, token);
         }

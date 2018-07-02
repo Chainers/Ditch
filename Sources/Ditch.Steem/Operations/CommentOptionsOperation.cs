@@ -40,7 +40,7 @@ namespace Ditch.Steem.Operations
         [JsonProperty("extensions")]
         public object[] Extensions { get; set; }
 
-        public CommentOptionsOperation(string author, string permlink, Asset maxAcceptedPayout, ushort percentSteemDollars, bool allowVotes, bool allowCurationRewards, params object[] extensions)
+        public CommentOptionsOperation(string author, string permlink, Asset maxAcceptedPayout, ushort percentSteemDollars, bool allowVotes, bool allowCurationRewards, object[] extensions)
         {
             Author = author;
             Permlink = permlink;
