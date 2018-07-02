@@ -27,8 +27,7 @@ namespace Ditch.Core.Models
         }
 
         #endregion
-
-
+        
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)

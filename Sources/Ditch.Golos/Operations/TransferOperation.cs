@@ -13,9 +13,11 @@ namespace Ditch.Golos.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class TransferOperation : BaseOperation
     {
+        public const string OperationName = "transfer";
+
         public override OperationType Type => OperationType.Transfer;
 
-        public override string TypeName => "transfer";
+        public override string TypeName => OperationName;
 
 
         /// <summary>

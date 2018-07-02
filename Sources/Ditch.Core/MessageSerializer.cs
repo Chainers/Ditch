@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using Ditch.Core.Attributes;
 using Ditch.Core.Interfaces;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Core
@@ -17,12 +18,17 @@ namespace Ditch.Core
         {
             using (var ms = new MemoryStream())
             {
-                var props = GetPropertiesForMessage(typeof(T));
-                foreach (var prop in props)
-                {
-                    AddToMessageStream(ms, prop, obj);
-                }
+                Serialize<T>(ms, obj);
                 return ms.ToArray();
+            }
+        }
+
+        public void Serialize<T>(Stream ms, object obj)
+        {
+            var props = GetPropertiesForMessage(typeof(T));
+            foreach (var prop in props)
+            {
+                AddToMessageStream(ms, prop, obj);
             }
         }
 
@@ -88,12 +94,6 @@ namespace Ditch.Core
                         stream.Write(buf, 0, buf.Length);
                         return;
                     }
-                case DateTime typed:
-                    {
-                        var buf = BitConverter.GetBytes((int)(typed.Ticks / 10000000 - 62135596800)); // 01.01.1970
-                        stream.Write(buf, 0, buf.Length);
-                        return;
-                    }
                 case byte[] typed:
                     {
                         stream.Write(typed, 0, typed.Length);
@@ -107,8 +107,10 @@ namespace Ditch.Core
                             return;
                         }
                         var buf = Encoding.UTF8.GetBytes(typed);
-                        var buflen = VarInt(buf.Length);
-                        stream.Write(buflen, 0, buflen.Length);
+
+                        var buflen = new UnsignedInt((UInt32)buf.Length);
+                        buflen.Serializer(stream, this);
+
                         stream.Write(buf, 0, buf.Length);
                         return;
                     }
@@ -129,8 +131,10 @@ namespace Ditch.Core
                             var typed = (ICollection)val;
                             if (typed == null)
                                 return;
-                            var buf = VarInt(typed.Count);
-                            stream.Write(buf, 0, buf.Length);
+
+                            var buf = new UnsignedInt((UInt32)typed.Count);
+                            buf.Serializer(stream, this);
+
                             foreach (var value in typed)
                             {
                                 AddToMessageStream(stream, value.GetType(), value);
@@ -184,36 +188,6 @@ namespace Ditch.Core
             }
 
             AddToMessageStream(stream, intype, inval);
-        }
-
-        /// <summary>
-        /// Сonverts a number to a minimal byte array
-        /// *peeped  https://github.com/xeroc/python-graphenelib/blob/master/graphenebase/types.py
-        /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public static byte[] VarInt(int n)
-        {
-            //get array len
-            var i = 1;
-            var k = n;
-            while (k >= 0x80)
-            {
-                k >>= 7;
-                i++;
-            }
-
-            var data = new byte[i];
-            i = 0;
-
-            while (n >= 0x80)
-            {
-                data[i++] = (byte)(0x80 | (n & 0x7f));
-                n >>= 7;
-            }
-
-            data[i] += (byte)n;
-            return data;
         }
     }
 }

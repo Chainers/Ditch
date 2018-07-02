@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -17,8 +16,6 @@ namespace Ditch.Golos.Tests
     public class BaseTest
     {
         protected const string AppVersion = "ditch / 3.2.0-alpha";
-
-        private const bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
 
@@ -28,8 +25,14 @@ namespace Ditch.Golos.Tests
         {
             if (User == null)
             {
-                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"],
+                    PostingWif = ConfigurationManager.AppSettings["PostingWif"],
+                    ActiveWif = ConfigurationManager.AppSettings["ActiveWif"]
+                };
             }
+
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
 
             if (Api == null)
@@ -45,53 +48,77 @@ namespace Ditch.Golos.Tests
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
-
         public static JsonSerializerSettings GetJsonSerializerSettings()
         {
             var rez = new JsonSerializerSettings
             {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 Culture = CultureInfo.InvariantCulture
             };
             return rez;
         }
 
-        protected void TestPropetries<T, T2>(JsonRpcResponse<T> resp, JsonRpcResponse<T2> obj)
+        protected void TestPropetries<T>(JsonRpcResponse<T> resp)
         {
             WriteLine(resp);
-            WriteLine(obj);
-
             Assert.IsFalse(resp.IsError);
-
-            if (obj.Result == null)
-                throw new NullReferenceException("obj.Result");
-
-            var type = typeof(T);
-            object jObj = obj.Result;
-            if (type.IsArray || typeof(IEnumerable).IsAssignableFrom(type))
+#if DEBUG
+            if (resp.RawResponse.Contains("\"result\":{"))
             {
-                var jArray = jObj as JArray;
-                if (jArray?.Count > 0)
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
+                Compare(typeof(T), jResult);
+            }
+            else
+            {
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse).Result;
+
+                if (jResult == null)
+                    throw new NullReferenceException("obj.Result");
+
+                var type = typeof(T);
+                if (type.IsArray) //list
                 {
                     type = type.GetElementType();
-                    jObj = jArray.First.Value<JObject>();
+                    var jObj = jResult.First.Value<JObject>();
+                    Compare(type, jObj);
                 }
-                else
+                else //dictionary
                 {
-                    var jObject = obj as JObject[];
-                    if (jObject.Length > 0)
+                    jResult = jResult.First().Value<JArray>();
+                    if (jResult == null)
+                        throw new InvalidCastException(nameof(jResult));
+
+                    while (type != null && !type.IsGenericType)
                     {
-                        type = type.GetElementType();
-                        jObj = jObject[0];
+                        type = type.BaseType;
                     }
-                    else if (!IgnoreRequestWithBadData)
-                        throw new NullReferenceException("Impossible to do test for this input data!");
+
+                    if (type == null)
+                        throw new InvalidCastException(nameof(jResult));
+
+                    var types = type.GenericTypeArguments;
+
+                    if (types.Length != jResult.Count)
+                    {
+                        throw new InvalidCastException(nameof(jResult));
+                    }
+
+                    for (var i = 0; i < types.Length; i++)
+                    {
+                        var t = types[i];
+                        if (t.IsPrimitive)
+                            continue;
+                        Compare(t, jResult[i].Value<JObject>());
+                    }
                 }
             }
+#endif
+        }
 
+        private void Compare(Type type, JObject jObj)
+        {
             var propNames = GetPropertyNames(type);
-
-            var jNames = ((JObject)jObj).Properties().Select(p => p.Name);
+            var jNames = jObj.Properties().Select(p => p.Name);
 
             var msg = new List<string>();
             foreach (var name in jNames)
@@ -104,9 +131,11 @@ namespace Ditch.Golos.Tests
 
             if (msg.Any())
             {
-                Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
+                Assert.Fail(
+                    $"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
         }
+
 
         protected HashSet<string> GetPropertyNames(Type type)
         {
@@ -120,6 +149,7 @@ namespace Ditch.Golos.Tests
                     resp.Add(order.PropertyName);
                 }
             }
+
             return resp;
         }
 
@@ -138,9 +168,30 @@ namespace Ditch.Golos.Tests
         protected void WriteLine(JsonRpcResponse r)
         {
             Console.WriteLine("---------------");
-            Console.WriteLine(r.IsError
-                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            if (r.IsError)
+            {
+                Console.WriteLine("Error:");
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            }
+            else
+            {
+                Console.WriteLine("Result:");
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            }
+#if DEBUG
+            Console.WriteLine("Request:");
+            Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
+#endif
+        }
+
+        private string JsonBeautify(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+                return json;
+            var obj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 }

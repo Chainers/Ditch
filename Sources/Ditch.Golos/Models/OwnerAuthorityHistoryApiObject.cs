@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -41,6 +42,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_valid_time")]
-        public DateTime LastValidTime {get; set;}
+        public TimePointSec LastValidTime {get; set;}
     }
 }

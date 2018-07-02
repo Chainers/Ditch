@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -89,7 +90,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_update")]
-        public DateTime LastUpdate { get; set; }
+        public TimePointSec LastUpdate { get; set; }
 
         /// <summary>
         /// API name: created
@@ -97,7 +98,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("created")]
-        public DateTime Created { get; set; }
+        public TimePointSec Created { get; set; }
 
         /// <summary>
         /// API name: active
@@ -105,7 +106,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("active")]
-        public DateTime Active { get; set; }
+        public TimePointSec Active { get; set; }
 
         /// <summary>
         /// API name: last_payout
@@ -113,7 +114,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_payout")]
-        public DateTime LastPayout { get; set; }
+        public TimePointSec LastPayout { get; set; }
 
         /// <summary>
         /// API name: depth
@@ -177,7 +178,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("cashout_time")]
-        public DateTime CashoutTime { get; set; }
+        public TimePointSec CashoutTime { get; set; }
 
         /// <summary>
         /// API name: max_cashout_time
@@ -185,7 +186,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("max_cashout_time")]
-        public DateTime MaxCashoutTime { get; set; }
+        public TimePointSec MaxCashoutTime { get; set; }
 
         /// <summary>
         /// API name: total_vote_weight

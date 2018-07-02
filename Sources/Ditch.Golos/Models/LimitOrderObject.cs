@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -34,7 +35,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("created")]
-        public DateTime Created { get; set; }
+        public TimePointSec Created { get; set; }
 
         /// <summary>
         /// API name: expiration
@@ -42,7 +43,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
+        public TimePointSec Expiration { get; set; }
 
         /// <summary>
         /// API name: seller

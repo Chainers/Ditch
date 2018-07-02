@@ -1,6 +1,5 @@
 using System.Threading;
-using Ditch.Steem.Models.Args;
-using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -18,8 +17,7 @@ namespace Ditch.Steem.Tests.Apis
                 Type = BandwidthType.Forum
             };
             var resp = Api.GetAccountBandwidth(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_account_bandwidth", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -27,8 +25,7 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetReserveRatioArgs();
             var resp = Api.GetReserveRatio(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.WitnessApi, "get_reserve_ratio", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
     }
 }

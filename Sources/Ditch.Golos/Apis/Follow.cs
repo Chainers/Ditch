@@ -23,7 +23,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public JsonRpcResponse<AccountReputation[]> GetAccountReputations(string lowerBoundName, uint limit, CancellationToken token)
         {
-            return CustomGetRequest<AccountReputation[]>(KnownApiNames.Follow, "get_account_reputations", new object[] { lowerBoundName, limit }, token);
+            return CustomGetRequest<AccountReputation[]>(KnownApiNames.Follow, "get_account_reputations", new object[] { new object[] { lowerBoundName, limit } }, token);
         }
 
         /// <summary>

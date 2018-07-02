@@ -17,7 +17,7 @@ namespace Ditch.Golos.Tests.Apis
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
             var resp = Api.BroadcastTransaction(transaction, CancellationToken.None);
             WriteLine(resp);
@@ -33,7 +33,7 @@ namespace Ditch.Golos.Tests.Apis
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
             var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, CancellationToken.None, op);
+            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
             var resp = Api.BroadcastTransactionSynchronous(transaction, CancellationToken.None);
             WriteLine(resp);

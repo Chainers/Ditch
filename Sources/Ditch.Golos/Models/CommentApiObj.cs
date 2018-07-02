@@ -1,4 +1,5 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -49,19 +50,19 @@ namespace Ditch.Golos.Models
 
         // bdType : time_point_sec
         [JsonProperty("last_update")]
-        public DateTime LastUpdate { get; set; }
+        public TimePointSec LastUpdate { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("created")]
-        public DateTime Created { get; set; }
+        public TimePointSec Created { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("active")]
-        public DateTime Active { get; set; }
+        public TimePointSec Active { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("last_payout")]
-        public DateTime LastPayout { get; set; }
+        public TimePointSec LastPayout { get; set; }
 
         // bdType : uint8_t | = 0;
         [JsonProperty("depth")]
@@ -93,11 +94,11 @@ namespace Ditch.Golos.Models
 
         // bdType : time_point_sec
         [JsonProperty("cashout_time")]
-        public DateTime CashoutTime { get; set; }
+        public TimePointSec CashoutTime { get; set; }
 
         // bdType : time_point_sec
         [JsonProperty("max_cashout_time")]
-        public DateTime MaxCashoutTime { get; set; }
+        public TimePointSec MaxCashoutTime { get; set; }
 
         // bdType : uint64_t | = 0;
         [JsonProperty("total_vote_weight")]

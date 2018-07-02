@@ -20,8 +20,7 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2
             };
             var resp = Api.GetDiscussionsByTrending(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_trending", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -29,12 +28,12 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
 
             var resp = Api.GetDiscussionsByCreated(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_created", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -42,11 +41,11 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
             var resp = Api.GetDiscussionsByActive(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_active", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -54,11 +53,11 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
             var resp = Api.GetDiscussionsByCashout(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_cashout", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -66,11 +65,11 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
             var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_payout", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -78,11 +77,11 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
             var resp = Api.GetDiscussionsByVotes(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_votes", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -90,11 +89,11 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
             var resp = Api.GetDiscussionsByHot(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_hot", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -102,11 +101,12 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
+                TruncateBody = 100,
+                Limit = 2,
                 SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByFeed(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_feed", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -114,11 +114,12 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
+                SelectAuthors = new[] { User.Login },
             };
             var resp = Api.GetDiscussionsByBlog(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_blog", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -126,11 +127,12 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
+                TruncateBody = 100,
+                Limit = 2,
                 StartAuthor = User.Login
             };
             var resp = Api.GetDiscussionsByComments(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_comments", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -138,11 +140,11 @@ namespace Ditch.Golos.Tests.Apis
         {
             var query = new DiscussionQuery()
             {
-                SelectAuthors = new[] { User.Login }
+                TruncateBody = 100,
+                Limit = 2,
             };
             var resp = Api.GetDiscussionsByPromoted(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_promoted", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -151,8 +153,7 @@ namespace Ditch.Golos.Tests.Apis
             ushort count = 3;
             var dt = DateTime.Now;
             var resp = Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count, 100, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_author_before_date", new object[] { User.Login, string.Empty, dt, count, 100 }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
             Assert.IsTrue(resp.Result.Length <= count);
         }
 
@@ -166,24 +167,22 @@ namespace Ditch.Golos.Tests.Apis
             };
 
             var resp = Api.GetDiscussionsByChildren(query, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_discussions_by_children", new object[] { query }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
         public void get_trending_tags()
         {
             var resp = Api.GetTrendingTags(User.Login, 3, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject[]>(ApiName, "get_trending_tags", new object[] { User.Login, 3 }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
         public void get_tags_used_by_author()
         {
             var resp = Api.GetTagsUsedByAuthor(User.Login, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(ApiName, "get_tags_used_by_author", new object[] { User.Login }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]

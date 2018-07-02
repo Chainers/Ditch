@@ -1,100 +1,85 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cryptography.ECDSA;
+using Ditch.Core;
 using Ditch.EOS.Errors;
+using Ditch.EOS.Models;
+using Newtonsoft.Json;
 
 namespace Ditch.EOS
 {
     public partial class OperationManager
     {
-        private readonly JsonNetConverter _jsonNetConverter;
-
         private readonly HttpClient _client;
-        private List<string> _urls;
-        private string _url;
+        public MessageSerializer MessageSerializer { get; }
 
         #region Constructors
 
         public OperationManager(long maxResponseContentBufferSize = 256000)
         {
-            _jsonNetConverter = new JsonNetConverter();
             _client = new HttpClient
             {
                 MaxResponseContentBufferSize = maxResponseContentBufferSize
             };
+            MessageSerializer = new MessageSerializer();
         }
 
         #endregion Constructors
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="urls"></param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public string TryConnectTo(List<string> urls, CancellationToken token)
-        {
-            _urls = urls;
-            _url = string.Empty;
-
-            foreach (var url in urls)
-            {
-                try
-                {
-                    var rez = _client.GetAsync(url, token).Result;
-                    if (rez?.StatusCode == null)
-                        continue;
-
-                    _url = url;
-                    break;
-                }
-                catch
-                {
-                    //todo nothing
-                }
-            }
-            return _url;
-        }
-
-
-        public async Task<OperationResult<T>> CustomGetRequest<T>(string endpoint, Dictionary<string, object> parameters, CancellationToken token)
+        public async Task<OperationResult<T>> CustomGetRequest<T>(string url, Dictionary<string, object> parameters, CancellationToken token)
         {
             var param = string.Empty;
             if (parameters != null && parameters.Count > 0)
                 param = "?" + string.Join("&", parameters.Select(i => $"{i.Key}={i.Value}"));
 
-            var url = $"{_url}/{endpoint}{param}";
-            var response = await _client.GetAsync(url, token);
-            return await CreateResult<T>(response, token);
+            var response = await _client.GetAsync($"{url}{param}", token);
+            var result = await CreateResult<T>(response, token);
+
+#if DEBUG
+            result.RawRequest = $"GET: {url}{param}";
+#endif
+
+            return result;
         }
 
-        public async Task<OperationResult<T>> CustomGetRequest<T>(string endpoint, CancellationToken token)
+        public async Task<OperationResult<T>> CustomGetRequest<T>(string url, CancellationToken token)
         {
-            var url = $"{_url}/{endpoint}";
             var response = await _client.GetAsync(url, token);
-            return await CreateResult<T>(response, token);
+            var result = await CreateResult<T>(response, token);
+
+#if DEBUG
+            result.RawRequest = $"GET: {url}";
+#endif
+
+            return result;
         }
 
 
-        public async Task<OperationResult<T>> CustomPostRequest<T>(string endpoint, object data, CancellationToken token)
+        public async Task<OperationResult<T>> CustomPostRequest<T>(string url, object data, CancellationToken token)
         {
             HttpContent content = null;
+            var param = string.Empty;
             if (data != null)
             {
-                var param = _jsonNetConverter.Serialize(data);
-                Debug.WriteLine(param);
+                param = JsonConvert.SerializeObject(data, Formatting.Indented);
                 content = new StringContent(param, Encoding.UTF8, "application/json");
             }
 
-            var url = $"{_url}/{endpoint}";
             var response = await _client.PostAsync(url, content, token);
-            return await CreateResult<T>(response, token);
+            var result = await CreateResult<T>(response, token);
+
+
+#if DEBUG
+            result.RawRequest = $"POST: {url}{Environment.NewLine}{param}";
+#endif
+
+            return result;
         }
 
 
@@ -102,13 +87,18 @@ namespace Ditch.EOS
         {
             var result = new OperationResult<T>();
 
+            var content = await response.Content.ReadAsStringAsync();
+
+#if DEBUG
+            result.RawResponse = content;
+#endif
+
             // HTTP error
             if (response.StatusCode == HttpStatusCode.InternalServerError ||
                 response.StatusCode != HttpStatusCode.OK &&
-                response.StatusCode != HttpStatusCode.Created)
+                response.StatusCode != HttpStatusCode.Created &&
+                response.StatusCode != HttpStatusCode.Accepted)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                Debug.WriteLine(content);
                 result.Error = new HttpError(response.StatusCode, content);
                 return result;
             }
@@ -122,8 +112,7 @@ namespace Ditch.EOS
             {
                 if (mediaType.Equals("application/json"))
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result.Result = _jsonNetConverter.Deserialize<T>(content);
+                    result.Result = JsonConvert.DeserializeObject<T>(content);
                 }
                 else
                 {
@@ -133,7 +122,92 @@ namespace Ditch.EOS
 
             return result;
         }
+
+        public async Task<PackedTransaction> CreatePackedTransaction(CreateTransactionArgs args, CancellationToken token)
+        {
+            //1
+            var infoResp = await GetInfo(token);
+            if (infoResp.IsError)
+                return null;
+
+            var info = infoResp.Result;
+
+            //2
+            var blockArgs = new GetBlockParams
+            {
+                BlockNumOrId = info.HeadBlockId
+            };
+            var getBlock = await GetBlock(blockArgs, token);
+            if (getBlock.IsError)
+                return null;
+
+            var block = getBlock.Result;
+
+            //3
+            var transaction = new SignedTransaction
+            {
+                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
+                RefBlockPrefix = block.RefBlockPrefix,
+                Expiration = block.Timestamp.Value.AddSeconds(30),
+                Actions = args.Actions
+            };
+
+            var packedTrx = MessageSerializer.Serialize<SignedTransaction>(transaction);
+
+            var chainId = Hex.HexToBytes(info.ChainId);
+            byte[] msg = new byte[chainId.Length + packedTrx.Length + 32];
+            Array.Copy(chainId, msg, chainId.Length);
+            Array.Copy(packedTrx, 0, msg, chainId.Length, packedTrx.Length);
+            var sha256 = Sha256Manager.GetHash(msg);
+
+            transaction.Signatures = new string[args.PrivateKeys.Count];
+            for (var i = 0; i < args.PrivateKeys.Count; i++)
+            {
+                var key = args.PrivateKeys[i];
+                var sig = Secp256K1Manager.SignCompressedCompact(sha256, key);
+                var sigHex = Base58.EncodeSig(sig);
+                transaction.Signatures[i] = sigHex;
+            }
+
+            return new PackedTransaction()
+            {
+                PackedTrx = Hex.ToString(packedTrx),
+                Signatures = transaction.Signatures,
+                PackedContextFreeData = "",
+                Compression = "none"
+            };
+        }
+
+        public async Task<SignedTransaction> CreateTransaction(CreateTransactionArgs args, CancellationToken token)
+        {
+            //1
+            var infoResp = await GetInfo(token);
+            if (infoResp.IsError)
+                return null;
+
+            var info = infoResp.Result;
+
+            //2
+            var blockArgs = new GetBlockParams
+            {
+                BlockNumOrId = info.HeadBlockId
+            };
+            var getBlock = await GetBlock(blockArgs, token);
+            if (getBlock.IsError)
+                return null;
+
+            var block = getBlock.Result;
+
+            //3
+            var transaction = new SignedTransaction
+            {
+                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
+                RefBlockPrefix = block.RefBlockPrefix,
+                Expiration = block.Timestamp.Value.AddSeconds(30),
+                Actions = args.Actions
+            };
+
+            return transaction;
+        }
     }
-
 }
-

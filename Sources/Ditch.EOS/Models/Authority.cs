@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -16,7 +17,15 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("threshold")]
-        public uint Threshold {get; set;}
+        public UInt32 Threshold {get; set;}
+
+        /// <summary>
+        /// API name: delay_sec
+        /// 
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
+        [JsonProperty("delay_sec")]
+        public UInt32 DelaySec {get; set;}
 
         /// <summary>
         /// API name: keys

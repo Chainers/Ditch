@@ -1,51 +1,21 @@
-using Ditch.EOS.Models.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
-    /**
-     * When a transaction is referenced by a block it could imply one of several outcomes which
-     * describe the state-transition undertaken by the block producer.
-     */
-
     /// <summary>
     /// transaction_receipt
-    /// libraries\chain\include\eosio\chain\transaction.hpp
+    /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class TransactionReceipt
+    public class TransactionReceipt : TransactionReceiptHeader
     {
 
         /// <summary>
-        /// API name: status
+        /// API name: trx
         /// 
         /// </summary>
-        /// <returns>API type: enum_type</returns>
-        [JsonProperty("status")]
-        public StatusEnum Status { get; set; }
-
-        /// <summary>
-        /// API name: kcpu_usage
-        /// 
-        /// </summary>
-        /// <returns>API type: unsigned_int</returns>
-        [JsonProperty("kcpu_usage")]
-        public uint KcpuUsage { get; set; }
-
-        /// <summary>
-        /// API name: net_usage_words
-        /// 
-        /// </summary>
-        /// <returns>API type: unsigned_int</returns>
-        [JsonProperty("net_usage_words")]
-        public uint NetUsageWords { get; set; }
-
-        /// <summary>
-        /// API name: id
-        /// 
-        /// </summary>
-        /// <returns>API type: transaction_id_type</returns>
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        /// <returns>API type: fc::static_variant<transaction_id_type, packed_transaction>>
+        //public StaticVariant<string, PackedTransaction> Trx { get; set; }
+        public object Trx { get; set; }
     }
 }

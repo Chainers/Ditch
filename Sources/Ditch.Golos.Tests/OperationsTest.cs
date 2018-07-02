@@ -15,11 +15,14 @@ namespace Ditch.Golos.Tests
     [TestFixture]
     public class OperationsTest : BaseTest
     {
-        private static JsonRpcResponse Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
+        private void Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
-            return isNeedBroadcast
-                ? Api.BroadcastOperations(postingKeys, CancellationToken.None, op)
-                : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+            var response = isNeedBroadcast
+                ? (JsonRpcResponse)Api.BroadcastOperations(postingKeys, op, CancellationToken.None)
+                : Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
+            WriteLine(response);
+
+            Assert.IsFalse(response.IsError);
         }
 
         #region Vote
@@ -41,8 +44,7 @@ namespace Ditch.Golos.Tests
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
                         : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
 
-                var response = Post(user.PostingKeys, false, op);
-                Assert.IsFalse(response.IsError, response.GetErrorMessage());
+                Post(user.PostingKeys, false, op);
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -72,14 +74,10 @@ namespace Ditch.Golos.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            var resp = Post(user.PostingKeys, false, op);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
-            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            resp = Post(user.PostingKeys, false, op2);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError, resp.GetErrorMessage());
+            var op2 = new DeleteCommentOperation(user.Login, "");
+            Post(user.PostingKeys, false, op2);
         }
 
         [Test]
@@ -89,9 +87,7 @@ namespace Ditch.Golos.Tests
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
 
-            var response = Post(user.PostingKeys, false, op, op2);
-
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op, op2);
         }
 
         [Test]
@@ -101,8 +97,7 @@ namespace Ditch.Golos.Tests
 
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         #endregion
@@ -113,8 +108,7 @@ namespace Ditch.Golos.Tests
         public void TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -125,8 +119,7 @@ namespace Ditch.Golos.Tests
         public void TransferToVestingOperationTest()
         {
             var op = new TransferToVestingOperation(User.Login, User.Login, new Asset("0.001 GOLOS"));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -137,8 +130,7 @@ namespace Ditch.Golos.Tests
         public void WithdrawVestingOperationTest()
         {
             var op = new WithdrawVestingOperation(User.Login, new Asset("0.001 GESTS"));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -161,8 +153,7 @@ namespace Ditch.Golos.Tests
         public void WitnessUpdateTest()
         {
             var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainApiProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
 
         #endregion
@@ -228,30 +219,26 @@ namespace Ditch.Golos.Tests
             var op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             isFollow = !isFollow;
 
             op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             isFollow = !isFollow;
 
             var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
 
             isFollow = !isFollow;
 
             fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         private bool IsFollow(string author)
@@ -266,8 +253,7 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new RePostOperation(user.Login, "joseph.kalu", "fkkl", user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -276,8 +262,7 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, user.Login);
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -286,8 +271,7 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, "StubLogin");
-            var response = Post(user.PostingKeys, false, op);
-            Assert.IsTrue(response.IsError);
+            Post(user.PostingKeys, false, op);
         }
 
         [Test]
@@ -297,8 +281,7 @@ namespace Ditch.Golos.Tests
             var acc = resp.Result[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
 
         [Test, Sequential]
@@ -352,8 +335,7 @@ namespace Ditch.Golos.Tests
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.MemoKey = new PublicKeyType(subPublicKey);
 
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            Post(User.ActiveKeys, false, op);
         }
     }
 }

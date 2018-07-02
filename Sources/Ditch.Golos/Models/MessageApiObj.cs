@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -65,7 +66,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("receive_time")]
-        public DateTime ReceiveTime { get; set; }
+        public TimePointSec ReceiveTime { get; set; }
 
         /// <summary>
         /// API name: checksum

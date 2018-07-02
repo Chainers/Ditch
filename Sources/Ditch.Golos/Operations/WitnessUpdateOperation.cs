@@ -7,9 +7,11 @@ namespace Ditch.Golos.Operations
     [JsonObject(MemberSerialization.OptIn)]
     public class WitnessUpdateOperation : BaseOperation
     {
+        public const string OperationName = "witness_update";
+
         public override OperationType Type => OperationType.WitnessUpdate;
 
-        public override string TypeName => "witness_update";
+        public override string TypeName => OperationName;
 
         [MessageOrder(20)]
         [JsonProperty("owner")]

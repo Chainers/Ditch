@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch.Golos
 {
@@ -29,11 +30,11 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: void</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastTransaction(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<VoidResponse> BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest(KnownApiNames.NetworkBroadcast, "broadcast_transaction", new object[] { trx }, token);
+            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_transaction", new object[] { trx }, token);
         }
-        
+
         /// <summary>
         /// API name: broadcast_transaction_synchronous
         /// This call will not return until the transaction is included in a block.
@@ -44,9 +45,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> BroadcastTransactionSynchronous(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<JObject> BroadcastTransactionSynchronous(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest<object>(KnownApiNames.NetworkBroadcast, "broadcast_transaction_synchronous", new object[] { trx }, token);
+            return CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcast, "broadcast_transaction_synchronous", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -57,9 +58,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: void</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastBlock(SignedBlock block, CancellationToken token)
+        public JsonRpcResponse<VoidResponse> BroadcastBlock(SignedBlock block, CancellationToken token)
         {
-            return CustomGetRequest(KnownApiNames.NetworkBroadcast, "broadcast_block", new object[] { block }, token);
+            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_block", new object[] { block }, token);
         }
     }
 }

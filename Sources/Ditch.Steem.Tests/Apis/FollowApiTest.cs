@@ -1,6 +1,5 @@
 ﻿using System.Threading;
-using Ditch.Steem.Models.Args;
-using Ditch.Steem.Models.Enums;
+using Ditch.Steem.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -20,8 +19,7 @@ namespace Ditch.Steem.Tests.Apis
                 Type = FollowType.Blog
             };
             var resp = Api.GetFollowers(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_followers", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -35,8 +33,7 @@ namespace Ditch.Steem.Tests.Apis
                 Type = FollowType.Blog
             };
             var resp = Api.GetFollowing(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_following", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -47,8 +44,7 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login
             };
             var resp = Api.GetFollowCount(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_follow_count", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -61,8 +57,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 10
             };
             var resp = Api.GetFeedEntries(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_feed_entries", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -75,8 +70,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 10
             };
             var resp = Api.GetFeed(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_feed", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -89,8 +83,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 10
             };
             var resp = Api.GetBlogEntries(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_blog_entries", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -103,8 +96,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 10
             };
             var resp = Api.GetBlog(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_blog", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -116,8 +108,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 10
             };
             var resp = Api.GetAccountReputations(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_account_reputations", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -129,8 +120,7 @@ namespace Ditch.Steem.Tests.Apis
                 Permlink = "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app"
             };
             var resp = Api.GetRebloggedBy(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_reblogged_by", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -141,8 +131,7 @@ namespace Ditch.Steem.Tests.Apis
                 BlogAccount = User.Login
             };
             var resp = Api.GetBlogAuthors(args, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.FollowApi, "get_blog_authors", args, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
     }
 }

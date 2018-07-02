@@ -1,53 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cryptography.ECDSA;
 using Ditch.EOS.Models;
-using Ditch.EOS.Models.Params;
 using Ditch.EOS.Tests.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Action = Ditch.EOS.Models.Action;
 
 namespace Ditch.EOS.Tests
 {
     [TestFixture]
     public class ChainApiTest : BaseTest
     {
+        const string CreatePostActionName = "createpost";
 
         [Test]
         public async Task GetInfoTest()
         {
-            var resp = await Api.GetInfo(CancellationToken.None);
-            var obj = await Api.CustomGetRequest<JObject>("v1/chain/get_info", CancellationToken.None);
+            var resp = await Api.GetInfo(CancellationToken);
+            var obj = await Api.CustomGetRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_info", CancellationToken);
             TestPropetries(resp, obj);
         }
 
         [Test]
         public async Task GetBlockTest()
         {
-            const string blockNumOrId = "1";
-            var parameters = new Dictionary<string, object>
+            var infoResp = await Api.GetInfo(CancellationToken);
+            var info = infoResp.Result;
+
+            var args = new GetBlockParams
             {
-                {"block_num_or_id", blockNumOrId}
+                BlockNumOrId = info.LastIrreversibleBlockId
             };
 
-            var resp = await Api.GetBlock(blockNumOrId, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_block", parameters, CancellationToken.None);
+            var resp = await Api.GetBlock(args, CancellationToken);
+            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_block", args, CancellationToken);
             TestPropetries(resp, obj);
         }
-
 
         [Test]
         public async Task GetAccountTest()
         {
             var accountParams = new GetAccountParams
             {
-                AccountName = "test1"
+                AccountName = User.Login
             };
-            var resp = await Api.GetAccount(accountParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_account", accountParams, CancellationToken.None);
+
+            var resp = await Api.GetAccount(accountParams, CancellationToken);
+            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_account", accountParams, CancellationToken);
             TestPropetries(resp, obj);
         }
 
@@ -56,48 +54,51 @@ namespace Ditch.EOS.Tests
         {
             var codeParams = new GetCodeParams
             {
-                AccountName = "hackathon"
+                AccountName = User.Login
             };
-            var resp = await Api.GetCode(codeParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_code", codeParams, CancellationToken.None);
+
+            var resp = await Api.GetCode(codeParams, CancellationToken);
+            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_code", codeParams, CancellationToken);
             TestPropetries(resp, obj);
         }
 
         [Test]
         public async Task GetTableRowsTest()
         {
-            var tableRowsParams = new GetTableRowsParams
+            var tableRowsParams = new GetTableRowsParams()
             {
-                Scope = "hackathon",
-                Code = "hackathon",
-                Table = "accounts",
-                Json = true,
-                LowerBound = "0",
-                UpperBound = "-1",
-                Limit = 10
+                Scope = "test",
+                Code = "test",
+                Table = "posts",
+                //Json = true,
+                //LowerBound = "0",
+                //UpperBound = "-1",
+                //Limit = 10
             };
-            var resp = await Api.GetTableRows(tableRowsParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_table_rows", tableRowsParams, CancellationToken.None);
+
+            var resp = await Api.GetTableRows(tableRowsParams, CancellationToken);
+            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_table_rows", tableRowsParams, CancellationToken);
             TestPropetries(resp, obj);
         }
 
         [Test]
         public async Task AbiJsonToBinTest()
         {
-            var abiJsonToBinParams = new AbiJsonToBinParams
+            var abiJsonToBinArgs = new AbiJsonToBinParams
             {
-                Code = "hackathon",
-                Action = "transfer",
-                Args = new Transfer
+                Code = ContractInfo.ContractName,
+                Action = CreatePostActionName,
+                Args = new CreatePostArgs
                 {
-                    From = "test1",
-                    To = "test1",
-                    Amount = new Asset("1000 VIM")
+                    UrlPhoto = "test_1_url",
+                    AccountCreator = User.Login,
+                    IpfsHashPhoto = "test_1_hash",
+                    //ParentPost = 1
                 }
             };
 
-            var resp = await Api.AbiJsonToBin(abiJsonToBinParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_json_to_bin", abiJsonToBinParams, CancellationToken.None);
+            var resp = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
+            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/abi_json_to_bin", abiJsonToBinArgs, CancellationToken);
             TestPropetries(resp, obj);
         }
 
@@ -106,115 +107,107 @@ namespace Ditch.EOS.Tests
         {
             var abiBinToJsonParams = new AbiBinToJsonParams
             {
-                Code = "hackathon",
-                Action = "transfer",
-                Binargs = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
+                Code = ContractInfo.ContractName,
+                Action = CreatePostActionName,
+                Binargs = "000000000090b1ca0a746573745f315f75726c0b746573745f315f68617368"
             };
 
-            var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken.None);
+            var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken);
+            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken);
             TestPropetries(resp, obj);
         }
 
-        [Ignore("you need to put your own data")]
         [Test]
         public async Task PushTransactionTest()
         {
-            var infoResp = await Api.GetInfo(CancellationToken.None);
-            var info = infoResp.Result;
-
-            var pushTransactionParams = new SignedTransaction
+            var abiJsonToBinArgs = new AbiJsonToBinParams
             {
-                RefBlockNum = (ushort)(info.HeadBlockNum & 0xffff),
-                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(info.HeadBlockId), 4),
-                Expiration = info.HeadBlockTime.AddSeconds(30),
+                Code = ContractInfo.ContractName,
+                Action = CreatePostActionName,
+                Args = new CreatePostArgs
+                {
+                    UrlPhoto = "test_1_url",
+                    AccountCreator = User.Login,
+                    IpfsHashPhoto = "test_1_hash",
+                    //ParentPost = 1
+                }
+            };
+            var abiJsonToBin = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
+            Assert.IsFalse(abiJsonToBin.IsError);
 
-                MaxNetUsageWords = 0,
-                MaxKcpuUsage = 0,
-                DelaySec = 0,
-                ContextFreeActions = new Action[0],
+            var args = new CreateTransactionArgs
+            {
                 Actions = new[]
                 {
                     new Action
                     {
-                        Account = "hackathon",
-                        Name = "transfer",
+                        Account = User.Login,
+                        Name = CreatePostActionName,
                         Authorization = new[]
                         {
                             new PermissionLevel
                             {
-                                Actor = "test1",
+                                Actor = User.Login,
                                 Permission = "active"
                             }
                         },
-                        Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
-                    }
-                }
-            };
-
-            var resp = await Api.PushTransaction(pushTransactionParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transaction", pushTransactionParams, CancellationToken.None);
-            TestPropetries(resp, obj);
-        }
-
-        [Ignore("you need to put your own data")]
-        [Test]
-        public async Task PushTransactionsTest()
-        {
-            var abiBinToJsonParams = new AbiBinToJsonParams
-            {
-                Code = "hackathon",
-                Action = "transfer",
-                Binargs = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
-            };
-
-            var resp = await Api.PushTransactions(null, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/push_transactions", abiBinToJsonParams, CancellationToken.None);
-            TestPropetries(resp, obj);
-        }
-
-        [Ignore("you need to put your own data")]
-        [Test]
-        public async Task GetRequiredKeysTest()
-        {
-            var infoResp = await Api.GetInfo(CancellationToken.None);
-            var info = infoResp.Result;
-
-            var getRequiredKeysParams = new GetRequiredKeysParams
-            {
-                Transaction = new Transaction
-                {
-                    Expiration = info.HeadBlockTime.AddSeconds(30),
-                    Region = 0,
-                    RefBlockNum = (ushort)(info.HeadBlockNum & 0xffff),
-                    RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(info.HeadBlockId), 4),
-                    MaxNetUsageWords = 0,
-                    MaxKcpuUsage = 0,
-                    DelaySec = 0,
-                    ContextFreeActions = new Action[0],
-                    Actions = new[]
-                    {
-                        new Action
-                        {
-                            Account = "hackathon",
-                            Name = "transfer",
-                            Authorization = new[]
-                            {
-                                new PermissionLevel
-                                {
-                                    Actor = "test1",
-                                    Permission = "active"
-                                }
-                            },
-                            Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
-                        }
+                        Data =  abiJsonToBin.Result.Binargs
                     }
                 },
-                AvailableKeys = new[] { "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS7drQWvc7Mn7NK2PivjbAqLXMyBpvSNnZWnZC3CS61g1dhVK57o", "EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7" }
+                PrivateKeys = new List<byte[]> { User.PrivateActiveKey }
             };
-            var resp = await Api.GetRequiredKeys(getRequiredKeysParams, CancellationToken.None);
-            var obj = await Api.CustomPostRequest<JObject>("v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken.None);
-            TestPropetries(resp, obj);
+
+            var packedTransaction = await Api.CreatePackedTransaction(args, CancellationToken);
+
+            var resp = await Api.PushTransaction(packedTransaction, CancellationToken);
+            WriteLine(resp);
+
+            Assert.IsFalse(resp.IsError);
         }
+
+        //[Ignore("you need to put your own data")]
+        //[Test]
+        //public async Task GetRequiredKeysTest()
+        //{
+        //    var infoResp = await Api.GetInfo(CancellationToken);
+        //    var info = infoResp.Result;
+
+        //    var getRequiredKeysParams = new GetRequiredKeysParams
+        //    {
+        //        Transaction = new Transaction
+        //        {
+        //            Expiration = info.HeadBlockTime.Value.AddSeconds(30),
+        //            Region = 0,
+        //            RefBlockNum = (ushort)(info.HeadBlockNum & 0xffff),
+        //            RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(info.HeadBlockId), 4),
+        //            MaxNetUsageWords = 0,
+        //            MaxKcpuUsage = 0,
+        //            DelaySec = 0,
+        //            ContextFreeActions = new Action[0],
+        //            Actions = new[]
+        //            {
+        //                new Action
+        //                {
+        //                    Account = "hackathon",
+        //                    Name = "transfer",
+        //                    Authorization = new[]
+        //                    {
+        //                        new PermissionLevel
+        //                        {
+        //                            Actor = "test1",
+        //                            Permission = "active"
+        //                        }
+        //                    },
+        //                    Data = "000000008090b1ca000000008090b1cae8030000000000000056494d00000000"
+        //                }
+        //            }
+        //        },
+        //        AvailableKeys = new[] { "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS7drQWvc7Mn7NK2PivjbAqLXMyBpvSNnZWnZC3CS61g1dhVK57o", "EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7" }
+        //    };
+
+        //    var resp = await Api.GetRequiredKeys(getRequiredKeysParams, CancellationToken);
+        //    var obj = await Api.CustomPostRequest<JObject>($"{ChainUrl}/v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken);
+        //    TestPropetries(resp, obj);
+        //}
     }
 }

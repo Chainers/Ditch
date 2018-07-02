@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -33,7 +34,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("created")]
-        public DateTime Created {get; set;}
+        public TimePointSec Created {get; set;}
 
         /// <summary>
         /// API name: url
@@ -105,7 +106,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_sbd_exchange_update")]
-        public DateTime LastSbdExchangeUpdate {get; set;}
+        public TimePointSec LastSbdExchangeUpdate {get; set;}
 
         /// <summary>
         /// API name: votes
@@ -169,6 +170,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("hardfork_time_vote")]
-        public DateTime HardforkTimeVote {get; set;}
+        public TimePointSec HardforkTimeVote {get; set;}
     }
 }

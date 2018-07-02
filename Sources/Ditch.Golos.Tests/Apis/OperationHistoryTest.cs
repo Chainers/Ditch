@@ -10,22 +10,20 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_ops_in_block()
         {
-            uint id = 2;
+            uint id = 26;
             var resp = Api.GetOpsInBlock(id, false, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JArray>(KnownApiNames.OperationHistory, "get_ops_in_block", new object[] { id, false }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
         public void get_transaction()
         {
-            uint id = 2;
+            uint id = 26;
             var ops = Api.GetOpsInBlock(id, false, CancellationToken.None);
             var trxId = ops.Result[0].TrxId;
 
             var resp = Api.GetTransaction(trxId, CancellationToken.None);
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.OperationHistory, "get_transaction", new object[] { trxId }, CancellationToken.None);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
     }
 }

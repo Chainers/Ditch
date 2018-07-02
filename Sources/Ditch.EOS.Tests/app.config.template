@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-  <appSettings>
-    <add key="Login" value="" />
-    <add key="PostingWif" value="" />
-    <add key="ActiveWif" value="" />
-    <add key="Url" value="" />
-  </appSettings>
+    <appSettings>
+
+        <add key="ContractName" value="test" />
+        <add key="Login" value="test" />
+        <add key="PrivateOwnerWif" value="***********************" />
+        <add key="PrivateActiveWif" value="*****************" />
+        <add key="Password" value="*************" />
+        <add key="ChainUrl" value="http://000.000.000.000:0000" />
+        <add key="WalletUrl" value="http://000.000.000.000:0000" />
+
+    </appSettings>
 </configuration>

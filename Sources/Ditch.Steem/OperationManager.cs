@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.JsonRpc;
-using Ditch.Steem.Models.ApiObj;
-using Ditch.Steem.Models.Args;
-using Ditch.Steem.Models.Objects;
-using Ditch.Steem.Models.Operations;
-using Ditch.Steem.Models.Other;
-using Ditch.Steem.Models.Return;
+using Ditch.Steem.Models;
+using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -41,7 +39,11 @@ namespace Ditch.Steem
         public OperationManager()
         {
             MessageSerializer = new MessageSerializer();
-            JsonSerializerSettings = new JsonSerializerSettings();
+            JsonSerializerSettings = new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Culture = CultureInfo.InvariantCulture
+            };
             ConnectionManager = new HttpManager(JsonSerializerSettings);
         }
 
@@ -68,13 +70,13 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperations(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse<VoidResponse> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return prop;
+                return new JsonRpcResponse<VoidResponse>(prop.Error);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations, token);
             var args = new BroadcastTransactionArgs
             {
                 Trx = transaction
@@ -92,13 +94,13 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse<BroadcastTransactionSynchronousReturn> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return prop;
+                return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop.Error);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations, token);
             var args = new BroadcastTransactionSynchronousArgs
             {
                 Trx = transaction
@@ -115,10 +117,10 @@ namespace Ditch.Steem
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
-            var transaction = CreateTransaction(prop, userPrivateKeys, token, testOps);
+            var transaction = CreateTransaction(prop, userPrivateKeys, testOps, token);
             var args = new VerifyAuthorityArgs
             {
                 Trx = transaction
@@ -158,35 +160,6 @@ namespace Ditch.Steem
         }
 
         /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string api, string method, object data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
-            return ConnectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string api, string method, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(api, method);
-            return ConnectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="propertyApiObj"></param>
@@ -195,15 +168,15 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             var transaction = new SignedTransaction
             {
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
-                Expiration = propertyApiObj.Time.AddSeconds(30),
-                BaseOperations = operations
+                Expiration = propertyApiObj.Time.Value.AddSeconds(30),
+                Operations = operations.Select(o => new Operation(o)).ToArray()
             };
 
             var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
@@ -219,6 +192,11 @@ namespace Ditch.Steem
             }
 
             return transaction;
+        }
+
+        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
+        {
+            return CreateTransaction(propertyApiObj, userPrivateKeys, new[] { operation }, token);
         }
 
         public byte[] TryLoadChainId(string[] chainFieldName, CancellationToken token)

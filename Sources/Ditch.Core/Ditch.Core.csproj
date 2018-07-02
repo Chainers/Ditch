@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.0" />
+    <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
     <PackageReference Include="WebSocket4Net" Version="0.15.2" />

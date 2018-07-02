@@ -1,6 +1,6 @@
 ﻿using System;
 using Ditch.Core.Attributes;
-using Ditch.Golos.Operations;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -22,7 +22,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(1)]
         [JsonProperty("ref_block_num")]
-        public UInt16 RefBlockNum {get; set;}
+        public UInt16 RefBlockNum { get; set; }
 
         /// <summary>
         /// API name: ref_block_prefix
@@ -31,7 +31,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(2)]
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix {get; set;}
+        public UInt32 RefBlockPrefix { get; set; }
 
         /// <summary>
         /// API name: expiration
@@ -40,15 +40,16 @@ namespace Ditch.Golos.Models
         /// <returns>API type: time_point_sec</returns>
         [MessageOrder(3)]
         [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
+        public TimePointSec Expiration { get; set; }
 
         /// <summary>
         /// API name: operations
         /// 
         /// </summary>
         /// <returns>API type: operation</returns>
+        [JsonProperty("operations")]
         [MessageOrder(4)]
-        public BaseOperation[] BaseOperations { get; set; }
+        public Operation[] Operations { get; set; }
 
         /// <summary>
         /// API name: extensions

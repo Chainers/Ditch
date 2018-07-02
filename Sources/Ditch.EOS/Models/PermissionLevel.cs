@@ -1,3 +1,4 @@
+using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -15,15 +16,17 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: account_name</returns>
+        [MessageOrder(10)]
         [JsonProperty("actor")]
-        public string Actor {get; set;}
+        public AccountName Actor {get; set;}
 
         /// <summary>
         /// API name: permission
         /// 
         /// </summary>
         /// <returns>API type: permission_name</returns>
+        [MessageOrder(20)]
         [JsonProperty("permission")]
-        public string Permission {get; set;}
+        public PermissionName Permission {get; set;}
     }
 }

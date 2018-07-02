@@ -103,6 +103,5 @@ namespace Ditch.Golos.Models
 
         #endregion
 
-
     }
 }
