@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>.net standard client for EOS blockchain (https://eosio.github.io/eos/group__eosiorpc.html)</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>3.2.0-beta</Version>
+    <PackageReleaseNotes>update to eos v1.0.5</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -16,10 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj" />
+    <PackageReference Include="Ditch.Core" Version="3.2.0" />
   </ItemGroup>
 
 </Project>
