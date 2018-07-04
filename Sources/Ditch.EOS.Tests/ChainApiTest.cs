@@ -16,8 +16,7 @@ namespace Ditch.EOS.Tests
         public async Task GetInfoTest()
         {
             var resp = await Api.GetInfo(CancellationToken);
-            var obj = await Api.CustomGetRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_info", CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -32,8 +31,7 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.GetBlock(args, CancellationToken);
-            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_block", args, CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -45,8 +43,7 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.GetAccount(accountParams, CancellationToken);
-            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_account", accountParams, CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -58,8 +55,7 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.GetCode(codeParams, CancellationToken);
-            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_code", codeParams, CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -77,8 +73,7 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.GetTableRows(tableRowsParams, CancellationToken);
-            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/get_table_rows", tableRowsParams, CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -98,8 +93,7 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
-            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/abi_json_to_bin", abiJsonToBinArgs, CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -113,8 +107,7 @@ namespace Ditch.EOS.Tests
             };
 
             var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken);
-            var obj = await Api.CustomPostRequest<JObject>($"{Api.ChainUrl}/v1/chain/abi_bin_to_json", abiBinToJsonParams, CancellationToken);
-            TestPropetries(resp, obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -207,7 +200,7 @@ namespace Ditch.EOS.Tests
 
         //    var resp = await Api.GetRequiredKeys(getRequiredKeysParams, CancellationToken);
         //    var obj = await Api.CustomPostRequest<JObject>($"{ChainUrl}/v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken);
-        //    TestPropetries(resp, obj);
+        //    TestPropetries(resp);
         //}
     }
 }

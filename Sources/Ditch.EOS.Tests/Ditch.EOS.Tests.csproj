@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Base58Test.cs" />
     <Compile Include="BaseTest.cs" />
+    <Compile Include="HistoryApiTest.cs" />
     <Compile Include="MessageSerializerTest.cs" />
     <Compile Include="Models\ContractInfo.cs" />
     <Compile Include="Models\CreatePostArgs.cs" />

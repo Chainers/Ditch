@@ -18,7 +18,6 @@ namespace Ditch.EOS.Tests
         protected static ContractInfo ContractInfo;
 
         protected static OperationManager Api;
-        private const bool IgnoreRequestWithBadData = true;
         protected CancellationToken CancellationToken = CancellationToken.None;
 
         [OneTimeSetUp]
@@ -29,7 +28,9 @@ namespace Ditch.EOS.Tests
                 User = new UserInfo
                 {
                     Login = ConfigurationManager.AppSettings["Login"],
+                    PublicOwnerWif = ConfigurationManager.AppSettings["PublicOwnerWif"],
                     PrivateOwnerWif = ConfigurationManager.AppSettings["PrivateOwnerWif"],
+                    PublicActiveWif = ConfigurationManager.AppSettings["PublicActiveWif"],
                     PrivateActiveWif = ConfigurationManager.AppSettings["PrivateActiveWif"],
                     Password = ConfigurationManager.AppSettings["Password"],
                 };
@@ -53,67 +54,14 @@ namespace Ditch.EOS.Tests
             }
         }
 
-        protected void TestPropetries<T>(OperationResult<T> resp, OperationResult<JArray> obj)
+        protected void TestPropetries<T>(OperationResult<T> resp)
         {
             WriteLine(resp);
-            WriteLine(obj);
-
             Assert.IsFalse(resp.IsError);
-
-            var jResult = obj.Result;
-
-            if (jResult == null)
-                throw new NullReferenceException("obj.Result");
-
-            var type = typeof(T);
-            if (type.IsArray) //list
-            {
-                type = type.GetElementType();
-                var jObj = obj.Result.First.Value<JObject>();
-                Compare(type, jObj);
-            }
-            else //dictionary
-            {
-                jResult = jResult.First().Value<JArray>();
-                if (jResult == null)
-                    throw new InvalidCastException(nameof(obj));
-
-                while (type != null && !type.IsGenericType)
-                {
-                    type = type.BaseType;
-                }
-
-                if (type == null)
-                    throw new InvalidCastException(nameof(obj));
-
-                var types = type.GenericTypeArguments;
-
-                if (types.Length != jResult.Count)
-                {
-                    throw new InvalidCastException(nameof(obj));
-                }
-
-                for (var i = 0; i < types.Length; i++)
-                {
-                    var t = types[i];
-                    if (t.IsPrimitive)
-                        continue;
-                    Compare(t, jResult[i].Value<JObject>());
-                }
-            }
-        }
-
-        protected void TestPropetries<T>(OperationResult<T> resp, OperationResult<JObject> obj)
-        {
-            WriteLine(resp);
-            WriteLine(obj);
-
-            Assert.IsFalse(resp.IsError);
-
-            if (obj.Result == null)
-                throw new NullReferenceException("obj.Result");
-
-            Compare(typeof(T), obj.Result);
+#if DEBUG
+            var jResult = JsonConvert.DeserializeObject<JObject>(resp.RawResponse);
+            Compare(typeof(T), jResult);
+#endif
         }
 
         private void Compare(Type type, JObject jObj)
@@ -135,6 +83,7 @@ namespace Ditch.EOS.Tests
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
         }
+
 
 
         protected HashSet<string> GetPropertyNames(Type type)
