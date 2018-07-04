@@ -1,5 +1,4 @@
 ﻿using System;
-using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -18,7 +17,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("account_creation_fee")]
-        [MessageOrder(10)]
         public Asset AccountCreationFee { get; set; }
 
         /// <summary>
@@ -27,7 +25,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_block_size")]
-        [MessageOrder(20)]
         public UInt32 MaximumBlockSize { get; set; }
 
         /// <summary>
@@ -35,7 +32,6 @@ namespace Ditch.Golos.Models
         /// 
         /// </summary>
         /// <returns>API type: uint16_t</returns>
-        [MessageOrder(30)]
         [JsonProperty("sbd_interest_rate")]
         public UInt16 SbdInterestRate { get; set; }
 
@@ -44,7 +40,6 @@ namespace Ditch.Golos.Models
         /// 
         /// </summary>
         /// <returns>API type: asset</returns>
-        [MessageOrder(40)]
         [JsonProperty("create_account_min_golos_fee", NullValueHandling = NullValueHandling.Ignore)]
         public Asset CreateAccountMinGolosFee { get; set; }
 
@@ -53,7 +48,6 @@ namespace Ditch.Golos.Models
         /// 
         /// </summary>
         /// <returns>API type: asset</returns>
-        [MessageOrder(50)]
         [JsonProperty("create_account_min_delegation", NullValueHandling = NullValueHandling.Ignore)]
         public Asset CreateAccountMinDelegation { get; set; }
 
@@ -62,7 +56,6 @@ namespace Ditch.Golos.Models
         /// 
         /// </summary>
         /// <returns>API type: uint32_t</returns>
-        [MessageOrder(60)]
         [JsonProperty("create_account_delegation_time", NullValueHandling = NullValueHandling.Ignore)]
         public UInt32 CreateAccountDelegationTime { get; set; }
 
@@ -71,18 +64,7 @@ namespace Ditch.Golos.Models
         /// 
         /// </summary>
         /// <returns>API type: asset</returns>
-        [MessageOrder(70)]
         [JsonProperty("min_delegation", NullValueHandling = NullValueHandling.Ignore)]
         public Asset MinDelegation { get; set; }
-
-
-        public ChainApiProperties(ushort sbdInterestRate, Asset accountCreationFee, uint maximumBlockSize)
-        {
-            SbdInterestRate = sbdInterestRate;
-            AccountCreationFee = accountCreationFee;
-            MaximumBlockSize = maximumBlockSize;
-        }
-
-        public ChainApiProperties() { }
     }
 }

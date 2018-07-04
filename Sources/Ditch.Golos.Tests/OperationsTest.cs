@@ -152,7 +152,7 @@ namespace Ditch.Golos.Tests
         [Test]
         public void WitnessUpdateTest()
         {
-            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainApiProperties(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
+            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainProperties17(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
             Post(User.ActiveKeys, false, op);
         }
 
