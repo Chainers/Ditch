@@ -37,8 +37,8 @@
         CommentOptions,
         SetWithdrawVestingRoute,
         LimitOrderCreate2,
-        PlaceholderA,               // A new op can go here
-        PlaceholderB,               // A new op can go here
+        ClaimAccount,
+        CreateClaimedAccount,
         RequestAccountRecovery,
         RecoverAccount,
         ChangeRecoveryAccount,
@@ -72,20 +72,20 @@
         //        SmtCreate,
         //#endif
         /// virtual operations below this point
-        FillConvertRequest,
-        AuthorReward,
-        CurationReward,
-        CommentReward,
-        LiquidityReward,
-        Interest,
-        FillVestingWithdraw,
-        FillOrder,
-        ShutdownWitness,
-        FillTransferFromSavings,
-        Hardfork,
-        CommentPayoutUpdate,
-        ReturnVestingDelegation,
-        CommentBenefactorReward,
-        ProducerReward
+        //FillConvertRequest,
+        //AuthorReward,
+        //CurationReward,
+        //CommentReward,
+        //LiquidityReward,
+        //Interest,
+        //FillVestingWithdraw,
+        //FillOrder,
+        //ShutdownWitness,
+        //FillTransferFromSavings,
+        //Hardfork,
+        //CommentPayoutUpdate,
+        //ReturnVestingDelegation,
+        //CommentBenefactorReward,
+        //ProducerReward
     }
 }

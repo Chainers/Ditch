@@ -20,7 +20,7 @@ namespace Ditch.Steem.Tests
     public class BaseTest
     {
         protected const string AppVersion = "ditch / 3.2.0-alpha";
-        
+
         protected static UserInfo User;
         protected static OperationManager Api;
 
@@ -65,7 +65,7 @@ namespace Ditch.Steem.Tests
         {
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-#if DEBUG
+
             if (resp.RawResponse.Contains("\"result\":{"))
             {
                 var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
@@ -115,7 +115,6 @@ namespace Ditch.Steem.Tests
                     }
                 }
             }
-#endif
         }
 
         private void Compare(Type type, JObject jObj)
@@ -191,12 +190,11 @@ namespace Ditch.Steem.Tests
                 Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
             }
-#if DEBUG
+
             Console.WriteLine("Request:");
             Console.WriteLine(JsonBeautify(r.RawRequest));
             Console.WriteLine("Response:");
             Console.WriteLine(JsonBeautify(r.RawResponse));
-#endif
         }
 
         private string JsonBeautify(string json)

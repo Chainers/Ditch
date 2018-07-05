@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -334,6 +335,30 @@ namespace Ditch.Golos.Tests
             pk = Base58.DecodePrivateWif(subWif);
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.MemoKey = new PublicKeyType(subPublicKey);
+
+            Post(User.ActiveKeys, false, op);
+        }
+
+        [Test]
+        public void ProposalCreateOperationTest()
+        {
+            var user = User;
+            const string autor = "joseph.kalu";
+            const string permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
+
+            var vop = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote);
+
+            var op = new ProposalCreateOperation(User.Login, "test title", "test memo", DateTime.Now.AddSeconds(30))
+            {
+                ReviewPeriodTime = DateTime.Now.AddSeconds(55),
+                ProposedOperations = new[]
+                {
+                    new OperationWrapper
+                    {
+                        Op = vop
+                    }
+                }
+            };
 
             Post(User.ActiveKeys, false, op);
         }

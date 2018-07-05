@@ -41,9 +41,7 @@ namespace Ditch.EOS
             var response = await _client.GetAsync($"{url}{param}", token);
             var result = await CreateResult<T>(response, token);
 
-#if DEBUG
             result.RawRequest = $"GET: {url}{param}";
-#endif
 
             return result;
         }
@@ -53,9 +51,7 @@ namespace Ditch.EOS
             var response = await _client.GetAsync(url, token);
             var result = await CreateResult<T>(response, token);
 
-#if DEBUG
             result.RawRequest = $"GET: {url}";
-#endif
 
             return result;
         }
@@ -74,10 +70,7 @@ namespace Ditch.EOS
             var response = await _client.PostAsync(url, content, token);
             var result = await CreateResult<T>(response, token);
 
-
-#if DEBUG
             result.RawRequest = $"POST: {url}{Environment.NewLine}{param}";
-#endif
 
             return result;
         }
@@ -89,9 +82,7 @@ namespace Ditch.EOS
 
             var content = await response.Content.ReadAsStringAsync();
 
-#if DEBUG
             result.RawResponse = content;
-#endif
 
             // HTTP error
             if (response.StatusCode == HttpStatusCode.InternalServerError ||

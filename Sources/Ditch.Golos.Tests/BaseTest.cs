@@ -62,7 +62,7 @@ namespace Ditch.Golos.Tests
         {
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-#if DEBUG
+
             if (resp.RawResponse.Contains("\"result\":{"))
             {
                 var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
@@ -112,7 +112,6 @@ namespace Ditch.Golos.Tests
                     }
                 }
             }
-#endif
         }
 
         private void Compare(Type type, JObject jObj)
@@ -178,12 +177,11 @@ namespace Ditch.Golos.Tests
                 Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
             }
-#if DEBUG
+
             Console.WriteLine("Request:");
             Console.WriteLine(JsonBeautify(r.RawRequest));
             Console.WriteLine("Response:");
             Console.WriteLine(JsonBeautify(r.RawResponse));
-#endif
         }
 
         private string JsonBeautify(string json)

@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.2" />
-    <PackageReference Include="Ditch.Core" Version="3.2.0" />
+    <PackageReference Include="Ditch.Core" Version="3.2.1" />
   </ItemGroup>
 
 </Project>

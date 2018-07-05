@@ -10,6 +10,11 @@ namespace Ditch.Golos.Models
     [JsonConverter(typeof(EnumConverter))]
     public enum CommentMode
     {
+        /// <summary>
+        /// API name: not_set
+        /// 
+        /// </summary>
+        NotSet,
 
         /// <summary>
         /// API name: first_payout

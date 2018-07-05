@@ -58,10 +58,8 @@ namespace Ditch.EOS.Tests
         {
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-#if DEBUG
             var jResult = JsonConvert.DeserializeObject<JObject>(resp.RawResponse);
             Compare(typeof(T), jResult);
-#endif
         }
 
         private void Compare(Type type, JObject jObj)
@@ -120,12 +118,11 @@ namespace Ditch.EOS.Tests
                 Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
             }
-#if DEBUG
+
             Console.WriteLine("Request:");
             Console.WriteLine(JsonBeautify(r.RawRequest));
             Console.WriteLine("Response:");
             Console.WriteLine(JsonBeautify(r.RawResponse));
-#endif
         }
 
         private string JsonBeautify(string json)

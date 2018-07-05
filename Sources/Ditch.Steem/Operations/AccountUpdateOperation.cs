@@ -35,7 +35,6 @@ namespace Ditch.Steem.Operations
         /// 
         /// </summary>
         /// <returns>API type: authority</returns>
-        [Obsolete("Not supported yet!")]
         [MessageOrder(30)]
         [JsonProperty("owner", NullValueHandling = NullValueHandling.Ignore)]
         public Authority Owner { get; set; }
@@ -45,7 +44,6 @@ namespace Ditch.Steem.Operations
         /// 
         /// </summary>
         /// <returns>API type: authority</returns>
-        [Obsolete("Not supported yet!")]
         [MessageOrder(40)]
         [JsonProperty("active", NullValueHandling = NullValueHandling.Ignore)]
         public Authority Active { get; set; }
@@ -55,7 +53,6 @@ namespace Ditch.Steem.Operations
         /// 
         /// </summary>
         /// <returns>API type: authority</returns>
-        [Obsolete("Not supported yet!")]
         [MessageOrder(50)]
         [JsonProperty("posting", NullValueHandling = NullValueHandling.Ignore)]
         public Authority Posting { get; set; }

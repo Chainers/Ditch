@@ -36,7 +36,6 @@ namespace Ditch.Golos.Operations
         /// 
         /// </summary>
         /// <returns>API type: authority</returns>
-        [Obsolete("Not supported yet!")]
         [MessageOrder(20)]
         [JsonProperty("owner", NullValueHandling = NullValueHandling.Ignore)]
         public Authority Owner { get; set; }
@@ -46,7 +45,6 @@ namespace Ditch.Golos.Operations
         /// 
         /// </summary>
         /// <returns>API type: authority</returns>
-        [Obsolete("Not supported yet!")]
         [MessageOrder(30)]
         [JsonProperty("active", NullValueHandling = NullValueHandling.Ignore)]
         public Authority Active { get; set; }
@@ -56,7 +54,6 @@ namespace Ditch.Golos.Operations
         /// 
         /// </summary>
         /// <returns>API type: authority</returns>
-        [Obsolete("Not supported yet!")]
         [MessageOrder(40)]
         [JsonProperty("posting", NullValueHandling = NullValueHandling.Ignore)]
         public Authority Posting { get; set; }

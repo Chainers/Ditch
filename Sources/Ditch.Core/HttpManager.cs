@@ -111,20 +111,16 @@ namespace Ditch.Core
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, _jsonSerializerSettings);
-#if DEBUG
                 prop.RawRequest = jsonRpc.Message;
                 prop.RawResponse = stringResponse;
-#endif
                 return prop;
             }
 
             return new JsonRpcResponse<T>
             {
                 Error = new HttpResponseError((int)response.StatusCode, "Http Error"),
-#if DEBUG
                 RawRequest = jsonRpc.Message,
                 RawResponse = stringResponse
-#endif
             };
         }
     }

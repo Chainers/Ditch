@@ -146,9 +146,7 @@ namespace Ditch.Core
                 return new JsonRpcResponse<T>
                 {
                     Error = new SystemError(ErrorCodes.ConnectionTimeoutError),
-#if DEBUG
                     RawRequest = jsonRpc.Message,
-#endif
                 };
 
             _webSocket.Send(jsonRpc.Message);
@@ -169,9 +167,7 @@ namespace Ditch.Core
                 {
                     var json = _responseDictionary[jsonRpc.Id];
                     response = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(json, _jsonSerializerSettings);
-#if DEBUG
                     response.RawResponse = json;
-#endif
                     _responseDictionary.Remove(jsonRpc.Id);
                 }
             }
@@ -182,14 +178,10 @@ namespace Ditch.Core
                 return new JsonRpcResponse<T>
                 {
                     Error = new SystemError(ErrorCodes.ResponseTimeoutError),
-#if DEBUG
                     RawRequest = jsonRpc.Message,
-#endif
                 };
 
-#if DEBUG
             response.RawRequest = jsonRpc.Message;
-#endif
 
             return response;
         }

@@ -8,21 +8,30 @@
     {
         Vote,
         Comment,
+
         Transfer,
         TransferToVesting,
         WithdrawVesting,
+
         LimitOrderCreate,
         LimitOrderCancel,
+
         FeedPublish,
         Convert,
+
         AccountCreate,
         AccountUpdate,
+
         WitnessUpdate,
         AccountWitnessVote,
         AccountWitnessProxy,
+
         Pow,
+
         Custom,
+
         ReportOverProduction,
+
         DeleteComment,
         CustomJson,
         CommentOptions,
@@ -45,6 +54,13 @@
         DeclineVotingRights,
         ResetAccount,
         SetResetAccount,
+        DelegateVestingShares,
+        AccountCreateWithDelegation,
+        AccountMetadata,
+        ProposalCreate,
+        ProposalUpdate,
+        ProposalDelete,
+        ChainPropertiesUpdate,
 
         /// virtual operations below this point
         FillConvertRequest,
@@ -59,6 +75,7 @@
         FillTransferFromSavings,
         Hardfork,
         CommentPayoutUpdate,
-        CommentBenefactorReward
+        CommentBenefactorReward,
+        ReturnVestingDelegation
     }
 }

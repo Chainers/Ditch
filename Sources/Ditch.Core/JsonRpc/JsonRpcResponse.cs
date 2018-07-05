@@ -19,13 +19,9 @@ namespace Ditch.Core.JsonRpc
 
         public bool IsError => Error != null;
 
-
-#if DEBUG
         public string RawRequest { get; set; }
 
         public string RawResponse { get; set; }
-#endif
-
 
         public JsonRpcResponse() { }
 

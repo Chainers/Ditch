@@ -75,6 +75,9 @@ namespace Ditch.Steem.Models
                     case CommentOptionsOperation.OperationName:
                         _baseOperation = serializer.Deserialize<CommentOptionsOperation>(reader);
                         break;
+                    case ClaimRewardBalanceOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<ClaimRewardBalanceOperation>(reader);
+                        break;
                     default:
                         _baseOperation = new UnsupportedOperation(opName, serializer.Deserialize<JObject>(reader));
                         break;

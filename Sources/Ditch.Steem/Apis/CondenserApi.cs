@@ -21,7 +21,7 @@ namespace Ditch.Steem
         //  "condenser_api.get_account_history",
         public JsonRpcResponse<MapContainer<UInt32, AppliedOperation>> GetAccountHistory2(GetAccountHistoryArgs args, CancellationToken token)
         {
-            var aargs = new object[] { args.Account, args.Limit, args.Start };
+            var aargs = new object[] { args.Account, args.Start, args.Limit };
             return CustomGetRequest<MapContainer<UInt32, AppliedOperation>>(KnownApiNames.CondenserApi, "get_account_history", aargs, token);
         }
         //  "condenser_api.get_account_references",

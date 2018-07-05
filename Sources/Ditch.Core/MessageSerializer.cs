@@ -177,13 +177,17 @@ namespace Ditch.Core
             var intype = prop.PropertyType;
             var inval = prop.GetValue(val);
 
-            if (inval == null)
+            var order = prop.GetCustomAttribute<JsonPropertyAttribute>();
+            if (order?.NullValueHandling == NullValueHandling.Ignore)
             {
-                var order = prop.GetCustomAttribute<JsonPropertyAttribute>();
-                if (order?.NullValueHandling == NullValueHandling.Ignore)
+                if (inval == null)
                 {
                     stream.WriteByte(0);
                     return;
+                }
+                else
+                {
+                    stream.WriteByte(1);
                 }
             }
 

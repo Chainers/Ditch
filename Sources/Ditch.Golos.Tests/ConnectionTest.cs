@@ -13,6 +13,7 @@ namespace Ditch.Golos.Tests
         [OneTimeSetUp]
         protected override void OneTimeSetUp() { }
 
+        [Ignore("LongRuningTest")]
         [Test]
         [TestCase("wss://ws.golos.io")]
         [TestCase("wss://ws.testnet.golos.io")]
@@ -58,6 +59,7 @@ namespace Ditch.Golos.Tests
             }
         }
 
+        [Ignore("LongRuningTest")]
         [Test]
         public async Task TryConnectToHttpsTest()
         {
@@ -85,6 +87,7 @@ namespace Ditch.Golos.Tests
             }
         }
 
+        [Ignore("LongRuningTest")]
         [Test]
         public async Task TryConnectToWssTest()
         {

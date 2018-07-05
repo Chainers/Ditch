@@ -335,5 +335,15 @@ namespace Ditch.Steem.Tests
 
             Post(User.ActiveKeys, false, op);
         }
+
+        [Test]
+        public void ClaimRewardBalanceOperationTest()
+        {
+            var steem = new Asset(Config.BlockchainVersion, 100000, Config.SteemAssetNumSteem);
+            var sbd = new Asset(Config.BlockchainVersion, 100000, Config.SteemAssetNumSbd);
+            var vest = new Asset(Config.BlockchainVersion, 10000000, Config.SteemAssetNumVests);
+            var op = new ClaimRewardBalanceOperation(User.Login, steem, sbd, vest);
+            Post(User.PostingKeys, false, op);
+        }
     }
 }

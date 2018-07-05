@@ -9,11 +9,9 @@ namespace Ditch.EOS
 
         public ErrorBase Error { get; set; }
 
-#if DEBUG
         public string RawRequest { get; set; }
 
         public string RawResponse { get; set; }
-#endif
 
 
         public OperationResult()
