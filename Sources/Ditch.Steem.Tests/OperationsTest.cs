@@ -85,7 +85,7 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(Config.BlockchainVersion, 1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
             Post(user.PostingKeys, false, op, popt);
         }
 
@@ -126,7 +126,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
             Post(User.ActiveKeys, false, op);
         }
 
@@ -137,7 +137,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void TransferToVestingOperationTest()
         {
-            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSteem));
+            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSteem));
             Post(User.ActiveKeys, false, op);
         }
 
@@ -148,7 +148,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public void WithdrawVestingOperationTest()
         {
-            var op = new WithdrawVestingOperation(User.Login, new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumVests));
+            var op = new WithdrawVestingOperation(User.Login, new Asset(1, Config.SteemAssetNumVests));
             Post(User.ActiveKeys, false, op);
         }
 
@@ -166,8 +166,8 @@ namespace Ditch.Steem.Tests
         [Test]
         public void WitnessUpdateTest()
         {
-            var accountCreationFee = new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSteem);
-            var fee = new Asset(Config.BlockchainVersion, 1, Config.SteemAssetNumSteem);
+            var accountCreationFee = new Asset(1, Config.SteemAssetNumSteem);
+            var fee = new Asset(1, Config.SteemAssetNumSteem);
 
             var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
             Post(User.ActiveKeys, false, op);
@@ -304,7 +304,7 @@ namespace Ditch.Steem.Tests
 
             var op = new AccountCreateOperation
             {
-                Fee = new Asset(Config.BlockchainVersion, 3000, Config.SteemAssetNumSteem),
+                Fee = new Asset(3000, Config.SteemAssetNumSteem),
                 Creator = User.Login,
                 NewAccountName = User.Login,
                 JsonMetadata = ""
@@ -339,9 +339,9 @@ namespace Ditch.Steem.Tests
         [Test]
         public void ClaimRewardBalanceOperationTest()
         {
-            var steem = new Asset(Config.BlockchainVersion, 100000, Config.SteemAssetNumSteem);
-            var sbd = new Asset(Config.BlockchainVersion, 100000, Config.SteemAssetNumSbd);
-            var vest = new Asset(Config.BlockchainVersion, 10000000, Config.SteemAssetNumVests);
+            var steem = new Asset(100000, Config.SteemAssetNumSteem);
+            var sbd = new Asset(100000, Config.SteemAssetNumSbd);
+            var vest = new Asset(10000000, Config.SteemAssetNumVests);
             var op = new ClaimRewardBalanceOperation(User.Login, steem, sbd, vest);
             Post(User.PostingKeys, false, op);
         }

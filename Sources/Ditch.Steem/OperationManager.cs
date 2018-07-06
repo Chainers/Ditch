@@ -221,5 +221,28 @@ namespace Ditch.Steem
             var str = jToken.Value<string>();
             return Hex.HexToBytes(str);
         }
+
+        public string TryLoadBlockchainVersion(string[] fieldName, CancellationToken token)
+        {
+            var resp = GetConfig<JObject>(token);
+            if (resp.IsError)
+                return string.Empty;
+
+            var conf = resp.Result;
+            JToken jToken = null;
+
+            foreach (var name in fieldName)
+            {
+                conf.TryGetValue(name, out jToken);
+                if (jToken != null)
+                    break;
+            }
+
+            if (jToken == null)
+                return string.Empty;
+
+            return jToken.Value<string>();
+        }
+
     }
 }

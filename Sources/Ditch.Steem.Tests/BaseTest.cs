@@ -42,8 +42,7 @@ namespace Ditch.Steem.Tests
                 var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
                 Assert.IsTrue(Api.TryConnectTo(urls, CancellationToken.None), "Enable connect to node");
 
-                var conf = Api.GetConfig<JObject>(CancellationToken.None);
-                var version = conf.Result.Value<string>("STEEM_BLOCKCHAIN_VERSION");
+                var version = Api.TryLoadBlockchainVersion(new[] { "STEEM_BLOCKCHAIN_VERSION" }, CancellationToken.None);
                 Assert.IsFalse(string.IsNullOrEmpty(version));
                 Config.BlockchainVersion = VersionHelper.ToInteger(version);
             }

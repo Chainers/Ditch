@@ -78,7 +78,7 @@ namespace Ditch.Steem.Operations
     public class BeneficiariesOperation : CommentOptionsOperation
     {
         public BeneficiariesOperation(string author, string permlink, params Beneficiary[] beneficiaries)
-            : base(author, permlink, new Asset(Config.BlockchainVersion, 1000000000, Config.SteemAssetNumSbd), 10000, true, true, SetExtensions(beneficiaries))
+            : base(author, permlink, new Asset("1000000000", Config.SteemAssetNumSbd), 10000, true, true, SetExtensions(beneficiaries))
         {
         }
 
