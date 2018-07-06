@@ -71,6 +71,8 @@ namespace Ditch.Steem.Tests
             return vote?.Percent ?? 0;
         }
 
+        #endregion
+        #region Comment
 
         [Test]
         public void PostTest()
@@ -78,26 +80,6 @@ namespace Ditch.Steem.Tests
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
             Post(user.PostingKeys, false, op);
-        }
-
-        [Test]
-        public void PostWithBeneficiariesTest()
-        {
-            var user = User;
-            var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
-            Post(user.PostingKeys, false, op, popt);
-        }
-
-        [Test]
-        public void DeleteCommentTest()
-        {
-            var user = User;
-            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            Post(user.PostingKeys, false, op);
-
-            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            Post(user.PostingKeys, false, op2);
         }
 
         [Test]
@@ -131,7 +113,6 @@ namespace Ditch.Steem.Tests
         }
 
         #endregion
-
         #region TransferToVesting
 
         [Test]
@@ -142,7 +123,6 @@ namespace Ditch.Steem.Tests
         }
 
         #endregion
-
         #region WithdrawVesting
 
         [Test]
@@ -156,10 +136,70 @@ namespace Ditch.Steem.Tests
 
         //LimitOrderCreate,
         //LimitOrderCancel,
+
         //FeedPublish,
         //Convert,
-        //AccountCreate,
-        //AccountUpdate,
+
+        #region AccountCreate
+
+        [Test]
+        public void AccountCreateTest()
+        {
+            const string name = "userlogin";
+
+            var op = new AccountCreateOperation
+            {
+                Fee = new Asset(3000, Config.SteemAssetNumSteem),
+                Creator = User.Login,
+                NewAccountName = User.Login,
+                JsonMetadata = ""
+            };
+
+            var privateKey = Secp256K1Manager.GenerateRandomKey();
+            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
+
+            var subWif = Base58.GetSubWif(name, privateWif, "owner");
+            var pk = Base58.DecodePrivateWif(subWif);
+            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "active");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "posting");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "memo");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.MemoKey = new PublicKeyType(subPublicKey);
+
+            Post(User.ActiveKeys, false, op);
+        }
+
+
+        #endregion AccountCreate
+        #region AccountUpdate
+
+        [Test]
+        public void AccountUpdateTest()
+        {
+            var args = new FindAccountsArgs
+            {
+                Accounts = new[] { User.Login }
+            };
+            var resp = Api.FindAccounts(args, CancellationToken.None);
+            var acc = resp.Result.Accounts[0];
+
+            var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
+            Post(User.ActiveKeys, false, op);
+        }
+
+        #endregion AccountUpdate
 
         #region WitnessUpdate
 
@@ -174,35 +214,30 @@ namespace Ditch.Steem.Tests
         }
 
         #endregion
-
         //AccountWitnessVote,
         //AccountWitnessProxy,
+
         //Pow,
+
         //Custom,
+
         //ReportOverProduction,
-        //DeleteComment,
-        //CustomJson,
-        //CommentOptions,
-        //SetWithdrawVestingRoute,
-        //LimitOrderCreate2,
-        //ChallengeAuthority,
-        //ProveAuthority,
-        //RequestAccountRecovery,
-        //RecoverAccount,
-        //ChangeRecoveryAccount,
-        //EscrowTransfer,
-        //EscrowDispute,
-        //EscrowRelease,
-        //Pow2,
-        //EscrowApprove,
-        //TransferToSavings,
-        //TransferFromSavings,
-        //CancelTransferFromSavings,
-        //CustomBinaryOperation,
-        //DeclineVotingRightsOperation,
-        //ResetAccountOperation,
-        //SetResetAccountOperation,
-        //AccountCreateWithDelegation,
+
+        #region DeleteComment
+
+        [Test]
+        public void DeleteCommentTest()
+        {
+            var user = User;
+            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
+            Post(user.PostingKeys, false, op);
+
+            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
+            Post(user.PostingKeys, false, op2);
+        }
+
+        #endregion DeleteComment
+        #region CustomJson
 
         [Test]
         public void FollowUnfollowTest()
@@ -283,58 +318,39 @@ namespace Ditch.Steem.Tests
             Post(user.PostingKeys, false, op);
         }
 
-        [Test]
-        public void AccountUpdateTest()
-        {
-            var args = new FindAccountsArgs
-            {
-                Accounts = new[] { User.Login }
-            };
-            var resp = Api.FindAccounts(args, CancellationToken.None);
-            var acc = resp.Result.Accounts[0];
-
-            var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
-            Post(User.ActiveKeys, false, op);
-        }
+        #endregion CustomJson
+        #region CommentOptions
 
         [Test]
-        public void AccountCreateTest()
+        public void PostWithBeneficiariesTest()
         {
-            const string name = "userlogin";
-
-            var op = new AccountCreateOperation
-            {
-                Fee = new Asset(3000, Config.SteemAssetNumSteem),
-                Creator = User.Login,
-                NewAccountName = User.Login,
-                JsonMetadata = ""
-            };
-
-            var privateKey = Secp256K1Manager.GenerateRandomKey();
-            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
-
-            var subWif = Base58.GetSubWif(name, privateWif, "owner");
-            var pk = Base58.DecodePrivateWif(subWif);
-            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
-
-            subWif = Base58.GetSubWif(name, privateWif, "active");
-            pk = Base58.DecodePrivateWif(subWif);
-            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
-
-            subWif = Base58.GetSubWif(name, privateWif, "posting");
-            pk = Base58.DecodePrivateWif(subWif);
-            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
-
-            subWif = Base58.GetSubWif(name, privateWif, "memo");
-            pk = Base58.DecodePrivateWif(subWif);
-            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.MemoKey = new PublicKeyType(subPublicKey);
-
-            Post(User.ActiveKeys, false, op);
+            var user = User;
+            var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
+            Post(user.PostingKeys, false, op, popt);
         }
+
+        #endregion CommentOptions
+        //SetWithdrawVestingRoute,
+        //LimitOrderCreate2,
+        //ClaimAccount,
+        //CreateClaimedAccount,
+        //RequestAccountRecovery,
+        //RecoverAccount,
+        //ChangeRecoveryAccount,
+        //EscrowTransfer,
+        //EscrowDispute,
+        //EscrowRelease,
+        //Pow2,
+        //EscrowApprove,
+        //TransferToSavings,
+        //TransferFromSavings,
+        //CancelTransferFromSavings,
+        //CustomBinary,
+        //DeclineVotingRights,
+        //ResetAccount,
+        //SetResetAccount,
+        #region ClaimRewardBalance
 
         [Test]
         public void ClaimRewardBalanceOperationTest()
@@ -345,5 +361,39 @@ namespace Ditch.Steem.Tests
             var op = new ClaimRewardBalanceOperation(User.Login, steem, sbd, vest);
             Post(User.PostingKeys, false, op);
         }
+
+        #endregion ClaimRewardBalance
+        //DelegateVestingShares,
+        //AccountCreateWithDelegation,
+        //WitnessSetProperties,
+
+        //# ifdef STEEM_ENABLE_SMT
+        //        /// SMT operations
+        //        ClaimRewardBalance2,
+
+        //        SmtSetup,
+        //        SmtCapReveal,
+        //        SmtRefund,
+        //        SmtSetupEmissions,
+        //        SmtSetSetupParameters,
+        //        SmtSetRuntimeParameters,
+        //        SmtCreate,
+        //#endif
+        /// virtual operations below this point
+        //FillConvertRequest,
+        //AuthorReward,
+        //CurationReward,
+        //CommentReward,
+        //LiquidityReward,
+        //Interest,
+        //FillVestingWithdraw,
+        //FillOrder,
+        //ShutdownWitness,
+        //FillTransferFromSavings,
+        //Hardfork,
+        //CommentPayoutUpdate,
+        //ReturnVestingDelegation,
+        //CommentBenefactorReward,
+        //ProducerReward
     }
 }

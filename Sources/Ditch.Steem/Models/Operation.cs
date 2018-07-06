@@ -42,30 +42,48 @@ namespace Ditch.Steem.Models
                 reader.Read();
                 switch (opName)
                 {
+                    case VoteOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<VoteOperation>(reader);
+                        break;
+                    case CommentOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<CommentOperation>(reader);
+                        break;
+
+                    case TransferOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<TransferOperation>(reader);
+                        break;
+                    case TransferToVestingOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<TransferToVestingOperation>(reader);
+                        break;
+                    case WithdrawVestingOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<WithdrawVestingOperation>(reader);
+                        break;
+
+                    //LimitOrderCreate,
+                    //LimitOrderCancel,
+
+                    //FeedPublish,
+                    //Convert,
+
                     case AccountCreateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<AccountCreateOperation>(reader);
                         break;
                     case AccountUpdateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<AccountUpdateOperation>(reader);
                         break;
-                    case CommentOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<CommentOperation>(reader);
-                        break;
+
                     case WitnessUpdateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<WitnessUpdateOperation>(reader);
                         break;
-                    case WithdrawVestingOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<WithdrawVestingOperation>(reader);
-                        break;
-                    case VoteOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<VoteOperation>(reader);
-                        break;
-                    case TransferToVestingOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<TransferToVestingOperation>(reader);
-                        break;
-                    case TransferOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<TransferOperation>(reader);
-                        break;
+                    //AccountWitnessVote,
+                    //AccountWitnessProxy,
+
+                    //Pow,
+
+                    //Custom,
+
+                    //ReportOverProduction,
+
                     case DeleteCommentOperation.OperationName:
                         _baseOperation = serializer.Deserialize<DeleteCommentOperation>(reader);
                         break;
@@ -75,9 +93,61 @@ namespace Ditch.Steem.Models
                     case CommentOptionsOperation.OperationName:
                         _baseOperation = serializer.Deserialize<CommentOptionsOperation>(reader);
                         break;
+                    //SetWithdrawVestingRoute,
+                    //LimitOrderCreate2,
+                    //ClaimAccount,
+                    //CreateClaimedAccount,
+                    //RequestAccountRecovery,
+                    //RecoverAccount,
+                    //ChangeRecoveryAccount,
+                    //EscrowTransfer,
+                    //EscrowDispute,
+                    //EscrowRelease,
+                    //Pow2,
+                    //EscrowApprove,
+                    //TransferToSavings,
+                    //TransferFromSavings,
+                    //CancelTransferFromSavings,
+                    //CustomBinary,
+                    //DeclineVotingRights,
+                    //ResetAccount,
+                    //SetResetAccount,
                     case ClaimRewardBalanceOperation.OperationName:
                         _baseOperation = serializer.Deserialize<ClaimRewardBalanceOperation>(reader);
                         break;
+                    //DelegateVestingShares,
+                    //AccountCreateWithDelegation,
+                    //WitnessSetProperties,
+
+                    //# ifdef STEEM_ENABLE_SMT
+                    //        /// SMT operations
+                    //        ClaimRewardBalance2,
+
+                    //        SmtSetup,
+                    //        SmtCapReveal,
+                    //        SmtRefund,
+                    //        SmtSetupEmissions,
+                    //        SmtSetSetupParameters,
+                    //        SmtSetRuntimeParameters,
+                    //        SmtCreate,
+                    //#endif
+                    /// virtual operations below this point
+                    //FillConvertRequest,
+                    //AuthorReward,
+                    //CurationReward,
+                    //CommentReward,
+                    //LiquidityReward,
+                    //Interest,
+                    //FillVestingWithdraw,
+                    //FillOrder,
+                    //ShutdownWitness,
+                    //FillTransferFromSavings,
+                    //Hardfork,
+                    //CommentPayoutUpdate,
+                    //ReturnVestingDelegation,
+                    //CommentBenefactorReward,
+                    //ProducerReward
+
                     default:
                         _baseOperation = new UnsupportedOperation(opName, serializer.Deserialize<JObject>(reader));
                         break;
