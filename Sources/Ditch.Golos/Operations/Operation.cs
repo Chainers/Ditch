@@ -74,6 +74,12 @@ namespace Ditch.Golos.Models
                     case CommentOptionsOperation.OperationName:
                         _baseOperation = serializer.Deserialize<CommentOptionsOperation>(reader);
                         break;
+                    case ProposalCreateOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<ProposalCreateOperation>(reader);
+                        break;
+                    case ProposalUpdateOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<ProposalUpdateOperation>(reader);
+                        break;
                     default:
                         _baseOperation = new UnsupportedOperation(opName, serializer.Deserialize<JObject>(reader));
                         break;

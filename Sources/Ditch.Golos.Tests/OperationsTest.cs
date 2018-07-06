@@ -362,5 +362,19 @@ namespace Ditch.Golos.Tests
 
             Post(User.ActiveKeys, false, op);
         }
+
+        [Test]
+        public void ProposalUpdateOperationTest()
+        {
+            var op = new ProposalUpdateOperation()
+            {
+                Title = "test title",
+                Author = User.Login,
+                PostingApprovalsToAdd = new[] { User.Login },
+
+            };
+
+            Post(User.PostingKeys, false, op);
+        }
     }
 }
