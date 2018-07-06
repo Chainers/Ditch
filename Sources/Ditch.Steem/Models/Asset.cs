@@ -22,7 +22,7 @@ namespace Ditch.Steem.Models
         private AssetSymbolType Symbol { get; set; }
 
 
-        public Asset(int verison, int amount, uint assetNum)
+        public Asset(int verison, long amount, uint assetNum)
         {
             Amount = amount.ToString();
             Symbol = new AssetSymbolType(assetNum);
