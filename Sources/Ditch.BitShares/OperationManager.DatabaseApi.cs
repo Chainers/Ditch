@@ -641,7 +641,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_trade Recent transactions in the market</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTrade[]> GetTradeHistory(string @base, string quote, DateTime start, DateTime stop, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<MarketTrade[]> GetTradeHistory(string @base, string quote, TimePointSec start, TimePointSec stop, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<MarketTrade[]>(KnownApiNames.DatabaseApi, "get_trade_history", new object[] { @base, quote, start, stop, limit, }, token);
         }
@@ -661,7 +661,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_trade Transactions in the market</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTrade[]> GetTradeHistoryBySequence(string @base, string quote, Int64 start, DateTime stop, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<MarketTrade[]> GetTradeHistoryBySequence(string @base, string quote, Int64 start, TimePointSec stop, UInt32 limit, CancellationToken token)
         {
             return CustomGetRequest<MarketTrade[]>(KnownApiNames.DatabaseApi, "get_trade_history_by_sequence", new object[] { @base, quote, start, stop, limit, }, token);
         }

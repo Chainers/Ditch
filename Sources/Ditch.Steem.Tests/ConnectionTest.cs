@@ -16,6 +16,7 @@ namespace Ditch.Steem.Tests
         /// https://www.steem.center/index.php?title=Public_Websocket_Servers
         /// </summary>
         /// <param name="url"></param>
+        [Ignore("LongRuningTest")]
         [Test]
         [TestCase("https://api.steemit.com")]
         [TestCase("https://steemd.steemit.com")]
@@ -50,6 +51,7 @@ namespace Ditch.Steem.Tests
             Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
         }
 
+        [Ignore("LongRuningTest")]
         [Test]
         public async Task TryConnectToHttpsTest()
         {

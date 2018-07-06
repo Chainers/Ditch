@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -35,6 +36,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("allowed_withdraw_time")]
-        public DateTime AllowedWithdrawTime { get; set; }
+        public TimePointSec AllowedWithdrawTime { get; set; }
     }
 }

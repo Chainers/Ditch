@@ -3,6 +3,7 @@ using System.IO;
 using Ditch.Core;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -34,7 +35,7 @@ namespace Ditch.BitShares.Models
         /// 
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
-        public UInt32 Instance { get; set; }
+        public UnsignedInt Instance { get; set; }
 
 
         public ObjectId() { }
@@ -51,9 +52,7 @@ namespace Ditch.BitShares.Models
 
         public void Serializer(Stream stream, IMessageSerializer serializeHelper)
         {
-            //https://developers.google.com/protocol-buffers/docs/encoding
-            var t = MessageSerializer.VarInt((int)Instance);
-            serializeHelper.AddToMessageStream(stream, typeof(byte[]), t);
+            Instance.Serializer(stream, serializeHelper);
         }
 
         #endregion ICustomSerializer
@@ -75,7 +74,7 @@ namespace Ditch.BitShares.Models
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            writer.WriteValue($"{SpaceId}.{TypeId}.{Instance}");
+            writer.WriteValue($"{SpaceId}.{TypeId}.{Instance.Value}");
         }
 
         #endregion ICustomJson

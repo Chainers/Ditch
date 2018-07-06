@@ -70,11 +70,11 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperations(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse<VoidResponse> BroadcastOperations(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return prop;
+                return new JsonRpcResponse<VoidResponse>(prop.Error);
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
             return BroadcastTransaction(transaction, token);
@@ -90,11 +90,11 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public JsonRpcResponse<object> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             var prop = GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return prop;
+                return new JsonRpcResponse<object>(prop.Error);
 
             var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
             return BroadcastTransactionSynchronous(transaction, token);
@@ -151,35 +151,6 @@ namespace Ditch.BitShares
         }
 
         /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string api, string method, object[] data, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
-            return ConnectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
-        /// Create and execute custom json-rpc method
-        /// </summary>
-        /// <param name="api">Api name</param>
-        /// <param name="method">Sets json-rpc "method" field</param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse CustomGetRequest(string api, string method, CancellationToken token)
-        {
-            var jsonRpc = new JsonRpcRequest(api, method);
-            return ConnectionManager.Execute(jsonRpc, token);
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="propertyApiObj"></param>
@@ -195,7 +166,7 @@ namespace Ditch.BitShares
                 ChainId = ChainId,
                 RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
                 RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
-                Expiration = propertyApiObj.Time.AddSeconds(30),
+                Expiration = propertyApiObj.Time.Value.AddSeconds(30),
                 BaseOperations = operations
             };
 

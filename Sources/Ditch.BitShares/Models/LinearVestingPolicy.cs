@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -28,7 +29,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("begin_timestamp")]
-        public DateTime BeginTimestamp { get; set; }
+        public TimePointSec BeginTimestamp { get; set; }
 
         /// No amount may be withdrawn before this many seconds of the vesting period have elapsed.
 

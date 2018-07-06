@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -50,7 +51,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("work_begin_date")]
-        public DateTime WorkBeginDate { get; set; }
+        public TimePointSec WorkBeginDate { get; set; }
 
         /// Time at which this worker will cease to receive pay. Worker will be deleted at this time
 
@@ -60,7 +61,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("work_end_date")]
-        public DateTime WorkEndDate { get; set; }
+        public TimePointSec WorkEndDate { get; set; }
 
         /// Amount in CORE this worker will be paid each day
 

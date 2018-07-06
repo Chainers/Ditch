@@ -1,6 +1,5 @@
 ﻿using System.Threading;
-using Ditch.Steem.Models.Args;
-using Ditch.Steem.Models.Other;
+using Ditch.Steem.Models;
 using NUnit.Framework;
 
 namespace Ditch.Steem.Tests.Apis

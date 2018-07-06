@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core.JsonRpc;
+using Ditch.EOS.Tests.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -13,34 +14,65 @@ namespace Ditch.EOS.Tests
 {
     public class BaseTest
     {
-        protected static OperationManager Api;
-        private const bool IgnoreRequestWithBadData = true;
+        protected static UserInfo User;
+        protected static ContractInfo ContractInfo;
 
+        protected static OperationManager Api;
+        protected CancellationToken CancellationToken = CancellationToken.None;
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
         {
-            if (Api != null)
-                return;
+            if (User == null)
+            {
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"],
+                    PublicOwnerWif = ConfigurationManager.AppSettings["PublicOwnerWif"],
+                    PrivateOwnerWif = ConfigurationManager.AppSettings["PrivateOwnerWif"],
+                    PublicActiveWif = ConfigurationManager.AppSettings["PublicActiveWif"],
+                    PrivateActiveWif = ConfigurationManager.AppSettings["PrivateActiveWif"],
+                    Password = ConfigurationManager.AppSettings["Password"],
+                };
+            }
 
-            Api = new OperationManager();
-            var url = ConfigurationManager.AppSettings["Url"];
-            Api.TryConnectTo(new List<string> { url }, CancellationToken.None);
+            if (ContractInfo == null)
+            {
+                ContractInfo = new ContractInfo
+                {
+                    ContractName = ConfigurationManager.AppSettings["ContractName"],
+                };
+            }
 
-            //Assert.IsTrue(Api.IsConnected, "Enable connect to node");
+            if (Api == null)
+            {
+                Api = new OperationManager
+                {
+                    ChainUrl = ConfigurationManager.AppSettings["ChainUrl"],
+                    WalletUrl = ConfigurationManager.AppSettings["WalletUrl"]
+                };
+            }
         }
 
-        protected void TestPropetries(Type type, JObject jObject)
+        protected void TestPropetries<T>(OperationResult<T> resp)
+        {
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
+            var jResult = JsonConvert.DeserializeObject<JObject>(resp.RawResponse);
+            Compare(typeof(T), jResult);
+        }
+
+        private void Compare(Type type, JObject jObj)
         {
             var propNames = GetPropertyNames(type);
-            var chSet = jObject.Children();
+            var jNames = jObj.Properties().Select(p => p.Name);
 
             var msg = new List<string>();
-            foreach (JProperty jtoken in chSet)
+            foreach (var name in jNames)
             {
-                if (!propNames.Contains(jtoken.Name))
+                if (!propNames.Contains(name))
                 {
-                    msg.Add($"Missing {jtoken}");
+                    msg.Add($"Missing {name}");
                 }
             }
 
@@ -50,37 +82,7 @@ namespace Ditch.EOS.Tests
             }
         }
 
-        protected void TestPropetries(Type type, JArray jArray)
-        {
-            if (jArray == null)
-                throw new NullReferenceException("jArray");
 
-            if (type.IsArray)
-            {
-                if (jArray.Count > 0)
-                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
-
-        protected void TestPropetries(Type type, JObject[] jObject)
-        {
-            if (jObject == null)
-                throw new NullReferenceException("jObject");
-
-            if (type.IsArray)
-            {
-                if (jObject.Length > 0)
-                    TestPropetries(type.GetElementType(), jObject[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
 
         protected HashSet<string> GetPropertyNames(Type type)
         {
@@ -99,21 +101,42 @@ namespace Ditch.EOS.Tests
 
         protected void WriteLine(string s)
         {
+            Console.WriteLine("--------------------");
             Console.WriteLine(s);
         }
 
         protected void WriteLine(JsonRpcResponse r)
         {
-            Console.WriteLine(r.IsError
-                ? JsonConvert.SerializeObject(r.Error, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            Console.WriteLine("---------------");
+            if (r.IsError)
+            {
+                Console.WriteLine("Error:");
+                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            }
+            else
+            {
+                Console.WriteLine("Result:");
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            }
+
+            Console.WriteLine("Request:");
+            Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
         }
 
-        protected void WriteLine<T>(OperationResult<T> r)
+        private string JsonBeautify(string json)
         {
-            Console.WriteLine(r.IsSuccess
-                ? JsonConvert.SerializeObject(r.Result, Formatting.Indented)
-                : JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            if (string.IsNullOrEmpty(json))
+                return json;
+            var obj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
+        }
+
+        protected void WriteLine<T>(T r)
+        {
+            Console.WriteLine("--------------------");
+            Console.WriteLine(JsonConvert.SerializeObject(r, Formatting.Indented));
         }
     }
 }

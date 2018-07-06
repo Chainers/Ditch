@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -56,6 +57,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("settlement_date")]
-        public DateTime SettlementDate { get; set; }
+        public TimePointSec SettlementDate { get; set; }
     }
 }

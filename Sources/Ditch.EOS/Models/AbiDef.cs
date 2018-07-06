@@ -1,10 +1,11 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
     /// <summary>
     /// abi_def
-    /// libraries\chain\include\eosio\chain\contracts\types.hpp
+    /// libraries\chain\include\eosio\chain\abi_def.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class AbiDef
@@ -49,5 +50,21 @@ namespace Ditch.EOS.Models
         /// <returns>API type: clause_pair</returns>
         [JsonProperty("ricardian_clauses")]
         public ClausePair[] RicardianClauses { get; set; }
+
+        /// <summary>
+        /// API name: error_messages
+        /// 
+        /// </summary>
+        /// <returns>API type: error_message</returns>
+        [JsonProperty("error_messages")]
+        public ErrorMessage[] ErrorMessages { get; set; }
+
+        /// <summary>
+        /// API name: abi_extensions
+        /// 
+        /// </summary>
+        /// <returns>API type: extensions_type</returns>
+        [JsonProperty("abi_extensions")]
+        public Tuple<UInt16, string>[] AbiExtensions { get; set; }
     }
 }

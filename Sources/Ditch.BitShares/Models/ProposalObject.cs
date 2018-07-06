@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -39,7 +40,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("expiration_time")]
-        public DateTime ExpirationTime { get; set; }
+        public TimePointSec ExpirationTime { get; set; }
 
         /// <summary>
         /// API name: review_period_time
@@ -47,7 +48,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("review_period_time", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime ReviewPeriodTime { get; set; }
+        public TimePointSec ReviewPeriodTime { get; set; }
 
         /// <summary>
         /// API name: proposed_transaction

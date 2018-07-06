@@ -1,21 +1,23 @@
-﻿namespace Ditch.Steem
+﻿using System;
+
+namespace Ditch.Steem
 {
     //TODO: move it to git like localization
     public class Config
     {
-        //public const int SteemAssetSymbolPrecisionBits = 4;
-        //public const UInt32 SmtMaxNai = 99999999;
-        //public const byte SteemPrecisionSbd = 3;
-        //public const byte SteemPrecisionSteem = 3;
-        //public const byte SteemPrecisionVests = 6;
+        public const int SteemAssetSymbolPrecisionBits = 4;
+        public const UInt32 SmtMaxNai = 99999999;
+        public const byte SteemPrecisionSbd = 3;
+        public const byte SteemPrecisionSteem = 3;
+        public const byte SteemPrecisionVests = 6;
 
         public const byte SteemNaiSbd = 1;
         public const byte SteemNaiSteem = 2;
         public const byte SteemNaiVests = 3;
 
-        public const uint SteemAssetNumSbd = 0x5f5e1003;// ((SmtMaxNai + SteemNaiSbd) << SteemAssetSymbolPrecisionBits) | SteemPrecisionSbd;
-        public const uint SteemAssetNumSteem = 0x5f5e1013;//((SmtMaxNai + SteemNaiSteem) << SteemAssetSymbolPrecisionBits) | SteemPrecisionSteem;
-        public const uint SteemAssetNumVests = 0x5f5e1026;//((SmtMaxNai + SteemNaiVests) << SteemAssetSymbolPrecisionBits) | SteemPrecisionVests;
+        public const uint SteemAssetNumSbd = ((SmtMaxNai + SteemNaiSbd) << SteemAssetSymbolPrecisionBits) | SteemPrecisionSbd;
+        public const uint SteemAssetNumSteem = ((SmtMaxNai + SteemNaiSteem) << SteemAssetSymbolPrecisionBits) | SteemPrecisionSteem;
+        public const uint SteemAssetNumVests = ((SmtMaxNai + SteemNaiVests) << SteemAssetSymbolPrecisionBits) | SteemPrecisionVests;
 
         //public const UInt64 VestsSymbolU64 = 0x0000005354534556; //((UInt64)'V' | ((UInt64)'E' << 8) | ((UInt64)'S' << 16) | ((UInt64)'T' << 24) | ((UInt64)'S' << 32));
         //public const UInt64 SteemSymbolU64 = 0x0000004d45455453; //((UInt64)'S' | ((UInt64)'T' << 8) | ((UInt64)'E' << 16) | ((UInt64)'E' << 24) | ((UInt64)'M' << 32));
@@ -34,5 +36,7 @@
         //public const UInt64 SbdSymbolSer = 0x0000000044425403;   //((UInt64)3 | (SbdSymbolU64 << 8));   // < SBD|TBD with 3 digits of precision;
 
         public string[] ChainFieldName { get; set; } = { "STEEM_CHAIN_ID", "STEEMIT_CHAIN_ID" };
+
+        public static int BlockchainVersion { get; set; } = 0x00001305;
     }
 }

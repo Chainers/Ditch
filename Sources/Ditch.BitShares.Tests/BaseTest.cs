@@ -15,7 +15,6 @@ namespace Ditch.BitShares.Tests
 {
     public class BaseTest
     {
-        private bool IgnoreRequestWithBadData = true;
         protected static UserInfo User;
         protected static OperationManager Api;
         protected string SbdSymbol = "BTS";
@@ -55,24 +54,79 @@ namespace Ditch.BitShares.Tests
         {
             var rez = new JsonSerializerSettings
             {
-                // DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                 Culture = CultureInfo.InvariantCulture
             };
             return rez;
         }
 
-        protected void TestPropetries(Type type, JObject jObject)
+        protected void TestPropetries<T>(JsonRpcResponse<T> resp)
+        {
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
+
+            if (resp.RawResponse.Contains("\"result\":{"))
+            {
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
+                Compare(typeof(T), jResult);
+            }
+            else
+            {
+                var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse).Result;
+
+                if (jResult == null)
+                    throw new NullReferenceException("obj.Result");
+
+                var type = typeof(T);
+                if (type.IsArray) //list
+                {
+                    type = type.GetElementType();
+                    var jObj = jResult.First.Value<JObject>();
+                    Compare(type, jObj);
+                }
+                else //dictionary
+                {
+                    jResult = jResult.First().Value<JArray>();
+                    if (jResult == null)
+                        throw new InvalidCastException(nameof(jResult));
+
+                    while (type != null && !type.IsGenericType)
+                    {
+                        type = type.BaseType;
+                    }
+
+                    if (type == null)
+                        throw new InvalidCastException(nameof(jResult));
+
+                    var types = type.GenericTypeArguments;
+
+                    if (types.Length != jResult.Count)
+                    {
+                        throw new InvalidCastException(nameof(jResult));
+                    }
+
+                    for (var i = 0; i < types.Length; i++)
+                    {
+                        var t = types[i];
+                        if (t.IsPrimitive)
+                            continue;
+                        Compare(t, jResult[i].Value<JObject>());
+                    }
+                }
+            }
+        }
+
+        private void Compare(Type type, JObject jObj)
         {
             var propNames = GetPropertyNames(type);
-
-            var chSet = jObject.Children();
+            var jNames = jObj.Properties().Select(p => p.Name);
 
             var msg = new List<string>();
-            foreach (JProperty jtoken in chSet)
+            foreach (var name in jNames)
             {
-                if (!propNames.Contains(jtoken.Name))
+                if (!propNames.Contains(name))
                 {
-                    msg.Add($"Missing {jtoken}");
+                    msg.Add($"Missing {name}");
                 }
             }
 
@@ -80,38 +134,6 @@ namespace Ditch.BitShares.Tests
             {
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
-        }
-
-        protected void TestPropetries(Type type, JArray jArray)
-        {
-            if (jArray == null)
-                throw new NullReferenceException("jArray");
-
-            if (type.IsArray)
-            {
-                if (jArray.Count > 0)
-                    TestPropetries(type.GetElementType(), (JObject)jArray[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
-        }
-
-        protected void TestPropetries(Type type, JObject[] jObject)
-        {
-            if (jObject == null)
-                throw new NullReferenceException("jObject");
-
-            if (type.IsArray)
-            {
-                if (jObject.Length > 0)
-                    TestPropetries(type.GetElementType(), jObject[0]);
-                else if (!IgnoreRequestWithBadData)
-                    throw new NullReferenceException("Impossible to do test for this input data!");
-            }
-            else
-                throw new InvalidCastException();
         }
 
         protected HashSet<string> GetPropertyNames(Type type)
@@ -131,15 +153,36 @@ namespace Ditch.BitShares.Tests
 
         protected void WriteLine(string s)
         {
+            Console.WriteLine("---------------");
             Console.WriteLine(s);
         }
 
         protected void WriteLine(JsonRpcResponse r)
         {
+            Console.WriteLine("---------------");
             if (r.IsError)
+            {
+                Console.WriteLine("Error:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+            }
             else
+            {
+                Console.WriteLine("Result:");
                 Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            }
+
+            Console.WriteLine("Request:");
+            Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
+        }
+
+        private string JsonBeautify(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+                return json;
+            var obj = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
     }
 }

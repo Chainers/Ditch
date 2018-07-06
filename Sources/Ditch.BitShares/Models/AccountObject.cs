@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -54,7 +55,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("membership_expiration_date")]
-        public DateTime MembershipExpirationDate { get; set; }
+        public TimePointSec MembershipExpirationDate { get; set; }
 
 
         ///The account that paid the fee to register this account. Receives a percentage of referral rewards.

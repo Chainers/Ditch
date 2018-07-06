@@ -4,7 +4,7 @@ namespace Ditch.EOS.Models
 {
     /// <summary>
     /// type_def
-    /// libraries\chain\include\eosio\chain\contracts\types.hpp
+    /// libraries\chain\include\eosio\chain\abi_def.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class TypeDef
@@ -16,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: type_name</returns>
         [JsonProperty("new_type_name")]
-        public string NewTypeName {get; set;}
+        public string NewTypeName { get; set; }
 
         /// <summary>
         /// API name: type
@@ -24,6 +24,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: type_name</returns>
         [JsonProperty("type")]
-        public string Type {get; set;}
+        public string Type { get; set; }
     }
 }

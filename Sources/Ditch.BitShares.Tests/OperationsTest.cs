@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
@@ -14,25 +13,21 @@ namespace Ditch.BitShares.Tests
     [TestFixture]
     public class OperationsTest : BaseTest
     {
-        private readonly Regex _errorMsg = new Regex(@"(?<=[\w\s\(\)&|\.<>=]+:\s+)[a-z\s0-9.]*", RegexOptions.IgnoreCase);
-        private const bool IsVerify = true;
-
         private JsonRpcResponse Post(List<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
-            if (!IsVerify || isNeedBroadcast)
-                return Api.BroadcastOperations(postingKeys, CancellationToken.None, op);
-
-            return Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+            return isNeedBroadcast
+                ? (JsonRpcResponse)Api.BroadcastOperations(postingKeys, CancellationToken.None, op)
+                : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
         }
 
 
         [Test]
-        public async Task AccountCreateOperationTest()
+        public void AccountCreateOperationTest()
         {
             var name = "userlogin";
             var key = Secp256K1Manager.GenerateRandomKey();
             var pwif = "P" + Base58.EncodePrivateWif(key);
-            
+
             var user = User.Account.Id;
 
             var op = new AccountCreateOperation

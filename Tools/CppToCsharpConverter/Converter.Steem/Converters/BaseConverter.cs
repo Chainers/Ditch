@@ -96,15 +96,15 @@ namespace Converter.Steem.Converters
                     }
                 case ObjectType.Api:
                     {
-                        outDir += "Api\\";
+                        outDir += "Apis\\";
                         break;
                     }
             }
 
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
-
-            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir));
+            
+            File.WriteAllText($"{outDir}{converted.Name}.cs", PrintParsedClass(converted, absPathToFile, searchDir), Encoding.UTF8);
             foreach (var itm in UnknownTypes)
             {
                 if (string.IsNullOrEmpty(itm.SearchDir))
@@ -355,10 +355,7 @@ namespace Converter.Steem.Converters
             {
                 case ObjectType.Class:
                     {
-                        sb.AppendLine("using Ditch.Core;");
                         sb.AppendLine("using System;");
-                        sb.AppendLine("using System.Collections.Generic; ");
-                        sb.AppendLine($"using Ditch.{ProjName}.Models;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
                         sb.AppendLine($"namespace Ditch.{ProjName}.Models");
@@ -366,7 +363,7 @@ namespace Converter.Steem.Converters
                     }
                 case ObjectType.Enum:
                     {
-                        sb.AppendLine("using Ditch.Core.Helpers;");
+                        sb.AppendLine("using Ditch.Core.Converters;");
                         sb.AppendLine("using Newtonsoft.Json;");
                         sb.AppendLine();
                         sb.AppendLine($"namespace Ditch.{ProjName}.Models");
@@ -471,12 +468,12 @@ namespace Converter.Steem.Converters
                     parsedFunc.MainComment = Comment.RemoveBriefFromMainComment(parsedFunc.MainComment);
             }
 
-            if (!string.IsNullOrEmpty(parsedElement.MainComment))
-            {
-                sb.Append(indent);
-                sb.AppendLine(parsedElement.MainComment);
-                sb.AppendLine();
-            }
+            //if (!string.IsNullOrEmpty(parsedElement.MainComment))
+            //{
+            //    sb.Append(indent);
+            //    sb.AppendLine(parsedElement.MainComment);
+            //    sb.AppendLine();
+            //}
 
             var isVoidType = false;
             if (parsedClass.ObjectType == ObjectType.Api && parsedFunc != null)

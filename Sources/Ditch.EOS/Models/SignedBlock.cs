@@ -1,33 +1,30 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
-    /**
-     * This structure contains the set of signed transactions referenced by the
-     * block summary. This inherits from block_summary/signed_block_header and is
-     * what would be logged to disk to enable the regeneration of blockchain state.
-     *
-     * The transactions are grouped to mirror the cycles in block_summary, generated
-     * transactions are not included.
-     */
-
     /// <summary>
     /// signed_block
     /// libraries\chain\include\eosio\chain\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SignedBlock : SignedBlockSummary
+    public class SignedBlock : SignedBlockHeader
     {
 
-
-        /// this is loaded and indexed into map&lt;id,trx> that is referenced by summary; order doesn't matter
+        /// <summary>
+        /// API name: transactions
+        /// new or generated transactions
+        /// </summary>
+        /// <returns>API type: transaction_receipt</returns>
+        [JsonProperty("transactions")]
+        public TransactionReceipt[] Transactions { get; set; }
 
         /// <summary>
-        /// API name: input_transactions
+        /// API name: block_extensions
         /// 
         /// </summary>
-        /// <returns>API type: packed_transaction</returns>
-        [JsonProperty("input_transactions")]
-        public PackedTransaction[] InputTransactions { get; set; }
+        /// <returns>API type: extensions_type</returns>
+        [JsonProperty("block_extensions")]
+        public Tuple<UInt16, char[]>[] BlockExtensions { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Ditch.BitShares.Models;
 using Ditch.BitShares.Models.Operations;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -45,7 +46,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("time")]
-        public DateTime Time { get; set; }
+        public TimePointSec Time { get; set; }
 
         /// <summary>
         /// API name: op

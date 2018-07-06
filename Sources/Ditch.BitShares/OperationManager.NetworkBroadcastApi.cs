@@ -28,9 +28,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: void</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastTransaction(SignedTransaction trx, CancellationToken token)
+        public JsonRpcResponse<VoidResponse> BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", new object[] { trx, }, token);
+            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", new object[] { trx, }, token);
         }
 
 
@@ -60,9 +60,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: void</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse BroadcastBlock(SignedBlock block, CancellationToken token)
+        public JsonRpcResponse<VoidResponse> BroadcastBlock(SignedBlock block, CancellationToken token)
         {
-            return CustomGetRequest(KnownApiNames.NetworkBroadcastApi, "broadcast_block", new object[] { block, }, token);
+            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", new object[] { block, }, token);
         }
     }
 }

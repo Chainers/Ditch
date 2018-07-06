@@ -5,9 +5,14 @@ namespace Ditch.EOS
 {
     public class OperationResult
     {
-        public bool IsSuccess => Error == null;
+        public bool IsError => Error != null;
 
         public ErrorBase Error { get; set; }
+
+        public string RawRequest { get; set; }
+
+        public string RawResponse { get; set; }
+
 
         public OperationResult()
         {

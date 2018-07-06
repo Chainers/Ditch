@@ -4,7 +4,7 @@ namespace Ditch.EOS.Models
 {
     /// <summary>
     /// table_def
-    /// libraries\chain\include\eosio\chain\contracts\types.hpp
+    /// libraries\chain\include\eosio\chain\abi_def.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class TableDef

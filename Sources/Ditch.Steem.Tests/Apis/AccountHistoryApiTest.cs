@@ -1,5 +1,5 @@
 using System.Threading;
-using Ditch.Steem.Models.Args;
+using Ditch.Steem.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -17,13 +17,7 @@ namespace Ditch.Steem.Tests.Apis
                 OnlyVirtual = false
             };
             var resp = Api.GetOpsInBlock(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "get_ops_in_block", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
-            WriteLine(obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -34,13 +28,7 @@ namespace Ditch.Steem.Tests.Apis
                 Id = ""
             };
             var resp = Api.GetTransaction(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "get_transaction", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
-            WriteLine(obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -51,13 +39,7 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login
             };
             var resp = Api.GetAccountHistory(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "get_account_history", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
-            WriteLine(obj);
+            TestPropetries(resp);
         }
 
         [Test]
@@ -69,13 +51,7 @@ namespace Ditch.Steem.Tests.Apis
                 BlockRangeEnd = 20
             };
             var resp = Api.EnumVirtualOps(args, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
-            var obj = Api.CustomGetRequest<JObject>(KnownApiNames.AccountHistoryApi, "enum_virtual_ops", args, CancellationToken.None);
-            TestPropetries(resp.Result.GetType(), obj.Result);
-            WriteLine("----------------------------------------------------------------------------");
-            WriteLine(obj);
+            TestPropetries(resp);
         }
     }
 }

@@ -1,88 +1,79 @@
 using System;
+using Ditch.Core.Attributes;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
     /**
-    *  The transaction header contains the fixed-sized data
-    *  associated with each transaction. It is separated from
-    *  the transaction body to facilitate partial parsing of
-    *  transactions without requiring dynamic memory allocation.
-    *
-    *  All transactions have an expiration time after which they
-    *  may no longer be included in the blockchain. Once a block
-    *  with a block_header::timestamp greater than expiration is
-    *  deemed irreversible, then a user can safely trust the transaction
-    *  will never be included.
-    *
-    *  Each region is an independent blockchain, it is included as routing
-    *  information for inter-blockchain communication. A contract in this
-    *  region might generate or authorize a transaction intended for a foreign
-    *  region.
-    */
+     * @defgroup transactioncppapi Transaction C++ API
+     * @ingroup transactionapi
+     * @brief Type-safe C++ wrappers for transaction C API
+     *
+     * @note There are some methods from the @ref transactioncapi that can be used directly from C++
+     *
+     * @{
+     */
 
     /// <summary>
     /// transaction_header
-    /// libraries\chain\include\eosio\chain\transaction.hpp
+    /// contracts\eosiolib\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class TransactionHeader
     {
-
         /// <summary>
         /// API name: expiration
-        /// the time at which a transaction expires
+        /// 
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
+        [MessageOrder(10)]
         [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
-
-        /// <summary>
-        /// API name: region
-        /// = 0U; ///&lt; the computational memory region this transaction applies to.
-        /// </summary>
-        /// <returns>API type: uint16_t</returns>
-        [JsonProperty("region")]
-        public ushort Region { get; set; }
+        public TimePointSec Expiration { get; set; } = new TimePointSec();
 
         /// <summary>
         /// API name: ref_block_num
-        /// = 0U; ///&lt; specifies a block num in the last 2^16 blocks.
+        /// 
         /// </summary>
         /// <returns>API type: uint16_t</returns>
+        [MessageOrder(20)]
         [JsonProperty("ref_block_num")]
-        public ushort RefBlockNum { get; set; }
+        public UInt16 RefBlockNum { get; set; }
 
         /// <summary>
         /// API name: ref_block_prefix
-        /// = 0UL; ///&lt; specifies the lower 32 bits of the blockid at get_ref_blocknum
+        /// 
         /// </summary>
         /// <returns>API type: uint32_t</returns>
+        [MessageOrder(30)]
         [JsonProperty("ref_block_prefix")]
-        public uint RefBlockPrefix { get; set; }
+        public UInt32 RefBlockPrefix { get; set; }
 
         /// <summary>
         /// API name: max_net_usage_words
-        /// = 0UL; /// upper limit on total network bandwidth (in 8 byte words) billed for this transaction
+        /// = 0UL; /// number of 8 byte words this transaction can serialize into after compressions
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
+        [MessageOrder(40)]
         [JsonProperty("max_net_usage_words")]
-        public uint MaxNetUsageWords { get; set; }
+        public UnsignedInt MaxNetUsageWords { get; set; } = new UnsignedInt();
 
         /// <summary>
-        /// API name: max_kcpu_usage
-        /// = 0UL; /// upper limit on the total number of kilo CPU usage units billed for this transaction
+        /// API name: max_cpu_usage_ms
+        /// = 0UL; /// number of CPU usage units to bill transaction for
         /// </summary>
-        /// <returns>API type: unsigned_int</returns>
-        [JsonProperty("max_kcpu_usage")]
-        public uint MaxKcpuUsage { get; set; }
+        /// <returns>API type: uint8_t</returns>
+        [MessageOrder(50)]
+        [JsonProperty("max_cpu_usage_ms")]
+        public byte MaxCpuUsageMs { get; set; }
 
         /// <summary>
         /// API name: delay_sec
-        /// = 0UL; /// number of seconds to delay this transaction for during which it may be canceled.
+        /// = 0UL; /// number of CPU usage units to bill transaction for
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
+        [MessageOrder(60)]
         [JsonProperty("delay_sec")]
-        public uint DelaySec { get; set; }
+        public UnsignedInt DelaySec { get; set; } = new UnsignedInt();
     }
 }

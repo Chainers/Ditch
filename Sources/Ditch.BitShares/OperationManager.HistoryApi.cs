@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Ditch.Core.JsonRpc;
 using Ditch.BitShares.Models;
 using System.Threading;
+using Ditch.Core.Models;
 
 namespace Ditch.BitShares
 {
@@ -99,7 +100,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bucket_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BucketObject[]> GetMarketHistory(AssetIdType a, AssetIdType b, UInt32 bucketSeconds, DateTime start, DateTime end, CancellationToken token)
+        public JsonRpcResponse<BucketObject[]> GetMarketHistory(AssetIdType a, AssetIdType b, UInt32 bucketSeconds, TimePointSec start, TimePointSec end, CancellationToken token)
         {
             return CustomGetRequest<BucketObject[]>(KnownApiNames.HistoryApi, "get_market_history", new object[] { a, b, bucketSeconds, start, end, }, token);
         }

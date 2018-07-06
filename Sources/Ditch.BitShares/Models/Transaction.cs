@@ -1,6 +1,7 @@
 using System;
 using Ditch.BitShares.Models.Operations;
 using Ditch.Core.Attributes;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -89,7 +90,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: time_point_sec</returns>
         [MessageOrder(30)]
         [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
+        public TimePointSec Expiration { get; set; }
 
         /// <summary>
         /// API name: operations

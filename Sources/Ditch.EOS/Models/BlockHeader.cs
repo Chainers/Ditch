@@ -5,58 +5,19 @@ namespace Ditch.EOS.Models
 {
     /// <summary>
     /// block_header
-    /// contracts\eosio.system\eosio.system.hpp
+    /// libraries\chain\include\eosio\chain\block_header.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class BlockHeader
     {
-        /// <summary>
-        /// API name: block_num
-        /// 
-        /// </summary>
-        /// <returns>API type: uint32_t</returns>
-        [JsonProperty("block_num")]
-        public uint BlockNum { get; set; }
-
-        /// <summary>
-        /// API name: previous
-        /// 
-        /// </summary>
-        /// <returns>API type: checksum256</returns>
-        [JsonProperty("previous")]
-        public string Previous { get; set; }
 
         /// <summary>
         /// API name: timestamp
         /// 
         /// </summary>
-        /// <returns>API type: time</returns>
+        /// <returns>API type: block_timestamp_type</returns>
         [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; set; }
-
-        /// <summary>
-        /// API name: transaction_mroot
-        /// 
-        /// </summary>
-        /// <returns>API type: checksum256</returns>
-        [JsonProperty("transaction_mroot")]
-        public string TransactionMroot { get; set; }
-
-        /// <summary>
-        /// API name: action_mroot
-        /// 
-        /// </summary>
-        /// <returns>API type: checksum256</returns>
-        [JsonProperty("action_mroot")]
-        public string ActionMroot { get; set; }
-
-        /// <summary>
-        /// API name: block_mroot
-        /// 
-        /// </summary>
-        /// <returns>API type: checksum256</returns>
-        [JsonProperty("block_mroot")]
-        public string BlockMroot { get; set; }
+        public BlockTimestampType Timestamp { get; set; }
 
         /// <summary>
         /// API name: producer
@@ -64,22 +25,62 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: account_name</returns>
         [JsonProperty("producer")]
-        public string Producer { get; set; }
+        public AccountName Producer { get; set; }
+
+        /// <summary>
+        /// API name: confirmed
+        /// = 1;
+        /// </summary>
+        /// <returns>API type: uint16_t</returns>
+        [JsonProperty("confirmed")]
+        public UInt16 Confirmed { get; set; }
+
+        /// <summary>
+        /// API name: previous
+        /// 
+        /// </summary>
+        /// <returns>API type: block_id_type</returns>
+        [JsonProperty("previous")]
+        public object Previous { get; set; }
+
+        /// <summary>
+        /// API name: transaction_mroot
+        /// mroot of cycles_summary
+        /// </summary>
+        /// <returns>API type: checksum256_type</returns>
+        [JsonProperty("transaction_mroot")]
+        public object TransactionMroot { get; set; }
+
+        /// <summary>
+        /// API name: action_mroot
+        /// mroot of all delivered action receipts
+        /// </summary>
+        /// <returns>API type: checksum256_type</returns>
+        [JsonProperty("action_mroot")]
+        public object ActionMroot { get; set; }
 
         /// <summary>
         /// API name: schedule_version
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("schedule_version")]
-        public uint ScheduleVersion { get; set; }
+        public UInt32 ScheduleVersion { get; set; }
 
         /// <summary>
         /// API name: new_producers
         /// 
         /// </summary>
-        /// <returns>API type: producer_schedule</returns>
+        /// <returns>API type: producer_schedule_type</returns>
         [JsonProperty("new_producers", NullValueHandling = NullValueHandling.Ignore)]
-        public ProducerSchedule NewProducers { get; set; }
+        public object NewProducers { get; set; }
+
+        /// <summary>
+        /// API name: header_extensions
+        /// 
+        /// </summary>
+        /// <returns>API type: extensions_type</returns>
+        [JsonProperty("header_extensions")]
+        public object HeaderExtensions { get; set; }
     }
 }

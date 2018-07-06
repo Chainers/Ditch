@@ -4,19 +4,18 @@ namespace Ditch.EOS.Models
 {
     /// <summary>
     /// signed_transaction
-    /// transaction.hpp
+    /// libraries\chain\include\eosio\chain\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class SignedTransaction : Transaction
     {
-
         /// <summary>
         /// API name: signatures
         /// 
         /// </summary>
         /// <returns>API type: signature_type</returns>
         [JsonProperty("signatures")]
-        public string[] Signatures { get; set; }
+        public string[] Signatures { get; set; } = new string[0];
 
         /// <summary>
         /// API name: context_free_data
@@ -24,6 +23,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: bytes</returns>
         [JsonProperty("context_free_data")]
-        public byte[] ContextFreeData { get; set; }
+        public Bytes[] ContextFreeData { get; set; } = new Bytes[0];
     }
 }

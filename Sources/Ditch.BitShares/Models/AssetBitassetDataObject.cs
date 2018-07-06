@@ -58,7 +58,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: flat_map<account_id_type, pair<time_point_sec,price_feed>> </returns>
         [JsonProperty("feeds")]
-        public MapContainer<AccountIdType, KeyValuePair<DateTime, PriceFeed>> Feeds { get; set; }
+        public MapContainer<AccountIdType, KeyValuePair<TimePointSec, PriceFeed>> Feeds { get; set; }
 
         /// This is the currently active price feed, calculated as the median of values from the currently active
         /// feeds.
@@ -79,7 +79,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("current_feed_publication_time")]
-        public DateTime CurrentFeedPublicationTime { get; set; }
+        public TimePointSec CurrentFeedPublicationTime { get; set; }
 
 
         /// True if this asset implements a @ref prediction_market

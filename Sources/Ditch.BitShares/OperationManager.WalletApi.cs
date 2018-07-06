@@ -184,7 +184,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: bucket_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<BucketObject[]> GetMarketHistory(string symbol, string symbol2, UInt32 bucket, DateTime start, DateTime end, CancellationToken token)
+//        public JsonRpcResponse<BucketObject[]> GetMarketHistory(string symbol, string symbol2, UInt32 bucket, TimePointSec start, TimePointSec end, CancellationToken token)
 //        {
 //            return CustomGetRequest<BucketObject[]>(KnownApiNames.WalletApi, "get_market_history", new object[] { symbol, symbol2, bucket, start, end, }, token);
 //        }

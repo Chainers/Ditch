@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -59,7 +60,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("time")]
-        public DateTime Time { get; set; }
+        public TimePointSec Time { get; set; }
 
         /// <summary>
         /// API name: current_witness
@@ -75,7 +76,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("next_maintenance_time")]
-        public DateTime NextMaintenanceTime { get; set; }
+        public TimePointSec NextMaintenanceTime { get; set; }
 
         /// <summary>
         /// API name: last_budget_time
@@ -83,7 +84,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("last_budget_time")]
-        public DateTime LastBudgetTime { get; set; }
+        public TimePointSec LastBudgetTime { get; set; }
 
         /// <summary>
         /// API name: witness_budget

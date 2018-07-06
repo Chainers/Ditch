@@ -1,4 +1,3 @@
-using Ditch.EOS.Models.Enums;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -17,15 +16,16 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: signature_type</returns>
         [JsonProperty("signatures")]
-        public object[] Signatures { get; set; }
+        public string[] Signatures { get; set; }
 
         /// <summary>
         /// API name: compression
         /// 
         /// </summary>
-        /// <returns>API type: enum_type</returns>
+        /// <returns>API type: fc::enum_type<uint8_t,compression_type></returns>
         [JsonProperty("compression")]
-        public CompressionType Compression { get; set; }
+        //public EnumType<byte, CompressionType> Compression { get; set; }
+        public string Compression { get; set; }
 
         /// <summary>
         /// API name: packed_context_free_data
@@ -33,7 +33,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: bytes</returns>
         [JsonProperty("packed_context_free_data")]
-        public char PackedContextFreeData { get; set; }
+        public string PackedContextFreeData { get; set; }
 
         /// <summary>
         /// API name: packed_trx
@@ -41,6 +41,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: bytes</returns>
         [JsonProperty("packed_trx")]
-        public char PackedTrx { get; set; }
+        public string PackedTrx { get; set; }
+
     }
 }

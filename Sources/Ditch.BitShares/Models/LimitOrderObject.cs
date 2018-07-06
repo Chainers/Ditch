@@ -1,4 +1,5 @@
 using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -42,7 +43,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("expiration")]
-        public DateTime Expiration { get; set; }
+        public TimePointSec Expiration { get; set; }
 
         /// <summary>
         /// API name: seller

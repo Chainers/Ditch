@@ -291,3 +291,4 @@ Sources/Ditch.Steem.Tests/app.config
 Sources/Ditch.Golos.Tests/app.config
 Sources/Ditch.EOS.Tests/app.config
 Sources/Ditch.BitShares.Tests/app.config
+Sources/Ditch.Steem.Old.Tests/app.config

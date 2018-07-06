@@ -113,7 +113,7 @@ namespace Converter.Steem
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                File.WriteAllText(Path.Combine(path, parsedClass.Name), sb.ToString());
+                File.WriteAllText(Path.Combine(path, parsedClass.Name), sb.ToString(), Encoding.UTF8);
             }
         }
 
