@@ -30,7 +30,7 @@ namespace Ditch.Golos.Models
         {
             return new Operation(baseOperation);
         }
-        
+
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
@@ -41,30 +41,49 @@ namespace Ditch.Golos.Models
                 reader.Read();
                 switch (opName)
                 {
+                    case VoteOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<VoteOperation>(reader);
+                        break;
+                    case CommentOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<CommentOperation>(reader);
+                        break;
+
+                    case TransferOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<TransferOperation>(reader);
+                        break;
+                    case TransferToVestingOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<TransferToVestingOperation>(reader);
+                        break;
+                    case WithdrawVestingOperation.OperationName:
+                        _baseOperation = serializer.Deserialize<WithdrawVestingOperation>(reader);
+                        break;
+
+                    //LimitOrderCreate,
+                    //LimitOrderCancel,
+
+                    //FeedPublish,
+                    //Convert,
+
+
                     case AccountCreateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<AccountCreateOperation>(reader);
                         break;
                     case AccountUpdateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<AccountUpdateOperation>(reader);
                         break;
-                    case CommentOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<CommentOperation>(reader);
-                        break;
+
                     case WitnessUpdateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<WitnessUpdateOperation>(reader);
                         break;
-                    case WithdrawVestingOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<WithdrawVestingOperation>(reader);
-                        break;
-                    case VoteOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<VoteOperation>(reader);
-                        break;
-                    case TransferToVestingOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<TransferToVestingOperation>(reader);
-                        break;
-                    case TransferOperation.OperationName:
-                        _baseOperation = serializer.Deserialize<TransferOperation>(reader);
-                        break;
+                    //AccountWitnessVote,
+                    //AccountWitnessProxy,
+
+                    //Pow,
+
+                    //Custom,
+
+                    //ReportOverProduction,
+
                     case DeleteCommentOperation.OperationName:
                         _baseOperation = serializer.Deserialize<DeleteCommentOperation>(reader);
                         break;
@@ -74,12 +93,54 @@ namespace Ditch.Golos.Models
                     case CommentOptionsOperation.OperationName:
                         _baseOperation = serializer.Deserialize<CommentOptionsOperation>(reader);
                         break;
+                    //SetWithdrawVestingRoute,
+                    //LimitOrderCreate2,
+                    //ChallengeAuthority,
+                    //ProveAuthority,
+                    //RequestAccountRecovery,
+                    //RecoverAccount,
+                    //ChangeRecoveryAccount,
+                    //EscrowTransfer,
+                    //EscrowDispute,
+                    //EscrowRelease,
+                    //Pow2,
+                    //EscrowApprove,
+                    //TransferToSavings,
+                    //TransferFromSavings,
+                    //CancelTransferFromSavings,
+                    //CustomBinary,
+                    //DeclineVotingRights,
+                    //ResetAccount,
+                    //SetResetAccount,
+                    //DelegateVestingShares,
+                    //AccountCreateWithDelegation,
+                    //AccountMetadata,
                     case ProposalCreateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<ProposalCreateOperation>(reader);
                         break;
                     case ProposalUpdateOperation.OperationName:
                         _baseOperation = serializer.Deserialize<ProposalUpdateOperation>(reader);
                         break;
+                    //ProposalDelete,
+                    //ChainPropertiesUpdate,
+
+                    ///// virtual operations below this point
+                    //FillConvertRequest,
+                    //AuthorReward,
+                    //CurationReward,
+                    //CommentReward,
+                    //LiquidityReward,
+                    //Interest,
+                    //FillVestingWithdraw,
+                    //FillOrder,
+                    //ShutdownWitness,
+                    //FillTransferFromSavings,
+                    //Hardfork,
+                    //CommentPayoutUpdate,
+                    //CommentBenefactorReward,
+                    //ReturnVestingDelegation
+
+
                     default:
                         _baseOperation = new UnsupportedOperation(opName, serializer.Deserialize<JObject>(reader));
                         break;

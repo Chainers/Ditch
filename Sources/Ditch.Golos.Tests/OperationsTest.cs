@@ -67,29 +67,7 @@ namespace Ditch.Golos.Tests
         }
 
         #endregion
-
         #region Comment
-
-        [Test]
-        public void DeleteCommentTest()
-        {
-            var user = User;
-            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            Post(user.PostingKeys, false, op);
-
-            var op2 = new DeleteCommentOperation(user.Login, "");
-            Post(user.PostingKeys, false, op2);
-        }
-
-        [Test]
-        public void PostWithBeneficiariesTest()
-        {
-            var user = User;
-            var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
-
-            Post(user.PostingKeys, false, op, op2);
-        }
 
         [Test]
         public void ReplyTest()
@@ -113,7 +91,6 @@ namespace Ditch.Golos.Tests
         }
 
         #endregion
-
         #region TransferToVesting
 
         [Test]
@@ -124,7 +101,6 @@ namespace Ditch.Golos.Tests
         }
 
         #endregion
-
         #region WithdrawVesting
 
         [Test]
@@ -137,16 +113,68 @@ namespace Ditch.Golos.Tests
         #endregion
 
 
-        //WithdrawVesting,
-
         //LimitOrderCreate,
         //LimitOrderCancel,
 
         //FeedPublish,
         //Convert,
 
-        //AccountCreate,
-        //AccountUpdate,
+        #region AccountCreate
+
+        [Test]
+        public void AccountCreateTest()
+        {
+            const string name = "userlogin";
+
+            var op = new AccountCreateOperation
+            {
+                Fee = new Asset(3000, 3, "GBG"),
+                Creator = User.Login,
+                NewAccountName = User.Login,
+                JsonMetadata = ""
+            };
+
+            var privateKey = Secp256K1Manager.GenerateRandomKey();
+            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
+
+            var subWif = Base58.GetSubWif(name, privateWif, "owner");
+            var pk = Base58.DecodePrivateWif(subWif);
+            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "active");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "posting");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
+
+            subWif = Base58.GetSubWif(name, privateWif, "memo");
+            pk = Base58.DecodePrivateWif(subWif);
+            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            op.MemoKey = new PublicKeyType(subPublicKey);
+
+            Post(User.ActiveKeys, false, op);
+        }
+
+        #endregion AccountCreate
+        #region AccountUpdate
+
+        [Test]
+        public void AccountUpdateTest()
+        {
+            var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            var acc = resp.Result[0];
+
+            var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
+            Post(User.ActiveKeys, false, op);
+        }
+
+        #endregion AccountUpdate
+
 
         #region WitnessUpdate
 
@@ -158,9 +186,7 @@ namespace Ditch.Golos.Tests
         }
 
         #endregion
-
-
-
+        
         //AccountWitnessVote,
         //AccountWitnessProxy,
 
@@ -170,43 +196,21 @@ namespace Ditch.Golos.Tests
 
         //ReportOverProduction,
 
-        //DeleteComment,
-        //CustomJson,
-        //CommentOptions,
-        //SetWithdrawVestingRoute,
-        //LimitOrderCreate2,
-        //ChallengeAuthority,
-        //ProveAuthority,
-        //RequestAccountRecovery,
-        //RecoverAccount,
-        //ChangeRecoveryAccount,
-        //EscrowTransfer,
-        //EscrowDispute,
-        //EscrowRelease,
-        //Pow2,
-        //EscrowApprove,
-        //TransferToSavings,
-        //TransferFromSavings,
-        //CancelTransferFromSavings,
-        //CustomBinary,
-        //DeclineVotingRights,
-        //ResetAccount,
-        //SetResetAccount,
+        #region DeleteComment
 
-        ///// virtual operations below this point
-        //FillConvertRequest,
-        //AuthorReward,
-        //CurationReward,
-        //CommentReward,
-        //LiquidityReward,
-        //Interest,
-        //FillVestingWithdraw,
-        //FillOrder,
-        //ShutdownWitness,
-        //FillTransferFromSavings,
-        //Hardfork,
-        //CommentPayoutUpdate,
-        //CommentBenefactorReward
+        [Test]
+        public void DeleteCommentTest()
+        {
+            var user = User;
+            var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
+            Post(user.PostingKeys, false, op);
+
+            var op2 = new DeleteCommentOperation(user.Login, "");
+            Post(user.PostingKeys, false, op2);
+        }
+
+        #endregion DeleteComment
+        #region CustomJson
 
         [Test]
         public void FollowUnfollowTest()
@@ -256,7 +260,7 @@ namespace Ditch.Golos.Tests
             var op = new RePostOperation(user.Login, "joseph.kalu", "fkkl", user.Login);
             Post(user.PostingKeys, false, op);
         }
-
+        
         [Test]
         public void VerifyAuthoritySuccessTest()
         {
@@ -275,69 +279,44 @@ namespace Ditch.Golos.Tests
             Post(user.PostingKeys, false, op);
         }
 
-        [Test]
-        public void AccountUpdateTest()
-        {
-            var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
-            var acc = resp.Result[0];
+        #endregion CustomJson
+        #region CommentOptions
 
-            var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
-            Post(User.ActiveKeys, false, op);
-        }
-
-        [Test, Sequential]
-        [TestCase("277.126 SBD", 277126, 3, "SBD")]
-        [TestCase("0 SBD", 0, 0, "SBD")]
-        [TestCase("0", 0, 0, "")]
-        [TestCase("123 SBD", 123, 0, "SBD")]
-        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
-        public void ParseTestTest(string test, long value, byte precision, string currency)
-        {
-            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-            Assert.IsTrue(asset.Value == value);
-            Assert.IsTrue(asset.Precision == precision);
-            Assert.IsTrue(asset.Currency == currency);
-            Assert.IsTrue(test.Equals(asset.ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)));
-        }
 
         [Test]
-        public void AccountCreateTest()
+        public void PostWithBeneficiariesTest()
         {
-            const string name = "userlogin";
+            var user = User;
+            var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
+            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
 
-            var op = new AccountCreateOperation
-            {
-                Fee = new Asset(3000, 3, "GBG"),
-                Creator = User.Login,
-                NewAccountName = User.Login,
-                JsonMetadata = ""
-            };
-
-            var privateKey = Secp256K1Manager.GenerateRandomKey();
-            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
-
-            var subWif = Base58.GetSubWif(name, privateWif, "owner");
-            var pk = Base58.DecodePrivateWif(subWif);
-            var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
-
-            subWif = Base58.GetSubWif(name, privateWif, "active");
-            pk = Base58.DecodePrivateWif(subWif);
-            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
-
-            subWif = Base58.GetSubWif(name, privateWif, "posting");
-            pk = Base58.DecodePrivateWif(subWif);
-            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
-
-            subWif = Base58.GetSubWif(name, privateWif, "memo");
-            pk = Base58.DecodePrivateWif(subWif);
-            subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
-            op.MemoKey = new PublicKeyType(subPublicKey);
-
-            Post(User.ActiveKeys, false, op);
+            Post(user.PostingKeys, false, op, op2);
         }
+
+        #endregion CommentOptions
+        //SetWithdrawVestingRoute,
+        //LimitOrderCreate2,
+        //ChallengeAuthority,
+        //ProveAuthority,
+        //RequestAccountRecovery,
+        //RecoverAccount,
+        //ChangeRecoveryAccount,
+        //EscrowTransfer,
+        //EscrowDispute,
+        //EscrowRelease,
+        //Pow2,
+        //EscrowApprove,
+        //TransferToSavings,
+        //TransferFromSavings,
+        //CancelTransferFromSavings,
+        //CustomBinary,
+        //DeclineVotingRights,
+        //ResetAccount,
+        //SetResetAccount,
+        //DelegateVestingShares,
+        //AccountCreateWithDelegation,
+        //AccountMetadata,
+        #region ProposalCreate
 
         [Test]
         public void ProposalCreateOperationTest()
@@ -363,6 +342,9 @@ namespace Ditch.Golos.Tests
             Post(User.ActiveKeys, false, op);
         }
 
+        #endregion ProposalCreate
+        #region ProposalUpdate
+
         [Test]
         public void ProposalUpdateOperationTest()
         {
@@ -375,6 +357,45 @@ namespace Ditch.Golos.Tests
             };
 
             Post(User.PostingKeys, false, op);
+        }
+
+        #endregion ProposalUpdate
+        //ProposalDelete,
+        //ChainPropertiesUpdate,
+
+        ///// virtual operations below this point
+        //FillConvertRequest,
+        //AuthorReward,
+        //CurationReward,
+        //CommentReward,
+        //LiquidityReward,
+        //Interest,
+        //FillVestingWithdraw,
+        //FillOrder,
+        //ShutdownWitness,
+        //FillTransferFromSavings,
+        //Hardfork,
+        //CommentPayoutUpdate,
+        //CommentBenefactorReward,
+        //ReturnVestingDelegation
+
+     
+
+
+
+        [Test, Sequential]
+        [TestCase("277.126 SBD", 277126, 3, "SBD")]
+        [TestCase("0 SBD", 0, 0, "SBD")]
+        [TestCase("0", 0, 0, "")]
+        [TestCase("123 SBD", 123, 0, "SBD")]
+        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
+        public void ParseTestTest(string test, long value, byte precision, string currency)
+        {
+            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
+            Assert.IsTrue(asset.Value == value);
+            Assert.IsTrue(asset.Precision == precision);
+            Assert.IsTrue(asset.Currency == currency);
+            Assert.IsTrue(test.Equals(asset.ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)));
         }
     }
 }
