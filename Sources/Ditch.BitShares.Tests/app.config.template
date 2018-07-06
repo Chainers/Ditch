@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <appSettings>
+        <add key="Login" value="MyLogin" />
+        <add key="ActiveWif" value="5**************************************************" />
+        <add key="OwnerWif" value="5**************************************************" />
+        <add key="1Url" value="wss://eu.openledger.info/ws" />
+        <add key="Url" value="https://node.testnet.bitshares.eu" />
+    </appSettings>
+</configuration>

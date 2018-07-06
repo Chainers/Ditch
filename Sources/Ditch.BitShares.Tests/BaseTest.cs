@@ -7,31 +7,31 @@ using System.Reflection;
 using System.Threading;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Helpers;
-using Ditch.Steem.Models;
-using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Ditch.Steem.Tests
+namespace Ditch.BitShares.Tests
 {
-    [TestFixture]
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 3.2.0-alpha";
-
         protected static UserInfo User;
         protected static OperationManager Api;
+        protected string SbdSymbol = "BTS";
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
         {
             if (User == null)
             {
-                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"],
+                    ActiveWif = ConfigurationManager.AppSettings["ActiveWif"],
+                    OwnerWif = ConfigurationManager.AppSettings["OwnerWif"]
+                };
+                Assert.IsFalse(string.IsNullOrEmpty(User.ActiveWif), "empty ActiveWif");
             }
-            Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
 
             if (Api == null)
             {
@@ -40,11 +40,11 @@ namespace Ditch.Steem.Tests
                 Api = new OperationManager(manager, jss);
 
                 var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                Assert.IsTrue(Api.TryConnectTo(urls, CancellationToken.None), "Enable connect to node");
+                Api.TryConnectTo(urls, CancellationToken.None);
 
-                var version = Api.TryLoadBlockchainVersion(new[] { "STEEM_BLOCKCHAIN_VERSION" }, CancellationToken.None);
-                Assert.IsFalse(string.IsNullOrEmpty(version));
-                Config.BlockchainVersion = VersionHelper.ToInteger(version);
+                var acc = Api.GetAccountByName(User.Login, CancellationToken.None);
+                Assert.IsFalse(acc.IsError);
+                User.Account = acc.Result;
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
@@ -135,7 +135,7 @@ namespace Ditch.Steem.Tests
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
         }
-        
+
         protected HashSet<string> GetPropertyNames(Type type)
         {
             var props = type.GetRuntimeProperties();
@@ -149,24 +149,6 @@ namespace Ditch.Steem.Tests
                 }
             }
             return resp;
-        }
-
-        protected string GetMeta(string[] tags)
-        {
-            var tagsm = tags == null || !tags.Any() ? string.Empty : $"\"{string.Join("\",\"", tags)}\"";
-            return $"{{\"app\": \"{AppVersion}\", \"tags\": [{tagsm}]}}";
-        }
-
-
-        protected SignedTransaction GetSignedTransaction()
-        {
-            var user = User;
-            const string autor = "steepshot";
-
-            var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
-            return transaction;
         }
 
         protected void WriteLine(string s)
