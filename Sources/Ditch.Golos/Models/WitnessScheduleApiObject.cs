@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// witness_schedule_api_object
     /// plugins\database_api\include\golos\plugins\database_api\forward.hpp

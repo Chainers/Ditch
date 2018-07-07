@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -17,7 +16,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class GlobalPropertyObject : AbstractObject<GlobalPropertyObject>
+    public class GlobalPropertyObject
     {
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("next_available_vote_id")]
-        public UInt32 NextAvailableVoteId { get; set; }
+        public uint NextAvailableVoteId { get; set; }
 
         /// <summary>
         /// API name: active_committee_members

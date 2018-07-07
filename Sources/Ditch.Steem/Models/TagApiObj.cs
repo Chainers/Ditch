@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Core.Models;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
@@ -16,7 +17,7 @@ namespace Ditch.Steem.Models
 
         // bdType : uint128_t
         [JsonProperty("total_children_rshares2")]
-        public string TotalChildrenRshares2 { get; set; }
+        public UInt128 TotalChildrenRshares2 { get; set; }
 
         // bdType : asset
         [JsonProperty("total_payouts")]
@@ -36,7 +37,7 @@ namespace Ditch.Steem.Models
 
         // bdType : uint128 | = 0;
         [JsonProperty("trending")]
-        public string Trending { get; set; }
+        public UInt128 Trending { get; set; }
     }
 
 }

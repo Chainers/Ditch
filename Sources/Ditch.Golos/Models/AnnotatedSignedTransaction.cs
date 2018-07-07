@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// annotated_signed_transaction
     /// libraries\protocol\include\golos\protocol\transaction.hpp

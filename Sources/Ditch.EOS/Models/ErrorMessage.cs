@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -17,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("error_code")]
-        public UInt64 ErrorCode {get; set;}
+        public ulong ErrorCode {get; set;}
 
         /// <summary>
         /// API name: error_msg

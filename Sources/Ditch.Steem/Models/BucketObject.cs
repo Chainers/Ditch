@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -377,6 +376,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("estimated_hashpower")]
-        public string EstimatedHashpower {get; set;}
+        public UInt128 EstimatedHashpower {get; set;}
     }
 }

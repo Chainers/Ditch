@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Ditch.BitShares.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class ConnectionTest
     {
         /// <summary>

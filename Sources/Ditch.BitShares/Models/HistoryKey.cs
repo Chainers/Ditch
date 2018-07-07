@@ -1,7 +1,3 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -11,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\plugins\market_history\include\graphene\market_history\market_history_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class HistoryKey
+    public class HistoryKey
     {
 
         /// <summary>
@@ -36,6 +32,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("sequence")]
-        public Int64 Sequence { get; set; }
+        public long Sequence { get; set; }
     }
 }

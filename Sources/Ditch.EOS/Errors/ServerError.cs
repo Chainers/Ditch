@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
@@ -12,11 +11,11 @@ namespace Ditch.EOS.Errors
         private static readonly Regex ErrorJson = new Regex("(?<=^{\"[a-z_0-9]*\":\\[\").*(?=\"]}$)");
         private static readonly Regex ErrorJson2 = new Regex("(?<=^{\"[a-z_0-9]*\":\").*(?=\"}$)");
 
-        public HttpError(HttpStatusCode responseStatusCode, string content)
-            : base(ToMessage(responseStatusCode, content)) { }
+        public HttpError(string content)
+            : base(ToMessage(content)) { }
 
 
-        private static string ToMessage(HttpStatusCode responseStatusCode, string content)
+        private static string ToMessage(string content)
         {
             if (string.IsNullOrWhiteSpace(content))
                 return nameof(LocalizationKeys.EmptyResponseContent);

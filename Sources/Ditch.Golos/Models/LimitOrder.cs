@@ -1,8 +1,8 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// limit_order
     /// plugins\market_history\include\golos\plugins\market_history\market_history_objects.hpp

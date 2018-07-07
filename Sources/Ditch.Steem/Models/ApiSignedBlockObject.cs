@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// api_signed_block_object
     /// libraries\plugins\apis\block_api\include\steem\plugins\block_api\block_api_objects.hpp

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// delete_comment_operation
     /// libraries\protocol\include\steemit\protocol\steem_operations.hpp

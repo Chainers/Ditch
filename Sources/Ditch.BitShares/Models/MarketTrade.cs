@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.BitShares.Models
     /// libraries\app\include\graphene\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class MarketTrade
+    public class MarketTrade
     {
 
         /// <summary>
@@ -18,7 +17,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("sequence")]
-        public Int64 Sequence { get; set; }
+        public long Sequence { get; set; }
 
         /// <summary>
         /// API name: date

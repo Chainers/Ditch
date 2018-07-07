@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using Ditch.Steem.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.Steem.Tests.Apis

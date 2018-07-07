@@ -20,7 +20,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Price
+    public class Price
     {
 
         /// <summary>

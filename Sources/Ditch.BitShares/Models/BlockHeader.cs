@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BlockHeader
+    public class BlockHeader
     {
 
         /// <summary>

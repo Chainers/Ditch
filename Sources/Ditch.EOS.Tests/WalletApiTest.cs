@@ -13,7 +13,7 @@ namespace Ditch.EOS.Tests
     [TestFixture]
     public class WalletApiTest : BaseTest
     {
-        const string CreatePostActionName = "createpost";
+        private const string CreatePostActionName = "createpost";
 
         [Test]
         public async Task CreateTest()
@@ -28,7 +28,7 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task WalletImportKeyTest()
         {
-            var user = new UserInfo()
+            var user = new UserInfo
             {
                 Login = $"testname{DateTime.Now:yyyyMMddhhmmss}"
             };
@@ -146,7 +146,7 @@ namespace Ditch.EOS.Tests
                 {
                     UrlPhoto = "test_1_url",
                     AccountCreator = User.Login,
-                    IpfsHashPhoto = "test_1_hash",
+                    IpfsHashPhoto = "test_1_hash"
                     //ParentPost = 1
                 }
             };

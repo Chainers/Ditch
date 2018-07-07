@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// comment_operation
     /// </summary>

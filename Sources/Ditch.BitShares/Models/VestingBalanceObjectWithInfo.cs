@@ -1,15 +1,15 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// vesting_balance_object_with_info
     /// libraries\wallet\include\graphene\wallet\wallet.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class VestingBalanceObjectWithInfo : VestingBalanceObject
+    public class VestingBalanceObjectWithInfo : VestingBalanceObject
     {
 
 

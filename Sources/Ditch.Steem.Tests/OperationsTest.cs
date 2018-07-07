@@ -309,15 +309,6 @@ namespace Ditch.Steem.Tests
             Post(user.PostingKeys, false, op);
         }
 
-        [Test]
-        public void VerifyAuthorityFallTest()
-        {
-            var user = User;
-
-            var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, "StubLogin");
-            Post(user.PostingKeys, false, op);
-        }
-
         #endregion CustomJson
         #region CommentOptions
 
@@ -379,7 +370,7 @@ namespace Ditch.Steem.Tests
         //        SmtSetRuntimeParameters,
         //        SmtCreate,
         //#endif
-        /// virtual operations below this point
+        //// virtual operations below this point
         //FillConvertRequest,
         //AuthorReward,
         //CurationReward,

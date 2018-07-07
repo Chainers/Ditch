@@ -15,6 +15,6 @@ namespace Ditch.Golos.Models
         /// API name: incoming
         /// all
         /// </summary>
-        Incoming,
+        Incoming
     }
 }

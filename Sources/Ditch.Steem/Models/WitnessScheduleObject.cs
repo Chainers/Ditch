@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ditch.Core.Models;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
@@ -16,7 +17,7 @@ namespace Ditch.Steem.Models
 
         // bdType : uint128
         [JsonProperty("current_virtual_time")]
-        public string CurrentVirtualTime { get; set; }
+        public UInt128 CurrentVirtualTime { get; set; }
 
         // bdType : uint32_t | = 1;
         [JsonProperty("next_shuffle_block_num")]

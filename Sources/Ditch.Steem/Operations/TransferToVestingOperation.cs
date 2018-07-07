@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// This operation converts STEEM into VFS(Vesting Fund Shares) at the current exchange rate.With this operation it is possible to give another account vesting shares so that faucets can pre-fund new accounts with vesting shares.
     ///

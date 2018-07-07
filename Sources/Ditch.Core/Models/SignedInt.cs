@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
@@ -9,23 +8,23 @@ namespace Ditch.Core.Models
     [JsonConverter(typeof(CustomConverter))]
     public class SignedInt : ICustomSerializer, ICustomJson
     {
-        public Int32 Value { get; set; }
+        public int Value { get; set; }
 
 
         public SignedInt() { }
 
-        public SignedInt(Int32 value)
+        public SignedInt(int value)
         {
             Value = value;
         }
 
 
-        public static implicit operator Int32(SignedInt d)
+        public static implicit operator int(SignedInt d)
         {
             return d.Value;
         }
 
-        public static implicit operator SignedInt(Int32 d)
+        public static implicit operator SignedInt(int d)
         {
             return new SignedInt(d);
         }
@@ -35,7 +34,7 @@ namespace Ditch.Core.Models
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            Value = serializer.Deserialize<Int32>(reader);
+            Value = serializer.Deserialize<int>(reader);
         }
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)

@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
@@ -25,7 +24,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
 
         /// <summary>
         /// API name: sbd_interest_rate
@@ -33,7 +32,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("sbd_interest_rate")]
-        public UInt16 SbdInterestRate { get; set; }
+        public ushort SbdInterestRate { get; set; }
 
         /// <summary>
         /// API name: create_account_min_golos_fee
@@ -57,7 +56,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("create_account_delegation_time", NullValueHandling = NullValueHandling.Ignore)]
-        public UInt32 CreateAccountDelegationTime { get; set; }
+        public uint CreateAccountDelegationTime { get; set; }
 
         /// <summary>
         /// API name: min_delegation

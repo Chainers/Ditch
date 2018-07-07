@@ -1,7 +1,5 @@
-﻿using System;
-using Ditch.Core.Models;
+﻿using Ditch.Core.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Ditch.Golos.Models
 {

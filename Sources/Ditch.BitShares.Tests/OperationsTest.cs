@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.BitShares.Models;
-using Ditch.BitShares.Models.Operations;
+using Ditch.BitShares.Operations;
 using Ditch.Core.JsonRpc;
 using NUnit.Framework;
 using Base58 = Ditch.Core.Base58;
@@ -32,7 +31,7 @@ namespace Ditch.BitShares.Tests
 
             var op = new AccountCreateOperation
             {
-                Fee = new Asset()
+                Fee = new Asset
                 {
                     Amount = 100000,
                     AssetId = new AssetIdType(1, 3, 0)
@@ -41,10 +40,10 @@ namespace Ditch.BitShares.Tests
                 Referrer = user,
                 ReferrerPercent = 10000,
                 Name = name,
-                Options = new AccountOptions()
+                Options = new AccountOptions
                 {
-                    VotingAccount = new AccountIdType(1, 2, 5),
-                },
+                    VotingAccount = new AccountIdType(1, 2, 5)
+                }
             };
 
             var subWif = Base58.GetSubWif(name, pwif, "owner");

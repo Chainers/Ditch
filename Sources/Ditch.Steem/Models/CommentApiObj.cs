@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Models;
+﻿using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
@@ -74,7 +73,7 @@ namespace Ditch.Steem.Models
 
         // bdType : uint128_t
         [JsonProperty("children_rshares2")]
-        public string ChildrenRshares2 { get; set; }
+        public UInt128 ChildrenRshares2 { get; set; }
 
         // bdType : share_type
         [JsonProperty("net_rshares")]

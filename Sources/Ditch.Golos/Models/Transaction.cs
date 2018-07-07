@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -22,7 +21,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(1)]
         [JsonProperty("ref_block_num")]
-        public UInt16 RefBlockNum { get; set; }
+        public ushort RefBlockNum { get; set; }
 
         /// <summary>
         /// API name: ref_block_prefix
@@ -31,7 +30,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(2)]
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
 
         /// <summary>
         /// API name: expiration

@@ -1,7 +1,8 @@
+using Ditch.BitShares.Models;
 using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
-namespace Ditch.BitShares.Models.Operations
+namespace Ditch.BitShares.Operations
 {
     /**
      * @ingroup operations
@@ -16,7 +17,7 @@ namespace Ditch.BitShares.Models.Operations
     /// libraries\chain\include\graphene\chain\protocol\market.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class FillOrderOperation : BaseOperation
+    public class FillOrderOperation : BaseOperation
     {
         public override OperationType Type => OperationType.FillOrder;
 

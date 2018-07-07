@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -20,7 +19,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\committee_member_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CommitteeMemberObject : AbstractObject<CommitteeMemberObject>
+    public class CommitteeMemberObject
     {
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_votes")]
-        public UInt64 TotalVotes { get; set; }
+        public ulong TotalVotes { get; set; }
 
         /// <summary>
         /// API name: url

@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -34,7 +33,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("seconds")]
-        public UInt32 Seconds {get; set;}
+        public uint Seconds {get; set;}
 
         /// <summary>
         /// API name: high_steem

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -25,7 +24,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_irreversible_block")]
-        public UInt32 LastIrreversibleBlock { get; set; }
+        public uint LastIrreversibleBlock { get; set; }
 
         /// <summary>
         /// API name: time_limit_exceeded_error

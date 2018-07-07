@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_transaction
     /// libraries\chain\include\eosio\chain\transaction.hpp

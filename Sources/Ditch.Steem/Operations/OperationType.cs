@@ -57,7 +57,7 @@
         ClaimRewardBalance,
         DelegateVestingShares,
         AccountCreateWithDelegation,
-        WitnessSetProperties,
+        WitnessSetProperties
 
         //# ifdef STEEM_ENABLE_SMT
         //        /// SMT operations
@@ -71,7 +71,7 @@
         //        SmtSetRuntimeParameters,
         //        SmtCreate,
         //#endif
-        /// virtual operations below this point
+        //// virtual operations below this point
         //FillConvertRequest,
         //AuthorReward,
         //CurationReward,

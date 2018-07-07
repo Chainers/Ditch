@@ -19,6 +19,7 @@ namespace Ditch.Golos.Operations
      *  producing blocks.
      */
 
+    /// <inheritdoc />
     /// <summary>
     /// witness_update_operation
     /// libraries\protocol\include\golos\protocol\steem_operations.hpp

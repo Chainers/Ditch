@@ -7,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\wallet\include\graphene\wallet\wallet.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class OperationDetailEx
+    public class OperationDetailEx
     {
 
         /// <summary>

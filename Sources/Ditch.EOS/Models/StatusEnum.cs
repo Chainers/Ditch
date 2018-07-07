@@ -39,6 +39,6 @@ namespace Ditch.EOS.Models
         /// API name: expired
         /// 4 ///&lt; transaction expired and storage space refuned to user
         /// </summary>
-        Expired,
+        Expired
     }
 }

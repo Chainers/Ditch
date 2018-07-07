@@ -11,7 +11,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\chain_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ChainPropertyObject : AbstractObject<ChainPropertyObject>
+    public class ChainPropertyObject
     {
 
         /// <summary>

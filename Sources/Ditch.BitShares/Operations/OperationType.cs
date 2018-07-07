@@ -1,4 +1,4 @@
-﻿namespace Ditch.BitShares.Models.Operations
+﻿namespace Ditch.BitShares.Operations
 {
     /// <summary>
     /// https://github.com/bitshares/bitshares-core/blob/master/libraries/chain/include/graphene/chain/protocol/operations.hpp

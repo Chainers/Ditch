@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -17,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("global_action_seq")]
-        public UInt64 GlobalActionSeq { get; set; }
+        public ulong GlobalActionSeq { get; set; }
 
         /// <summary>
         /// API name: account_action_seq
@@ -25,7 +24,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("account_action_seq")]
-        public Int32 AccountActionSeq { get; set; }
+        public int AccountActionSeq { get; set; }
 
         /// <summary>
         /// API name: block_num
@@ -33,7 +32,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_num")]
-        public UInt32 BlockNum { get; set; }
+        public uint BlockNum { get; set; }
 
         /// <summary>
         /// API name: block_time

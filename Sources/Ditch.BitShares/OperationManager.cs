@@ -4,7 +4,7 @@ using System.Threading;
 using Cryptography.ECDSA;
 using Ditch.BitShares.JsonRpc;
 using Ditch.BitShares.Models;
-using Ditch.BitShares.Models.Operations;
+using Ditch.BitShares.Operations;
 using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
@@ -174,7 +174,7 @@ namespace Ditch.BitShares
             var data = Sha256Manager.GetHash(msg);
 
             transaction.Signatures = new string[userPrivateKeys.Count];
-            for (int i = 0; i < userPrivateKeys.Count; i++)
+            for (var i = 0; i < userPrivateKeys.Count; i++)
             {
                 token.ThrowIfCancellationRequested();
                 var userPrivateKey = userPrivateKeys[i];

@@ -90,7 +90,7 @@ namespace Ditch.EOS
                 response.StatusCode != HttpStatusCode.Created &&
                 response.StatusCode != HttpStatusCode.Accepted)
             {
-                result.Error = new HttpError(response.StatusCode, content);
+                result.Error = new HttpError(content);
                 return result;
             }
 
@@ -146,7 +146,7 @@ namespace Ditch.EOS
             var packedTrx = MessageSerializer.Serialize<SignedTransaction>(transaction);
 
             var chainId = Hex.HexToBytes(info.ChainId);
-            byte[] msg = new byte[chainId.Length + packedTrx.Length + 32];
+            var msg = new byte[chainId.Length + packedTrx.Length + 32];
             Array.Copy(chainId, msg, chainId.Length);
             Array.Copy(packedTrx, 0, msg, chainId.Length, packedTrx.Length);
             var sha256 = Sha256Manager.GetHash(msg);
@@ -160,7 +160,7 @@ namespace Ditch.EOS
                 transaction.Signatures[i] = sigHex;
             }
 
-            return new PackedTransaction()
+            return new PackedTransaction
             {
                 PackedTrx = Hex.ToString(packedTrx),
                 Signatures = transaction.Signatures,

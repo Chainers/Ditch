@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -21,7 +20,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("version")]
-        public UInt32 Version { get; set; }
+        public uint Version { get; set; }
 
         /// <summary>
         /// API name: producers

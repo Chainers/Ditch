@@ -1,7 +1,3 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -11,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\app\include\graphene\app\api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class HistoryOperationDetail
+    public class HistoryOperationDetail
     {
 
         /// <summary>
@@ -20,7 +16,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("total_count")]
-        public UInt32 TotalCount { get; set; }
+        public uint TotalCount { get; set; }
 
         /// <summary>
         /// API name: operation_history_objs

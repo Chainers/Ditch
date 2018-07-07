@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 
@@ -20,7 +19,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_account_history_return_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetAccountHistoryReturnType> GetAccountHistory(string account, UInt64 from, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<GetAccountHistoryReturnType> GetAccountHistory(string account, ulong from, uint limit, CancellationToken token)
         {
             return CustomGetRequest<GetAccountHistoryReturnType>(KnownApiNames.AccountHistory, "get_account_history", new object[] { account, from, limit }, token);
         }

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -22,7 +21,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: enum_type</returns>
         [JsonProperty("status")]
-        //public EnumType<byte, StatusEnum> Status { get; set; }
         public object Status { get; set; }
 
 
@@ -32,7 +30,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("cpu_usage_us")]
-        public UInt32 CpuUsageUs { get; set; }
+        public uint CpuUsageUs { get; set; }
 
         /// <summary>
         /// API name: net_usage_words
@@ -40,6 +38,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: unsigned_int</returns>
         [JsonProperty("net_usage_words")]
-        public UInt32 NetUsageWords { get; set; }
+        public uint NetUsageWords { get; set; }
     }
 }

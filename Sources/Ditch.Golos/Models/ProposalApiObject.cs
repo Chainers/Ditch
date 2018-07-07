@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Ditch.Golos.Operations;
 using Newtonsoft.Json;

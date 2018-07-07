@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// annotated_signed_transaction
     /// libraries\protocol\include\steemit\protocol\transaction.hpp

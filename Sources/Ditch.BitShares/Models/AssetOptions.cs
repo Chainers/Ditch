@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -14,7 +13,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\asset_ops.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetOptions
+    public class AssetOptions
     {
 
         /// The maximum supply of this asset which may exist at any given time. This can be as large as
@@ -38,7 +37,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("market_fee_percent")]
-        public UInt16 MarketFeePercent { get; set; }
+        public ushort MarketFeePercent { get; set; }
 
         /// Market fees calculated as @ref market_fee_percent of the traded volume are capped to this value
 
@@ -59,7 +58,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("issuer_permissions")]
-        public UInt16 IssuerPermissions { get; set; }
+        public ushort IssuerPermissions { get; set; }
 
         /// The currently active flags on this permission. See @ref asset_issuer_permission_flags
 
@@ -69,7 +68,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("flags")]
-        public UInt16 Flags { get; set; }
+        public ushort Flags { get; set; }
 
 
         /// When a non-core asset is used to pay a fee, the blockchain must convert that asset to core asset in

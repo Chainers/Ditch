@@ -16,12 +16,13 @@ namespace Ditch.BitShares.Models
      *  should be returned.
      */
 
+    /// <inheritdoc />
     /// <summary>
     /// processed_transaction
     /// libraries\chain\include\graphene\chain\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ProcessedTransaction : SignedTransaction
+    public class ProcessedTransaction : SignedTransaction
     {
 
         /// <summary>

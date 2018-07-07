@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Ditch.EOS.Models;
 using Ditch.EOS.Tests.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.EOS.Tests
@@ -10,7 +9,7 @@ namespace Ditch.EOS.Tests
     [TestFixture]
     public class ChainApiTest : BaseTest
     {
-        const string CreatePostActionName = "createpost";
+        private const string CreatePostActionName = "createpost";
 
         [Test]
         public async Task GetInfoTest()
@@ -61,11 +60,11 @@ namespace Ditch.EOS.Tests
         [Test]
         public async Task GetTableRowsTest()
         {
-            var tableRowsParams = new GetTableRowsParams()
+            var tableRowsParams = new GetTableRowsParams
             {
                 Scope = "test",
                 Code = "test",
-                Table = "posts",
+                Table = "posts"
                 //Json = true,
                 //LowerBound = "0",
                 //UpperBound = "-1",
@@ -87,7 +86,7 @@ namespace Ditch.EOS.Tests
                 {
                     UrlPhoto = "test_1_url",
                     AccountCreator = User.Login,
-                    IpfsHashPhoto = "test_1_hash",
+                    IpfsHashPhoto = "test_1_hash"
                     //ParentPost = 1
                 }
             };
@@ -121,7 +120,7 @@ namespace Ditch.EOS.Tests
                 {
                     UrlPhoto = "test_1_url",
                     AccountCreator = User.Login,
-                    IpfsHashPhoto = "test_1_hash",
+                    IpfsHashPhoto = "test_1_hash"
                     //ParentPost = 1
                 }
             };

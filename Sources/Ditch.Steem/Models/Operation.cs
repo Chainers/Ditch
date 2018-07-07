@@ -131,7 +131,7 @@ namespace Ditch.Steem.Models
                     //        SmtSetRuntimeParameters,
                     //        SmtCreate,
                     //#endif
-                    /// virtual operations below this point
+                    //// virtual operations below this point
                     //FillConvertRequest,
                     //AuthorReward,
                     //CurationReward,

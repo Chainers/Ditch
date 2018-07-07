@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -15,7 +14,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\proposal_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ProposalObject : AbstractObject<ProposalObject>
+    public class ProposalObject
     {
 
         /// <summary>

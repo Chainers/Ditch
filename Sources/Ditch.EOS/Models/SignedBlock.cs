@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_block
     /// libraries\chain\include\eosio\chain\block.hpp
@@ -25,6 +26,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: extensions_type</returns>
         [JsonProperty("block_extensions")]
-        public Tuple<UInt16, char[]>[] BlockExtensions { get; set; }
+        public Tuple<ushort, char[]>[] BlockExtensions { get; set; }
     }
 }

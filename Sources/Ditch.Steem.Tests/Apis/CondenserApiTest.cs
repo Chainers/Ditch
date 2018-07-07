@@ -1,6 +1,5 @@
 using System.Threading;
 using Ditch.Steem.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.Steem.Tests.Apis
@@ -47,12 +46,11 @@ namespace Ditch.Steem.Tests.Apis
         [Test]
         public void get_block()
         {
-            var args = new GetBlockArgs()
+            var args = new GetBlockArgs
             {
                 BlockNum = 22054347
             };
             var resp = Api.GetBlock2(args, CancellationToken.None);
-            var aargs = new object[] { args.BlockNum };
             TestPropetries(resp);
         }
         //  "condenser_api.get_block_header",

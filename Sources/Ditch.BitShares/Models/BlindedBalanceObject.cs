@@ -14,7 +14,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\confidential_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BlindedBalanceObject : AbstractObject<BlindedBalanceObject>
+    public class BlindedBalanceObject
     {
 
         /// <summary>

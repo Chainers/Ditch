@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 
@@ -86,9 +85,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: uint64_t</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<UInt64> GetWitnessCount(CancellationToken token)
+        public JsonRpcResponse<ulong> GetWitnessCount(CancellationToken token)
         {
-            return CustomGetRequest<UInt64>(KnownApiNames.WitnessApi, "get_witness_count", token);
+            return CustomGetRequest<ulong>(KnownApiNames.WitnessApi, "get_witness_count", token);
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: witness_api_object an array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject[]> GetWitnessesByVote(string from, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<WitnessApiObject[]> GetWitnessesByVote(string from, uint limit, CancellationToken token)
         {
             return CustomGetRequest<WitnessApiObject[]>(KnownApiNames.WitnessApi, "get_witnesses_by_vote", new object[] { from, limit }, token);
         }
@@ -145,7 +144,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type Map of witness names to corresponding IDs</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> LookupWitnessAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<string[]> LookupWitnessAccounts(string lowerBoundName, uint limit, CancellationToken token)
         {
             return CustomGetRequest<string[]>(KnownApiNames.WitnessApi, "lookup_witness_accounts", new object[] { lowerBoundName, limit }, token);
         }

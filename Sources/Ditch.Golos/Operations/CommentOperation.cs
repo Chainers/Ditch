@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// comment_operation
     /// libraries\protocol\include\golos\protocol\operations\comment_operations.hpp

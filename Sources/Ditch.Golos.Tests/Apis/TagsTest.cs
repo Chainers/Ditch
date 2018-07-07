@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Ditch.Golos.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis
@@ -9,12 +8,10 @@ namespace Ditch.Golos.Tests.Apis
     [TestFixture]
     public class TagsTest : BaseTest
     {
-        private string ApiName = KnownApiNames.Tags;
-
         [Test]
         public void get_discussions_by_trending()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 1024,
                 Limit = 2
@@ -26,10 +23,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_created()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
 
             var resp = Api.GetDiscussionsByCreated(query, CancellationToken.None);
@@ -39,10 +36,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_active()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByActive(query, CancellationToken.None);
             TestPropetries(resp);
@@ -51,10 +48,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_cashout()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByCashout(query, CancellationToken.None);
             TestPropetries(resp);
@@ -63,10 +60,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_payout()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByPayout(query, CancellationToken.None);
             TestPropetries(resp);
@@ -75,10 +72,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_votes()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByVotes(query, CancellationToken.None);
             TestPropetries(resp);
@@ -87,10 +84,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_hot()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByHot(query, CancellationToken.None);
             TestPropetries(resp);
@@ -99,7 +96,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_feed()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
                 Limit = 2,
@@ -112,11 +109,11 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_blog()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
                 Limit = 2,
-                SelectAuthors = new[] { User.Login },
+                SelectAuthors = new[] { User.Login }
             };
             var resp = Api.GetDiscussionsByBlog(query, CancellationToken.None);
             TestPropetries(resp);
@@ -125,7 +122,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_comments()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
                 Limit = 2,
@@ -138,10 +135,10 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_promoted()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
-                Limit = 2,
+                Limit = 2
             };
             var resp = Api.GetDiscussionsByPromoted(query, CancellationToken.None);
             TestPropetries(resp);
@@ -160,7 +157,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void get_discussions_by_children()
         {
-            var query = new DiscussionQuery()
+            var query = new DiscussionQuery
             {
                 TruncateBody = 100,
                 Limit = 2

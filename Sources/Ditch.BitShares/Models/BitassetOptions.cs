@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -14,7 +13,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\asset_ops.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BitassetOptions
+    public class BitassetOptions
     {
 
         /// Time before a price feed expires
@@ -25,7 +24,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("feed_lifetime_sec")]
-        public UInt32 FeedLifetimeSec { get; set; }
+        public uint FeedLifetimeSec { get; set; }
 
         /// Minimum number of unexpired feeds required to extract a median feed from
 
@@ -45,7 +44,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("force_settlement_delay_sec")]
-        public UInt32 ForceSettlementDelaySec { get; set; }
+        public uint ForceSettlementDelaySec { get; set; }
 
         /// This is the percent to adjust the feed price in the short's favor in the event of a forced settlement
 
@@ -55,7 +54,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("force_settlement_offset_percent")]
-        public UInt16 ForceSettlementOffsetPercent { get; set; }
+        public ushort ForceSettlementOffsetPercent { get; set; }
 
         /// Force settlement volume can be limited such that only a certain percentage of the total existing supply
         /// of the asset may be force-settled within any given chain maintenance interval. This field stores the
@@ -69,7 +68,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("maximum_force_settlement_volume")]
-        public UInt16 MaximumForceSettlementVolume { get; set; }
+        public ushort MaximumForceSettlementVolume { get; set; }
 
         /// This speicifies which asset type is used to collateralize short sales
         /// This field may only be updated if the current supply of the asset is zero.

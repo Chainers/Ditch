@@ -1,8 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_block_header
     /// libraries\protocol\include\golos\protocol\block_header.hpp

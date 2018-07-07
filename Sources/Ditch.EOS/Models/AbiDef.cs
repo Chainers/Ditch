@@ -65,6 +65,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: extensions_type</returns>
         [JsonProperty("abi_extensions")]
-        public Tuple<UInt16, string>[] AbiExtensions { get; set; }
+        public Tuple<ushort, string>[] AbiExtensions { get; set; }
     }
 }

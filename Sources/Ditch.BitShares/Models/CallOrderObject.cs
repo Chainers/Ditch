@@ -15,7 +15,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\market_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class CallOrderObject : AbstractObject<CallOrderObject>
+    public class CallOrderObject
     {
 
         /// <summary>

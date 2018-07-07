@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -34,7 +33,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("head_block_num")]
-        public UInt32 HeadBlockNum {get; set;}
+        public uint HeadBlockNum {get; set;}
 
         /// <summary>
         /// API name: last_irreversible_block_num
@@ -42,7 +41,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_irreversible_block_num")]
-        public UInt32 LastIrreversibleBlockNum {get; set;}
+        public uint LastIrreversibleBlockNum {get; set;}
 
         /// <summary>
         /// API name: last_irreversible_block_id
@@ -82,7 +81,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("virtual_block_cpu_limit")]
-        public UInt64 VirtualBlockCpuLimit {get; set;}
+        public ulong VirtualBlockCpuLimit {get; set;}
 
         /// <summary>
         /// API name: virtual_block_net_limit
@@ -90,7 +89,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("virtual_block_net_limit")]
-        public UInt64 VirtualBlockNetLimit {get; set;}
+        public ulong VirtualBlockNetLimit {get; set;}
 
         /// <summary>
         /// API name: block_cpu_limit
@@ -98,7 +97,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("block_cpu_limit")]
-        public UInt64 BlockCpuLimit {get; set;}
+        public ulong BlockCpuLimit {get; set;}
 
         /// <summary>
         /// API name: block_net_limit
@@ -106,6 +105,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("block_net_limit")]
-        public UInt64 BlockNetLimit {get; set;}
+        public ulong BlockNetLimit {get; set;}
     }
 }

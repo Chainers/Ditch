@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
@@ -10,9 +9,9 @@ namespace Ditch.EOS.Models
         public string Id { get; set; }
 
         [JsonProperty("block_num")]
-        public UInt32 BlockNum { get; set; }
+        public uint BlockNum { get; set; }
 
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
     }
 }

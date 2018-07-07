@@ -27,6 +27,6 @@ namespace Ditch.Golos.Models
         /// API name: ignore
         /// 
         /// </summary>
-        Ignore,
+        Ignore
     }
 }

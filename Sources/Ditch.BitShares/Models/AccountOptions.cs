@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
@@ -11,7 +10,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\account.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountOptions
+    public class AccountOptions
     {
 
         /// The memo key is the key this account will typically use to encrypt/sign transaction memos and other non-
@@ -51,7 +50,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(30)]
         [JsonProperty("num_witness")]
-        public UInt16 NumWitness { get; set; } = 0;
+        public ushort NumWitness { get; set; }
 
         /// The number of active committee members this account votes the blockchain should appoint
         /// Must not exceed the actual number of committee members voted for in @ref votes
@@ -63,7 +62,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(40)]
         [JsonProperty("num_committee")]
-        public UInt16 NumCommittee { get; set; } = 0;
+        public ushort NumCommittee { get; set; }
 
         /// This is the list of vote IDs this account votes for. The weight of these votes is determined by this
         /// account's balance of core asset.

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
@@ -17,7 +16,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\asset_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetBitassetDataObject : AbstractObject<AssetBitassetDataObject>
+    public class AssetBitassetDataObject
     {
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace Ditch.BitShares.Models
         /// API name: feeds
         /// 
         /// </summary>
-        /// <returns>API type: flat_map<account_id_type, pair<time_point_sec,price_feed>> </returns>
+        /// <returns>API type: flat_map&lt;account_id_type, pair&lt;time_point_sec,price_feed>> </returns>
         [JsonProperty("feeds")]
         public MapContainer<AccountIdType, KeyValuePair<TimePointSec, PriceFeed>> Feeds { get; set; }
 

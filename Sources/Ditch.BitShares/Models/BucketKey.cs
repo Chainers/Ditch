@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -9,7 +8,7 @@ namespace Ditch.BitShares.Models
     /// libraries\plugins\market_history\include\graphene\market_history\market_history_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BucketKey
+    public class BucketKey
     {
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("seconds")]
-        public UInt32 Seconds { get; set; }
+        public uint Seconds { get; set; }
 
         /// <summary>
         /// API name: open

@@ -50,7 +50,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("total_missed")]
-        public UInt32 TotalMissed {get; set;}
+        public uint TotalMissed {get; set;}
 
         /// <summary>
         /// API name: last_aslot
@@ -58,7 +58,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("last_aslot")]
-        public UInt64 LastAslot {get; set;}
+        public ulong LastAslot {get; set;}
 
         /// <summary>
         /// API name: last_confirmed_block_num
@@ -66,7 +66,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("last_confirmed_block_num")]
-        public UInt64 LastConfirmedBlockNum {get; set;}
+        public ulong LastConfirmedBlockNum {get; set;}
 
         /// <summary>
         /// API name: pow_worker
@@ -74,7 +74,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("pow_worker")]
-        public UInt64 PowWorker {get; set;}
+        public ulong PowWorker {get; set;}
 
         /// <summary>
         /// API name: signing_key
@@ -122,7 +122,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("virtual_last_update")]
-        public string VirtualLastUpdate {get; set;}
+        public UInt128 VirtualLastUpdate {get; set;}
 
         /// <summary>
         /// API name: virtual_position
@@ -130,7 +130,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("virtual_position")]
-        public string VirtualPosition {get; set;}
+        public UInt128 VirtualPosition {get; set;}
 
         /// <summary>
         /// API name: virtual_scheduled_time
@@ -138,7 +138,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("virtual_scheduled_time")]
-        public string VirtualScheduledTime {get; set;}
+        public UInt128 VirtualScheduledTime {get; set;}
 
         /// <summary>
         /// API name: last_work

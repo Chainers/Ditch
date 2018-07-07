@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Cryptography.ECDSA;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
@@ -43,14 +42,14 @@ namespace Ditch.EOS.Models
             stream.Write(buf, 0, buf.Length);
         }
 
-        public static UInt64 StringToName(string str)
+        public static ulong StringToName(string str)
         {
             var len = str.Length;
-            UInt64 value = 0;
+            ulong value = 0;
 
             for (var i = 0; i <= 12; ++i)
             {
-                UInt64 c = 0;
+                ulong c = 0;
                 if (i < len && i <= 12)
                     c = CharToSymbol(str[i]);
 
@@ -70,12 +69,12 @@ namespace Ditch.EOS.Models
             return value;
         }
 
-        public static UInt64 CharToSymbol(char c)
+        public static ulong CharToSymbol(char c)
         {
             if (c >= 'a' && c <= 'z')
-                return (UInt64)(c - 'a') + 6;
+                return (ulong)(c - 'a') + 6;
             if (c >= '1' && c <= '5')
-                return (UInt64)(c - '1') + 1;
+                return (ulong)(c - '1') + 1;
             return 0;
         }
 

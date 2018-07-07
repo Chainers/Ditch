@@ -24,6 +24,7 @@ namespace Ditch.Core.Errors
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Default constructor of class
         /// </summary>

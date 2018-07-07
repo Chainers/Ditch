@@ -15,7 +15,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\confidential.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class StealthConfirmation
+    public class StealthConfirmation
     {
 
         /// <summary>

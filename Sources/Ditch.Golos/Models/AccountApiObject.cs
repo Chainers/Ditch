@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -170,7 +169,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("comment_count")]
-        public UInt32 CommentCount {get; set;}
+        public uint CommentCount {get; set;}
 
         /// <summary>
         /// API name: lifetime_vote_count
@@ -178,7 +177,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("lifetime_vote_count")]
-        public UInt32 LifetimeVoteCount {get; set;}
+        public uint LifetimeVoteCount {get; set;}
 
         /// <summary>
         /// API name: post_count
@@ -186,7 +185,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("post_count")]
-        public UInt32 PostCount {get; set;}
+        public uint PostCount {get; set;}
 
         /// <summary>
         /// API name: can_vote
@@ -202,7 +201,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("voting_power")]
-        public UInt16 VotingPower {get; set;}
+        public ushort VotingPower {get; set;}
 
         /// <summary>
         /// API name: last_vote_time
@@ -242,7 +241,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("sbd_seconds")]
-        public string SbdSeconds {get; set;}
+        public UInt128 SbdSeconds {get; set;}
 
         /// <summary>
         /// API name: sbd_seconds_last_update
@@ -274,7 +273,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("savings_sbd_seconds")]
-        public string SavingsSbdSeconds {get; set;}
+        public UInt128 SavingsSbdSeconds {get; set;}
 
         /// <summary>
         /// API name: savings_sbd_seconds_last_update
@@ -378,7 +377,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("withdraw_routes")]
-        public UInt16 WithdrawRoutes {get; set;}
+        public ushort WithdrawRoutes {get; set;}
 
         /// <summary>
         /// API name: proxied_vsf_votes
@@ -394,7 +393,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("witnesses_voted_for")]
-        public UInt16 WitnessesVotedFor {get; set;}
+        public ushort WitnessesVotedFor {get; set;}
 
         /// <summary>
         /// API name: average_bandwidth

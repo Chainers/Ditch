@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using Ditch.Core.Models;
 using NUnit.Framework;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Ditch.Core.Tests
 {
@@ -28,27 +27,27 @@ namespace Ditch.Core.Tests
             var dt = DateTime.Today;
             var tps = new TimePointSec(dt);
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 tps.Value = tps.Value.AddMilliseconds(10);
                 tps.WriteJson(jws, null);
             }
-            for (int i = 0; i < 60; i++)
+            for (var i = 0; i < 60; i++)
             {
                 tps.Value = tps.Value.AddSeconds(1);
                 tps.WriteJson(jws, null);
             }
-            for (int i = 0; i < 60; i++)
+            for (var i = 0; i < 60; i++)
             {
                 tps.Value = tps.Value.AddMinutes(1);
                 tps.WriteJson(jws, null);
             }
-            for (int i = 0; i < 24; i++)
+            for (var i = 0; i < 24; i++)
             {
                 tps.Value = tps.Value.AddDays(1);
                 tps.WriteJson(jws, null);
             }
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
                 tps.Value = tps.Value.AddMonths(1);
                 tps.WriteJson(jws, null);

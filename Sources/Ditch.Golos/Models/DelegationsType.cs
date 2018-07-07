@@ -15,6 +15,6 @@ namespace Ditch.Golos.Models
         /// API name: delegated
         /// 
         /// </summary>
-        Delegated,
+        Delegated
     }
 }

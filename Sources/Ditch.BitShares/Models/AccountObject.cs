@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -18,7 +17,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\account_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountObject : AbstractObject<AccountObject>
+    public class AccountObject
     {
         [JsonProperty("id")]
         public AccountIdType Id { get; set; }
@@ -97,7 +96,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("network_fee_percentage")]
-        public UInt16 NetworkFeePercentage { get; set; }
+        public ushort NetworkFeePercentage { get; set; }
 
         /// Percentage of fee which should go to lifetime referrer.
 
@@ -107,7 +106,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("lifetime_referrer_fee_percentage")]
-        public UInt16 LifetimeReferrerFeePercentage { get; set; }
+        public ushort LifetimeReferrerFeePercentage { get; set; }
 
         /// Percentage of referral rewards (leftover fee after paying network and lifetime referrer) which should go
         /// to referrer. The remainder of referral rewards goes to the registrar.
@@ -118,7 +117,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("referrer_rewards_percentage")]
-        public UInt16 ReferrerRewardsPercentage { get; set; }
+        public ushort ReferrerRewardsPercentage { get; set; }
 
 
         /// The account's name. This name must be unique among all account names on the graph. May not be empty.

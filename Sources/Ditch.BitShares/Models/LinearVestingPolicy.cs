@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -18,7 +17,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\vesting_balance_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class LinearVestingPolicy
+    public class LinearVestingPolicy
     {
 
         /// This is the time at which funds begin vesting.
@@ -39,7 +38,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("vesting_cliff_seconds")]
-        public UInt32 VestingCliffSeconds { get; set; }
+        public uint VestingCliffSeconds { get; set; }
 
         /// Duration of the vesting period, in seconds. Must be greater than 0 and greater than vesting_cliff_seconds.
 
@@ -49,7 +48,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("vesting_duration_seconds")]
-        public UInt32 VestingDurationSeconds { get; set; }
+        public uint VestingDurationSeconds { get; set; }
 
         /// The total amount of asset to vest.
 

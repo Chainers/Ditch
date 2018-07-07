@@ -1,7 +1,5 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Core.Models;
-using Ditch.Steem.Operations;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models

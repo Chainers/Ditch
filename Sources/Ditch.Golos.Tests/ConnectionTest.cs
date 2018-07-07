@@ -32,6 +32,7 @@ namespace Ditch.Golos.Tests
             Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
         }
 
+        [Ignore("LongRuningTest")]
         [Test]
         public void HttpsNodeTest()
         {

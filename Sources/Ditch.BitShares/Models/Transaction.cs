@@ -1,5 +1,4 @@
-using System;
-using Ditch.BitShares.Models.Operations;
+using Ditch.BitShares.Operations;
 using Ditch.Core.Attributes;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
@@ -44,7 +43,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Transaction
+    public class Transaction
     {
         [MessageOrder(10)]
         public byte[] ChainId { get; set; } = new byte[0]; //64
@@ -61,7 +60,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(20)]
         [JsonProperty("ref_block_num")]
-        public UInt16 RefBlockNum { get; set; }
+        public ushort RefBlockNum { get; set; }
 
         /**
          * The first non-block-number 32-bits of the reference block ID. Recall that block IDs have 32 bits of block
@@ -76,7 +75,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(20)]
         [JsonProperty("ref_block_prefix")]
-        public UInt32 RefBlockPrefix { get; set; }
+        public uint RefBlockPrefix { get; set; }
 
 
         /**

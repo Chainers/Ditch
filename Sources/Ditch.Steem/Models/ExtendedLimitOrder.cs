@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// extended_limit_order
     /// libraries\app\include\steemit\app\state.hpp

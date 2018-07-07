@@ -2,12 +2,13 @@ using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_block_with_info
     /// libraries\wallet\include\graphene\wallet\wallet.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockWithInfo : SignedBlock
+    public class SignedBlockWithInfo : SignedBlock
     {
 
         /// <summary>

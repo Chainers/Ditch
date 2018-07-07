@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using Ditch.Core;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Ditch.Core.Models;
@@ -14,7 +12,7 @@ namespace Ditch.BitShares.Models
     /// </summary>
     [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ObjectId : ICustomJson, ICustomSerializer
+    public class ObjectId : ICustomJson, ICustomSerializer
     {
         /// <summary>
         /// API name: space_id
@@ -40,7 +38,7 @@ namespace Ditch.BitShares.Models
 
         public ObjectId() { }
 
-        public ObjectId(byte spaceId, byte typeId, UInt32 instance)
+        public ObjectId(byte spaceId, byte typeId, uint instance)
         {
             SpaceId = spaceId;
             TypeId = typeId;

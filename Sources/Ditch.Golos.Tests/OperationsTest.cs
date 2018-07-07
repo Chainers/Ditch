@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using Cryptography.ECDSA;
@@ -269,16 +268,7 @@ namespace Ditch.Golos.Tests
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, user.Login);
             Post(user.PostingKeys, false, op);
         }
-
-        [Test]
-        public void VerifyAuthorityFallTest()
-        {
-            var user = User;
-
-            var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, "StubLogin");
-            Post(user.PostingKeys, false, op);
-        }
-
+        
         #endregion CustomJson
         #region CommentOptions
 
@@ -348,11 +338,11 @@ namespace Ditch.Golos.Tests
         [Test]
         public void ProposalUpdateOperationTest()
         {
-            var op = new ProposalUpdateOperation()
+            var op = new ProposalUpdateOperation
             {
                 Title = "test title",
                 Author = User.Login,
-                PostingApprovalsToAdd = new[] { User.Login },
+                PostingApprovalsToAdd = new[] { User.Login }
 
             };
 
@@ -391,11 +381,11 @@ namespace Ditch.Golos.Tests
         [TestCase("0.12345 SBD", 12345, 5, "SBD")]
         public void ParseTestTest(string test, long value, byte precision, string currency)
         {
-            var asset = new Asset(test, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator, CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator);
-            Assert.IsTrue(asset.Value == value);
-            Assert.IsTrue(asset.Precision == precision);
+            var asset = new Asset(test);
+            Assert.IsTrue(asset.Amount == value);
+            Assert.IsTrue(asset.Decimals == precision);
             Assert.IsTrue(asset.Currency == currency);
-            Assert.IsTrue(test.Equals(asset.ToString(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator)));
+            Assert.IsTrue(test.Equals(asset.ToString()));
         }
     }
 }

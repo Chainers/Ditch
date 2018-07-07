@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -25,7 +24,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("follower_count")]
-        public UInt32 FollowerCount {get; set;}
+        public uint FollowerCount {get; set;}
 
         /// <summary>
         /// API name: following_count
@@ -33,7 +32,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("following_count")]
-        public UInt32 FollowingCount {get; set;}
+        public uint FollowingCount {get; set;}
 
         /// <summary>
         /// API name: limit
@@ -41,6 +40,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public UInt32 Limit {get; set;}
+        public uint Limit {get; set;}
     }
 }

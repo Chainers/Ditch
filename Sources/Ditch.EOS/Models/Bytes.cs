@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Cryptography.ECDSA;
 using Ditch.Core.Converters;
@@ -40,7 +39,7 @@ namespace Ditch.EOS.Models
         public void Serializer(Stream stream, IMessageSerializer serializeHelper)
         {
             var buf = Hex.HexToBytes(Value);
-            var len = new UnsignedInt((UInt32)buf.Length);
+            var len = new UnsignedInt((uint)buf.Length);
             len.Serializer(stream, serializeHelper);
             stream.Write(buf, 0, buf.Length);
         }

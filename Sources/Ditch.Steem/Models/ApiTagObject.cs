@@ -1,3 +1,4 @@
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
@@ -56,6 +57,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128</returns>
         [JsonProperty("trending")]
-        public string Trending {get; set;}
+        public UInt128 Trending {get; set;}
     }
 }

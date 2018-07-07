@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -8,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\wallet\include\graphene\wallet\wallet.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountHistoryOperationDetail
+    public class AccountHistoryOperationDetail
     {
 
         /// <summary>
@@ -17,7 +16,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("total_count")]
-        public UInt32 TotalCount { get; set; }
+        public uint TotalCount { get; set; }
 
         /// <summary>
         /// API name: result_count
@@ -25,7 +24,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("result_count")]
-        public UInt32 ResultCount { get; set; }
+        public uint ResultCount { get; set; }
 
         /// <summary>
         /// API name: details

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -8,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\witness_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WitnessObject : AbstractObject<WitnessObject>
+    public class WitnessObject
     {
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("last_aslot")]
-        public UInt64 LastAslot { get; set; }
+        public ulong LastAslot { get; set; }
 
         /// <summary>
         /// API name: signing_key
@@ -73,7 +72,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_votes")]
-        public UInt64 TotalVotes { get; set; }
+        public ulong TotalVotes { get; set; }
 
         /// <summary>
         /// API name: url
@@ -89,7 +88,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("total_missed")]
-        public Int64 TotalMissed { get; set; }
+        public long TotalMissed { get; set; }
 
         /// <summary>
         /// API name: last_confirmed_block_num
@@ -97,6 +96,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_confirmed_block_num")]
-        public UInt32 LastConfirmedBlockNum { get; set; }
+        public uint LastConfirmedBlockNum { get; set; }
     }
 }

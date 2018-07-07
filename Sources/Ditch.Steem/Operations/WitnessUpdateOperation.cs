@@ -6,14 +6,12 @@ namespace Ditch.Steem.Operations
 {
 
 
+    /// <inheritdoc />
     /// <summary>
     /// witness_update_operation
     /// libraries\protocol\include\steem\protocol\steem_operations.hpp
-    /// 
     /// Users who wish to become a witness must pay a fee acceptable to the current witnesses to apply for the position and allow voting to begin.
-    /// 
     /// If the owner isn't a witness they will become a witness.  Witnesses are charged a fee equal to 1 weeks worth of witness pay which in turn is derived from the current share supply.  The fee is only applied if the owner is not already a witness.
-    /// 
     /// If the block_signing_key is null then the witness is removed from contention.The network will pick the top 21 witnesses for producing blocks.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]

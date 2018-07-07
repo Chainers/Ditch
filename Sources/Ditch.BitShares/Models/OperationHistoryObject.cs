@@ -1,5 +1,4 @@
-using System;
-using Ditch.BitShares.Models.Operations;
+using Ditch.BitShares.Operations;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -25,7 +24,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\operation_history_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class OperationHistoryObject : AbstractObject<OperationHistoryObject>
+    public class OperationHistoryObject
     {
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("block_num")]
-        public UInt32 BlockNum { get; set; }
+        public uint BlockNum { get; set; }
 
         /** the transaction in the block */
 
@@ -78,7 +77,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("trx_in_block")]
-        public UInt16 TrxInBlock { get; set; }
+        public ushort TrxInBlock { get; set; }
 
         /** the operation within the transaction */
 
@@ -88,7 +87,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("op_in_trx")]
-        public UInt16 OpInTrx { get; set; }
+        public ushort OpInTrx { get; set; }
 
         /** any virtual operations implied by operation in block */
 
@@ -98,6 +97,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("virtual_op")]
-        public UInt16 VirtualOp { get; set; }
+        public ushort VirtualOp { get; set; }
     }
 }

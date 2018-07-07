@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Ditch.Steem
+﻿namespace Ditch.Steem
 {
     //TODO: move it to git like localization
     public class Config
     {
         public const int SteemAssetSymbolPrecisionBits = 4;
-        public const UInt32 SmtMaxNai = 99999999;
+        public const uint SmtMaxNai = 99999999;
         public const byte SteemPrecisionSbd = 3;
         public const byte SteemPrecisionSteem = 3;
         public const byte SteemPrecisionVests = 6;

@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
@@ -24,7 +23,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("pos", NullValueHandling = NullValueHandling.Ignore)]
-        public Int32 Pos { get; set; }
+        public int Pos { get; set; }
 
         /// <summary>
         /// API name: offset
@@ -32,6 +31,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("offset", NullValueHandling = NullValueHandling.Ignore)]
-        public Int32 Offset { get; set; }
+        public int Offset { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -17,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("used")]
-        public Int64 Used {get; set;}
+        public long Used {get; set;}
 
         /// <summary>
         /// API name: available
@@ -25,7 +24,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("available")]
-        public Int64 Available {get; set;}
+        public long Available {get; set;}
 
         /// <summary>
         /// API name: max
@@ -33,6 +32,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("max")]
-        public Int64 Max {get; set;}
+        public long Max {get; set;}
     }
 }

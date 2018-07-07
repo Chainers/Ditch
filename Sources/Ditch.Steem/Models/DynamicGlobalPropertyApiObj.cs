@@ -1,8 +1,10 @@
 ﻿using System;
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// Shows an overview of various information regarding the current state of the STEEM network.
     /// dynamic_global_property_api_obj
@@ -15,14 +17,14 @@ namespace Ditch.Steem.Models
 
         // bdType : uint32_t | = 0;
         [JsonProperty("current_reserve_ratio")]
-        public new uint CurrentReserveRatio { get; set; }
+        public uint CurrentReserveRatio { get; set; }
 
         // bdType : uint64_t | = 0;
         [JsonProperty("average_block_size")]
-        public new ulong AverageBlockSize { get; set; }
+        public ulong AverageBlockSize { get; set; }
 
         // bdType : uint128_t | = 0;
         [JsonProperty("max_virtual_bandwidth")]
-        public new string MaxVirtualBandwidth { get; set; }
+        public UInt128 MaxVirtualBandwidth { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
@@ -33,7 +32,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent")]
-        public UInt16 Percent {get; set;}
+        public ushort Percent {get; set;}
 
         /// <summary>
         /// API name: auto_vest

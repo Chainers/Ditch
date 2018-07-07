@@ -1,12 +1,13 @@
 ﻿namespace Ditch.Steem.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// Unfollow some author
     /// </summary>
     public class UnfollowOperation : FollowOperation
     {
+        /// <inheritdoc />
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="login"></param>
         /// <param name="author"></param>

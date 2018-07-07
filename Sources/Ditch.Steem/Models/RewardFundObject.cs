@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -42,7 +41,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("recent_claims")]
-        public string RecentClaims { get; set; }
+        public UInt128 RecentClaims { get; set; }
 
         /// <summary>
         /// API name: last_update
@@ -58,7 +57,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("content_constant")]
-        public string ContentConstant { get; set; }
+        public UInt128 ContentConstant { get; set; }
 
         /// <summary>
         /// API name: percent_curation_rewards

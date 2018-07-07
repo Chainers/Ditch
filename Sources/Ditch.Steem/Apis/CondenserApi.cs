@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Core.Models;
 using Ditch.Steem.Models;
@@ -19,10 +18,10 @@ namespace Ditch.Steem
         }
         //  "condenser_api.get_account_count",
         //  "condenser_api.get_account_history",
-        public JsonRpcResponse<MapContainer<UInt32, AppliedOperation>> GetAccountHistory2(GetAccountHistoryArgs args, CancellationToken token)
+        public JsonRpcResponse<MapContainer<uint, AppliedOperation>> GetAccountHistory2(GetAccountHistoryArgs args, CancellationToken token)
         {
             var aargs = new object[] { args.Account, args.Start, args.Limit };
-            return CustomGetRequest<MapContainer<UInt32, AppliedOperation>>(KnownApiNames.CondenserApi, "get_account_history", aargs, token);
+            return CustomGetRequest<MapContainer<uint, AppliedOperation>>(KnownApiNames.CondenserApi, "get_account_history", aargs, token);
         }
         //  "condenser_api.get_account_references",
         //  "condenser_api.get_account_reputations",

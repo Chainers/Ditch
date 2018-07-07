@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// claim_reward_balance_operation
     /// libraries\protocol\include\steem\protocol\steem_operations.hpp

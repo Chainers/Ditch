@@ -2,12 +2,13 @@ using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_block_header
     /// libraries\chain\include\graphene\chain\protocol\block.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedBlockHeader : BlockHeader
+    public class SignedBlockHeader : BlockHeader
     {
 
         /// <summary>

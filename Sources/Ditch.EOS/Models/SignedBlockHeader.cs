@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_block_header
     /// libraries\chain\include\eosio\chain\block_header.hpp

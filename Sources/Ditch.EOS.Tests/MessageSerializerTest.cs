@@ -28,10 +28,8 @@ namespace Ditch.EOS.Tests
                 {
                     throw new NotImplementedException("ContextFreeData");
                 }
-                else
-                {
-                    ms.Write(new byte[32], 0, 32);
-                }
+
+                ms.Write(new byte[32], 0, 32);
                 msg = ms.ToArray();
             }
 

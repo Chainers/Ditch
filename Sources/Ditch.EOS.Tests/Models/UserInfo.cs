@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Ditch.Core;
 
 namespace Ditch.EOS.Tests.Models
 {

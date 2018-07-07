@@ -13,7 +13,7 @@ namespace Ditch.Golos.Operations
 
         public override string TypeName { get; }
 
-        private JObject Value;
+        private JObject Value { get; set; }
 
 
         public UnsupportedOperation(string name, JObject value)

@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -20,7 +19,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\withdraw_permission_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WithdrawPermissionObject : AbstractObject<WithdrawPermissionObject>
+    public class WithdrawPermissionObject
     {
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("withdrawal_period_sec")]
-        public UInt32 WithdrawalPeriodSec { get; set; }
+        public uint WithdrawalPeriodSec { get; set; }
 
         /***
  * The beginning of the next withdrawal period

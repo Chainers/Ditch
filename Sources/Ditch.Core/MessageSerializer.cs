@@ -108,7 +108,7 @@ namespace Ditch.Core
                         }
                         var buf = Encoding.UTF8.GetBytes(typed);
 
-                        var buflen = new UnsignedInt((UInt32)buf.Length);
+                        var buflen = new UnsignedInt((uint)buf.Length);
                         buflen.Serializer(stream, this);
 
                         stream.Write(buf, 0, buf.Length);
@@ -132,7 +132,7 @@ namespace Ditch.Core
                             if (typed == null)
                                 return;
 
-                            var buf = new UnsignedInt((UInt32)typed.Count);
+                            var buf = new UnsignedInt((uint)typed.Count);
                             buf.Serializer(stream, this);
 
                             foreach (var value in typed)
@@ -185,10 +185,8 @@ namespace Ditch.Core
                     stream.WriteByte(0);
                     return;
                 }
-                else
-                {
-                    stream.WriteByte(1);
-                }
+
+                stream.WriteByte(1);
             }
 
             AddToMessageStream(stream, intype, inval);

@@ -11,7 +11,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\vesting_balance_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class VestingBalanceObject : AbstractObject<VestingBalanceObject>
+    public class VestingBalanceObject
     {
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -20,7 +19,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("weight_threshold")]
         [MessageOrder(10)]
-        public UInt32 WeightThreshold { get; set; }
+        public uint WeightThreshold { get; set; }
 
         /// <summary>
         /// API name: account_auths

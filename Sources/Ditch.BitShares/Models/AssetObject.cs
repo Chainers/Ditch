@@ -15,7 +15,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\asset_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AssetObject : AbstractObject<AssetObject>
+    public class AssetObject
     {
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Ditch.BitShares.Models
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
 
-        /// Maximum number of digits after the decimal point (must be <= 12)
+        /// Maximum number of digits after the decimal point (must be &lt;= 12)
 
         /// <summary>
         /// API name: precision

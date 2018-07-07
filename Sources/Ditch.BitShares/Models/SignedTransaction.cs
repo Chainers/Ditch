@@ -6,12 +6,13 @@ namespace Ditch.BitShares.Models
      *  @brief adds a signature to a transaction
      */
 
+    /// <inheritdoc />
     /// <summary>
     /// signed_transaction
     /// libraries\chain\include\graphene\chain\protocol\transaction.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class SignedTransaction : Transaction
+    public class SignedTransaction : Transaction
     {
         private object[][] _operations;
 

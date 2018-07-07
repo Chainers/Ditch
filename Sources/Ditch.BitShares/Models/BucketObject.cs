@@ -7,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\plugins\market_history\include\graphene\market_history\market_history_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class BucketObject : AbstractObject<BucketObject>
+    public class BucketObject
     {
 
         /// <summary>

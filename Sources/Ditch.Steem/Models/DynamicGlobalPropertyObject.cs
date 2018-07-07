@@ -1,144 +1,248 @@
-﻿using System;
-using Ditch.Core.Models;
+﻿using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
+    /**
+     * @class dynamic_global_property_object
+     * @brief Maintains global state information
+     * @ingroup object
+     * @ingroup implementation
+     *
+     * This is an implementation detail. The values here are calculated during normal chain operations and reflect the
+     * current values of global blockchain properties.
+     */
+
     /// <summary>
-    /// Shows an overview of various information regarding the current state of the STEEM network.
     /// dynamic_global_property_object
-    /// steem-0.19.1\libraries\chain\include\steemit\chain\global_property_object.hpp
+    /// libraries\chain\include\steem\chain\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class DynamicGlobalPropertyObject
     {
-        // bdType : id_type
+
+        /// <summary>
+        /// API name: id
+        /// 
+        /// </summary>
+        /// <returns>API type: id_type</returns>
         [JsonProperty("id")]
         public string Id { get; set; }
 
-        // bdType : uint32_t | = 0;
+        /// <summary>
+        /// API name: head_block_number
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
         [JsonProperty("head_block_number")]
         public uint HeadBlockNumber { get; set; }
 
-        //block_id_type
+        /// <summary>
+        /// API name: head_block_id
+        /// 
+        /// </summary>
+        /// <returns>API type: block_id_type</returns>
         [JsonProperty("head_block_id")]
         public string HeadBlockId { get; set; }
 
-        // bdType : time_point_sec
+        /// <summary>
+        /// API name: time
+        /// 
+        /// </summary>
+        /// <returns>API type: time_point_sec</returns>
         [JsonProperty("time")]
         public TimePointSec Time { get; set; }
 
-        // bdType : account_name_type
+        /// <summary>
+        /// API name: current_witness
+        /// 
+        /// </summary>
+        /// <returns>API type: account_name_type</returns>
         [JsonProperty("current_witness")]
         public string CurrentWitness { get; set; }
 
-        // bdType : uint64_t | = -1;
+        /// <summary>
+        /// API name: total_pow
+        /// = -1;
+        /// </summary>
+        /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_pow")]
         public ulong TotalPow { get; set; }
 
-        // bdType : uint32_t | = 0;
+        /// <summary>
+        /// API name: num_pow_witnesses
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
         [JsonProperty("num_pow_witnesses")]
         public uint NumPowWitnesses { get; set; }
 
-        // bdType : asset | = asset(0, steem_symbol);
+        /// <summary>
+        /// API name: virtual_supply
+        /// = asset( 0, STEEM_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("virtual_supply")]
         public Asset VirtualSupply { get; set; }
 
-        // bdType : asset | = asset(0, steem_symbol);
+        /// <summary>
+        /// API name: current_supply
+        /// = asset( 0, STEEM_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("current_supply")]
         public Asset CurrentSupply { get; set; }
 
-        // bdType : asset | = asset(0, steem_symbol); 
         /// <summary>
-        /// total asset held in confidential balances
+        /// API name: confidential_supply
+        /// = asset( 0, STEEM_SYMBOL ); ///&lt; total asset held in confidential balances
         /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("confidential_supply")]
         public Asset ConfidentialSupply { get; set; }
 
-        // bdType : asset | = asset(0, sbd_symbol);
+        /// <summary>
+        /// API name: current_sbd_supply
+        /// = asset( 0, SBD_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("current_sbd_supply")]
         public Asset CurrentSbdSupply { get; set; }
 
-        // bdType : asset | = asset(0, sbd_symbol); 
         /// <summary>
-        /// total asset held in confidential balances
+        /// API name: confidential_sbd_supply
+        /// = asset( 0, SBD_SYMBOL ); ///&lt; total asset held in confidential balances
         /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("confidential_sbd_supply")]
         public Asset ConfidentialSbdSupply { get; set; }
 
-        // bdType : asset | = asset(0, steem_symbol);
+        /// <summary>
+        /// API name: total_vesting_fund_steem
+        /// = asset( 0, STEEM_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("total_vesting_fund_steem")]
         public Asset TotalVestingFundSteem { get; set; }
 
-        // bdType : asset | = asset(0, vests_symbol);
+        /// <summary>
+        /// API name: total_vesting_shares
+        /// = asset( 0, VESTS_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("total_vesting_shares")]
         public Asset TotalVestingShares { get; set; }
 
-        // bdType : asset | = asset(0, steem_symbol);
+        /// <summary>
+        /// API name: total_reward_fund_steem
+        /// = asset( 0, STEEM_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("total_reward_fund_steem")]
         public Asset TotalRewardFundSteem { get; set; }
 
-        //uint128
+        /// <summary>
+        /// API name: total_reward_shares2
+        /// the running total of REWARD^2
+        /// </summary>
+        /// <returns>API type: uint128</returns>
         [JsonProperty("total_reward_shares2")]
-        public string TotalRewardShares2 { get; set; }
+        public UInt128 TotalRewardShares2 { get; set; }
 
-        // bdType : asset | = asset( 0, vests_symbol );
+        /// <summary>
+        /// API name: pending_rewarded_vesting_shares
+        /// = asset( 0, VESTS_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("pending_rewarded_vesting_shares")]
         public Asset PendingRewardedVestingShares { get; set; }
 
-        // bdType : asset | = asset( 0, steem_symbol );
+        /// <summary>
+        /// API name: pending_rewarded_vesting_steem
+        /// = asset( 0, STEEM_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
         [JsonProperty("pending_rewarded_vesting_steem")]
         public Asset PendingRewardedVestingSteem { get; set; }
 
-        // bdType : uint16_t | = 0;
+        /// <summary>
+        /// API name: sbd_interest_rate
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint16_t</returns>
         [JsonProperty("sbd_interest_rate")]
         public ushort SbdInterestRate { get; set; }
 
-        // bdType : uint16_t | = steemit_100_percent;
+        /// <summary>
+        /// API name: sbd_print_rate
+        /// = STEEM_100_PERCENT;
+        /// </summary>
+        /// <returns>API type: uint16_t</returns>
         [JsonProperty("sbd_print_rate")]
         public ushort SbdPrintRate { get; set; }
 
-        // bdType : uint32_t | = 0;
-        [JsonProperty("average_block_size")]
-        public uint AverageBlockSize { get; set; }
-
-        // bdType : uint32_t | = 0;
+        /// <summary>
+        /// API name: maximum_block_size
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_block_size")]
         public uint MaximumBlockSize { get; set; }
 
-        // bdType : uint64_t | = 0;
+        /// <summary>
+        /// API name: current_aslot
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint64_t</returns>
         [JsonProperty("current_aslot")]
         public ulong CurrentAslot { get; set; }
 
-        //uint128_t
-        [JsonProperty("recent_slots_filled")]
-        public string RecentSlotsFilled { get; set; }
-
-        // bdType : uint8_t | = 0; 
         /// <summary>
-        /// divide by 128 to compute participation percentage
+        /// API name: recent_slots_filled
+        /// 
         /// </summary>
+        /// <returns>API type: uint128_t</returns>
+        [JsonProperty("recent_slots_filled")]
+        public UInt128 RecentSlotsFilled { get; set; }
+
+        /// <summary>
+        /// API name: participation_count
+        /// = 0; ///&lt; Divide by 128 to compute participation percentage
+        /// </summary>
+        /// <returns>API type: uint8_t</returns>
         [JsonProperty("participation_count")]
         public byte ParticipationCount { get; set; }
 
-        // bdType : uint32_t | = 0;
+        /// <summary>
+        /// API name: last_irreversible_block_num
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_irreversible_block_num")]
         public uint LastIrreversibleBlockNum { get; set; }
 
-        // bdType : uint64_t | = 0;
-        [JsonProperty("max_virtual_bandwidth")]
-        public ulong MaxVirtualBandwidth { get; set; }
-
-        // bdType : uint64_t | = 1;
-        [JsonProperty("current_reserve_ratio")]
-        public ulong CurrentReserveRatio { get; set; }
-
-        // bdType : uint32_t | = 40;
-        [JsonProperty("vote_regeneration_per_day")]
-        public uint VoteRegenerationPerDay { get; set; }
-
-        // bdType : uint32_t | = 40;
+        /// <summary>
+        /// API name: vote_power_reserve_rate
+        /// = STEEM_INITIAL_VOTE_POWER_RATE;
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
         [JsonProperty("vote_power_reserve_rate")]
         public uint VotePowerReserveRate { get; set; }
+
+        /// <summary>
+        /// API name: delegation_return_period
+        /// = STEEM_DELEGATION_RETURN_PERIOD_HF0;
+        /// </summary>
+        /// <returns>API type: uint32_t</returns>
+        [JsonProperty("delegation_return_period")]
+        public uint DelegationReturnPeriod { get; set; }
+
+        /// <summary>
+        /// API name: smt_creation_fee
+        /// = asset( 1000000, SBD_SYMBOL );
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("smt_creation_fee")]
+        public Asset SmtCreationFee { get; set; }
     }
 }

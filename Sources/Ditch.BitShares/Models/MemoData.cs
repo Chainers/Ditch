@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -8,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\confidential.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class MemoData
+    public class MemoData
     {
 
         /// <summary>
@@ -49,6 +48,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("check")]
-        public UInt32 Check { get; set; }
+        public uint Check { get; set; }
     }
 }

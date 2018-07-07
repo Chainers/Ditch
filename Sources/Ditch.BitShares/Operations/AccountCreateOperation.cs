@@ -1,8 +1,8 @@
-using System;
+using Ditch.BitShares.Models;
 using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
-namespace Ditch.BitShares.Models.Operations
+namespace Ditch.BitShares.Operations
 {
     /**
      *  @ingroup operations
@@ -13,7 +13,7 @@ namespace Ditch.BitShares.Models.Operations
     /// libraries\chain\include\graphene\chain\protocol\account.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class AccountCreateOperation : BaseOperation
+    public class AccountCreateOperation : BaseOperation
     {
         public override OperationType Type => OperationType.AccountCreate;
 
@@ -59,7 +59,7 @@ namespace Ditch.BitShares.Models.Operations
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(50)]
         [JsonProperty("referrer_percent")]
-        public UInt16 ReferrerPercent { get; set; }
+        public ushort ReferrerPercent { get; set; }
 
         /// <summary>
         /// API name: name

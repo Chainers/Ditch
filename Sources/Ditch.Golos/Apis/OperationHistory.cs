@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 
@@ -19,7 +18,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: applied_operation sequence of operations included/generated within the block</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(UInt32 blockNum, bool onlyVirtual, CancellationToken token)
+        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(uint blockNum, bool onlyVirtual, CancellationToken token)
         {
             return CustomGetRequest<AppliedOperation[]>(KnownApiNames.OperationHistory, "get_ops_in_block", new object[] { blockNum, onlyVirtual }, token);
         }

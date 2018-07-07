@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Models;
+﻿using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -34,7 +33,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("requestid")]
-        public UInt32 Requestid {get; set;}
+        public uint Requestid {get; set;}
 
         /// <summary>
         /// API name: amount

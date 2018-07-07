@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// Vote up/down/flag post
     /// </summary>

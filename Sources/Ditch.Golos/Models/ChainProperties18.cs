@@ -1,8 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// chain_properties_18
     /// libraries\protocol\include\golos\protocol\steem_operations.hpp

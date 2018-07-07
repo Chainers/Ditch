@@ -32,6 +32,6 @@ namespace Ditch.Golos.Models
         /// API name: archived
         /// 
         /// </summary>
-        Archived,
+        Archived
     }
 }

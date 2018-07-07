@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
@@ -33,7 +32,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("confirmed")]
-        public UInt16 Confirmed { get; set; }
+        public ushort Confirmed { get; set; }
 
         /// <summary>
         /// API name: previous
@@ -65,7 +64,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("schedule_version")]
-        public UInt32 ScheduleVersion { get; set; }
+        public uint ScheduleVersion { get; set; }
 
         /// <summary>
         /// API name: new_producers

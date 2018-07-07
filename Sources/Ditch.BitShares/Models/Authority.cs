@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Ditch.Core.Attributes;
 using Ditch.Core.Models;
@@ -16,7 +15,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\authority.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Authority
+    public class Authority
     {
         /// <summary>
         /// API name: weight_threshold
@@ -25,25 +24,25 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(10)]
         [JsonProperty("weight_threshold")]
-        public UInt32 WeightThreshold { get; set; }
+        public uint WeightThreshold { get; set; }
 
         /// <summary>
         /// API name: account_auths
         /// 
         /// </summary>
-        /// <returns>API type: flat_map<account_id_type,weight_type></returns>
+        /// <returns>API type: flat_map&lt;account_id_type,weight_type></returns>
         [MessageOrder(20)]
         [JsonProperty("account_auths")]
-        public MapContainer<AccountIdType, UInt16> AccountAuths { get; set; }
+        public MapContainer<AccountIdType, ushort> AccountAuths { get; set; }
 
         /// <summary>
         /// API name: key_auths
         /// 
         /// </summary>
-        /// <returns>API type: flat_map<public_key_type,weight_type></returns>
+        /// <returns>API type: flat_map&lt;public_key_type,weight_type></returns>
         [MessageOrder(30)]
         [JsonProperty("key_auths")]
-        public MapContainer<PublicKeyType, UInt16> KeyAuths { get; set; }
+        public MapContainer<PublicKeyType, ushort> KeyAuths { get; set; }
 
         /** needed for backward compatibility only */
 
@@ -51,17 +50,17 @@ namespace Ditch.BitShares.Models
         /// API name: address_auths
         /// 
         /// </summary>
-        /// <returns>API type: flat_map<address,weight_type></returns>
+        /// <returns>API type: flat_map&lt;address,weight_type></returns>
         [MessageOrder(40)]
         [JsonProperty("address_auths")]
-        public MapContainer<object, UInt16> AddressAuths { get; set; }
+        public MapContainer<object, ushort> AddressAuths { get; set; }
 
         public Authority()
         {
             WeightThreshold = 1;
             AccountAuths = new MapContainer<AccountIdType, ushort>();
             KeyAuths = new MapContainer<PublicKeyType, ushort>();
-            AddressAuths = new MapContainer<object, UInt16>();
+            AddressAuths = new MapContainer<object, ushort>();
         }
 
         public Authority(PublicKeyType key)

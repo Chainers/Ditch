@@ -32,7 +32,7 @@ namespace Ditch.EOS.Tests
                     PrivateOwnerWif = ConfigurationManager.AppSettings["PrivateOwnerWif"],
                     PublicActiveWif = ConfigurationManager.AppSettings["PublicActiveWif"],
                     PrivateActiveWif = ConfigurationManager.AppSettings["PrivateActiveWif"],
-                    Password = ConfigurationManager.AppSettings["Password"],
+                    Password = ConfigurationManager.AppSettings["Password"]
                 };
             }
 
@@ -40,7 +40,7 @@ namespace Ditch.EOS.Tests
             {
                 ContractInfo = new ContractInfo
                 {
-                    ContractName = ConfigurationManager.AppSettings["ContractName"],
+                    ContractName = ConfigurationManager.AppSettings["ContractName"]
                 };
             }
 

@@ -1,7 +1,7 @@
 ﻿using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
-namespace Ditch.BitShares.Models.Operations
+namespace Ditch.BitShares.Operations
 {
 
     [JsonObject(MemberSerialization.OptIn)]

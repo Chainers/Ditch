@@ -21,9 +21,9 @@ namespace Ditch.Core
                 case 'K':
                 case 'L':
                     return CutLastBytes(Base58CheckDecode(data), 1);
+                default:
+                    throw new NotImplementedException();
             }
-
-            throw new NotImplementedException();
         }
 
         public static string EncodePrivateWif(byte[] source)

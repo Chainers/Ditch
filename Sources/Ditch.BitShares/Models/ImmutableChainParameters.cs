@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -8,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\immutable_chain_parameters.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ImmutableChainParameters
+    public class ImmutableChainParameters
     {
 
         /// <summary>
@@ -17,7 +16,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("min_committee_member_count")]
-        public UInt16 MinCommitteeMemberCount { get; set; }
+        public ushort MinCommitteeMemberCount { get; set; }
 
         /// <summary>
         /// API name: min_witness_count
@@ -25,7 +24,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("min_witness_count")]
-        public UInt16 MinWitnessCount { get; set; }
+        public ushort MinWitnessCount { get; set; }
 
         /// <summary>
         /// API name: num_special_accounts
@@ -33,7 +32,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("num_special_accounts")]
-        public UInt32 NumSpecialAccounts { get; set; }
+        public uint NumSpecialAccounts { get; set; }
 
         /// <summary>
         /// API name: num_special_assets
@@ -41,6 +40,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("num_special_assets")]
-        public UInt32 NumSpecialAssets { get; set; }
+        public uint NumSpecialAssets { get; set; }
     }
 }

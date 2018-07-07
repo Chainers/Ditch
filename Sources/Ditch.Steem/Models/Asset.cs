@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
@@ -13,12 +14,14 @@ namespace Ditch.Steem.Models
     [JsonObject(MemberSerialization.OptIn)]
     public class Asset : ICustomJson, ICustomSerializer
     {
-        private byte _type;
+        private static readonly Regex MultyZeroRegex = new Regex("^0{2,}");
 
         public NumberFormatInfo NumberFormat { get; set; } = CultureInfo.InvariantCulture.NumberFormat;
 
+        private byte _type;
 
-        public string Amount { get; private set; }
+
+        public long Amount { get; private set; }
 
         public AssetSymbolType Symbol { get; private set; }
 
@@ -26,17 +29,12 @@ namespace Ditch.Steem.Models
         public Asset() { }
 
         public Asset(long amount, uint assetNum)
-        : this(amount.ToString(), assetNum) { }
-
-        public Asset(string amount, uint assetNum)
         {
             FromNewFormat(amount, assetNum);
         }
 
 
-
-
-        public void FromNewFormat(string amount, uint assetNum)
+        public void FromNewFormat(long amount, uint assetNum)
         {
             Amount = amount;
             Symbol = new AssetSymbolType(assetNum);
@@ -44,6 +42,7 @@ namespace Ditch.Steem.Models
 
         public void FromOldFormat(string asset)
         {
+            asset = MultyZeroRegex.Replace(asset, "0");
             var args = asset.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (args.Length != 2)
                 throw new InvalidCastException($"Error cast {asset} to Asset");
@@ -66,39 +65,32 @@ namespace Ditch.Steem.Models
             var val = args[0].Replace(NumberFormat.NumberGroupSeparator, "");
             var dec = val.IndexOf(NumberFormat.NumberDecimalSeparator, StringComparison.Ordinal);
 
+            string amount;
             if (dec > -1)
             {
-                dec = val.Length - dec;
+                dec = val.Length - dec - 1;
                 if (dec > Symbol.Decimals())
                     throw new InvalidCastException($"Error cast {asset} to Asset");
 
-                Amount = val.Replace(NumberFormat.NumberDecimalSeparator, "");
+                amount = val.Replace(NumberFormat.NumberDecimalSeparator, "");
                 if (dec != Symbol.Decimals())
                 {
-                    Amount += new string('0', Symbol.Decimals() - dec);
+                    amount += new string('0', Symbol.Decimals() - dec);
                 }
             }
             else
             {
-                Amount = val + new string('0', Symbol.Decimals());
+                amount = val + new string('0', Symbol.Decimals());
             }
+
+            Amount = long.Parse(amount);
         }
 
 
 
         public string ToOldFormatString()
         {
-            var dig = Amount;
-            var precision = Symbol.Decimals();
-            if (precision > 0)
-            {
-                if (dig.Length <= precision)
-                {
-                    var prefix = new string('0', precision - dig.Length + 1);
-                    dig = prefix + dig;
-                }
-                dig = dig.Insert(dig.Length - precision, NumberFormat.NumberDecimalSeparator);
-            }
+            var dig = ToDoubleString();
 
             string currency;
             switch (Symbol.AssetNum)
@@ -125,9 +117,9 @@ namespace Ditch.Steem.Models
             return string.IsNullOrEmpty(currency) ? dig : $"{dig} {currency}";
         }
 
-        public double ToDouble()
+        public string ToDoubleString()
         {
-            var dig = Amount;
+            var dig = Amount.ToString();
             var precision = Symbol.Decimals();
             if (precision > 0)
             {
@@ -139,7 +131,12 @@ namespace Ditch.Steem.Models
                 dig = dig.Insert(dig.Length - precision, NumberFormat.NumberDecimalSeparator);
             }
 
-            return double.Parse(dig);
+            return dig;
+        }
+        
+        public double ToDouble()
+        {
+            return double.Parse(ToDoubleString());
         }
 
 
@@ -156,14 +153,14 @@ namespace Ditch.Steem.Models
             else if (reader.TokenType == JsonToken.StartObject)
             {
                 var obj = serializer.Deserialize<JObject>(reader);
-                Amount = obj.Value<string>("amount");
+                Amount = long.Parse(obj.Value<string>("amount"));
                 Symbol = new AssetSymbolType(obj.Value<string>("nai"), obj.Value<byte>("precision"));
                 _type = 2;
             }
             else
             {
                 var arr = serializer.Deserialize<JArray>(reader);
-                Amount = arr[0].Value<string>("amount");
+                Amount = long.Parse(arr[0].Value<string>("amount"));
                 Symbol = new AssetSymbolType(arr[2].Value<string>("nai"), arr[1].Value<byte>("precision"));
                 _type = 3;
             }
@@ -207,6 +204,9 @@ namespace Ditch.Steem.Models
                         writer.WriteEndArray();
                         break;
                     }
+
+                default:
+                    throw new NotImplementedException();
             }
 
         }
@@ -222,7 +222,7 @@ namespace Ditch.Steem.Models
                 case 0 when Config.BlockchainVersion < 0x00001304:
                 case 1:
                     {
-                        serializeHelper.AddToMessageStream(stream, typeof(long), long.Parse(Amount));
+                        serializeHelper.AddToMessageStream(stream, typeof(long), Amount);
                         stream.WriteByte(Symbol.Decimals());
                         string currency;
                         switch (Symbol.AssetNum)
@@ -257,7 +257,7 @@ namespace Ditch.Steem.Models
                 case 2:
                 case 3:
                     {
-                        serializeHelper.AddToMessageStream(stream, typeof(long), long.Parse(Amount));
+                        serializeHelper.AddToMessageStream(stream, typeof(long), Amount);
                         Symbol.Serializer(stream, serializeHelper);
                         break;
                     }

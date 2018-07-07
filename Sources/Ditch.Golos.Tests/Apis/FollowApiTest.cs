@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using Ditch.Golos.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis

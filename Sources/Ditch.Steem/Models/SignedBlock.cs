@@ -2,6 +2,7 @@
 
 namespace Ditch.Steem.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_block
     /// steem-0.19.1\libraries\protocol\include\steemit\protocol\block.hpp

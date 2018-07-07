@@ -22,7 +22,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("limit")]
-        public uint Limit { get; set; } = 0;
+        public uint Limit { get; set; }
 
         /// <summary>
         /// API name: select_authors
@@ -54,7 +54,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("truncate_body")]
-        public uint TruncateBody { get; set; } = 0;
+        public uint TruncateBody { get; set; }
 
         /// <summary>
         /// API name: start_author

@@ -7,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\app\include\graphene\app\database_api.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Order
+    public class Order
     {
 
         /// <summary>

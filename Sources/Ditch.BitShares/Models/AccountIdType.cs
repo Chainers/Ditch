@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace Ditch.BitShares.Models
+﻿namespace Ditch.BitShares.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// libraries\chain\include\graphene\chain\protocol\types.hpp
-    /// typedef object_id<protocol_ids, account_object_type, account_object> account_id_type;
+    /// typedef object_id&lt;protocol_ids, account_object_type, account_object&gt; account_id_type;
     /// </summary>
     public class AccountIdType : ObjectId
     {
@@ -12,7 +11,7 @@ namespace Ditch.BitShares.Models
         {
         }
 
-        public AccountIdType(byte spaceId, byte typeId, UInt32 instance)
+        public AccountIdType(byte spaceId, byte typeId, uint instance)
             : base(spaceId, typeId, instance)
         {
         }

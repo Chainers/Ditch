@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using Cryptography.ECDSA;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
 

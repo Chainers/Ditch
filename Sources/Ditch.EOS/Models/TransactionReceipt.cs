@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// transaction_receipt
     /// libraries\chain\include\eosio\chain\block.hpp
@@ -14,8 +15,7 @@ namespace Ditch.EOS.Models
         /// API name: trx
         /// 
         /// </summary>
-        /// <returns>API type: fc::static_variant<transaction_id_type, packed_transaction>>
-        //public StaticVariant<string, PackedTransaction> Trx { get; set; }
+        /// <returns>API type: fc::static_variant&lt;transaction_id_type, packed_transaction>></returns>
         public object Trx { get; set; }
     }
 }

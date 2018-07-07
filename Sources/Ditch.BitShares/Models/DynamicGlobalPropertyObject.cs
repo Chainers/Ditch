@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -19,7 +18,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\global_property_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DynamicGlobalPropertyObject : AbstractObject<DynamicGlobalPropertyObject>
+    public class DynamicGlobalPropertyObject
     {
 
         /// <summary>
@@ -44,7 +43,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("head_block_number")]
-        public UInt32 HeadBlockNumber { get; set; }
+        public uint HeadBlockNumber { get; set; }
 
         /// <summary>
         /// API name: head_block_id
@@ -100,7 +99,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("accounts_registered_this_interval")]
-        public UInt32 AccountsRegisteredThisInterval { get; set; }
+        public uint AccountsRegisteredThisInterval { get; set; }
 
         /**
  *  Every time a block is missed this increases by
@@ -118,7 +117,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("recently_missed_count")]
-        public UInt32 RecentlyMissedCount { get; set; }
+        public uint RecentlyMissedCount { get; set; }
 
 
         /**
@@ -133,7 +132,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("current_aslot")]
-        public UInt64 CurrentAslot { get; set; }
+        public ulong CurrentAslot { get; set; }
 
 
         /**
@@ -146,7 +145,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("recent_slots_filled")]
-        public string RecentSlotsFilled { get; set; }
+        public UInt128 RecentSlotsFilled { get; set; }
 
 
         /**
@@ -160,7 +159,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("dynamic_flags")]
-        public UInt32 DynamicFlags { get; set; }
+        public uint DynamicFlags { get; set; }
 
         /// <summary>
         /// API name: last_irreversible_block_num
@@ -168,6 +167,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_irreversible_block_num")]
-        public UInt32 LastIrreversibleBlockNum { get; set; }
+        public uint LastIrreversibleBlockNum { get; set; }
     }
 }

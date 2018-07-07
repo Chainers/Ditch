@@ -146,7 +146,7 @@ namespace Ditch.Core
                 return new JsonRpcResponse<T>
                 {
                     Error = new SystemError(ErrorCodes.ConnectionTimeoutError),
-                    RawRequest = jsonRpc.Message,
+                    RawRequest = jsonRpc.Message
                 };
 
             _webSocket.Send(jsonRpc.Message);
@@ -178,7 +178,7 @@ namespace Ditch.Core
                 return new JsonRpcResponse<T>
                 {
                     Error = new SystemError(ErrorCodes.ResponseTimeoutError),
-                    RawRequest = jsonRpc.Message,
+                    RawRequest = jsonRpc.Message
                 };
 
             response.RawRequest = jsonRpc.Message;
@@ -217,8 +217,10 @@ namespace Ditch.Core
                         token.ThrowIfCancellationRequested();
                         return t == 1;
                     }
-                default:
+                case WebSocketState.Open:
                     return true;
+                default:
+                    return false;
             }
         }
 

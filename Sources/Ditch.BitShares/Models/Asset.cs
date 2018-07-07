@@ -1,7 +1,3 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
 using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
@@ -12,7 +8,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\asset.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class Asset
+    public class Asset
     {
 
         /// <summary>
@@ -22,7 +18,7 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: share_type</returns>
         [MessageOrder(10)]
         [JsonProperty("amount")]
-        public UInt64 Amount { get; set; }
+        public ulong Amount { get; set; }
 
         /// <summary>
         /// API name: asset_id

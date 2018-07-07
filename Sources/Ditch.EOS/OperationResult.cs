@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.EOS.Errors;
+﻿using Ditch.EOS.Errors;
 
 namespace Ditch.EOS
 {
@@ -31,10 +30,5 @@ namespace Ditch.EOS
         public OperationResult() { }
 
         public OperationResult(ErrorBase error) : base(error) { }
-
-        public OperationResult(ApplicationException applicationException)
-        {
-
-        }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -13,7 +12,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\worker_object.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class WorkerObject : AbstractObject<WorkerObject>
+    public class WorkerObject
     {
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_votes_for")]
-        public UInt64 TotalVotesFor { get; set; }
+        public ulong TotalVotesFor { get; set; }
 
         /// <summary>
         /// API name: total_votes_against
@@ -138,6 +137,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_votes_against")]
-        public UInt64 TotalVotesAgainst { get; set; }
+        public ulong TotalVotesAgainst { get; set; }
     }
 }

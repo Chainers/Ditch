@@ -1,5 +1,4 @@
 ﻿using Ditch.Core.Attributes;
-using Ditch.Core.Interfaces;
 using Ditch.Core.Models;
 using Ditch.Golos.Models;
 using Newtonsoft.Json;
@@ -16,6 +15,7 @@ namespace Ditch.Golos.Operations
      * object.
      */
 
+    /// <inheritdoc />
     /// <summary>
     /// proposal_create_operation
     /// libraries\protocol\include\golos\protocol\proposal_operations.hpp

@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -210,7 +209,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("sbd_seconds")]
-        public string SbdSeconds {get; set;}
+        public UInt128 SbdSeconds {get; set;}
 
         /// <summary>
         /// API name: sbd_seconds_last_update
@@ -242,7 +241,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("savings_sbd_seconds")]
-        public string SavingsSbdSeconds {get; set;}
+        public UInt128 SavingsSbdSeconds {get; set;}
 
         /// <summary>
         /// API name: savings_sbd_seconds_last_update

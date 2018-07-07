@@ -1,10 +1,10 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Ditch.Golos.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// Update an existing account
     /// This operation is used to update an existing account. It can be used to update the authorities, or adjust the options on the account.

@@ -23,6 +23,7 @@ namespace Ditch.Golos.Operations
      * add or remove active authority approval to such a proposal will fail.
      */
 
+    /// <inheritdoc />
     /// <summary>
     /// proposal_update_operation
     /// libraries\protocol\include\golos\protocol\proposal_operations.hpp

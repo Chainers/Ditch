@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Models;
+﻿using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -26,7 +25,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("escrow_id")]
-        public UInt32 EscrowId {get; set;}
+        public uint EscrowId {get; set;}
 
         /// <summary>
         /// API name: from

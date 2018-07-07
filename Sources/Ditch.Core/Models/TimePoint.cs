@@ -49,7 +49,7 @@ namespace Ditch.Core.Models
 
         public void Serializer(Stream stream, IMessageSerializer serializeHelper)
         {
-            var buf = BitConverter.GetBytes((UInt64)(Value.Ticks / 10000 - 62135596800000)); // 01.01.1970
+            var buf = BitConverter.GetBytes((ulong)(Value.Ticks / 10000 - 62135596800000)); // 01.01.1970
             stream.Write(buf, 0, buf.Length);
         }
 

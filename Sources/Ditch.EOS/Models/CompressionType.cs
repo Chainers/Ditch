@@ -21,6 +21,6 @@ namespace Ditch.EOS.Models
         /// API name: zlib
         /// 1
         /// </summary>
-        Zlib,
+        Zlib
     }
 }

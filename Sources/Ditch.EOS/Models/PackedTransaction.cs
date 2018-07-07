@@ -22,9 +22,8 @@ namespace Ditch.EOS.Models
         /// API name: compression
         /// 
         /// </summary>
-        /// <returns>API type: fc::enum_type<uint8_t,compression_type></returns>
+        /// <returns>API type: fc::enum_type&lt;uint8_t,compression_type></returns>
         [JsonProperty("compression")]
-        //public EnumType<byte, CompressionType> Compression { get; set; }
         public string Compression { get; set; }
 
         /// <summary>

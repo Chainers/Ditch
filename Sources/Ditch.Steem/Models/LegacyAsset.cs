@@ -11,8 +11,5 @@ namespace Ditch.Steem.Models
     [JsonObject(MemberSerialization.OptIn)]
     public class LegacyAsset : Asset
     {
-        public LegacyAsset() { }
-
-        //public LegacyAsset(long amount, uint assetNum) : base(amount, assetNum) { }
     }
 }

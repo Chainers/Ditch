@@ -1,5 +1,3 @@
-using System;
-using Ditch.Core;
 using Ditch.Core.Attributes;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
@@ -23,7 +21,7 @@ namespace Ditch.EOS.Models
 
         public PublicKey(string value)
         {
-            Data = Base58.DecodePublicWif(value, Prefix);
+            Data = Core.Base58.DecodePublicWif(value, Prefix);
         }
 
         public PublicKey(byte[] data)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -25,7 +25,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("current_virtual_time")]
-        public string CurrentVirtualTime { get; set; }
+        public UInt128 CurrentVirtualTime { get; set; }
 
         /// <summary>
         /// API name: next_shuffle_block_num
@@ -33,7 +33,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("next_shuffle_block_num")]
-        public UInt32 NextShuffleBlockNum {get; set;}
+        public uint NextShuffleBlockNum {get; set;}
 
         /// <summary>
         /// API name: current_shuffled_witnesses
@@ -81,7 +81,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("witness_pay_normalization_factor")]
-        public UInt32 WitnessPayNormalizationFactor {get; set;}
+        public uint WitnessPayNormalizationFactor {get; set;}
 
         /// <summary>
         /// API name: median_props

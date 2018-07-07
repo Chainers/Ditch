@@ -213,7 +213,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test]
         public void lookup_accounts()
         {
-            UInt32 limit = 3;
+            uint limit = 3;
             var resp = Api.LookupAccounts(User.Login, limit, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);

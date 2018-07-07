@@ -10,6 +10,7 @@ namespace Ditch.Steem.Operations
      * @brief Transfers STEEM from one account to another.
      */
 
+    /// <inheritdoc />
     /// <summary>
     /// transfer_operation
     /// libraries\protocol\include\steemit\protocol\steem_operations.hpp

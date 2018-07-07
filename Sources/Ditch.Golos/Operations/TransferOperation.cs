@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// Transfers STEEM from one account to another.
     /// 

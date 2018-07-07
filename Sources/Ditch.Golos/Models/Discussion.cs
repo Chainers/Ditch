@@ -1,8 +1,8 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// discussion
     /// golos-0.16.3\libraries\app\include\steemit\app\state.hpp
@@ -42,7 +42,7 @@ namespace Ditch.Golos.Models
 
         // bdType :uint32_t
         [JsonProperty("active_votes_count")]
-        public UInt32 active_votes_count { get; set; }
+        public uint ActiveVotesCount { get; set; }
 
         // bdType : vector<string>
         /// <summary>

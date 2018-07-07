@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -59,7 +58,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("orderid")]
-        public UInt32 Orderid {get; set;}
+        public uint Orderid {get; set;}
 
         /// <summary>
         /// API name: for_sale

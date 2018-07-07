@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -12,7 +11,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\fee_schedule.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class FeeSchedule
+    public class FeeSchedule
     {
 
 
@@ -34,6 +33,6 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("scale")]
-        public UInt32 Scale { get; set; }
+        public uint Scale { get; set; }
     }
 }

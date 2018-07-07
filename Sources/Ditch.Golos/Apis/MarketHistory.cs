@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Core.Models;
 using Ditch.Golos.Models;
@@ -78,7 +77,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_book_extended</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OrderBookExtended> GetOrderBookExtended(UInt32 arg0, CancellationToken token)
+        public JsonRpcResponse<OrderBookExtended> GetOrderBookExtended(uint arg0, CancellationToken token)
         {
             return CustomGetRequest<OrderBookExtended>(KnownApiNames.MarketHistory, "get_order_book_extended", new object[] { arg0 }, token);
         }

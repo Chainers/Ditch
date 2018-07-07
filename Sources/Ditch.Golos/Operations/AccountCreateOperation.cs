@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations
 {
+    /// <inheritdoc />
     /// <summary>
     /// account_create_operation
     /// libraries\protocol\include\golos\protocol\steem_operations.hpp

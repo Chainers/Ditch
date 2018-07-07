@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
@@ -8,7 +7,7 @@ namespace Ditch.BitShares.Models
     /// libraries\chain\include\graphene\chain\protocol\chain_parameters.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class ChainParameters
+    public class ChainParameters
     {
 
         ///** using a smart ref breaks the circular dependency created between operations and the fee schedule */
@@ -35,7 +34,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maintenance_interval")]
-        public UInt32 MaintenanceInterval { get; set; }
+        public uint MaintenanceInterval { get; set; }
 
         /// <summary>
         /// API name: maintenance_skip_slots
@@ -51,7 +50,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("committee_proposal_review_period")]
-        public UInt32 CommitteeProposalReviewPeriod { get; set; }
+        public uint CommitteeProposalReviewPeriod { get; set; }
 
         /// <summary>
         /// API name: maximum_transaction_size
@@ -59,7 +58,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_transaction_size")]
-        public UInt32 MaximumTransactionSize { get; set; }
+        public uint MaximumTransactionSize { get; set; }
 
         /// <summary>
         /// API name: maximum_block_size
@@ -67,7 +66,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
 
         /// <summary>
         /// API name: maximum_time_until_expiration
@@ -75,7 +74,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_time_until_expiration")]
-        public UInt32 MaximumTimeUntilExpiration { get; set; }
+        public uint MaximumTimeUntilExpiration { get; set; }
 
         /// <summary>
         /// API name: maximum_proposal_lifetime
@@ -83,7 +82,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("maximum_proposal_lifetime")]
-        public UInt32 MaximumProposalLifetime { get; set; }
+        public uint MaximumProposalLifetime { get; set; }
 
         /// <summary>
         /// API name: maximum_asset_whitelist_authorities
@@ -107,7 +106,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("maximum_witness_count")]
-        public UInt16 MaximumWitnessCount { get; set; }
+        public ushort MaximumWitnessCount { get; set; }
 
         /// <summary>
         /// API name: maximum_committee_count
@@ -115,7 +114,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("maximum_committee_count")]
-        public UInt16 MaximumCommitteeCount { get; set; }
+        public ushort MaximumCommitteeCount { get; set; }
 
         /// <summary>
         /// API name: maximum_authority_membership
@@ -123,7 +122,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("maximum_authority_membership")]
-        public UInt16 MaximumAuthorityMembership { get; set; }
+        public ushort MaximumAuthorityMembership { get; set; }
 
         /// <summary>
         /// API name: reserve_percent_of_fee
@@ -131,7 +130,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("reserve_percent_of_fee")]
-        public UInt16 ReservePercentOfFee { get; set; }
+        public ushort ReservePercentOfFee { get; set; }
 
         /// <summary>
         /// API name: network_percent_of_fee
@@ -139,7 +138,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("network_percent_of_fee")]
-        public UInt16 NetworkPercentOfFee { get; set; }
+        public ushort NetworkPercentOfFee { get; set; }
 
         /// <summary>
         /// API name: lifetime_referrer_percent_of_fee
@@ -147,7 +146,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("lifetime_referrer_percent_of_fee")]
-        public UInt16 LifetimeReferrerPercentOfFee { get; set; }
+        public ushort LifetimeReferrerPercentOfFee { get; set; }
 
         /// <summary>
         /// API name: cashback_vesting_period_seconds
@@ -155,7 +154,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("cashback_vesting_period_seconds")]
-        public UInt32 CashbackVestingPeriodSeconds { get; set; }
+        public uint CashbackVestingPeriodSeconds { get; set; }
 
         /// <summary>
         /// API name: cashback_vesting_threshold
@@ -195,7 +194,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("witness_pay_vesting_seconds")]
-        public UInt32 WitnessPayVestingSeconds { get; set; }
+        public uint WitnessPayVestingSeconds { get; set; }
 
         /// <summary>
         /// API name: worker_budget_per_day
@@ -211,7 +210,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("max_predicate_opcode")]
-        public UInt16 MaxPredicateOpcode { get; set; }
+        public ushort MaxPredicateOpcode { get; set; }
 
         /// <summary>
         /// API name: fee_liquidation_threshold
@@ -227,7 +226,7 @@ namespace Ditch.BitShares.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("accounts_per_fee_scale")]
-        public UInt16 AccountsPerFeeScale { get; set; }
+        public ushort AccountsPerFeeScale { get; set; }
 
         /// <summary>
         /// API name: account_fee_scale_bitshifts

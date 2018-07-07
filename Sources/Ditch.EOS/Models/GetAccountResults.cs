@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -25,7 +24,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("head_block_num")]
-        public UInt32 HeadBlockNum { get; set; }
+        public uint HeadBlockNum { get; set; }
 
         /// <summary>
         /// API name: head_block_time
@@ -73,7 +72,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("ram_quota")]
-        public Int64 RamQuota { get; set; }
+        public long RamQuota { get; set; }
 
         /// <summary>
         /// API name: net_weight
@@ -81,7 +80,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("net_weight")]
-        public Int64 NetWeight { get; set; }
+        public long NetWeight { get; set; }
 
         /// <summary>
         /// API name: cpu_weight
@@ -89,7 +88,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("cpu_weight")]
-        public Int64 CpuWeight { get; set; }
+        public long CpuWeight { get; set; }
 
         /// <summary>
         /// API name: net_limit
@@ -113,7 +112,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: int64_t</returns>
         [JsonProperty("ram_usage")]
-        public Int64 RamUsage { get; set; }
+        public long RamUsage { get; set; }
 
         /// <summary>
         /// API name: permissions

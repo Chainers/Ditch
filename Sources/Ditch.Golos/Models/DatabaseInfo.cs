@@ -1,4 +1,3 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -8,7 +7,7 @@ namespace Ditch.Golos.Models
     /// plugins\database_api\include\golos\plugins\database_api\plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class DatabaseInfo
+    public class DatabaseInfo
     {
 
         /// <summary>

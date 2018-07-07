@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -130,7 +129,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("children")]
-        public UInt32 Children {get; set;}
+        public uint Children {get; set;}
 
         /// <summary>
         /// API name: children_rshares2
@@ -138,7 +137,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("children_rshares2")]
-        public string ChildrenRshares2 { get; set; }
+        public UInt128 ChildrenRshares2 { get; set; }
 
         /// <summary>
         /// API name: net_rshares
@@ -194,7 +193,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_vote_weight")]
-        public UInt64 TotalVoteWeight {get; set;}
+        public ulong TotalVoteWeight {get; set;}
 
         /// <summary>
         /// API name: reward_weight
@@ -202,7 +201,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("reward_weight")]
-        public UInt16 RewardWeight {get; set;}
+        public ushort RewardWeight {get; set;}
 
         /// <summary>
         /// API name: total_payout_value
@@ -234,7 +233,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("net_votes")]
-        public Int32 NetVotes {get; set;}
+        public int NetVotes {get; set;}
 
         /// <summary>
         /// API name: mode
@@ -266,7 +265,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_steem_dollars")]
-        public UInt16 PercentSteemDollars {get; set;}
+        public ushort PercentSteemDollars {get; set;}
 
         /// <summary>
         /// API name: allow_replies

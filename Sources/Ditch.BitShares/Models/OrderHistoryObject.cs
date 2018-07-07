@@ -1,8 +1,4 @@
-using Ditch.Core;
-using System;
-using System.Collections.Generic;
-using Ditch.BitShares.Models;
-using Ditch.BitShares.Models.Operations;
+using Ditch.BitShares.Operations;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -13,7 +9,7 @@ namespace Ditch.BitShares.Models
     /// libraries\plugins\market_history\include\graphene\market_history\market_history_plugin.hpp
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public partial class OrderHistoryObject : AbstractObject<OrderHistoryObject>
+    public class OrderHistoryObject
     {
 
         /// <summary>

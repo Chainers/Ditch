@@ -1,5 +1,4 @@
-﻿using System;
-using Ditch.Core.Attributes;
+﻿using Ditch.Core.Attributes;
 using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
@@ -35,7 +34,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint32_t</returns>
         [MessageOrder(20)]
         [JsonProperty("maximum_block_size")]
-        public UInt32 MaximumBlockSize { get; set; }
+        public uint MaximumBlockSize { get; set; }
 
         /// <summary>
         /// API name: sbd_interest_rate
@@ -44,7 +43,7 @@ namespace Ditch.Golos.Models
         /// <returns>API type: uint16_t</returns>
         [MessageOrder(30)]
         [JsonProperty("sbd_interest_rate")]
-        public UInt16 SbdInterestRate { get; set; }
+        public ushort SbdInterestRate { get; set; }
 
         public ChainProperties17(ushort sbdInterestRate, Asset accountCreationFee, uint maximumBlockSize)
         {

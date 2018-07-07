@@ -2,6 +2,7 @@
 
 namespace Ditch.Steem.Models
 {
+    /// <inheritdoc />
     /// <summary>
     /// signed_transaction
     /// libraries\protocol\include\steemit\protocol\transaction.hpp

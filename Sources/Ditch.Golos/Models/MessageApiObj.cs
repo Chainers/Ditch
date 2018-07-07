@@ -1,4 +1,3 @@
-using System;
 using Ditch.Core.Models;
 using Newtonsoft.Json;
 
@@ -58,7 +57,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("sent_time")]
-        public UInt64 SentTime {get; set;}
+        public ulong SentTime {get; set;}
 
         /// <summary>
         /// API name: receive_time
@@ -74,7 +73,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("checksum")]
-        public UInt32 Checksum {get; set;}
+        public uint Checksum {get; set;}
 
         /// <summary>
         /// API name: encrypted_message

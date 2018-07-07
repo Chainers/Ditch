@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Core.Models;
 using Ditch.Golos.Models;
@@ -206,7 +205,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         ///  <returns>API type: discussion</returns>
         ///  <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, TimePointSec beforeDate, UInt32 limit, UInt16 voteLimit, CancellationToken token)
+        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, TimePointSec beforeDate, uint limit, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit, voteLimit }, token);
         }
@@ -249,9 +248,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>vector of top 1000 tags used by an author sorted by most frequently used</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MapContainer<string, UInt32>> GetTagsUsedByAuthor(string author, CancellationToken token)
+        public JsonRpcResponse<MapContainer<string, uint>> GetTagsUsedByAuthor(string author, CancellationToken token)
         {
-            return CustomGetRequest<MapContainer<string, UInt32>>(KnownApiNames.Tags, "get_tags_used_by_author", new object[] { author }, token);
+            return CustomGetRequest<MapContainer<string, uint>>(KnownApiNames.Tags, "get_tags_used_by_author", new object[] { author }, token);
         }
 
         /// <summary>

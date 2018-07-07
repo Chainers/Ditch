@@ -122,7 +122,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("virtual_last_update")]
-        public string VirtualLastUpdate {get; set;}
+        public UInt128 VirtualLastUpdate {get; set;}
 
         /// <summary>
         /// API name: virtual_position
@@ -130,7 +130,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("virtual_position")]
-        public string VirtualPosition {get; set;}
+        public UInt128 VirtualPosition {get; set;}
 
         /// <summary>
         /// API name: last_work

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Ditch.Core.JsonRpc;
 using Ditch.Core.Models;
 using Ditch.Golos.Models;
@@ -45,9 +44,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: uint64_t</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<UInt64> GetAccountCount(CancellationToken token)
+        public JsonRpcResponse<ulong> GetAccountCount(CancellationToken token)
         {
-            return CustomGetRequest<UInt64>(KnownApiNames.DatabaseApi, "get_account_count", token);
+            return CustomGetRequest<ulong>(KnownApiNames.DatabaseApi, "get_account_count", token);
         }
 
         /// <summary>
@@ -75,7 +74,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: signed_block the referenced block, or null if no matching block was found</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<SignedBlock> GetBlock(UInt32 blockNum, CancellationToken token)
+        public JsonRpcResponse<SignedBlock> GetBlock(uint blockNum, CancellationToken token)
         {
             return CustomGetRequest<SignedBlock>(KnownApiNames.DatabaseApi, "get_block", new object[] { blockNum }, token);
         }
@@ -91,7 +90,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: block_header header of the referenced block, or null if no matching block was found</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BlockHeader> GetBlockHeader(UInt32 blockNum, CancellationToken token)
+        public JsonRpcResponse<BlockHeader> GetBlockHeader(uint blockNum, CancellationToken token)
         {
             return CustomGetRequest<BlockHeader>(KnownApiNames.DatabaseApi, "get_block_header", new object[] { blockNum }, token);
         }
@@ -175,7 +174,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: escrow_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<EscrowApiObject> GetEscrow(string from, UInt32 escrowId, CancellationToken token)
+        public JsonRpcResponse<EscrowApiObject> GetEscrow(string from, uint escrowId, CancellationToken token)
         {
             return CustomGetRequest<EscrowApiObject>(KnownApiNames.DatabaseApi, "get_escrow", new object[] { from, escrowId }, token);
         }
@@ -191,7 +190,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: vesting_delegation_expiration_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VestingDelegationExpirationApiObject[]> GetExpiringVestingDelegations(string account, TimePointSec from, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<VestingDelegationExpirationApiObject[]> GetExpiringVestingDelegations(string account, TimePointSec from, uint limit, CancellationToken token)
         {
             return CustomGetRequest<VestingDelegationExpirationApiObject[]>(KnownApiNames.DatabaseApi, "get_expiring_vesting_delegations", new object[] { account, from, limit }, token);
         }
@@ -260,7 +259,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: proposal_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ProposalApiObject[]> GetProposedTransactions(string arg0, UInt32 arg1, UInt32 arg2, CancellationToken token)
+        public JsonRpcResponse<ProposalApiObject[]> GetProposedTransactions(string arg0, uint arg1, uint arg2, CancellationToken token)
         {
             return CustomGetRequest<ProposalApiObject[]>(KnownApiNames.DatabaseApi, "get_proposed_transactions", new object[] { arg0, arg1, arg2 }, token);
         }
@@ -349,7 +348,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: vesting_delegation_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VestingDelegationApiObject[]> GetVestingDelegations(string account, string from, UInt32 limit, DelegationsType type, CancellationToken token)
+        public JsonRpcResponse<VestingDelegationApiObject[]> GetVestingDelegations(string account, string from, uint limit, DelegationsType type, CancellationToken token)
         {
             return CustomGetRequest<VestingDelegationApiObject[]>(KnownApiNames.DatabaseApi, "get_vesting_delegations", new object[] { account, from, limit, type }, token);
         }
@@ -399,7 +398,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: string Map of account names to corresponding IDs</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> LookupAccounts(string lowerBoundName, UInt32 limit, CancellationToken token)
+        public JsonRpcResponse<string[]> LookupAccounts(string lowerBoundName, uint limit, CancellationToken token)
         {
             return CustomGetRequest<string[]>(KnownApiNames.DatabaseApi, "lookup_accounts", new object[] { lowerBoundName, limit }, token);
         }
