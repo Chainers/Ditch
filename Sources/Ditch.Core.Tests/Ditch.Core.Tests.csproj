@@ -59,6 +59,7 @@
     <Compile Include="DateTimeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransliterationTest.cs" />
+    <Compile Include="Uint128Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
