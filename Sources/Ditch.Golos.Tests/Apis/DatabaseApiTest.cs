@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Golos.Models;
 using Ditch.Golos.Operations;
 using Newtonsoft.Json.Linq;
@@ -10,243 +11,243 @@ namespace Ditch.Golos.Tests.Apis
     [TestFixture]
     public class DatabaseApiTest : BaseTest
     {
-        [Test]
-        public void get_account_bandwidth()
+        [Test][Parallelizable]
+        public async Task get_account_bandwidth()
         {
-            var resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Post, CancellationToken.None);
+            var resp = await Api.GetAccountBandwidth(User.Login, BandwidthType.Post, CancellationToken.None);
             Assert.IsFalse(resp.IsError);
-            resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Market, CancellationToken.None);
+            resp = await Api.GetAccountBandwidth(User.Login, BandwidthType.Market, CancellationToken.None);
             Assert.IsFalse(resp.IsError);
 
-            resp = Api.GetAccountBandwidth(User.Login, BandwidthType.Forum, CancellationToken.None);
+            resp = await Api.GetAccountBandwidth(User.Login, BandwidthType.Forum, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_account_count()
+        [Test][Parallelizable]
+        public async Task get_account_count()
         {
-            var resp = Api.GetAccountCount(CancellationToken.None);
+            var resp = await Api.GetAccountCount(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_accounts()
+        [Test][Parallelizable]
+        public async Task get_accounts()
         {
-            var resp = Api.GetAccounts(new[] { User.Login }, CancellationToken.None);
+            var resp = await Api.GetAccounts(new[] { User.Login }, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_block()
+        [Test][Parallelizable]
+        public async Task get_block()
         {
-            var resp = Api.GetBlock(42, CancellationToken.None);
+            var resp = await Api.GetBlock(42, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_block_header()
+        [Test][Parallelizable]
+        public async Task get_block_header()
         {
-            var resp = Api.GetBlockHeader(42, CancellationToken.None);
+            var resp = await Api.GetBlockHeader(42, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_chain_properties()
+        [Test][Parallelizable]
+        public async Task get_chain_properties()
         {
-            var resp = Api.GetChainProperties(CancellationToken.None);
+            var resp = await Api.GetChainProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_config()
+        [Test][Parallelizable]
+        public async Task get_config()
         {
-            var resp = Api.GetConfig<JObject>(CancellationToken.None);
+            var resp = await Api.GetConfig<JObject>(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_conversion_requests()
+        [Test][Parallelizable]
+        public async Task get_conversion_requests()
         {
-            var resp = Api.GetConversionRequests(User.Login, CancellationToken.None);
+            var resp = await Api.GetConversionRequests(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_dynamic_global_properties()
+        [Test][Parallelizable]
+        public async Task get_dynamic_global_properties()
         {
-            var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var resp = await Api.GetDynamicGlobalProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_escrow()
+        [Test][Parallelizable]
+        public async Task get_escrow()
         {
-            var resp = Api.GetEscrow(User.Login, 3, CancellationToken.None);
+            var resp = await Api.GetEscrow(User.Login, 3, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_expiring_vesting_delegations()
+        [Test][Parallelizable]
+        public async Task get_expiring_vesting_delegations()
         {
-            var resp = Api.GetExpiringVestingDelegations(User.Login, DateTime.Today, 3, CancellationToken.None);
+            var resp = await Api.GetExpiringVestingDelegations(User.Login, DateTime.Today, 3, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_hardfork_version()
+        [Test][Parallelizable]
+        public async Task get_hardfork_version()
         {
-            var resp = Api.GetHardforkVersion(CancellationToken.None);
+            var resp = await Api.GetHardforkVersion(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_next_scheduled_hardfork()
+        [Test][Parallelizable]
+        public async Task get_next_scheduled_hardfork()
         {
-            var resp = Api.GetNextScheduledHardfork(CancellationToken.None);
+            var resp = await Api.GetNextScheduledHardfork(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_owner_history()
+        [Test][Parallelizable]
+        public async Task get_owner_history()
         {
-            var resp = Api.GetOwnerHistory(User.Login, CancellationToken.None);
+            var resp = await Api.GetOwnerHistory(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_potential_signatures()
+        [Test][Parallelizable]
+        public async Task get_potential_signatures()
         {
             var user = User;
             var autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
-            var resp = Api.GetPotentialSignatures(transaction, CancellationToken.None);
+            var resp = await Api.GetPotentialSignatures(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_proposed_transactions()
+        [Test][Parallelizable]
+        public async Task get_proposed_transactions()
         {
-            var resp = Api.GetProposedTransactions(User.Login, 1, 1, CancellationToken.None);
+            var resp = await Api.GetProposedTransactions(User.Login, 1, 1, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_recovery_request()
+        [Test][Parallelizable]
+        public async Task get_recovery_request()
         {
-            var resp = Api.GetRecoveryRequest(User.Login, CancellationToken.None);
+            var resp = await Api.GetRecoveryRequest(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_required_signatures()
+        [Test][Parallelizable]
+        public async Task get_required_signatures()
         {
             var user = User;
             var autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
-            var resp = Api.GetRequiredSignatures(transaction, new PublicKeyType[0], CancellationToken.None);
+            var resp = await Api.GetRequiredSignatures(transaction, new PublicKeyType[0], CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_savings_withdraw_from()
+        [Test][Parallelizable]
+        public async Task get_savings_withdraw_from()
         {
-            var resp = Api.GetSavingsWithdrawFrom(User.Login, CancellationToken.None);
+            var resp = await Api.GetSavingsWithdrawFrom(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_savings_withdraw_to()
+        [Test][Parallelizable]
+        public async Task get_savings_withdraw_to()
         {
-            var resp = Api.GetSavingsWithdrawTo(User.Login, CancellationToken.None);
+            var resp = await Api.GetSavingsWithdrawTo(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_transaction_hex()
+        [Test][Parallelizable]
+        public async Task get_transaction_hex()
         {
             var user = User;
             var autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
-            var resp = Api.GetTransactionHex(transaction, CancellationToken.None);
+            var resp = await Api.GetTransactionHex(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_vesting_delegations()
+        [Test][Parallelizable]
+        public async Task get_vesting_delegations()
         {
-            var resp = Api.GetVestingDelegations(User.Login, User.Login, 1, DelegationsType.Delegated, CancellationToken.None);
+            var resp = await Api.GetVestingDelegations(User.Login, User.Login, 1, DelegationsType.Delegated, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_withdraw_routes()
+        [Test][Parallelizable]
+        public async Task get_withdraw_routes()
         {
-            var resp = Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Incoming, CancellationToken.None);
+            var resp = await Api.GetWithdrawRoutes(User.Login, WithdrawRouteType.Incoming, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void lookup_account_names()
+        [Test][Parallelizable]
+        public async Task lookup_account_names()
         {
-            var resp = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            var resp = await Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void lookup_accounts()
+        [Test][Parallelizable]
+        public async Task lookup_accounts()
         {
             uint limit = 3;
-            var resp = Api.LookupAccounts(User.Login, limit, CancellationToken.None);
+            var resp = await Api.LookupAccounts(User.Login, limit, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void set_block_applied_callback()
+        [Test][Parallelizable]
+        public async Task set_block_applied_callback()
         {
-            var resp = Api.SetBlockAppliedCallback(null, CancellationToken.None);
+            var resp = await Api.SetBlockAppliedCallback(null, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void verify_account_authority()
+        [Test][Parallelizable]
+        public async Task verify_account_authority()
         {
-            var acc = Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            var acc = await Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
 
-            var resp = Api.VerifyAccountAuthority(User.Login, new[] { acc.Result[0].Active.KeyAuths[0].Key }, CancellationToken.None);
+            var resp = await Api.VerifyAccountAuthority(User.Login, new[] { acc.Result[0].Active.KeyAuths[0].Key }, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void verify_authority()
+        [Test][Parallelizable]
+        public async Task verify_authority()
         {
             var user = User;
             var autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
 
-            var resp = Api.VerifyAuthority(transaction, CancellationToken.None);
+            var resp = await Api.VerifyAuthority(transaction, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Core.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class UInt128 : ICustomJson, ICustomSerializer
     {
         public string Value { get; set; }

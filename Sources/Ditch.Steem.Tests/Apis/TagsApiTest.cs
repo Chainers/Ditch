@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Steem.Models;
 using NUnit.Framework;
 
@@ -9,123 +10,123 @@ namespace Ditch.Steem.Tests.Apis
     public class TagsApiTest : BaseTest
     {
 
-        [Test]
-        public void get_trending_tags()
+        [Test][Parallelizable]
+        public async Task get_trending_tags()
         {
             var args = new GetTrendingTagsArgs();
-            var resp = Api.GetTrendingTags(args, CancellationToken.None);
+            var resp = await Api.GetTrendingTags(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_tags_used_by_author()
+        [Test][Parallelizable]
+        public async Task get_tags_used_by_author()
         {
             var args = new GetTagsUsedByAuthorArgs
             {
                 Author = User.Login
             };
-            var resp = Api.GetTagsUsedByAuthor(args, CancellationToken.None);
+            var resp = await Api.GetTagsUsedByAuthor(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussion()
+        [Test][Parallelizable]
+        public async Task get_discussion()
         {
             var args = new GetDiscussionArgs
             {
                 Author = "steepshot",
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
-            var resp = Api.GetDiscussion(args, CancellationToken.None);
+            var resp = await Api.GetDiscussion(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_content_replies()
+        [Test][Parallelizable]
+        public async Task get_content_replies()
         {
             var args = new GetContentRepliesArgs
             {
                 Author = "steepshot",
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
-            var resp = Api.GetContentReplies(args, CancellationToken.None);
+            var resp = await Api.GetContentReplies(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_post_discussions_by_payout()
+        [Test][Parallelizable]
+        public async Task get_post_discussions_by_payout()
         {
             var args = new GetPostDiscussionsByPayoutArgs();
-            var resp = Api.GetPostDiscussionsByPayout(args, CancellationToken.None);
+            var resp = await Api.GetPostDiscussionsByPayout(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_comment_discussions_by_payout()
+        [Test][Parallelizable]
+        public async Task get_comment_discussions_by_payout()
         {
             var args = new GetCommentDiscussionsByPayoutArgs();
-            var resp = Api.GetCommentDiscussionsByPayout(args, CancellationToken.None);
+            var resp = await Api.GetCommentDiscussionsByPayout(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_trending()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_trending()
         {
             var args = new GetDiscussionsByTrendingArgs();
-            var resp = Api.GetDiscussionsByTrending(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByTrending(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_created()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_created()
         {
             var args = new GetDiscussionsByCreatedArgs();
-            var resp = Api.GetDiscussionsByCreated(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByCreated(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_active()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_active()
         {
             var args = new GetDiscussionsByActiveArgs();
-            var resp = Api.GetDiscussionsByActive(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByActive(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_cashout()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_cashout()
         {
             var args = new GetDiscussionsByCashoutArgs();
-            var resp = Api.GetDiscussionsByCashout(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByCashout(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_votes()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_votes()
         {
             var args = new GetDiscussionsByVotesArgs();
-            var resp = Api.GetDiscussionsByVotes(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByVotes(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_children()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_children()
         {
             var args = new GetDiscussionsByChildrenArgs();
-            var resp = Api.GetDiscussionsByChildren(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByChildren(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_hot()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_hot()
         {
             var args = new GetDiscussionsByHotArgs();
-            var resp = Api.GetDiscussionsByHot(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByHot(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_feed()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_feed()
         {
             var args = new GetDiscussionsByFeedArgs
             {
@@ -133,12 +134,12 @@ namespace Ditch.Steem.Tests.Apis
                 SelectAuthors = new[] {User.Login},
                 FilterTags = new[] {"steepshot"}
             };
-            var resp = Api.GetDiscussionsByFeed(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByFeed(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_blog()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_blog()
         {
             var args = new GetDiscussionsByBlogArgs
             {
@@ -146,34 +147,34 @@ namespace Ditch.Steem.Tests.Apis
                 SelectAuthors = new[] { User.Login },
                 FilterTags = new[] { "steepshot" }
             };
-            var resp = Api.GetDiscussionsByBlog(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByBlog(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_comments()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_comments()
         {
             var args = new GetDiscussionsByCommentsArgs
             {
                 StartAuthor = User.Login
             };
-            var resp = Api.GetDiscussionsByComments(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByComments(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_promoted()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_promoted()
         {
             var args = new GetDiscussionsByPromotedArgs
             {
                 ParentAuthor = "steepshot"
             };
-            var resp = Api.GetDiscussionsByPromoted(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByPromoted(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_replies_by_last_update()
+        [Test][Parallelizable]
+        public async Task get_replies_by_last_update()
         {
             var args = new GetRepliesByLastUpdateArgs
             {
@@ -181,12 +182,12 @@ namespace Ditch.Steem.Tests.Apis
                 StartPermlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
                 Limit = 3
             };
-            var resp = Api.GetRepliesByLastUpdate(args, CancellationToken.None);
+            var resp = await Api.GetRepliesByLastUpdate(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_discussions_by_author_before_date()
+        [Test][Parallelizable]
+        public async Task get_discussions_by_author_before_date()
         {
             var args = new GetDiscussionsByAuthorBeforeDateArgs
             {
@@ -195,19 +196,19 @@ namespace Ditch.Steem.Tests.Apis
                 BeforeDate = DateTime.Today,
                 Limit = 3
             };
-            var resp = Api.GetDiscussionsByAuthorBeforeDate(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByAuthorBeforeDate(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_active_votes()
+        [Test][Parallelizable]
+        public async Task get_active_votes()
         {
             var args = new GetActiveVotesArgs
             {
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot",
                 Author = "steepshot"
             };
-            var resp = Api.GetActiveVotes(args, CancellationToken.None);
+            var resp = await Api.GetActiveVotes(args, CancellationToken.None);
             TestPropetries(resp);
         }
     }

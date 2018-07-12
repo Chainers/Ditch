@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Steem.Models;
 using NUnit.Framework;
 
@@ -7,9 +8,8 @@ namespace Ditch.Steem.Tests.Apis
     [TestFixture]
     public class AccountByKeyApiTest : BaseTest
     {
-
-        [Test]
-        public void get_key_references()
+        [Test][Parallelizable]
+        public async Task get_key_references()
         {
             var pubKey = new PublicKeyType("STM6C8GjDBAHrfSqaNRn4FnLLUdCfw3WgjY3td1cC4T7CKpb32YM6");
 
@@ -17,7 +17,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Keys = new[] { pubKey }
             };
-            var resp = Api.GetKeyReferences(args, CancellationToken.None);
+            var resp =await Api.GetKeyReferences(args, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

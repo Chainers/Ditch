@@ -28,17 +28,17 @@ namespace Ditch.Steem.Models
             AssetNum = assetNum;
         }
 
-        public AssetSymbolType(string value, byte decimalPlaces)
+        public AssetSymbolType(byte decimalPlaces, string value)
         {
             var m = ValidateRegex.Match(value);
             if (!m.Success)
                 throw new InvalidCastException();
 
             var assetNum = uint.Parse(m.Value);
-            AssetNum = AssetNumFromNai(assetNum, decimalPlaces);
+            AssetNum = AssetNumFromNai(decimalPlaces, assetNum);
         }
 
-        private static uint AssetNumFromNai(uint nai, byte decimalPlaces)
+        private static uint AssetNumFromNai(byte decimalPlaces, uint nai)
         {
             var naiDataDigits = nai / 10;
 

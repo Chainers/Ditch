@@ -1,16 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Ditch.Core.Attributes;
-using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Ditch.Steem.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Operations
 {
-    [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class CommentPayoutBeneficiaries : ICustomJson, ICustomSerializer
+    public class CommentPayoutBeneficiaries : ICustomSerializer
     {
         public const string OperationName = "comment_payout_beneficiaries";
 
@@ -20,30 +17,6 @@ namespace Ditch.Steem.Operations
         {
             Beneficiaries = beneficiaries;
         }
-
-        #region ICustomJson
-
-        public void ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            throw new NotImplementedException("Oops, it seems that Ditch doesn't support this functionality yet. Try adding it yourself or contact the developer.");
-        }
-
-        public void WriteJson(JsonWriter writer, JsonSerializer serializer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteValue(OperationName);
-            writer.WritePropertyName("value");
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("beneficiaries");
-            serializer.Serialize(writer, Beneficiaries);
-            writer.WriteEndObject();
-
-            writer.WriteEndObject();
-        }
-
-        #endregion
 
         #region ICustomSerializer
 

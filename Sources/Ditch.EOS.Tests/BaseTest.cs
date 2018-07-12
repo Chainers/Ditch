@@ -111,7 +111,10 @@ namespace Ditch.EOS.Tests
             if (r.IsError)
             {
                 Console.WriteLine("Error:");
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+                if (r.ResponseError != null)
+                    Console.WriteLine(JsonConvert.SerializeObject(r.ResponseError, Formatting.Indented));
+                if (r.Exception != null)
+                    Console.WriteLine(r.Exception.ToString());
             }
             else
             {

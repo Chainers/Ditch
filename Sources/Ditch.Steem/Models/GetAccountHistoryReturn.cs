@@ -1,3 +1,4 @@
+using Ditch.Core.Models;
 using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
@@ -16,6 +17,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: map&lt;uint32_t,api_operation_object></returns>
         [JsonProperty("history")]
-        public object History {get; set;}
+        public MapContainer<uint, AppliedOperation> History {get; set;}
     }
 }

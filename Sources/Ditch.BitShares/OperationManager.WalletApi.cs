@@ -3,6 +3,7 @@
 //using System.Threading;
 //using Ditch.BitShares.Models;
 //using Ditch.BitShares.Models.Operations;
+//using Ditch.BitShares.Operations;
 //using Ditch.Core.JsonRpc;
 //using Ditch.Core.Models;
 
@@ -56,7 +57,7 @@
 //        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        ///// <returns>API type: signed_block_with_info</returns>
 //        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        //public JsonRpcResponse<SignedBlockWithInfo> GetBlock(UInt32 num, CancellationToken token)
+//        //public JsonRpcResponse<SignedBlockWithInfo>> GetBlock(UInt32 num, CancellationToken token)
 //        //{
 //        //    return CustomGetRequest<SignedBlockWithInfo>(KnownApiNames.WalletApi, "get_block", new object[] { num, }, token);
 //        //}
@@ -72,7 +73,7 @@
 //        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        ///// <returns>API type: uint64_t</returns>
 //        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        //public JsonRpcResponse<UInt64> GetAccountCount(CancellationToken token)
+//        //public JsonRpcResponse<UInt64>> GetAccountCount(CancellationToken token)
 //        //{
 //        //    return CustomGetRequest<UInt64>(KnownApiNames.WalletApi, "get_account_count", token);
 //        //}
@@ -150,7 +151,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: operation_detail</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<OperationDetail[]> GetAccountHistory(string name, int limit, CancellationToken token)
+//        public JsonRpcResponse<OperationDetail[]>> GetAccountHistory(string name, int limit, CancellationToken token)
 //        {
 //            return CustomGetRequest<OperationDetail[]>(KnownApiNames.WalletApi, "get_account_history", new object[] { name, limit, }, token);
 //        }
@@ -167,7 +168,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: operation_detail</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<OperationDetail[]> GetRelativeAccountHistory(string name, UInt32 stop, int limit, UInt32 start, CancellationToken token)
+//        public JsonRpcResponse<OperationDetail[]>> GetRelativeAccountHistory(string name, UInt32 stop, int limit, UInt32 start, CancellationToken token)
 //        {
 //            return CustomGetRequest<OperationDetail[]>(KnownApiNames.WalletApi, "get_relative_account_history", new object[] { name, stop, limit, start, }, token);
 //        }
@@ -184,7 +185,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: bucket_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<BucketObject[]> GetMarketHistory(string symbol, string symbol2, UInt32 bucket, TimePointSec start, TimePointSec end, CancellationToken token)
+//        public JsonRpcResponse<BucketObject[]>> GetMarketHistory(string symbol, string symbol2, UInt32 bucket, TimePointSec start, TimePointSec end, CancellationToken token)
 //        {
 //            return CustomGetRequest<BucketObject[]>(KnownApiNames.WalletApi, "get_market_history", new object[] { symbol, symbol2, bucket, start, end, }, token);
 //        }
@@ -199,7 +200,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: limit_order_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<LimitOrderObject[]> GetLimitOrders(string a, string b, UInt32 limit, CancellationToken token)
+//        public JsonRpcResponse<LimitOrderObject[]>> GetLimitOrders(string a, string b, UInt32 limit, CancellationToken token)
 //        {
 //            return CustomGetRequest<LimitOrderObject[]>(KnownApiNames.WalletApi, "get_limit_orders", new object[] { a, b, limit, }, token);
 //        }
@@ -213,7 +214,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: call_order_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<CallOrderObject[]> GetCallOrders(string a, UInt32 limit, CancellationToken token)
+//        public JsonRpcResponse<CallOrderObject[]>> GetCallOrders(string a, UInt32 limit, CancellationToken token)
 //        {
 //            return CustomGetRequest<CallOrderObject[]>(KnownApiNames.WalletApi, "get_call_orders", new object[] { a, limit, }, token);
 //        }
@@ -227,7 +228,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: force_settlement_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<ForceSettlementObject[]> GetSettleOrders(string a, UInt32 limit, CancellationToken token)
+//        public JsonRpcResponse<ForceSettlementObject[]>> GetSettleOrders(string a, UInt32 limit, CancellationToken token)
 //        {
 //            return CustomGetRequest<ForceSettlementObject[]>(KnownApiNames.WalletApi, "get_settle_orders", new object[] { a, limit, }, token);
 //        }
@@ -243,7 +244,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: collateral_bid_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<CollateralBidObject[]> GetCollateralBids(string asset, UInt32 limit, UInt32 start, CancellationToken token)
+//        public JsonRpcResponse<CollateralBidObject[]>> GetCollateralBids(string asset, UInt32 limit, UInt32 start, CancellationToken token)
 //        {
 //            return CustomGetRequest<CollateralBidObject[]>(KnownApiNames.WalletApi, "get_collateral_bids", new object[] { asset, limit, start, }, token);
 //        }
@@ -264,7 +265,7 @@
 //        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        ///// <returns>API type: global_property_object</returns>
 //        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        //public JsonRpcResponse<GlobalPropertyObject> GetGlobalProperties(CancellationToken token)
+//        //public JsonRpcResponse<GlobalPropertyObject>> GetGlobalProperties(CancellationToken token)
 //        //{
 //        //    return CustomGetRequest<GlobalPropertyObject>(KnownApiNames.WalletApi, "get_global_properties", token);
 //        //}
@@ -281,7 +282,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: account_history_operation_detail</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<AccountHistoryOperationDetail> GetAccountHistoryByOperations(string name, UInt16[] operationTypes, UInt32 start, int limit, CancellationToken token)
+//        public JsonRpcResponse<AccountHistoryOperationDetail>> GetAccountHistoryByOperations(string name, UInt16[] operationTypes, UInt32 start, int limit, CancellationToken token)
 //        {
 //            return CustomGetRequest<AccountHistoryOperationDetail>(KnownApiNames.WalletApi, "get_account_history_by_operations", new object[] { name, operationTypes, start, limit, }, token);
 //        }
@@ -301,7 +302,7 @@
 //        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        ///// <returns>API type: dynamic_global_property_object</returns>
 //        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        //public JsonRpcResponse<DynamicGlobalPropertyObject> GetDynamicGlobalProperties(CancellationToken token)
+//        //public JsonRpcResponse<DynamicGlobalPropertyObject>> GetDynamicGlobalProperties(CancellationToken token)
 //        //{
 //        //    return CustomGetRequest<DynamicGlobalPropertyObject>(KnownApiNames.WalletApi, "get_dynamic_global_properties", token);
 //        //}
@@ -315,7 +316,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: account_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<AccountObject> GetAccount(string accountNameOrId, CancellationToken token)
+//        public JsonRpcResponse<AccountObject>> GetAccount(string accountNameOrId, CancellationToken token)
 //        {
 //            return CustomGetRequest<AccountObject>(KnownApiNames.WalletApi, "get_account", new object[] { accountNameOrId, }, token);
 //        }
@@ -329,7 +330,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: asset_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<AssetObject> GetAsset(string assetNameOrId, CancellationToken token)
+//        public JsonRpcResponse<AssetObject>> GetAsset(string assetNameOrId, CancellationToken token)
 //        {
 //            return CustomGetRequest<AssetObject>(KnownApiNames.WalletApi, "get_asset", new object[] { assetNameOrId, }, token);
 //        }
@@ -343,7 +344,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: asset_bitasset_data_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<AssetBitassetDataObject> GetBitassetData(string assetNameOrId, CancellationToken token)
+//        public JsonRpcResponse<AssetBitassetDataObject>> GetBitassetData(string assetNameOrId, CancellationToken token)
 //        {
 //            return CustomGetRequest<AssetBitassetDataObject>(KnownApiNames.WalletApi, "get_bitasset_data", new object[] { assetNameOrId, }, token);
 //        }
@@ -357,7 +358,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: account_id_type</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<AccountIdType> GetAccountId(string accountNameOrId, CancellationToken token)
+//        public JsonRpcResponse<AccountIdType>> GetAccountId(string accountNameOrId, CancellationToken token)
 //        {
 //            return CustomGetRequest<object>(KnownApiNames.WalletApi, "get_account_id", new object[] { accountNameOrId, }, token);
 //        }
@@ -371,7 +372,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: variant</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<object> GetObject(object id, CancellationToken token)
+//        public JsonRpcResponse<object>> GetObject(object id, CancellationToken token)
 //        {
 //            return CustomGetRequest<object>(KnownApiNames.WalletApi, "get_object", new object[] { id, }, token);
 //        }
@@ -390,7 +391,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: string</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<string> GetPrivateKey(PublicKeyType pubkey, CancellationToken token)
+//        public JsonRpcResponse<string>> GetPrivateKey(PublicKeyType pubkey, CancellationToken token)
 //        {
 //            return CustomGetRequest<string>(KnownApiNames.WalletApi, "get_private_key", new object[] { pubkey, }, token);
 //        }
@@ -658,7 +659,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: string</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<string> Gethelp(string method, CancellationToken token)
+//        public JsonRpcResponse<string>> Gethelp(string method, CancellationToken token)
 //        {
 //            return CustomGetRequest<string>(KnownApiNames.WalletApi, "gethelp", new object[] { method, }, token);
 //        }
@@ -949,7 +950,7 @@
 //        /// <returns>API type: asset the total balance of all blinded commitments that can be claimed by the
 //        /// given account key or label</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<object[]> GetBlindBalances(string keyOrLabel, CancellationToken token)
+//        public JsonRpcResponse<object[]>> GetBlindBalances(string keyOrLabel, CancellationToken token)
 //        {
 //            return CustomGetRequest<object[]>(KnownApiNames.WalletApi, "get_blind_balances", new object[] { keyOrLabel, }, token);
 //        }
@@ -961,7 +962,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: map&lt;string,public_key_type> all blind accounts */</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<MapContainer<string, PublicKeyType>> GetBlindAccounts(CancellationToken token)
+//        public JsonRpcResponse<MapContainer<string, PublicKeyType>>> GetBlindAccounts(CancellationToken token)
 //        {
 //            return CustomGetRequest<MapContainer<string, PublicKeyType>>(KnownApiNames.WalletApi, "get_blind_accounts", token);
 //        }
@@ -973,7 +974,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: map&lt;string,public_key_type> all blind accounts for which this wallet has the private key */</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<MapContainer<string, PublicKeyType>> GetMyBlindAccounts(CancellationToken token)
+//        public JsonRpcResponse<MapContainer<string, PublicKeyType>>> GetMyBlindAccounts(CancellationToken token)
 //        {
 //            return CustomGetRequest<MapContainer<string, PublicKeyType>>(KnownApiNames.WalletApi, "get_my_blind_accounts", token);
 //        }
@@ -986,7 +987,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: public_key_type the public key associated with the given label */</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<PublicKeyType> GetPublicKey(string label, CancellationToken token)
+//        public JsonRpcResponse<PublicKeyType>> GetPublicKey(string label, CancellationToken token)
 //        {
 //            return CustomGetRequest<PublicKeyType>(KnownApiNames.WalletApi, "get_public_key", new object[] { label, }, token);
 //        }
@@ -1383,7 +1384,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: witness_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<WitnessObject> GetWitness(string ownerAccount, CancellationToken token)
+//        public JsonRpcResponse<WitnessObject>> GetWitness(string ownerAccount, CancellationToken token)
 //        {
 //            return CustomGetRequest<WitnessObject>(KnownApiNames.WalletApi, "get_witness", new object[] { ownerAccount, }, token);
 //        }
@@ -1397,7 +1398,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: committee_member_object</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<CommitteeMemberObject> GetCommitteeMember(string ownerAccount, CancellationToken token)
+//        public JsonRpcResponse<CommitteeMemberObject>> GetCommitteeMember(string ownerAccount, CancellationToken token)
 //        {
 //            return CustomGetRequest<CommitteeMemberObject>(KnownApiNames.WalletApi, "get_committee_member", new object[] { ownerAccount, }, token);
 //        }
@@ -1443,7 +1444,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: vesting_balance_object_with_info</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<VestingBalanceObjectWithInfo[]> GetVestingBalances(string accountName, CancellationToken token)
+//        public JsonRpcResponse<VestingBalanceObjectWithInfo[]>> GetVestingBalances(string accountName, CancellationToken token)
 //        {
 //            return CustomGetRequest<VestingBalanceObjectWithInfo[]>(KnownApiNames.WalletApi, "get_vesting_balances", new object[] { accountName, }, token);
 //        }
@@ -1538,7 +1539,7 @@
 //        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        /// <returns>API type: operation a default-constructed operation of the given type</returns>
 //        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        public JsonRpcResponse<BaseOperation> GetPrototypeOperation(string operationType, CancellationToken token)
+//        public JsonRpcResponse<BaseOperation>> GetPrototypeOperation(string operationType, CancellationToken token)
 //        {
 //            return CustomGetRequest<BaseOperation>(KnownApiNames.WalletApi, "get_prototype_operation", new object[] { operationType, }, token);
 //        }
@@ -1553,7 +1554,7 @@
 //        ///// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
 //        ///// <returns>API type: order_book</returns>
 //        ///// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-//        //public JsonRpcResponse<OrderBook> GetOrderBook(string @base, string quote, UInt32 limit, CancellationToken token)
+//        //public JsonRpcResponse<OrderBook>> GetOrderBook(string @base, string quote, UInt32 limit, CancellationToken token)
 //        //{
 //        //    return CustomGetRequest<OrderBook>(KnownApiNames.WalletApi, "get_order_book", new object[] { @base, quote, limit, }, token);
 //        //}

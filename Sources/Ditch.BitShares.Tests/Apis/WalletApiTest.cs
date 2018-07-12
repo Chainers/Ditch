@@ -8,792 +8,792 @@
 //    [TestFixture]
 //    public class WalletApiTest : BaseTest
 //    {
-//        [Test]
-//        public void info()
+//        [Test][Parallelizable]
+//        public async Task info()
 //        {
-//            var resp = Api.Info(CancellationToken.None);
+//            var resp = await Api.Info(CancellationToken.None);
 //        }
 
-//        [Test]
-//        public void about()
+//        [Test][Parallelizable]
+//        public async Task about()
 //        {
-//            var resp = Api.About(CancellationToken.None);
+//            var resp = await Api.About(CancellationToken.None);
 //        }
 
 //        //[Test]
-//        //public void get_block()
+//        //public async Task get_block()
 //        //{
 //        //    var args = new UInt32();
-//        //    var resp = Api.GetBlock(args, CancellationToken.None);
+//        //    var resp = await Api.GetBlock(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void get_account_count()
+//        [Test][Parallelizable]
+//        public async Task get_account_count()
 //        {
-//            var resp = Api.GetAccountCount(CancellationToken.None);
+//            var resp = await Api.GetAccountCount(CancellationToken.None);
 //        }
 
-//        [Test]
-//        public void list_my_accounts()
+//        [Test][Parallelizable]
+//        public async Task list_my_accounts()
 //        {
-//            var resp = Api.ListMyAccounts(CancellationToken.None);
+//            var resp = await Api.ListMyAccounts(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void list_accounts()
+//        //public async Task list_accounts()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ListAccounts(args, CancellationToken.None);
+//        //    var resp = await Api.ListAccounts(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void list_account_balances()
+//        //public async Task list_account_balances()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ListAccountBalances(args, CancellationToken.None);
+//        //    var resp = await Api.ListAccountBalances(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void list_assets()
+//        //public async Task list_assets()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ListAssets(args, CancellationToken.None);
+//        //    var resp = await Api.ListAssets(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_account_history()
+//        //public async Task get_account_history()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetAccountHistory(args, CancellationToken.None);
+//        //    var resp = await Api.GetAccountHistory(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_relative_account_history()
+//        //public async Task get_relative_account_history()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetRelativeAccountHistory(args, CancellationToken.None);
+//        //    var resp = await Api.GetRelativeAccountHistory(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_market_history()
+//        //public async Task get_market_history()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetMarketHistory(args, CancellationToken.None);
+//        //    var resp = await Api.GetMarketHistory(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_limit_orders()
+//        //public async Task get_limit_orders()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetLimitOrders(args, CancellationToken.None);
+//        //    var resp = await Api.GetLimitOrders(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_call_orders()
+//        //public async Task get_call_orders()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetCallOrders(args, CancellationToken.None);
+//        //    var resp = await Api.GetCallOrders(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_settle_orders()
+//        //public async Task get_settle_orders()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetSettleOrders(args, CancellationToken.None);
+//        //    var resp = await Api.GetSettleOrders(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_collateral_bids()
+//        //public async Task get_collateral_bids()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetCollateralBids(args, CancellationToken.None);
+//        //    var resp = await Api.GetCollateralBids(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void get_global_properties()
+//        [Test][Parallelizable]
+//        public async Task get_global_properties()
 //        {
-//            var resp = Api.GetGlobalProperties(CancellationToken.None);
+//            var resp = await Api.GetGlobalProperties(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void get_account_history_by_operations()
+//        //public async Task get_account_history_by_operations()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetAccountHistoryByOperations(args, CancellationToken.None);
+//        //    var resp = await Api.GetAccountHistoryByOperations(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void get_dynamic_global_properties()
+//        [Test][Parallelizable]
+//        public async Task get_dynamic_global_properties()
 //        {
-//            var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
+//            var resp = await Api.GetDynamicGlobalProperties(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void get_account()
+//        //public async Task get_account()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetAccount(args, CancellationToken.None);
+//        //    var resp = await Api.GetAccount(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_asset()
+//        //public async Task get_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetAsset(args, CancellationToken.None);
+//        //    var resp = await Api.GetAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_bitasset_data()
+//        //public async Task get_bitasset_data()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetBitassetData(args, CancellationToken.None);
+//        //    var resp = await Api.GetBitassetData(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_account_id()
+//        //public async Task get_account_id()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetAccountId(args, CancellationToken.None);
+//        //    var resp = await Api.GetAccountId(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_object()
+//        //public async Task get_object()
 //        //{
 //        //    var args = new ObjectIdType();
-//        //    var resp = Api.GetObject(args, CancellationToken.None);
+//        //    var resp = await Api.GetObject(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_private_key()
+//        //public async Task get_private_key()
 //        //{
 //        //    var args = new PublicKeyType();
-//        //    var resp = Api.GetPrivateKey(args, CancellationToken.None);
+//        //    var resp = await Api.GetPrivateKey(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void begin_builder_transaction()
+//        [Test][Parallelizable]
+//        public async Task begin_builder_transaction()
 //        {
-//            var resp = Api.BeginBuilderTransaction(CancellationToken.None);
+//            var resp = await Api.BeginBuilderTransaction(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void add_operation_to_builder_transaction()
+//        //public async Task add_operation_to_builder_transaction()
 //        //{
 //        //    var args = new UInt16();
-//        //    var resp = Api.AddOperationToBuilderTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.AddOperationToBuilderTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void replace_operation_in_builder_transaction()
+//        //public async Task replace_operation_in_builder_transaction()
 //        //{
 //        //    var args = new UInt16();
-//        //    var resp = Api.ReplaceOperationInBuilderTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.ReplaceOperationInBuilderTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void preview_builder_transaction()
+//        //public async Task preview_builder_transaction()
 //        //{
 //        //    var args = new UInt16();
-//        //    var resp = Api.PreviewBuilderTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.PreviewBuilderTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void sign_builder_transaction()
+//        //public async Task sign_builder_transaction()
 //        //{
 //        //    var args = new UInt16();
-//        //    var resp = Api.SignBuilderTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.SignBuilderTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void broadcast_transaction()
+//        //public async Task broadcast_transaction()
 //        //{
 //        //    var args = new SignedTransaction();
-//        //    var resp = Api.BroadcastTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.BroadcastTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void remove_builder_transaction()
+//        //public async Task remove_builder_transaction()
 //        //{
 //        //    var args = new UInt16();
-//        //    var resp = Api.RemoveBuilderTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.RemoveBuilderTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void is_new()
+//        [Test][Parallelizable]
+//        public async Task is_new()
 //        {
-//            var resp = Api.IsNew(CancellationToken.None);
+//            var resp = await Api.IsNew(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
-//        [Test]
-//        public void is_locked()
+//        [Test][Parallelizable]
+//        public async Task is_locked()
 //        {
-//            var resp = Api.IsLocked(CancellationToken.None);
+//            var resp = await Api.IsLocked(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
-//        [Test]
-//        public void lockTest()
+//        [Test][Parallelizable]
+//        public async Task lockTest()
 //        {
-//            var resp = Api.Lock(CancellationToken.None);
+//            var resp = await Api.Lock(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void unlock()
+//        //public async Task unlock()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.Unlock(args, CancellationToken.None);
+//        //    var resp = await Api.Unlock(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void set_password()
+//        //public async Task set_password()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.SetPassword(args, CancellationToken.None);
+//        //    var resp = await Api.SetPassword(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void dump_private_keys()
+//        [Test][Parallelizable]
+//        public async Task dump_private_keys()
 //        {
-//            var resp = Api.DumpPrivateKeys(CancellationToken.None);
+//            var resp = await Api.DumpPrivateKeys(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
-//        [Test]
-//        public void help()
+//        [Test][Parallelizable]
+//        public async Task help()
 //        {
-//            var resp = Api.Help(CancellationToken.None);
-//            TestPropetries(resp);
-//        }
-
-//        //[Test]
-//        //public void gethelp()
-//        //{
-//        //    var args = new string();
-//        //    var resp = Api.Gethelp(args, CancellationToken.None);
-//        //    TestPropetries(resp);
-//        //}
-
-//        [Test]
-//        public void suggest_brain_key()
-//        {
-//            var resp = Api.SuggestBrainKey(CancellationToken.None);
+//            var resp = await Api.Help(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void derive_owner_keys_from_brain_key()
+//        //public async Task gethelp()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.DeriveOwnerKeysFromBrainKey(args, CancellationToken.None);
+//        //    var resp = await Api.Gethelp(args, CancellationToken.None);
+//        //    TestPropetries(resp);
+//        //}
+
+//        [Test][Parallelizable]
+//        public async Task suggest_brain_key()
+//        {
+//            var resp = await Api.SuggestBrainKey(CancellationToken.None);
+//            TestPropetries(resp);
+//        }
+
+//        //[Test]
+//        //public async Task derive_owner_keys_from_brain_key()
+//        //{
+//        //    var args = new string();
+//        //    var resp = await Api.DeriveOwnerKeysFromBrainKey(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void is_public_key_registered()
+//        //public async Task is_public_key_registered()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.IsPublicKeyRegistered(args, CancellationToken.None);
+//        //    var resp = await Api.IsPublicKeyRegistered(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void serialize_transaction()
+//        //public async Task serialize_transaction()
 //        //{
 //        //    var args = new SignedTransaction();
-//        //    var resp = Api.SerializeTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.SerializeTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void import_key()
+//        //public async Task import_key()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ImportKey(args, CancellationToken.None);
+//        //    var resp = await Api.ImportKey(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void import_accounts()
+//        //public async Task import_accounts()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ImportAccounts(args, CancellationToken.None);
+//        //    var resp = await Api.ImportAccounts(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void import_account_keys()
+//        //public async Task import_account_keys()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ImportAccountKeys(args, CancellationToken.None);
+//        //    var resp = await Api.ImportAccountKeys(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void import_balance()
+//        //public async Task import_balance()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ImportBalance(args, CancellationToken.None);
+//        //    var resp = await Api.ImportBalance(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void normalize_brain_key()
+//        //public async Task normalize_brain_key()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.NormalizeBrainKey(args, CancellationToken.None);
+//        //    var resp = await Api.NormalizeBrainKey(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void register_account()
+//        //public async Task register_account()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.RegisterAccount(args, CancellationToken.None);
+//        //    var resp = await Api.RegisterAccount(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void upgrade_account()
+//        //public async Task upgrade_account()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.UpgradeAccount(args, CancellationToken.None);
+//        //    var resp = await Api.UpgradeAccount(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void create_account_with_brain_key()
+//        //public async Task create_account_with_brain_key()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.CreateAccountWithBrainKey(args, CancellationToken.None);
+//        //    var resp = await Api.CreateAccountWithBrainKey(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void transfer()
+//        //public async Task transfer()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.Transfer(args, CancellationToken.None);
+//        //    var resp = await Api.Transfer(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void sign_memo()
+//        //public async Task sign_memo()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.SignMemo(args, CancellationToken.None);
+//        //    var resp = await Api.SignMemo(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void read_memo()
+//        //public async Task read_memo()
 //        //{
 //        //    var args = new MemoData();
-//        //    var resp = Api.ReadMemo(args, CancellationToken.None);
+//        //    var resp = await Api.ReadMemo(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void create_blind_account()
+//        //public async Task create_blind_account()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.CreateBlindAccount(args, CancellationToken.None);
+//        //    var resp = await Api.CreateBlindAccount(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_blind_balances()
+//        //public async Task get_blind_balances()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetBlindBalances(args, CancellationToken.None);
+//        //    var resp = await Api.GetBlindBalances(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void get_blind_accounts()
+//        [Test][Parallelizable]
+//        public async Task get_blind_accounts()
 //        {
-//            var resp = Api.GetBlindAccounts(CancellationToken.None);
+//            var resp = await Api.GetBlindAccounts(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
-//        [Test]
-//        public void get_my_blind_accounts()
+//        [Test][Parallelizable]
+//        public async Task get_my_blind_accounts()
 //        {
-//            var resp = Api.GetMyBlindAccounts(CancellationToken.None);
+//            var resp = await Api.GetMyBlindAccounts(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 
 //        //[Test]
-//        //public void get_public_key()
+//        //public async Task get_public_key()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetPublicKey(args, CancellationToken.None);
+//        //    var resp = await Api.GetPublicKey(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void blind_history()
+//        //public async Task blind_history()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.BlindHistory(args, CancellationToken.None);
+//        //    var resp = await Api.BlindHistory(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void receive_blind_transfer()
+//        //public async Task receive_blind_transfer()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ReceiveBlindTransfer(args, CancellationToken.None);
+//        //    var resp = await Api.ReceiveBlindTransfer(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void blind_transfer()
+//        //public async Task blind_transfer()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.BlindTransfer(args, CancellationToken.None);
+//        //    var resp = await Api.BlindTransfer(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void sell_asset()
+//        //public async Task sell_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.SellAsset(args, CancellationToken.None);
+//        //    var resp = await Api.SellAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void borrow_asset()
+//        //public async Task borrow_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.BorrowAsset(args, CancellationToken.None);
+//        //    var resp = await Api.BorrowAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void cancel_order()
+//        //public async Task cancel_order()
 //        //{
 //        //    var args = new ObjectIdType();
-//        //    var resp = Api.CancelOrder(args, CancellationToken.None);
+//        //    var resp = await Api.CancelOrder(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void create_asset()
+//        //public async Task create_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.CreateAsset(args, CancellationToken.None);
+//        //    var resp = await Api.CreateAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void issue_asset()
+//        //public async Task issue_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.IssueAsset(args, CancellationToken.None);
+//        //    var resp = await Api.IssueAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void update_asset()
+//        //public async Task update_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.UpdateAsset(args, CancellationToken.None);
+//        //    var resp = await Api.UpdateAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void update_bitasset()
+//        //public async Task update_bitasset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.UpdateBitasset(args, CancellationToken.None);
+//        //    var resp = await Api.UpdateBitasset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void update_asset_feed_producers()
+//        //public async Task update_asset_feed_producers()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.UpdateAssetFeedProducers(args, CancellationToken.None);
+//        //    var resp = await Api.UpdateAssetFeedProducers(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void publish_asset_feed()
+//        //public async Task publish_asset_feed()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.PublishAssetFeed(args, CancellationToken.None);
+//        //    var resp = await Api.PublishAssetFeed(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void fund_asset_fee_pool()
+//        //public async Task fund_asset_fee_pool()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.FundAssetFeePool(args, CancellationToken.None);
+//        //    var resp = await Api.FundAssetFeePool(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void reserve_asset()
+//        //public async Task reserve_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ReserveAsset(args, CancellationToken.None);
+//        //    var resp = await Api.ReserveAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void global_settle_asset()
+//        //public async Task global_settle_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GlobalSettleAsset(args, CancellationToken.None);
+//        //    var resp = await Api.GlobalSettleAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void settle_asset()
+//        //public async Task settle_asset()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.SettleAsset(args, CancellationToken.None);
+//        //    var resp = await Api.SettleAsset(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void bid_collateral()
+//        //public async Task bid_collateral()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.BidCollateral(args, CancellationToken.None);
+//        //    var resp = await Api.BidCollateral(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void whitelist_account()
+//        //public async Task whitelist_account()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.WhitelistAccount(args, CancellationToken.None);
+//        //    var resp = await Api.WhitelistAccount(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void create_committee_member()
+//        //public async Task create_committee_member()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.CreateCommitteeMember(args, CancellationToken.None);
+//        //    var resp = await Api.CreateCommitteeMember(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void list_witnesses()
+//        //public async Task list_witnesses()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ListWitnesses(args, CancellationToken.None);
+//        //    var resp = await Api.ListWitnesses(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void list_committee_members()
+//        //public async Task list_committee_members()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.ListCommitteeMembers(args, CancellationToken.None);
+//        //    var resp = await Api.ListCommitteeMembers(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_witness()
+//        //public async Task get_witness()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetWitness(args, CancellationToken.None);
+//        //    var resp = await Api.GetWitness(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_committee_member()
+//        //public async Task get_committee_member()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetCommitteeMember(args, CancellationToken.None);
+//        //    var resp = await Api.GetCommitteeMember(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void create_witness()
+//        //public async Task create_witness()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.CreateWitness(args, CancellationToken.None);
+//        //    var resp = await Api.CreateWitness(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void update_witness()
+//        //public async Task update_witness()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.UpdateWitness(args, CancellationToken.None);
+//        //    var resp = await Api.UpdateWitness(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_vesting_balances()
+//        //public async Task get_vesting_balances()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetVestingBalances(args, CancellationToken.None);
+//        //    var resp = await Api.GetVestingBalances(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void vote_for_committee_member()
+//        //public async Task vote_for_committee_member()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.VoteForCommitteeMember(args, CancellationToken.None);
+//        //    var resp = await Api.VoteForCommitteeMember(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void vote_for_witness()
+//        //public async Task vote_for_witness()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.VoteForWitness(args, CancellationToken.None);
+//        //    var resp = await Api.VoteForWitness(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void set_voting_proxy()
+//        //public async Task set_voting_proxy()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.SetVotingProxy(args, CancellationToken.None);
+//        //    var resp = await Api.SetVotingProxy(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void set_desired_witness_and_committee_member_count()
+//        //public async Task set_desired_witness_and_committee_member_count()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.SetDesiredWitnessAndCommitteeMemberCount(args, CancellationToken.None);
+//        //    var resp = await Api.SetDesiredWitnessAndCommitteeMemberCount(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void sign_transaction()
+//        //public async Task sign_transaction()
 //        //{
 //        //    var args = new SignedTransaction();
-//        //    var resp = Api.SignTransaction(args, CancellationToken.None);
+//        //    var resp = await Api.SignTransaction(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_prototype_operation()
+//        //public async Task get_prototype_operation()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetPrototypeOperation(args, CancellationToken.None);
+//        //    var resp = await Api.GetPrototypeOperation(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void get_order_book()
+//        //public async Task get_order_book()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.GetOrderBook(args, CancellationToken.None);
+//        //    var resp = await Api.GetOrderBook(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void dbg_make_uia()
+//        //public async Task dbg_make_uia()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.DbgMakeUia(args, CancellationToken.None);
+//        //    var resp = await Api.DbgMakeUia(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void dbg_make_mia()
+//        //public async Task dbg_make_mia()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.DbgMakeMia(args, CancellationToken.None);
+//        //    var resp = await Api.DbgMakeMia(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void dbg_push_blocks()
+//        //public async Task dbg_push_blocks()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.DbgPushBlocks(args, CancellationToken.None);
+//        //    var resp = await Api.DbgPushBlocks(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void dbg_generate_blocks()
+//        //public async Task dbg_generate_blocks()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.DbgGenerateBlocks(args, CancellationToken.None);
+//        //    var resp = await Api.DbgGenerateBlocks(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void dbg_stream_json_objects()
+//        //public async Task dbg_stream_json_objects()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.DbgStreamJsonObjects(args, CancellationToken.None);
+//        //    var resp = await Api.DbgStreamJsonObjects(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void dbg_update_object()
+//        //public async Task dbg_update_object()
 //        //{
 //        //    var args = new object();
-//        //    var resp = Api.DbgUpdateObject(args, CancellationToken.None);
+//        //    var resp = await Api.DbgUpdateObject(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void flood_network()
+//        //public async Task flood_network()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.FloodNetwork(args, CancellationToken.None);
+//        //    var resp = await Api.FloodNetwork(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
 //        //[Test]
-//        //public void network_add_nodes()
+//        //public async Task network_add_nodes()
 //        //{
 //        //    var args = new string();
-//        //    var resp = Api.NetworkAddNodes(args, CancellationToken.None);
+//        //    var resp = await Api.NetworkAddNodes(args, CancellationToken.None);
 //        //    TestPropetries(resp);
 //        //}
 
-//        [Test]
-//        public void network_get_connected_peers()
+//        [Test][Parallelizable]
+//        public async Task network_get_connected_peers()
 //        {
-//            var resp = Api.NetworkGetConnectedPeers(CancellationToken.None);
+//            var resp = await Api.NetworkGetConnectedPeers(CancellationToken.None);
 //            TestPropetries(resp);
 //        }
 //    }

@@ -36,6 +36,6 @@ namespace Ditch.Steem.Models
         public TimePointSec Timestamp { get; set; }
 
         [JsonProperty("op")]
-        public object[] Op { get; set; }
+        public Operation Op { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
 namespace Ditch.BitShares.Tests.Apis
@@ -8,57 +9,58 @@ namespace Ditch.BitShares.Tests.Apis
     public class HistoryApiTest : BaseTest
     {
         //[Test]
-        //public void get_account_history()
+        //public async Task get_account_history()
         //{
-        //    var resp = Api.GetAccountHistory(User.Account.Id, , 100, , CancellationToken.None);
+        //    var resp = await Api.GetAccountHistory(User.Account.Id, , 100, , CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_account_history_by_operations()
+        //public async Task get_account_history_by_operations()
         //{
         //    var args = new object();
-        //    var resp = Api.GetAccountHistoryByOperations(args, CancellationToken.None);
+        //    var resp = await Api.GetAccountHistoryByOperations(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_account_history_by_operations()
+        //public async Task get_account_history_by_operations()
         //{
         //    var args = new object();
-        //    var resp = Api.GetAccountHistoryByOperations(args, CancellationToken.None);
+        //    var resp = await Api.GetAccountHistoryByOperations(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_relative_account_history()
+        //public async Task get_relative_account_history()
         //{
         //    var args = new object();
-        //    var resp = Api.GetRelativeAccountHistory(args, CancellationToken.None);
+        //    var resp = await Api.GetRelativeAccountHistory(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_fill_order_history()
+        //public async Task get_fill_order_history()
         //{
         //    var args = new object();
-        //    var resp = Api.GetFillOrderHistory(args, CancellationToken.None);
+        //    var resp = await Api.GetFillOrderHistory(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_market_history()
+        //public async Task get_market_history()
         //{
         //    var args = new object();
-        //    var resp = Api.GetMarketHistory(args, CancellationToken.None);
+        //    var resp = await Api.GetMarketHistory(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_market_history_buckets()
+        [Test][Parallelizable]
+        public async Task get_market_history_buckets()
         {
-            var resp = Api.GetMarketHistoryBuckets(CancellationToken.None); Assert.IsFalse(resp.IsError);
+            var resp = await Api.GetMarketHistoryBuckets(CancellationToken.None);
             Console.WriteLine(JsonConvert.SerializeObject(resp.Result));
+            Assert.IsFalse(resp.IsError);
         }
     }
 }

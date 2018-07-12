@@ -8,7 +8,7 @@ namespace Ditch.EOS.Models
     /// public_key
     /// contracts\eosiolib\public_key.hpp
     /// </summary>
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class PublicKey : ICustomJson
     {
         public string Prefix = "EOS";

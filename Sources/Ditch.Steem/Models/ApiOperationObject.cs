@@ -65,6 +65,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: operation</returns>
         [JsonProperty("op")]
-        public object Op { get; set; }
+        public Operation Op { get; set; }
     }
 }

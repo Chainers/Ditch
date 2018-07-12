@@ -34,7 +34,5 @@
         //public const UInt64 SbdSymbolSer = 0x0000000044425403;   //((UInt64)3 | (SbdSymbolU64 << 8));   // < SBD|TBD with 3 digits of precision;
 
         public string[] ChainFieldName { get; set; } = { "STEEM_CHAIN_ID", "STEEMIT_CHAIN_ID" };
-
-        public static int BlockchainVersion { get; set; } = 0x00001305;
     }
 }

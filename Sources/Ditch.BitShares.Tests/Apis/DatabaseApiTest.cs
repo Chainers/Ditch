@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -8,511 +9,511 @@ namespace Ditch.BitShares.Tests.Apis
     public class DatabaseApiTest : BaseTest
     {
         //[Test]
-        //public void get_objects()
+        //public async Task get_objects()
         //{
         //    var args = new ObjectIdType();
-        //    var resp = Api.GetObjects(args, CancellationToken.None);
+        //    var resp = await Api.GetObjects(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_block_header()
+        //public async Task get_block_header()
         //{
         //    var args = new UInt32();
-        //    var resp = Api.GetBlockHeader(args, CancellationToken.None);
+        //    var resp = await Api.GetBlockHeader(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_block_header_batch()
+        //public async Task get_block_header_batch()
         //{
         //    var args = new UInt32();
-        //    var resp = Api.GetBlockHeaderBatch(args, CancellationToken.None);
+        //    var resp = await Api.GetBlockHeaderBatch(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_block()
+        //public async Task get_block()
         //{
         //    var args = new UInt32();
-        //    var resp = Api.GetBlock(args, CancellationToken.None);
+        //    var resp = await Api.GetBlock(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_transaction()
+        //public async Task get_transaction()
         //{
         //    var args = new UInt32();
-        //    var resp = Api.GetTransaction(args, CancellationToken.None);
+        //    var resp = await Api.GetTransaction(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_recent_transaction_by_id()
+        //public async Task get_recent_transaction_by_id()
         //{
         //    var args = new string();
-        //    var resp = Api.GetRecentTransactionById(args, CancellationToken.None);
+        //    var resp = await Api.GetRecentTransactionById(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_chain_properties()
+        [Test][Parallelizable]
+        public async Task get_chain_properties()
         {
-            var resp = Api.GetChainProperties(CancellationToken.None);
+            var resp = await Api.GetChainProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_global_properties()
+        [Test][Parallelizable]
+        public async Task get_global_properties()
         {
-            var resp = Api.GetGlobalProperties(CancellationToken.None);
+            var resp = await Api.GetGlobalProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_config()
+        [Test][Parallelizable]
+        public async Task get_config()
         {
-            var resp = Api.GetConfig<JObject>(CancellationToken.None);
+            var resp = await Api.GetConfig<JObject>(CancellationToken.None);
             WriteLine(resp);
         }
 
-        [Test]
-        public void get_chain_id()
+        [Test][Parallelizable]
+        public async Task get_chain_id()
         {
-            var resp = Api.GetChainId(CancellationToken.None);
+            var resp = await Api.GetChainId(CancellationToken.None);
             WriteLine(resp);
         }
 
-        [Test]
-        public void get_dynamic_global_properties()
+        [Test][Parallelizable]
+        public async Task get_dynamic_global_properties()
         {
-            var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var resp = await Api.GetDynamicGlobalProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
         //[Test]
-        //public void get_key_references()
+        //public async Task get_key_references()
         //{
         //    var args = new PublicKeyType();
-        //    var resp = Api.GetKeyReferences(args, CancellationToken.None);
+        //    var resp = await Api.GetKeyReferences(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void is_public_key_registered()
+        //public async Task is_public_key_registered()
         //{
         //    var args = new string();
-        //    var resp = Api.IsPublicKeyRegistered(args, CancellationToken.None);
+        //    var resp = await Api.IsPublicKeyRegistered(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_accounts()
+        [Test][Parallelizable]
+        public async Task get_accounts()
         {
             var args = new[] { User.Account.Id };
-            var resp = Api.GetAccounts(args, CancellationToken.None);
+            var resp = await Api.GetAccounts(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         //[Test]
-        //public void get_full_accounts()
+        //public async Task get_full_accounts()
         //{
         //    var args = new string();
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_account_by_name()
+        [Test][Parallelizable]
+        public async Task get_account_by_name()
         {
-            var resp = Api.GetAccountByName(User.Login, CancellationToken.None);
+            var resp = await Api.GetAccountByName(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
         //[Test]
-        //public void get_account_references()
+        //public async Task get_account_references()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetAccountReferences(args, CancellationToken.None);
+        //    var resp = await Api.GetAccountReferences(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void lookup_account_names()
+        //public async Task lookup_account_names()
         //{
         //    var args = new string();
-        //    var resp = Api.LookupAccountNames(args, CancellationToken.None);
+        //    var resp = await Api.LookupAccountNames(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void lookup_accounts()
+        //public async Task lookup_accounts()
         //{
         //    var args = new string();
-        //    var resp = Api.LookupAccounts(args, CancellationToken.None);
+        //    var resp = await Api.LookupAccounts(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_account_balances()
+        //public async Task get_account_balances()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetAccountBalances(args, CancellationToken.None);
+        //    var resp = await Api.GetAccountBalances(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_named_account_balances()
+        //public async Task get_named_account_balances()
         //{
         //    var args = new string();
-        //    var resp = Api.GetNamedAccountBalances(args, CancellationToken.None);
+        //    var resp = await Api.GetNamedAccountBalances(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_balance_objects()
+        //public async Task get_balance_objects()
         //{
         //    var args = new Address();
-        //    var resp = Api.GetBalanceObjects(args, CancellationToken.None);
+        //    var resp = await Api.GetBalanceObjects(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_vested_balances()
+        //public async Task get_vested_balances()
         //{
         //    var args = new BalanceIdType();
-        //    var resp = Api.GetVestedBalances(args, CancellationToken.None);
+        //    var resp = await Api.GetVestedBalances(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_vesting_balances()
+        //public async Task get_vesting_balances()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetVestingBalances(args, CancellationToken.None);
+        //    var resp = await Api.GetVestingBalances(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_account_count()
+        [Test][Parallelizable]
+        public async Task get_account_count()
         {
-            var resp = Api.GetAccountCount(CancellationToken.None);
+            var resp = await Api.GetAccountCount(CancellationToken.None);
             WriteLine(resp);
 
         }
 
         //[Test]
-        //public void get_assets()
+        //public async Task get_assets()
         //{
         //    var args = new AssetIdType();
-        //    var resp = Api.GetAssets(args, CancellationToken.None);
+        //    var resp = await Api.GetAssets(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void list_assets()
+        //public async Task list_assets()
         //{
         //    var args = new string();
-        //    var resp = Api.ListAssets(args, CancellationToken.None);
+        //    var resp = await Api.ListAssets(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void lookup_asset_symbols()
+        //public async Task lookup_asset_symbols()
         //{
         //    var args = new string();
-        //    var resp = Api.LookupAssetSymbols(args, CancellationToken.None);
+        //    var resp = await Api.LookupAssetSymbols(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_limit_orders()
+        //public async Task get_limit_orders()
         //{
         //    var args = new AssetIdType();
-        //    var resp = Api.GetLimitOrders(args, CancellationToken.None);
+        //    var resp = await Api.GetLimitOrders(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_call_orders()
+        //public async Task get_call_orders()
         //{
         //    var args = new AssetIdType();
-        //    var resp = Api.GetCallOrders(args, CancellationToken.None);
+        //    var resp = await Api.GetCallOrders(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_settle_orders()
+        //public async Task get_settle_orders()
         //{
         //    var args = new AssetIdType();
-        //    var resp = Api.GetSettleOrders(args, CancellationToken.None);
+        //    var resp = await Api.GetSettleOrders(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_collateral_bids()
+        //public async Task get_collateral_bids()
         //{
         //    var args = new AssetIdType();
-        //    var resp = Api.GetCollateralBids(args, CancellationToken.None);
+        //    var resp = await Api.GetCollateralBids(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_margin_positions()
+        //public async Task get_margin_positions()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetMarginPositions(args, CancellationToken.None);
+        //    var resp = await Api.GetMarginPositions(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void subscribe_to_market()
+        //public async Task subscribe_to_market()
         //{
         //    var args = new Function();
-        //    var resp = Api.SubscribeToMarket(args, CancellationToken.None);
+        //    var resp = await Api.SubscribeToMarket(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void unsubscribe_from_market()
+        //public async Task unsubscribe_from_market()
         //{
         //    var args = new AssetIdType();
-        //    var resp = Api.UnsubscribeFromMarket(args, CancellationToken.None);
+        //    var resp = await Api.UnsubscribeFromMarket(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_ticker()
+        //public async Task get_ticker()
         //{
         //    var args = new string();
-        //    var resp = Api.GetTicker(args, CancellationToken.None);
+        //    var resp = await Api.GetTicker(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_24_volume()
+        //public async Task get_24_volume()
         //{
         //    var args = new string();
-        //    var resp = Api.Get24Volume(args, CancellationToken.None);
+        //    var resp = await Api.Get24Volume(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_order_book()
+        //public async Task get_order_book()
         //{
         //    var args = new string();
-        //    var resp = Api.GetOrderBook(args, CancellationToken.None);
+        //    var resp = await Api.GetOrderBook(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_top_markets()
+        //public async Task get_top_markets()
         //{
         //    var args = new UInt32();
-        //    var resp = Api.GetTopMarkets(args, CancellationToken.None);
+        //    var resp = await Api.GetTopMarkets(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_trade_history()
+        //public async Task get_trade_history()
         //{
         //    var args = new string();
-        //    var resp = Api.GetTradeHistory(args, CancellationToken.None);
+        //    var resp = await Api.GetTradeHistory(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_trade_history_by_sequence()
+        //public async Task get_trade_history_by_sequence()
         //{
         //    var args = new string();
-        //    var resp = Api.GetTradeHistoryBySequence(args, CancellationToken.None);
+        //    var resp = await Api.GetTradeHistoryBySequence(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_witnesses()
+        //public async Task get_witnesses()
         //{
         //    var args = new WitnessIdType();
-        //    var resp = Api.GetWitnesses(args, CancellationToken.None);
+        //    var resp = await Api.GetWitnesses(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_witness_by_account()
+        //public async Task get_witness_by_account()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetWitnessByAccount(args, CancellationToken.None);
+        //    var resp = await Api.GetWitnessByAccount(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void lookup_witness_accounts()
+        //public async Task lookup_witness_accounts()
         //{
         //    var args = new string();
-        //    var resp = Api.LookupWitnessAccounts(args, CancellationToken.None);
+        //    var resp = await Api.LookupWitnessAccounts(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_witness_count()
+        [Test][Parallelizable]
+        public async Task get_witness_count()
         {
-            var resp = Api.GetWitnessCount(CancellationToken.None);
+            var resp = await Api.GetWitnessCount(CancellationToken.None);
             WriteLine(resp);
         }
 
         //[Test]
-        //public void get_committee_members()
+        //public async Task get_committee_members()
         //{
         //    var args = new CommitteeMemberIdType();
-        //    var resp = Api.GetCommitteeMembers(args, CancellationToken.None);
+        //    var resp = await Api.GetCommitteeMembers(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_committee_member_by_account()
+        //public async Task get_committee_member_by_account()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetCommitteeMemberByAccount(args, CancellationToken.None);
+        //    var resp = await Api.GetCommitteeMemberByAccount(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void lookup_committee_member_accounts()
+        //public async Task lookup_committee_member_accounts()
         //{
         //    var args = new string();
-        //    var resp = Api.LookupCommitteeMemberAccounts(args, CancellationToken.None);
+        //    var resp = await Api.LookupCommitteeMemberAccounts(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_committee_count()
+        [Test][Parallelizable]
+        public async Task get_committee_count()
         {
-            var resp = Api.GetCommitteeCount(CancellationToken.None);
+            var resp = await Api.GetCommitteeCount(CancellationToken.None);
             WriteLine(resp);
         }
 
-        [Test]
-        public void get_all_workers()
+        [Test][Parallelizable]
+        public async Task get_all_workers()
         {
-            var resp = Api.GetAllWorkers(CancellationToken.None);
+            var resp = await Api.GetAllWorkers(CancellationToken.None);
             TestPropetries(resp);
         }
 
         //[Test]
-        //public void get_workers_by_account()
+        //public async Task get_workers_by_account()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetWorkersByAccount(args, CancellationToken.None);
+        //    var resp = await Api.GetWorkersByAccount(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
-        [Test]
-        public void get_worker_count()
+        [Test][Parallelizable]
+        public async Task get_worker_count()
         {
-            var resp = Api.GetWorkerCount(CancellationToken.None);
+            var resp = await Api.GetWorkerCount(CancellationToken.None);
             WriteLine(resp);
         }
 
         //[Test]
-        //public void lookup_vote_ids()
+        //public async Task lookup_vote_ids()
         //{
         //    var args = new VoteIdType();
-        //    var resp = Api.LookupVoteIds(args, CancellationToken.None);
+        //    var resp = await Api.LookupVoteIds(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_transaction_hex()
+        //public async Task get_transaction_hex()
         //{
         //    var args = new SignedTransaction();
-        //    var resp = Api.GetTransactionHex(args, CancellationToken.None);
+        //    var resp = await Api.GetTransactionHex(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_required_signatures()
+        //public async Task get_required_signatures()
         //{
         //    var args = new SignedTransaction();
-        //    var resp = Api.GetRequiredSignatures(args, CancellationToken.None);
+        //    var resp = await Api.GetRequiredSignatures(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_potential_signatures()
+        //public async Task get_potential_signatures()
         //{
         //    var args = new SignedTransaction();
-        //    var resp = Api.GetPotentialSignatures(args, CancellationToken.None);
+        //    var resp = await Api.GetPotentialSignatures(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_potential_address_signatures()
+        //public async Task get_potential_address_signatures()
         //{
         //    var args = new SignedTransaction();
-        //    var resp = Api.GetPotentialAddressSignatures(args, CancellationToken.None);
+        //    var resp = await Api.GetPotentialAddressSignatures(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void verify_authority()
+        //public async Task verify_authority()
         //{
         //    var args = new SignedTransaction();
-        //    var resp = Api.VerifyAuthority(args, CancellationToken.None);
+        //    var resp = await Api.VerifyAuthority(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void verify_account_authority()
+        //public async Task verify_account_authority()
         //{
         //    var args = new string();
-        //    var resp = Api.VerifyAccountAuthority(args, CancellationToken.None);
+        //    var resp = await Api.VerifyAccountAuthority(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void validate_transaction()
+        //public async Task validate_transaction()
         //{
         //    var args = new SignedTransaction();
-        //    var resp = Api.ValidateTransaction(args, CancellationToken.None);
+        //    var resp = await Api.ValidateTransaction(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_required_fees()
+        //public async Task get_required_fees()
         //{
         //    var args = new Operation();
-        //    var resp = Api.GetRequiredFees(args, CancellationToken.None);
+        //    var resp = await Api.GetRequiredFees(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_proposed_transactions()
+        //public async Task get_proposed_transactions()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetProposedTransactions(args, CancellationToken.None);
+        //    var resp = await Api.GetProposedTransactions(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_blinded_balances()
+        //public async Task get_blinded_balances()
         //{
         //    var args = new FlatSet();
-        //    var resp = Api.GetBlindedBalances(args, CancellationToken.None);
+        //    var resp = await Api.GetBlindedBalances(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_withdraw_permissions_by_giver()
+        //public async Task get_withdraw_permissions_by_giver()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetWithdrawPermissionsByGiver(args, CancellationToken.None);
+        //    var resp = await Api.GetWithdrawPermissionsByGiver(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
 
         //[Test]
-        //public void get_withdraw_permissions_by_recipient()
+        //public async Task get_withdraw_permissions_by_recipient()
         //{
         //    var args = new AccountIdType();
-        //    var resp = Api.GetWithdrawPermissionsByRecipient(args, CancellationToken.None);
+        //    var resp = await Api.GetWithdrawPermissionsByRecipient(args, CancellationToken.None);
         //    TestPropetries(resp);
         //}
     }

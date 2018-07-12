@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
+using Newtonsoft.Json;
 
 namespace Ditch.Core.Interfaces
 {
@@ -8,12 +9,10 @@ namespace Ditch.Core.Interfaces
     {
         bool IsConnected { get; }
 
-        bool TryConnectTo(string endpoin, CancellationToken token);
-
-        bool TryConnectTo(IEnumerable<string> urls, CancellationToken token);
+        bool ConnectTo(string endpoin, CancellationToken token);
 
         void Disconnect();
 
-        JsonRpcResponse<T> Execute<T>(IJsonRpcRequest jsonRpc, CancellationToken token);
+        Task<JsonRpcResponse<T>> ExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token);
     }
 }

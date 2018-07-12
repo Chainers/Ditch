@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core;
@@ -17,6 +17,8 @@ namespace Ditch.BitShares.Tests
     {
         protected static UserInfo User;
         protected static OperationManager Api;
+        protected HttpManager HttpManager;
+        protected HttpClient HttpClient;
         protected string SbdSymbol = "BTS";
 
         [OneTimeSetUp]
@@ -35,29 +37,22 @@ namespace Ditch.BitShares.Tests
 
             if (Api == null)
             {
-                var jss = GetJsonSerializerSettings();
-                var manager = new HttpManager(jss, 1024 * 1024);
-                Api = new OperationManager(manager, jss);
+                HttpClient = new HttpClient()
+                {
+                    MaxResponseContentBufferSize = 1024 * 1024
+                };
+                HttpManager = new HttpManager(HttpClient);
+                Api = new OperationManager(HttpManager);
 
-                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                Api.TryConnectTo(urls, CancellationToken.None);
+                var url = ConfigurationManager.AppSettings["Url"];
+                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None), "Enable connect to node");
 
-                var acc = Api.GetAccountByName(User.Login, CancellationToken.None);
+                var acc = Api.GetAccountByName(User.Login, CancellationToken.None).Result;
                 Assert.IsFalse(acc.IsError);
                 User.Account = acc.Result;
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
-        }
-
-        public static JsonSerializerSettings GetJsonSerializerSettings()
-        {
-            var rez = new JsonSerializerSettings
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                Culture = CultureInfo.InvariantCulture
-            };
-            return rez;
         }
 
         protected void TestPropetries<T>(JsonRpcResponse<T> resp)
@@ -163,7 +158,10 @@ namespace Ditch.BitShares.Tests
             if (r.IsError)
             {
                 Console.WriteLine("Error:");
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+                if (r.ResponseError != null)
+                    Console.WriteLine(JsonConvert.SerializeObject(r.ResponseError, Formatting.Indented));
+                if (r.Exception != null)
+                    Console.WriteLine(r.Exception.ToString());
             }
             else
             {

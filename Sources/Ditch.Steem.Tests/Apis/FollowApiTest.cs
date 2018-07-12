@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Steem.Models;
 using NUnit.Framework;
 
@@ -7,8 +8,8 @@ namespace Ditch.Steem.Tests.Apis
     [TestFixture]
     public class FollowApiTest : BaseTest
     {
-        [Test]
-        public void get_followers()
+        [Test][Parallelizable]
+        public async Task get_followers()
         {
             var args = new GetFollowersArgs
             {
@@ -17,12 +18,12 @@ namespace Ditch.Steem.Tests.Apis
                 Start = string.Empty,
                 Type = FollowType.Blog
             };
-            var resp = Api.GetFollowers(args, CancellationToken.None);
+            var resp = await Api.GetFollowers(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_following()
+        [Test][Parallelizable]
+        public async Task get_following()
         {
             var args = new GetFollowingArgs
             {
@@ -31,23 +32,23 @@ namespace Ditch.Steem.Tests.Apis
                 Start = string.Empty,
                 Type = FollowType.Blog
             };
-            var resp = Api.GetFollowing(args, CancellationToken.None);
+            var resp = await Api.GetFollowing(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_follow_count()
+        [Test][Parallelizable]
+        public async Task get_follow_count()
         {
             var args = new GetFollowCountArgs
             {
                 Account = User.Login
             };
-            var resp = Api.GetFollowCount(args, CancellationToken.None);
+            var resp = await Api.GetFollowCount(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_feed_entries()
+        [Test][Parallelizable]
+        public async Task get_feed_entries()
         {
             var args = new GetFeedEntriesArgs
             {
@@ -55,12 +56,12 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = Api.GetFeedEntries(args, CancellationToken.None);
+            var resp = await Api.GetFeedEntries(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_feed()
+        [Test][Parallelizable]
+        public async Task get_feed()
         {
             var args = new GetFeedArgs
             {
@@ -68,12 +69,12 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = Api.GetFeed(args, CancellationToken.None);
+            var resp = await Api.GetFeed(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_blog_entries()
+        [Test][Parallelizable]
+        public async Task get_blog_entries()
         {
             var args = new GetBlogEntriesArgs
             {
@@ -81,12 +82,12 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = Api.GetBlogEntries(args, CancellationToken.None);
+            var resp = await Api.GetBlogEntries(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_blog()
+        [Test][Parallelizable]
+        public async Task get_blog()
         {
             var args = new GetBlogArgs
             {
@@ -94,42 +95,42 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = Api.GetBlog(args, CancellationToken.None);
+            var resp = await Api.GetBlog(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_account_reputations()
+        [Test][Parallelizable]
+        public async Task get_account_reputations()
         {
             var args = new GetAccountReputationsArgs
             {
                 AccountLowerBound = User.Login,
                 Limit = 10
             };
-            var resp = Api.GetAccountReputations(args, CancellationToken.None);
+            var resp = await Api.GetAccountReputations(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_reblogged_by()
+        [Test][Parallelizable]
+        public async Task get_reblogged_by()
         {
             var args = new GetRebloggedByArgs
             {
                 Author = "steepshot",
                 Permlink = "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app"
             };
-            var resp = Api.GetRebloggedBy(args, CancellationToken.None);
+            var resp = await Api.GetRebloggedBy(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_blog_authors()
+        [Test][Parallelizable]
+        public async Task get_blog_authors()
         {
             var args = new GetBlogAuthorsArgs
             {
                 BlogAccount = User.Login
             };
-            var resp = Api.GetBlogAuthors(args, CancellationToken.None);
+            var resp = await Api.GetBlogAuthors(args, CancellationToken.None);
             TestPropetries(resp);
         }
     }

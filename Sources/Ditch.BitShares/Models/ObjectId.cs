@@ -10,7 +10,7 @@ namespace Ditch.BitShares.Models
     /// object_id
     /// libraries\db\include\graphene\db\object_id.hpp
     /// </summary>
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     [JsonObject(MemberSerialization.OptIn)]
     public class ObjectId : ICustomJson, ICustomSerializer
     {

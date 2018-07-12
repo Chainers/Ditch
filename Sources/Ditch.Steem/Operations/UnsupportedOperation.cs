@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 
 namespace Ditch.Steem.Operations
 {
-    [JsonConverter(typeof(CustomConverter))]
     [JsonObject(MemberSerialization.OptIn)]
     public class UnsupportedOperation : BaseOperation, ICustomJson
     {

@@ -1,28 +1,187 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
-using Ditch.Core.Models;
+using Ditch.Steem.JsonRpc;
 using Ditch.Steem.Models;
+using Ditch.Steem.Operations;
+using Newtonsoft.Json;
 
 namespace Ditch.Steem
 {
     public partial class OperationManager
     {
-        //  "condenser_api.broadcast_block",
-        //  "condenser_api.broadcast_transaction",
-        //  "condenser_api.broadcast_transaction_synchronous",
-        //  "condenser_api.get_account_bandwidth",
-        public JsonRpcResponse<AccountBandwidthApiObj> GetAccountBandwidth2(GetAccountBandwidthArgs args, CancellationToken token)
+        #region system
+
+        public JsonSerializerSettings CondenserJsonSerializerSettings { get; set; }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<T>> CondenserCustomGetRequest<T>(string api, string method, object data, CancellationToken token)
+        {
+            var jsonRpc = JsonRpcRequest.CondenserRequest(CondenserJsonSerializerSettings, api, method, data);
+            return ConnectionManager.ExecuteAsync<T>(jsonRpc, CondenserJsonSerializerSettings, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<T>> CondenserCustomGetRequest<T>(string api, string method, CancellationToken token)
+        {
+            var jsonRpc = JsonRpcRequest.CondenserRequest(api, method);
+            return ConnectionManager.ExecuteAsync<T>(jsonRpc, CondenserJsonSerializerSettings, token);
+        }
+
+
+        /// <summary>
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// The transaction will be checked for validity in the local database prior to broadcasting. If it fails to apply locally, an error will be thrown and the transaction will not be broadcast.
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public async Task<JsonRpcResponse<VoidResponse>> CondenserBroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        {
+            var prop = await CondenserGetDynamicGlobalProperties(token);
+            if (prop.IsError)
+                return new JsonRpcResponse<VoidResponse>(prop);
+
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var args = new BroadcastTransactionArgs
+            {
+                Trx = transaction
+            };
+            return await CondenserBroadcastTransaction(args, token);
+        }
+
+        /// <summary>
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// This call will not return until the transaction is included in a block. 
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> CondenserBroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        {
+            var prop = await CondenserGetDynamicGlobalProperties(token);
+            if (prop.IsError)
+                return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop);
+
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var args = new BroadcastTransactionSynchronousArgs
+            {
+                Trx = transaction
+            };
+            return await CondenserBroadcastTransactionSynchronous(args, token);
+        }
+
+        public async Task<JsonRpcResponse<VerifyAuthorityReturn>> CondenserVerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
+        {
+            var prop = DynamicGlobalPropertyApiObj.Default;
+            var transaction = await CreateTransaction(prop, userPrivateKeys, testOps, token);
+            var args = new VerifyAuthorityArgs
+            {
+                Trx = transaction
+            };
+            return await CondenserVerifyAuthority(args, token);
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// API name: broadcast_block
+        /// 
+        /// </summary>
+        /// <param name="args">API type: broadcast_block_args</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<VoidResponse>> CondenserBroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
+        {
+            var aargs = new object[] { args.Block };
+            return CondenserCustomGetRequest<VoidResponse>(KnownApiNames.CondenserApi, "broadcast_block", aargs, token);
+        }
+
+        /// <summary>
+        /// API name: broadcast_transaction
+        /// 
+        /// </summary>
+        /// <param name="args">API type: broadcast_transaction_args</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<VoidResponse>> CondenserBroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
+        {
+            var aargs = new object[] { args.Trx };
+            return CondenserCustomGetRequest<VoidResponse>(KnownApiNames.CondenserApi, "broadcast_transaction", aargs, token);
+        }
+
+        /// <summary>
+        /// API name: broadcast_transaction_synchronous
+        /// 
+        /// </summary>
+        /// <param name="args">API type: broadcast_transaction_synchronous_args</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: broadcast_transaction_synchronous_return</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> CondenserBroadcastTransactionSynchronous(BroadcastTransactionSynchronousArgs args, CancellationToken token)
+        {
+            var aargs = new object[] { args.Trx };
+            return CondenserCustomGetRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.CondenserApi, "broadcast_transaction_synchronous", aargs, token);
+        }
+
+        /// <summary>
+        /// API name: get_account_bandwidth
+        /// 
+        /// </summary>
+        /// <param name="args">API type: get_account_bandwidth_args</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: get_account_bandwidth_return</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<AccountBandwidthApiObj>> CondenserGetAccountBandwidth(GetAccountBandwidthArgs args, CancellationToken token)
         {
             var aargs = new object[] { args.Account, args.Type };
-            return CustomGetRequest<AccountBandwidthApiObj>(KnownApiNames.CondenserApi, "get_account_bandwidth", aargs, token);
+            return CondenserCustomGetRequest<AccountBandwidthApiObj>(KnownApiNames.CondenserApi, "get_account_bandwidth", aargs, token);
         }
-        //  "condenser_api.get_account_count",
-        //  "condenser_api.get_account_history",
-        public JsonRpcResponse<MapContainer<uint, AppliedOperation>> GetAccountHistory2(GetAccountHistoryArgs args, CancellationToken token)
+
+        public Task<JsonRpcResponse<long>> CondenserGetAccountCount(CancellationToken token)
+        {
+            return CondenserCustomGetRequest<long>(KnownApiNames.CondenserApi, "get_account_count", token);
+        }
+
+        /// <summary>
+        /// API name: get_account_history
+        /// 
+        /// </summary>
+        /// <param name="args">API type: get_account_history_args</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: get_account_history_return</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<GetAccountHistoryReturn>> CondenserGetAccountHistory(GetAccountHistoryArgs args, CancellationToken token)
         {
             var aargs = new object[] { args.Account, args.Start, args.Limit };
-            return CustomGetRequest<MapContainer<uint, AppliedOperation>>(KnownApiNames.CondenserApi, "get_account_history", aargs, token);
+            return CondenserCustomGetRequest<GetAccountHistoryReturn>(KnownApiNames.CondenserApi, "get_account_history", aargs, token);
         }
+
         //  "condenser_api.get_account_references",
         //  "condenser_api.get_account_reputations",
         //  "condenser_api.get_account_votes",
@@ -30,10 +189,10 @@ namespace Ditch.Steem
         //  "condenser_api.get_active_votes",
         //  "condenser_api.get_active_witnesses",
         //  "condenser_api.get_block",
-        public JsonRpcResponse<SignedBlockApiObj> GetBlock2(GetBlockArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<SignedBlockApiObj>> CondenserGetBlock(GetBlockArgs args, CancellationToken token)
         {
             var aargs = new object[] { args.BlockNum };
-            return CustomGetRequest<SignedBlockApiObj>(KnownApiNames.CondenserApi, "get_block", aargs, token);
+            return CondenserCustomGetRequest<SignedBlockApiObj>(KnownApiNames.CondenserApi, "get_block", aargs, token);
         }
         //  "condenser_api.get_block_header",
         //  "condenser_api.get_blog",
@@ -58,7 +217,10 @@ namespace Ditch.Steem
         //  "condenser_api.get_discussions_by_promoted",
         //  "condenser_api.get_discussions_by_trending",
         //  "condenser_api.get_discussions_by_votes",
-        //  "condenser_api.get_dynamic_global_properties",
+        public Task<JsonRpcResponse<GetDynamicGlobalPropertiesReturn>> CondenserGetDynamicGlobalProperties(CancellationToken token)
+        {
+            return CondenserCustomGetRequest<GetDynamicGlobalPropertiesReturn>(KnownApiNames.CondenserApi, "get_dynamic_global_properties", token);
+        }
         //  "condenser_api.get_escrow",
         //  "condenser_api.get_expiring_vesting_delegations",
         //  "condenser_api.get_feed",
@@ -93,10 +255,10 @@ namespace Ditch.Steem
         //  "condenser_api.get_transaction",
         //  "condenser_api.get_transaction_hex",
         //  "condenser_api.get_trending_tags",
-        public JsonRpcResponse<ApiTagObject[]> GetTrendingTags2(GetTrendingTagsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ApiTagObject[]>> CondenserGetTrendingTags(GetTrendingTagsArgs args, CancellationToken token)
         {
             var aargs = new object[] { args.StartTag, args.Limit };
-            return CustomGetRequest<ApiTagObject[]>(KnownApiNames.CondenserApi, "get_trending_tags", aargs, token);
+            return CondenserCustomGetRequest<ApiTagObject[]>(KnownApiNames.CondenserApi, "get_trending_tags", aargs, token);
         }
         //  "condenser_api.get_version",
         //  "condenser_api.get_vesting_delegations",
@@ -111,7 +273,18 @@ namespace Ditch.Steem
         //  "condenser_api.lookup_accounts",
         //  "condenser_api.lookup_witness_accounts",
         //  "condenser_api.verify_account_authority",
-        //  "condenser_api.verify_authority",
 
+        /// <summary>
+        /// API name: verify_authority
+        /// 
+        /// </summary>
+        /// <param name="args">API type: verify_authority_args</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>API type: verify_authority_return true of the @ref trx has all of the required signatures, otherwise throws an exception</returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<VerifyAuthorityReturn>> CondenserVerifyAuthority(VerifyAuthorityArgs args, CancellationToken token)
+        {
+            return CondenserCustomGetRequest<VerifyAuthorityReturn>(KnownApiNames.CondenserApi, "verify_authority", args, token);
+        }
     }
 }

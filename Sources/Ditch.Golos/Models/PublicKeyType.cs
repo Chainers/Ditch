@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class PublicKeyType : ICustomJson
     {
         public const string Prefix = "GLS";

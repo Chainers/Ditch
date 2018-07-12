@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis
@@ -6,83 +7,82 @@ namespace Ditch.Golos.Tests.Apis
     [TestFixture]
     public class WitnessApiTest : BaseTest
     {
-        [Test]
-        public void get_active_witnesses()
+        [Test][Parallelizable]
+        public async Task get_active_witnesses()
         {
-            var resp = Api.GetActiveWitnesses(CancellationToken.None);
+            var resp = await Api.GetActiveWitnesses(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_current_median_history_price()
+        [Test][Parallelizable]
+        public async Task get_current_median_history_price()
         {
-            var resp = Api.GetCurrentMedianHistoryPrice(CancellationToken.None);
+            var resp = await Api.GetCurrentMedianHistoryPrice(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_feed_history()
+        [Test][Parallelizable]
+        public async Task get_feed_history()
         {
-            var resp = Api.GetFeedHistory(CancellationToken.None);
+            var resp = await Api.GetFeedHistory(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_miner_queue()
+        [Test][Parallelizable]
+        public async Task get_miner_queue()
         {
-            var resp = Api.GetMinerQueue(CancellationToken.None);
+            var resp = await Api.GetMinerQueue(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_witness_by_account()
+        [Test][Parallelizable]
+        public async Task get_witness_by_account()
         {
-            var resp = Api.GetWitnessByAccount(User.Login, CancellationToken.None);
+            var resp = await Api.GetWitnessByAccount(User.Login, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_witness_count()
+        [Test][Parallelizable]
+        public async Task get_witness_count()
         {
-            var resp = Api.GetWitnessCount(CancellationToken.None);
+            var resp = await Api.GetWitnessCount(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
-        [Test]
-        public void get_witness_schedule()
+        [Test][Parallelizable]
+        public async Task get_witness_schedule()
         {
-            var resp = Api.GetWitnessSchedule(CancellationToken.None);
+            var resp = await Api.GetWitnessSchedule(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_witnesses()
+        [Test][Parallelizable]
+        public async Task get_witnesses()
         {
-            var witnes = Api.GetWitnessesByVote(string.Empty, 100, CancellationToken.None);
+            var witnes = await Api.GetWitnessesByVote(string.Empty, 100, CancellationToken.None);
             WriteLine(witnes);
             Assert.IsFalse(witnes.IsError);
 
-            var resp = Api.GetWitnesses(new[] { witnes.Result[0].Id }, CancellationToken.None);
+            var resp = await Api.GetWitnesses(new[] { witnes.Result[0].Id }, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_witnesses_by_vote()
+        [Test][Parallelizable]
+        public async Task get_witnesses_by_vote()
         {
-            var resp = Api.GetWitnessesByVote(string.Empty, 3, CancellationToken.None);
+            var resp = await Api.GetWitnessesByVote(string.Empty, 3, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void lookup_witness_accounts()
+        [Test][Parallelizable]
+        public async Task lookup_witness_accounts()
         {
-            var resp = Api.LookupWitnessAccounts(string.Empty, 3, CancellationToken.None);
+            var resp = await Api.LookupWitnessAccounts(string.Empty, 3, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
     }
 }
-

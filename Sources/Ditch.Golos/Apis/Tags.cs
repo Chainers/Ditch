@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Core.Models;
 using Ditch.Golos.Models;
@@ -20,7 +21,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of first payout mode discussions sorted by rshares^2 amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByTrending(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByTrending(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_trending", new object[] { query }, token);
         }
@@ -36,7 +37,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by created time</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByCreated(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByCreated(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_created", new object[] { query }, token);
         }
@@ -52,7 +53,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by last activity time</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByActive(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByActive(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_active", new object[] { query }, token);
         }
@@ -68,7 +69,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by last cashout time</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByCashout(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByCashout(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_cashout", new object[] { query }, token);
         }
@@ -84,7 +85,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by net rshares amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByPayout(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_payout", new object[] { query }, token);
         }
@@ -100,7 +101,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by direct votes amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByVotes(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByVotes(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_votes", new object[] { query }, token);
         }
@@ -117,7 +118,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by hot amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByHot(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByHot(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_hot", new object[] { query }, token);
         }
@@ -134,7 +135,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions from the feed of authors in @ref discussion_query#select_authors</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByFeed(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByFeed(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_feed", new object[] { query }, token);
         }
@@ -151,7 +152,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions from the blog of authors in @ref discussion_query#select_authors</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByBlog(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByBlog(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_blog", new object[] { query }, token);
         }
@@ -165,7 +166,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByComments(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByComments(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_comments", new object[] { query }, token);
         }
@@ -181,7 +182,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion vector of discussions sorted by promoted balance amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByPromoted(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByPromoted(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_promoted", new object[] { query }, token);
         }
@@ -205,7 +206,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         ///  <returns>API type: discussion</returns>
         ///  <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, TimePointSec beforeDate, uint limit, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByAuthorBeforeDate(string author, string startPermlink, TimePointSec beforeDate, uint limit, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_author_before_date", new object[] { author, startPermlink, beforeDate, limit, voteLimit }, token);
         }
@@ -219,7 +220,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion  Vector of discussions sorted by children posts amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetDiscussionsByChildren(DiscussionQuery query, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.Tags, "get_discussions_by_children", new object[] { query }, token);
         }
@@ -233,7 +234,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: tag_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<TagApiObj[]> GetTrendingTags(string afterTag, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<TagApiObj[]>> GetTrendingTags(string afterTag, uint limit, CancellationToken token)
         {
             return CustomGetRequest<TagApiObj[]>(KnownApiNames.Tags, "get_trending_tags", new object[] { afterTag, limit }, token);
         }
@@ -248,7 +249,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>vector of top 1000 tags used by an author sorted by most frequently used</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MapContainer<string, uint>> GetTagsUsedByAuthor(string author, CancellationToken token)
+        public Task<JsonRpcResponse<MapContainer<string, uint>>> GetTagsUsedByAuthor(string author, CancellationToken token)
         {
             return CustomGetRequest<MapContainer<string, uint>>(KnownApiNames.Tags, "get_tags_used_by_author", new object[] { author }, token);
         }
@@ -260,7 +261,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion  Vector of discussions sorted by children posts amount</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<JObject> GetLanguages(CancellationToken token)
+        public Task<JsonRpcResponse<JObject>> GetLanguages(CancellationToken token)
         {
             return CustomGetRequest<JObject>(KnownApiNames.Tags, "get_languages", token);
         }

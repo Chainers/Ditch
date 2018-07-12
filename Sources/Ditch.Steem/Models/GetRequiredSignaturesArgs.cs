@@ -16,7 +16,7 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: signed_transaction</returns>
         [JsonProperty("trx")]
-        public SignedTransaction Trx {get; set;}
+        public SignedTransaction Trx { get; set; }
 
         /// <summary>
         /// API name: available_keys
@@ -24,6 +24,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: flat_set</returns>
         [JsonProperty("available_keys")]
-        public PublicKeyType[] AvailableKeys {get; set;}
+        public PublicKeyType[] AvailableKeys { get; set; }
     }
 }

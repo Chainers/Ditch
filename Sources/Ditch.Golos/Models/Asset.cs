@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class Asset : ICustomJson, ICustomSerializer
     {
         private static readonly Regex MultyZeroRegex = new Regex("^0{2,}");

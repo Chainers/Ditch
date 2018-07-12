@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 
@@ -19,7 +20,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> GetActiveWitnesses(CancellationToken token)
+        public Task<JsonRpcResponse<string[]>> GetActiveWitnesses(CancellationToken token)
         {
             return CustomGetRequest<string[]>(KnownApiNames.WitnessApi, "get_active_witnesses", token);
         }
@@ -32,7 +33,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: price_17</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Price> GetCurrentMedianHistoryPrice(CancellationToken token)
+        public Task<JsonRpcResponse<Price>> GetCurrentMedianHistoryPrice(CancellationToken token)
         {
             return CustomGetRequest<Price>(KnownApiNames.WitnessApi, "get_current_median_history_price", token);
         }
@@ -45,7 +46,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: feed_history_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<FeedHistoryApiObject> GetFeedHistory(CancellationToken token)
+        public Task<JsonRpcResponse<FeedHistoryApiObject>> GetFeedHistory(CancellationToken token)
         {
             return CustomGetRequest<FeedHistoryApiObject>(KnownApiNames.WitnessApi, "get_feed_history", token);
         }
@@ -58,7 +59,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> GetMinerQueue(CancellationToken token)
+        public Task<JsonRpcResponse<string[]>> GetMinerQueue(CancellationToken token)
         {
             return CustomGetRequest<string[]>(KnownApiNames.WitnessApi, "get_miner_queue", token);
         }
@@ -72,7 +73,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: witness_api_object The witness object, or null if the account does not have a witness</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject> GetWitnessByAccount(string accountName, CancellationToken token)
+        public Task<JsonRpcResponse<WitnessApiObject>> GetWitnessByAccount(string accountName, CancellationToken token)
         {
             return CustomGetRequest<WitnessApiObject>(KnownApiNames.WitnessApi, "get_witness_by_account", new object[] { accountName }, token);
         }
@@ -85,7 +86,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: uint64_t</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<ulong> GetWitnessCount(CancellationToken token)
+        public Task<JsonRpcResponse<ulong>> GetWitnessCount(CancellationToken token)
         {
             return CustomGetRequest<ulong>(KnownApiNames.WitnessApi, "get_witness_count", token);
         }
@@ -98,7 +99,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: witness_schedule_api_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessScheduleApiObject> GetWitnessSchedule(CancellationToken token)
+        public Task<JsonRpcResponse<WitnessScheduleApiObject>> GetWitnessSchedule(CancellationToken token)
         {
             return CustomGetRequest<WitnessScheduleApiObject>(KnownApiNames.WitnessApi, "get_witness_schedule", token);
         }
@@ -114,7 +115,7 @@ namespace Ditch.Golos
         /// 
         /// This function has semantics identical to @ref get_objects</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject[]> GetWitnesses(object[] witnessIds, CancellationToken token)
+        public Task<JsonRpcResponse<WitnessApiObject[]>> GetWitnesses(object[] witnessIds, CancellationToken token)
         {
             return CustomGetRequest<WitnessApiObject[]>(KnownApiNames.WitnessApi, "get_witnesses", new object[] { witnessIds }, token);
         }
@@ -129,7 +130,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: witness_api_object an array of `count` witnesses sorted by total votes after witness `from` with at most `limit' results.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<WitnessApiObject[]> GetWitnessesByVote(string from, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<WitnessApiObject[]>> GetWitnessesByVote(string from, uint limit, CancellationToken token)
         {
             return CustomGetRequest<WitnessApiObject[]>(KnownApiNames.WitnessApi, "get_witnesses_by_vote", new object[] { from, limit }, token);
         }
@@ -144,7 +145,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type Map of witness names to corresponding IDs</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<string[]> LookupWitnessAccounts(string lowerBoundName, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<string[]>> LookupWitnessAccounts(string lowerBoundName, uint limit, CancellationToken token)
         {
             return CustomGetRequest<string[]>(KnownApiNames.WitnessApi, "lookup_witness_accounts", new object[] { lowerBoundName, limit }, token);
         }

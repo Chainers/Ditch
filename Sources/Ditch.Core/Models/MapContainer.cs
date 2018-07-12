@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Ditch.Core.Converters;
 using Ditch.Core.Interfaces;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Ditch.Core.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class MapContainer<TKey, TValue> : List<KeyValuePair<TKey, TValue>>, ICustomJson, ICustomSerializer
     {
         #region ICustomSerializer
@@ -27,19 +27,27 @@ namespace Ditch.Core.Models
         }
 
         #endregion
-        
+
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            var array = JArray.Load(reader);
+            if (reader.TokenType != JsonToken.StartArray)
+                throw new InvalidCastException(reader.TokenType.ToString());
+            reader.Read();
 
-            foreach (var jToken in array)
+            while (reader.TokenType != JsonToken.EndArray)
             {
-                var item = (JArray)jToken;
-                var id = item[0].ToObject<TKey>();
-                var value = item[1].ToObject<TValue>();
-                Add(new KeyValuePair<TKey, TValue>(id, value));
+                if (reader.TokenType != JsonToken.StartArray)
+                    throw new InvalidCastException(reader.TokenType.ToString());
+                reader.Read();
+
+                var key = serializer.Deserialize<TKey>(reader);
+                reader.Read();
+                var value = serializer.Deserialize<TValue>(reader);
+                Add(new KeyValuePair<TKey, TValue>(key, value));
+                reader.Read();
+                reader.Read();
             }
         }
 

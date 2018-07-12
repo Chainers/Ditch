@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Golos.Operations
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     [JsonObject(MemberSerialization.OptIn)]
     public class CommentPayoutBeneficiaries : ICustomJson, ICustomSerializer
     {

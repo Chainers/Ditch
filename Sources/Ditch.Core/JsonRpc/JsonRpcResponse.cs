@@ -1,23 +1,24 @@
-﻿using Ditch.Core.Converters;
-using Ditch.Core.Errors;
+﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Ditch.Core.JsonRpc
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class JsonRpcResponse
     {
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
-        public object Result { get; set; }
-
-        [JsonConverter(typeof(ConcreteTypeConverter<ResponseError>))]
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
-        public ErrorInfo Error { get; set; }
-
         [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
-        public bool IsError => Error != null;
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "result")]
+        public object Result { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
+        public JObject ResponseError { get; set; }
+
+        public Exception Exception { get; }
+
+        public bool IsError => ResponseError != null || Exception != null;
 
         public string RawRequest { get; set; }
 
@@ -25,14 +26,17 @@ namespace Ditch.Core.JsonRpc
 
         public JsonRpcResponse() { }
 
-        public JsonRpcResponse(ErrorInfo systemError)
+        public JsonRpcResponse(Exception exception)
         {
-            Error = systemError;
+            Exception = exception;
         }
 
-        public string GetErrorMessage()
+        public JsonRpcResponse(JsonRpcResponse response)
         {
-            return Error?.ToString() ?? string.Empty;
+            Exception = response.Exception;
+            ResponseError = response.ResponseError;
+            RawRequest = response.RawRequest;
+            RawResponse = response.RawResponse;
         }
     }
 
@@ -48,7 +52,9 @@ namespace Ditch.Core.JsonRpc
 
         public JsonRpcResponse() { }
 
-        public JsonRpcResponse(ErrorInfo systemError) : base(systemError) { }
+        public JsonRpcResponse(Exception exception) : base(exception) { }
+
+        public JsonRpcResponse(JsonRpcResponse response) : base(response) { }
 
         public JsonRpcResponse(T result)
         {

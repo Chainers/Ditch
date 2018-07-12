@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models;
 
@@ -18,7 +19,7 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_transaction_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoidResponse> BroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
         {
             return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
         }
@@ -31,7 +32,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: broadcast_transaction_synchronous_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BroadcastTransactionSynchronousReturn> BroadcastTransactionSynchronous(BroadcastTransactionSynchronousArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronous(BroadcastTransactionSynchronousArgs args, CancellationToken token)
         {
             return CustomGetRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
         }
@@ -43,7 +44,7 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_block_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoidResponse> BroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
         {
             return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
         }

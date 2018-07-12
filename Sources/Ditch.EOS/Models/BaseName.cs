@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class BaseName : ICustomSerializer, ICustomJson
     {
         public string Value { get; set; }

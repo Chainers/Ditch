@@ -84,6 +84,7 @@
     <Compile Include="BaseTest.cs" />
     <Compile Include="InfoTest.cs" />
     <Compile Include="ConnectionTest.cs" />
+    <Compile Include="CondenserOperationsTest.cs" />
     <Compile Include="OperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInfo.cs" />

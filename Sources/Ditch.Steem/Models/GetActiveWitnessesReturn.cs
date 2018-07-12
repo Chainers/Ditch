@@ -16,6 +16,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: account_name_type</returns>
         [JsonProperty("witnesses")]
-        public string[] Witnesses {get; set;}
+        public string[] Witnesses { get; set; }
     }
 }

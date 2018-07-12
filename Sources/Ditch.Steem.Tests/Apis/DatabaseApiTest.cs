@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Steem.Models;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -9,76 +10,84 @@ namespace Ditch.Steem.Tests.Apis
     public class DatabaseApiTest : BaseTest
     {
         [Test]
-        public void get_config()
+        [Parallelizable]
+        public async Task get_config()
         {
-            var resp = Api.GetConfig<JObject>(CancellationToken.None);
+            var resp = await Api.GetConfig<JObject>(CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
         [Test]
-        public void get_dynamic_global_properties()
+        public async Task get_dynamic_global_properties()
         {
-            var resp = Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var resp = await Api.GetDynamicGlobalProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_witness_schedule()
+        public async Task get_witness_schedule()
         {
-            var resp = Api.GetWitnessSchedule(CancellationToken.None);
+            var resp = await Api.GetWitnessSchedule(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_hardfork_properties()
+        [Parallelizable]
+        public async Task get_hardfork_properties()
         {
-            var resp = Api.GetHardforkProperties(CancellationToken.None);
+            var resp = await Api.GetHardforkProperties(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_reward_funds()
+        [Parallelizable]
+        public async Task get_reward_funds()
         {
-            var resp = Api.GetRewardFunds(CancellationToken.None);
+            var resp = await Api.GetRewardFunds(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_current_price_feed()
+        [Parallelizable]
+        public async Task get_current_price_feed()
         {
-            var resp = Api.GetCurrentPriceFeed(CancellationToken.None);
+            var resp = await Api.GetCurrentPriceFeed(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_feed_history()
+        [Parallelizable]
+        public async Task get_feed_history()
         {
-            var resp = Api.GetFeedHistory(CancellationToken.None);
+            var resp = await Api.GetFeedHistory(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_witnesses()
+        [Parallelizable]
+        public async Task list_witnesses()
         {
             var args = new ListWitnessesArgs();
-            var resp = Api.ListWitnesses(args, CancellationToken.None);
+            var resp = await Api.ListWitnesses(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_witnesses()
+        [Parallelizable]
+        public async Task find_witnesses()
         {
             var args = new FindWitnessesArgs
             {
                 Owners = new[] { User.Login }
             };
-            var resp = Api.FindWitnesses(args, CancellationToken.None);
+            var resp = await Api.FindWitnesses(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_witness_votes()
+        [Parallelizable]
+        public async Task list_witness_votes()
         {
             var args = new ListWitnessVotesArgs
             {
@@ -86,58 +95,64 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = Api.ListWitnessVotes(args, CancellationToken.None);
+            var resp = await Api.ListWitnessVotes(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_active_witnesses()
+        [Parallelizable]
+        public async Task get_active_witnesses()
         {
-            var resp = Api.GetActiveWitnesses(CancellationToken.None);
+            var resp = await Api.GetActiveWitnesses(CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_accounts()
+        [Parallelizable]
+        public async Task list_accounts()
         {
             var args = new ListAccountsArgs();
-            var resp = Api.ListAccounts(args, CancellationToken.None);
+            var resp = await Api.ListAccounts(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_accounts()
+        [Parallelizable]
+        public async Task find_accounts()
         {
             var args = new FindAccountsArgs
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = Api.FindAccounts(args, CancellationToken.None);
+            var resp = await Api.FindAccounts(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_owner_histories()
+        [Parallelizable]
+        public async Task list_owner_histories()
         {
             var args = new ListOwnerHistoriesArgs
             {
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = Api.ListOwnerHistories(args, CancellationToken.None);
+            var resp = await Api.ListOwnerHistories(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_owner_histories()
+        [Parallelizable]
+        public async Task find_owner_histories()
         {
             var args = new FindOwnerHistoriesArgs();
-            var resp = Api.FindOwnerHistories(args, CancellationToken.None);
+            var resp = await Api.FindOwnerHistories(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_account_recovery_requests()
+        [Parallelizable]
+        public async Task list_account_recovery_requests()
         {
             var args = new ListAccountRecoveryRequestsArgs
             {
@@ -145,45 +160,49 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3,
                 Order = SortOrderType.ByAccount
             };
-            var resp = Api.ListAccountRecoveryRequests(args, CancellationToken.None);
+            var resp = await Api.ListAccountRecoveryRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_account_recovery_requests()
+        [Parallelizable]
+        public async Task find_account_recovery_requests()
         {
             var args = new FindAccountRecoveryRequestsArgs
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = Api.FindAccountRecoveryRequests(args, CancellationToken.None);
+            var resp = await Api.FindAccountRecoveryRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_change_recovery_account_requests()
+        [Parallelizable]
+        public async Task list_change_recovery_account_requests()
         {
             var args = new ListChangeRecoveryAccountRequestsArgs
             {
                 Order = SortOrderType.ByAccount
             };
-            var resp = Api.ListChangeRecoveryAccountRequests(args, CancellationToken.None);
+            var resp = await Api.ListChangeRecoveryAccountRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_change_recovery_account_requests()
+        [Parallelizable]
+        public async Task find_change_recovery_account_requests()
         {
             var args = new FindChangeRecoveryAccountRequestsArgs
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = Api.FindChangeRecoveryAccountRequests(args, CancellationToken.None);
+            var resp = await Api.FindChangeRecoveryAccountRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_escrows()
+        [Parallelizable]
+        public async Task list_escrows()
         {
             var args = new ListEscrowsArgs
             {
@@ -192,20 +211,22 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByFromId
             };
 
-            var resp = Api.ListEscrows(args, CancellationToken.None);
+            var resp = await Api.ListEscrows(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_escrows()
+        [Parallelizable]
+        public async Task find_escrows()
         {
             var args = new FindEscrowsArgs();
-            var resp = Api.FindEscrows(args, CancellationToken.None);
+            var resp = await Api.FindEscrows(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_withdraw_vesting_routes()
+        [Parallelizable]
+        public async Task list_withdraw_vesting_routes()
         {
             var args = new ListWithdrawVestingRoutesArgs
             {
@@ -213,24 +234,26 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = Api.ListWithdrawVestingRoutes(args, CancellationToken.None);
+            var resp = await Api.ListWithdrawVestingRoutes(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_withdraw_vesting_routes()
+        [Parallelizable]
+        public async Task find_withdraw_vesting_routes()
         {
             var args = new FindWithdrawVestingRoutesArgs
             {
                 Account = User.Login,
                 Order = SortOrderType.ByWithdrawRoute
             };
-            var resp = Api.FindWithdrawVestingRoutes(args, CancellationToken.None);
+            var resp = await Api.FindWithdrawVestingRoutes(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_savings_withdrawals()
+        [Parallelizable]
+        public async Task list_savings_withdrawals()
         {
             var args = new ListSavingsWithdrawalsArgs
             {
@@ -239,20 +262,22 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByFromId
             };
 
-            var resp = Api.ListSavingsWithdrawals(args, CancellationToken.None);
+            var resp = await Api.ListSavingsWithdrawals(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_savings_withdrawals()
+        [Parallelizable]
+        public async Task find_savings_withdrawals()
         {
             var args = new FindSavingsWithdrawalsArgs();
-            var resp = Api.FindSavingsWithdrawals(args, CancellationToken.None);
+            var resp = await Api.FindSavingsWithdrawals(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_vesting_delegations()
+        [Parallelizable]
+        public async Task list_vesting_delegations()
         {
             var args = new ListVestingDelegationsArgs
             {
@@ -260,20 +285,22 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = Api.ListVestingDelegations(args, CancellationToken.None);
+            var resp = await Api.ListVestingDelegations(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_vesting_delegations()
+        [Parallelizable]
+        public async Task find_vesting_delegations()
         {
             var args = new FindVestingDelegationsArgs();
-            var resp = Api.FindVestingDelegations(args, CancellationToken.None);
+            var resp = await Api.FindVestingDelegations(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_vesting_delegation_expirations()
+        [Parallelizable]
+        public async Task list_vesting_delegation_expirations()
         {
             var args = new ListVestingDelegationExpirationsArgs
             {
@@ -281,20 +308,22 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = Api.ListVestingDelegationExpirations(args, CancellationToken.None);
+            var resp = await Api.ListVestingDelegationExpirations(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_vesting_delegation_expirations()
+        [Parallelizable]
+        public async Task find_vesting_delegation_expirations()
         {
             var args = new FindVestingDelegationExpirationsArgs();
-            var resp = Api.FindVestingDelegationExpirations(args, CancellationToken.None);
+            var resp = await Api.FindVestingDelegationExpirations(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_sbd_conversion_requests()
+        [Parallelizable]
+        public async Task list_sbd_conversion_requests()
         {
             var args = new ListSbdConversionRequestsArgs
             {
@@ -302,42 +331,46 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = Api.ListSbdConversionRequests(args, CancellationToken.None);
+            var resp = await Api.ListSbdConversionRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_sbd_conversion_requests()
+        [Parallelizable]
+        public async Task find_sbd_conversion_requests()
         {
             var args = new FindSbdConversionRequestsArgs();
-            var resp = Api.FindSbdConversionRequests(args, CancellationToken.None);
+            var resp = await Api.FindSbdConversionRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_decline_voting_rights_requests()
+        [Parallelizable]
+        public async Task list_decline_voting_rights_requests()
         {
             var args = new ListDeclineVotingRightsRequestsArgs
             {
                 Order = SortOrderType.ByAccount
             };
-            var resp = Api.ListDeclineVotingRightsRequests(args, CancellationToken.None);
+            var resp = await Api.ListDeclineVotingRightsRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_decline_voting_rights_requests()
+        [Parallelizable]
+        public async Task find_decline_voting_rights_requests()
         {
             var args = new FindDeclineVotingRightsRequestsArgs
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = Api.FindDeclineVotingRightsRequests(args, CancellationToken.None);
+            var resp = await Api.FindDeclineVotingRightsRequests(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_comments()
+        [Parallelizable]
+        public async Task list_comments()
         {
             var args = new ListCommentsArgs
             {
@@ -346,23 +379,25 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByPermlink
             };
 
-            var resp = Api.ListComments(args, CancellationToken.None);
+            var resp = await Api.ListComments(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_comments()
+        [Parallelizable]
+        public async Task find_comments()
         {
             var args = new FindCommentsArgs
             {
                 Comments = new[] { new[] { "steepshot", "steepshot-updates-join-ios-closed-beta-testing-full-screen-mode-for-desktops-sponsors-incentives-and-more" } }
             };
-            var resp = Api.FindComments(args, CancellationToken.None);
+            var resp = await Api.FindComments(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_votes()
+        [Parallelizable]
+        public async Task list_votes()
         {
             var args = new ListVotesArgs
             {
@@ -375,24 +410,26 @@ namespace Ditch.Steem.Tests.Apis
                 },
                 Limit = 3
             };
-            var resp = Api.ListVotes(args, CancellationToken.None);
+            var resp = await Api.ListVotes(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_votes()
+        [Parallelizable]
+        public async Task find_votes()
         {
             var args = new FindVotesArgs
             {
                 Author = "steepshot",
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
-            var resp = Api.FindVotes(args, CancellationToken.None);
+            var resp = await Api.FindVotes(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void list_limit_orders()
+        [Parallelizable]
+        public async Task list_limit_orders()
         {
             var args = new ListLimitOrdersArgs
             {
@@ -400,101 +437,110 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3,
                 Order = SortOrderType.ByAccount
             };
-            var resp = Api.ListLimitOrders(args, CancellationToken.None);
+            var resp = await Api.ListLimitOrders(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void find_limit_orders()
+        [Parallelizable]
+        public async Task find_limit_orders()
         {
             var args = new FindLimitOrdersArgs
             {
                 Account = User.Login
             };
-            var resp = Api.FindLimitOrders(args, CancellationToken.None);
+            var resp = await Api.FindLimitOrders(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_transaction_hex()
+        [Parallelizable]
+        public async Task get_transaction_hex()
         {
             var args = new GetTransactionHexArgs
             {
-                Trx = GetSignedTransaction()
+                Trx = await GetSignedTransaction()
             };
-            var resp = Api.GetTransactionHex(args, CancellationToken.None);
+            var resp = await Api.GetTransactionHex(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_required_signatures()
+        [Parallelizable]
+        public async Task get_required_signatures()
         {
             var findAccountsArgs = new FindAccountsArgs
             {
                 Accounts = new[] { User.Login }
             };
-            var accounts = Api.FindAccounts(findAccountsArgs, CancellationToken.None);
-            WriteLine(accounts);
+            var accounts = await Api.FindAccounts(findAccountsArgs, CancellationToken.None);
+            if (accounts.IsError)
+                WriteLine(accounts);
             Assert.IsFalse(accounts.IsError);
             var pKey = accounts.Result.Accounts[0].Posting.KeyAuths[0].Key;
 
             var args = new GetRequiredSignaturesArgs
             {
-                Trx = GetSignedTransaction(),
+                Trx = await GetSignedTransaction(),
                 AvailableKeys = new[] { pKey }
             };
-            var resp = Api.GetRequiredSignatures(args, CancellationToken.None);
+            var resp = await Api.GetRequiredSignatures(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_potential_signatures()
+        [Parallelizable]
+        public async Task get_potential_signatures()
         {
             var args = new GetPotentialSignaturesArgs
             {
-                Trx = GetSignedTransaction()
+                Trx = await GetSignedTransaction()
             };
-            var resp = Api.GetPotentialSignatures(args, CancellationToken.None);
+            var resp = await Api.GetPotentialSignatures(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void verify_authority()
+        [Parallelizable]
+        public async Task verify_authority()
         {
             var args = new VerifyAuthorityArgs
             {
-                Trx = GetSignedTransaction()
+                Trx = await GetSignedTransaction()
             };
-            var resp = Api.VerifyAuthority(args, CancellationToken.None);
+            var resp = await Api.VerifyAuthority(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
+        [Parallelizable]
         [Ignore("It did not take off...")]
-        public void verify_account_authority()
+        public async Task verify_account_authority()
         {
             var args = new VerifyAccountAuthorityArgs
             {
                 Account = User.Login,
                 Signers = new PublicKeyType[0]
             };
-            var resp = Api.VerifyAccountAuthority(args, CancellationToken.None);
+            var resp = await Api.VerifyAccountAuthority(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
+        [Parallelizable]
         [Ignore("It did not take off...")]
-        public void verify_signatures()
+        public async Task verify_signatures()
         {
             var args = new VerifySignaturesArgs();
-            var resp = Api.VerifySignatures(args, CancellationToken.None);
+            var resp = await Api.VerifySignatures(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
         [Test]
-        public void get_smt_next_identifier()
+        [Parallelizable]
+        public async Task get_smt_next_identifier()
         {
-            var confResp = Api.GetConfig<JObject>(CancellationToken.None);
+            var confResp = await Api.GetConfig<JObject>(CancellationToken.None);
             if (confResp.IsError)
                 return;
 
@@ -506,7 +552,7 @@ namespace Ditch.Steem.Tests.Apis
 
             if (isEnableSmt)
             {
-                var resp = Api.GetSmtNextIdentifier(CancellationToken.None);
+                var resp = await Api.GetSmtNextIdentifier(CancellationToken.None);
                 TestPropetries(resp);
             }
         }

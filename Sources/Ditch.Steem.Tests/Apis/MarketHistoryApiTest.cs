@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Steem.Models;
 using NUnit.Framework;
 
@@ -8,30 +9,30 @@ namespace Ditch.Steem.Tests.Apis
     [TestFixture]
     public class MarketHistoryApiTest : BaseTest
     {
-        [Test]
-        public void get_ticker()
+        [Test][Parallelizable]
+        public async Task get_ticker()
         {
-            var resp = Api.GetTicker(CancellationToken.None);
+            var resp = await Api.GetTicker(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_volume()
+        [Test][Parallelizable]
+        public async Task get_volume()
         {
-            var resp = Api.GetVolume(CancellationToken.None);
+            var resp = await Api.GetVolume(CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_order_book()
+        [Test][Parallelizable]
+        public async Task get_order_book()
         {
             var args = new GetOrderBookArgs();
-            var resp = Api.GetOrderBook(args, CancellationToken.None);
+            var resp = await Api.GetOrderBook(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_trade_history()
+        [Test][Parallelizable]
+        public async Task get_trade_history()
         {
             var args = new GetTradeHistoryArgs
             {
@@ -39,20 +40,20 @@ namespace Ditch.Steem.Tests.Apis
                 End = new DateTime(2017, 6, 2),
                 Limit = 100
             };
-            var resp = Api.GetTradeHistory(args, CancellationToken.None);
+            var resp = await Api.GetTradeHistory(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_recent_trades()
+        [Test][Parallelizable]
+        public async Task get_recent_trades()
         {
             var args = new GetRecentTradesArgs();
-            var resp = Api.GetRecentTrades(args, CancellationToken.None);
+            var resp = await Api.GetRecentTrades(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_market_history()
+        [Test][Parallelizable]
+        public async Task get_market_history()
         {
             var args = new GetMarketHistoryArgs
             {
@@ -60,14 +61,14 @@ namespace Ditch.Steem.Tests.Apis
                 BucketSeconds = 100,
                 End = new DateTime(2017, 6, 2)
             };
-            var resp = Api.GetMarketHistory(args, CancellationToken.None);
+            var resp = await Api.GetMarketHistory(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_market_history_buckets()
+        [Test][Parallelizable]
+        public async Task get_market_history_buckets()
         {
-            var resp = Api.GetMarketHistoryBuckets(CancellationToken.None);
+            var resp = await Api.GetMarketHistoryBuckets(CancellationToken.None);
             TestPropetries(resp);
         }
     }

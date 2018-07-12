@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using Ditch.Core;
 using NUnit.Framework;
 
 namespace Ditch.BitShares.Tests
 {
     [TestFixture]
-    public class ConnectionTest
+    public class ConnectionTest : BaseTest
     {
+        [OneTimeSetUp]
+        protected override void OneTimeSetUp()
+        {
+            var ws = new WebSocketManager();
+            Api = new OperationManager(ws);
+        }
+
         /// <summary>
         /// https://www.steem.center/index.php?title=Public_Websocket_Servers
         /// </summary>
@@ -30,16 +37,13 @@ namespace Ditch.BitShares.Tests
         [TestCase("wss://japan.bitshares.apasia.tech/ws")]
         public void NodeTest(string url)
         {
-            var manager = new OperationManager();
-
             var sw = new Stopwatch();
-            var urls = new List<string> { url };
-            sw.Restart();
-            manager.TryConnectTo(urls, CancellationToken.None);
+            sw.Start();
+            Api.ConnectTo(url, CancellationToken.None);
             sw.Stop();
 
             Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
-            Assert.True(manager.IsConnected);
+            Assert.True(Api.IsConnected);
         }
     }
 }

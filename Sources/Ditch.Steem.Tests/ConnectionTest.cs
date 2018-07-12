@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Ditch.Core;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.Steem.Tests
@@ -33,57 +34,28 @@ namespace Ditch.Steem.Tests
         [TestCase("https://rpc.buildteam.io")]
         [TestCase("https://steemd2.steepshot.org")]
         [TestCase("https://steemd.steepshot.org")]
-        public void NodeTest(string url)
+        public async Task NodeTest(string url)
         {
-            var manager = new OperationManager();
+            var manager = new OperationManager(new HttpManager());
             var token = CancellationToken.None;
 
             var sw = new Stopwatch();
-            var urls = new List<string> { url };
-            sw.Restart();
-            if (manager.TryConnectTo(urls, token))
+            sw.Start();
+            if (manager.ConnectTo(url, token))
             {
-                manager.GetHardforkProperties(token);
+                var hfvr = await manager.GetConfig<JObject>(token);
+                WriteLine(hfvr);
+                Assert.IsFalse(hfvr.IsError);
+                JToken version;
+                if (!hfvr.Result.TryGetValue("STEEM_BLOCKCHAIN_VERSION", out version))
+                    if (!hfvr.Result.TryGetValue("STEEMIT_BLOCKCHAIN_VERSION", out version))
+                        Assert.Fail();
+                WriteLine(version.Value<string>());
             }
             sw.Stop();
 
             WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
-            Assert.IsTrue(manager.IsConnected, $"Not connected to {url}");
-        }
-
-        [Ignore("LongRuningTest")]
-        [Test]
-        public async Task TryConnectToHttpsTest()
-        {
-            var urls = new List<string> {
-                "https://api.steemit.com",
-                "https://steemd.steemit.com",
-                "https://steemd.steemitstage.com",
-                "https://steemd.steemitdev.com",
-                "https://steemd.privex.io",
-                "https://gtg.steem.house:8090",
-                "https://rpc.steemliberator.com",
-                "https://node.steem.ws",
-                "https://steemd.minnowsupportproject.org",
-                "https://rpc.buildteam.io",
-                "https://steemd.pevo.science",
-                "https://steemd.steemgigs.org",
-                "https://rpc.buildteam.io",
-                "https://steemd2.steepshot.org"
-            };
-
-            var manager = new OperationManager();
-
-            var sw = new Stopwatch();
-            for (var i = 0; i < 5; i++)
-            {
-                sw.Restart();
-                var url = manager.TryConnectTo(urls, CancellationToken.None);
-                sw.Stop();
-                WriteLine($"{i} conected to {url} {sw.ElapsedMilliseconds}");
-                Assert.IsTrue(manager.IsConnected, "Not connected");
-                await Task.Delay(3000);
-            }
+            Assert.IsTrue(manager.IsConnected);
         }
     }
 }

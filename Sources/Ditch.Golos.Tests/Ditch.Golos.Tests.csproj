@@ -80,7 +80,6 @@
     <Compile Include="Apis\WitnessApiTest.cs" />
     <Compile Include="Apis\SocialNetworkTest.cs" />
     <Compile Include="BaseTest.cs" />
-    <Compile Include="Apis\AccountByKeyApiTest.cs" />
     <Compile Include="Apis\DatabaseApiTest.cs" />
     <Compile Include="Apis\FollowApiTest.cs" />
     <Compile Include="Apis\MarketHistoryApiTest.cs" />

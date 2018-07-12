@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Core.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class TimePoint : ICustomSerializer, ICustomJson
     {
         public DateTime Value { get; set; }

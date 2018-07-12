@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Steem.Models;
 using NUnit.Framework;
 
@@ -7,33 +8,53 @@ namespace Ditch.Steem.Tests.Apis
     [TestFixture]
     public class CondenserApiTest : BaseTest
     {
+        [OneTimeSetUp]
+        protected override void OneTimeSetUp()
+        {
+            base.OneTimeSetUp();
+            JsonSerializerSettings = Api.CondenserJsonSerializerSettings;
+        }
+
         //  "condenser_api.broadcast_block",
+
+
         //  "condenser_api.broadcast_transaction",
         //  "condenser_api.broadcast_transaction_synchronous",
 
+
         [Test]
-        public void get_account_bandwidth()
+        [Parallelizable]
+        public async Task get_account_bandwidth()
         {
             var args = new GetAccountBandwidthArgs
             {
                 Account = User.Login,
                 Type = BandwidthType.Forum
             };
-            var resp = Api.GetAccountBandwidth2(args, CancellationToken.None);
+            var resp = await Api.CondenserGetAccountBandwidth(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        //  "condenser_api.get_account_count",
         [Test]
-        public void get_account_history()
+        [Parallelizable]
+        public async Task get_account_count()
+        {
+            var resp = await Api.CondenserGetAccountCount(CancellationToken.None);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
+        }
+
+        [Test]
+        [Parallelizable]
+        public async Task get_account_history()
         {
             var args = new GetAccountHistoryArgs
             {
                 Account = User.Login,
-                Limit = 3,
-                Start = 3
+                Limit = 1,
+                Start = 1
             };
-            var resp = Api.GetAccountHistory2(args, CancellationToken.None);
+            var resp = await Api.CondenserGetAccountHistory(args, CancellationToken.None);
             TestPropetries(resp);
         }
 
@@ -44,13 +65,14 @@ namespace Ditch.Steem.Tests.Apis
         //  "condenser_api.get_active_votes",
         //  "condenser_api.get_active_witnesses",
         [Test]
-        public void get_block()
+        [Parallelizable]
+        public async Task get_block()
         {
             var args = new GetBlockArgs
             {
                 BlockNum = 22054347
             };
-            var resp = Api.GetBlock2(args, CancellationToken.None);
+            var resp = await Api.CondenserGetBlock(args, CancellationToken.None);
             TestPropetries(resp);
         }
         //  "condenser_api.get_block_header",
@@ -111,14 +133,15 @@ namespace Ditch.Steem.Tests.Apis
         //  "condenser_api.get_transaction",
         //  "condenser_api.get_transaction_hex",
         [Test]
-        public void get_trending_tags()
+        [Parallelizable]
+        public async Task get_trending_tags()
         {
             var args = new GetTrendingTagsArgs
             {
                 StartTag = string.Empty,
                 Limit = 1
             };
-            var resp = Api.GetTrendingTags2(args, CancellationToken.None);
+            var resp = await Api.CondenserGetTrendingTags(args, CancellationToken.None);
             TestPropetries(resp);
         }
         //  "condenser_api.get_version",

@@ -16,6 +16,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: signed_transaction</returns>
         [JsonProperty("trx")]
-        public SignedTransaction Trx {get; set;}
+        public SignedTransaction Trx { get; set; }
     }
 }

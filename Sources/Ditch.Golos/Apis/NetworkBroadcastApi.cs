@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 using Newtonsoft.Json.Linq;
@@ -30,7 +31,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: void</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoidResponse> BroadcastTransaction(SignedTransaction trx, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
             return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_transaction", new object[] { trx }, token);
         }
@@ -45,7 +46,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: variant</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<JObject> BroadcastTransactionSynchronous(SignedTransaction trx, CancellationToken token)
+        public Task<JsonRpcResponse<JObject>> BroadcastTransactionSynchronous(SignedTransaction trx, CancellationToken token)
         {
             return CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcast, "broadcast_transaction_synchronous", new object[] { trx }, token);
         }
@@ -58,7 +59,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: void</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoidResponse> BroadcastBlock(SignedBlock block, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastBlock(SignedBlock block, CancellationToken token)
         {
             return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_block", new object[] { block }, token);
         }

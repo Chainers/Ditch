@@ -12,6 +12,6 @@ namespace Ditch.Steem.Models
     {
         // bdType : vector<signed_transaction>
         [JsonProperty("transactions")]
-        public object[] Transactions { get; set; }
+        public SignedTransaction[] Transactions { get; set; }
     }
 }

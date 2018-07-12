@@ -80,9 +80,9 @@ namespace Ditch.BitShares.Models
         public uint WithdrawalPeriodSec { get; set; }
 
         /***
- * The beginning of the next withdrawal period
- * WARNING: Due to caching, this value does not always represent the start of the next or current period (because it is only updated after a withdrawal operation such as claim).  For the latest current period, use current_period().
- */
+       * The beginning of the next withdrawal period
+       * WARNING: Due to caching, this value does not always represent the start of the next or current period (because it is only updated after a withdrawal operation such as claim).  For the latest current period, use current_period().
+       */
 
         /// <summary>
         /// API name: period_start_time

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -15,9 +14,10 @@ namespace Ditch.Golos.Tests
 {
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 3.2.0-alpha";
+        protected const string AppVersion = "ditch / 4.0.0-alpha";
         protected static UserInfo User;
         protected static OperationManager Api;
+        protected WebSocketManager WebSocketManager;
 
 
         [OneTimeSetUp]
@@ -37,25 +37,14 @@ namespace Ditch.Golos.Tests
 
             if (Api == null)
             {
-                var jss = GetJsonSerializerSettings();
-                var manager = new WebSocketManager(jss, 1024 * 1024);
-                Api = new OperationManager(manager, jss);
+                WebSocketManager = new WebSocketManager();
+                Api = new OperationManager(WebSocketManager);
 
-                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                Api.TryConnectTo(urls, CancellationToken.None);
+                var url = ConfigurationManager.AppSettings["Url"];
+                Api.ConnectTo(url, CancellationToken.None);
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
-        }
-
-        public static JsonSerializerSettings GetJsonSerializerSettings()
-        {
-            var rez = new JsonSerializerSettings
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                Culture = CultureInfo.InvariantCulture
-            };
-            return rez;
         }
 
         protected void TestPropetries<T>(JsonRpcResponse<T> resp)
@@ -170,7 +159,10 @@ namespace Ditch.Golos.Tests
             if (r.IsError)
             {
                 Console.WriteLine("Error:");
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+                if (r.ResponseError != null)
+                    Console.WriteLine(JsonConvert.SerializeObject(r.ResponseError, Formatting.Indented));
+                if (r.Exception != null)
+                    Console.WriteLine(r.Exception.ToString());
             }
             else
             {

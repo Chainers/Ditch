@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.BitShares.JsonRpc;
 using Ditch.BitShares.Models;
@@ -21,7 +23,7 @@ namespace Ditch.BitShares
 
         public byte[] ChainId
         {
-            get => _chainId ?? (_chainId = TryLoadChainId(CancellationToken.None));
+            get => _chainId ?? (_chainId = TryLoadChainId(CancellationToken.None).Result);
             set => _chainId = value;
         }
 
@@ -30,35 +32,25 @@ namespace Ditch.BitShares
 
         #region Constructors
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
-            : this(connectionManage, jsonSerializerSettings, new MessageSerializer()) { }
-
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, MessageSerializer serializer)
-        {
-            JsonSerializerSettings = jsonSerializerSettings;
-            ConnectionManager = connectionManage;
-            MessageSerializer = serializer;
-        }
-
-        public OperationManager()
+        public OperationManager(IConnectionManager connectionManage)
         {
             MessageSerializer = new MessageSerializer();
-            JsonSerializerSettings = new JsonSerializerSettings();
-            ConnectionManager = new WebSocketManager(JsonSerializerSettings);
+            ConnectionManager = connectionManage;
+            JsonSerializerSettings = new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Culture = CultureInfo.InvariantCulture
+            };
         }
 
         #endregion Constructors
 
 
-        public bool TryConnectTo(string endpoin, CancellationToken token)
+        public bool ConnectTo(string endpoin, CancellationToken token)
         {
-            return ConnectionManager.TryConnectTo(endpoin, token);
+            return ConnectionManager.ConnectTo(endpoin, token);
         }
 
-        public bool TryConnectTo(IEnumerable<string> urls, CancellationToken token)
-        {
-            return ConnectionManager.TryConnectTo(urls, token);
-        }
 
         /// <summary>
         /// Create and Broadcast a transaction to the network
@@ -70,14 +62,14 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoidResponse> BroadcastOperations(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return new JsonRpcResponse<VoidResponse>(prop.Error);
+                return new JsonRpcResponse<VoidResponse>(prop);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return BroadcastTransaction(transaction, token);
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            return await BroadcastTransaction(transaction, token);
         }
 
         /// <summary>
@@ -90,14 +82,14 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<object> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public async Task<JsonRpcResponse<object>> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return new JsonRpcResponse<object>(prop.Error);
+                return new JsonRpcResponse<object>(prop);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return BroadcastTransactionSynchronous(transaction, token);
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, token, operations);
+            return await BroadcastTransactionSynchronous(transaction, token);
         }
 
         /// <summary>
@@ -109,14 +101,14 @@ namespace Ditch.BitShares
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<bool> VerifyAuthority(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] testOps)
+        public async Task<JsonRpcResponse<bool>> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
-            var prop = GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return new JsonRpcResponse<bool>(prop.Error);
+                return new JsonRpcResponse<bool>(prop);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, token, testOps);
-            return VerifyAuthority(transaction, token);
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, token, testOps);
+            return await VerifyAuthority(transaction, token);
         }
 
         /// <summary>
@@ -129,10 +121,10 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
-            return ConnectionManager.Execute<T>(jsonRpc, token);
+            return ConnectionManager.ExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
         }
 
         /// <summary>
@@ -144,10 +136,10 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
-            return ConnectionManager.Execute<T>(jsonRpc, token);
+            return ConnectionManager.ExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
         }
 
         /// <summary>
@@ -159,35 +151,38 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
-            var transaction = new SignedTransaction
+            return Task.Run(() =>
             {
-                ChainId = ChainId,
-                RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
-                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
-                Expiration = propertyApiObj.Time.Value.AddSeconds(30),
-                BaseOperations = operations
-            };
+                var transaction = new SignedTransaction
+                {
+                    ChainId = ChainId,
+                    RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
+                    RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
+                    Expiration = propertyApiObj.Time.Value.AddSeconds(30),
+                    BaseOperations = operations
+                };
 
-            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
-            var data = Sha256Manager.GetHash(msg);
+                var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
+                var data = Sha256Manager.GetHash(msg);
 
-            transaction.Signatures = new string[userPrivateKeys.Count];
-            for (var i = 0; i < userPrivateKeys.Count; i++)
-            {
-                token.ThrowIfCancellationRequested();
-                var userPrivateKey = userPrivateKeys[i];
-                var sig = Secp256K1Manager.SignCompressedCompact(data, userPrivateKey);
-                transaction.Signatures[i] = Hex.ToString(sig);
-            }
+                transaction.Signatures = new string[userPrivateKeys.Count];
+                for (var i = 0; i < userPrivateKeys.Count; i++)
+                {
+                    token.ThrowIfCancellationRequested();
+                    var userPrivateKey = userPrivateKeys[i];
+                    var sig = Secp256K1Manager.SignCompressedCompact(data, userPrivateKey);
+                    transaction.Signatures[i] = Hex.ToString(sig);
+                }
 
-            return transaction;
+                return transaction;
+            }, token);
         }
 
-        public byte[] TryLoadChainId(CancellationToken token)
+        public async Task<byte[]> TryLoadChainId(CancellationToken token)
         {
-            var resp = GetChainId(token);
+            var resp = await GetChainId(token);
             if (!resp.IsError)
             {
                 return Hex.HexToBytes(resp.Result);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -10,17 +11,17 @@ namespace Ditch.Steem.Tests
     public class InfoTest : BaseTest
     {
         [Test]
-        public void get_methods()
+        public async Task get_methods()
         {
-            var resp = Api.CustomGetRequest<string[]>(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None);
+            var resp = await Api.CustomGetRequest<string[]>(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
 
         [Test]
-        public void get_signature()
+        public async Task get_signature()
         {
-            var resp = Api.CustomGetRequest<VoidResponse>(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None);
+            var resp = await Api.CustomGetRequest<VoidResponse>(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));

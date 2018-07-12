@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.BitShares.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class PublicKeyType : ICustomJson
     {
         public string Prefix = "BTS";

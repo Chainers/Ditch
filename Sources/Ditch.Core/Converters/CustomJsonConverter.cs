@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.Core.Converters
 {
-    public class CustomConverter : JsonConverter
+    public class CustomJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

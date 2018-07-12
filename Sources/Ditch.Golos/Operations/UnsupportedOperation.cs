@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Ditch.Golos.Operations
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     [JsonObject(MemberSerialization.OptIn)]
     public class UnsupportedOperation : BaseOperation, ICustomJson
     {

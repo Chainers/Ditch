@@ -16,6 +16,6 @@ namespace Ditch.Steem.Models
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("keys")]
-        public PublicKeyType[] Keys {get; set;}
+        public PublicKeyType[] Keys { get; set; }
     }
 }

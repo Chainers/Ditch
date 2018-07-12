@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Steem.Helpers;
 using Ditch.Steem.Models;
 using Ditch.Steem.Operations;
 using Newtonsoft.Json;
@@ -19,10 +19,13 @@ namespace Ditch.Steem.Tests
     [TestFixture]
     public class BaseTest
     {
-        protected const string AppVersion = "ditch / 3.2.0-alpha";
+        protected const string AppVersion = "ditch / 4.0.0-alpha";
 
         protected static UserInfo User;
         protected static OperationManager Api;
+        protected HttpManager HttpManager;
+        protected HttpClient HttpClient;
+        protected JsonSerializerSettings JsonSerializerSettings;
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
@@ -35,29 +38,19 @@ namespace Ditch.Steem.Tests
 
             if (Api == null)
             {
-                var jss = GetJsonSerializerSettings();
-                var manager = new HttpManager(jss, 1024 * 1024);
-                Api = new OperationManager(manager, jss);
+                HttpClient = new HttpClient()
+                {
+                    MaxResponseContentBufferSize = 1024 * 1024
+                };
+                HttpManager = new HttpManager(HttpClient);
+                Api = new OperationManager(HttpManager);
+                JsonSerializerSettings = Api.NewJsonSerializerSettings;
 
-                var urls = new List<string> { ConfigurationManager.AppSettings["Url"] };
-                Assert.IsTrue(Api.TryConnectTo(urls, CancellationToken.None), "Enable connect to node");
-
-                var version = Api.TryLoadBlockchainVersion(new[] { "STEEM_BLOCKCHAIN_VERSION" }, CancellationToken.None);
-                Assert.IsFalse(string.IsNullOrEmpty(version));
-                Config.BlockchainVersion = VersionHelper.ToInteger(version);
+                var url = ConfigurationManager.AppSettings["Url"];
+                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None), "Enable connect to node");
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
-        }
-
-        public static JsonSerializerSettings GetJsonSerializerSettings()
-        {
-            var rez = new JsonSerializerSettings
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                Culture = CultureInfo.InvariantCulture
-            };
-            return rez;
         }
 
         protected void TestPropetries<T>(JsonRpcResponse<T> resp)
@@ -76,6 +69,9 @@ namespace Ditch.Steem.Tests
 
                 if (jResult == null)
                     throw new NullReferenceException("obj.Result");
+
+                if (jResult.Type == JTokenType.Array && jResult.First.Type == JTokenType.String)
+                    return; // skeep string array
 
                 var type = typeof(T);
                 if (type.IsArray) //list
@@ -135,7 +131,7 @@ namespace Ditch.Steem.Tests
                 Assert.Fail($"Some properties ({msg.Count}) was missed! {Environment.NewLine} {string.Join(Environment.NewLine, msg)}");
             }
         }
-        
+
         protected HashSet<string> GetPropertyNames(Type type)
         {
             var props = type.GetRuntimeProperties();
@@ -158,14 +154,14 @@ namespace Ditch.Steem.Tests
         }
 
 
-        protected SignedTransaction GetSignedTransaction()
+        protected async Task<SignedTransaction> GetSignedTransaction()
         {
             var user = User;
             const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
             return transaction;
         }
 
@@ -181,12 +177,15 @@ namespace Ditch.Steem.Tests
             if (r.IsError)
             {
                 Console.WriteLine("Error:");
-                Console.WriteLine(JsonConvert.SerializeObject(r.Error, Formatting.Indented));
+                if (r.ResponseError != null)
+                    Console.WriteLine(JsonConvert.SerializeObject(r.ResponseError, Formatting.Indented, JsonSerializerSettings));
+                if (r.Exception != null)
+                    Console.WriteLine(r.Exception.ToString());
             }
             else
             {
                 Console.WriteLine("Result:");
-                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented, JsonSerializerSettings));
             }
 
             Console.WriteLine("Request:");

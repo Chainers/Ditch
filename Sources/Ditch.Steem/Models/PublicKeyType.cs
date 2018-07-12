@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 
 namespace Ditch.Steem.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
     public class PublicKeyType : ICustomJson
     {
         public const string Prefix = "STM";
@@ -25,8 +24,7 @@ namespace Ditch.Steem.Models
         {
             Data = data;
         }
-
-
+        
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)

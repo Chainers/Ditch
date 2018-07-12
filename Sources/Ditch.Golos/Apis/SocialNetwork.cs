@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 
@@ -29,7 +30,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: vote_state if permlink is "" then it will return all votes for author</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoteState[]> GetActiveVotes(string author, string permlink, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<VoteState[]>> GetActiveVotes(string author, string permlink, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<VoteState[]>(KnownApiNames.SocialNetworkApi, "get_active_votes", new object[] { author, permlink, voteLimit }, token);
         }
@@ -44,7 +45,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_vote</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AccountVote[]> GetAccountVotes(string voter, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<AccountVote[]>> GetAccountVotes(string voter, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<AccountVote[]>(KnownApiNames.SocialNetworkApi, "get_account_votes", new object[] { voter, voteLimit }, token);
         }
@@ -60,7 +61,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion> GetContent(string author, string permlink, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion>> GetContent(string author, string permlink, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion>(KnownApiNames.SocialNetworkApi, "get_content", new object[] { author, permlink, voteLimit }, token);
         }
@@ -76,11 +77,11 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetContentReplies(string parent, string parentPermlink, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetContentReplies(string parent, string parentPermlink, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_content_replies", new object[] { parent, parentPermlink, voteLimit }, token);
         }
-        
+
         /// <summary>
         /// API name: get_replies_by_last_update
         /// *Return the active discussions with the highest cumulative pending payouts without respect to category, total  pending payout means the pending payout of all children as well.
@@ -94,11 +95,11 @@ namespace Ditch.Golos
         /// <returns>API type: discussion Return the active discussions with the highest cumulative pending payouts without respect to category, total
         /// pending payout means the pending payout of all children as well.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetRepliesByLastUpdate(string startAuthor, string startPermlink, uint limit, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetRepliesByLastUpdate(string startAuthor, string startPermlink, uint limit, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_replies_by_last_update", new object[] { startAuthor, startPermlink, limit, voteLimit }, token);
         }
-        
+
         /// <summary>
         /// API name: get_all_content_replies
         /// 
@@ -109,7 +110,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: discussion</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<Discussion[]> GetAllContentReplies(string author, string permlink, ushort voteLimit, CancellationToken token)
+        public Task<JsonRpcResponse<Discussion[]>> GetAllContentReplies(string author, string permlink, ushort voteLimit, CancellationToken token)
         {
             return CustomGetRequest<Discussion[]>(KnownApiNames.SocialNetworkApi, "get_all_content_replies", new object[] { author, permlink, voteLimit }, token);
         }

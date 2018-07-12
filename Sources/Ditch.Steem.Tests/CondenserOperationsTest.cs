@@ -1,31 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.JsonRpc;
-using Ditch.Golos.Models;
-using Ditch.Golos.Operations;
+using Ditch.Steem.Models;
+using Ditch.Steem.Operations;
 using NUnit.Framework;
 using Base58 = Ditch.Core.Base58;
 
-namespace Ditch.Golos.Tests
+namespace Ditch.Steem.Tests
 {
     [TestFixture]
-    public class OperationsTest : BaseTest
+    public class CondenserOperationsTest : BaseTest
     {
-        private async Task Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
+        [OneTimeSetUp]
+        protected override void OneTimeSetUp()
+        {
+            base.OneTimeSetUp();
+            JsonSerializerSettings = Api.CondenserJsonSerializerSettings;
+        }
+
+        protected virtual async Task Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
             JsonRpcResponse response;
             if (isNeedBroadcast)
-                response = await Api.BroadcastOperations(postingKeys, op, CancellationToken.None);
+                response = await Api.CondenserBroadcastOperations(postingKeys, op, CancellationToken.None);
             else
-                response = await Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
+                response = await Api.CondenserVerifyAuthority(postingKeys, op, CancellationToken.None);
 
             WriteLine(response);
-
             Assert.IsFalse(response.IsError);
         }
 
@@ -36,7 +41,7 @@ namespace Ditch.Golos.Tests
         {
             var user = User;
             const string autor = "joseph.kalu";
-            const string permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
+            const string permlink = "fkkl";
 
             var voteState = await GetVoteState(autor, permlink, user);
 
@@ -61,17 +66,40 @@ namespace Ditch.Golos.Tests
 
         private async Task<int> GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = await Api.GetContent(author, permlink, 100, CancellationToken.None);
+            var args = new GetDiscussionArgs
+            {
+                Author = author,
+                Permlink = permlink
+            };
+            var resp = await Api.GetDiscussion(args, CancellationToken.None);
             if (resp.IsError)
+            {
                 WriteLine(resp);
-
-            Assert.IsFalse(resp.IsError);
+                Assert.IsFalse(resp.IsError);
+            }
             var vote = resp.Result.ActiveVotes.FirstOrDefault(i => i.Voter.Equals(user.Login));
             return vote?.Percent ?? 0;
         }
 
         #endregion
         #region Comment
+
+        [Test]
+        public async Task PostTest()
+        {
+            var user = User;
+            var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
+            await Post(user.PostingKeys, false, op);
+        }
+
+        [Test]
+        public async Task RuPostTest()
+        {
+            var user = User;
+
+            var op = new PostOperation("test", user.Login, "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
+            await Post(user.PostingKeys, false, op);
+        }
 
         [Test]
         public async Task ReplyTest()
@@ -90,7 +118,7 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task TransferOperationTest()
         {
-            var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
+            var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
             await Post(User.ActiveKeys, false, op);
         }
 
@@ -100,7 +128,7 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task TransferToVestingOperationTest()
         {
-            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset("0.001 GOLOS"));
+            var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSteem));
             await Post(User.ActiveKeys, false, op);
         }
 
@@ -110,12 +138,11 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task WithdrawVestingOperationTest()
         {
-            var op = new WithdrawVestingOperation(User.Login, new Asset("0.001 GESTS"));
+            var op = new WithdrawVestingOperation(User.Login, new Asset(1, Config.SteemAssetNumVests));
             await Post(User.ActiveKeys, false, op);
         }
 
         #endregion
-
 
         //LimitOrderCreate,
         //LimitOrderCancel,
@@ -132,7 +159,7 @@ namespace Ditch.Golos.Tests
 
             var op = new AccountCreateOperation
             {
-                Fee = new Asset(3000, 3, "GBG"),
+                Fee = new Asset(3000, Config.SteemAssetNumSteem),
                 Creator = User.Login,
                 NewAccountName = User.Login,
                 JsonMetadata = ""
@@ -164,14 +191,19 @@ namespace Ditch.Golos.Tests
             await Post(User.ActiveKeys, false, op);
         }
 
+
         #endregion AccountCreate
         #region AccountUpdate
 
         [Test]
         public async Task AccountUpdateTest()
         {
-            var resp = await Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
-            var acc = resp.Result[0];
+            var args = new FindAccountsArgs
+            {
+                Accounts = new[] { User.Login }
+            };
+            var resp = await Api.FindAccounts(args, CancellationToken.None);
+            var acc = resp.Result.Accounts[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
             await Post(User.ActiveKeys, false, op);
@@ -179,18 +211,19 @@ namespace Ditch.Golos.Tests
 
         #endregion AccountUpdate
 
-
         #region WitnessUpdate
 
         [Test]
         public async Task WitnessUpdateTest()
         {
-            var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainProperties17(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
+            var accountCreationFee = new Asset(1, Config.SteemAssetNumSteem);
+            var fee = new Asset(1, Config.SteemAssetNumSteem);
+
+            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
             await Post(User.ActiveKeys, false, op);
         }
 
         #endregion
-
         //AccountWitnessVote,
         //AccountWitnessProxy,
 
@@ -209,7 +242,7 @@ namespace Ditch.Golos.Tests
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
             await Post(user.PostingKeys, false, op);
 
-            var op2 = new DeleteCommentOperation(user.Login, "");
+            var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
             await Post(user.PostingKeys, false, op2);
         }
 
@@ -250,10 +283,22 @@ namespace Ditch.Golos.Tests
             await Post(user.PostingKeys, false, op);
         }
 
-        private async Task<bool> IsFollow(string author)
+        private async Task<bool> IsFollow(string autor)
         {
-            var resp = await Api.GetFollowing(User.Login, author, FollowType.Blog, 1, CancellationToken.None);
-            return resp.Result.Length > 0 && resp.Result[0].Following == author;
+            var args = new GetFollowingArgs
+            {
+                Account = User.Login,
+                Start = autor,
+                Limit = 1,
+                Type = FollowType.Blog
+            };
+            var resp = await Api.GetFollowing(args, CancellationToken.None);
+            if (resp.IsError)
+            {
+                WriteLine(resp);
+                Assert.IsFalse(resp.IsError);
+            }
+            return resp.Result.Following.Length > 0 && resp.Result.Following[0].Following == autor;
         }
 
         [Test]
@@ -277,22 +322,20 @@ namespace Ditch.Golos.Tests
         #endregion CustomJson
         #region CommentOptions
 
-
         [Test]
         public async Task PostWithBeneficiariesTest()
         {
             var user = User;
-            var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
-
-            await Post(user.PostingKeys, false, op, op2);
+            var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
+            var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
+            await Post(user.PostingKeys, false, op, popt);
         }
 
         #endregion CommentOptions
         //SetWithdrawVestingRoute,
         //LimitOrderCreate2,
-        //ChallengeAuthority,
-        //ProveAuthority,
+        //ClaimAccount,
+        //CreateClaimedAccount,
         //RequestAccountRecovery,
         //RecoverAccount,
         //ChangeRecoveryAccount,
@@ -308,57 +351,36 @@ namespace Ditch.Golos.Tests
         //DeclineVotingRights,
         //ResetAccount,
         //SetResetAccount,
-        //DelegateVestingShares,
-        //AccountCreateWithDelegation,
-        //AccountMetadata,
-        #region ProposalCreate
+        #region ClaimRewardBalance
 
         [Test]
-        public async Task ProposalCreateOperationTest()
+        public async Task ClaimRewardBalanceOperationTest()
         {
-            var user = User;
-            const string autor = "joseph.kalu";
-            const string permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
-
-            var vop = new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote);
-
-            var op = new ProposalCreateOperation(User.Login, "test title", "test memo", DateTime.Now.AddSeconds(30))
-            {
-                ReviewPeriodTime = DateTime.Now.AddSeconds(55),
-                ProposedOperations = new[]
-                {
-                    new OperationWrapper
-                    {
-                        Op = vop
-                    }
-                }
-            };
-
-            await Post(User.ActiveKeys, false, op);
-        }
-
-        #endregion ProposalCreate
-        #region ProposalUpdate
-
-        [Test]
-        public async Task ProposalUpdateOperationTest()
-        {
-            var op = new ProposalUpdateOperation
-            {
-                Title = "test title",
-                Author = User.Login,
-                PostingApprovalsToAdd = new[] { User.Login }
-
-            };
-
+            var steem = new Asset(1, Config.SteemAssetNumSteem);
+            var sbd = new Asset(1, Config.SteemAssetNumSbd);
+            var vest = new Asset(1, Config.SteemAssetNumVests);
+            var op = new ClaimRewardBalanceOperation(User.Login, steem, sbd, vest);
             await Post(User.PostingKeys, false, op);
         }
 
-        #endregion ProposalUpdate
-        //ProposalDelete,
-        //ChainPropertiesUpdate,
+        #endregion ClaimRewardBalance
+        //DelegateVestingShares,
+        //AccountCreateWithDelegation,
+        //WitnessSetProperties,
 
-        ///// virtual operations below this point
+        //# ifdef STEEM_ENABLE_SMT
+        //        /// SMT operations
+        //        ClaimRewardBalance2,
+
+        //        SmtSetup,
+        //        SmtCapReveal,
+        //        SmtRefund,
+        //        SmtSetupEmissions,
+        //        SmtSetSetupParameters,
+        //        SmtSetRuntimeParameters,
+        //        SmtCreate,
+        //#endif
+        //// virtual operations below this point
         //FillConvertRequest,
         //AuthorReward,
         //CurationReward,
@@ -371,26 +393,8 @@ namespace Ditch.Golos.Tests
         //FillTransferFromSavings,
         //Hardfork,
         //CommentPayoutUpdate,
+        //ReturnVestingDelegation,
         //CommentBenefactorReward,
-        //ReturnVestingDelegation
-
-
-
-
-
-        [Test, Sequential]
-        [TestCase("277.126 SBD", 277126, 3, "SBD")]
-        [TestCase("0 SBD", 0, 0, "SBD")]
-        [TestCase("0", 0, 0, "")]
-        [TestCase("123 SBD", 123, 0, "SBD")]
-        [TestCase("0.12345 SBD", 12345, 5, "SBD")]
-        public void ParseTestTest(string test, long value, byte precision, string currency)
-        {
-            var asset = new Asset(test);
-            Assert.IsTrue(asset.Amount == value);
-            Assert.IsTrue(asset.Decimals == precision);
-            Assert.IsTrue(asset.Currency == currency);
-            Assert.IsTrue(test.Equals(asset.ToString()));
-        }
+        //ProducerReward
     }
 }

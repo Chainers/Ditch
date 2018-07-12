@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Golos.Models;
 
@@ -18,7 +19,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: applied_operation sequence of operations included/generated within the block</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AppliedOperation[]> GetOpsInBlock(uint blockNum, bool onlyVirtual, CancellationToken token)
+        public Task<JsonRpcResponse<AppliedOperation[]>> GetOpsInBlock(uint blockNum, bool onlyVirtual, CancellationToken token)
         {
             return CustomGetRequest<AppliedOperation[]>(KnownApiNames.OperationHistory, "get_ops_in_block", new object[] { blockNum, onlyVirtual }, token);
         }
@@ -32,7 +33,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: annotated_signed_transaction</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<AnnotatedSignedTransaction> GetTransaction(string trxId, CancellationToken token)
+        public Task<JsonRpcResponse<AnnotatedSignedTransaction>> GetTransaction(string trxId, CancellationToken token)
         {
             return CustomGetRequest<AnnotatedSignedTransaction>(KnownApiNames.OperationHistory, "get_transaction", new object[] { trxId }, token);
         }

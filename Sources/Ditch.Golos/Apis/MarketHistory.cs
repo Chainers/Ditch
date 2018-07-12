@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Core.Models;
 using Ditch.Golos.Models;
@@ -23,7 +24,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bucket_object A list of market history buckets.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BucketObject[]> GetMarketHistory(uint bucketSeconds, TimePointSec start, TimePointSec end, CancellationToken token)
+        public Task<JsonRpcResponse<BucketObject[]>> GetMarketHistory(uint bucketSeconds, TimePointSec start, TimePointSec end, CancellationToken token)
         {
             return CustomGetRequest<BucketObject[]>(KnownApiNames.MarketHistory, "get_market_history", new object[] { bucketSeconds, start, end }, token);
         }
@@ -36,7 +37,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: flat_set</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<uint[]> GetMarketHistoryBuckets(CancellationToken token)
+        public Task<JsonRpcResponse<uint[]>> GetMarketHistoryBuckets(CancellationToken token)
         {
             return CustomGetRequest<uint[]>(KnownApiNames.MarketHistory, "get_market_history_buckets", new object[] { }, token);
         }
@@ -50,7 +51,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: limit_order</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<LimitOrder[]> GetOpenOrders(string owner, CancellationToken token)
+        public Task<JsonRpcResponse<LimitOrder[]>> GetOpenOrders(string owner, CancellationToken token)
         {
             return CustomGetRequest<LimitOrder[]>(KnownApiNames.MarketHistory, "get_open_orders", new object[] { owner }, token);
         }
@@ -64,7 +65,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_book</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OrderBook> GetOrderBook(uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<OrderBook>> GetOrderBook(uint limit, CancellationToken token)
         {
             return CustomGetRequest<OrderBook>(KnownApiNames.MarketHistory, "get_order_book", new object[] { limit }, token);
         }
@@ -77,7 +78,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_book_extended</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<OrderBookExtended> GetOrderBookExtended(uint arg0, CancellationToken token)
+        public Task<JsonRpcResponse<OrderBookExtended>> GetOrderBookExtended(uint arg0, CancellationToken token)
         {
             return CustomGetRequest<OrderBookExtended>(KnownApiNames.MarketHistory, "get_order_book_extended", new object[] { arg0 }, token);
         }
@@ -91,7 +92,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_trade</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTrade[]> GetRecentTrades(uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<MarketTrade[]>> GetRecentTrades(uint limit, CancellationToken token)
         {
             return CustomGetRequest<MarketTrade[]>(KnownApiNames.MarketHistory, "get_recent_trades", new object[] { limit }, token);
         }
@@ -104,7 +105,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_ticker The market ticker for the past 24 hours.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTicker> GetTicker(CancellationToken token)
+        public Task<JsonRpcResponse<MarketTicker>> GetTicker(CancellationToken token)
         {
             return CustomGetRequest<MarketTicker>(KnownApiNames.MarketHistory, "get_ticker", token);
         }
@@ -120,7 +121,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_trade Recent transactions in the market</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketTrade[]> GetTradeHistory(TimePointSec start, TimePointSec stop, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<MarketTrade[]>> GetTradeHistory(TimePointSec start, TimePointSec stop, uint limit, CancellationToken token)
         {
             return CustomGetRequest<MarketTrade[]>(KnownApiNames.MarketHistory, "get_trade_history", new object[] { start, stop, limit }, token);
         }
@@ -133,7 +134,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: market_volume The market volume over the past 24 hours</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<MarketVolume> GetVolume(CancellationToken token)
+        public Task<JsonRpcResponse<MarketVolume>> GetVolume(CancellationToken token)
         {
             return CustomGetRequest<MarketVolume>(KnownApiNames.MarketHistory, "get_volume", token);
         }

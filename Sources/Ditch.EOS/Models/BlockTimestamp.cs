@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
-    [JsonConverter(typeof(CustomConverter))]
+    [JsonConverter(typeof(CustomJsonConverter))]
     public class BlockTimestamp : ICustomJson
     {
         public DateTime Value { get; set; }

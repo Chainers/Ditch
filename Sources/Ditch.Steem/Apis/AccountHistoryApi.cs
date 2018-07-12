@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models;
 
@@ -19,7 +20,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_ops_in_block_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetOpsInBlockReturn> GetOpsInBlock(GetOpsInBlockArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetOpsInBlockReturn>> GetOpsInBlock(GetOpsInBlockArgs args, CancellationToken token)
         {
             return CustomGetRequest<GetOpsInBlockReturn>(KnownApiNames.AccountHistoryApi, "get_ops_in_block", args, token);
         }
@@ -32,7 +33,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_transaction_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetTransactionReturn> GetTransaction(GetTransactionArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetTransactionReturn>> GetTransaction(GetTransactionArgs args, CancellationToken token)
         {
             return CustomGetRequest<GetTransactionReturn>(KnownApiNames.AccountHistoryApi, "get_transaction", args, token);
         }
@@ -45,7 +46,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_account_history_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetAccountHistoryReturn> GetAccountHistory(GetAccountHistoryArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetAccountHistoryReturn>> GetAccountHistory(GetAccountHistoryArgs args, CancellationToken token)
         {
             return CustomGetRequest<GetAccountHistoryReturn>(KnownApiNames.AccountHistoryApi, "get_account_history", args, token);
         }
@@ -58,7 +59,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: enum_virtual_ops_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<EnumVirtualOpsReturn> EnumVirtualOps(EnumVirtualOpsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<EnumVirtualOpsReturn>> EnumVirtualOps(EnumVirtualOpsArgs args, CancellationToken token)
         {
             return CustomGetRequest<EnumVirtualOpsReturn>(KnownApiNames.AccountHistoryApi, "enum_virtual_ops", args, token);
         }

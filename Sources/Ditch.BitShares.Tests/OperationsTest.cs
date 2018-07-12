@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.BitShares.Models;
 using Ditch.BitShares.Operations;
@@ -12,16 +13,21 @@ namespace Ditch.BitShares.Tests
     [TestFixture]
     public class OperationsTest : BaseTest
     {
-        private JsonRpcResponse Post(List<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
+        private async Task Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
-            return isNeedBroadcast
-                ? (JsonRpcResponse)Api.BroadcastOperations(postingKeys, CancellationToken.None, op)
-                : Api.VerifyAuthority(postingKeys, CancellationToken.None, op);
+            JsonRpcResponse response;
+            if (isNeedBroadcast)
+                response = await Api.BroadcastOperations(postingKeys, op, CancellationToken.None);
+            else
+                response = await Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
+
+            WriteLine(response);
+
+            Assert.IsFalse(response.IsError);
         }
 
-
         [Test]
-        public void AccountCreateOperationTest()
+        public async Task AccountCreateOperationTestAsync()
         {
             var name = "userlogin";
             var key = Secp256K1Manager.GenerateRandomKey();
@@ -61,8 +67,7 @@ namespace Ditch.BitShares.Tests
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.Options.MemoKey = new PublicKeyType(subPublicKey, "TEST");
 
-            var response = Post(User.ActiveKeys, false, op);
-            Assert.IsFalse(response.IsError, response.GetErrorMessage());
+            await Post(User.ActiveKeys, false, op);
         }
     }
 }

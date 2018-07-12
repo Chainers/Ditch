@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
+using Ditch.Steem.Converters;
 using Ditch.Steem.JsonRpc;
 using Ditch.Steem.Models;
 using Ditch.Steem.Operations;
@@ -17,7 +19,8 @@ namespace Ditch.Steem
 {
     public partial class OperationManager
     {
-        public JsonSerializerSettings JsonSerializerSettings { get; }
+        public JsonSerializerSettings NewJsonSerializerSettings { get; set; }
+
         public MessageSerializer MessageSerializer { get; }
         public IConnectionManager ConnectionManager { get; }
         public byte[] ChainId { get; set; } = new byte[32];
@@ -26,38 +29,29 @@ namespace Ditch.Steem
 
         #region Constructors
 
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings)
-            : this(connectionManage, jsonSerializerSettings, new MessageSerializer()) { }
-
-        public OperationManager(IConnectionManager connectionManage, JsonSerializerSettings jsonSerializerSettings, MessageSerializer serializer)
-        {
-            JsonSerializerSettings = jsonSerializerSettings;
-            ConnectionManager = connectionManage;
-            MessageSerializer = serializer;
-        }
-
-        public OperationManager()
+        public OperationManager(IConnectionManager connectionManage)
         {
             MessageSerializer = new MessageSerializer();
-            JsonSerializerSettings = new JsonSerializerSettings
+            ConnectionManager = connectionManage;
+            NewJsonSerializerSettings = new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                Culture = CultureInfo.InvariantCulture
+                Culture = CultureInfo.InvariantCulture,
+                Converters = new JsonConverter[] { new NewJsonConverter(), }
             };
-            ConnectionManager = new HttpManager(JsonSerializerSettings);
+            CondenserJsonSerializerSettings = new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+                Culture = CultureInfo.InvariantCulture,
+                Converters = new JsonConverter[] { new CondenserJsonConverter(), }
+            };
         }
 
         #endregion Constructors
 
-
-        public bool TryConnectTo(string endpoin, CancellationToken token)
+        public bool ConnectTo(string endpoin, CancellationToken token)
         {
-            return ConnectionManager.TryConnectTo(endpoin, token);
-        }
-
-        public bool TryConnectTo(IEnumerable<string> urls, CancellationToken token)
-        {
-            return ConnectionManager.TryConnectTo(urls, token);
+            return ConnectionManager.ConnectTo(endpoin, token);
         }
 
         /// <summary>
@@ -70,18 +64,18 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VoidResponse> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return new JsonRpcResponse<VoidResponse>(prop.Error);
+                return new JsonRpcResponse<VoidResponse>(prop);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
             var args = new BroadcastTransactionArgs
             {
                 Trx = transaction
             };
-            return BroadcastTransaction(args, token);
+            return await BroadcastTransaction(args, token);
         }
 
         /// <summary>
@@ -94,18 +88,18 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<BroadcastTransactionSynchronousReturn> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalProperties(token);
             if (prop.IsError)
-                return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop.Error);
+                return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop);
 
-            var transaction = CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
             var args = new BroadcastTransactionSynchronousArgs
             {
                 Trx = transaction
             };
-            return BroadcastTransactionSynchronous(args, token);
+            return await BroadcastTransactionSynchronous(args, token);
         }
 
         /// <summary>
@@ -117,15 +111,15 @@ namespace Ditch.Steem
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<VerifyAuthorityReturn> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
+        public async Task<JsonRpcResponse<VerifyAuthorityReturn>> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
-            var transaction = CreateTransaction(prop, userPrivateKeys, testOps, token);
+            var transaction = await CreateTransaction(prop, userPrivateKeys, testOps, token);
             var args = new VerifyAuthorityArgs
             {
                 Trx = transaction
             };
-            return VerifyAuthority(args, token);
+            return await VerifyAuthority(args, token);
         }
 
         /// <summary>
@@ -138,10 +132,10 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, object data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, object data, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
-            return ConnectionManager.Execute<T>(jsonRpc, token);
+            var jsonRpc = JsonRpcRequest.Request(NewJsonSerializerSettings, api, method, data);
+            return ConnectionManager.ExecuteAsync<T>(jsonRpc, NewJsonSerializerSettings, token);
         }
 
         /// <summary>
@@ -153,10 +147,10 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<T> CustomGetRequest<T>(string api, string method, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, CancellationToken token)
         {
-            var jsonRpc = new JsonRpcRequest(api, method);
-            return ConnectionManager.Execute<T>(jsonRpc, token);
+            var jsonRpc = JsonRpcRequest.Request(api, method);
+            return ConnectionManager.ExecuteAsync<T>(jsonRpc, NewJsonSerializerSettings, token);
         }
 
         /// <summary>
@@ -168,40 +162,43 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var transaction = new SignedTransaction
+            return Task.Run(() =>
             {
-                ChainId = ChainId,
-                RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
-                RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
-                Expiration = propertyApiObj.Time.Value.AddSeconds(30),
-                Operations = operations.Select(o => new Operation(o)).ToArray()
-            };
+                var transaction = new SignedTransaction
+                {
+                    ChainId = ChainId,
+                    RefBlockNum = (ushort)(propertyApiObj.HeadBlockNumber & 0xffff),
+                    RefBlockPrefix = (uint)BitConverter.ToInt32(Hex.HexToBytes(propertyApiObj.HeadBlockId), 4),
+                    Expiration = propertyApiObj.Time.Value.AddSeconds(30),
+                    Operations = operations.Select(o => new Operation(o)).ToArray()
+                };
 
-            var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
-            var data = Sha256Manager.GetHash(msg);
+                var msg = MessageSerializer.Serialize<SignedTransaction>(transaction);
+                var data = Sha256Manager.GetHash(msg);
 
-            transaction.Signatures = new string[userPrivateKeys.Count];
-            for (var i = 0; i < userPrivateKeys.Count; i++)
-            {
-                token.ThrowIfCancellationRequested();
-                var userPrivateKey = userPrivateKeys[i];
-                var sig = Secp256K1Manager.SignCompressedCompact(data, userPrivateKey);
-                transaction.Signatures[i] = Hex.ToString(sig);
-            }
+                transaction.Signatures = new string[userPrivateKeys.Count];
+                for (var i = 0; i < userPrivateKeys.Count; i++)
+                {
+                    token.ThrowIfCancellationRequested();
+                    var userPrivateKey = userPrivateKeys[i];
+                    var sig = Secp256K1Manager.SignCompressedCompact(data, userPrivateKey);
+                    transaction.Signatures[i] = Hex.ToString(sig);
+                }
 
-            return transaction;
+                return transaction;
+            }, token);
         }
 
-        public SignedTransaction CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
+        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
         {
             return CreateTransaction(propertyApiObj, userPrivateKeys, new[] { operation }, token);
         }
 
-        public byte[] TryLoadChainId(string[] chainFieldName, CancellationToken token)
+        public async Task<byte[]> TryLoadChainId(string[] chainFieldName, CancellationToken token)
         {
-            var resp = GetConfig<JObject>(token);
+            var resp = await GetConfig<JObject>(token);
             if (resp.IsError)
                 return new byte[0];
 
@@ -222,9 +219,9 @@ namespace Ditch.Steem
             return Hex.HexToBytes(str);
         }
 
-        public string TryLoadBlockchainVersion(string[] fieldName, CancellationToken token)
+        public async Task<string> TryLoadBlockchainVersion(string[] fieldName, CancellationToken token)
         {
-            var resp = GetConfig<JObject>(token);
+            var resp = await GetConfig<JObject>(token);
             if (resp.IsError)
                 return string.Empty;
 

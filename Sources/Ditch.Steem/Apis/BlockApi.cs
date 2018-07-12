@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models;
 
@@ -25,7 +26,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_block_header_return header of the referenced block, or null if no matching block was found</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetBlockHeaderReturn> GetBlockHeader(GetBlockHeaderArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetBlockHeaderReturn>> GetBlockHeader(GetBlockHeaderArgs args, CancellationToken token)
         {
             return CustomGetRequest<GetBlockHeaderReturn>(KnownApiNames.BlockApi, "get_block_header", args, token);
         }
@@ -40,7 +41,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_block_return the referenced block, or null if no matching block was found</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public JsonRpcResponse<GetBlockReturn> GetBlock(GetBlockArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetBlockReturn>> GetBlock(GetBlockArgs args, CancellationToken token)
         {
             return CustomGetRequest<GetBlockReturn>(KnownApiNames.BlockApi, "get_block", args, token);
         }

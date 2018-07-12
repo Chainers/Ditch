@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Ditch.Golos.Tests.Apis
@@ -8,17 +9,17 @@ namespace Ditch.Golos.Tests.Apis
     public class PrivateMessageApiTest : BaseTest
     {
 
-        [Test]
-        public void get_inbox()
+        [Test][Parallelizable]
+        public async Task get_inbox()
         {
-            var resp = Api.GetInbox(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None);
+            var resp = await Api.GetInbox(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None);
             TestPropetries(resp);
         }
 
-        [Test]
-        public void get_outbox()
+        [Test][Parallelizable]
+        public async Task get_outbox()
         {
-            var resp = Api.GetOutbox(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None);
+            var resp = await Api.GetOutbox(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None);
             TestPropetries(resp);
         }
     }
