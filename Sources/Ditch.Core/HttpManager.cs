@@ -20,12 +20,12 @@ namespace Ditch.Core
         /// <summary>
         /// Timeout in milliseconds waiting for WebSocket request to execute. Default is 30000.
         /// </summary>
-        public int WaitResponceTimeout { get; set; } = 3000;
+        public int WaitResponceTimeout { get; set; } = 5000;
 
         /// <summary>
         /// Timeout in milliseconds waiting for WebSocket connect to chain. Default is 10000.
         /// </summary>
-        public int WaitConnectTimeout { get; set; } = 3000;
+        public int WaitConnectTimeout { get; set; } = 5000;
 
         public int MaxRepeatRequest { get; set; } = 3;
 
@@ -96,8 +96,7 @@ namespace Ditch.Core
             var stringResponse = string.Empty;
             try
             {
-                var content = new StringContent(jsonRpc.Message);
-                var response = await RepeatPost(content, token, MaxRepeatRequest);
+                var response = await RepeatPost(jsonRpc.Message, token, MaxRepeatRequest);
                 response.EnsureSuccessStatusCode();
 
                 stringResponse = await response.Content.ReadAsStringAsync();
@@ -119,19 +118,25 @@ namespace Ditch.Core
             }
         }
 
-        private async Task<HttpResponseMessage> RepeatPost(StringContent content, CancellationToken token, int loop)
+        private async Task<HttpResponseMessage> RepeatPost(string message, CancellationToken token, int loop)
         {
             try
             {
-                var cts = new CancellationTokenSource(WaitResponceTimeout);
-                var lcts = CancellationTokenSource.CreateLinkedTokenSource(token, cts.Token);
-                return await _client.PostAsync(UrlToConnect, content, lcts.Token);
+                var ct = token;
+                if (loop > 0)
+                {
+                    var cts = new CancellationTokenSource(WaitResponceTimeout);
+                    var lcts = CancellationTokenSource.CreateLinkedTokenSource(token, cts.Token);
+                    ct = lcts.Token;
+                }
+                var content = new StringContent(message);
+                return await _client.PostAsync(UrlToConnect, content, ct);
             }
             catch (TaskCanceledException)
             {
                 if (token.IsCancellationRequested || loop < 1)
                     throw;
-                return await RepeatPost(content, token, loop - 1);
+                return await RepeatPost(message, token, loop - 1);
             }
         }
     }

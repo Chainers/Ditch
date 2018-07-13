@@ -25,6 +25,7 @@ namespace Ditch.Steem.Converters
             ExtendedTypeNames = new Dictionary<string, (Func<JsonReader, Type, object, JsonSerializer, object>, Action<JsonWriter, JsonSerializer, object>)>
                 {
                     {nameof(Asset), (ReadAsset, WriteAsset)},
+                    {nameof(LegacyAsset), (ReadLegacyAsset, WriteLegacyAsset)},
                     {nameof(Operation), (ReadOperation, WriteOperation)},
                     {nameof(BroadcastTransactionArgs), (ReadBroadcastTransactionArgs, WriteBroadcastTransactionArgs)},
                     {nameof(GetActiveWitnessesReturn), (ReadGetActiveWitnessesReturn, WriteGetActiveWitnessesReturn)},
@@ -43,7 +44,7 @@ namespace Ditch.Steem.Converters
 
         public override bool CanConvert(Type objectType)
         {
-            return ExtendedTypeNames.ContainsKey(objectType.Name) ||
+            return ExtendedTypeNames.ContainsKey(objectType.Name) || 
                    objectType.GetInterfaces().Contains(typeof(ICustomJson));
         }
 
@@ -79,6 +80,24 @@ namespace Ditch.Steem.Converters
         {
             var val = reader.Value.ToString();
             var asset = new Asset();
+            asset.FromOldFormat(val);
+            return asset;
+        }
+
+        #endregion
+
+        #region LegacyAsset
+
+        protected virtual void WriteLegacyAsset(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (LegacyAsset)obj;
+            writer.WriteValue(value.ToOldFormatString());
+        }
+
+        protected virtual LegacyAsset ReadLegacyAsset(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var val = reader.Value.ToString();
+            var asset = new LegacyAsset();
             asset.FromOldFormat(val);
             return asset;
         }

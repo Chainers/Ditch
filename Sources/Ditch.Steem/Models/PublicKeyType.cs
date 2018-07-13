@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models
 {
     public class PublicKeyType : ICustomJson
     {
-        public const string Prefix = "STM";
+        public string Prefix { get; set; } = Config.SteemAddressPrefix;
 
         [MessageOrder(1)]
         public byte[] Data { get; set; }
@@ -25,6 +25,11 @@ namespace Ditch.Steem.Models
             Data = data;
         }
         
+        public override string ToString()
+        {
+            return Base58.EncodePublicWif(Data, Prefix);
+        }
+
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)

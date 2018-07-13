@@ -3,6 +3,12 @@
     //TODO: move it to git like localization
     public class Config
     {
+        public const string Steem = "STEEM";
+        public const string Sbd = "SBD";
+        public const string Vests = "VESTS";
+        public const string SteemAddressPrefix = "STM";
+
+
         public const int SteemAssetSymbolPrecisionBits = 4;
         public const uint SmtMaxNai = 99999999;
         public const byte SteemPrecisionSbd = 3;

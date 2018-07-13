@@ -219,7 +219,7 @@ namespace Ditch.Steem.Tests
             var accountCreationFee = new Asset(1, Config.SteemAssetNumSteem);
             var fee = new Asset(1, Config.SteemAssetNumSteem);
 
-            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType("STM1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
+            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType(Config.SteemAddressPrefix + "1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
             await Post(User.ActiveKeys, false, op);
         }
 

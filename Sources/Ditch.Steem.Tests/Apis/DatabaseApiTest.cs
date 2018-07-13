@@ -19,6 +19,7 @@ namespace Ditch.Steem.Tests.Apis
         }
 
         [Test]
+        [Parallelizable]
         public async Task get_dynamic_global_properties()
         {
             var resp = await Api.GetDynamicGlobalProperties(CancellationToken.None);
@@ -26,6 +27,7 @@ namespace Ditch.Steem.Tests.Apis
         }
 
         [Test]
+        [Parallelizable]
         public async Task get_witness_schedule()
         {
             var resp = await Api.GetWitnessSchedule(CancellationToken.None);

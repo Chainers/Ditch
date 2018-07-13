@@ -46,13 +46,13 @@ namespace Ditch.Steem.Models
 
             switch (args[1])
             {
-                case "SBD":
+                case Config.Sbd:
                     Symbol = new AssetSymbolType(Config.SteemAssetNumSbd);
                     break;
-                case "STEEM":
+                case Config.Steem:
                     Symbol = new AssetSymbolType(Config.SteemAssetNumSteem);
                     break;
-                case "VESTS":
+                case Config.Vests:
                     Symbol = new AssetSymbolType(Config.SteemAssetNumVests);
                     break;
                 default:
@@ -93,17 +93,17 @@ namespace Ditch.Steem.Models
             {
                 case Config.SteemAssetNumSbd:
                     {
-                        currency = "SBD";
+                        currency = Config.Sbd;
                         break;
                     }
                 case Config.SteemAssetNumSteem:
                     {
-                        currency = "STEEM";
+                        currency = Config.Steem;
                         break;
                     }
                 case Config.SteemAssetNumVests:
                     {
-                        currency = "VESTS";
+                        currency = Config.Vests;
                         break;
                     }
                 default:
