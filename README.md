@@ -7,9 +7,10 @@
 The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain. 
 
 ## Supported chains:
- * Golos (hf 0.18.0)
- * Steem (hf 0.19.4)
- * EOS (DAWN 3.0)
+ * Golos (v0.18.3)
+ * Steem (v0.19.10)
+ * EOS (v1.0.9)
+ * BitShares
   
 ## Additional features:
  * Transliteration (Cyrillic to Latin)
@@ -20,25 +21,14 @@ The essence of the library is to generate a transaction according to the require
     //set global properties
     public void SetUp()
     {
-        var jss = new JsonSerializerSettings
-            {
-                DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK",
-                Culture = CultureInfo.InvariantCulture
-            };
+        HttpClient = new HttpClient();
+        HttpManager = new HttpManager(HttpClient);
+        Api = new OperationManager(HttpManager);
+        //Api = new OperationManager(new WebSocketManager());
         
-        //_operationManager = new OperationManager(new WebSocketManager(jss), jss);
-        _operationManager = new OperationManager(new HttpManager(jss), jss);
+        Api.ConnectTo("https://api.steemit.com", CancellationToken.None);        
+        //Api.ConnectTo("wss://ws.golos.io", CancellationToken.None);
         
-        // Steem
-        //var url = _operationManager.TryConnectTo(new List<string> {"wss://steemd.steemit.com", }, CancellationToken.None);
-        var url = _operationManager.TryConnectTo(new List<string> { "https://api.steemit.com", }, CancellationToken.None);
-        
-        // Golos
-        //var url = _operationManager.TryConnectTo(new List<string> { "wss://ws.golos.io", }, CancellationToken.None);
-        //var url = _operationManager.TryConnectTo(new List<string> { "https://public-ws.golos.io", }, CancellationToken.None);
-        
-        if (!string.IsNullOrEmpty(url))
-            Console.WriteLine($"Conected to {url}");
         YouPrivateKeys = new List<byte[]>
         {
             Base58.GetBytes("5**************************************************") \\WIF
@@ -48,13 +38,13 @@ The essence of the library is to generate a transaction according to the require
     
     //Create new post with some beneficiaries
     var postOp = new PostOperation("parentPermlink", YouLogin, "Title", "Body", "jsonMetadata");
-    var benOp = new BeneficiariesOperation(YouLogin, postOp.Permlink, _operationManager.SbdSymbol, new Beneficiary("someBeneficiarName", 1000));
-    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, CancellationToken.None, postOp, benOp);
+    var benOp = new BeneficiariesOperation(YouLogin, postOp.Permlink, new Asset(1, Config.SteemAssetNumSbd), new Beneficiary("someBeneficiarName", 1000));
+    var responce = Api.BroadcastOperations(YouPrivateKeys, new[]{postOp, benOp},CancellationToken.None);
     
     //UpVote
     var voteOp = new UpVoteOperation(YouLogin, "someUserName", "somePermlink");
-    var responce = _operationManager.BroadcastOberations(YouPrivateKeys, CancellationToken.None, voteOp);
+    var responce = Api.BroadcastOberations(YouPrivateKeys, voteOp, CancellationToken.None);
     
     //Follow
     var followOp = new FollowOperation(YouLogin, "someUserName", FollowType.Blog, YouLogin);
-    var responce = _operationManager.BroadcastOperations(YouPrivateKeys, CancellationToken.None, followOp);
+    var responce = Api.BroadcastOperations(YouPrivateKeys, followOp, CancellationToken.None);
