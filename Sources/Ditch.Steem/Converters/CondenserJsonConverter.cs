@@ -27,16 +27,30 @@ namespace Ditch.Steem.Converters
                     {nameof(Asset), (ReadAsset, WriteAsset)},
                     {nameof(LegacyAsset), (ReadLegacyAsset, WriteLegacyAsset)},
                     {nameof(Operation), (ReadOperation, WriteOperation)},
+                    {nameof(CommentPayoutBeneficiaries), (ReadCommentPayoutBeneficiaries, WriteCommentPayoutBeneficiaries)},
+
+                    {nameof(BroadcastBlockArgs), (ReadBroadcastBlockArgs, WriteBroadcastBlockArgs)},
                     {nameof(BroadcastTransactionArgs), (ReadBroadcastTransactionArgs, WriteBroadcastTransactionArgs)},
+                    {nameof(BroadcastTransactionSynchronousArgs), (ReadBroadcastTransactionSynchronousArgs, WriteBroadcastTransactionSynchronousArgs)},
+                    {nameof(GetAccountBandwidthArgs), (ReadGetAccountBandwidthArgs, WriteGetAccountBandwidthArgs)},
+                    {nameof(GetAccountBandwidthReturn), (ReadGetAccountBandwidthReturn, WriteGetAccountBandwidthReturn)},
+                    {nameof(GetAccountHistoryArgs), (ReadGetAccountHistoryArgs, WriteGetAccountHistoryArgs)},
+                    {nameof(GetAccountHistoryReturn), (ReadGetAccountHistoryReturn, WriteGetAccountHistoryReturn)},
                     {nameof(GetActiveWitnessesReturn), (ReadGetActiveWitnessesReturn, WriteGetActiveWitnessesReturn)},
+                    {nameof(GetBlockArgs), (ReadGetBlockArgs, WriteGetBlockArgs)},
+                    {nameof(GetBlockReturn), (ReadGetBlockReturn, WriteGetBlockReturn)},
                     {nameof(GetPotentialSignaturesArgs), (ReadGetPotentialSignaturesArgs, WriteGetPotentialSignaturesArgs)},
                     {nameof(GetPotentialSignaturesReturn), (ReadGetPotentialSignaturesReturn, WriteGetPotentialSignaturesReturn)},
                     {nameof(GetTransactionHexArgs), (ReadGetTransactionHexArgs, WriteGetTransactionHexArgs)},
-                    {nameof(GetRequiredSignaturesArgs), (ReadGetRequiredSignaturesArgs, WriteGetRequiredSignaturesArgs)},
+                    {nameof(GetTransactionHexReturn), (ReadGetTransactionHexReturn, WriteGetTransactionHexReturn)},
+                    {nameof(GetTrendingTagsArgs), (ReadGetTrendingTagsArgs, WriteGetTrendingTagsArgs)},
+                    {nameof(GetTrendingTagsReturn), (ReadGetTrendingTagsReturn, WriteGetTrendingTagsReturn)},
                     {nameof(VerifyAuthorityArgs), (ReadVerifyAuthorityArgs, WriteVerifyAuthorityArgs)},
                     {nameof(VerifyAuthorityReturn), (ReadVerifyAuthorityReturn, WriteVerifyAuthorityReturn)},
-                    {nameof(CommentPayoutBeneficiaries), (ReadCommentPayoutBeneficiaries, WriteCommentPayoutBeneficiaries)},
-                    {nameof(GetAccountHistoryReturn), (ReadGetAccountHistoryReturn, WriteGetAccountHistoryReturn)},
+
+                    
+                    {nameof(GetRequiredSignaturesArgs), (ReadGetRequiredSignaturesArgs, WriteGetRequiredSignaturesArgs)},
+                    {nameof(GetRequiredSignaturesReturn), (ReadGetRequiredSignaturesReturn, WriteGetRequiredSignaturesReturn)},
                     //{nameof(), (Read, Write)},
                 };
         }
@@ -44,7 +58,7 @@ namespace Ditch.Steem.Converters
 
         public override bool CanConvert(Type objectType)
         {
-            return ExtendedTypeNames.ContainsKey(objectType.Name) || 
+            return ExtendedTypeNames.ContainsKey(objectType.Name) ||
                    objectType.GetInterfaces().Contains(typeof(ICustomJson));
         }
 
@@ -247,8 +261,41 @@ namespace Ditch.Steem.Converters
             writer.WriteEndArray();
         }
 
-        protected virtual Operation ReadBroadcastTransactionArgs(JsonReader reader, Type objectType,
-            object existingValue, JsonSerializer serializer)
+        protected virtual Operation ReadBroadcastTransactionArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region BroadcastTransactionSynchronousArgs
+
+        protected virtual void WriteBroadcastTransactionSynchronousArgs(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (BroadcastTransactionSynchronousArgs)obj;
+            writer.WriteStartArray();
+            serializer.Serialize(writer, value.Trx);
+            writer.WriteEndArray();
+        }
+
+        protected virtual Operation ReadBroadcastTransactionSynchronousArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region BroadcastBlockArgs
+
+        protected virtual void WriteBroadcastBlockArgs(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (BroadcastBlockArgs)obj;
+            writer.WriteStartArray();
+            serializer.Serialize(writer, value.Block);
+            writer.WriteEndArray();
+        }
+
+        protected virtual Operation ReadBroadcastBlockArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -328,6 +375,24 @@ namespace Ditch.Steem.Converters
 
         #endregion
 
+        #region GetTransactionHexReturn
+
+        protected virtual void WriteGetTransactionHexReturn(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetTransactionHexReturn)obj;
+            serializer.Serialize(writer, value.Hex);
+        }
+
+        protected virtual GetTransactionHexReturn ReadGetTransactionHexReturn(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return new GetTransactionHexReturn
+            {
+                Hex = serializer.Deserialize<string>(reader)
+            };
+        }
+
+        #endregion
+
         #region GetRequiredSignaturesArgs
 
         protected virtual void WriteGetRequiredSignaturesArgs(JsonWriter writer, JsonSerializer serializer, object obj)
@@ -345,10 +410,10 @@ namespace Ditch.Steem.Converters
         }
 
         #endregion
-
+        
         #region GetRequiredSignaturesReturn
 
-        protected virtual void WritGetRequiredSignaturesReturn(JsonWriter writer, JsonSerializer serializer, object obj)
+        protected virtual void WriteGetRequiredSignaturesReturn(JsonWriter writer, JsonSerializer serializer, object obj)
         {
             var value = (GetRequiredSignaturesReturn)obj;
             serializer.Serialize(writer, value.Keys);
@@ -359,6 +424,132 @@ namespace Ditch.Steem.Converters
             return new GetRequiredSignaturesReturn
             {
                 Keys = serializer.Deserialize<PublicKeyType[]>(reader)
+            };
+        }
+
+        #endregion
+
+        #region GetAccountBandwidthArgs
+
+        protected virtual void WriteGetAccountBandwidthArgs(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetAccountBandwidthArgs)obj;
+            writer.WriteStartArray();
+            serializer.Serialize(writer, value.Account);
+            serializer.Serialize(writer, value.Type);
+            writer.WriteEndArray();
+        }
+
+        protected virtual GetAccountBandwidthArgs ReadGetAccountBandwidthArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetAccountBandwidthReturn
+
+        protected virtual void WriteGetAccountBandwidthReturn(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetAccountBandwidthReturn)obj;
+            serializer.Serialize(writer, value.Bandwidth);
+        }
+
+        protected virtual GetAccountBandwidthReturn ReadGetAccountBandwidthReturn(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return new GetAccountBandwidthReturn
+            {
+                Bandwidth = serializer.Deserialize<ApiAccountBandwidthObject>(reader)
+            };
+        }
+
+        #endregion
+
+        #region GetAccountHistoryArgs
+
+        protected virtual void WriteGetAccountHistoryArgs(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetAccountHistoryArgs)obj;
+            writer.WriteStartArray();
+            serializer.Serialize(writer, value.Account);
+            serializer.Serialize(writer, value.Start);
+            serializer.Serialize(writer, value.Limit);
+            writer.WriteEndArray();
+        }
+
+        protected virtual GetAccountHistoryArgs ReadGetAccountHistoryArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetBlockArgs
+
+        protected virtual void WriteGetBlockArgs(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetBlockArgs)obj;
+            writer.WriteStartArray();
+            serializer.Serialize(writer, value.BlockNum);
+            writer.WriteEndArray();
+        }
+
+        protected virtual GetBlockArgs ReadGetBlockArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetBlockReturn
+
+        protected virtual void WriteGetBlockReturn(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetBlockReturn)obj;
+            serializer.Serialize(writer, value.Block);
+        }
+
+        protected virtual GetBlockReturn ReadGetBlockReturn(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return new GetBlockReturn
+            {
+                Block = serializer.Deserialize<ApiSignedBlockObject>(reader)
+            };
+        }
+
+        #endregion
+
+        #region GetTrendingTagsArgs
+
+        protected virtual void WriteGetTrendingTagsArgs(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetTrendingTagsArgs)obj;
+            writer.WriteStartArray();
+            serializer.Serialize(writer, value.StartTag);
+            serializer.Serialize(writer, value.Limit);
+            writer.WriteEndArray();
+        }
+
+        protected virtual GetTrendingTagsArgs ReadGetTrendingTagsArgs(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region GetTrendingTagsReturn
+
+        protected virtual void WriteGetTrendingTagsReturn(JsonWriter writer, JsonSerializer serializer, object obj)
+        {
+            var value = (GetTrendingTagsReturn)obj;
+            serializer.Serialize(writer, value.Tags);
+        }
+
+        protected virtual GetTrendingTagsReturn ReadGetTrendingTagsReturn(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            return new GetTrendingTagsReturn
+            {
+                Tags = serializer.Deserialize<ApiTagObject[]>(reader)
             };
         }
 

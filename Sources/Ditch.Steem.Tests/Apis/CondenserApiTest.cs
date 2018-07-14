@@ -63,7 +63,15 @@ namespace Ditch.Steem.Tests.Apis
         //  "condenser_api.get_account_votes",
         //  "condenser_api.get_accounts",
         //  "condenser_api.get_active_votes",
-        //  "condenser_api.get_active_witnesses",
+
+        [Test]
+        [Parallelizable]
+        public async Task get_active_witnesses()
+        {
+            var resp = await Api.CondenserGetActiveWitnesses(CancellationToken.None);
+            TestPropetries(resp);
+        }
+
         [Test]
         [Parallelizable]
         public async Task get_block()
@@ -98,7 +106,15 @@ namespace Ditch.Steem.Tests.Apis
         //  "condenser_api.get_discussions_by_promoted",
         //  "condenser_api.get_discussions_by_trending",
         //  "condenser_api.get_discussions_by_votes",
-        //  "condenser_api.get_dynamic_global_properties",
+
+        [Test]
+        [Parallelizable]
+        public async Task get_dynamic_global_properties()
+        {
+            var resp = await Api.CondenserGetDynamicGlobalProperties(CancellationToken.None);
+            TestPropetries(resp);
+        }
+
         //  "condenser_api.get_escrow",
         //  "condenser_api.get_expiring_vesting_delegations",
         //  "condenser_api.get_feed",
@@ -117,12 +133,45 @@ namespace Ditch.Steem.Tests.Apis
         //  "condenser_api.get_order_book",
         //  "condenser_api.get_owner_history",
         //  "condenser_api.get_post_discussions_by_payout",
-        //  "condenser_api.get_potential_signatures",
+        [Test]
+        [Parallelizable]
+        public async Task get_potential_signatures()
+        {
+            var args = new GetPotentialSignaturesArgs
+            {
+                Trx = await GetSignedTransaction()
+            };
+            var resp = await Api.CondenserGetPotentialSignatures(args, CancellationToken.None);
+            TestPropetries(resp);
+        }
         //  "condenser_api.get_reblogged_by",
         //  "condenser_api.get_recent_trades",
         //  "condenser_api.get_recovery_request",
         //  "condenser_api.get_replies_by_last_update",
-        //  "condenser_api.get_required_signatures",
+
+        [Test]
+        [Parallelizable]
+        public async Task get_required_signatures()
+        {
+            var findAccountsArgs = new FindAccountsArgs
+            {
+                Accounts = new[] { User.Login }
+            };
+            var accounts = await Api.FindAccounts(findAccountsArgs, CancellationToken.None);
+            if (accounts.IsError)
+                WriteLine(accounts);
+            Assert.IsFalse(accounts.IsError);
+            var pKey = accounts.Result.Accounts[0].Posting.KeyAuths[0].Key;
+
+            var args = new GetRequiredSignaturesArgs
+            {
+                Trx = await GetSignedTransaction(),
+                AvailableKeys = new[] { pKey }
+            };
+            var resp = await Api.CondenserGetRequiredSignatures(args, CancellationToken.None);
+            TestPropetries(resp);
+        }
+
         //  "condenser_api.get_reward_fund",
         //  "condenser_api.get_savings_withdraw_from",
         //  "condenser_api.get_savings_withdraw_to",
@@ -131,7 +180,19 @@ namespace Ditch.Steem.Tests.Apis
         //  "condenser_api.get_ticker",
         //  "condenser_api.get_trade_history",
         //  "condenser_api.get_transaction",
-        //  "condenser_api.get_transaction_hex",
+
+        [Test]
+        [Parallelizable]
+        public async Task get_transaction_hex()
+        {
+            var args = new GetTransactionHexArgs
+            {
+                Trx = await GetSignedTransaction()
+            };
+            var resp = await Api.CondenserGetTransactionHex(args, CancellationToken.None);
+            TestPropetries(resp);
+        }
+
         [Test]
         [Parallelizable]
         public async Task get_trending_tags()

@@ -77,6 +77,30 @@ namespace Ditch.Steem
             };
             return await BroadcastTransaction(args, token);
         }
+        
+        /// <summary>
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// The transaction will be checked for validity in the local database prior to broadcasting. If it fails to apply locally, an error will be thrown and the transaction will not be broadcast.
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperationsLikeSteemit(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        {
+            var prop = await GetDynamicGlobalProperties(token);
+            if (prop.IsError)
+                return new JsonRpcResponse<VoidResponse>(prop);
+
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var args = new BroadcastTransactionArgs
+            {
+                Trx = transaction
+            };
+            return await BroadcastTransactionLikeSteemit(args, token);
+        }
 
         /// <summary>
         /// Create and Broadcast a transaction to the network
@@ -100,6 +124,30 @@ namespace Ditch.Steem
                 Trx = transaction
             };
             return await BroadcastTransactionSynchronous(args, token);
+        }
+        
+        /// <summary>
+        /// Create and Broadcast a transaction to the network
+        /// 
+        /// This call will not return until the transaction is included in a block. 
+        /// </summary>
+        /// <param name="userPrivateKeys"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <param name="operations"></param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastOperationsSynchronousLikeSteemit(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        {
+            var prop = await GetDynamicGlobalProperties(token);
+            if (prop.IsError)
+                return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop);
+
+            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var args = new BroadcastTransactionSynchronousArgs
+            {
+                Trx = transaction
+            };
+            return await BroadcastTransactionSynchronousLikeSteemit(args, token);
         }
 
         /// <summary>
