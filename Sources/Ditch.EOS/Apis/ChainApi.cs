@@ -127,15 +127,16 @@ namespace Ditch.EOS
         /// <summary>
         /// This method push multiple transactions at once.
         /// 
-        /// curl http://localhost:8888/v1/chain/push_transaction -X POST -d '[{"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["initb","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["initb","initc"],"authorization":[{"account":"initb","permission":"active"}],"data":"000000000041934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}, {"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["inita","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["inita","initc"],"authorization":[{"account":"inita","permission":"active"}],"data":"000000008040934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}]'
+        /// curl http://localhost:8888/v1/chain/push_transaction -X POST -d '[{"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["initb","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["initb","initc"],"authorization":[{"account":"initb","permission":"active"}],"data":"000000000041934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}, 
+        ///                                                                   {"ref_block_num":"101","ref_block_prefix":"4159312339","expiration":"2017-09-25T06:28:49","scope":["inita","initc"],"actions":[{"code":"currency","type":"transfer","recipients":["inita","initc"],"authorization":[{"account":"inita","permission":"active"}],"data":"000000008040934b000000008041934be803000000000000"}],"signatures":[],"authorizations":[]}]'
         /// </summary>
-        /// <param name="pushTransactionParams"></param>
+        /// <param name="args"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<PushTransactionResults[]>> PushTransactions(object[] pushTransactionParams, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults[]>> PushTransactions(PackedTransaction[] args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/push_transaction";
-            return await CustomPostRequest<PushTransactionResults[]>(endpoint, pushTransactionParams, token);
+            return await CustomPostRequest<PushTransactionResults[]>(endpoint, args, token);
         }
 
         /// <summary>

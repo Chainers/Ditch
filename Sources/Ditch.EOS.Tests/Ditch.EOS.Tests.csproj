@@ -56,14 +56,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base58Test.cs" />
-    <Compile Include="BaseTest.cs" />
-    <Compile Include="HistoryApiTest.cs" />
+    <Compile Include="Apis\BaseTest.cs" />
+    <Compile Include="Apis\HistoryApiTest.cs" />
     <Compile Include="MessageSerializerTest.cs" />
-    <Compile Include="Models\ContractInfo.cs" />
-    <Compile Include="Models\CreatePostArgs.cs" />
-    <Compile Include="Models\UserInfo.cs" />
-    <Compile Include="WalletApiTest.cs" />
-    <Compile Include="ChainApiTest.cs" />
+    <Compile Include="ContractInfo.cs" />
+    <Compile Include="Apis\CreatePostArgs.cs" />
+    <Compile Include="UserInfo.cs" />
+    <Compile Include="Apis\WalletApiTest.cs" />
+    <Compile Include="Apis\ChainApiTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

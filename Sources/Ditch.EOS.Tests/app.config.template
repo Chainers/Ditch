@@ -2,13 +2,13 @@
 <configuration>
     <appSettings>
 
-        <add key="ContractName" value="test" />
-        <add key="Login" value="test" />
-        <add key="PublicOwnerWif" value="***********************" />
-        <add key="PrivateOwnerWif" value="***********************" />
-        <add key="PublicActiveWif" value="*****************" />
-        <add key="PrivateActiveWif" value="*****************" />
-        <add key="Password" value="*************" />
+        <add key="ContractName" value="YouContractName" />
+        <add key="Login" value="UserLogin" />
+        <add key="PublicOwnerWif" value="EOS*********************" />
+        <add key="PrivateOwnerWif" value="5***********************" />
+        <add key="PublicActiveWif" value="EOS*****************" />
+        <add key="PrivateActiveWif" value="5*****************" />
+        <add key="Password" value="Password for Wallet" />
         <add key="ChainUrl" value="http://000.000.000.000:0000" />
         <add key="WalletUrl" value="http://000.000.000.000:0000" />
 

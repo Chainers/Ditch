@@ -14,9 +14,6 @@ namespace Ditch.Golos.Models
     {
         private static readonly Regex MultyZeroRegex = new Regex("^0{2,}");
 
-        public NumberFormatInfo NumberFormat { get; set; } = CultureInfo.InvariantCulture.NumberFormat;
-
-
         public long Amount { get; private set; }
 
         public byte Decimals { get; private set; }
@@ -29,7 +26,12 @@ namespace Ditch.Golos.Models
 
         public Asset(string value)
         {
-            InitFromString(value);
+            InitFromString(value, CultureInfo.InvariantCulture);
+        }
+
+        public Asset(string value, CultureInfo cultureInfo)
+        {
+            InitFromString(value, cultureInfo);
         }
 
         public Asset(long amount, byte decimals, string currency)
@@ -42,20 +44,30 @@ namespace Ditch.Golos.Models
 
         public override string ToString()
         {
-            var dig = ToDoubleString();
+            return ToString(CultureInfo.InvariantCulture);
+        }
+
+        public string ToString(CultureInfo cultureInfo)
+        {
+            var dig = ToDoubleString(cultureInfo);
             return string.IsNullOrEmpty(Currency) ? dig : $"{dig} {Currency}";
         }
 
         public void InitFromString(string value)
         {
+            InitFromString(value, CultureInfo.InvariantCulture);
+        }
+
+        public void InitFromString(string value, CultureInfo cultureInfo)
+        {
             value = MultyZeroRegex.Replace(value, "0");
             var kv = value.Split(' ');
 
             var buf = kv[0]
-                .Replace(NumberFormat.NumberDecimalSeparator, string.Empty)
-                .Replace(NumberFormat.NumberGroupSeparator, string.Empty);
+                .Replace(cultureInfo.NumberFormat.NumberDecimalSeparator, string.Empty)
+                .Replace(cultureInfo.NumberFormat.NumberGroupSeparator, string.Empty);
 
-            var charLenAftSeparator = kv[0].LastIndexOf(NumberFormat.NumberDecimalSeparator, StringComparison.OrdinalIgnoreCase);
+            var charLenAftSeparator = kv[0].LastIndexOf(cultureInfo.NumberFormat.NumberDecimalSeparator, StringComparison.OrdinalIgnoreCase);
             if (charLenAftSeparator > 0)
                 Decimals = (byte)(buf.Length - charLenAftSeparator);
             Amount = long.Parse(buf);
@@ -63,6 +75,11 @@ namespace Ditch.Golos.Models
         }
 
         public string ToDoubleString()
+        {
+            return ToDoubleString(CultureInfo.InvariantCulture);
+        }
+
+        public string ToDoubleString(CultureInfo cultureInfo)
         {
             var dig = Amount.ToString();
             if (Decimals > 0)
@@ -72,7 +89,7 @@ namespace Ditch.Golos.Models
                     var prefix = new string('0', Decimals - dig.Length + 1);
                     dig = prefix + dig;
                 }
-                dig = dig.Insert(dig.Length - Decimals, NumberFormat.NumberDecimalSeparator);
+                dig = dig.Insert(dig.Length - Decimals, cultureInfo.NumberFormat.NumberDecimalSeparator);
             }
 
             return dig;
@@ -80,10 +97,13 @@ namespace Ditch.Golos.Models
 
         public double ToDouble()
         {
-            return double.Parse(ToDoubleString());
+            return ToDouble(CultureInfo.InvariantCulture);
         }
 
-
+        public double ToDouble(CultureInfo cultureInfo)
+        {
+            return double.Parse(ToDoubleString(cultureInfo), cultureInfo);
+        }
 
         #region ICustomJson
 
