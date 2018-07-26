@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Ditch.EOS.Tests.Models
+namespace Ditch.EOS.Tests
 {
     public class UserInfo
     {

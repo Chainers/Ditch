@@ -11,7 +11,7 @@ namespace Ditch.EOS.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class PublicKey : ICustomJson
     {
-        public string Prefix = "EOS";
+        public string Prefix { get; set; } = Config.Prefix;
 
         [MessageOrder(1)]
         public byte[] Data { get; set; }
@@ -28,7 +28,7 @@ namespace Ditch.EOS.Models
         {
             Data = data;
         }
-        
+
         #region ICustomJson
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)

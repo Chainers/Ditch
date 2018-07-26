@@ -1,4 +1,4 @@
-﻿namespace Ditch.EOS.Tests.Models
+﻿namespace Ditch.EOS.Tests
 {
     public class ContractInfo
     {

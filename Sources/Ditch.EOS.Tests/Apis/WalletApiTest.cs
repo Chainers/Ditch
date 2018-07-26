@@ -5,10 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.EOS.Models;
-using Ditch.EOS.Tests.Models;
 using NUnit.Framework;
 
-namespace Ditch.EOS.Tests
+namespace Ditch.EOS.Tests.Apis
 {
     [TestFixture]
     public class WalletApiTest : BaseTest

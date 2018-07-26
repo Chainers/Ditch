@@ -2,7 +2,7 @@
 using Ditch.EOS.Models;
 using NUnit.Framework;
 
-namespace Ditch.EOS.Tests
+namespace Ditch.EOS.Tests.Apis
 {
     [TestFixture]
     public class HistoryApiTest : BaseTest
@@ -21,11 +21,12 @@ namespace Ditch.EOS.Tests
         }
 
         [Test]
-        public async Task GetTransactionTest()
+        [TestCase("8e38a2cba6bd5d397bfd498281d97a39d4f14a878dd6ef42f0919bc1b96f63e9")]
+        public async Task GetTransactionTest(string testTransactionId)
         {
             var args = new GetTransactionParams
             {
-                TransactionId = ""
+                TransactionId = testTransactionId
             };
             var resp = await Api.GetTransaction(args, CancellationToken);
             TestPropetries(resp);

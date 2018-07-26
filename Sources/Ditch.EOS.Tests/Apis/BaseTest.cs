@@ -5,12 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core.JsonRpc;
-using Ditch.EOS.Tests.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Ditch.EOS.Tests
+namespace Ditch.EOS.Tests.Apis
 {
     public class BaseTest
     {

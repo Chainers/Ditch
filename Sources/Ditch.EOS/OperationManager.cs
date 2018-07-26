@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.Core;
-using Ditch.EOS.Errors;
 using Ditch.EOS.Models;
 using Newtonsoft.Json;
 
@@ -17,17 +15,22 @@ namespace Ditch.EOS
     public partial class OperationManager
     {
         private readonly HttpClient _client;
-        public MessageSerializer MessageSerializer { get; }
+        public MessageSerializer MessageSerializer { get; set; }
+        public JsonSerializerSettings JsonSerializerSettings { get; set; }
 
         #region Constructors
 
-        public OperationManager(long maxResponseContentBufferSize = 256000)
+        public OperationManager()
+            : this(new HttpClient()) { }
+
+        public OperationManager(long maxResponseContentBufferSize)
+            : this(new HttpClient { MaxResponseContentBufferSize = maxResponseContentBufferSize }) { }
+
+        public OperationManager(HttpClient client)
         {
-            _client = new HttpClient
-            {
-                MaxResponseContentBufferSize = maxResponseContentBufferSize
-            };
+            _client = client;
             MessageSerializer = new MessageSerializer();
+            JsonSerializerSettings = new JsonSerializerSettings();
         }
 
         #endregion Constructors
@@ -63,7 +66,7 @@ namespace Ditch.EOS
             var param = string.Empty;
             if (data != null)
             {
-                param = JsonConvert.SerializeObject(data, Formatting.Indented);
+                param = JsonConvert.SerializeObject(data, JsonSerializerSettings);
                 content = new StringContent(param, Encoding.UTF8, "application/json");
             }
 
@@ -80,37 +83,44 @@ namespace Ditch.EOS
         {
             var result = new OperationResult<T>();
 
-            var content = await response.Content.ReadAsStringAsync();
+            if (response.Content != null)
+                result.RawResponse = await response.Content.ReadAsStringAsync();
 
-            result.RawResponse = content;
-
-            // HTTP error
-            if (response.StatusCode == HttpStatusCode.InternalServerError ||
-                response.StatusCode != HttpStatusCode.OK &&
-                response.StatusCode != HttpStatusCode.Created &&
-                response.StatusCode != HttpStatusCode.Accepted)
+            if (!response.IsSuccessStatusCode)
             {
-                result.Error = new HttpError(content);
+                result.Error = new HttpRequestException(result.RawResponse);
                 return result;
             }
 
             if (response.Content == null)
+            {
+                result.Result = default(T);
                 return result;
+            }
 
             var mediaType = response.Content.Headers?.ContentType?.MediaType.ToLower();
 
             if (mediaType != null)
             {
-                if (mediaType.Equals("application/json"))
+                switch (mediaType)
                 {
-                    result.Result = JsonConvert.DeserializeObject<T>(content);
-                }
-                else
-                {
-                    result.Error = new ClientError(LocalizationKeys.UnsupportedMime);
+                    case "text/plain":
+                    case "application/json":
+                    case "text/html":
+                        {
+                            if (string.IsNullOrEmpty(result.RawResponse))
+                                result.Result = default(T);
+                            else
+                                result.Result = JsonConvert.DeserializeObject<T>(result.RawResponse, JsonSerializerSettings);
+                            break;
+                        }
+                    default:
+                        {
+                            result.Error = new NotImplementedException(mediaType);
+                            break;
+                        }
                 }
             }
-
             return result;
         }
 

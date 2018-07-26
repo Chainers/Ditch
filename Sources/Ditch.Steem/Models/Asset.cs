@@ -12,8 +12,6 @@ namespace Ditch.Steem.Models
     {
         private static readonly Regex MultyZeroRegex = new Regex("^0{2,}");
 
-        public NumberFormatInfo NumberFormat { get; set; } = CultureInfo.InvariantCulture.NumberFormat;
-
 
         public long Amount { get; private set; }
 
@@ -39,6 +37,11 @@ namespace Ditch.Steem.Models
 
         public void FromOldFormat(string asset)
         {
+            FromOldFormat(asset, CultureInfo.InvariantCulture);
+        }
+
+        public void FromOldFormat(string asset, CultureInfo cultureInfo)
+        {
             asset = MultyZeroRegex.Replace(asset, "0");
             var args = asset.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (args.Length != 2)
@@ -59,8 +62,8 @@ namespace Ditch.Steem.Models
                     throw new InvalidCastException($"Error cast {asset} to Asset");
             }
 
-            var val = args[0].Replace(NumberFormat.NumberGroupSeparator, "");
-            var dec = val.IndexOf(NumberFormat.NumberDecimalSeparator, StringComparison.Ordinal);
+            var val = args[0].Replace(cultureInfo.NumberFormat.NumberGroupSeparator, "");
+            var dec = val.IndexOf(cultureInfo.NumberFormat.NumberDecimalSeparator, StringComparison.Ordinal);
 
             string amount;
             if (dec > -1)
@@ -69,7 +72,7 @@ namespace Ditch.Steem.Models
                 if (dec > Symbol.Decimals())
                     throw new InvalidCastException($"Error cast {asset} to Asset");
 
-                amount = val.Replace(NumberFormat.NumberDecimalSeparator, "");
+                amount = val.Replace(cultureInfo.NumberFormat.NumberDecimalSeparator, "");
                 if (dec != Symbol.Decimals())
                 {
                     amount += new string('0', Symbol.Decimals() - dec);
@@ -86,7 +89,12 @@ namespace Ditch.Steem.Models
 
         public string ToOldFormatString()
         {
-            var dig = ToDoubleString();
+            return ToOldFormatString(CultureInfo.InvariantCulture);
+        }
+
+        public string ToOldFormatString(CultureInfo cultureInfo)
+        {
+            var dig = ToDoubleString(cultureInfo);
 
             string currency;
             switch (Symbol.AssetNum)
@@ -113,7 +121,13 @@ namespace Ditch.Steem.Models
             return string.IsNullOrEmpty(currency) ? dig : $"{dig} {currency}";
         }
 
+
         public string ToDoubleString()
+        {
+            return ToDoubleString(CultureInfo.InvariantCulture);
+        }
+
+        public string ToDoubleString(CultureInfo cultureInfo)
         {
             var dig = Amount.ToString();
             var precision = Symbol.Decimals();
@@ -125,15 +139,21 @@ namespace Ditch.Steem.Models
                     dig = prefix + dig;
                 }
 
-                dig = dig.Insert(dig.Length - precision, NumberFormat.NumberDecimalSeparator);
+                dig = dig.Insert(dig.Length - precision, cultureInfo.NumberFormat.NumberDecimalSeparator);
             }
 
             return dig;
         }
 
+
         public double ToDouble()
         {
-            return double.Parse(ToDoubleString());
+            return ToDouble(CultureInfo.InvariantCulture);
+        }
+
+        public double ToDouble(CultureInfo cultureInfo)
+        {
+            return double.Parse(ToDoubleString(cultureInfo), cultureInfo);
         }
 
 

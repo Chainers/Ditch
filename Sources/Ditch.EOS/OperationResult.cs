@@ -1,4 +1,4 @@
-﻿using Ditch.EOS.Errors;
+﻿using System;
 
 namespace Ditch.EOS
 {
@@ -6,7 +6,7 @@ namespace Ditch.EOS
     {
         public bool IsError => Error != null;
 
-        public ErrorBase Error { get; set; }
+        public Exception Error { get; set; }
 
         public string RawRequest { get; set; }
 
@@ -17,7 +17,7 @@ namespace Ditch.EOS
         {
         }
 
-        public OperationResult(ErrorBase error)
+        public OperationResult(Exception error)
         {
             Error = error;
         }
@@ -29,6 +29,6 @@ namespace Ditch.EOS
 
         public OperationResult() { }
 
-        public OperationResult(ErrorBase error) : base(error) { }
+        public OperationResult(Exception error) : base(error) { }
     }
 }

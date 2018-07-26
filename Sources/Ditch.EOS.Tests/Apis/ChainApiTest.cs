@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Ditch.EOS.Models;
-using Ditch.EOS.Tests.Models;
 using NUnit.Framework;
 
-namespace Ditch.EOS.Tests
+namespace Ditch.EOS.Tests.Apis
 {
     [TestFixture]
     public class ChainApiTest : BaseTest
@@ -34,33 +33,72 @@ namespace Ditch.EOS.Tests
         }
 
         [Test]
+        public async Task GetBlockHeaderStateTest()
+        {
+            var infoResp = await Api.GetInfo(CancellationToken);
+            var info = infoResp.Result;
+
+            var args = new GetBlockHeaderStateParams
+            {
+                BlockNumOrId = info.LastIrreversibleBlockId
+            };
+
+            var resp = await Api.GetBlockHeaderState(args, CancellationToken);
+            TestPropetries(resp);
+        }
+
+        [Test]
         public async Task GetAccountTest()
         {
-            var accountParams = new GetAccountParams
+            var args = new GetAccountParams
             {
                 AccountName = User.Login
             };
 
-            var resp = await Api.GetAccount(accountParams, CancellationToken);
+            var resp = await Api.GetAccount(args, CancellationToken);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        public async Task GetAbiTest()
+        {
+            var args = new GetAbiParams
+            {
+                AccountName = User.Login
+            };
+
+            var resp = await Api.GetAbi(args, CancellationToken);
             TestPropetries(resp);
         }
 
         [Test]
         public async Task GetCodeTest()
         {
-            var codeParams = new GetCodeParams
+            var args = new GetCodeParams
             {
                 AccountName = User.Login
             };
 
-            var resp = await Api.GetCode(codeParams, CancellationToken);
+            var resp = await Api.GetCode(args, CancellationToken);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        public async Task GetRawCodeAndAbiTest()
+        {
+            var args = new GetRawCodeAndAbiParams
+            {
+                AccountName = User.Login
+            };
+
+            var resp = await Api.GetRawCodeAndAbi(args, CancellationToken);
             TestPropetries(resp);
         }
 
         [Test]
         public async Task GetTableRowsTest()
         {
-            var tableRowsParams = new GetTableRowsParams
+            var args = new GetTableRowsParams
             {
                 Scope = "test",
                 Code = "test",
@@ -71,14 +109,14 @@ namespace Ditch.EOS.Tests
                 //Limit = 10
             };
 
-            var resp = await Api.GetTableRows(tableRowsParams, CancellationToken);
+            var resp = await Api.GetTableRows(args, CancellationToken);
             TestPropetries(resp);
         }
 
         [Test]
         public async Task AbiJsonToBinTest()
         {
-            var abiJsonToBinArgs = new AbiJsonToBinParams
+            var args = new AbiJsonToBinParams
             {
                 Code = ContractInfo.ContractName,
                 Action = CreatePostActionName,
@@ -87,25 +125,50 @@ namespace Ditch.EOS.Tests
                     UrlPhoto = "test_1_url",
                     AccountCreator = User.Login,
                     IpfsHashPhoto = "test_1_hash"
-                    //ParentPost = 1
                 }
             };
 
-            var resp = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
+            var resp = await Api.AbiJsonToBin(args, CancellationToken);
             TestPropetries(resp);
         }
 
         [Test]
         public async Task AbiBinToJsonTest()
         {
-            var abiBinToJsonParams = new AbiBinToJsonParams
+            var args = new AbiBinToJsonParams
             {
                 Code = ContractInfo.ContractName,
                 Action = CreatePostActionName,
                 Binargs = "000000000090b1ca0a746573745f315f75726c0b746573745f315f68617368"
             };
 
-            var resp = await Api.AbiBinToJson(abiBinToJsonParams, CancellationToken);
+            var resp = await Api.AbiBinToJson(args, CancellationToken);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        public async Task GetCurrencyStatsTest()
+        {
+            var args = new GetCurrencyStatsParams()
+            {
+                Code = "tez",
+                Symbol = "VIM"
+            };
+
+            var resp = await Api.GetCurrencyStats(args, CancellationToken);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        public async Task GetProducersTest()
+        {
+            var args = new GetProducersParams()
+            {
+                Limit = 50,
+                Json = true
+            };
+
+            var resp = await Api.GetProducers(args, CancellationToken);
             TestPropetries(resp);
         }
 
@@ -121,7 +184,6 @@ namespace Ditch.EOS.Tests
                     UrlPhoto = "test_1_url",
                     AccountCreator = User.Login,
                     IpfsHashPhoto = "test_1_hash"
-                    //ParentPost = 1
                 }
             };
             var abiJsonToBin = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
