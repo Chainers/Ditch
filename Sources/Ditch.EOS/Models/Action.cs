@@ -15,7 +15,6 @@ namespace Ditch.EOS.Models
     [JsonObject(MemberSerialization.OptIn)]
     public class Action
     {
-
         /// <summary>
         /// API name: account
         /// 
@@ -51,5 +50,21 @@ namespace Ditch.EOS.Models
         [MessageOrder(40)]
         [JsonProperty("data")]
         public Bytes Data { get; set; }
+
+
+        public Action() { }
+
+        public Action(AccountName accountName, ActionName actionName, PermissionLevel[] permissionLevels)
+        {
+            Account = accountName;
+            Name = actionName;
+            Authorization = permissionLevels;
+        }
+
+        public Action(AccountName accountName, ActionName actionName, PermissionLevel[] permissionLevels, Bytes data)
+        : this(accountName, actionName, permissionLevels)
+        {
+            Data = data;
+        }
     }
 }

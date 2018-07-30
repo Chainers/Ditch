@@ -21,14 +21,22 @@ namespace Ditch.EOS
         {
             Error = error;
         }
+
+        public OperationResult(OperationResult operationResult)
+        {
+            Error = operationResult.Error;
+            RawRequest = operationResult.RawRequest;
+            RawResponse = operationResult.RawResponse;
+        }
     }
 
     public class OperationResult<T> : OperationResult
     {
-        public T Result { get; set; }
+        public T Result { get; set; } = default(T);
 
         public OperationResult() { }
 
-        public OperationResult(Exception error) : base(error) { }
+        public OperationResult(OperationResult operationResult)
+            : base(operationResult) { }
     }
 }

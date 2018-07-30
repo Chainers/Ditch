@@ -10,13 +10,9 @@ namespace Ditch.EOS.Tests
         public string Login { get; set; } = string.Empty;
 
         public string PrivateOwnerWif { get; set; } = string.Empty;
-
-        public string PublicOwnerWif { get; set; } = string.Empty;
         
         public string PrivateActiveWif { get; set; } = string.Empty;
         
-        public string PublicActiveWif { get; set; } = string.Empty;
-
         public string Password { get; set; } = string.Empty;
 
         public List<byte[]> OwnerKeys => _ownerKeys ?? (_ownerKeys = new List<byte[]> { Base58.DecodePrivateWif(PrivateOwnerWif) });

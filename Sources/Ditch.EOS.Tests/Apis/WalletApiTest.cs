@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
-using Ditch.EOS.Models;
 using NUnit.Framework;
 
 namespace Ditch.EOS.Tests.Apis
@@ -12,8 +9,6 @@ namespace Ditch.EOS.Tests.Apis
     [TestFixture]
     public class WalletApiTest : BaseTest
     {
-        private const string CreatePostActionName = "createpost";
-
         [Test]
         public async Task CreateTest()
         {
@@ -41,12 +36,10 @@ namespace Ditch.EOS.Tests.Apis
             var key1 = Secp256K1Manager.GenerateRandomKey();
             user.PrivateOwnerWif = Core.Base58.EncodePrivateWif(key1);
             var pKey1 = Secp256K1Manager.GetPublicKey(key1, true);
-            user.PublicOwnerWif = Core.Base58.EncodePublicWif(pKey1, "EOS");
 
             var key2 = Secp256K1Manager.GenerateRandomKey();
             user.PrivateActiveWif = Core.Base58.EncodePrivateWif(key2);
             var pKey2 = Secp256K1Manager.GetPublicKey(key2, true);
-            user.PublicActiveWif = Core.Base58.EncodePublicWif(pKey2, "EOS");
 
             WriteLine(user);
 
@@ -132,71 +125,6 @@ namespace Ditch.EOS.Tests.Apis
             var resp = await Api.WalletSetTimeout(10, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
-        }
-
-        [Test]
-        public async Task WalletSignTrxTest()
-        {
-            var abiJsonToBinArgs = new AbiJsonToBinParams
-            {
-                Code = ContractInfo.ContractName,
-                Action = CreatePostActionName,
-                Args = new CreatePostArgs
-                {
-                    UrlPhoto = "test_1_url",
-                    AccountCreator = User.Login,
-                    IpfsHashPhoto = "test_1_hash"
-                    //ParentPost = 1
-                }
-            };
-            var abiJsonToBin = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
-            Assert.IsFalse(abiJsonToBin.IsError);
-
-            var accountParams = new GetAccountParams
-            {
-                AccountName = User.Login
-            };
-
-            var unlock = await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
-            Assert.IsFalse(unlock.IsError);
-
-            var accR = await Api.GetAccount(accountParams, CancellationToken);
-            Assert.IsFalse(accR.IsError);
-
-            var publicKeys = accR.Result.Permissions.First(p => p.PermName == "active").RequiredAuth.Keys.Select(k => k.Key).ToArray();
-
-            var args = new CreateTransactionArgs
-            {
-                Actions = new[]
-                {
-                    new EOS.Models.Action
-                    {
-                        Account = User.Login,
-                        Name = CreatePostActionName,
-                        Authorization = new[]
-                        {
-                            new PermissionLevel
-                            {
-                                Actor = User.Login,
-                                Permission = "active"
-                            }
-                        },
-                        Data =  abiJsonToBin.Result.Binargs
-                    }
-                },
-                PrivateKeys = new List<byte[]> { User.PrivateActiveKey }
-            };
-            var trx = await Api.CreateTransaction(args, CancellationToken);
-
-            var infoResp = await Api.GetInfo(CancellationToken.None);
-            var info = infoResp.Result;
-
-            var resp = await Api.WalletSignTrx(trx, publicKeys, info.ChainId, CancellationToken.None);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-
-            var wlock = await Api.WalletLock(User.Login, CancellationToken);
-            Assert.IsFalse(wlock.IsError);
         }
     }
 }

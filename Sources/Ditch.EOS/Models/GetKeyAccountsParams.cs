@@ -16,6 +16,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: public_key_type</returns>
         [JsonProperty("public_key")]
-        public PublicKeyType PublicKey {get; set;}
+        public PublicKey PublicKey {get; set;}
     }
 }

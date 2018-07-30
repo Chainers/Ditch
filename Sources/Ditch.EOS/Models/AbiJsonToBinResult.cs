@@ -16,6 +16,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: char</returns>
         [JsonProperty("binargs")]
-        public Bytes Binargs {get; set;}
+        public Bytes BinArgs {get; set;}
     }
 }

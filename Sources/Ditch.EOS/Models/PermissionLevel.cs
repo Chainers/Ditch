@@ -18,7 +18,7 @@ namespace Ditch.EOS.Models
         /// <returns>API type: account_name</returns>
         [MessageOrder(10)]
         [JsonProperty("actor")]
-        public AccountName Actor {get; set;}
+        public AccountName Actor { get; set; }
 
         /// <summary>
         /// API name: permission
@@ -27,6 +27,15 @@ namespace Ditch.EOS.Models
         /// <returns>API type: permission_name</returns>
         [MessageOrder(20)]
         [JsonProperty("permission")]
-        public PermissionName Permission {get; set;}
+        public PermissionName Permission { get; set; }
+
+
+        public PermissionLevel() { }
+
+        public PermissionLevel(AccountName actor, PermissionName permissionName)
+        {
+            Actor = actor;
+            Permission = permissionName;
+        }
     }
 }
