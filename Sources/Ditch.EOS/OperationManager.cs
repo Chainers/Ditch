@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cryptography.ECDSA;
 using Ditch.Core;
+using Ditch.Core.JsonRpc;
 using Ditch.EOS.Models;
 using Newtonsoft.Json;
 
@@ -59,7 +60,6 @@ namespace Ditch.EOS
             return result;
         }
 
-
         public async Task<OperationResult<T>> CustomPostRequest<T>(string url, object data, CancellationToken token)
         {
             HttpContent content = null;
@@ -73,9 +73,101 @@ namespace Ditch.EOS
             var response = await _client.PostAsync(url, content, token);
             var result = await CreateResult<T>(response, token);
 
-            result.RawRequest = $"POST: {url}{Environment.NewLine}{param}";
+            result.RawRequest = $"POST: {url} {param}";
 
             return result;
+        }
+
+        public async Task<OperationResult<PushTransactionResults>> BroadcastOperations(Operation[] operations, List<byte[]> privateKeys, CancellationToken token)
+        {
+            var initOpRez = await AbiJsonToBin(operations, token);
+            if (initOpRez.IsError)
+                return new OperationResult<PushTransactionResults>(initOpRez);
+
+            var infoResp = await GetInfo(token);
+            if (infoResp.IsError)
+                return new OperationResult<PushTransactionResults>(infoResp);
+
+            var info = infoResp.Result;
+
+            var blockArgs = new GetBlockParams
+            {
+                BlockNumOrId = info.HeadBlockId
+            };
+            var getBlock = await GetBlock(blockArgs, token);
+            if (getBlock.IsError)
+                return new OperationResult<PushTransactionResults>(getBlock);
+
+            var block = getBlock.Result;
+
+            var trx = new SignedTransaction
+            {
+                Actions = operations,
+                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
+                RefBlockPrefix = block.RefBlockPrefix,
+                Expiration = block.Timestamp.Value.AddSeconds(30)
+            };
+
+            var packedTrx = MessageSerializer.Serialize<SignedTransaction>(trx);
+
+            var chainId = Hex.HexToBytes(info.ChainId);
+            var msg = new byte[chainId.Length + packedTrx.Length + 32];
+            Array.Copy(chainId, msg, chainId.Length);
+            Array.Copy(packedTrx, 0, msg, chainId.Length, packedTrx.Length);
+            var sha256 = Sha256Manager.GetHash(msg);
+
+            var pack = new PackedTransaction
+            {
+                PackedTrx = Hex.ToString(packedTrx),
+                Signatures = new string[privateKeys.Count],
+                PackedContextFreeData = "",
+                Compression = "none"
+            };
+
+            for (var i = 0; i < privateKeys.Count; i++)
+            {
+                var key = privateKeys[i];
+                var sig = Secp256K1Manager.SignCompressedCompact(sha256, key);
+                var sigHex = Base58.EncodeSig(sig);
+                pack.Signatures[i] = sigHex;
+            }
+
+            return await PushTransaction(pack, token);
+        }
+
+        public async Task<OperationResult<VoidResponse>> AbiJsonToBin(Operation[] operations, CancellationToken token)
+        {
+            foreach (var operation in operations)
+            {
+                if (operation.Data != null)
+                    continue;
+
+                var abiJsonToBinArgs = new AbiJsonToBinParams
+                {
+                    Code = operation.ContractName,
+                    Action = operation.Name,
+                    Args = operation.Args
+                };
+                var abiJsonToBin = await AbiJsonToBin(abiJsonToBinArgs, token);
+
+                if (abiJsonToBin.IsError)
+                    return new OperationResult<VoidResponse>(abiJsonToBin);
+
+                operation.Data = abiJsonToBin.Result.BinArgs;
+            }
+            return new OperationResult<VoidResponse>();
+        }
+
+
+        public WebSocketManager WebSocketManager = new WebSocketManager();
+        public async Task<OperationResult<object>> SignWithScatter(SignedTransaction trx, PublicKey[] publicKeys, string chainId, CancellationToken token)
+        {
+            if (!WebSocketManager.IsConnected)
+                WebSocketManager.ConnectTo("http://localhost:50005/DitchTestApp", token);
+
+            var endpoint = "http://localhost:50005/DitchTestApp";
+            var args = new object[] { trx, publicKeys, chainId };
+            return await CustomPostRequest<object>(endpoint, args, token);
         }
 
 
@@ -122,93 +214,6 @@ namespace Ditch.EOS
                 }
             }
             return result;
-        }
-
-        public async Task<PackedTransaction> CreatePackedTransaction(CreateTransactionArgs args, CancellationToken token)
-        {
-            //1
-            var infoResp = await GetInfo(token);
-            if (infoResp.IsError)
-                return null;
-
-            var info = infoResp.Result;
-
-            //2
-            var blockArgs = new GetBlockParams
-            {
-                BlockNumOrId = info.HeadBlockId
-            };
-            var getBlock = await GetBlock(blockArgs, token);
-            if (getBlock.IsError)
-                return null;
-
-            var block = getBlock.Result;
-
-            //3
-            var transaction = new SignedTransaction
-            {
-                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
-                RefBlockPrefix = block.RefBlockPrefix,
-                Expiration = block.Timestamp.Value.AddSeconds(30),
-                Actions = args.Actions
-            };
-
-            var packedTrx = MessageSerializer.Serialize<SignedTransaction>(transaction);
-
-            var chainId = Hex.HexToBytes(info.ChainId);
-            var msg = new byte[chainId.Length + packedTrx.Length + 32];
-            Array.Copy(chainId, msg, chainId.Length);
-            Array.Copy(packedTrx, 0, msg, chainId.Length, packedTrx.Length);
-            var sha256 = Sha256Manager.GetHash(msg);
-
-            transaction.Signatures = new string[args.PrivateKeys.Count];
-            for (var i = 0; i < args.PrivateKeys.Count; i++)
-            {
-                var key = args.PrivateKeys[i];
-                var sig = Secp256K1Manager.SignCompressedCompact(sha256, key);
-                var sigHex = Base58.EncodeSig(sig);
-                transaction.Signatures[i] = sigHex;
-            }
-
-            return new PackedTransaction
-            {
-                PackedTrx = Hex.ToString(packedTrx),
-                Signatures = transaction.Signatures,
-                PackedContextFreeData = "",
-                Compression = "none"
-            };
-        }
-
-        public async Task<SignedTransaction> CreateTransaction(CreateTransactionArgs args, CancellationToken token)
-        {
-            //1
-            var infoResp = await GetInfo(token);
-            if (infoResp.IsError)
-                return null;
-
-            var info = infoResp.Result;
-
-            //2
-            var blockArgs = new GetBlockParams
-            {
-                BlockNumOrId = info.HeadBlockId
-            };
-            var getBlock = await GetBlock(blockArgs, token);
-            if (getBlock.IsError)
-                return null;
-
-            var block = getBlock.Result;
-
-            //3
-            var transaction = new SignedTransaction
-            {
-                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
-                RefBlockPrefix = block.RefBlockPrefix,
-                Expiration = block.Timestamp.Value.AddSeconds(30),
-                Actions = args.Actions
-            };
-
-            return transaction;
         }
     }
 }

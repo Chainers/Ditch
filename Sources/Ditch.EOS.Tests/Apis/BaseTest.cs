@@ -4,7 +4,10 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
+using Cryptography.ECDSA;
 using Ditch.Core.JsonRpc;
+using Ditch.EOS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -27,9 +30,7 @@ namespace Ditch.EOS.Tests.Apis
                 User = new UserInfo
                 {
                     Login = ConfigurationManager.AppSettings["Login"],
-                    PublicOwnerWif = ConfigurationManager.AppSettings["PublicOwnerWif"],
                     PrivateOwnerWif = ConfigurationManager.AppSettings["PrivateOwnerWif"],
-                    PublicActiveWif = ConfigurationManager.AppSettings["PublicActiveWif"],
                     PrivateActiveWif = ConfigurationManager.AppSettings["PrivateActiveWif"],
                     Password = ConfigurationManager.AppSettings["Password"]
                 };

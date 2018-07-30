@@ -32,7 +32,7 @@ namespace Ditch.Core
         /// </summary>
         public int WaitConnectTimeout { get; set; } = 10000;
 
-        public bool IsConnected => _webSocket.State == WebSocketState.Open;
+        public bool IsConnected => _webSocket?.State == WebSocketState.Open;
 
 
 

@@ -148,22 +148,5 @@ namespace Ditch.EOS
             var endpoint = $"{WalletUrl}/v1/wallet/set_timeout";
             return await CustomPostRequest<VoidResponse>(endpoint, seconds, token);
         }
-
-        /// <summary>
-        /// Sign transaction given an array of transaction, require public keys, and chain id
-        /// 
-        /// curl http://localhost:8889/v1/wallet/sign_transaction -X POST -d '[{"ref_block_num":21453,"ref_block_prefix":3165644999,"expiration":"2017-12-08T10:28:49","scope":["initb","initc"],"read_scope":[],"messages":[{"code":"currency","type":"transfer","authorization":[{"account":"initb","permission":"active"}],"data":"000000008093dd74000000000094dd74e803000000000000"}],"signatures":[]}, ["EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"], ""]'
-        /// </summary>
-        /// <param name="publicKeys"></param>
-        /// <param name="trx"></param>
-        /// <param name="chainId"></param>
-        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
-        /// <returns></returns>
-        public async Task<OperationResult<SignedTransaction>> WalletSignTrx(SignedTransaction trx, PublicKey[] publicKeys, string chainId, CancellationToken token)
-        {
-            var endpoint = $"{WalletUrl}/v1/wallet/sign_transaction";
-            var args = new object[] { trx, publicKeys, chainId };
-            return await CustomPostRequest<SignedTransaction>(endpoint, args, token);
-        }
     }
 }

@@ -17,5 +17,13 @@ namespace Ditch.EOS.Models
         /// <returns>API type: name</returns>
         [JsonProperty("account_name")]
         public string AccountName { get; set; }
+
+
+        public GetAccountParams() { }
+
+        public GetAccountParams(string accountName)
+        {
+            AccountName = accountName;
+        }
     }
 }

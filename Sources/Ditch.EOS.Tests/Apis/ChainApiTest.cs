@@ -147,16 +147,19 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task GetCurrencyStatsTest()
+        [TestCase("EOS")]
+        public async Task GetCurrencyStatsTest(string symbol)
         {
             var args = new GetCurrencyStatsParams()
             {
-                Code = "tez",
-                Symbol = "VIM"
+                Code = User.Login,
+                Symbol = symbol
             };
 
             var resp = await Api.GetCurrencyStats(args, CancellationToken);
-            TestPropetries(resp);
+            //TestPropetries(resp);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
         }
 
         [Test]
@@ -173,52 +176,27 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task PushTransactionTest()
+        public async Task BroadcastOperationsTest()
         {
-            var abiJsonToBinArgs = new AbiJsonToBinParams
+            var op = new Operation
             {
-                Code = ContractInfo.ContractName,
-                Action = CreatePostActionName,
+                ContractName = ContractInfo.ContractName,
+                Name = CreatePostActionName,
+                Account = User.Login,
                 Args = new CreatePostArgs
                 {
                     UrlPhoto = "test_1_url",
                     AccountCreator = User.Login,
                     IpfsHashPhoto = "test_1_hash"
-                }
-            };
-            var abiJsonToBin = await Api.AbiJsonToBin(abiJsonToBinArgs, CancellationToken);
-            Assert.IsFalse(abiJsonToBin.IsError);
-
-            var args = new CreateTransactionArgs
-            {
-                Actions = new[]
-                {
-                    new Action
-                    {
-                        Account = User.Login,
-                        Name = CreatePostActionName,
-                        Authorization = new[]
-                        {
-                            new PermissionLevel
-                            {
-                                Actor = User.Login,
-                                Permission = "active"
-                            }
-                        },
-                        Data =  abiJsonToBin.Result.Binargs
-                    }
                 },
-                PrivateKeys = new List<byte[]> { User.PrivateActiveKey }
+                Authorization = new[] { new PermissionLevel(User.Login, "active") }
             };
 
-            var packedTransaction = await Api.CreatePackedTransaction(args, CancellationToken);
-
-            var resp = await Api.PushTransaction(packedTransaction, CancellationToken);
+            var resp = await Api.BroadcastOperations(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken);
             WriteLine(resp);
-
             Assert.IsFalse(resp.IsError);
         }
-
+             
         //[Ignore("you need to put your own data")]
         //[Test]
         //public async Task GetRequiredKeysTest()

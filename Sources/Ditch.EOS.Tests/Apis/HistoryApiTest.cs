@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Ditch.EOS.Models;
 using NUnit.Framework;
 
@@ -35,9 +36,21 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task GetKeyAccountsTest()
         {
+            var accArgs = new GetAccountParams(User.Login);
+            var accRes = await Api.GetAccount(accArgs, CancellationToken);
+            if (accRes.IsError)
+            {
+                WriteLine(accRes);
+                Assert.Fail(nameof(accRes));
+            }
+            var publicKey = accRes.Result.Permissions
+                .First(p => p.PermName == "active")
+                .RequiredAuth.Keys.Select(k => k.Key)
+                .First();
+
             var args = new GetKeyAccountsParams
             {
-                PublicKey = new PublicKeyType(User.PublicActiveWif)
+                PublicKey = publicKey
             };
             var resp = await Api.GetKeyAccounts(args, CancellationToken);
             TestPropetries(resp);
