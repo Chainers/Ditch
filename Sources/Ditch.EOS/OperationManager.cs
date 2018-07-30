@@ -158,19 +158,6 @@ namespace Ditch.EOS
             return new OperationResult<VoidResponse>();
         }
 
-
-        public WebSocketManager WebSocketManager = new WebSocketManager();
-        public async Task<OperationResult<object>> SignWithScatter(SignedTransaction trx, PublicKey[] publicKeys, string chainId, CancellationToken token)
-        {
-            if (!WebSocketManager.IsConnected)
-                WebSocketManager.ConnectTo("http://localhost:50005/DitchTestApp", token);
-
-            var endpoint = "http://localhost:50005/DitchTestApp";
-            var args = new object[] { trx, publicKeys, chainId };
-            return await CustomPostRequest<object>(endpoint, args, token);
-        }
-
-
         protected virtual async Task<OperationResult<T>> CreateResult<T>(HttpResponseMessage response, CancellationToken ct)
         {
             var result = new OperationResult<T>();
