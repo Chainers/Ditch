@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Converter.Core.Helpers;
 using Converter.Core.Models;
 using Newtonsoft.Json;
 
@@ -143,26 +144,7 @@ namespace Converter.Core
             }
             return rez;
         }
-
-        public string ToTitleCase(string name, bool firstUpper = true)
-        {
-            var sb = new StringBuilder(name);
-            for (var i = 0; i < sb.Length; i++)
-            {
-                if (i == 0 && firstUpper)
-                    sb[i] = char.ToUpper(sb[i]);
-
-                if (sb[i] == '_' && i + 1 < sb.Length)
-                    sb[i + 1] = char.ToUpper(sb[i + 1]);
-            }
-            sb.Replace("_", string.Empty);
-            var rez = sb.ToString();
-            if (rez.Equals("params"))
-                rez = "parameters";
-
-            return rez;
-        }
-
+        
         public virtual ParsedClass TryParseClass(SearchTask searchTask, IList<string> text, bool isApi)
         {
             if (!text.Any())
@@ -192,7 +174,7 @@ namespace Converter.Core
             var header = headerSb.ToString();
             var name = TryParseClassName(header);
             result.CppName = name;
-            result.Name = ToTitleCase(name);
+            result.Name = name.ToTitleCase();
             result.ObjectType = EnumRegex.IsMatch(header) ? ObjectType.Enum : result.ObjectType;
 
             var inherit = TryParseInherit(header).Trim();
@@ -289,7 +271,7 @@ namespace Converter.Core
                 end++;
                 var names = itms.Where(i => i.StartsWith("typename")).Select(i => i.Remove(0, 8).Trim()).ToArray();
 
-                result.Template = $"<{string.Join(", ", names.Select(i => ToTitleCase(i)))}> ";
+                result.Template = $"<{string.Join(", ", names.Select(i => i.ToTitleCase()))}> ";
                 if (itms.Count > names.Length)
                 {
                     foreach (var itm in itms.Where(i => !i.StartsWith("typename")))
@@ -335,7 +317,7 @@ namespace Converter.Core
 
             var field = new PreParsedElement
             {
-                Name = ToTitleCase(name),
+                Name = name.ToTitleCase(),
                 CppName = name,
                 Comment = coment
             };

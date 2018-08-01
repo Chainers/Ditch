@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Converter.Core;
+using Converter.Core.Helpers;
 using Converter.Core.Models;
 
 namespace Converter.Steem.Converters
@@ -128,7 +129,7 @@ namespace Converter.Steem.Converters
                 return;
 
             if (!string.IsNullOrEmpty(parsedClass.CppName))
-                parsedClass.Name = _cashParser.ToTitleCase(parsedClass.CppName);
+                parsedClass.Name = parsedClass.CppName.ToTitleCase();
             if (!string.IsNullOrEmpty(parsedClass.CppInherit))
                 parsedClass.Inherit = new List<ParsedType> { GetKnownTypeOrDefault(parsedClass.CppInherit) };
 
@@ -202,7 +203,7 @@ namespace Converter.Steem.Converters
             if (!NotNameChar.IsMatch(type))
             {
                 AddTypeToTask(type);
-                return new ParsedType { CppName = type, Name = _cashParser.ToTitleCase(type), IsOptional = isOptional };
+                return new ParsedType { CppName = type, Name = type.ToTitleCase(), IsOptional = isOptional };
             }
 
             return new ParsedType { CppName = type, Name = "object", IsOptional = isOptional };
@@ -212,7 +213,7 @@ namespace Converter.Steem.Converters
         {
             if (!Founded.ContainsKey(type))
             {
-                Founded.Add(type, _cashParser.ToTitleCase(type));
+                Founded.Add(type, type.ToTitleCase());
                 if (!UnknownTypes.Any(i => i.SearchLine.Equals(type) && string.IsNullOrEmpty(i.SearchDir)))
                 {
                     var task = new SearchTask
@@ -301,7 +302,7 @@ namespace Converter.Steem.Converters
                 var param = new ParsedParams()
                 {
                     CppName = name,
-                    Name = _cashParser.ToTitleCase(name, false),
+                    Name = name.ToTitleCase(false),
                     Default = defaultValue,
                     CppType = typeMatches[i].Value,
                     Type = GetKnownTypeOrDefault(typeMatches[i].Value)
@@ -337,7 +338,7 @@ namespace Converter.Steem.Converters
             var rez = new ParsedParams()
             {
                 CppName = name,
-                Name = _cashParser.ToTitleCase(name, false),
+                Name = name.ToTitleCase(false),
                 Default = defaultValue,
                 CppType = typeMatche.Value,
                 Type = GetKnownTypeOrDefault(typeMatche.Value)

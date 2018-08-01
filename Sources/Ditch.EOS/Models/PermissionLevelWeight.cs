@@ -25,5 +25,16 @@ namespace Ditch.EOS.Models
         /// <returns>API type: weight_type</returns>
         [JsonProperty("weight")]
         public ushort Weight { get; set; }
+
+        public PermissionLevelWeight() { }
+
+        public PermissionLevelWeight(AccountName actor, PermissionName permissionName)
+         : this(new PermissionLevel(actor, permissionName), 1) { }
+
+        public PermissionLevelWeight(PermissionLevel permission, ushort weight)
+        {
+            Permission = permission;
+            Weight = weight;
+        }
     }
 }

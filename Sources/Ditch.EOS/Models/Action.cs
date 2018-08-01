@@ -54,6 +54,11 @@ namespace Ditch.EOS.Models
 
         public Action() { }
 
+        public Action(ActionName actionName)
+        {
+            Name = actionName;
+        }
+
         public Action(AccountName accountName, ActionName actionName, PermissionLevel[] permissionLevels)
         {
             Account = accountName;

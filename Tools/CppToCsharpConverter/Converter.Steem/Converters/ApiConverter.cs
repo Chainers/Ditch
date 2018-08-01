@@ -3,6 +3,7 @@ using Converter.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Converter.Core.Helpers;
 
 namespace Converter.Steem.Converters
 {
@@ -57,7 +58,7 @@ namespace Converter.Steem.Converters
 
             var field = new ParsedFunc();
             field.Type = GetKnownTypeOrDefault($"{test}_return");
-            field.Name = _cashParser.ToTitleCase(test);
+            field.Name = test.ToTitleCase();
             field.CppName = test;
             field.Params = TryParseParams($"{test}_args args");
             field.Comment = preParsedElement.Comment;

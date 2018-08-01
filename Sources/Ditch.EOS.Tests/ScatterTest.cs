@@ -1,44 +1,85 @@
-﻿using System.Net;
-using System.Net.Sockets;
-using System.Net.WebSockets;
+﻿using System.Configuration;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Ditch.Core;
+using Ditch.EOS.Contracts.Eosio.Actions;
+using Ditch.EOS.Contracts.Eosio.Structs;
+using Ditch.EOS.Models;
+using Ditch.EOS.Tests.Apis;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Ditch.EOS.Tests
 {
     [TestFixture]
-    public class ScatterTest
+    public class ScatterTest : BaseTest
     {
-        public WebSocketManager WebSocketManager = new WebSocketManager();
-        // http://127.0.0.1:50005/tfZYsSST3DyG1ohtRxmYaYAYa2LtoSqZmwXQrFrVvd7xJnTIrOsHVjSxYlY32rhx
         [Test]
         public async Task BroadcastWithScatterTest()
         {
-            //TcpClient client = new TcpClient("localhost", 50005);
-            //NetworkStream stream = client.GetStream();
-            //string response = "Ditch";
-            //byte[] data = System.Text.Encoding.UTF8.GetBytes(response);
-            //stream.Write(data, 0, data.Length);
-            //stream.Flush();
+            var op = new BuyramAction
+            {
+                Account = User.Login,
 
-            //byte[] rdata = new byte[256];
-            //int bytes = stream.Read(rdata, 0, rdata.Length); // получаем количество считанных байтов
-            //string message = Encoding.UTF8.GetString(rdata, 0, bytes);
+                Args = new Buyram
+                {
+                    Payer = User.Login,
+                    Receiver = User.Login,
+                    Quant = new Asset("0.001 EOS")
 
+                },
+                Authorization = new[]
+                {
+                    new PermissionLevel
+                    {
+                        Actor = User.Login,
+                        Permission = "active"
+                    }
+                }
+            };
 
-            //client.Close();
+            var resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SignFuncWithWallet, CancellationToken);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
 
-            //if (!WebSocketManager.IsConnected)
-            //    WebSocketManager.ConnectTo("ws://127.0.0.1:50005/scatter", CancellationToken.None);
+            resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SignFunc, CancellationToken);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
 
+        }
 
-            //Assert.IsTrue(WebSocketManager.IsConnected);
+        private async Task<OperationResult<SignedTransaction>> SignFuncWithWallet(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
+        {
+            await Api.WalletOpen(User.Login, token);
+            await Api.WalletUnlock(User.Login, User.Password, token);
+            return await Api.WalletSignTransaction(trx, keys, chainId, token);
+        }
 
-            //var args = new object[] { trx, publicKeys, chainId };
+        private Task<OperationResult<SignedTransaction>> SignFunc(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
+        {
+            var args = new object[] { trx, keys, chainId };
+            var endpoint = ConfigurationManager.AppSettings["ScatterUrl"];
+            return CustomPostRequest<SignedTransaction>(endpoint, args, token);
+        }
 
+        public async Task<OperationResult<T>> CustomPostRequest<T>(string url, object data, CancellationToken token)
+        {
+            HttpContent content = null;
+            var param = string.Empty;
+            if (data != null)
+            {
+                param = JsonConvert.SerializeObject(data, Api.JsonSerializerSettings);
+                content = new StringContent(param, Encoding.UTF8, "application/json");
+            }
+
+            var _client = new HttpClient();
+            var response = await _client.PostAsync(url, content, token);
+            var result = await Api.CreateResult<T>(response, token);
+
+            result.RawRequest = $"POST: {url} {param}";
+
+            return result;
         }
     }
 }

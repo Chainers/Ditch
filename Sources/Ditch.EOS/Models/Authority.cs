@@ -16,7 +16,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("threshold")]
-        public uint Threshold {get; set;}
+        public uint Threshold { get; set; }
 
         /// <summary>
         /// API name: delay_sec
@@ -24,7 +24,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("delay_sec")]
-        public uint DelaySec {get; set;}
+        public uint DelaySec { get; set; }
 
         /// <summary>
         /// API name: keys
@@ -32,7 +32,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: key_weight</returns>
         [JsonProperty("keys")]
-        public KeyWeight[] Keys {get; set;}
+        public KeyWeight[] Keys { get; set; }
 
         /// <summary>
         /// API name: accounts
@@ -40,6 +40,6 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: permission_level_weight</returns>
         [JsonProperty("accounts")]
-        public PermissionLevelWeight[] Accounts {get; set;}
+        public PermissionLevelWeight[] Accounts { get; set; }
     }
 }

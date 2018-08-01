@@ -132,13 +132,90 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiContractToModelGenerator.cs" />
     <Compile Include="Base58Test.cs" />
     <Compile Include="Apis\BaseTest.cs" />
     <Compile Include="Apis\HistoryApiTest.cs" />
-    <Compile Include="ContractTest.cs" />
+    <Compile Include="Contracts\Eosio\Actions\BidnameAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\BuyramAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\BuyrambytesAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\CanceldelayAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\ClaimrewardsAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\DelegatebwAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\DeleteauthAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\LinkauthAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\NewaccountAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\OnerrorAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\RefundAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\RegproducerAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\RegproxyAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\ReqauthAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\RmvproducerAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SellramAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetabiAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetalimitsAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetcodeAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetglimitsAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetparamsAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetprivAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetprodsAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetramAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\SetramrateAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\UndelegatebwAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\UnlinkauthAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\UnregprodAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\UpdateauthAction.cs" />
+    <Compile Include="Contracts\Eosio\Actions\VoteproducerAction.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Authority.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Bidname.cs" />
+    <Compile Include="Contracts\Eosio\Structs\BlockchainParameters.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Buyram.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Buyrambytes.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Canceldelay.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Claimrewards.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Connector.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Delegatebw.cs" />
+    <Compile Include="Contracts\Eosio\Structs\DelegatedBandwidth.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Deleteauth.cs" />
+    <Compile Include="Contracts\Eosio\Structs\EosioGlobalState.cs" />
+    <Compile Include="Contracts\Eosio\Structs\EosioGlobalState2.cs" />
+    <Compile Include="Contracts\Eosio\Structs\ExchangeState.cs" />
+    <Compile Include="Contracts\Eosio\Structs\KeyWeight.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Linkauth.cs" />
+    <Compile Include="Contracts\Eosio\Structs\NamebidInfo.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Newaccount.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Onerror.cs" />
+    <Compile Include="Contracts\Eosio\Structs\PermissionLevelWeight.cs" />
+    <Compile Include="Contracts\Eosio\Structs\ProducerInfo.cs" />
+    <Compile Include="Contracts\Eosio\Structs\ProducerKey.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Refund.cs" />
+    <Compile Include="Contracts\Eosio\Structs\RefundRequest.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Regproducer.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Regproxy.cs" />
+    <Compile Include="Contracts\Eosio\Structs\RequireAuth.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Rmvproducer.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Sellram.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Setabi.cs" />
+    <Compile Include="Contracts\Eosio\Structs\SetAccountLimits.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Setcode.cs" />
+    <Compile Include="Contracts\Eosio\Structs\SetGlobalLimits.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Setparams.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Setpriv.cs" />
+    <Compile Include="Contracts\Eosio\Structs\SetProducers.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Setram.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Setramrate.cs" />
+    <Compile Include="Contracts\Eosio\Structs\TotalResources.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Undelegatebw.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Unlinkauth.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Unregprod.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Updateauth.cs" />
+    <Compile Include="Contracts\Eosio\Structs\UserResources.cs" />
+    <Compile Include="Contracts\Eosio\Structs\Voteproducer.cs" />
+    <Compile Include="Contracts\Eosio\Structs\VoterInfo.cs" />
+    <Compile Include="Contracts\Eosio\Structs\WaitWeight.cs" />
+    <Compile Include="KeyGenerator.cs" />
     <Compile Include="MessageSerializerTest.cs" />
     <Compile Include="ContractInfo.cs" />
-    <Compile Include="Apis\CreatePostArgs.cs" />
     <Compile Include="ScatterTest.cs" />
     <Compile Include="UserInfo.cs" />
     <Compile Include="Apis\WalletApiTest.cs" />
@@ -146,7 +223,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.config.template" />
     <None Include="packages.config" />
   </ItemGroup>

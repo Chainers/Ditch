@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Converter.Core;
+using Converter.Core.Helpers;
 using Converter.Core.Models;
 
 namespace Converter.BitShares.Converters
@@ -82,7 +83,7 @@ namespace Converter.BitShares.Converters
             {
                 var field = new ParsedFunc();
                 field.Type = GetKnownTypeOrDefault(cppTypeMatch.Value, templateName);
-                field.Name = _cashParser.ToTitleCase(nameMatch.Value);
+                field.Name = nameMatch.Value.ToTitleCase();
                 field.CppName = nameMatch.Value;
                 field.Params = TryParseParams(paramsMatch.Value);
                 field.Comment = preParsedElement.Comment;

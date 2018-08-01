@@ -4,10 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
-using Cryptography.ECDSA;
 using Ditch.Core.JsonRpc;
-using Ditch.EOS.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -17,7 +14,6 @@ namespace Ditch.EOS.Tests.Apis
     public class BaseTest
     {
         protected static UserInfo User;
-        protected static ContractInfo ContractInfo;
 
         protected static OperationManager Api;
         protected CancellationToken CancellationToken = CancellationToken.None;
@@ -31,16 +27,10 @@ namespace Ditch.EOS.Tests.Apis
                 {
                     Login = ConfigurationManager.AppSettings["Login"],
                     PrivateOwnerWif = ConfigurationManager.AppSettings["PrivateOwnerWif"],
+                    PublicOwnerWif = ConfigurationManager.AppSettings["PublicOwnerWif"],
                     PrivateActiveWif = ConfigurationManager.AppSettings["PrivateActiveWif"],
+                    PublicActiveWif = ConfigurationManager.AppSettings["PublicActiveWif"],
                     Password = ConfigurationManager.AppSettings["Password"]
-                };
-            }
-
-            if (ContractInfo == null)
-            {
-                ContractInfo = new ContractInfo
-                {
-                    ContractName = ConfigurationManager.AppSettings["ContractName"]
                 };
             }
 
@@ -82,8 +72,6 @@ namespace Ditch.EOS.Tests.Apis
             }
         }
 
-
-
         protected HashSet<string> GetPropertyNames(Type type)
         {
             var props = type.GetRuntimeProperties();
@@ -124,6 +112,27 @@ namespace Ditch.EOS.Tests.Apis
 
             Console.WriteLine("Request:");
             Console.WriteLine(JsonBeautify(r.RawRequest));
+            Console.WriteLine("Response:");
+            Console.WriteLine(JsonBeautify(r.RawResponse));
+        }
+
+        protected void WriteLine<T>(OperationResult<T> r)
+        {
+            Console.WriteLine("---------------");
+            if (r.IsError)
+            {
+                Console.WriteLine("Error:");
+                if (r.Error != null)
+                    Console.WriteLine(r.Error.ToString());
+            }
+            else
+            {
+                Console.WriteLine("Result:");
+                Console.WriteLine(JsonConvert.SerializeObject(r.Result, Formatting.Indented));
+            }
+
+            Console.WriteLine("Request:");
+            Console.WriteLine(r.RawRequest);
             Console.WriteLine("Response:");
             Console.WriteLine(JsonBeautify(r.RawResponse));
         }
