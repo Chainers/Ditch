@@ -39,24 +39,24 @@ namespace Ditch.EOS.Tests
                 }
             };
 
-            var resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SignFuncWithWallet, CancellationToken);
+            var resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SigningWithEosWallet, CancellationToken);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
 
-            resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SignFunc, CancellationToken);
+            resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SigningWithScatter, CancellationToken);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
 
         }
 
-        private async Task<OperationResult<SignedTransaction>> SignFuncWithWallet(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
+        private async Task<OperationResult<SignedTransaction>> SigningWithEosWallet(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
         {
             await Api.WalletOpen(User.Login, token);
             await Api.WalletUnlock(User.Login, User.Password, token);
             return await Api.WalletSignTransaction(trx, keys, chainId, token);
         }
 
-        private Task<OperationResult<SignedTransaction>> SignFunc(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
+        private Task<OperationResult<SignedTransaction>> SigningWithScatter(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
         {
             var args = new object[] { trx, keys, chainId };
             var endpoint = ConfigurationManager.AppSettings["ScatterUrl"];
