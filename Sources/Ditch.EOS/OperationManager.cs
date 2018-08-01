@@ -78,9 +78,9 @@ namespace Ditch.EOS
             return result;
         }
 
-        public async Task<OperationResult<PushTransactionResults>> BroadcastOperations(Operation[] operations, List<byte[]> privateKeys, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults>> BroadcastActions(BaseAction[] baseActions, List<byte[]> privateKeys, CancellationToken token)
         {
-            var initOpRez = await AbiJsonToBin(operations, token);
+            var initOpRez = await AbiJsonToBin(baseActions, token);
             if (initOpRez.IsError)
                 return new OperationResult<PushTransactionResults>(initOpRez);
 
@@ -102,7 +102,7 @@ namespace Ditch.EOS
 
             var trx = new SignedTransaction
             {
-                Actions = operations,
+                Actions = baseActions,
                 RefBlockNum = (ushort)(block.BlockNum & 0xffff),
                 RefBlockPrefix = block.RefBlockPrefix,
                 Expiration = block.Timestamp.Value.AddSeconds(30)
@@ -135,30 +135,87 @@ namespace Ditch.EOS
             return await PushTransaction(pack, token);
         }
 
-        public async Task<OperationResult<VoidResponse>> AbiJsonToBin(Operation[] operations, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults>> BroadcastActions(BaseAction[] baseActions, PublicKey[] publicKeys, Func<SignedTransaction, PublicKey[], string, CancellationToken, Task<OperationResult<SignedTransaction>>> signFunc, CancellationToken token)
         {
-            foreach (var operation in operations)
+            var initOpRez = await AbiJsonToBin(baseActions, token);
+            if (initOpRez.IsError)
+                return new OperationResult<PushTransactionResults>(initOpRez);
+
+            var infoResp = await GetInfo(token);
+            if (infoResp.IsError)
+                return new OperationResult<PushTransactionResults>(infoResp);
+
+            var info = infoResp.Result;
+
+            var blockArgs = new GetBlockParams
             {
-                if (operation.Data != null)
+                BlockNumOrId = info.HeadBlockId
+            };
+            var getBlock = await GetBlock(blockArgs, token);
+            if (getBlock.IsError)
+                return new OperationResult<PushTransactionResults>(getBlock);
+
+            var block = getBlock.Result;
+
+            var trx = new SignedTransaction
+            {
+                Actions = baseActions,
+                RefBlockNum = (ushort)(block.BlockNum & 0xffff),
+                RefBlockPrefix = block.RefBlockPrefix,
+                Expiration = block.Timestamp.Value.AddSeconds(30)
+            };
+
+            var strx = await signFunc.Invoke(trx, publicKeys, info.ChainId, token);
+            if (strx.IsError)
+                return new OperationResult<PushTransactionResults>(strx);
+
+            var packedTrx = MessageSerializer.Serialize<SignedTransaction>(trx);
+
+            var chainId = Hex.HexToBytes(info.ChainId);
+            var msg = new byte[chainId.Length + packedTrx.Length + 32];
+            Array.Copy(chainId, msg, chainId.Length);
+            Array.Copy(packedTrx, 0, msg, chainId.Length, packedTrx.Length);
+
+            var pack = new PackedTransaction
+            {
+                PackedTrx = Hex.ToString(packedTrx),
+                PackedContextFreeData = "",
+                Compression = "none",
+                Signatures = strx.Result.Signatures
+            };
+
+            return await PushTransaction(pack, token);
+        }
+
+        public async Task<OperationResult<PushTransactionResults>> BroadcastActionsWithWallet(BaseAction[] baseActions, PublicKey[] publicKeys, CancellationToken token)
+        {
+            return await BroadcastActions(baseActions, publicKeys, WalletSignTransaction, token);
+        }
+
+        public async Task<OperationResult<VoidResponse>> AbiJsonToBin(BaseAction[] baseActions, CancellationToken token)
+        {
+            foreach (var action in baseActions)
+            {
+                if (action.Data != null)
                     continue;
 
                 var abiJsonToBinArgs = new AbiJsonToBinParams
                 {
-                    Code = operation.ContractName,
-                    Action = operation.Name,
-                    Args = operation.Args
+                    Code = action.ContractName,
+                    Action = action.Name,
+                    Args = action.Args
                 };
                 var abiJsonToBin = await AbiJsonToBin(abiJsonToBinArgs, token);
 
                 if (abiJsonToBin.IsError)
                     return new OperationResult<VoidResponse>(abiJsonToBin);
 
-                operation.Data = abiJsonToBin.Result.BinArgs;
+                action.Data = abiJsonToBin.Result.BinArgs;
             }
             return new OperationResult<VoidResponse>();
         }
 
-        protected virtual async Task<OperationResult<T>> CreateResult<T>(HttpResponseMessage response, CancellationToken ct)
+        public virtual async Task<OperationResult<T>> CreateResult<T>(HttpResponseMessage response, CancellationToken ct)
         {
             var result = new OperationResult<T>();
 

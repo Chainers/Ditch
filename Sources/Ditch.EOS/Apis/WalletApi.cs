@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.JsonRpc;
 using Ditch.EOS.Models;
@@ -148,5 +149,27 @@ namespace Ditch.EOS
             var endpoint = $"{WalletUrl}/v1/wallet/set_timeout";
             return await CustomPostRequest<VoidResponse>(endpoint, seconds, token);
         }
+
+        /// <summary>
+        /// Signs a transaction
+        /// </summary>
+        /// <param name="trx"></param>
+        /// <param name="keys"></param>
+        /// <param name="chainId"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<SignedTransaction>> WalletSignTransaction(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
+        {
+            var args = new object[] { trx, keys, chainId };
+            var endpoint = $"{WalletUrl}/v1/wallet/sign_transaction";
+            return await CustomPostRequest<SignedTransaction>(endpoint, args, token);
+        }
+
+       
+        //set_dir
+        //set_eosio_key
+        //sign_digest
+        //create_key
+
     }
 }

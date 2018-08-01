@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ditch.EOS.Contracts.Eosio.Actions;
+using Ditch.EOS.Contracts.Eosio.Structs;
 using Ditch.EOS.Models;
 using NUnit.Framework;
 
@@ -8,8 +11,6 @@ namespace Ditch.EOS.Tests.Apis
     [TestFixture]
     public class ChainApiTest : BaseTest
     {
-        private const string CreatePostActionName = "createpost";
-
         [Test]
         public async Task GetInfoTest()
         {
@@ -84,11 +85,12 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task GetRawCodeAndAbiTest()
+        [TestCase("eosio")]
+        public async Task GetRawCodeAndAbiTest(string accName)
         {
             var args = new GetRawCodeAndAbiParams
             {
-                AccountName = User.Login
+                AccountName = accName
             };
 
             var resp = await Api.GetRawCodeAndAbi(args, CancellationToken);
@@ -96,13 +98,14 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task GetTableRowsTest()
+        [TestCase("eosio", "eosio", "producers")]
+        public async Task GetTableRowsTest(string scope, string code, string table)
         {
             var args = new GetTableRowsParams
             {
-                Scope = "test",
-                Code = "test",
-                Table = "posts"
+                Scope = scope,
+                Code = code,
+                Table = table
                 //Json = true,
                 //LowerBound = "0",
                 //UpperBound = "-1",
@@ -118,13 +121,64 @@ namespace Ditch.EOS.Tests.Apis
         {
             var args = new AbiJsonToBinParams
             {
-                Code = ContractInfo.ContractName,
-                Action = CreatePostActionName,
-                Args = new CreatePostArgs
+                Code = NewaccountAction.ContractName,
+                Action = NewaccountAction.ActionName,
+                Args = new Newaccount
                 {
-                    UrlPhoto = "test_1_url",
-                    AccountCreator = User.Login,
-                    IpfsHashPhoto = "test_1_hash"
+                    Creator = "eosio",
+                    Name = "qwdfvbmfkrt",
+                    Owner = new Ditch.EOS.Contracts.Eosio.Structs.Authority
+                    {
+                        Threshold = 1,
+                        Keys = new[] { new Ditch.EOS.Contracts.Eosio.Structs.KeyWeight
+                        {
+                            Key = new PublicKey("EOS6JQaiy5wpCvwyBauN4odnyqcutboxMk2bYkC3e2nmUubBsBbZ8"),
+                            Weight = 1
+                        } },
+                        Accounts = new[] { new Ditch.EOS.Contracts.Eosio.Structs.PermissionLevelWeight
+                        {
+                            Weight = 1,
+                            Permission = new PermissionLevel()
+                            {
+                                Permission = "owner",
+                                Actor = "qwdfvbmfkrt"
+                            }
+                        } },
+                        Waits = new[]
+                        {
+                            new WaitWeight()
+                            {
+                                Weight = 1,
+                                WaitSec = 0
+                            }
+                        }
+                    },
+                    Active = new Ditch.EOS.Contracts.Eosio.Structs.Authority
+                    {
+                        Threshold = 1,
+                        Keys = new[] { new Ditch.EOS.Contracts.Eosio.Structs.KeyWeight
+                        {
+                            Weight = 1,
+                            Key = new PublicKey("EOS7z5qpGxAKZRgDmVCc2p5VZocumssfDoFMi5BNEsSocFWu4dXB2")
+                        } },
+                        Accounts = new[] { new Ditch.EOS.Contracts.Eosio.Structs.PermissionLevelWeight
+                        {
+                            Weight = 1,
+                            Permission = new PermissionLevel()
+                            {
+                                Permission = "active",
+                                Actor = "qwdfvbmfkrt"
+                            }
+                        } },
+                        Waits = new[]
+                        {
+                            new WaitWeight()
+                            {
+                                Weight = 1,
+                                WaitSec = 0
+                            }
+                        }
+                    }
                 }
             };
 
@@ -137,9 +191,9 @@ namespace Ditch.EOS.Tests.Apis
         {
             var args = new AbiBinToJsonParams
             {
-                Code = ContractInfo.ContractName,
-                Action = CreatePostActionName,
-                Binargs = "000000000090b1ca0a746573745f315f75726c0b746573745f315f68617368"
+                Code = NewaccountAction.ContractName,
+                Action = NewaccountAction.ActionName,
+                Binargs = "0000000000ea305500f2854b9ebd12b701000000010002ba0115bf16dbe4bc5f8bf66ffbfd86f879aa729054f31176a80b98326ce5400001000100f2854b9ebd12b70000000080ab26a70100010000000001000100000001000397caa58c9aed5159cad3d2d5ce19e98d7308fe7fa2c0ad6071ab6244c8f3cc2401000100f2854b9ebd12b700000000a8ed3232010001000000000100"
             };
 
             var resp = await Api.AbiBinToJson(args, CancellationToken);
@@ -147,12 +201,12 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        [TestCase("EOS")]
-        public async Task GetCurrencyStatsTest(string symbol)
+        [TestCase("eosio", "EOS")]
+        public async Task GetCurrencyStatsTest(string contractName, string symbol)
         {
             var args = new GetCurrencyStatsParams()
             {
-                Code = User.Login,
+                Code = contractName,
                 Symbol = symbol
             };
 
@@ -176,27 +230,34 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task BroadcastOperationsTest()
+        public async Task BroadcastActionsTest()
         {
-            var op = new Operation
+            var op = new BuyramAction
             {
-                ContractName = ContractInfo.ContractName,
-                Name = CreatePostActionName,
                 Account = User.Login,
-                Args = new CreatePostArgs
+
+                Args = new Buyram
                 {
-                    UrlPhoto = "test_1_url",
-                    AccountCreator = User.Login,
-                    IpfsHashPhoto = "test_1_hash"
+                    Payer = User.Login,
+                    Receiver = User.Login,
+                    Quant = new Asset("0.001 EOS")
+
                 },
-                Authorization = new[] { new PermissionLevel(User.Login, "active") }
+                Authorization = new[]
+                {
+                    new PermissionLevel
+                    {
+                        Actor = User.Login,
+                        Permission = "active"
+                    }
+                }
             };
 
-            var resp = await Api.BroadcastOperations(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken);
+            var resp = await Api.BroadcastActions(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
-             
+
         //[Ignore("you need to put your own data")]
         //[Test]
         //public async Task GetRequiredKeysTest()

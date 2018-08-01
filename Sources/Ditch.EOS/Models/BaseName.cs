@@ -18,6 +18,15 @@ namespace Ditch.EOS.Models
             Value = value;
         }
 
+        public static implicit operator string(BaseName d)
+        {
+            return d.Value;
+        }
+
+        public static implicit operator BaseName(string d)
+        {
+            return new ActionName(d);
+        }
 
         #region ICustomJson
 

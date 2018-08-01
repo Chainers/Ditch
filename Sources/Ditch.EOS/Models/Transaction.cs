@@ -19,7 +19,7 @@ namespace Ditch.EOS.Models
         /// <returns>API type: vector&lt;action></returns>
         [MessageOrder(70)]
         [JsonProperty("context_free_actions")]
-        public Operation[] ContextFreeActions { get; set; } = new Operation[0];
+        public BaseAction[] ContextFreeActions { get; set; } = new BaseAction[0];
 
         /// <summary>
         /// API name: actions
@@ -28,7 +28,7 @@ namespace Ditch.EOS.Models
         /// <returns>API type: vector&lt;action></returns>
         [MessageOrder(80)]
         [JsonProperty("actions")]
-        public Operation[] Actions { get; set; } = new Operation[0];
+        public BaseAction[] Actions { get; set; } = new BaseAction[0];
 
         /// <summary>
         /// API name: transaction_extensions
