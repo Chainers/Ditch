@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Converter.Core.Models;
 using System.Text.RegularExpressions;
+using Converter.Core.Helpers;
 
 namespace Converter.Golos.Converters
 {
@@ -81,7 +82,7 @@ namespace Converter.Golos.Converters
             {
                 var field = new ParsedFunc();
                 field.Type = GetKnownTypeOrDefault(cppTypeMatch.Value, templateName);
-                field.Name = _cashParser.ToTitleCase(nameMatch.Value);
+                field.Name = nameMatch.Value.ToTitleCase();
                 field.CppName = nameMatch.Value;
                 field.Params = TryParseParams(paramsMatch.Value);
                 field.Comment = preParsedElement.Comment;

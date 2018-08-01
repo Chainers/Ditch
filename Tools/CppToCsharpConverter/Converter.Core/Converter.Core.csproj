@@ -48,6 +48,7 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\StructConverter.cs" />
     <Compile Include="Grabber.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Models\ParsedClass.cs" />
     <Compile Include="Models\ParsedFunc.cs" />
