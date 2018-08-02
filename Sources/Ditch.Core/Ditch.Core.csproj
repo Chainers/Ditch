@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.0.0-alpha1</Version>
+    <Version>4.0.0</Version>
     <Authors>Chainers, KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <PackageProjectUrl>https://chainers.github.io/Ditch</PackageProjectUrl>
@@ -15,8 +15,8 @@ refactoring
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Ditch.Core</PackageId>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem).</Description>
-    <AssemblyVersion>4.0.0.1</AssemblyVersion>
-    <FileVersion>4.0.0.1</FileVersion>
+    <AssemblyVersion>4.0.0.2</AssemblyVersion>
+    <FileVersion>4.0.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

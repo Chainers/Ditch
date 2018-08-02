@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.0.0-alpha1</Version>
+    <Version>4.0.0</Version>
     <Authors>Chainers, KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Copyright></Copyright>
@@ -15,8 +15,8 @@
 </Description>
     <PackageReleaseNotes>adds async
 refactoring</PackageReleaseNotes>
-    <AssemblyVersion>4.0.0.1</AssemblyVersion>
-    <FileVersion>4.0.0.1</FileVersion>
+    <AssemblyVersion>4.0.0.2</AssemblyVersion>
+    <FileVersion>4.0.0.2</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,7 +25,7 @@ refactoring</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.2" />
-    <PackageReference Include="Ditch.Core" Version="4.0.0-alpha1" />
+    <PackageReference Include="Ditch.Core" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

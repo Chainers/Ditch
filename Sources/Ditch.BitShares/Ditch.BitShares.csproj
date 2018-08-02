@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ditch.Core\Ditch.Core.csproj" />
+    <PackageReference Include="Ditch.Core" Version="4.0.0" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.0.0-alpha3</Version>
+    <Version>4.0.0</Version>
     <Authors>KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
@@ -15,8 +15,8 @@
     <PackageReleaseNotes>adds async
 refactoring
 condenser api (some functions added broadcast etk.)</PackageReleaseNotes>
-    <AssemblyVersion>4.0.0.3</AssemblyVersion>
-    <FileVersion>4.0.0.3</FileVersion>
+    <AssemblyVersion>4.0.0.4</AssemblyVersion>
+    <FileVersion>4.0.0.4</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,7 +25,7 @@ condenser api (some functions added broadcast etk.)</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.2" />
-    <PackageReference Include="Ditch.Core" Version="4.0.0-alpha1" />
+    <PackageReference Include="Ditch.Core" Version="4.0.0" />
   </ItemGroup>
 
 </Project>
