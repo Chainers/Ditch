@@ -15,7 +15,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: name</returns>
-        [JsonProperty("account_name")]
+        [JsonProperty("account_name", NullValueHandling = NullValueHandling.Ignore)]
         public string AccountName { get; set; }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Ditch.EOS.Models
         /// = false;
         /// </summary>
         /// <returns>API type: bool</returns>
-        [JsonProperty("code_as_wasm")]
+        [JsonProperty("code_as_wasm", NullValueHandling = NullValueHandling.Ignore)]
         public bool CodeAsWasm { get; set; }
     }
 }

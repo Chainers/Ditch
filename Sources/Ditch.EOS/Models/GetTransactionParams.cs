@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Ditch.EOS.Models
 {
@@ -15,7 +16,10 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: transaction_id_type</returns>
-        [JsonProperty("transaction_id")]
-        public object TransactionId {get; set;}
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public object Id { get; set; }
+
+        [JsonProperty("block_num_hint", NullValueHandling = NullValueHandling.Ignore)]
+        public UInt32? BlockNumHint { get; set; }
     }
 }

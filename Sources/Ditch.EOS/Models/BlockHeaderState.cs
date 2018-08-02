@@ -17,7 +17,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: block_id_type</returns>
         [JsonProperty("id")]
-        public JObject Id { get; set; }
+        public object Id { get; set; }
 
         /// <summary>
         /// API name: block_num
@@ -73,7 +73,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: digest_type</returns>
         [JsonProperty("pending_schedule_hash")]
-        public JObject PendingScheduleHash { get; set; }
+        public object PendingScheduleHash { get; set; }
 
         /// <summary>
         /// API name: pending_schedule
@@ -81,7 +81,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: producer_schedule_type</returns>
         [JsonProperty("pending_schedule")]
-        public JObject PendingSchedule { get; set; }
+        public object PendingSchedule { get; set; }
 
         /// <summary>
         /// API name: active_schedule
@@ -89,7 +89,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: producer_schedule_type</returns>
         [JsonProperty("active_schedule")]
-        public JObject ActiveSchedule { get; set; }
+        public object ActiveSchedule { get; set; }
 
         /// <summary>
         /// API name: blockroot_merkle
@@ -97,7 +97,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: incremental_merkle</returns>
         [JsonProperty("blockroot_merkle")]
-        public JObject BlockrootMerkle { get; set; }
+        public object BlockrootMerkle { get; set; }
 
         /// <summary>
         /// API name: producer_to_last_produced

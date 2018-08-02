@@ -15,7 +15,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: name</returns>
-        [JsonProperty("code")]
+        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: name</returns>
-        [JsonProperty("action")]
+        [JsonProperty("action", NullValueHandling = NullValueHandling.Ignore)]
         public string Action { get; set; }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: char</returns>
-        [JsonProperty("binargs")]
+        [JsonProperty("binargs", NullValueHandling = NullValueHandling.Ignore)]
         public string Binargs { get; set; }
     }
 }

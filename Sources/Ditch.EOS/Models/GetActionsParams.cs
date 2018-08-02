@@ -14,7 +14,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: account_name</returns>
-        [JsonProperty("account_name")]
+        [JsonProperty("account_name", NullValueHandling = NullValueHandling.Ignore)]
         public string AccountName { get; set; }
 
         /// <summary>

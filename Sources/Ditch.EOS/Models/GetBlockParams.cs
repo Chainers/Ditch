@@ -15,7 +15,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [JsonProperty("block_num_or_id")]
+        [JsonProperty("block_num_or_id", NullValueHandling = NullValueHandling.Ignore)]
         public string BlockNumOrId {get; set;}
     }
 }

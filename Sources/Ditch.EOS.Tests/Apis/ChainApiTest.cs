@@ -105,8 +105,8 @@ namespace Ditch.EOS.Tests.Apis
             {
                 Scope = scope,
                 Code = code,
-                Table = table
-                //Json = true,
+                Table = table,
+                Json = true,
                 //LowerBound = "0",
                 //UpperBound = "-1",
                 //Limit = 10

@@ -15,7 +15,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: variant</returns>
-        [JsonProperty("transaction")]
+        [JsonProperty("transaction", NullValueHandling = NullValueHandling.Ignore)]
         public object Transaction { get; set; }
 
         ///// <summary>

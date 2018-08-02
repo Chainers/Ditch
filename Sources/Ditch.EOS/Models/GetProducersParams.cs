@@ -15,7 +15,7 @@ namespace Ditch.EOS.Models
         /// = false;
         /// </summary>
         /// <returns>API type: bool</returns>
-        [JsonProperty("json")]
+        [JsonProperty("json", NullValueHandling = NullValueHandling.Ignore)]
         public bool Json { get; set; }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Ditch.EOS.Models
         /// = 50;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
-        [JsonProperty("limit")]
+        [JsonProperty("limit", NullValueHandling = NullValueHandling.Ignore)]
         public uint Limit { get; set; }
     }
 }

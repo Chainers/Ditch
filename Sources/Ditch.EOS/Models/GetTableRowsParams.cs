@@ -15,7 +15,7 @@ namespace Ditch.EOS.Models
         /// = false;
         /// </summary>
         /// <returns>API type: bool</returns>
-        [JsonProperty("json")]
+        [JsonProperty("json", NullValueHandling = NullValueHandling.Ignore)]
         public bool Json { get; set; }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: name</returns>
-        [JsonProperty("code")]
+        [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
         public string Code { get; set; }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [JsonProperty("scope")]
+        [JsonProperty("scope", NullValueHandling = NullValueHandling.Ignore)]
         public string Scope { get; set; }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: name</returns>
-        [JsonProperty("table")]
+        [JsonProperty("table", NullValueHandling = NullValueHandling.Ignore)]
         public string Table { get; set; }
 
         //      string      table_type;
@@ -49,7 +49,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [JsonProperty("table_key")]
+        [JsonProperty("table_key", NullValueHandling = NullValueHandling.Ignore)]
         public string TableKey { get; set; }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [JsonProperty("lower_bound")]
+        [JsonProperty("lower_bound", NullValueHandling = NullValueHandling.Ignore)]
         public string LowerBound { get; set; }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: string</returns>
-        [JsonProperty("upper_bound")]
+        [JsonProperty("upper_bound", NullValueHandling = NullValueHandling.Ignore)]
         public string UpperBound { get; set; }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Ditch.EOS.Models
         /// = 10;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
-        [JsonProperty("limit")]
+        [JsonProperty("limit", NullValueHandling = NullValueHandling.Ignore)]
         public uint Limit { get; set; }
     }
 }

@@ -31,7 +31,8 @@ namespace Ditch.EOS.Tests.Apis
             var testLogin2 = User.Login + DateTime.Now.Millisecond;
             var resp = await Api.WalletCreate(User.Login, CancellationToken.None);
             WriteLine(resp);
-            User.Password = resp.Result;
+            if (!resp.IsError)
+                User.Password = resp.Result;
             if (resp.IsError) //already added
             {
 
@@ -55,7 +56,7 @@ namespace Ditch.EOS.Tests.Apis
             if (resp.IsError) //already added
             {
 
-                addOwner = await Api.WalletImportKey(testLogin2, User.PrivateActiveWif, CancellationToken.None);
+                addActive = await Api.WalletImportKey(testLogin2, User.PrivateActiveWif, CancellationToken.None);
                 WriteLine(addActive);
                 Assert.IsFalse(addActive.IsError);
             }
@@ -91,6 +92,8 @@ namespace Ditch.EOS.Tests.Apis
             var resp = await Api.WalletUnlock(User.Login, User.Password, CancellationToken.None);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
+
+            await Api.WalletLock(User.Login, CancellationToken);
         }
 
         [Test]
@@ -117,6 +120,7 @@ namespace Ditch.EOS.Tests.Apis
             Assert.IsFalse(unlock.IsError);
 
             var resp = await Api.WalletGetPublicKeys(CancellationToken.None);
+            await Api.WalletLock(User.Login, CancellationToken);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -195,10 +199,11 @@ namespace Ditch.EOS.Tests.Apis
             await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
 
             var resp = await Api.WalletSignTransaction(trx, new[] { new PublicKey(User.PublicActiveWif), }, info.ChainId, CancellationToken.None);
+            await Api.WalletLock(User.Login, CancellationToken);
             WriteLine(resp);
+
             Assert.IsFalse(resp.IsError);
             Assert.IsTrue(resp.Result.Signatures.Length == 1);
-
         }
 
         [Test]
@@ -229,6 +234,7 @@ namespace Ditch.EOS.Tests.Apis
             await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
 
             var resp = await Api.BroadcastActionsWithWallet(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, CancellationToken);
+            await Api.WalletLock(User.Login, CancellationToken);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

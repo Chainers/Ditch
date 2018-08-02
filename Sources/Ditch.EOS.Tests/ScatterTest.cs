@@ -53,7 +53,9 @@ namespace Ditch.EOS.Tests
         {
             await Api.WalletOpen(User.Login, token);
             await Api.WalletUnlock(User.Login, User.Password, token);
-            return await Api.WalletSignTransaction(trx, keys, chainId, token);
+            var result = await Api.WalletSignTransaction(trx, keys, chainId, token);
+            await Api.WalletLock(User.Login, CancellationToken);
+            return result;
         }
 
         private Task<OperationResult<SignedTransaction>> SigningWithScatter(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
