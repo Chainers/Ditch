@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,7 +10,13 @@ namespace Ditch.EOS
 {
     public class ContractCodeGenerator
     {
-        public async Task Generate(OperationManager api, string contractName, string @namespace, string outDir, CancellationToken token)
+
+        public Task Generate(OperationManager api, string contractName, string @namespace, string outDir, CancellationToken token)
+        {
+            return Generate(api, contractName, @namespace, outDir, null, token);
+        }
+
+        public async Task Generate(OperationManager api, string contractName, string @namespace, string outDir, HashSet<string> actionFilter, CancellationToken token)
         {
             var args = new GetCodeParams
             {
@@ -28,17 +35,43 @@ namespace Ditch.EOS
             var actionsNamespace = $"{@namespace}.{contractName.ToTitleCase()}.Actions";
 
             var generator = new ContractCodeGenerator();
+
+            HashSet<string> stuctFilter = new HashSet<string>();
+            foreach (var action in abi.Actions)
+            {
+                if (actionFilter != null && !actionFilter.Contains(action.Name))
+                    continue;
+
+                generator.ActionToClass($@"{contractPath}\Actions\", actionsNamespace, structNamespace, contractName, action, abi);
+
+                AddAllRef(abi, stuctFilter, action.Type);
+            }
+
             foreach (var itm in abi.Structs)
             {
-                if (itm.Name.Equals("permission_level"))
+                if (!stuctFilter.Contains(itm.Name))
                     continue;
                 generator.StructToClass($@"{contractPath}\Structs\", structNamespace, itm, abi);
             }
-
-            foreach (var action in abi.Actions)
-                generator.ActionToClass($@"{contractPath}\Actions\", actionsNamespace, structNamespace, contractName, action, abi);
-
         }
+
+        private void AddAllRef(AbiDef abiDef, HashSet<string> stuctFilter, string typeName)
+        {
+            var s = abiDef.Structs.FirstOrDefault(i => i.Name.Equals(typeName));
+            if (s != null)
+            {
+                if (!stuctFilter.Contains(typeName))
+                {
+                    stuctFilter.Add(typeName);
+
+                    foreach (var f in s.Fields)
+                    {
+                        AddAllRef(abiDef, stuctFilter, f.Type);
+                    }
+                }
+            }
+        }
+
 
         public void StructToClass(string outDirPath, string structNamespace, StructDef str, AbiDef abi)
         {

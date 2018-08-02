@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Ditch.EOS.Models;
 using Ditch.EOS.Tests.Apis;
@@ -14,7 +15,7 @@ namespace Ditch.EOS.Tests
         public async Task Generate(string contractName, string outDir)
         {
             var generator = new ContractCodeGenerator();
-            await generator.Generate(Api, contractName, "Ditch.EOS.Contracts", outDir, CancellationToken.None);
+            await generator.Generate(Api, contractName, "Ditch.EOS.Contracts", outDir, new HashSet<string> { "newaccount" }, CancellationToken.None);
         }
 
     }
