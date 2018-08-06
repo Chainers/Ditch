@@ -63,8 +63,8 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: asset</returns>
-        //[JsonProperty("core_liquid_balance", NullValueHandling = NullValueHandling.Ignore)]
-        //public Asset CoreLiquidBalance { get; set; }
+        [JsonProperty("core_liquid_balance", NullValueHandling = NullValueHandling.Ignore)]
+        public Asset CoreLiquidBalance { get; set; }
 
         /// <summary>
         /// API name: ram_quota
