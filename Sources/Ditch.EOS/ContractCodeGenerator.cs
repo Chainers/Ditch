@@ -60,6 +60,9 @@ namespace Ditch.EOS
             var s = abiDef.Structs.FirstOrDefault(i => i.Name.Equals(typeName));
             if (s != null)
             {
+                if (!string.IsNullOrEmpty(s.Base) && !stuctFilter.Contains(s.Base))
+                    AddAllRef(abiDef, stuctFilter, s.Base);
+
                 if (!stuctFilter.Contains(typeName))
                 {
                     stuctFilter.Add(typeName);
@@ -121,7 +124,7 @@ namespace Ditch.EOS
 
             var inden = new string(' ', 4);
             sw.WriteLine($"{inden}[JsonObject(MemberSerialization.OptIn)]");
-            sw.WriteLine($"{inden}public class {str.Name.ToTitleCase()}");
+            sw.WriteLine($"{inden}public class {str.Name.ToTitleCase()}{(string.IsNullOrEmpty(str.Base) ? string.Empty : $" : {str.Base.ToTitleCase()}")}");
             sw.WriteLine($"{inden}{{");
 
             foreach (var field in str.Fields)

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Ditch.EOS.Models;
 using Ditch.EOS.Tests.Apis;
 using NUnit.Framework;
 
@@ -11,11 +11,18 @@ namespace Ditch.EOS.Tests
     public class ApiContractToModelGenerator : BaseTest
     {
         [Test]
-        [TestCase("eosio", @"D:\Projects\Chainers\Ditch\Sources\Ditch.EOS.Tests\Contracts\")]
-        public async Task Generate(string contractName, string outDir)
+        [TestCase("eosio", @"..\..\Contracts\", new[] { "newaccount" })]
+        public async Task Generate(string contractName, string outDir, string[] set)
         {
+            HashSet<string> hs = null;
+            if (set != null)
+                hs = new HashSet<string>(set);
+
+            var currentDir = AppContext.BaseDirectory;
+            outDir = $"{currentDir}{outDir}";
+
             var generator = new ContractCodeGenerator();
-            await generator.Generate(Api, contractName, "Ditch.EOS.Contracts", outDir, new HashSet<string> { "newaccount" }, CancellationToken.None);
+            await generator.Generate(Api, contractName, "Ditch.EOS.Contracts", outDir, hs, CancellationToken.None);
         }
 
     }
