@@ -7,9 +7,10 @@
 The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain. 
 
 ## Supported chains:
- * Golos (v0.18.3)
- * Steem (v0.19.10)
- * EOS (v1.0.9)
+
+ * Golos (v0.18.3)  [![NuGet version](https://badge.fury.io/nu/Ditch.Golos.svg)](https://badge.fury.io/nu/Ditch.Golos)
+ * Steem (v0.19.10) [![NuGet version](https://badge.fury.io/nu/Ditch.Steem.svg)](https://badge.fury.io/nu/Ditch.Steem)
+ * EOS   (v1.1.0)   [![NuGet version](https://badge.fury.io/nu/Ditch.EOS.svg)](https://badge.fury.io/nu/Ditch.EOS)
  * BitShares
   
 ## Additional features:
