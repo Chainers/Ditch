@@ -25,7 +25,7 @@ namespace Ditch.EOS
 
             var resp = await api.GetCode(args, token);
             if (resp.IsError)
-                throw resp.Error;
+                throw resp.Exception;
 
             var abi = resp.Result.Abi;
 

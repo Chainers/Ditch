@@ -32,7 +32,7 @@ namespace Ditch.Steem.Tests.Apis
                 Type = BandwidthType.Forum
             };
             var resp = await Api.CondenserGetAccountBandwidth(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = 1
             };
             var resp = await Api.CondenserGetAccountHistory(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
 
         //  "condenser_api.get_account_references",
@@ -69,7 +69,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task get_active_witnesses()
         {
             var resp = await Api.CondenserGetActiveWitnesses(CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Ditch.Steem.Tests.Apis
                 BlockNum = 22054347
             };
             var resp = await Api.CondenserGetBlock(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
         //  "condenser_api.get_block_header",
         //  "condenser_api.get_blog",
@@ -112,7 +112,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task get_dynamic_global_properties()
         {
             var resp = await Api.CondenserGetDynamicGlobalProperties(CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
 
         //  "condenser_api.get_escrow",
@@ -142,7 +142,7 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = await GetSignedTransaction()
             };
             var resp = await Api.CondenserGetPotentialSignatures(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
         //  "condenser_api.get_reblogged_by",
         //  "condenser_api.get_recent_trades",
@@ -169,7 +169,7 @@ namespace Ditch.Steem.Tests.Apis
                 AvailableKeys = new[] { pKey }
             };
             var resp = await Api.CondenserGetRequiredSignatures(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
 
         //  "condenser_api.get_reward_fund",
@@ -190,7 +190,7 @@ namespace Ditch.Steem.Tests.Apis
                 Trx = await GetSignedTransaction()
             };
             var resp = await Api.CondenserGetTransactionHex(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 1
             };
             var resp = await Api.CondenserGetTrendingTags(args, CancellationToken.None);
-            TestPropetries(resp);
+            TestPropetries(resp, true);
         }
         //  "condenser_api.get_version",
         //  "condenser_api.get_vesting_delegations",

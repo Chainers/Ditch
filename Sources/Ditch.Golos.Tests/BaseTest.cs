@@ -41,10 +41,10 @@ namespace Ditch.Golos.Tests
                 Api = new OperationManager(WebSocketManager);
 
                 var url = ConfigurationManager.AppSettings["Url"];
-                Api.ConnectTo(url, CancellationToken.None);
+                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None).Result, "Сan`t connect to the node");
             }
 
-            Assert.IsTrue(Api.IsConnected, "Enable connect to node");
+            Assert.IsTrue(Api.IsConnected, "Сan`t connect to the node");
         }
 
         protected void TestPropetries<T>(JsonRpcResponse<T> resp)

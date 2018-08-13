@@ -25,10 +25,26 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CondenserCustomGetRequest<T>(string api, string method, object data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CondenserBroadcastRequestAsync<T>(string api, string method, object data, CancellationToken token)
         {
             var jsonRpc = JsonRpcRequest.CondenserRequest(CondenserJsonSerializerSettings, api, method, data);
             return ConnectionManager.ExecuteAsync<T>(jsonRpc, CondenserJsonSerializerSettings, token);
+        }
+
+        /// <summary>
+        /// Create and execute custom json-rpc method
+        /// </summary>
+        /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
+        /// <param name="api">Api name</param>
+        /// <param name="method">Sets json-rpc "method" field</param>
+        /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
+        public Task<JsonRpcResponse<T>> CondenserCustomGetRequest<T>(string api, string method, object data, CancellationToken token)
+        {
+            var jsonRpc = JsonRpcRequest.CondenserRequest(CondenserJsonSerializerSettings, api, method, data);
+            return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, CondenserJsonSerializerSettings, token);
         }
 
         /// <summary>
@@ -43,7 +59,7 @@ namespace Ditch.Steem
         public Task<JsonRpcResponse<T>> CondenserCustomGetRequest<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = JsonRpcRequest.CondenserRequest(api, method);
-            return ConnectionManager.ExecuteAsync<T>(jsonRpc, CondenserJsonSerializerSettings, token);
+            return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, CondenserJsonSerializerSettings, token);
         }
 
 
@@ -118,7 +134,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> CondenserBroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
         {
-            return CondenserCustomGetRequest<VoidResponse>(KnownApiNames.CondenserApi, "broadcast_block", args, token);
+            return CondenserBroadcastRequestAsync<VoidResponse>(KnownApiNames.CondenserApi, "broadcast_block", args, token);
         }
 
         /// <summary>
@@ -130,7 +146,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> CondenserBroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
         {
-            return CondenserCustomGetRequest<VoidResponse>(KnownApiNames.CondenserApi, "broadcast_transaction", args, token);
+            return CondenserBroadcastRequestAsync<VoidResponse>(KnownApiNames.CondenserApi, "broadcast_transaction", args, token);
         }
 
         /// <summary>
@@ -143,7 +159,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> CondenserBroadcastTransactionSynchronous(BroadcastTransactionSynchronousArgs args, CancellationToken token)
         {
-            return CondenserCustomGetRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.CondenserApi, "broadcast_transaction_synchronous", args, token);
+            return CondenserBroadcastRequestAsync<BroadcastTransactionSynchronousReturn>(KnownApiNames.CondenserApi, "broadcast_transaction_synchronous", args, token);
         }
 
         /// <summary>

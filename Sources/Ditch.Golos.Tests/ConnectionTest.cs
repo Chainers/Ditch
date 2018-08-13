@@ -30,7 +30,7 @@ namespace Ditch.Golos.Tests
 
             var sw = new Stopwatch();
             sw.Start();
-            if (manager.ConnectTo(url, CancellationToken.None))
+            if (await manager.ConnectTo(url, CancellationToken.None))
             {
                 var hfvr = await manager.GetConfig<JObject>(CancellationToken.None);
                 if (hfvr.IsError)
@@ -58,7 +58,7 @@ namespace Ditch.Golos.Tests
 
             var sw = new Stopwatch();
             sw.Start();
-            if (manager.ConnectTo(url, CancellationToken.None))
+            if (await manager.ConnectTo(url, CancellationToken.None))
             {
                 var hfvr = await manager.GetConfig<JObject>(CancellationToken.None);
                 if (hfvr.IsError)

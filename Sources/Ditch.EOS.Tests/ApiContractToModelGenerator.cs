@@ -24,6 +24,5 @@ namespace Ditch.EOS.Tests
             var generator = new ContractCodeGenerator();
             await generator.Generate(Api, contractName, "Ditch.EOS.Contracts", outDir, hs, CancellationToken.None);
         }
-
     }
 }

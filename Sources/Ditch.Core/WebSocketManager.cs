@@ -17,6 +17,7 @@ namespace Ditch.Core
         private readonly Dictionary<int, ManualResetEvent> _manualResetEventDictionary = new Dictionary<int, ManualResetEvent>();
         private readonly ManualResetEvent _socketOpenEvent = new ManualResetEvent(false);
         private readonly ManualResetEvent _socketCloseEvent = new ManualResetEvent(false);
+        public int MaxRequestRepeatCount { get; }
 
         private WebSocket _webSocket;
 
@@ -35,6 +36,12 @@ namespace Ditch.Core
         public bool IsConnected => _webSocket?.State == WebSocketState.Open;
 
 
+        public WebSocketManager() : this(3) { }
+
+        public WebSocketManager(int maxRequestRepeatCount)
+        {
+            MaxRequestRepeatCount = maxRequestRepeatCount;
+        }
 
         /// <summary>
         /// Connects and checks socket status
@@ -42,27 +49,30 @@ namespace Ditch.Core
         /// <param name="url">The Uri the request is sent to.</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Url which will be used for data transfer (empty if none)</returns>
-        public bool ConnectTo(string url, CancellationToken token)
+        public Task<bool> ConnectTo(string url, CancellationToken token)
         {
-            Disconnect();
-
-            _webSocket = new WebSocket(url);
-            _webSocket.Opened += WebSocketOpened;
-            _webSocket.Closed += WebSocketClosed;
-            _webSocket.MessageReceived += WebSocketMessageReceived;
-            _webSocket.Error += WebSocketOnError;
-            _webSocket.EnableAutoSendPing = true;
-            _webSocket.Open();
-
-            var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitConnectTimeout);
-
-            if (t == 1)
+            return Task.Run(() =>
             {
-                UrlToConnect = url;
-                return true;
-            }
+                Disconnect();
 
-            return false;
+                _webSocket = new WebSocket(url);
+                _webSocket.Opened += WebSocketOpened;
+                _webSocket.Closed += WebSocketClosed;
+                _webSocket.MessageReceived += WebSocketMessageReceived;
+                _webSocket.Error += WebSocketOnError;
+                _webSocket.EnableAutoSendPing = true;
+                _webSocket.Open();
+
+                var t = WaitHandle.WaitAny(new[] { token.WaitHandle, _socketOpenEvent }, WaitConnectTimeout);
+
+                if (t == 1)
+                {
+                    UrlToConnect = url;
+                    return true;
+                }
+
+                return false;
+            }, token);
         }
 
 
@@ -143,6 +153,65 @@ namespace Ditch.Core
             }, token);
         }
 
+        public Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
+        {
+            return Task.Run(() =>
+            {
+                var waiter = new ManualResetEvent(false);
+                var rep = 0;
+                int outId;
+                do
+                {
+                    if (!OpenIfClosed(token))
+                    {
+                        if (token.IsCancellationRequested)
+                            return new JsonRpcResponse<T>(new OperationCanceledException())
+                            {
+                                RawRequest = jsonRpc.Message
+                            };
+                        return new JsonRpcResponse<T>(new TimeoutException()) { RawRequest = jsonRpc.Message };
+                    }
+
+                    if (rep == 0)
+                    {
+                        lock (_manualResetEventDictionary)
+                        {
+                            _manualResetEventDictionary.Add(jsonRpc.Id, waiter);
+                        }
+                    }
+
+                    _webSocket.Send(jsonRpc.Message);
+
+                    outId = WaitHandle.WaitAny(new[] { token.WaitHandle, waiter }, WaitResponceTimeout);
+                    rep++;
+                } while (rep < MaxRequestRepeatCount && outId == WaitHandle.WaitTimeout);
+
+
+                lock (_manualResetEventDictionary)
+                {
+                    if (_manualResetEventDictionary.ContainsKey(jsonRpc.Id))
+                        _manualResetEventDictionary.Remove(jsonRpc.Id);
+                    waiter.Dispose();
+                }
+
+                lock (_responseDictionary)
+                {
+                    if (_responseDictionary.ContainsKey(jsonRpc.Id))
+                    {
+                        var json = _responseDictionary[jsonRpc.Id];
+                        _responseDictionary.Remove(jsonRpc.Id);
+                        var response = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(json, jsonSerializerSettings);
+                        response.RawResponse = json;
+                        response.RawRequest = jsonRpc.Message;
+                        return response;
+                    }
+                }
+
+                if (token.IsCancellationRequested)
+                    return new JsonRpcResponse<T>(new OperationCanceledException()) { RawRequest = jsonRpc.Message };
+                return new JsonRpcResponse<T>(new TimeoutException()) { RawRequest = jsonRpc.Message };
+            }, token);
+        }
 
         private bool OpenIfClosed(CancellationToken token)
         {

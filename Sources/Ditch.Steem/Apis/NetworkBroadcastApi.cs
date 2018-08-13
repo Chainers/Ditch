@@ -21,7 +21,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> BroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
         {
-            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
+            return CustomBroadcastRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronous(BroadcastTransactionSynchronousArgs args, CancellationToken token)
         {
-            return CustomGetRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
+            return CustomBroadcastRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> BroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
         {
-            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
+            return CustomBroadcastRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> BroadcastTransactionLikeSteemit(BroadcastTransactionArgs args, CancellationToken token)
         {
-            return CondenserCustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
+            return CondenserBroadcastRequestAsync<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronousLikeSteemit(BroadcastTransactionSynchronousArgs args, CancellationToken token)
         {
-            return CondenserCustomGetRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
+            return CondenserBroadcastRequestAsync<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Ditch.Steem
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> BroadcastBlockLikeSteemit(BroadcastBlockArgs args, CancellationToken token)
         {
-            return CondenserCustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
+            return CondenserBroadcastRequestAsync<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
         }
     }
 }

@@ -37,15 +37,11 @@ namespace Ditch.BitShares.Tests
 
             if (Api == null)
             {
-                HttpClient = new HttpClient()
-                {
-                    MaxResponseContentBufferSize = 1024 * 1024
-                };
-                HttpManager = new HttpManager(HttpClient);
+                HttpManager = new HttpManager();
                 Api = new OperationManager(HttpManager);
 
                 var url = ConfigurationManager.AppSettings["Url"];
-                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None), "Enable connect to node");
+                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None).Result, "Enable connect to node");
 
                 var acc = Api.GetAccountByName(User.Login, CancellationToken.None).Result;
                 Assert.IsFalse(acc.IsError);

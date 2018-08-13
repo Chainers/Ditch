@@ -4,9 +4,9 @@ namespace Ditch.EOS
 {
     public class OperationResult
     {
-        public bool IsError => Error != null;
+        public bool IsError => Exception != null;
 
-        public Exception Error { get; set; }
+        public Exception Exception { get; set; }
 
         public string RawRequest { get; set; }
 
@@ -17,14 +17,14 @@ namespace Ditch.EOS
         {
         }
 
-        public OperationResult(Exception error)
+        public OperationResult(Exception exception)
         {
-            Error = error;
+            Exception = exception;
         }
 
         public OperationResult(OperationResult operationResult)
         {
-            Error = operationResult.Error;
+            Exception = operationResult.Exception;
             RawRequest = operationResult.RawRequest;
             RawResponse = operationResult.RawResponse;
         }
@@ -35,6 +35,9 @@ namespace Ditch.EOS
         public T Result { get; set; } = default(T);
 
         public OperationResult() { }
+
+        public OperationResult(Exception exception)
+            : base(exception) { }
 
         public OperationResult(OperationResult operationResult)
             : base(operationResult) { }

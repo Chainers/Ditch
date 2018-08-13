@@ -15,23 +15,28 @@ namespace Ditch.EOS
 {
     public partial class OperationManager
     {
-        private readonly HttpClient _client;
+        private static readonly Random Random = new Random();
+
+        public int MaxRequestRepeatCount { get; }
+
+        public long MaxResponseContentBufferSize { get; }
+
         public MessageSerializer MessageSerializer { get; set; }
+
         public JsonSerializerSettings JsonSerializerSettings { get; set; }
 
         #region Constructors
 
-        public OperationManager()
-            : this(new HttpClient()) { }
-
-        public OperationManager(long maxResponseContentBufferSize)
-            : this(new HttpClient { MaxResponseContentBufferSize = maxResponseContentBufferSize }) { }
-
-        public OperationManager(HttpClient client)
+        public OperationManager() : this(3, 1024 * 1024)
         {
-            _client = client;
             MessageSerializer = new MessageSerializer();
             JsonSerializerSettings = new JsonSerializerSettings();
+        }
+
+        public OperationManager(int maxRequestRepeatCount, long maxResponseContentBufferSize)
+        {
+            MaxRequestRepeatCount = maxRequestRepeatCount;
+            MaxResponseContentBufferSize = maxResponseContentBufferSize;
         }
 
         #endregion Constructors
@@ -41,41 +46,23 @@ namespace Ditch.EOS
             var param = string.Empty;
             if (parameters != null && parameters.Count > 0)
                 param = "?" + string.Join("&", parameters.Select(i => $"{i.Key}={i.Value}"));
-
-            var response = await _client.GetAsync($"{url}{param}", token);
-            var result = await CreateResult<T>(response, token);
-
-            result.RawRequest = $"GET: {url}{param}";
-
-            return result;
+            return await RepeatGetRequest<T>($"{url}{param}", -1, token);
         }
 
         public async Task<OperationResult<T>> CustomGetRequest<T>(string url, CancellationToken token)
         {
-            var response = await _client.GetAsync(url, token);
-            var result = await CreateResult<T>(response, token);
 
-            result.RawRequest = $"GET: {url}";
+            return await RepeatGetRequest<T>(url, -1, token);
+        }
 
-            return result;
+        public async Task<OperationResult<T>> CustomPutRequest<T>(string url, object data, CancellationToken token)
+        {
+            return await RepeatPostRequest<T>(url, data, -1, token);
         }
 
         public async Task<OperationResult<T>> CustomPostRequest<T>(string url, object data, CancellationToken token)
         {
-            HttpContent content = null;
-            var param = string.Empty;
-            if (data != null)
-            {
-                param = JsonConvert.SerializeObject(data, JsonSerializerSettings);
-                content = new StringContent(param, Encoding.UTF8, "application/json");
-            }
-
-            var response = await _client.PostAsync(url, content, token);
-            var result = await CreateResult<T>(response, token);
-
-            result.RawRequest = $"POST: {url} {param}";
-
-            return result;
+            return await RepeatPostRequest<T>(url, data, MaxRequestRepeatCount, token);
         }
 
         public async Task<OperationResult<PushTransactionResults>> BroadcastActions(BaseAction[] baseActions, List<byte[]> privateKeys, CancellationToken token)
@@ -224,7 +211,7 @@ namespace Ditch.EOS
 
             if (!response.IsSuccessStatusCode)
             {
-                result.Error = new HttpRequestException(result.RawResponse);
+                result.Exception = new HttpRequestException(result.RawResponse);
                 return result;
             }
 
@@ -252,12 +239,137 @@ namespace Ditch.EOS
                         }
                     default:
                         {
-                            result.Error = new NotImplementedException(mediaType);
+                            result.Exception = new NotImplementedException(mediaType);
                             break;
                         }
                 }
             }
             return result;
         }
+
+
+        private async Task<OperationResult<T>> RepeatPostRequest<T>(string url, object data, int loop, CancellationToken token)
+        {
+            var args = string.Empty;
+            if (data != null)
+                args = JsonConvert.SerializeObject(data, JsonSerializerSettings);
+
+            HttpResponseMessage response = null;
+            HttpClient client = null;
+
+            do
+            {
+                try
+                {
+                    loop++;
+                    client = new HttpClient
+                    {
+                        MaxResponseContentBufferSize = MaxResponseContentBufferSize
+                    };
+
+                    HttpContent content =
+                        args != null ? new StringContent(args, Encoding.UTF8, "application/json") : null;
+
+                    response = await client.PostAsync(url, content, token);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var result = await CreateResult<T>(response, token);
+                    result.RawRequest = $"POST(PUT): {url} {args}";
+                    return result;
+
+                }
+                catch (Exception ex)
+                {
+                    if (loop > MaxRequestRepeatCount || token.IsCancellationRequested)
+                    {
+                        var stringResponse = string.Empty;
+                        if (response?.Content != null)
+                            stringResponse = await response.Content.ReadAsStringAsync();
+
+                        return new OperationResult<T>(ex)
+                        {
+                            RawRequest = $"POST(PUT): {url} {args}",
+                            RawResponse = stringResponse
+                        };
+                    }
+                }
+                finally
+                {
+                    client?.Dispose();
+                }
+
+                try
+                {
+                    await Task.Delay(1000 * loop + Random.Next(1, 5) * 100, token);
+                }
+                catch (Exception ex)
+                {
+                    return new OperationResult<T>(ex)
+                    {
+                        RawRequest = $"POST(PUT): {url} {args}"
+                    };
+                }
+            } while (true);
+        }
+
+        private async Task<OperationResult<T>> RepeatGetRequest<T>(string url, int loop, CancellationToken token)
+        {
+            HttpResponseMessage response = null;
+            HttpClient client = null;
+
+            do
+            {
+                try
+                {
+                    loop++;
+                    client = new HttpClient
+                    {
+                        MaxResponseContentBufferSize = MaxResponseContentBufferSize
+                    };
+
+                    response = await client.GetAsync(url, token);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var result = await CreateResult<T>(response, token);
+                    result.RawRequest = $"GET: {url}";
+                    return result;
+
+                }
+                catch (Exception ex)
+                {
+                    if (loop > MaxRequestRepeatCount || token.IsCancellationRequested)
+                    {
+                        var stringResponse = string.Empty;
+                        if (response?.Content != null)
+                            stringResponse = await response.Content.ReadAsStringAsync();
+
+                        return new OperationResult<T>(ex)
+                        {
+                            RawRequest = $"GET: {url}",
+                            RawResponse = stringResponse
+                        };
+                    }
+                }
+                finally
+                {
+                    client?.Dispose();
+                }
+
+                try
+                {
+                    await Task.Delay(1000 * loop + Random.Next(1, 5) * 100, token);
+                }
+                catch (Exception ex)
+                {
+                    return new OperationResult<T>(ex)
+                    {
+                        RawRequest = $"GET: {url}"
+                    };
+                }
+            } while (true);
+        }
+
     }
 }

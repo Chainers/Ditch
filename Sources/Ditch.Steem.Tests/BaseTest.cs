@@ -38,22 +38,18 @@ namespace Ditch.Steem.Tests
 
             if (Api == null)
             {
-                HttpClient = new HttpClient()
-                {
-                    MaxResponseContentBufferSize = 1024 * 1024
-                };
-                HttpManager = new HttpManager(HttpClient);
+                HttpManager = new HttpManager();
                 Api = new OperationManager(HttpManager);
                 JsonSerializerSettings = Api.NewJsonSerializerSettings;
 
                 var url = ConfigurationManager.AppSettings["Url"];
-                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None), "Enable connect to node");
+                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None).Result, "Enable connect to node");
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
         }
 
-        protected void TestPropetries<T>(JsonRpcResponse<T> resp)
+        protected void TestPropetries<T>(JsonRpcResponse<T> resp, bool isCondenser = false)
         {
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -61,7 +57,7 @@ namespace Ditch.Steem.Tests
             if (resp.RawResponse.Contains("\"result\":{"))
             {
                 var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
-                Compare(typeof(T), jResult);
+                Compare(typeof(T), jResult, isCondenser);
             }
             else
             {
@@ -74,11 +70,18 @@ namespace Ditch.Steem.Tests
                     return; // skeep string array
 
                 var type = typeof(T);
+                if (isCondenser)
+                {
+                    var props = type.GetRuntimeProperties().ToArray();
+                    if (props.Length == 1)
+                        type = props[0].PropertyType;
+                }
+
                 if (type.IsArray) //list
                 {
                     type = type.GetElementType();
                     var jObj = jResult.First.Value<JObject>();
-                    Compare(type, jObj);
+                    Compare(type, jObj, isCondenser);
                 }
                 else //dictionary
                 {
@@ -106,16 +109,27 @@ namespace Ditch.Steem.Tests
                         var t = types[i];
                         if (t.IsPrimitive)
                             continue;
-                        Compare(t, jResult[i].Value<JObject>());
+                        Compare(t, jResult[i].Value<JObject>(), isCondenser);
                     }
                 }
             }
         }
 
-        private void Compare(Type type, JObject jObj)
+        private void Compare(Type type, JObject jObj, bool isCondenser)
         {
             var propNames = GetPropertyNames(type);
             var jNames = jObj.Properties().Select(p => p.Name);
+
+            if (isCondenser)
+            {
+                var props = type.GetRuntimeProperties().ToArray();
+                if (props.Length == 1)
+                {
+                    Compare(props[0].PropertyType, jObj, false);
+                    return;
+                }
+            }
+
 
             var msg = new List<string>();
             foreach (var name in jNames)

@@ -10,30 +10,28 @@ namespace Ditch.Core
 {
     public class HttpManager : IConnectionManager
     {
-        private readonly HttpClient _client;
+        private static readonly Random Random = new Random();
 
         public string UrlToConnect { get; private set; }
 
         public bool IsConnected => !string.IsNullOrEmpty(UrlToConnect);
 
+        public int MaxRequestRepeatCount { get; }
 
-        /// <summary>
-        /// Manager for http connections
-        /// </summary>
-        /// <param name="maxResponseContentBufferSize">Sets the maximum numbr of bytes to buffer when reading the response content.</param>
-        public HttpManager(long maxResponseContentBufferSize = 256000)
+        public long MaxResponseContentBufferSize { get; }
+
+
+        public HttpManager()
         {
-            _client = new HttpClient
-            {
-                MaxResponseContentBufferSize = maxResponseContentBufferSize
-            };
+            MaxRequestRepeatCount = 3;
+            MaxResponseContentBufferSize = 1024 * 1024;
         }
 
-        public HttpManager(HttpClient client)
+        public HttpManager(int maxRequestRepeatCount, long maxResponseContentBufferSize)
         {
-            _client = client;
+            MaxRequestRepeatCount = maxRequestRepeatCount;
+            MaxResponseContentBufferSize = maxResponseContentBufferSize;
         }
-
 
         /// <summary>
         /// Connects and checks http status
@@ -44,15 +42,30 @@ namespace Ditch.Core
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         /// <exception cref="T:System.ArgumentNullException">The requestUri was null.</exception>
         /// <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        public bool ConnectTo(string requestUrl, CancellationToken token)
+        public async Task<bool> ConnectTo(string requestUrl, CancellationToken token)
         {
             UrlToConnect = string.Empty;
 
-            var rez = _client.GetAsync(requestUrl, token).Result;
-            if (rez.IsSuccessStatusCode)
+            if (string.IsNullOrEmpty(requestUrl))
+                return false;
+
+            HttpClient client = null;
+            try
             {
-                UrlToConnect = requestUrl;
-                return true;
+                client = new HttpClient
+                {
+                    MaxResponseContentBufferSize = MaxResponseContentBufferSize
+                };
+                var response = await client.GetAsync(requestUrl, token);
+                if (response.IsSuccessStatusCode)
+                {
+                    UrlToConnect = requestUrl;
+                    return true;
+                }
+            }
+            finally
+            {
+                client?.Dispose();
             }
 
             return false;
@@ -76,30 +89,81 @@ namespace Ditch.Core
         /// <returns>Typed JsonRpcResponse</returns>
         public async Task<JsonRpcResponse<T>> ExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
         {
+            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, MaxRequestRepeatCount, token);
+        }
+
+        /// <summary>
+        /// Sends request to specified url.
+        /// </summary>
+        /// <typeparam name="T">Some type for response deserialization</typeparam>
+        /// <param name="jsonRpc">Request body</param>
+        /// <param name="jsonSerializerSettings">Specifies json settings</param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns>Typed JsonRpcResponse</returns>
+        public async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
+        {
+            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, -1, token);
+        }
+
+        private async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, int loop, CancellationToken token)
+        {
             if (string.IsNullOrEmpty(UrlToConnect))
                 return new JsonRpcResponse<T>(new ArgumentNullException(nameof(UrlToConnect))) { RawRequest = jsonRpc.Message };
 
-            var stringResponse = string.Empty;
-            try
+            HttpResponseMessage response = null;
+            HttpClient client = null;
+            do
             {
-                var content = new StringContent(jsonRpc.Message);
-                var response = await _client.PostAsync(UrlToConnect, content, token);
-                response.EnsureSuccessStatusCode();
-
-                stringResponse = await response.Content.ReadAsStringAsync();
-                var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
-                prop.RawRequest = jsonRpc.Message;
-                prop.RawResponse = stringResponse;
-                return prop;
-            }
-            catch (Exception e)
-            {
-                return new JsonRpcResponse<T>(e)
+                try
                 {
-                    RawRequest = jsonRpc.Message,
-                    RawResponse = stringResponse
-                };
-            }
+                    loop++;
+                    client = new HttpClient
+                    {
+                        MaxResponseContentBufferSize = MaxResponseContentBufferSize
+                    };
+                    var content = new StringContent(jsonRpc.Message);
+                    response = await client.PostAsync(UrlToConnect, content, token);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var stringResponse = await response.Content.ReadAsStringAsync();
+                    var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
+                    prop.RawRequest = jsonRpc.Message;
+                    prop.RawResponse = stringResponse;
+                    return prop;
+                }
+                catch (Exception ex)
+                {
+                    if (loop > MaxRequestRepeatCount || token.IsCancellationRequested)
+                    {
+                        var stringResponse = string.Empty;
+                        if (response?.Content != null)
+                            stringResponse = await response.Content.ReadAsStringAsync();
+
+                        return new JsonRpcResponse<T>(ex)
+                        {
+                            RawRequest = jsonRpc.Message,
+                            RawResponse = stringResponse
+                        };
+                    }
+                }
+                finally
+                {
+                    client?.Dispose();
+                }
+
+                try
+                {
+                    await Task.Delay(1000 * loop + Random.Next(1, 5) * 100, token);
+                }
+                catch (Exception ex)
+                {
+                    return new JsonRpcResponse<T>(ex)
+                    {
+                        RawRequest = jsonRpc.Message,
+                    };
+                }
+            } while (true);
         }
     }
 }

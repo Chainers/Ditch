@@ -36,7 +36,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetBlockResults>> GetBlock(GetBlockParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_block";
-            return await CustomPostRequest<GetBlockResults>(endpoint, args, token);
+            return await CustomPutRequest<GetBlockResults>(endpoint, args, token);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<BlockHeaderState>> GetBlockHeaderState(GetBlockHeaderStateParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_block_header_state";
-            return await CustomPostRequest<BlockHeaderState>(endpoint, args, token);
+            return await CustomPutRequest<BlockHeaderState>(endpoint, args, token);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetAccountResults>> GetAccount(GetAccountParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_account";
-            return await CustomPostRequest<GetAccountResults>(endpoint, args, token);
+            return await CustomPutRequest<GetAccountResults>(endpoint, args, token);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetAbiResults>> GetAbi(GetAbiParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_abi";
-            return await CustomPostRequest<GetAbiResults>(endpoint, args, token);
+            return await CustomPutRequest<GetAbiResults>(endpoint, args, token);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetCodeResults>> GetCode(GetCodeParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_code";
-            return await CustomPostRequest<GetCodeResults>(endpoint, args, token);
+            return await CustomPutRequest<GetCodeResults>(endpoint, args, token);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetRawCodeAndAbiResults>> GetRawCodeAndAbi(GetRawCodeAndAbiParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_raw_code_and_abi";
-            return await CustomPostRequest<GetRawCodeAndAbiResults>(endpoint, args, token);
+            return await CustomPutRequest<GetRawCodeAndAbiResults>(endpoint, args, token);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetTableRowsResult>> GetTableRows(GetTableRowsParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_table_rows";
-            return await CustomPostRequest<GetTableRowsResult>(endpoint, args, token);
+            return await CustomPutRequest<GetTableRowsResult>(endpoint, args, token);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<AbiJsonToBinResult>> AbiJsonToBin(AbiJsonToBinParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/abi_json_to_bin";
-            return await CustomPostRequest<AbiJsonToBinResult>(endpoint, args, token);
+            return await CustomPutRequest<AbiJsonToBinResult>(endpoint, args, token);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<AbiBinToJsonResult>> AbiBinToJson(AbiBinToJsonParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/abi_bin_to_json";
-            return await CustomPostRequest<AbiBinToJsonResult>(endpoint, args, token);
+            return await CustomPutRequest<AbiBinToJsonResult>(endpoint, args, token);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetRequiredKeysResult>> GetRequiredKeys(GetRequiredKeysParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_required_keys";
-            return await CustomPostRequest<GetRequiredKeysResult>(endpoint, args, token);
+            return await CustomPutRequest<GetRequiredKeysResult>(endpoint, args, token);
         }
 
         /// <summary>
@@ -168,13 +168,13 @@ namespace Ditch.EOS
         public async Task<OperationResult<GetCurrencyStatsResult>> GetCurrencyStats(GetCurrencyStatsParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_currency_stats";
-            return await CustomPostRequest<GetCurrencyStatsResult>(endpoint, args, token);
+            return await CustomPutRequest<GetCurrencyStatsResult>(endpoint, args, token);
         }
 
         public async Task<OperationResult<GetProducersResult>> GetProducers(GetProducersParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_producers";
-            return await CustomPostRequest<GetProducersResult>(endpoint, args, token);
+            return await CustomPutRequest<GetProducersResult>(endpoint, args, token);
         }
 
         /// <summary>

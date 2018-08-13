@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using Ditch.Core;
 using NUnit.Framework;
 
@@ -35,11 +36,11 @@ namespace Ditch.BitShares.Tests
         [TestCase("wss://bitshares.apasia.tech/ws")]
         [TestCase("wss://bitshares.dacplay.org/ws")]
         [TestCase("wss://japan.bitshares.apasia.tech/ws")]
-        public void NodeTest(string url)
+        public async Task NodeTest(string url)
         {
             var sw = new Stopwatch();
             sw.Start();
-            Api.ConnectTo(url, CancellationToken.None);
+            await Api.ConnectTo(url, CancellationToken.None);
             sw.Stop();
 
             Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");

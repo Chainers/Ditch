@@ -37,7 +37,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<VoidResponse>> WalletOpen(string name, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/open";
-            return await CustomPostRequest<VoidResponse>(endpoint, name, token);
+            return await CustomPutRequest<VoidResponse>(endpoint, name, token);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<VoidResponse>> WalletLock(string name, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/lock";
-            return await CustomPostRequest<VoidResponse>(endpoint, name, token);
+            return await CustomPutRequest<VoidResponse>(endpoint, name, token);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Ditch.EOS
         public async Task<OperationResult<VoidResponse>> WalletUnlock(string name, string password, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/unlock";
-            return await CustomPostRequest<VoidResponse>(endpoint, new[] { name, password }, token);
+            return await CustomPutRequest<VoidResponse>(endpoint, new[] { name, password }, token);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Ditch.EOS
         {
             var args = new object[] { trx, keys, chainId };
             var endpoint = $"{WalletUrl}/v1/wallet/sign_transaction";
-            return await CustomPostRequest<SignedTransaction>(endpoint, args, token);
+            return await CustomPutRequest<SignedTransaction>(endpoint, args, token);
         }
 
        

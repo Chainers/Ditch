@@ -41,7 +41,7 @@ namespace Ditch.Steem.Tests
 
             var sw = new Stopwatch();
             sw.Start();
-            if (manager.ConnectTo(url, token))
+            if (await manager.ConnectTo(url, token))
             {
                 var hfvr = await manager.GetConfig<JObject>(token);
                 WriteLine(hfvr);

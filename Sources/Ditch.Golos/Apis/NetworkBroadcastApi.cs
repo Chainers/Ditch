@@ -33,7 +33,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> BroadcastTransaction(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_transaction", new object[] { trx }, token);
+            return CustomBroadcastRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_transaction", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<JObject>> BroadcastTransactionSynchronous(SignedTransaction trx, CancellationToken token)
         {
-            return CustomGetRequest<JObject>(KnownApiNames.NetworkBroadcast, "broadcast_transaction_synchronous", new object[] { trx }, token);
+            return CustomBroadcastRequest<JObject>(KnownApiNames.NetworkBroadcast, "broadcast_transaction_synchronous", new object[] { trx }, token);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Ditch.Golos
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         public Task<JsonRpcResponse<VoidResponse>> BroadcastBlock(SignedBlock block, CancellationToken token)
         {
-            return CustomGetRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_block", new object[] { block }, token);
+            return CustomBroadcastRequest<VoidResponse>(KnownApiNames.NetworkBroadcast, "broadcast_block", new object[] { block }, token);
         }
     }
 }

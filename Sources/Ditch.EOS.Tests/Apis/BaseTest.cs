@@ -122,8 +122,8 @@ namespace Ditch.EOS.Tests.Apis
             if (r.IsError)
             {
                 Console.WriteLine("Error:");
-                if (r.Error != null)
-                    Console.WriteLine(r.Error.ToString());
+                if (r.Exception != null)
+                    Console.WriteLine(r.Exception.ToString());
             }
             else
             {

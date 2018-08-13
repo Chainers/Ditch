@@ -9,10 +9,12 @@ namespace Ditch.Core.Interfaces
     {
         bool IsConnected { get; }
 
-        bool ConnectTo(string endpoin, CancellationToken token);
+        Task<bool> ConnectTo(string endpoin, CancellationToken token);
 
         void Disconnect();
 
         Task<JsonRpcResponse<T>> ExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token);
+
+        Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token);
     }
 }
