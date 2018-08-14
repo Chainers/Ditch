@@ -11,7 +11,12 @@ namespace Ditch.Steem.Tests
     public class ConnectionTest : BaseTest
     {
         [OneTimeSetUp]
-        protected override void OneTimeSetUp() { }
+        protected override void OneTimeSetUp()
+        {
+            HttpClient = new RepeatHttpClient();
+            HttpManager = new HttpManager(HttpClient);
+            Api = new OperationManager(HttpManager);
+        }
 
         /// <summary>
         /// https://www.steem.center/index.php?title=Public_Websocket_Servers
@@ -36,14 +41,13 @@ namespace Ditch.Steem.Tests
         [TestCase("https://steemd.steepshot.org")]
         public async Task NodeTest(string url)
         {
-            var manager = new OperationManager(new HttpManager());
             var token = CancellationToken.None;
 
             var sw = new Stopwatch();
             sw.Start();
-            if (await manager.ConnectTo(url, token))
+            if (await Api.ConnectTo(url, token))
             {
-                var hfvr = await manager.GetConfig<JObject>(token);
+                var hfvr = await Api.GetConfig<JObject>(token);
                 WriteLine(hfvr);
                 Assert.IsFalse(hfvr.IsError);
                 JToken version;
@@ -55,7 +59,7 @@ namespace Ditch.Steem.Tests
             sw.Stop();
 
             WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
-            Assert.IsTrue(manager.IsConnected);
+            Assert.IsTrue(Api.IsConnected);
         }
     }
 }

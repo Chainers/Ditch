@@ -133,7 +133,7 @@ namespace Ditch.Golos
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
             return ConnectionManager.ExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
         }
-        
+
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
@@ -147,7 +147,7 @@ namespace Ditch.Golos
         public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
-            return ConnectionManager.ExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
+            return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
         }
 
         /// <summary>

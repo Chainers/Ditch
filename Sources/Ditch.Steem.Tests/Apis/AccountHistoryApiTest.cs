@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Steem.Models;
@@ -45,13 +46,22 @@ namespace Ditch.Steem.Tests.Apis
         [Test][Parallelizable]
         public async Task enum_virtual_ops()
         {
-            var args = new EnumVirtualOpsArgs
+            try
             {
-                BlockRangeBegin = 2,
-                BlockRangeEnd = 20
-            };
-            var resp = await Api.EnumVirtualOps(args, CancellationToken.None);
-            TestPropetries(resp);
+                var args = new EnumVirtualOpsArgs
+                {
+                    BlockRangeBegin = 2,
+                    BlockRangeEnd = 20
+                };
+                var resp = await Api.EnumVirtualOps(args, CancellationToken.None);
+                TestPropetries(resp);
+            }
+            catch (Exception ex)
+            {
+                var t = HttpClient;
+            }
+
+           
         }
     }
 }

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core;
+using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Ditch.Steem.Models;
 using Ditch.Steem.Operations;
@@ -24,7 +24,7 @@ namespace Ditch.Steem.Tests
         protected static UserInfo User;
         protected static OperationManager Api;
         protected HttpManager HttpManager;
-        protected HttpClient HttpClient;
+        protected IHttpClient HttpClient;
         protected JsonSerializerSettings JsonSerializerSettings;
 
         [OneTimeSetUp]
@@ -38,7 +38,8 @@ namespace Ditch.Steem.Tests
 
             if (Api == null)
             {
-                HttpManager = new HttpManager();
+                HttpClient = new RepeatHttpClient();
+                HttpManager = new HttpManager(HttpClient);
                 Api = new OperationManager(HttpManager);
                 JsonSerializerSettings = Api.NewJsonSerializerSettings;
 

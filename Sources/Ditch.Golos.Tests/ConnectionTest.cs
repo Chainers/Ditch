@@ -10,13 +10,16 @@ namespace Ditch.Golos.Tests
     [TestFixture]
     public class ConnectionTest : BaseTest
     {
-        private HttpManager HttpManager;
+        protected HttpManager HttpManager;
 
         [OneTimeSetUp]
         protected override void OneTimeSetUp()
         {
+            HttpClient = new RepeatHttpClient();
+            HttpManager = new HttpManager(HttpClient);
+            Api = new OperationManager(HttpManager);
+
             WebSocketManager = new WebSocketManager();
-            HttpManager = new HttpManager();
         }
 
         [Ignore("LongRuningTest")]
@@ -54,13 +57,11 @@ namespace Ditch.Golos.Tests
         [TestCase("https://golosd.steepshot.org")]
         public async Task HttpsNodeTest(string url)
         {
-            var manager = new OperationManager(HttpManager);
-
             var sw = new Stopwatch();
             sw.Start();
-            if (await manager.ConnectTo(url, CancellationToken.None))
+            if (await Api.ConnectTo(url, CancellationToken.None))
             {
-                var hfvr = await manager.GetConfig<JObject>(CancellationToken.None);
+                var hfvr = await Api.GetConfig<JObject>(CancellationToken.None);
                 if (hfvr.IsError)
                     WriteLine(hfvr);
                 Assert.IsFalse(hfvr.IsError);
@@ -73,7 +74,7 @@ namespace Ditch.Golos.Tests
             sw.Stop();
 
             WriteLine($"time (mls): {sw.ElapsedMilliseconds}");
-            Assert.IsTrue(manager.IsConnected);
+            Assert.IsTrue(Api.IsConnected);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core;
+using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,6 +17,7 @@ namespace Ditch.Golos.Tests
     {
         protected const string AppVersion = "ditch / 4.0.0-alpha";
         protected static UserInfo User;
+        protected IHttpClient HttpClient;
         protected static OperationManager Api;
         protected WebSocketManager WebSocketManager;
 

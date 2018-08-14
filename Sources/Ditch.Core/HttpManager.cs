@@ -10,27 +10,16 @@ namespace Ditch.Core
 {
     public class HttpManager : IConnectionManager
     {
-        private static readonly Random Random = new Random();
-
         public string UrlToConnect { get; private set; }
 
         public bool IsConnected => !string.IsNullOrEmpty(UrlToConnect);
 
-        public int MaxRequestRepeatCount { get; }
-
-        public long MaxResponseContentBufferSize { get; }
+        public IHttpClient HttpClient { get; set; }
 
 
-        public HttpManager()
+        public HttpManager(IHttpClient httpClient)
         {
-            MaxRequestRepeatCount = 3;
-            MaxResponseContentBufferSize = 1024 * 1024;
-        }
-
-        public HttpManager(int maxRequestRepeatCount, long maxResponseContentBufferSize)
-        {
-            MaxRequestRepeatCount = maxRequestRepeatCount;
-            MaxResponseContentBufferSize = maxResponseContentBufferSize;
+            HttpClient = httpClient;
         }
 
         /// <summary>
@@ -49,23 +38,11 @@ namespace Ditch.Core
             if (string.IsNullOrEmpty(requestUrl))
                 return false;
 
-            HttpClient client = null;
-            try
+            var response = await HttpClient.GetAsync(requestUrl, token);
+            if (response.IsSuccessStatusCode)
             {
-                client = new HttpClient
-                {
-                    MaxResponseContentBufferSize = MaxResponseContentBufferSize
-                };
-                var response = await client.GetAsync(requestUrl, token);
-                if (response.IsSuccessStatusCode)
-                {
-                    UrlToConnect = requestUrl;
-                    return true;
-                }
-            }
-            finally
-            {
-                client?.Dispose();
+                UrlToConnect = requestUrl;
+                return true;
             }
 
             return false;
@@ -89,7 +66,7 @@ namespace Ditch.Core
         /// <returns>Typed JsonRpcResponse</returns>
         public async Task<JsonRpcResponse<T>> ExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
         {
-            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, MaxRequestRepeatCount, token);
+            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, 0, token);
         }
 
         /// <summary>
@@ -102,68 +79,41 @@ namespace Ditch.Core
         /// <returns>Typed JsonRpcResponse</returns>
         public async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
         {
-            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, -1, token);
+            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, HttpClient.MaxRequestRepeatCount, token);
         }
 
-        private async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, int loop, CancellationToken token)
+        private async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, byte loop, CancellationToken token)
         {
             if (string.IsNullOrEmpty(UrlToConnect))
                 return new JsonRpcResponse<T>(new ArgumentNullException(nameof(UrlToConnect))) { RawRequest = jsonRpc.Message };
 
             HttpResponseMessage response = null;
-            HttpClient client = null;
-            do
+
+            try
             {
-                try
-                {
-                    loop++;
-                    client = new HttpClient
-                    {
-                        MaxResponseContentBufferSize = MaxResponseContentBufferSize
-                    };
-                    var content = new StringContent(jsonRpc.Message);
-                    response = await client.PostAsync(UrlToConnect, content, token);
+                var content = new StringContent(jsonRpc.Message);
+                response = await HttpClient.PostAsync(UrlToConnect, content, loop, token);
 
-                    response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();
 
-                    var stringResponse = await response.Content.ReadAsStringAsync();
-                    var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
-                    prop.RawRequest = jsonRpc.Message;
-                    prop.RawResponse = stringResponse;
-                    return prop;
-                }
-                catch (Exception ex)
-                {
-                    if (loop > MaxRequestRepeatCount || token.IsCancellationRequested)
-                    {
-                        var stringResponse = string.Empty;
-                        if (response?.Content != null)
-                            stringResponse = await response.Content.ReadAsStringAsync();
+                var stringResponse = await response.Content.ReadAsStringAsync();
+                var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
+                prop.RawRequest = jsonRpc.Message;
+                prop.RawResponse = stringResponse;
+                return prop;
+            }
+            catch (Exception ex)
+            {
+                var stringResponse = string.Empty;
+                if (response?.Content != null)
+                    stringResponse = await response.Content.ReadAsStringAsync();
 
-                        return new JsonRpcResponse<T>(ex)
-                        {
-                            RawRequest = jsonRpc.Message,
-                            RawResponse = stringResponse
-                        };
-                    }
-                }
-                finally
+                return new JsonRpcResponse<T>(ex)
                 {
-                    client?.Dispose();
-                }
-
-                try
-                {
-                    await Task.Delay(1000 * loop + Random.Next(1, 5) * 100, token);
-                }
-                catch (Exception ex)
-                {
-                    return new JsonRpcResponse<T>(ex)
-                    {
-                        RawRequest = jsonRpc.Message,
-                    };
-                }
-            } while (true);
+                    RawRequest = jsonRpc.Message,
+                    RawResponse = stringResponse
+                };
+            }
         }
     }
 }

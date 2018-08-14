@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using Ditch.Core;
+using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,7 +18,7 @@ namespace Ditch.BitShares.Tests
         protected static UserInfo User;
         protected static OperationManager Api;
         protected HttpManager HttpManager;
-        protected HttpClient HttpClient;
+        protected IHttpClient HttpClient;
         protected string SbdSymbol = "BTS";
 
         [OneTimeSetUp]
@@ -37,7 +37,8 @@ namespace Ditch.BitShares.Tests
 
             if (Api == null)
             {
-                HttpManager = new HttpManager();
+                HttpClient = new RepeatHttpClient();
+                HttpManager = new HttpManager(HttpClient);
                 Api = new OperationManager(HttpManager);
 
                 var url = ConfigurationManager.AppSettings["Url"];
