@@ -87,12 +87,10 @@ namespace Ditch.Core
             if (string.IsNullOrEmpty(UrlToConnect))
                 return new JsonRpcResponse<T>(new ArgumentNullException(nameof(UrlToConnect))) { RawRequest = jsonRpc.Message };
 
-            HttpResponseMessage response = null;
-
             try
             {
                 var content = new StringContent(jsonRpc.Message);
-                response = await HttpClient.PostAsync(UrlToConnect, content, loop, token);
+                var response = await HttpClient.PostAsync(UrlToConnect, content, loop, token);
 
                 response.EnsureSuccessStatusCode();
 
@@ -104,14 +102,9 @@ namespace Ditch.Core
             }
             catch (Exception ex)
             {
-                var stringResponse = string.Empty;
-                if (response?.Content != null)
-                    stringResponse = await response.Content.ReadAsStringAsync();
-
                 return new JsonRpcResponse<T>(ex)
                 {
-                    RawRequest = jsonRpc.Message,
-                    RawResponse = stringResponse
+                    RawRequest = jsonRpc.Message
                 };
             }
         }

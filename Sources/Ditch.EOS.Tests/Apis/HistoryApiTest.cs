@@ -22,7 +22,7 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task GetTransactionTest(string testTransactionId)
+        public async Task GetTransactionTest()
         {
             var args = new GetTransactionParams
             {

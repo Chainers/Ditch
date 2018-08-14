@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Ditch.Core;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,7 +15,7 @@ namespace Ditch.EOS.Tests.Apis
     public class BaseTest
     {
         protected static UserInfo User;
-
+        protected RepeatHttpClient HttpClient;
         protected static OperationManager Api;
         protected CancellationToken CancellationToken = CancellationToken.None;
 
@@ -36,7 +37,8 @@ namespace Ditch.EOS.Tests.Apis
 
             if (Api == null)
             {
-                Api = new OperationManager
+                HttpClient = new RepeatHttpClient();
+                Api = new OperationManager(HttpClient)
                 {
                     ChainUrl = ConfigurationManager.AppSettings["ChainUrl"],
                     WalletUrl = ConfigurationManager.AppSettings["WalletUrl"]

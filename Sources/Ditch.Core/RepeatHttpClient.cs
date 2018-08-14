@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,6 +55,9 @@ namespace Ditch.Core
             var maxL = 0;
             do
             {
+                //prevent "System.InvalidOperationException: Cannot send the same request message multiple times"
+                var cloneRequest = await CloneHttpRequestMessageAsync(request);
+
                 maxL++;
                 HttpClient client = null;
                 try
@@ -69,7 +73,7 @@ namespace Ditch.Core
                         _httpClientSet[client]++;
                     }
 
-                    var msg = await client.SendAsync(request, token);
+                    var msg = await client.SendAsync(cloneRequest, token);
                     if (msg.IsSuccessStatusCode || maxL >= loopCount)
                         return msg;
 
@@ -100,8 +104,37 @@ namespace Ditch.Core
                         }
                     }
                 }
-
             } while (true);
+        }
+
+        public static async Task<HttpRequestMessage> CloneHttpRequestMessageAsync(HttpRequestMessage req)
+        {
+            var clone = new HttpRequestMessage(req.Method, req.RequestUri)
+            {
+                Version = req.Version
+            };
+
+            // Copy the request's content (via a MemoryStream) into the cloned object
+            var ms = new MemoryStream();
+            if (req.Content != null)
+            {
+                await req.Content.CopyToAsync(ms).ConfigureAwait(false);
+                ms.Position = 0;
+                clone.Content = new StreamContent(ms);
+
+                // Copy the content headers
+                if (req.Content.Headers != null)
+                    foreach (var h in req.Content.Headers)
+                        clone.Content.Headers.Add(h.Key, h.Value);
+            }
+
+            foreach (var prop in req.Properties)
+                clone.Properties.Add(prop);
+
+            foreach (var header in req.Headers)
+                clone.Headers.TryAddWithoutValidation(header.Key, header.Value);
+
+            return clone;
         }
 
 
