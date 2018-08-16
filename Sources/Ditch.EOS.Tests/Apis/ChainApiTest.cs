@@ -73,15 +73,17 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task GetCodeTest()
+        [TestCase("eosio.token")]
+        public async Task GetCodeTest(string accountName)
         {
             var args = new GetCodeParams
             {
-                AccountName = User.Login
+                AccountName = accountName
             };
 
             var resp = await Api.GetCode(args, CancellationToken);
-            TestPropetries(resp);
+            Assert.IsFalse(resp.IsError);
+            WriteLine(resp.Result.Abi);
         }
 
         [Test]
@@ -99,12 +101,13 @@ namespace Ditch.EOS.Tests.Apis
 
         [Test]
         [TestCase("eosio", "eosio", "producers")]
-        public async Task GetTableRowsTest(string scope, string code, string table)
+        [TestCase("eosio.token", "ditchtest", "accounts")]
+        public async Task GetTableRowsTest(string code, string scope, string table)
         {
             var args = new GetTableRowsParams
             {
-                Scope = scope,
                 Code = code,
+                Scope = scope,
                 Table = table,
                 Json = true,
                 //LowerBound = "0",
