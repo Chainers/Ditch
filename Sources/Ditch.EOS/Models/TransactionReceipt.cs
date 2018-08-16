@@ -16,6 +16,7 @@ namespace Ditch.EOS.Models
         /// 
         /// </summary>
         /// <returns>API type: fc::static_variant&lt;transaction_id_type, packed_transaction>></returns>
+        [JsonProperty("trx")]
         public object Trx { get; set; }
     }
 }
