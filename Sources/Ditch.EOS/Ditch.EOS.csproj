@@ -4,8 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>.net standard client for EOS blockchain (https://eosio.github.io/eos/group__eosiorpc.html)</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.0.1</Version>
+    <Version>4.0.2</Version>
     <PackageReleaseNotes>adds repeat get</PackageReleaseNotes>
+    <AssemblyVersion>4.0.2.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
