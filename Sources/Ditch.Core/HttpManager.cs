@@ -91,9 +91,7 @@ namespace Ditch.Core
             {
                 var content = new StringContent(jsonRpc.Message);
                 var response = await HttpClient.PostAsync(UrlToConnect, content, loop, token);
-
-                response.EnsureSuccessStatusCode();
-
+                
                 var stringResponse = await response.Content.ReadAsStringAsync();
                 var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
                 prop.RawRequest = jsonRpc.Message;

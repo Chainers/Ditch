@@ -252,9 +252,6 @@ namespace Ditch.EOS
             {
                 HttpContent content = args != null ? new StringContent(args, Encoding.UTF8, "application/json") : null;
                 var response = await HttpClient.PostAsync(url, content, loop, token);
-
-                response.EnsureSuccessStatusCode();
-
                 var result = await CreateResult<T>(response, token);
                 result.RawRequest = $"POST(PUT): {url} {args}";
                 return result;
@@ -273,7 +270,7 @@ namespace Ditch.EOS
         {
             if (string.IsNullOrEmpty(url))
                 return new OperationResult<T>(new ArgumentNullException(nameof(url))) { RawRequest = $"GET: {url}" };
-            
+
             try
             {
                 var response = await HttpClient.GetAsync(url, token);

@@ -233,18 +233,48 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task BroadcastActionsTest()
+        public async Task BroadcastBuyramActionTest()
         {
             var op = new BuyramAction
             {
-                Account = User.Login,
+                Account = BuyramAction.ContractName,
 
                 Args = new Buyram
                 {
                     Payer = User.Login,
                     Receiver = User.Login,
-                    Quant = new Asset("0.001 EOS")
+                    Quant = new Asset("100.0000 EOS")
 
+                },
+                Authorization = new[]
+                {
+                    new PermissionLevel
+                    {
+                        Actor = User.Login,
+                        Permission = "active"
+                    }
+                }
+            };
+
+            var resp = await Api.BroadcastActions(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken);
+            WriteLine(resp);
+            Assert.IsFalse(resp.IsError);
+        }
+
+        [Test]
+        public async Task BroadcastDelegatebwActionTest()
+        {
+            var op = new DelegatebwAction
+            {
+                Account = DelegatebwAction.ContractName,
+
+                Args = new Delegatebw
+                {
+                    From = User.Login,
+                    Receiver = User.Login,
+                    StakeCpuQuantity = new Asset("100.0000 EOS"),
+                    StakeNetQuantity = new Asset("100.0000 EOS"),
+                    Transfer = false
                 },
                 Authorization = new[]
                 {
