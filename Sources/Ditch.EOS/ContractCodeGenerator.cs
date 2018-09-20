@@ -11,19 +11,19 @@ namespace Ditch.EOS
     public class ContractCodeGenerator
     {
 
-        public Task Generate(OperationManager api, string contractName, string @namespace, string outDir, CancellationToken token)
+        public Task GenerateAsync(OperationManager api, string contractName, string @namespace, string outDir, CancellationToken token)
         {
-            return Generate(api, contractName, @namespace, outDir, null, token);
+            return GenerateAsync(api, contractName, @namespace, outDir, null, token);
         }
 
-        public async Task Generate(OperationManager api, string contractName, string @namespace, string outDir, HashSet<string> actionFilter, CancellationToken token)
+        public async Task GenerateAsync(OperationManager api, string contractName, string @namespace, string outDir, HashSet<string> actionFilter, CancellationToken token)
         {
             var args = new GetCodeParams
             {
                 AccountName = contractName
             };
 
-            var resp = await api.GetCode(args, token);
+            var resp = await api.GetCodeAsync(args, token).ConfigureAwait(false);
             if (resp.IsError)
                 throw resp.Exception;
 

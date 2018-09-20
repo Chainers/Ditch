@@ -17,9 +17,9 @@ namespace Ditch.BitShares.Tests
         {
             JsonRpcResponse response;
             if (isNeedBroadcast)
-                response = await Api.BroadcastOperations(postingKeys, op, CancellationToken.None);
+                response = await Api.BroadcastOperationsAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
             else
-                response = await Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
+                response = await Api.VerifyAuthorityAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
 
             WriteLine(response);
 
@@ -27,7 +27,7 @@ namespace Ditch.BitShares.Tests
         }
 
         [Test]
-        public async Task AccountCreateOperationTestAsync()
+        public async Task AccountCreateOperationTest()
         {
             var name = "userlogin";
             var key = Secp256K1Manager.GenerateRandomKey();
@@ -67,7 +67,7 @@ namespace Ditch.BitShares.Tests
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.Options.MemoKey = new PublicKeyType(subPublicKey, "TEST");
 
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
     }
 }

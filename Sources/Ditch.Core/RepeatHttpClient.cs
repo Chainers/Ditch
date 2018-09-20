@@ -40,7 +40,7 @@ namespace Ditch.Core
                 RequestUri = new Uri(requestUri),
                 Content = content,
             };
-            return await SendAsync(request, loopCount, token);
+            return await SendAsync(request, loopCount, token).ConfigureAwait(false);
         }
 
         public override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token)
@@ -56,7 +56,7 @@ namespace Ditch.Core
             do
             {
                 //prevent "System.InvalidOperationException: Cannot send the same request message multiple times"
-                var cloneRequest = await CloneHttpRequestMessageAsync(request);
+                var cloneRequest = await CloneHttpRequestMessageAsync(request).ConfigureAwait(false);
 
                 maxL++;
                 HttpClient client = null;
@@ -65,7 +65,7 @@ namespace Ditch.Core
                     if (isfirst)
                         isfirst = false;
                     else
-                        await Task.Delay(1000 * maxL + Random.Next(1, 5) * 100, token);
+                        await Task.Delay(1000 * maxL + Random.Next(1, 5) * 100, token).ConfigureAwait(false);
 
                     lock (_httpClientSet)
                     {
@@ -73,7 +73,7 @@ namespace Ditch.Core
                         _httpClientSet[client]++;
                     }
 
-                    var msg = await client.SendAsync(cloneRequest, token);
+                    var msg = await client.SendAsync(cloneRequest, token).ConfigureAwait(false);
                     if (msg.IsSuccessStatusCode || maxL >= loopCount)
                         return msg;
 

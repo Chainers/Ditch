@@ -44,7 +44,7 @@ namespace Ditch.Steem.Tests
                 JsonSerializerSettings = Api.NewJsonSerializerSettings;
 
                 var url = ConfigurationManager.AppSettings["Url"];
-                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None).Result, "Enable connect to node");
+                Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Enable connect to node");
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
@@ -175,8 +175,8 @@ namespace Ditch.Steem.Tests
             const string autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalPropertiesAsync(CancellationToken.None).ConfigureAwait(false);
+            var transaction = await Api.CreateTransactionAsync(prop.Result, user.PostingKeys, op, CancellationToken.None).ConfigureAwait(false);
             return transaction;
         }
 

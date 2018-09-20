@@ -40,7 +40,7 @@ namespace Ditch.BitShares.Tests
         {
             var sw = new Stopwatch();
             sw.Start();
-            await Api.ConnectTo(url, CancellationToken.None);
+            await Api.ConnectToAsync(url, CancellationToken.None).ConfigureAwait(false);
             sw.Stop();
 
             Console.WriteLine($"time (mls): {sw.ElapsedMilliseconds}");

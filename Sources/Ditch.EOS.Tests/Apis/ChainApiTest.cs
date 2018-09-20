@@ -14,14 +14,14 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task GetInfoTest()
         {
-            var resp = await Api.GetInfo(CancellationToken);
+            var resp = await Api.GetInfoAsync(CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test]
         public async Task GetBlockTest()
         {
-            var infoResp = await Api.GetInfo(CancellationToken);
+            var infoResp = await Api.GetInfoAsync(CancellationToken).ConfigureAwait(false);
             var info = infoResp.Result;
 
             var args = new GetBlockParams
@@ -29,14 +29,14 @@ namespace Ditch.EOS.Tests.Apis
                 BlockNumOrId = info.LastIrreversibleBlockId
             };
 
-            var resp = await Api.GetBlock(args, CancellationToken);
+            var resp = await Api.GetBlockAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test]
         public async Task GetBlockHeaderStateTest()
         {
-            var infoResp = await Api.GetInfo(CancellationToken);
+            var infoResp = await Api.GetInfoAsync(CancellationToken).ConfigureAwait(false);
             var info = infoResp.Result;
 
             var args = new GetBlockHeaderStateParams
@@ -44,7 +44,7 @@ namespace Ditch.EOS.Tests.Apis
                 BlockNumOrId = info.LastIrreversibleBlockId
             };
 
-            var resp = await Api.GetBlockHeaderState(args, CancellationToken);
+            var resp = await Api.GetBlockHeaderStateAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -56,7 +56,7 @@ namespace Ditch.EOS.Tests.Apis
                 AccountName = User.Login
             };
 
-            var resp = await Api.GetAccount(args, CancellationToken);
+            var resp = await Api.GetAccountAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -68,7 +68,7 @@ namespace Ditch.EOS.Tests.Apis
                 AccountName = User.Login
             };
 
-            var resp = await Api.GetAbi(args, CancellationToken);
+            var resp = await Api.GetAbiAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -81,7 +81,7 @@ namespace Ditch.EOS.Tests.Apis
                 AccountName = accountName
             };
 
-            var resp = await Api.GetCode(args, CancellationToken);
+            var resp = await Api.GetCodeAsync(args, CancellationToken).ConfigureAwait(false);
             Assert.IsFalse(resp.IsError);
             WriteLine(resp.Result.Abi);
         }
@@ -95,7 +95,7 @@ namespace Ditch.EOS.Tests.Apis
                 AccountName = accName
             };
 
-            var resp = await Api.GetRawCodeAndAbi(args, CancellationToken);
+            var resp = await Api.GetRawCodeAndAbiAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -115,7 +115,7 @@ namespace Ditch.EOS.Tests.Apis
                 //Limit = 10
             };
 
-            var resp = await Api.GetTableRows(args, CancellationToken);
+            var resp = await Api.GetTableRowsAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -185,7 +185,7 @@ namespace Ditch.EOS.Tests.Apis
                 }
             };
 
-            var resp = await Api.AbiJsonToBin(args, CancellationToken);
+            var resp = await Api.AbiJsonToBinAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -199,7 +199,7 @@ namespace Ditch.EOS.Tests.Apis
                 Binargs = "0000000000ea305500f2854b9ebd12b701000000010002ba0115bf16dbe4bc5f8bf66ffbfd86f879aa729054f31176a80b98326ce5400001000100f2854b9ebd12b70000000080ab26a70100010000000001000100000001000397caa58c9aed5159cad3d2d5ce19e98d7308fe7fa2c0ad6071ab6244c8f3cc2401000100f2854b9ebd12b700000000a8ed3232010001000000000100"
             };
 
-            var resp = await Api.AbiBinToJson(args, CancellationToken);
+            var resp = await Api.AbiBinToJsonAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -213,7 +213,7 @@ namespace Ditch.EOS.Tests.Apis
                 Symbol = symbol
             };
 
-            var resp = await Api.GetCurrencyStats(args, CancellationToken);
+            var resp = await Api.GetCurrencyStatsAsync(args, CancellationToken).ConfigureAwait(false);
             //TestPropetries(resp);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
@@ -228,7 +228,7 @@ namespace Ditch.EOS.Tests.Apis
                 Json = true
             };
 
-            var resp = await Api.GetProducers(args, CancellationToken);
+            var resp = await Api.GetProducersAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -256,7 +256,7 @@ namespace Ditch.EOS.Tests.Apis
                 }
             };
 
-            var resp = await Api.BroadcastActions(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken);
+            var resp = await Api.BroadcastActionsAsync(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -286,7 +286,7 @@ namespace Ditch.EOS.Tests.Apis
                 }
             };
 
-            var resp = await Api.BroadcastActions(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken);
+            var resp = await Api.BroadcastActionsAsync(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -295,7 +295,7 @@ namespace Ditch.EOS.Tests.Apis
         //[Test]
         //public async Task GetRequiredKeysTest()
         //{
-        //    var infoResp = await Api.GetInfo(CancellationToken);
+        //    var infoResp = await Api.GetInfoAsync(CancellationToken).ConfigureAwait(false);
         //    var info = infoResp.Result;
 
         //    var getRequiredKeysParams = new GetRequiredKeysParams
@@ -331,8 +331,8 @@ namespace Ditch.EOS.Tests.Apis
         //        AvailableKeys = new[] { "EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV", "EOS7drQWvc7Mn7NK2PivjbAqLXMyBpvSNnZWnZC3CS61g1dhVK57o", "EOS8KLWY5tcczw6tTkk4UhfeZJrES7ECiFZAkChcR2mwsFcArURn7" }
         //    };
 
-        //    var resp = await Api.GetRequiredKeys(getRequiredKeysParams, CancellationToken);
-        //    var obj = await Api.CustomPostRequest<JObject>($"{ChainUrl}/v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken);
+        //    var resp = await Api.GetRequiredKeysAsync(getRequiredKeysParams, CancellationToken).ConfigureAwait(false);
+        //    var obj = await Api.CustomPostRequestAsync<JObject>($"{ChainUrl}/v1/chain/get_required_keys", getRequiredKeysParams, CancellationToken).ConfigureAwait(false);
         //    TestPropetries(resp);
         //}
     }

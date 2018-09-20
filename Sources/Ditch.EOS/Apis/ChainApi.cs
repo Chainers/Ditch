@@ -18,10 +18,10 @@ namespace Ditch.EOS
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<GetInfoResults>> GetInfo(CancellationToken token)
+        public async Task<OperationResult<GetInfoResults>> GetInfoAsync(CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_info";
-            return await CustomGetRequest<GetInfoResults>(endpoint, token);
+            return await CustomGetRequestAsync<GetInfoResults>(endpoint, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -33,10 +33,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<GetBlockResults>> GetBlock(GetBlockParams args, CancellationToken token)
+        public async Task<OperationResult<GetBlockResults>> GetBlockAsync(GetBlockParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_block";
-            return await CustomPutRequest<GetBlockResults>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetBlockResults>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -45,10 +45,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<BlockHeaderState>> GetBlockHeaderState(GetBlockHeaderStateParams args, CancellationToken token)
+        public async Task<OperationResult<BlockHeaderState>> GetBlockHeaderStateAsync(GetBlockHeaderStateParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_block_header_state";
-            return await CustomPutRequest<BlockHeaderState>(endpoint, args, token);
+            return await CustomPutRequestAsync<BlockHeaderState>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -59,10 +59,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<GetAccountResults>> GetAccount(GetAccountParams args, CancellationToken token)
+        public async Task<OperationResult<GetAccountResults>> GetAccountAsync(GetAccountParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_account";
-            return await CustomPutRequest<GetAccountResults>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetAccountResults>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,10 +71,10 @@ namespace Ditch.EOS
         /// <param name="args">name of account to retrieve ABI for</param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<GetAbiResults>> GetAbi(GetAbiParams args, CancellationToken token)
+        public async Task<OperationResult<GetAbiResults>> GetAbiAsync(GetAbiParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_abi";
-            return await CustomPutRequest<GetAbiResults>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetAbiResults>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -85,10 +85,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<GetCodeResults>> GetCode(GetCodeParams args, CancellationToken token)
+        public async Task<OperationResult<GetCodeResults>> GetCodeAsync(GetCodeParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_code";
-            return await CustomPutRequest<GetCodeResults>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetCodeResults>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,10 +97,10 @@ namespace Ditch.EOS
         /// <param name="args">Account name to get code and abi for</param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<GetRawCodeAndAbiResults>> GetRawCodeAndAbi(GetRawCodeAndAbiParams args, CancellationToken token)
+        public async Task<OperationResult<GetRawCodeAndAbiResults>> GetRawCodeAndAbiAsync(GetRawCodeAndAbiParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_raw_code_and_abi";
-            return await CustomPutRequest<GetRawCodeAndAbiResults>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetRawCodeAndAbiResults>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,10 +112,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<GetTableRowsResult>> GetTableRows(GetTableRowsParams args, CancellationToken token)
+        public async Task<OperationResult<GetTableRowsResult>> GetTableRowsAsync(GetTableRowsParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_table_rows";
-            return await CustomPutRequest<GetTableRowsResult>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetTableRowsResult>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,10 +126,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<AbiJsonToBinResult>> AbiJsonToBin(AbiJsonToBinParams args, CancellationToken token)
+        public async Task<OperationResult<AbiJsonToBinResult>> AbiJsonToBinAsync(AbiJsonToBinParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/abi_json_to_bin";
-            return await CustomPutRequest<AbiJsonToBinResult>(endpoint, args, token);
+            return await CustomPutRequestAsync<AbiJsonToBinResult>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,10 +140,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<AbiBinToJsonResult>> AbiBinToJson(AbiBinToJsonParams args, CancellationToken token)
+        public async Task<OperationResult<AbiBinToJsonResult>> AbiBinToJsonAsync(AbiBinToJsonParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/abi_bin_to_json";
-            return await CustomPutRequest<AbiBinToJsonResult>(endpoint, args, token);
+            return await CustomPutRequestAsync<AbiBinToJsonResult>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -153,10 +153,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<GetRequiredKeysResult>> GetRequiredKeys(GetRequiredKeysParams args, CancellationToken token)
+        public async Task<OperationResult<GetRequiredKeysResult>> GetRequiredKeysAsync(GetRequiredKeysParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_required_keys";
-            return await CustomPutRequest<GetRequiredKeysResult>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetRequiredKeysResult>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,16 +165,16 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<GetCurrencyStatsResult>> GetCurrencyStats(GetCurrencyStatsParams args, CancellationToken token)
+        public async Task<OperationResult<GetCurrencyStatsResult>> GetCurrencyStatsAsync(GetCurrencyStatsParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_currency_stats";
-            return await CustomPutRequest<GetCurrencyStatsResult>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetCurrencyStatsResult>(endpoint, args, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<GetProducersResult>> GetProducers(GetProducersParams args, CancellationToken token)
+        public async Task<OperationResult<GetProducersResult>> GetProducersAsync(GetProducersParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_producers";
-            return await CustomPutRequest<GetProducersResult>(endpoint, args, token);
+            return await CustomPutRequestAsync<GetProducersResult>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -185,10 +185,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<PushTransactionResults>> PushTransaction(PackedTransaction args, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults>> PushTransactionAsync(PackedTransaction args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/push_transaction";
-            return await CustomPostRequest<PushTransactionResults>(endpoint, args, token);
+            return await CustomPostRequestAsync<PushTransactionResults>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -200,10 +200,10 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<OperationResult<PushTransactionResults[]>> PushTransactions(PackedTransaction[] args, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults[]>> PushTransactionsAsync(PackedTransaction[] args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/push_transaction";
-            return await CustomPostRequest<PushTransactionResults[]>(endpoint, args, token);
+            return await CustomPostRequestAsync<PushTransactionResults[]>(endpoint, args, token).ConfigureAwait(false);
         }
 
     }

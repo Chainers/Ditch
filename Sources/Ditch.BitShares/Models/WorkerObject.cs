@@ -31,9 +31,6 @@ namespace Ditch.BitShares.Models
         [JsonProperty("type_id")]
         public byte TypeId { get; set; }
 
-
-        /// ID of the account which owns this worker
-
         /// <summary>
         /// API name: worker_account
         /// 
@@ -41,8 +38,6 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: account_id_type</returns>
         [JsonProperty("worker_account")]
         public AccountIdType WorkerAccount { get; set; }
-
-        /// Time at which this worker begins receiving pay, if elected
 
         /// <summary>
         /// API name: work_begin_date
@@ -52,8 +47,6 @@ namespace Ditch.BitShares.Models
         [JsonProperty("work_begin_date")]
         public TimePointSec WorkBeginDate { get; set; }
 
-        /// Time at which this worker will cease to receive pay. Worker will be deleted at this time
-
         /// <summary>
         /// API name: work_end_date
         /// 
@@ -61,8 +54,6 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("work_end_date")]
         public TimePointSec WorkEndDate { get; set; }
-
-        /// Amount in CORE this worker will be paid each day
 
         /// <summary>
         /// API name: daily_pay
@@ -72,8 +63,6 @@ namespace Ditch.BitShares.Models
         [JsonProperty("daily_pay")]
         public object DailyPay { get; set; }
 
-        /// ID of this worker's pay balance
-
         /// <summary>
         /// API name: worker
         /// 
@@ -81,8 +70,6 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: worker_type</returns>
         [JsonProperty("worker")]
         public object Worker { get; set; }
-
-        /// Human-readable name for the worker
 
         /// <summary>
         /// API name: name
@@ -92,8 +79,6 @@ namespace Ditch.BitShares.Models
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        /// URL to a web page representing this worker
-
         /// <summary>
         /// API name: url
         /// 
@@ -102,9 +87,6 @@ namespace Ditch.BitShares.Models
         [JsonProperty("url")]
         public string Url { get; set; }
 
-
-        /// Voting ID which represents approval of this worker
-
         /// <summary>
         /// API name: vote_for
         /// 
@@ -112,8 +94,6 @@ namespace Ditch.BitShares.Models
         /// <returns>API type: vote_id_type</returns>
         [JsonProperty("vote_for")]
         public object VoteFor { get; set; }
-
-        /// Voting ID which represents disapproval of this worker
 
         /// <summary>
         /// API name: vote_against

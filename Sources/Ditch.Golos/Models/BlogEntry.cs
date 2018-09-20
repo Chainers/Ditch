@@ -17,7 +17,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("author")]
-        public string Author {get; set;}
+        public string Author { get; set; }
 
         /// <summary>
         /// API name: permlink
@@ -25,7 +25,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("permlink")]
-        public string Permlink {get; set;}
+        public string Permlink { get; set; }
 
         /// <summary>
         /// API name: blog
@@ -33,7 +33,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("blog")]
-        public string Blog {get; set;}
+        public string Blog { get; set; }
 
         /// <summary>
         /// API name: reblog_on
@@ -41,7 +41,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("reblog_on")]
-        public TimePointSec ReblogOn {get; set;}
+        public TimePointSec ReblogOn { get; set; }
 
         /// <summary>
         /// API name: entry_id
@@ -49,6 +49,30 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("entry_id")]
-        public uint EntryId {get; set;}
+        public uint EntryId { get; set; }
+
+        /// <summary>
+        /// API name: reblog_title
+        /// 
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("reblog_title")]
+        public string ReblogTitle { get; set; }
+
+        /// <summary>
+        /// API name: reblog_body
+        /// 
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("reblog_body")]
+        public string ReblogBody { get; set; }
+
+        /// <summary>
+        /// API name: reblog_json_metadata
+        /// 
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("reblog_json_metadata")]
+        public string ReblogJsonMetadata { get; set; }
     }
 }

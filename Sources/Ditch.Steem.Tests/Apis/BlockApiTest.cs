@@ -15,7 +15,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 BlockNum = 1
             };
-            var resp = await Api.GetBlockHeader(args, CancellationToken.None);
+            var resp = await Api.GetBlockHeaderAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
         
@@ -26,7 +26,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 BlockNum = 1
             };
-            var resp = await Api.GetBlock(args, CancellationToken.None);
+            var resp = await Api.GetBlockAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

@@ -33,9 +33,9 @@ namespace Ditch.Golos.Tests
 
             var sw = new Stopwatch();
             sw.Start();
-            if (await manager.ConnectTo(url, CancellationToken.None))
+            if (await manager.ConnectToAsync(url, CancellationToken.None).ConfigureAwait(false))
             {
-                var hfvr = await manager.GetConfig<JObject>(CancellationToken.None);
+                var hfvr = await manager.GetConfigAsync<JObject>(CancellationToken.None).ConfigureAwait(false);
                 if (hfvr.IsError)
                     WriteLine(hfvr);
                 Assert.IsFalse(hfvr.IsError);
@@ -59,9 +59,9 @@ namespace Ditch.Golos.Tests
         {
             var sw = new Stopwatch();
             sw.Start();
-            if (await Api.ConnectTo(url, CancellationToken.None))
+            if (await Api.ConnectToAsync(url, CancellationToken.None).ConfigureAwait(false))
             {
-                var hfvr = await Api.GetConfig<JObject>(CancellationToken.None);
+                var hfvr = await Api.GetConfigAsync<JObject>(CancellationToken.None).ConfigureAwait(false);
                 if (hfvr.IsError)
                     WriteLine(hfvr);
                 Assert.IsFalse(hfvr.IsError);

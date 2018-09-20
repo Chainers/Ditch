@@ -19,9 +19,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_ticker_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetTickerReturn>> GetTicker(CancellationToken token)
+        public Task<JsonRpcResponse<GetTickerReturn>> GetTickerAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetTickerReturn>(KnownApiNames.MarketHistoryApi, "get_ticker", token);
+            return CustomGetRequestAsync<GetTickerReturn>(KnownApiNames.MarketHistoryApi, "get_ticker", token);
         }
 
         /// <summary>
@@ -31,9 +31,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_volume_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetVolumeReturn>> GetVolume(CancellationToken token)
+        public Task<JsonRpcResponse<GetVolumeReturn>> GetVolumeAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetVolumeReturn>(KnownApiNames.MarketHistoryApi, "get_volume", token);
+            return CustomGetRequestAsync<GetVolumeReturn>(KnownApiNames.MarketHistoryApi, "get_volume", token);
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_order_book_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetOrderBookReturn>> GetOrderBook(GetOrderBookArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetOrderBookReturn>> GetOrderBookAsync(GetOrderBookArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetOrderBookReturn>(KnownApiNames.MarketHistoryApi, "get_order_book", args, token);
+            return CustomGetRequestAsync<GetOrderBookReturn>(KnownApiNames.MarketHistoryApi, "get_order_book", args, token);
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_trade_history_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetTradeHistoryReturn>> GetTradeHistory(GetTradeHistoryArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetTradeHistoryReturn>> GetTradeHistoryAsync(GetTradeHistoryArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetTradeHistoryReturn>(KnownApiNames.MarketHistoryApi, "get_trade_history", args, token);
+            return CustomGetRequestAsync<GetTradeHistoryReturn>(KnownApiNames.MarketHistoryApi, "get_trade_history", args, token);
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_recent_trades_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetRecentTradesReturn>> GetRecentTrades(GetRecentTradesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetRecentTradesReturn>> GetRecentTradesAsync(GetRecentTradesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetRecentTradesReturn>(KnownApiNames.MarketHistoryApi, "get_recent_trades", args, token);
+            return CustomGetRequestAsync<GetRecentTradesReturn>(KnownApiNames.MarketHistoryApi, "get_recent_trades", args, token);
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_market_history_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetMarketHistoryReturn>> GetMarketHistory(GetMarketHistoryArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetMarketHistoryReturn>> GetMarketHistoryAsync(GetMarketHistoryArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetMarketHistoryReturn>(KnownApiNames.MarketHistoryApi, "get_market_history", args, token);
+            return CustomGetRequestAsync<GetMarketHistoryReturn>(KnownApiNames.MarketHistoryApi, "get_market_history", args, token);
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_market_history_buckets_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetMarketHistoryBucketsReturn>> GetMarketHistoryBuckets(CancellationToken token)
+        public Task<JsonRpcResponse<GetMarketHistoryBucketsReturn>> GetMarketHistoryBucketsAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetMarketHistoryBucketsReturn>(KnownApiNames.MarketHistoryApi, "get_market_history_buckets", token);
+            return CustomGetRequestAsync<GetMarketHistoryBucketsReturn>(KnownApiNames.MarketHistoryApi, "get_market_history_buckets", token);
         }
     }
 }

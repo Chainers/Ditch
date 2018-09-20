@@ -17,7 +17,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("author")]
-        public string Author {get; set;}
+        public string Author { get; set; }
 
         /// <summary>
         /// API name: permlink
@@ -25,7 +25,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("permlink")]
-        public string Permlink {get; set;}
+        public string Permlink { get; set; }
 
         /// <summary>
         /// API name: reblog_by
@@ -33,7 +33,15 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("reblog_by")]
-        public string[] ReblogBy {get; set;}
+        public string[] ReblogBy { get; set; }
+
+        /// <summary>
+        /// API name: reblog_entries
+        /// 
+        /// </summary>
+        /// <returns>API type: reblog_entry</returns>
+        [JsonProperty("reblog_entries")]
+        public ReblogEntry[] ReblogEntries { get; set; }
 
         /// <summary>
         /// API name: reblog_on
@@ -41,7 +49,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
         [JsonProperty("reblog_on")]
-        public TimePointSec ReblogOn {get; set;}
+        public TimePointSec ReblogOn { get; set; }
 
         /// <summary>
         /// API name: entry_id
@@ -49,6 +57,6 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("entry_id")]
-        public uint EntryId {get; set;}
+        public uint EntryId { get; set; }
     }
 }

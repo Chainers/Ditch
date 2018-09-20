@@ -23,9 +23,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: message_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<MessageApiObj[]>> GetInbox(string to, TimePoint newest, ushort limit, ushort offset, CancellationToken token)
+        public Task<JsonRpcResponse<MessageApiObj[]>> GetInboxAsync(string to, TimePoint newest, ushort limit, ushort offset, CancellationToken token)
         {
-            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_inbox", new object[] { to, newest, limit, offset }, token);
+            return CustomGetRequestAsync<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_inbox", new object[] { to, newest, limit, offset }, token);
         }
 
 
@@ -40,9 +40,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: message_api_obj</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<MessageApiObj[]>> GetOutbox(string from, TimePoint newest, ushort limit, ushort offset, CancellationToken token)
+        public Task<JsonRpcResponse<MessageApiObj[]>> GetOutboxAsync(string from, TimePoint newest, ushort limit, ushort offset, CancellationToken token)
         {
-            return CustomGetRequest<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_outbox", new object[] { from, newest, limit, offset }, token);
+            return CustomGetRequestAsync<MessageApiObj[]>(KnownApiNames.PrivateMessage, "get_outbox", new object[] { from, newest, limit, offset }, token);
         }
     }
 }

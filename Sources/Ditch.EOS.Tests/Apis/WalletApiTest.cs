@@ -14,12 +14,12 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task CreateTest()
         {
-            var resp = await Api.WalletCreate(User.Login, CancellationToken.None);
+            var resp = await Api.WalletCreateAsync(User.Login, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             if (resp.IsError) //already added
             {
 
-                resp = await Api.WalletCreate(User.Login + DateTime.Now.Millisecond, CancellationToken.None);
+                resp = await Api.WalletCreateAsync(User.Login + DateTime.Now.Millisecond, CancellationToken.None).ConfigureAwait(false);
                 WriteLine(resp);
                 Assert.IsFalse(resp.IsError);
             }
@@ -29,34 +29,34 @@ namespace Ditch.EOS.Tests.Apis
         public async Task WalletImportKeyTest()
         {
             var testLogin2 = User.Login + DateTime.Now.Millisecond;
-            var resp = await Api.WalletCreate(User.Login, CancellationToken.None);
+            var resp = await Api.WalletCreateAsync(User.Login, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             if (!resp.IsError)
                 User.Password = resp.Result;
             if (resp.IsError) //already added
             {
 
-                resp = await Api.WalletCreate(testLogin2, CancellationToken.None);
+                resp = await Api.WalletCreateAsync(testLogin2, CancellationToken.None).ConfigureAwait(false);
                 WriteLine(resp);
                 Assert.IsFalse(resp.IsError);
             }
 
-            var addOwner = await Api.WalletImportKey(User.Login, User.PrivateOwnerWif, CancellationToken.None);
+            var addOwner = await Api.WalletImportKeyAsync(User.Login, User.PrivateOwnerWif, CancellationToken.None).ConfigureAwait(false);
             WriteLine(addOwner);
             if (resp.IsError) //already added
             {
 
-                addOwner = await Api.WalletImportKey(testLogin2, User.PrivateOwnerWif, CancellationToken.None);
+                addOwner = await Api.WalletImportKeyAsync(testLogin2, User.PrivateOwnerWif, CancellationToken.None).ConfigureAwait(false);
                 WriteLine(addOwner);
                 Assert.IsFalse(addOwner.IsError);
             }
 
-            var addActive = await Api.WalletImportKey(User.Login, User.PrivateActiveWif, CancellationToken.None);
+            var addActive = await Api.WalletImportKeyAsync(User.Login, User.PrivateActiveWif, CancellationToken.None).ConfigureAwait(false);
             WriteLine(addActive);
             if (resp.IsError) //already added
             {
 
-                addActive = await Api.WalletImportKey(testLogin2, User.PrivateActiveWif, CancellationToken.None);
+                addActive = await Api.WalletImportKeyAsync(testLogin2, User.PrivateActiveWif, CancellationToken.None).ConfigureAwait(false);
                 WriteLine(addActive);
                 Assert.IsFalse(addActive.IsError);
             }
@@ -65,7 +65,7 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task WalletOpenTest()
         {
-            var resp = await Api.WalletOpen(User.Login, CancellationToken.None);
+            var resp = await Api.WalletOpenAsync(User.Login, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -73,7 +73,7 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task WalletLockTest()
         {
-            var resp = await Api.WalletLock(User.Login, CancellationToken.None);
+            var resp = await Api.WalletLockAsync(User.Login, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -81,7 +81,7 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task WalletLockAllTest()
         {
-            var resp = await Api.WalletLockAll(CancellationToken.None);
+            var resp = await Api.WalletLockAllAsync(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -89,17 +89,17 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task WalletUnlockTest()
         {
-            var resp = await Api.WalletUnlock(User.Login, User.Password, CancellationToken.None);
+            var resp = await Api.WalletUnlockAsync(User.Login, User.Password, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
 
-            await Api.WalletLock(User.Login, CancellationToken);
+            await Api.WalletLockAsync(User.Login, CancellationToken).ConfigureAwait(false);
         }
 
         [Test]
         public async Task WalletListTest()
         {
-            var resp = await Api.WalletList(CancellationToken.None);
+            var resp = await Api.WalletListAsync(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -108,7 +108,7 @@ namespace Ditch.EOS.Tests.Apis
         [Ignore(" --- not work")]
         public async Task WalletListKeysTest()
         {
-            var resp = await Api.WalletListKeys(CancellationToken.None);
+            var resp = await Api.WalletListKeysAsync(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -116,11 +116,11 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task WalletGetPublicKeysTest()
         {
-            var unlock = await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
+            var unlock = await Api.WalletUnlockAsync(User.Login, User.Password, CancellationToken).ConfigureAwait(false);
             Assert.IsFalse(unlock.IsError);
 
-            var resp = await Api.WalletGetPublicKeys(CancellationToken.None);
-            await Api.WalletLock(User.Login, CancellationToken);
+            var resp = await Api.WalletGetPublicKeysAsync(CancellationToken.None).ConfigureAwait(false);
+            await Api.WalletLockAsync(User.Login, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -128,7 +128,7 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task WalletSetTimeoutTest()
         {
-            var resp = await Api.WalletSetTimeout(10, CancellationToken.None);
+            var resp = await Api.WalletSetTimeoutAsync(10, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -157,14 +157,14 @@ namespace Ditch.EOS.Tests.Apis
                 }
             };
 
-            var initOpRez = await Api.AbiJsonToBin(new[] { op }, CancellationToken);
+            var initOpRez = await Api.AbiJsonToBinAsync(new[] { op }, CancellationToken).ConfigureAwait(false);
             if (initOpRez.IsError)
             {
                 WriteLine(initOpRez);
                 Assert.Fail();
             }
 
-            var infoResp = await Api.GetInfo(CancellationToken);
+            var infoResp = await Api.GetInfoAsync(CancellationToken).ConfigureAwait(false);
             if (infoResp.IsError)
             {
                 WriteLine(infoResp);
@@ -177,7 +177,7 @@ namespace Ditch.EOS.Tests.Apis
             {
                 BlockNumOrId = info.HeadBlockId
             };
-            var getBlock = await Api.GetBlock(blockArgs, CancellationToken);
+            var getBlock = await Api.GetBlockAsync(blockArgs, CancellationToken).ConfigureAwait(false);
             if (getBlock.IsError)
             {
                 WriteLine(getBlock);
@@ -195,11 +195,11 @@ namespace Ditch.EOS.Tests.Apis
             };
 
 
-            await Api.WalletOpen(User.Login, CancellationToken);
-            await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
+            await Api.WalletOpenAsync(User.Login, CancellationToken).ConfigureAwait(false);
+            await Api.WalletUnlockAsync(User.Login, User.Password, CancellationToken).ConfigureAwait(false);
 
-            var resp = await Api.WalletSignTransaction(trx, new[] { new PublicKey(User.PublicActiveWif), }, info.ChainId, CancellationToken.None);
-            await Api.WalletLock(User.Login, CancellationToken);
+            var resp = await Api.WalletSignTransactionAsync(trx, new[] { new PublicKey(User.PublicActiveWif), }, info.ChainId, CancellationToken.None).ConfigureAwait(false);
+            await Api.WalletLockAsync(User.Login, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
 
             Assert.IsFalse(resp.IsError);
@@ -230,11 +230,11 @@ namespace Ditch.EOS.Tests.Apis
                 }
             };
 
-            await Api.WalletOpen(User.Login, CancellationToken);
-            await Api.WalletUnlock(User.Login, User.Password, CancellationToken);
+            await Api.WalletOpenAsync(User.Login, CancellationToken).ConfigureAwait(false);
+            await Api.WalletUnlockAsync(User.Login, User.Password, CancellationToken).ConfigureAwait(false);
 
-            var resp = await Api.BroadcastActionsWithWallet(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, CancellationToken);
-            await Api.WalletLock(User.Login, CancellationToken);
+            var resp = await Api.BroadcastActionsWithWalletAsync(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, CancellationToken).ConfigureAwait(false);
+            await Api.WalletLockAsync(User.Login, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

@@ -31,14 +31,14 @@ namespace Ditch.Core
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
         /// <exception cref="T:System.ArgumentNullException">The requestUri was null.</exception>
         /// <exception cref="T:System.Net.Http.HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout.</exception>
-        public async Task<bool> ConnectTo(string requestUrl, CancellationToken token)
+        public async Task<bool> ConnectToAsync(string requestUrl, CancellationToken token)
         {
             UrlToConnect = string.Empty;
 
             if (string.IsNullOrEmpty(requestUrl))
                 return false;
 
-            var response = await HttpClient.GetAsync(requestUrl, token);
+            var response = await HttpClient.GetAsync(requestUrl, token).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 UrlToConnect = requestUrl;
@@ -66,7 +66,7 @@ namespace Ditch.Core
         /// <returns>Typed JsonRpcResponse</returns>
         public async Task<JsonRpcResponse<T>> ExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
         {
-            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, 0, token);
+            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, 0, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Ditch.Core
         /// <returns>Typed JsonRpcResponse</returns>
         public async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, CancellationToken token)
         {
-            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, HttpClient.MaxRequestRepeatCount, token);
+            return await RepeatExecuteAsync<T>(jsonRpc, jsonSerializerSettings, HttpClient.MaxRequestRepeatCount, token).ConfigureAwait(false);
         }
 
         private async Task<JsonRpcResponse<T>> RepeatExecuteAsync<T>(IJsonRpcRequest jsonRpc, JsonSerializerSettings jsonSerializerSettings, byte loop, CancellationToken token)
@@ -90,9 +90,9 @@ namespace Ditch.Core
             try
             {
                 var content = new StringContent(jsonRpc.Message);
-                var response = await HttpClient.PostAsync(UrlToConnect, content, loop, token);
+                var response = await HttpClient.PostAsync(UrlToConnect, content, loop, token).ConfigureAwait(false);
                 
-                var stringResponse = await response.Content.ReadAsStringAsync();
+                var stringResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
                 prop.RawRequest = jsonRpc.Message;
                 prop.RawResponse = stringResponse;

@@ -11,14 +11,14 @@ namespace Ditch.Golos.Tests.Apis
         public async Task get_active_votes()
         {
             var permlink = "test";
-            var resp = await Api.GetActiveVotes(User.Login, permlink, 100, CancellationToken.None);
+            var resp = await Api.GetActiveVotesAsync(User.Login, permlink, 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_account_votes()
         {
-            var resp = await Api.GetAccountVotes(User.Login, 100, CancellationToken.None);
+            var resp = await Api.GetAccountVotesAsync(User.Login, 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -28,7 +28,7 @@ namespace Ditch.Golos.Tests.Apis
             var author = "steepshot";
             var permlink = "znakomtes-steepshot-io";
 
-            var resp = await Api.GetContent(author, permlink, 100, CancellationToken.None);
+            var resp = await Api.GetContentAsync(author, permlink, 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -38,14 +38,14 @@ namespace Ditch.Golos.Tests.Apis
             var parent = "korzunav";
             var parentPermink = "ditch-na-blokchein-khakatone";
 
-            var resp = await Api.GetContentReplies(parent, parentPermink, 100, CancellationToken.None);
+            var resp = await Api.GetContentRepliesAsync(parent, parentPermink, 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_replies_by_last_update()
         {
-            var resp = await Api.GetRepliesByLastUpdate(User.Login, string.Empty, 10, 100, CancellationToken.None);
+            var resp = await Api.GetRepliesByLastUpdateAsync(User.Login, string.Empty, 10, 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -55,7 +55,7 @@ namespace Ditch.Golos.Tests.Apis
             var author = "korzunav";
             var post = "ditch-na-blokchein-khakatone";
 
-            var resp = await Api.GetAllContentReplies(author, post, 1, CancellationToken.None);
+            var resp = await Api.GetAllContentRepliesAsync(author, post, 1, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

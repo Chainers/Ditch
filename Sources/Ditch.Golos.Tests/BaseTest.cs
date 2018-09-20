@@ -43,7 +43,7 @@ namespace Ditch.Golos.Tests
                 Api = new OperationManager(WebSocketManager);
 
                 var url = ConfigurationManager.AppSettings["Url"];
-                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None).Result, "Сan`t connect to the node");
+                Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Сan`t connect to the node");
             }
 
             Assert.IsTrue(Api.IsConnected, "Сan`t connect to the node");

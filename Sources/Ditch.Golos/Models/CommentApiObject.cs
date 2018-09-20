@@ -25,7 +25,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("title")]
-        public string Title {get; set;}
+        public string Title { get; set; }
 
         /// <summary>
         /// API name: body
@@ -33,7 +33,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("body")]
-        public string Body {get; set;}
+        public string Body { get; set; }
 
         /// <summary>
         /// API name: json_metadata
@@ -41,7 +41,7 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("json_metadata")]
-        public string JsonMetadata {get; set;}
+        public string JsonMetadata { get; set; }
 
         /// <summary>
         /// API name: parent_author
@@ -81,14 +81,14 @@ namespace Ditch.Golos.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("category")]
-        public string Category {get; set;}
+        public string Category { get; set; }
 
         /// <summary>
         /// API name: last_update
         /// 
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
-        [JsonProperty("last_update")]
+        [JsonProperty("last_update", NullValueHandling = NullValueHandling.Ignore)]
         public TimePointSec LastUpdate { get; set; }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Ditch.Golos.Models
         /// 
         /// </summary>
         /// <returns>API type: time_point_sec</returns>
-        [JsonProperty("active")]
+        [JsonProperty("active", NullValueHandling = NullValueHandling.Ignore)]
         public TimePointSec Active { get; set; }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Ditch.Golos.Models
 
         /// <summary>
         /// API name: depth
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint8_t</returns>
         [JsonProperty("depth")]
@@ -125,15 +125,15 @@ namespace Ditch.Golos.Models
 
         /// <summary>
         /// API name: children
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("children")]
-        public uint Children {get; set;}
+        public uint Children { get; set; }
 
         /// <summary>
         /// API name: children_rshares2
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint128_t</returns>
         [JsonProperty("children_rshares2")]
@@ -189,35 +189,59 @@ namespace Ditch.Golos.Models
 
         /// <summary>
         /// API name: total_vote_weight
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("total_vote_weight")]
-        public ulong TotalVoteWeight {get; set;}
+        public ulong TotalVoteWeight { get; set; }
 
         /// <summary>
         /// API name: reward_weight
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("reward_weight")]
-        public ushort RewardWeight {get; set;}
+        public ushort RewardWeight { get; set; }
 
         /// <summary>
         /// API name: total_payout_value
-        /// 
+        /// = asset(0, SBD_SYMBOL);
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("total_payout_value")]
         public Asset TotalPayoutValue { get; set; }
 
         /// <summary>
+        /// API name: beneficiary_payout_value
+        /// = asset(0, SBD_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("beneficiary_payout_value")]
+        public Asset BeneficiaryPayoutValue { get; set; }
+
+        /// <summary>
+        /// API name: beneficiary_gests_payout_value
+        /// = asset(0, VESTS_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("beneficiary_gests_payout_value")]
+        public Asset BeneficiaryGestsPayoutValue { get; set; }
+
+        /// <summary>
         /// API name: curator_payout_value
-        /// 
+        /// = asset(0, SBD_SYMBOL);
         /// </summary>
         /// <returns>API type: asset</returns>
         [JsonProperty("curator_payout_value")]
         public Asset CuratorPayoutValue { get; set; }
+
+        /// <summary>
+        /// API name: curator_gests_payout_value
+        /// = asset(0, VESTS_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("curator_gests_payout_value")]
+        public Asset CuratorGestsPayoutValue { get; set; }
 
         /// <summary>
         /// API name: author_rewards
@@ -228,20 +252,44 @@ namespace Ditch.Golos.Models
         public object AuthorRewards { get; set; }
 
         /// <summary>
+        /// API name: author_gbg_payout_value
+        /// = asset(0, SBD_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("author_gbg_payout_value")]
+        public Asset AuthorGbgPayoutValue { get; set; }
+
+        /// <summary>
+        /// API name: author_golos_payout_value
+        /// = asset(0, STEEM_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("author_golos_payout_value")]
+        public Asset AuthorGolosPayoutValue { get; set; }
+
+        /// <summary>
+        /// API name: author_gests_payout_value
+        /// = asset(0, VESTS_SYMBOL);
+        /// </summary>
+        /// <returns>API type: asset</returns>
+        [JsonProperty("author_gests_payout_value")]
+        public Asset AuthorGestsPayoutValue { get; set; }
+
+        /// <summary>
         /// API name: net_votes
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: int32_t</returns>
         [JsonProperty("net_votes")]
-        public int NetVotes {get; set;}
+        public int NetVotes { get; set; }
 
         /// <summary>
         /// API name: mode
-        /// 
+        /// = not_set;
         /// </summary>
         /// <returns>API type: comment_mode</returns>
         [JsonProperty("mode")]
-        public CommentMode Mode {get; set;}
+        public CommentMode Mode { get; set; }
 
         /// <summary>
         /// API name: root_comment
@@ -250,6 +298,14 @@ namespace Ditch.Golos.Models
         /// <returns>API type: comment_object::id_type</returns>
         [JsonProperty("root_comment")]
         public object RootComment { get; set; }
+
+        /// <summary>
+        /// API name: root_title
+        /// 
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("root_title")]
+        public string RootTitle { get; set; }
 
         /// <summary>
         /// API name: max_accepted_payout
@@ -261,15 +317,15 @@ namespace Ditch.Golos.Models
 
         /// <summary>
         /// API name: percent_steem_dollars
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: uint16_t</returns>
         [JsonProperty("percent_steem_dollars")]
-        public ushort PercentSteemDollars {get; set;}
+        public ushort PercentSteemDollars { get; set; }
 
         /// <summary>
         /// API name: allow_replies
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: bool</returns>
         [JsonProperty("allow_replies")]
@@ -277,7 +333,7 @@ namespace Ditch.Golos.Models
 
         /// <summary>
         /// API name: allow_votes
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: bool</returns>
         [JsonProperty("allow_votes")]
@@ -285,7 +341,7 @@ namespace Ditch.Golos.Models
 
         /// <summary>
         /// API name: allow_curation_rewards
-        /// 
+        /// = 0;
         /// </summary>
         /// <returns>API type: bool</returns>
         [JsonProperty("allow_curation_rewards")]

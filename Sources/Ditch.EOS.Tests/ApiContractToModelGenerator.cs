@@ -22,7 +22,7 @@ namespace Ditch.EOS.Tests
             outDir = $"{currentDir}{outDir}";
 
             var generator = new ContractCodeGenerator();
-            await generator.Generate(Api, contractName, "Ditch.EOS.Contracts", outDir, hs, CancellationToken.None);
+            await generator.GenerateAsync(Api, contractName, "Ditch.EOS.Contracts", outDir, hs, CancellationToken.None).ConfigureAwait(false);
         }
     }
 }

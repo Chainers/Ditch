@@ -15,9 +15,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new BroadcastTransactionArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.BroadcastTransaction(args, CancellationToken.None);
+            var resp = await Api.BroadcastTransactionAsync(args, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -29,9 +29,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new BroadcastTransactionSynchronousArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.BroadcastTransactionSynchronous(args, CancellationToken.None);
+            var resp = await Api.BroadcastTransactionSynchronousAsync(args, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -45,7 +45,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Block = new SignedBlock()
             };
-            var resp = await Api.BroadcastBlock(args, CancellationToken.None);
+            var resp = await Api.BroadcastBlockAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

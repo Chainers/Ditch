@@ -42,9 +42,9 @@ namespace Ditch.Golos
 
         #endregion Constructors
 
-        public async Task<bool> ConnectTo(string endpoin, CancellationToken token)
+        public async Task<bool> ConnectToAsync(string endpoin, CancellationToken token)
         {
-            return await ConnectionManager.ConnectTo(endpoin, token);
+            return await ConnectionManager.ConnectToAsync(endpoin, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -57,14 +57,14 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperationsAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<VoidResponse>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
-            return await BroadcastTransaction(transaction, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, operations, token).ConfigureAwait(false);
+            return await BroadcastTransactionAsync(transaction, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -77,14 +77,14 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<JObject>> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public async Task<JsonRpcResponse<JObject>> BroadcastOperationsSynchronousAsync(IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<JObject>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
-            return await BroadcastTransactionSynchronous(transaction, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, operations, token).ConfigureAwait(false);
+            return await BroadcastTransactionSynchronousAsync(transaction, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -96,11 +96,11 @@ namespace Ditch.Golos
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<bool>> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
+        public async Task<JsonRpcResponse<bool>> VerifyAuthorityAsync(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
             var prop = new DynamicGlobalPropertyObject { HeadBlockId = "0000000000000000000000000000000000000000", Time = DateTime.Now, HeadBlockNumber = 0 };
-            var transaction = await CreateTransaction(prop, userPrivateKeys, testOps, token);
-            return await VerifyAuthority(transaction, token);
+            var transaction = await CreateTransactionAsync(prop, userPrivateKeys, testOps, token).ConfigureAwait(false);
+            return await VerifyAuthorityAsync(transaction, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequestAsync<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
             return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
@@ -128,7 +128,7 @@ namespace Ditch.Golos
         /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomBroadcastRequest<T>(string api, string method, object[] data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomBroadcastRequestAsync<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
             return ConnectionManager.ExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
@@ -144,7 +144,7 @@ namespace Ditch.Golos
         /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequestAsync<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
             return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
@@ -159,7 +159,7 @@ namespace Ditch.Golos
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public Task<SignedTransaction> CreateTransactionAsync(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             return Task.Run(() =>
             {
@@ -188,9 +188,9 @@ namespace Ditch.Golos
             }, token);
         }
 
-        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
+        public Task<SignedTransaction> CreateTransactionAsync(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
         {
-            return CreateTransaction(propertyApiObj, userPrivateKeys, new[] { operation }, token);
+            return CreateTransactionAsync(propertyApiObj, userPrivateKeys, new[] { operation }, token);
         }
     }
 }

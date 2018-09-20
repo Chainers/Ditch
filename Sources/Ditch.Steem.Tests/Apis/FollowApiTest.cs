@@ -18,7 +18,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = string.Empty,
                 Type = FollowType.Blog
             };
-            var resp = await Api.GetFollowers(args, CancellationToken.None);
+            var resp = await Api.GetFollowersAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -32,7 +32,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = string.Empty,
                 Type = FollowType.Blog
             };
-            var resp = await Api.GetFollowing(args, CancellationToken.None);
+            var resp = await Api.GetFollowingAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -43,7 +43,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Account = User.Login
             };
-            var resp = await Api.GetFollowCount(args, CancellationToken.None);
+            var resp = await Api.GetFollowCountAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -56,7 +56,7 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = await Api.GetFeedEntries(args, CancellationToken.None);
+            var resp = await Api.GetFeedEntriesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -69,7 +69,7 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = await Api.GetFeed(args, CancellationToken.None);
+            var resp = await Api.GetFeedAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -82,7 +82,7 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = await Api.GetBlogEntries(args, CancellationToken.None);
+            var resp = await Api.GetBlogEntriesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -95,7 +95,7 @@ namespace Ditch.Steem.Tests.Apis
                 StartEntryId = 0,
                 Limit = 10
             };
-            var resp = await Api.GetBlog(args, CancellationToken.None);
+            var resp = await Api.GetBlogAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -107,7 +107,7 @@ namespace Ditch.Steem.Tests.Apis
                 AccountLowerBound = User.Login,
                 Limit = 10
             };
-            var resp = await Api.GetAccountReputations(args, CancellationToken.None);
+            var resp = await Api.GetAccountReputationsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -119,7 +119,7 @@ namespace Ditch.Steem.Tests.Apis
                 Author = "steepshot",
                 Permlink = "finally-arrived-steepshot-goes-to-beta-meet-the-updated-open-source-android-app"
             };
-            var resp = await Api.GetRebloggedBy(args, CancellationToken.None);
+            var resp = await Api.GetRebloggedByAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -130,7 +130,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 BlogAccount = User.Login
             };
-            var resp = await Api.GetBlogAuthors(args, CancellationToken.None);
+            var resp = await Api.GetBlogAuthorsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

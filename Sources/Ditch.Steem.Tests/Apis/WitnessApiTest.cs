@@ -16,7 +16,7 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login,
                 Type = BandwidthType.Forum
             };
-            var resp = await Api.GetAccountBandwidth(args, CancellationToken.None);
+            var resp = await Api.GetAccountBandwidthAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -24,7 +24,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task get_reserve_ratio()
         {
             var args = new GetReserveRatioArgs();
-            var resp = await Api.GetReserveRatio(args, CancellationToken.None);
+            var resp = await Api.GetReserveRatioAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

@@ -13,7 +13,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_config()
         {
-            var resp = await Api.GetConfig<JObject>(CancellationToken.None);
+            var resp = await Api.GetConfigAsync<JObject>(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -22,7 +22,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_dynamic_global_properties()
         {
-            var resp = await Api.GetDynamicGlobalProperties(CancellationToken.None);
+            var resp = await Api.GetDynamicGlobalPropertiesAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -30,7 +30,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_witness_schedule()
         {
-            var resp = await Api.GetWitnessSchedule(CancellationToken.None);
+            var resp = await Api.GetWitnessScheduleAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -38,7 +38,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_hardfork_properties()
         {
-            var resp = await Api.GetHardforkProperties(CancellationToken.None);
+            var resp = await Api.GetHardforkPropertiesAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -46,7 +46,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_reward_funds()
         {
-            var resp = await Api.GetRewardFunds(CancellationToken.None);
+            var resp = await Api.GetRewardFundsAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -54,7 +54,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_current_price_feed()
         {
-            var resp = await Api.GetCurrentPriceFeed(CancellationToken.None);
+            var resp = await Api.GetCurrentPriceFeedAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -62,7 +62,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_feed_history()
         {
-            var resp = await Api.GetFeedHistory(CancellationToken.None);
+            var resp = await Api.GetFeedHistoryAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -71,7 +71,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task list_witnesses()
         {
             var args = new ListWitnessesArgs();
-            var resp = await Api.ListWitnesses(args, CancellationToken.None);
+            var resp = await Api.ListWitnessesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -83,7 +83,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Owners = new[] { User.Login }
             };
-            var resp = await Api.FindWitnesses(args, CancellationToken.None);
+            var resp = await Api.FindWitnessesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -97,7 +97,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = await Api.ListWitnessVotes(args, CancellationToken.None);
+            var resp = await Api.ListWitnessVotesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -105,7 +105,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_active_witnesses()
         {
-            var resp = await Api.GetActiveWitnesses(CancellationToken.None);
+            var resp = await Api.GetActiveWitnessesAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -114,7 +114,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task list_accounts()
         {
             var args = new ListAccountsArgs();
-            var resp = await Api.ListAccounts(args, CancellationToken.None);
+            var resp = await Api.ListAccountsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -126,7 +126,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = await Api.FindAccounts(args, CancellationToken.None);
+            var resp = await Api.FindAccountsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -139,7 +139,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = await Api.ListOwnerHistories(args, CancellationToken.None);
+            var resp = await Api.ListOwnerHistoriesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -148,7 +148,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task find_owner_histories()
         {
             var args = new FindOwnerHistoriesArgs();
-            var resp = await Api.FindOwnerHistories(args, CancellationToken.None);
+            var resp = await Api.FindOwnerHistoriesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -162,7 +162,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3,
                 Order = SortOrderType.ByAccount
             };
-            var resp = await Api.ListAccountRecoveryRequests(args, CancellationToken.None);
+            var resp = await Api.ListAccountRecoveryRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -174,7 +174,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = await Api.FindAccountRecoveryRequests(args, CancellationToken.None);
+            var resp = await Api.FindAccountRecoveryRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -186,7 +186,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Order = SortOrderType.ByAccount
             };
-            var resp = await Api.ListChangeRecoveryAccountRequests(args, CancellationToken.None);
+            var resp = await Api.ListChangeRecoveryAccountRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -198,7 +198,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = await Api.FindChangeRecoveryAccountRequests(args, CancellationToken.None);
+            var resp = await Api.FindChangeRecoveryAccountRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -213,7 +213,7 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByFromId
             };
 
-            var resp = await Api.ListEscrows(args, CancellationToken.None);
+            var resp = await Api.ListEscrowsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -222,7 +222,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task find_escrows()
         {
             var args = new FindEscrowsArgs();
-            var resp = await Api.FindEscrows(args, CancellationToken.None);
+            var resp = await Api.FindEscrowsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -236,7 +236,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = await Api.ListWithdrawVestingRoutes(args, CancellationToken.None);
+            var resp = await Api.ListWithdrawVestingRoutesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -249,7 +249,7 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login,
                 Order = SortOrderType.ByWithdrawRoute
             };
-            var resp = await Api.FindWithdrawVestingRoutes(args, CancellationToken.None);
+            var resp = await Api.FindWithdrawVestingRoutesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -264,7 +264,7 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByFromId
             };
 
-            var resp = await Api.ListSavingsWithdrawals(args, CancellationToken.None);
+            var resp = await Api.ListSavingsWithdrawalsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -273,7 +273,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task find_savings_withdrawals()
         {
             var args = new FindSavingsWithdrawalsArgs();
-            var resp = await Api.FindSavingsWithdrawals(args, CancellationToken.None);
+            var resp = await Api.FindSavingsWithdrawalsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -287,7 +287,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = await Api.ListVestingDelegations(args, CancellationToken.None);
+            var resp = await Api.ListVestingDelegationsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -296,7 +296,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task find_vesting_delegations()
         {
             var args = new FindVestingDelegationsArgs();
-            var resp = await Api.FindVestingDelegations(args, CancellationToken.None);
+            var resp = await Api.FindVestingDelegationsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -310,7 +310,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = await Api.ListVestingDelegationExpirations(args, CancellationToken.None);
+            var resp = await Api.ListVestingDelegationExpirationsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -319,7 +319,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task find_vesting_delegation_expirations()
         {
             var args = new FindVestingDelegationExpirationsArgs();
-            var resp = await Api.FindVestingDelegationExpirations(args, CancellationToken.None);
+            var resp = await Api.FindVestingDelegationExpirationsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -333,7 +333,7 @@ namespace Ditch.Steem.Tests.Apis
                 Start = new object[0],
                 Limit = 3
             };
-            var resp = await Api.ListSbdConversionRequests(args, CancellationToken.None);
+            var resp = await Api.ListSbdConversionRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -342,7 +342,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task find_sbd_conversion_requests()
         {
             var args = new FindSbdConversionRequestsArgs();
-            var resp = await Api.FindSbdConversionRequests(args, CancellationToken.None);
+            var resp = await Api.FindSbdConversionRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -354,7 +354,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Order = SortOrderType.ByAccount
             };
-            var resp = await Api.ListDeclineVotingRightsRequests(args, CancellationToken.None);
+            var resp = await Api.ListDeclineVotingRightsRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -366,7 +366,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = await Api.FindDeclineVotingRightsRequests(args, CancellationToken.None);
+            var resp = await Api.FindDeclineVotingRightsRequestsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -381,7 +381,7 @@ namespace Ditch.Steem.Tests.Apis
                 Order = SortOrderType.ByPermlink
             };
 
-            var resp = await Api.ListComments(args, CancellationToken.None);
+            var resp = await Api.ListCommentsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -393,7 +393,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Comments = new[] { new[] { "steepshot", "steepshot-updates-join-ios-closed-beta-testing-full-screen-mode-for-desktops-sponsors-incentives-and-more" } }
             };
-            var resp = await Api.FindComments(args, CancellationToken.None);
+            var resp = await Api.FindCommentsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -412,7 +412,7 @@ namespace Ditch.Steem.Tests.Apis
                 },
                 Limit = 3
             };
-            var resp = await Api.ListVotes(args, CancellationToken.None);
+            var resp = await Api.ListVotesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -425,7 +425,7 @@ namespace Ditch.Steem.Tests.Apis
                 Author = "steepshot",
                 Permlink = "let-s-make-steem-great-again-incentives-to-sponsors-announcement-from-steepshot"
             };
-            var resp = await Api.FindVotes(args, CancellationToken.None);
+            var resp = await Api.FindVotesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -439,7 +439,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 3,
                 Order = SortOrderType.ByAccount
             };
-            var resp = await Api.ListLimitOrders(args, CancellationToken.None);
+            var resp = await Api.ListLimitOrdersAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -451,7 +451,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Account = User.Login
             };
-            var resp = await Api.FindLimitOrders(args, CancellationToken.None);
+            var resp = await Api.FindLimitOrdersAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -461,9 +461,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetTransactionHexArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.GetTransactionHex(args, CancellationToken.None);
+            var resp = await Api.GetTransactionHexAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -475,7 +475,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Accounts = new[] { User.Login }
             };
-            var accounts = await Api.FindAccounts(findAccountsArgs, CancellationToken.None);
+            var accounts = await Api.FindAccountsAsync(findAccountsArgs, CancellationToken.None).ConfigureAwait(false);
             if (accounts.IsError)
                 WriteLine(accounts);
             Assert.IsFalse(accounts.IsError);
@@ -483,10 +483,10 @@ namespace Ditch.Steem.Tests.Apis
 
             var args = new GetRequiredSignaturesArgs
             {
-                Trx = await GetSignedTransaction(),
+                Trx = await GetSignedTransaction().ConfigureAwait(false),
                 AvailableKeys = new[] { pKey }
             };
-            var resp = await Api.GetRequiredSignatures(args, CancellationToken.None);
+            var resp = await Api.GetRequiredSignaturesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -496,9 +496,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetPotentialSignaturesArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.GetPotentialSignatures(args, CancellationToken.None);
+            var resp = await Api.GetPotentialSignaturesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -508,9 +508,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new VerifyAuthorityArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.VerifyAuthority(args, CancellationToken.None);
+            var resp = await Api.VerifyAuthorityAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -524,7 +524,7 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login,
                 Signers = new PublicKeyType[0]
             };
-            var resp = await Api.VerifyAccountAuthority(args, CancellationToken.None);
+            var resp = await Api.VerifyAccountAuthorityAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -534,7 +534,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task verify_signatures()
         {
             var args = new VerifySignaturesArgs();
-            var resp = await Api.VerifySignatures(args, CancellationToken.None);
+            var resp = await Api.VerifySignaturesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -542,7 +542,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_smt_next_identifier()
         {
-            var confResp = await Api.GetConfig<JObject>(CancellationToken.None);
+            var confResp = await Api.GetConfigAsync<JObject>(CancellationToken.None).ConfigureAwait(false);
             if (confResp.IsError)
                 return;
 
@@ -554,7 +554,7 @@ namespace Ditch.Steem.Tests.Apis
 
             if (isEnableSmt)
             {
-                var resp = await Api.GetSmtNextIdentifier(CancellationToken.None);
+                var resp = await Api.GetSmtNextIdentifierAsync(CancellationToken.None).ConfigureAwait(false);
                 TestPropetries(resp);
             }
         }

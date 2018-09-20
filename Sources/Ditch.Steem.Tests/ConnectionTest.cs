@@ -45,9 +45,9 @@ namespace Ditch.Steem.Tests
 
             var sw = new Stopwatch();
             sw.Start();
-            if (await Api.ConnectTo(url, token))
+            if (await Api.ConnectToAsync(url, token).ConfigureAwait(false))
             {
-                var hfvr = await Api.GetConfig<JObject>(token);
+                var hfvr = await Api.GetConfigAsync<JObject>(token).ConfigureAwait(false);
                 WriteLine(hfvr);
                 Assert.IsFalse(hfvr.IsError);
                 JToken version;

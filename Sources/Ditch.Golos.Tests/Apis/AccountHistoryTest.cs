@@ -12,7 +12,7 @@ namespace Ditch.Golos.Tests.Apis
         {
             ulong from = 3;
             uint limit = 3;
-            var resp = await Api.GetAccountHistory(User.Login, from, limit, CancellationToken.None);
+            var resp = await Api.GetAccountHistoryAsync(User.Login, from, limit, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

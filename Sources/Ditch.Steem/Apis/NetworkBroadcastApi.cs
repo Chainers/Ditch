@@ -19,9 +19,9 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_transaction_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VoidResponse>> BroadcastTransaction(BroadcastTransactionArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastTransactionAsync(BroadcastTransactionArgs args, CancellationToken token)
         {
-            return CustomBroadcastRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
+            return CustomBroadcastRequestAsync<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: broadcast_transaction_synchronous_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronous(BroadcastTransactionSynchronousArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronousAsync(BroadcastTransactionSynchronousArgs args, CancellationToken token)
         {
-            return CustomBroadcastRequest<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
+            return CustomBroadcastRequestAsync<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_block_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VoidResponse>> BroadcastBlock(BroadcastBlockArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastBlockAsync(BroadcastBlockArgs args, CancellationToken token)
         {
-            return CustomBroadcastRequest<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
+            return CustomBroadcastRequestAsync<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_transaction_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VoidResponse>> BroadcastTransactionLikeSteemit(BroadcastTransactionArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastTransactionLikeSteemitAsync(BroadcastTransactionArgs args, CancellationToken token)
         {
             return CondenserBroadcastRequestAsync<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction", args, token);
         }
@@ -69,7 +69,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: broadcast_transaction_synchronous_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronousLikeSteemit(BroadcastTransactionSynchronousArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastTransactionSynchronousLikeSteemitAsync(BroadcastTransactionSynchronousArgs args, CancellationToken token)
         {
             return CondenserBroadcastRequestAsync<BroadcastTransactionSynchronousReturn>(KnownApiNames.NetworkBroadcastApi, "broadcast_transaction_synchronous", args, token);
         }
@@ -81,7 +81,7 @@ namespace Ditch.Steem
         /// <param name="args">API type: broadcast_block_args</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VoidResponse>> BroadcastBlockLikeSteemit(BroadcastBlockArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VoidResponse>> BroadcastBlockLikeSteemitAsync(BroadcastBlockArgs args, CancellationToken token)
         {
             return CondenserBroadcastRequestAsync<VoidResponse>(KnownApiNames.NetworkBroadcastApi, "broadcast_block", args, token);
         }

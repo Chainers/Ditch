@@ -20,9 +20,9 @@ namespace Ditch.Golos.Tests
         {
             JsonRpcResponse response;
             if (isNeedBroadcast)
-                response = await Api.BroadcastOperations(postingKeys, op, CancellationToken.None);
+                response = await Api.BroadcastOperationsAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
             else
-                response = await Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
+                response = await Api.VerifyAuthorityAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
 
             WriteLine(response);
 
@@ -38,7 +38,7 @@ namespace Ditch.Golos.Tests
             const string autor = "joseph.kalu";
             const string permlink = "test-s-russkimi-bukvami-2017-11-16-17-12-05";
 
-            var voteState = await GetVoteState(autor, permlink, user);
+            var voteState = await GetVoteState(autor, permlink, user).ConfigureAwait(false);
 
             for (var i = 0; i < 3; i++)
             {
@@ -48,7 +48,7 @@ namespace Ditch.Golos.Tests
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
                         : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
 
-                await Post(user.PostingKeys, false, op);
+                await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -61,7 +61,7 @@ namespace Ditch.Golos.Tests
 
         private async Task<int> GetVoteState(string author, string permlink, UserInfo user)
         {
-            var resp = await Api.GetContent(author, permlink, 100, CancellationToken.None);
+            var resp = await Api.GetContentAsync(author, permlink, 100, CancellationToken.None).ConfigureAwait(false);
             if (resp.IsError)
                 WriteLine(resp);
 
@@ -80,7 +80,7 @@ namespace Ditch.Golos.Tests
 
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -91,7 +91,7 @@ namespace Ditch.Golos.Tests
         public async Task TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset("0.001 GBG"), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -101,7 +101,7 @@ namespace Ditch.Golos.Tests
         public async Task TransferToVestingOperationTest()
         {
             var op = new TransferToVestingOperation(User.Login, User.Login, new Asset("0.001 GOLOS"));
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -111,7 +111,7 @@ namespace Ditch.Golos.Tests
         public async Task WithdrawVestingOperationTest()
         {
             var op = new WithdrawVestingOperation(User.Login, new Asset("0.001 GESTS"));
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -161,7 +161,7 @@ namespace Ditch.Golos.Tests
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.MemoKey = new PublicKeyType(subPublicKey);
 
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion AccountCreate
@@ -170,11 +170,11 @@ namespace Ditch.Golos.Tests
         [Test]
         public async Task AccountUpdateTest()
         {
-            var resp = await Api.LookupAccountNames(new[] { User.Login }, CancellationToken.None);
+            var resp = await Api.LookupAccountNamesAsync(new[] { User.Login }, CancellationToken.None).ConfigureAwait(false);
             var acc = resp.Result[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion AccountUpdate
@@ -186,7 +186,7 @@ namespace Ditch.Golos.Tests
         public async Task WitnessUpdateTest()
         {
             var op = new WitnessUpdateOperation(User.Login, "https://golos.io/ru--golos/@steepshot/steepshot-zapuskaet-delegatskuyu-nodu", new PublicKeyType("GLS1111111111111111111111111111111114T1Anm"), new ChainProperties17(1000, new Asset("1.000 GOLOS"), 131072), new Asset("0.000 GOLOS"));
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -207,10 +207,10 @@ namespace Ditch.Golos.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             var op2 = new DeleteCommentOperation(user.Login, "");
-            await Post(user.PostingKeys, false, op2);
+            await Post(user.PostingKeys, false, op2).ConfigureAwait(false);
         }
 
         #endregion DeleteComment
@@ -223,36 +223,36 @@ namespace Ditch.Golos.Tests
             const string autor = "steepshot";
 
 
-            var isFollow = await IsFollow(autor);
+            var isFollow = await IsFollow(autor).ConfigureAwait(false);
 
             var op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             isFollow = !isFollow;
 
             op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             isFollow = !isFollow;
 
             var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             isFollow = !isFollow;
 
             fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         private async Task<bool> IsFollow(string author)
         {
-            var resp = await Api.GetFollowing(User.Login, author, FollowType.Blog, 1, CancellationToken.None);
+            var resp = await Api.GetFollowingAsync(User.Login, author, FollowType.Blog, 1, CancellationToken.None).ConfigureAwait(false);
             return resp.Result.Length > 0 && resp.Result[0].Following == author;
         }
 
@@ -262,7 +262,7 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new RePostOperation(user.Login, "joseph.kalu", "fkkl", user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         [Test]
@@ -271,7 +271,7 @@ namespace Ditch.Golos.Tests
             var user = User;
 
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion CustomJson
@@ -285,7 +285,7 @@ namespace Ditch.Golos.Tests
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами и бенефитами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             var op2 = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, 3, "GBG"), new Beneficiary("steepshot", 1000));
 
-            await Post(user.PostingKeys, false, op, op2);
+            await Post(user.PostingKeys, false, op, op2).ConfigureAwait(false);
         }
 
         #endregion CommentOptions
@@ -334,7 +334,7 @@ namespace Ditch.Golos.Tests
                 }
             };
 
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion ProposalCreate
@@ -351,7 +351,7 @@ namespace Ditch.Golos.Tests
 
             };
 
-            await Post(User.PostingKeys, false, op);
+            await Post(User.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion ProposalUpdate

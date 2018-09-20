@@ -17,10 +17,10 @@ namespace Ditch.Golos.Tests.Apis
             var autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalPropertiesAsync(CancellationToken.None).ConfigureAwait(false);
+            var transaction = await Api.CreateTransactionAsync(prop.Result, user.PostingKeys, op, CancellationToken.None).ConfigureAwait(false);
 
-            var resp = await Api.BroadcastTransaction(transaction, CancellationToken.None);
+            var resp = await Api.BroadcastTransactionAsync(transaction, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -33,10 +33,10 @@ namespace Ditch.Golos.Tests.Apis
             var autor = "steepshot";
 
             var op = new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            var prop = await Api.GetDynamicGlobalProperties(CancellationToken.None);
-            var transaction = await Api.CreateTransaction(prop.Result, user.PostingKeys, op, CancellationToken.None);
+            var prop = await Api.GetDynamicGlobalPropertiesAsync(CancellationToken.None).ConfigureAwait(false);
+            var transaction = await Api.CreateTransactionAsync(prop.Result, user.PostingKeys, op, CancellationToken.None).ConfigureAwait(false);
 
-            var resp = await Api.BroadcastTransactionSynchronous(transaction, CancellationToken.None);
+            var resp = await Api.BroadcastTransactionSynchronousAsync(transaction, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -45,7 +45,7 @@ namespace Ditch.Golos.Tests.Apis
         [Ignore("Real transaction")]
         public async Task broadcast_block()
         {
-            var resp = await Api.BroadcastBlock(new SignedBlock(), CancellationToken.None);
+            var resp = await Api.BroadcastBlockAsync(new SignedBlock(), CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

@@ -12,14 +12,14 @@ namespace Ditch.Steem.Tests.Apis
         [Test][Parallelizable]
         public async Task get_ticker()
         {
-            var resp = await Api.GetTicker(CancellationToken.None);
+            var resp = await Api.GetTickerAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_volume()
         {
-            var resp = await Api.GetVolume(CancellationToken.None);
+            var resp = await Api.GetVolumeAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -27,7 +27,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task get_order_book()
         {
             var args = new GetOrderBookArgs();
-            var resp = await Api.GetOrderBook(args, CancellationToken.None);
+            var resp = await Api.GetOrderBookAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -40,7 +40,7 @@ namespace Ditch.Steem.Tests.Apis
                 End = new DateTime(2017, 6, 2),
                 Limit = 100
             };
-            var resp = await Api.GetTradeHistory(args, CancellationToken.None);
+            var resp = await Api.GetTradeHistoryAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -48,7 +48,7 @@ namespace Ditch.Steem.Tests.Apis
         public async Task get_recent_trades()
         {
             var args = new GetRecentTradesArgs();
-            var resp = await Api.GetRecentTrades(args, CancellationToken.None);
+            var resp = await Api.GetRecentTradesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -61,14 +61,14 @@ namespace Ditch.Steem.Tests.Apis
                 BucketSeconds = 100,
                 End = new DateTime(2017, 6, 2)
             };
-            var resp = await Api.GetMarketHistory(args, CancellationToken.None);
+            var resp = await Api.GetMarketHistoryAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_market_history_buckets()
         {
-            var resp = await Api.GetMarketHistoryBuckets(CancellationToken.None);
+            var resp = await Api.GetMarketHistoryBucketsAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

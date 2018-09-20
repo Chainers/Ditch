@@ -12,14 +12,14 @@ namespace Ditch.Golos.Tests.Apis
         [Test][Parallelizable]
         public async Task get_inbox()
         {
-            var resp = await Api.GetInbox(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None);
+            var resp = await Api.GetInboxAsync(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_outbox()
         {
-            var resp = await Api.GetOutbox(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None);
+            var resp = await Api.GetOutboxAsync(User.Login, new DateTime(2017, 1, 1), 10, 0, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

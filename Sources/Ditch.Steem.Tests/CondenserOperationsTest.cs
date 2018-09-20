@@ -26,9 +26,9 @@ namespace Ditch.Steem.Tests
         {
             JsonRpcResponse response;
             if (isNeedBroadcast)
-                response = await Api.CondenserBroadcastOperationsSynchronous(postingKeys, op, CancellationToken.None);
+                response = await Api.CondenserBroadcastOperationsSynchronousAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
             else
-                response = await Api.CondenserVerifyAuthority(postingKeys, op, CancellationToken.None);
+                response = await Api.CondenserVerifyAuthorityAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
 
             WriteLine(response);
             Assert.IsFalse(response.IsError);
@@ -43,7 +43,7 @@ namespace Ditch.Steem.Tests
             const string autor = "joseph.kalu";
             const string permlink = "fkkl";
 
-            var voteState = await GetVoteState(autor, permlink, user);
+            var voteState = await GetVoteState(autor, permlink, user).ConfigureAwait(false);
 
             for (var i = 0; i < 3; i++)
             {
@@ -53,7 +53,7 @@ namespace Ditch.Steem.Tests
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
                         : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
 
-                await Post(user.PostingKeys, false, op);
+                await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
                 if (voteState == 0)
                     voteState = VoteOperation.MaxUpVote;
@@ -71,7 +71,7 @@ namespace Ditch.Steem.Tests
                 Author = author,
                 Permlink = permlink
             };
-            var resp = await Api.GetDiscussion(args, CancellationToken.None);
+            var resp = await Api.GetDiscussionAsync(args, CancellationToken.None).ConfigureAwait(false);
             if (resp.IsError)
             {
                 WriteLine(resp);
@@ -89,7 +89,7 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new PostOperation("test", user.Login, "Тест с русскими буквами", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Ditch.Steem.Tests
 
             var op = new ReplyOperation("steepshot", "Тест с русскими буквами", user.Login, "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg фотачка и русский текст в придачу!", GetMeta(null));
             Assert.IsTrue(OperationHelper.TimePostfix.IsMatch(op.Permlink));
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -119,7 +119,7 @@ namespace Ditch.Steem.Tests
         public async Task TransferOperationTest()
         {
             var op = new TransferOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSbd), "Hi, it`s test transfer from Ditch (https://github.com/Chainers/Ditch).");
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -129,7 +129,7 @@ namespace Ditch.Steem.Tests
         public async Task TransferToVestingOperationTest()
         {
             var op = new TransferToVestingOperation(User.Login, User.Login, new Asset(1, Config.SteemAssetNumSteem));
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -139,7 +139,7 @@ namespace Ditch.Steem.Tests
         public async Task WithdrawVestingOperationTest()
         {
             var op = new WithdrawVestingOperation(User.Login, new Asset(1, Config.SteemAssetNumVests));
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -188,7 +188,7 @@ namespace Ditch.Steem.Tests
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
             op.MemoKey = new PublicKeyType(subPublicKey);
 
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
 
@@ -202,11 +202,11 @@ namespace Ditch.Steem.Tests
             {
                 Accounts = new[] { User.Login }
             };
-            var resp = await Api.FindAccounts(args, CancellationToken.None);
+            var resp = await Api.FindAccountsAsync(args, CancellationToken.None).ConfigureAwait(false);
             var acc = resp.Result.Accounts[0];
 
             var op = new AccountUpdateOperation(User.Login, acc.MemoKey, acc.JsonMetadata);
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion AccountUpdate
@@ -220,7 +220,7 @@ namespace Ditch.Steem.Tests
             var fee = new Asset(1, Config.SteemAssetNumSteem);
 
             var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType(Config.SteemAddressPrefix + "1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
-            await Post(User.ActiveKeys, false, op);
+            await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion
@@ -240,10 +240,10 @@ namespace Ditch.Steem.Tests
         {
             var user = User;
             var op = new PostOperation("test", user.Login, "Test post for delete", "Test post for delete", GetMeta(null));
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             var op2 = new DeleteCommentOperation(op.Author, op.Permlink);
-            await Post(user.PostingKeys, false, op2);
+            await Post(user.PostingKeys, false, op2).ConfigureAwait(false);
         }
 
         #endregion DeleteComment
@@ -256,31 +256,31 @@ namespace Ditch.Steem.Tests
             const string autor = "steepshot";
 
 
-            var isFollow = await IsFollow(autor);
+            var isFollow = await IsFollow(autor).ConfigureAwait(false);
 
             var op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             isFollow = !isFollow;
 
             op = isFollow
                 ? new UnfollowOperation(user.Login, autor, user.Login)
                 : new FollowOperation(user.Login, autor, FollowType.Blog, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             isFollow = !isFollow;
 
             var fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
             isFollow = !isFollow;
 
             fType = isFollow ? new FollowType[0] : new[] { FollowType.Blog };
             op = new FollowOperation(user.Login, autor, fType, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         private async Task<bool> IsFollow(string autor)
@@ -292,7 +292,7 @@ namespace Ditch.Steem.Tests
                 Limit = 1,
                 Type = FollowType.Blog
             };
-            var resp = await Api.GetFollowing(args, CancellationToken.None);
+            var resp = await Api.GetFollowingAsync(args, CancellationToken.None).ConfigureAwait(false);
             if (resp.IsError)
             {
                 WriteLine(resp);
@@ -307,7 +307,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new RePostOperation(user.Login, "joseph.kalu", "fkkl", user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         [Test]
@@ -316,7 +316,7 @@ namespace Ditch.Steem.Tests
             var user = User;
 
             var op = new FollowOperation(user.Login, "steepshot", FollowType.Blog, user.Login);
-            await Post(user.PostingKeys, false, op);
+            await Post(user.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion CustomJson
@@ -328,7 +328,7 @@ namespace Ditch.Steem.Tests
             var user = User;
             var op = new PostOperation("test", user.Login, "test", "http://yt3.ggpht.com/-Z7aLVW1IhkQ/AAAAAAAAAAI/AAAAAAAAAAA/k54r-HgKdJc/s900-c-k-no-mo-rj-c0xffffff/photo.jpg", GetMeta(null));
             var popt = new BeneficiariesOperation(user.Login, op.Permlink, new Asset(1000000000, Config.SteemAssetNumSbd), new Beneficiary("steepshot", 1000));
-            await Post(user.PostingKeys, false, op, popt);
+            await Post(user.PostingKeys, false, op, popt).ConfigureAwait(false);
         }
 
         #endregion CommentOptions
@@ -360,7 +360,7 @@ namespace Ditch.Steem.Tests
             var sbd = new Asset(1, Config.SteemAssetNumSbd);
             var vest = new Asset(1, Config.SteemAssetNumVests);
             var op = new ClaimRewardBalanceOperation(User.Login, steem, sbd, vest);
-            await Post(User.PostingKeys, false, op);
+            await Post(User.PostingKeys, false, op).ConfigureAwait(false);
         }
 
         #endregion ClaimRewardBalance

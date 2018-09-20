@@ -238,6 +238,38 @@ namespace Ditch.Steem.Models
         public uint DelegationReturnPeriod { get; set; }
 
         /// <summary>
+        /// API name: reverse_auction_seconds
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint64_t</returns>
+        [JsonProperty("reverse_auction_seconds")]
+        public ulong ReverseAuctionSeconds { get; set; }
+
+        /// <summary>
+        /// API name: available_account_subsidies
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: int64_t</returns>
+        [JsonProperty("available_account_subsidies")]
+        public long AvailableAccountSubsidies { get; set; }
+
+        /// <summary>
+        /// API name: sbd_stop_percent
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint16_t</returns>
+        [JsonProperty("sbd_stop_percent")]
+        public ushort SbdStopPercent { get; set; }
+
+        /// <summary>
+        /// API name: sbd_start_percent
+        /// = 0;
+        /// </summary>
+        /// <returns>API type: uint16_t</returns>
+        [JsonProperty("sbd_start_percent")]
+        public ushort SbdStartPercent { get; set; }
+
+        /// <summary>
         /// API name: smt_creation_fee
         /// = asset( 1000000, SBD_SYMBOL );
         /// </summary>

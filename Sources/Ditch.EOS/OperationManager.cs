@@ -33,36 +33,36 @@ namespace Ditch.EOS
 
         #endregion Constructors
 
-        public async Task<OperationResult<T>> CustomGetRequest<T>(string url, Dictionary<string, object> parameters, CancellationToken token)
+        public async Task<OperationResult<T>> CustomGetRequestAsync<T>(string url, Dictionary<string, object> parameters, CancellationToken token)
         {
             var param = string.Empty;
             if (parameters != null && parameters.Count > 0)
                 param = "?" + string.Join("&", parameters.Select(i => $"{i.Key}={i.Value}"));
-            return await RepeatGetRequest<T>($"{url}{param}", token);
+            return await RepeatGetRequestAsync<T>($"{url}{param}", token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<T>> CustomGetRequest<T>(string url, CancellationToken token)
+        public async Task<OperationResult<T>> CustomGetRequestAsync<T>(string url, CancellationToken token)
         {
-            return await RepeatGetRequest<T>(url, token);
+            return await RepeatGetRequestAsync<T>(url, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<T>> CustomPutRequest<T>(string url, object data, CancellationToken token)
+        public async Task<OperationResult<T>> CustomPutRequestAsync<T>(string url, object data, CancellationToken token)
         {
-            return await RepeatPostRequest<T>(url, data, HttpClient.MaxRequestRepeatCount, token);
+            return await RepeatPostRequestAsync<T>(url, data, HttpClient.MaxRequestRepeatCount, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<T>> CustomPostRequest<T>(string url, object data, CancellationToken token)
+        public async Task<OperationResult<T>> CustomPostRequestAsync<T>(string url, object data, CancellationToken token)
         {
-            return await RepeatPostRequest<T>(url, data, 0, token);
+            return await RepeatPostRequestAsync<T>(url, data, 0, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<PushTransactionResults>> BroadcastActions(BaseAction[] baseActions, List<byte[]> privateKeys, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults>> BroadcastActionsAsync(BaseAction[] baseActions, List<byte[]> privateKeys, CancellationToken token)
         {
-            var initOpRez = await AbiJsonToBin(baseActions, token);
+            var initOpRez = await AbiJsonToBinAsync(baseActions, token).ConfigureAwait(false);
             if (initOpRez.IsError)
                 return new OperationResult<PushTransactionResults>(initOpRez);
 
-            var infoResp = await GetInfo(token);
+            var infoResp = await GetInfoAsync(token).ConfigureAwait(false);
             if (infoResp.IsError)
                 return new OperationResult<PushTransactionResults>(infoResp);
 
@@ -72,7 +72,7 @@ namespace Ditch.EOS
             {
                 BlockNumOrId = info.HeadBlockId
             };
-            var getBlock = await GetBlock(blockArgs, token);
+            var getBlock = await GetBlockAsync(blockArgs, token).ConfigureAwait(false);
             if (getBlock.IsError)
                 return new OperationResult<PushTransactionResults>(getBlock);
 
@@ -110,16 +110,16 @@ namespace Ditch.EOS
                 pack.Signatures[i] = sigHex;
             }
 
-            return await PushTransaction(pack, token);
+            return await PushTransactionAsync(pack, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<PushTransactionResults>> BroadcastActions(BaseAction[] baseActions, PublicKey[] publicKeys, Func<SignedTransaction, PublicKey[], string, CancellationToken, Task<OperationResult<SignedTransaction>>> signFunc, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults>> BroadcastActionsAsync(BaseAction[] baseActions, PublicKey[] publicKeys, Func<SignedTransaction, PublicKey[], string, CancellationToken, Task<OperationResult<SignedTransaction>>> signFunc, CancellationToken token)
         {
-            var initOpRez = await AbiJsonToBin(baseActions, token);
+            var initOpRez = await AbiJsonToBinAsync(baseActions, token).ConfigureAwait(false);
             if (initOpRez.IsError)
                 return new OperationResult<PushTransactionResults>(initOpRez);
 
-            var infoResp = await GetInfo(token);
+            var infoResp = await GetInfoAsync(token).ConfigureAwait(false);
             if (infoResp.IsError)
                 return new OperationResult<PushTransactionResults>(infoResp);
 
@@ -129,7 +129,7 @@ namespace Ditch.EOS
             {
                 BlockNumOrId = info.HeadBlockId
             };
-            var getBlock = await GetBlock(blockArgs, token);
+            var getBlock = await GetBlockAsync(blockArgs, token).ConfigureAwait(false);
             if (getBlock.IsError)
                 return new OperationResult<PushTransactionResults>(getBlock);
 
@@ -143,7 +143,7 @@ namespace Ditch.EOS
                 Expiration = block.Timestamp.Value.AddSeconds(30)
             };
 
-            var strx = await signFunc.Invoke(trx, publicKeys, info.ChainId, token);
+            var strx = await signFunc.Invoke(trx, publicKeys, info.ChainId, token).ConfigureAwait(false);
             if (strx.IsError)
                 return new OperationResult<PushTransactionResults>(strx);
 
@@ -162,15 +162,15 @@ namespace Ditch.EOS
                 Signatures = strx.Result.Signatures
             };
 
-            return await PushTransaction(pack, token);
+            return await PushTransactionAsync(pack, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<PushTransactionResults>> BroadcastActionsWithWallet(BaseAction[] baseActions, PublicKey[] publicKeys, CancellationToken token)
+        public async Task<OperationResult<PushTransactionResults>> BroadcastActionsWithWalletAsync(BaseAction[] baseActions, PublicKey[] publicKeys, CancellationToken token)
         {
-            return await BroadcastActions(baseActions, publicKeys, WalletSignTransaction, token);
+            return await BroadcastActionsAsync(baseActions, publicKeys, WalletSignTransactionAsync, token).ConfigureAwait(false);
         }
 
-        public async Task<OperationResult<VoidResponse>> AbiJsonToBin(BaseAction[] baseActions, CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> AbiJsonToBinAsync(BaseAction[] baseActions, CancellationToken token)
         {
             foreach (var action in baseActions)
             {
@@ -183,7 +183,7 @@ namespace Ditch.EOS
                     Action = action.Name,
                     Args = action.Args
                 };
-                var abiJsonToBin = await AbiJsonToBin(abiJsonToBinArgs, token);
+                var abiJsonToBin = await AbiJsonToBinAsync(abiJsonToBinArgs, token).ConfigureAwait(false);
 
                 if (abiJsonToBin.IsError)
                     return new OperationResult<VoidResponse>(abiJsonToBin);
@@ -193,12 +193,12 @@ namespace Ditch.EOS
             return new OperationResult<VoidResponse>();
         }
 
-        public virtual async Task<OperationResult<T>> CreateResult<T>(HttpResponseMessage response, CancellationToken ct)
+        public virtual async Task<OperationResult<T>> CreateResultAsync<T>(HttpResponseMessage response, CancellationToken ct)
         {
             var result = new OperationResult<T>();
 
             if (response.Content != null)
-                result.RawResponse = await response.Content.ReadAsStringAsync();
+                result.RawResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -239,7 +239,7 @@ namespace Ditch.EOS
         }
 
 
-        private async Task<OperationResult<T>> RepeatPostRequest<T>(string url, object data, byte loop, CancellationToken token)
+        private async Task<OperationResult<T>> RepeatPostRequestAsync<T>(string url, object data, byte loop, CancellationToken token)
         {
             var args = string.Empty;
             if (data != null)
@@ -251,8 +251,8 @@ namespace Ditch.EOS
             try
             {
                 HttpContent content = args != null ? new StringContent(args, Encoding.UTF8, "application/json") : null;
-                var response = await HttpClient.PostAsync(url, content, loop, token);
-                var result = await CreateResult<T>(response, token);
+                var response = await HttpClient.PostAsync(url, content, loop, token).ConfigureAwait(false);
+                var result = await CreateResultAsync<T>(response, token).ConfigureAwait(false);
                 result.RawRequest = $"POST(PUT): {url} {args}";
                 return result;
 
@@ -266,18 +266,18 @@ namespace Ditch.EOS
             }
         }
 
-        private async Task<OperationResult<T>> RepeatGetRequest<T>(string url, CancellationToken token)
+        private async Task<OperationResult<T>> RepeatGetRequestAsync<T>(string url, CancellationToken token)
         {
             if (string.IsNullOrEmpty(url))
                 return new OperationResult<T>(new ArgumentNullException(nameof(url))) { RawRequest = $"GET: {url}" };
 
             try
             {
-                var response = await HttpClient.GetAsync(url, token);
+                var response = await HttpClient.GetAsync(url, token).ConfigureAwait(false);
 
                 response.EnsureSuccessStatusCode();
 
-                var result = await CreateResult<T>(response, token);
+                var result = await CreateResultAsync<T>(response, token).ConfigureAwait(false);
                 result.RawRequest = $"GET: {url}";
                 return result;
             }

@@ -9,7 +9,7 @@ namespace Ditch.Core.Interfaces
     {
         bool IsConnected { get; }
 
-        Task<bool> ConnectTo(string endpoin, CancellationToken token);
+        Task<bool> ConnectToAsync(string endpoin, CancellationToken token);
 
         void Disconnect();
 

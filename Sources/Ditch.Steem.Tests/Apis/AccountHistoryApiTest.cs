@@ -17,7 +17,7 @@ namespace Ditch.Steem.Tests.Apis
                 BlockNum = 2,
                 OnlyVirtual = false
             };
-            var resp = await Api.GetOpsInBlock(args, CancellationToken.None);
+            var resp = await Api.GetOpsInBlockAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
         
@@ -28,7 +28,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Id = ""
             };
-            var resp = await Api.GetTransaction(args, CancellationToken.None);
+            var resp = await Api.GetTransactionAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
         
@@ -39,7 +39,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Account = User.Login
             };
-            var resp = await Api.GetAccountHistory(args, CancellationToken.None);
+            var resp = await Api.GetAccountHistoryAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
         
@@ -53,7 +53,7 @@ namespace Ditch.Steem.Tests.Apis
                     BlockRangeBegin = 2,
                     BlockRangeEnd = 20
                 };
-                var resp = await Api.EnumVirtualOps(args, CancellationToken.None);
+                var resp = await Api.EnumVirtualOpsAsync(args, CancellationToken.None).ConfigureAwait(false);
                 TestPropetries(resp);
             }
             catch (Exception ex)

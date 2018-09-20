@@ -13,7 +13,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task get_methods()
         {
-            var resp = await Api.CustomGetRequest<string[]>(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None);
+            var resp = await Api.CustomGetRequestAsync<string[]>(KnownApiNames.JsonrpcApi, "get_methods", CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -21,7 +21,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task get_signature()
         {
-            var resp = await Api.CustomGetRequest<VoidResponse>(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None);
+            var resp = await Api.CustomGetRequestAsync<VoidResponse>(KnownApiNames.JsonrpcApi, "get_signature", new Method(KnownApiNames.DatabaseApi, "list_witness_votes"), CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
             WriteLine(JsonConvert.SerializeObject(resp.Result).Replace("\",\"", $"\",{Environment.NewLine}\""));

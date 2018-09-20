@@ -11,14 +11,14 @@ namespace Ditch.Golos.Tests.Apis
         [Test][Parallelizable]
         public async Task get_market_history()
         {
-            var resp = await Api.GetMarketHistory(100, new DateTime(2017, 4, 2), DateTime.Now, CancellationToken.None);
+            var resp = await Api.GetMarketHistoryAsync(100, new DateTime(2017, 4, 2), DateTime.Now, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_market_history_buckets()
         {
-            var resp = await Api.GetMarketHistoryBuckets(CancellationToken.None);
+            var resp = await Api.GetMarketHistoryBucketsAsync(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -26,14 +26,14 @@ namespace Ditch.Golos.Tests.Apis
         [Test][Parallelizable]
         public async Task get_open_orders()
         {
-            var resp = await Api.GetOpenOrders(User.Login, CancellationToken.None);
+            var resp = await Api.GetOpenOrdersAsync(User.Login, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_order_book()
         {
-            var resp = await Api.GetOrderBook(100, CancellationToken.None);
+            var resp = await Api.GetOrderBookAsync(100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -41,35 +41,35 @@ namespace Ditch.Golos.Tests.Apis
         public async Task get_order_book_extended()
         {
             uint arg0 = 1;
-            var resp = await Api.GetOrderBookExtended(arg0, CancellationToken.None);
+            var resp = await Api.GetOrderBookExtendedAsync(arg0, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_recent_trades()
         {
-            var resp = await Api.GetRecentTrades(3, CancellationToken.None);
+            var resp = await Api.GetRecentTradesAsync(3, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_ticker()
         {
-            var resp = await Api.GetTicker(CancellationToken.None);
+            var resp = await Api.GetTickerAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_trade_history()
         {
-            var resp = await Api.GetTradeHistory(new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100, CancellationToken.None);
+            var resp = await Api.GetTradeHistoryAsync(new DateTime(2017, 4, 2), new DateTime(2017, 4, 3), 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_volume()
         {
-            var resp = await Api.GetVolume(CancellationToken.None);
+            var resp = await Api.GetVolumeAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

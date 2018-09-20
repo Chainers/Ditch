@@ -39,11 +39,11 @@ namespace Ditch.EOS.Tests
                 }
             };
 
-            var resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SigningWithEosWallet, CancellationToken);
+            var resp = await Api.BroadcastActionsAsync(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SigningWithEosWallet, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
 
-            resp = await Api.BroadcastActions(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SigningWithScatter, CancellationToken);
+            resp = await Api.BroadcastActionsAsync(new[] { op }, new[] { new PublicKey(User.PublicActiveWif) }, SigningWithScatter, CancellationToken).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
 
@@ -51,10 +51,10 @@ namespace Ditch.EOS.Tests
 
         private async Task<OperationResult<SignedTransaction>> SigningWithEosWallet(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
         {
-            await Api.WalletOpen(User.Login, token);
-            await Api.WalletUnlock(User.Login, User.Password, token);
-            var result = await Api.WalletSignTransaction(trx, keys, chainId, token);
-            await Api.WalletLock(User.Login, CancellationToken);
+            await Api.WalletOpenAsync(User.Login, token).ConfigureAwait(false);
+            await Api.WalletUnlockAsync(User.Login, User.Password, token).ConfigureAwait(false);
+            var result = await Api.WalletSignTransactionAsync(trx, keys, chainId, token).ConfigureAwait(false);
+            await Api.WalletLockAsync(User.Login, CancellationToken).ConfigureAwait(false);
             return result;
         }
 
@@ -76,8 +76,8 @@ namespace Ditch.EOS.Tests
             }
 
             var _client = new HttpClient();
-            var response = await _client.PostAsync(url, content, token);
-            var result = await Api.CreateResult<T>(response, token);
+            var response = await _client.PostAsync(url, content, token).ConfigureAwait(false);
+            var result = await Api.CreateResultAsync<T>(response, token).ConfigureAwait(false);
 
             result.RawRequest = $"POST: {url} {param}";
 

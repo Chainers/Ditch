@@ -42,9 +42,9 @@ namespace Ditch.BitShares.Tests
                 Api = new OperationManager(HttpManager);
 
                 var url = ConfigurationManager.AppSettings["Url"];
-                Assert.IsTrue(Api.ConnectTo(url, CancellationToken.None).Result, "Enable connect to node");
+                Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Enable connect to node");
 
-                var acc = Api.GetAccountByName(User.Login, CancellationToken.None).Result;
+                var acc = Api.GetAccountByNameAsync(User.Login, CancellationToken.None).Result;
                 Assert.IsFalse(acc.IsError);
                 User.Account = acc.Result;
             }

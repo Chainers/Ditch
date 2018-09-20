@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyVersion>4.0.1.0</AssemblyVersion>
-    <FileVersion>4.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>adds repeat get</PackageReleaseNotes>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <FileVersion>4.1.0.0</FileVersion>
+    <Version>4.1.0</Version>
+    <PackageReleaseNotes>Support Task-based Asynchronous Pattern (TAP) convention</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ditch.Core" Version="4.0.3" />
+    <PackageReference Include="Ditch.Core" Version="4.1.0" />
   </ItemGroup>
 
 </Project>

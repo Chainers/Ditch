@@ -19,9 +19,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: account_name_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetKeyReferencesReturn>> GetKeyReferences(GetKeyReferencesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetKeyReferencesReturn>> GetKeyReferencesAsync(GetKeyReferencesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetKeyReferencesReturn>(KnownApiNames.AccountByKeyApi, "get_key_references", args, token);
+            return CustomGetRequestAsync<GetKeyReferencesReturn>(KnownApiNames.AccountByKeyApi, "get_key_references", args, token);
         }
     }
 }

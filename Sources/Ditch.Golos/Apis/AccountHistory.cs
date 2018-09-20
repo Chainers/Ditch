@@ -20,9 +20,9 @@ namespace Ditch.Golos
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_account_history_return_type</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetAccountHistoryReturnType>> GetAccountHistory(string account, ulong from, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<GetAccountHistoryReturnType>> GetAccountHistoryAsync(string account, ulong from, uint limit, CancellationToken token)
         {
-            return CustomGetRequest<GetAccountHistoryReturnType>(KnownApiNames.AccountHistory, "get_account_history", new object[] { account, from, limit }, token);
+            return CustomGetRequestAsync<GetAccountHistoryReturnType>(KnownApiNames.AccountHistory, "get_account_history", new object[] { account, from, limit }, token);
         }
     }
 }

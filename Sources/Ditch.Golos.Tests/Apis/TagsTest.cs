@@ -17,7 +17,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 1024,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByTrending(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByTrendingAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -30,7 +30,7 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2
             };
 
-            var resp = await Api.GetDiscussionsByCreated(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByCreatedAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -42,7 +42,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 100,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByActive(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByActiveAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -54,7 +54,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 100,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByCashout(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByCashoutAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -66,7 +66,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 100,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByPayout(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByPayoutAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -78,7 +78,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 100,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByVotes(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByVotesAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -90,7 +90,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 100,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByHot(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByHotAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -103,7 +103,7 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2,
                 SelectAuthors = new[] { User.Login }
             };
-            var resp = await Api.GetDiscussionsByFeed(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByFeedAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -116,7 +116,7 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2,
                 SelectAuthors = new[] { User.Login }
             };
-            var resp = await Api.GetDiscussionsByBlog(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByBlogAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -129,7 +129,7 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2,
                 StartAuthor = User.Login
             };
-            var resp = await Api.GetDiscussionsByComments(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByCommentsAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -141,7 +141,7 @@ namespace Ditch.Golos.Tests.Apis
                 TruncateBody = 100,
                 Limit = 2
             };
-            var resp = await Api.GetDiscussionsByPromoted(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByPromotedAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -150,7 +150,7 @@ namespace Ditch.Golos.Tests.Apis
         {
             ushort count = 3;
             var dt = DateTime.Now;
-            var resp = await Api.GetDiscussionsByAuthorBeforeDate(User.Login, string.Empty, dt, count, 100, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByAuthorBeforeDateAsync(User.Login, string.Empty, dt, count, 100, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
             Assert.IsTrue(resp.Result.Length <= count);
         }
@@ -164,21 +164,21 @@ namespace Ditch.Golos.Tests.Apis
                 Limit = 2
             };
 
-            var resp = await Api.GetDiscussionsByChildren(query, CancellationToken.None);
+            var resp = await Api.GetDiscussionsByChildrenAsync(query, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_trending_tags()
         {
-            var resp = await Api.GetTrendingTags(User.Login, 3, CancellationToken.None);
+            var resp = await Api.GetTrendingTagsAsync(User.Login, 3, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
         [Test][Parallelizable]
         public async Task get_tags_used_by_author()
         {
-            var resp = await Api.GetTagsUsedByAuthor(User.Login, CancellationToken.None);
+            var resp = await Api.GetTagsUsedByAuthorAsync(User.Login, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -186,7 +186,7 @@ namespace Ditch.Golos.Tests.Apis
         [Test][Parallelizable]
         public async Task get_languages()
         {
-            var resp = await Api.GetLanguages(CancellationToken.None);
+            var resp = await Api.GetLanguagesAsync(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

@@ -17,7 +17,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Keys = new[] { pubKey }
             };
-            var resp = await Api.GetKeyReferences(args, CancellationToken.None);
+            var resp = await Api.GetKeyReferencesAsync(args, CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }

@@ -30,9 +30,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>A list of operations performed by account, ordered from most recent to oldest.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<OperationHistoryObject[]>> GetAccountHistory(AccountIdType account, object stop, uint limit, object start, CancellationToken token)
+        public Task<JsonRpcResponse<OperationHistoryObject[]>> GetAccountHistoryAsync(AccountIdType account, object stop, uint limit, object start, CancellationToken token)
         {
-            return CustomGetRequest<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_account_history", new[] { account, stop, limit, start }, token);
+            return CustomGetRequestAsync<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_account_history", new[] { account, stop, limit, start }, token);
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: history_operation_detail history_operation_detail</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<HistoryOperationDetail>> GetAccountHistoryByOperations(AccountIdType account, ushort[] operationTypes, uint start, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<HistoryOperationDetail>> GetAccountHistoryByOperationsAsync(AccountIdType account, ushort[] operationTypes, uint start, uint limit, CancellationToken token)
         {
-            return CustomGetRequest<HistoryOperationDetail>(KnownApiNames.HistoryApi, "get_account_history_by_operations", new object[] { account, operationTypes, start, limit }, token);
+            return CustomGetRequestAsync<HistoryOperationDetail>(KnownApiNames.HistoryApi, "get_account_history_by_operations", new object[] { account, operationTypes, start, limit }, token);
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: operation_history_object A list of operations performed by account, ordered from most recent to oldest.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<OperationHistoryObject[]>> GetRelativeAccountHistory(AccountIdType account, uint stop, uint limit, uint start, CancellationToken token)
+        public Task<JsonRpcResponse<OperationHistoryObject[]>> GetRelativeAccountHistoryAsync(AccountIdType account, uint stop, uint limit, uint start, CancellationToken token)
         {
-            return CustomGetRequest<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_relative_account_history", new object[] { account, stop, limit, start }, token);
+            return CustomGetRequestAsync<OperationHistoryObject[]>(KnownApiNames.HistoryApi, "get_relative_account_history", new object[] { account, stop, limit, start }, token);
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: order_history_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<OrderHistoryObject[]>> GetFillOrderHistory(AssetIdType a, AssetIdType b, uint limit, CancellationToken token)
+        public Task<JsonRpcResponse<OrderHistoryObject[]>> GetFillOrderHistoryAsync(AssetIdType a, AssetIdType b, uint limit, CancellationToken token)
         {
-            return CustomGetRequest<OrderHistoryObject[]>(KnownApiNames.HistoryApi, "get_fill_order_history", new object[] { a, b, limit }, token);
+            return CustomGetRequestAsync<OrderHistoryObject[]>(KnownApiNames.HistoryApi, "get_fill_order_history", new object[] { a, b, limit }, token);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: bucket_object</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<BucketObject[]>> GetMarketHistory(AssetIdType a, AssetIdType b, uint bucketSeconds, TimePointSec start, TimePointSec end, CancellationToken token)
+        public Task<JsonRpcResponse<BucketObject[]>> GetMarketHistoryAsync(AssetIdType a, AssetIdType b, uint bucketSeconds, TimePointSec start, TimePointSec end, CancellationToken token)
         {
-            return CustomGetRequest<BucketObject[]>(KnownApiNames.HistoryApi, "get_market_history", new object[] { a, b, bucketSeconds, start, end }, token);
+            return CustomGetRequestAsync<BucketObject[]>(KnownApiNames.HistoryApi, "get_market_history", new object[] { a, b, bucketSeconds, start, end }, token);
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: flat_set</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<uint[]>> GetMarketHistoryBuckets(CancellationToken token)
+        public Task<JsonRpcResponse<uint[]>> GetMarketHistoryBucketsAsync(CancellationToken token)
         {
-            return CustomGetRequest<uint[]>(KnownApiNames.HistoryApi, "get_market_history_buckets", token);
+            return CustomGetRequestAsync<uint[]>(KnownApiNames.HistoryApi, "get_market_history_buckets", token);
         }
     }
 }

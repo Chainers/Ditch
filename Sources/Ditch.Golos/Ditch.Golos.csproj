@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.0.1</Version>
+    <Version>4.1.0</Version>
     <Authors>Chainers, KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Copyright></Copyright>
@@ -13,9 +13,9 @@
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
 </Description>
-    <PackageReleaseNotes>adds repeat get</PackageReleaseNotes>
-    <AssemblyVersion>4.0.1.0</AssemblyVersion>
-    <FileVersion>4.0.1.0</FileVersion>
+    <PackageReleaseNotes>Support Task-based Asynchronous Pattern (TAP) convention</PackageReleaseNotes>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <FileVersion>4.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cryptography.ECDSA.Secp256K1" Version="1.1.2" />
-    <PackageReference Include="Ditch.Core" Version="4.0.3" />
+    <PackageReference Include="Ditch.Core" Version="4.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

@@ -17,7 +17,7 @@ namespace Ditch.EOS.Tests.Apis
                 Offset = 100,
                 Pos = -1
             };
-            var resp = await Api.GetActions(args, CancellationToken);
+            var resp = await Api.GetActionsAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -29,7 +29,7 @@ namespace Ditch.EOS.Tests.Apis
                 Id = "e98bafdecb902a2d3aa0d17575482c1551cda51d629b32079b80654aa0de0bb4",
                 BlockNumHint = 7908800
             };
-            var resp = await Api.GetTransaction(args, CancellationToken);
+            var resp = await Api.GetTransactionAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -37,7 +37,7 @@ namespace Ditch.EOS.Tests.Apis
         public async Task GetKeyAccountsTest()
         {
             var accArgs = new GetAccountParams(User.Login);
-            var accRes = await Api.GetAccount(accArgs, CancellationToken);
+            var accRes = await Api.GetAccountAsync(accArgs, CancellationToken).ConfigureAwait(false);
             if (accRes.IsError)
             {
                 WriteLine(accRes);
@@ -52,7 +52,7 @@ namespace Ditch.EOS.Tests.Apis
             {
                 PublicKey = new PublicKeyType(publicKey.Data)
             };
-            var resp = await Api.GetKeyAccounts(args, CancellationToken);
+            var resp = await Api.GetKeyAccountsAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -63,7 +63,7 @@ namespace Ditch.EOS.Tests.Apis
             {
                 ControllingAccount = User.Login
             };
-            var resp = await Api.GetControlledAccounts(args, CancellationToken);
+            var resp = await Api.GetControlledAccountsAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
         }
 

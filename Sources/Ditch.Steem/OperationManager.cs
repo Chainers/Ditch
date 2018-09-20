@@ -49,9 +49,9 @@ namespace Ditch.Steem
 
         #endregion Constructors
 
-        public async Task<bool> ConnectTo(string endpoin, CancellationToken token)
+        public async Task<bool> ConnectToAsync(string endpoin, CancellationToken token)
         {
-            return await ConnectionManager.ConnectTo(endpoin, token);
+            return await ConnectionManager.ConnectToAsync(endpoin, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,20 +64,20 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperationsAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<VoidResponse>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, operations, token).ConfigureAwait(false);
             var args = new BroadcastTransactionArgs
             {
                 Trx = transaction
             };
-            return await BroadcastTransaction(args, token);
+            return await BroadcastTransactionAsync(args, token).ConfigureAwait(false);
         }
-        
+
         /// <summary>
         /// Create and Broadcast a transaction to the network
         /// 
@@ -88,18 +88,18 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperationsLikeSteemit(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperationsLikeSteemitAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<VoidResponse>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, operations, token).ConfigureAwait(false);
             var args = new BroadcastTransactionArgs
             {
                 Trx = transaction
             };
-            return await BroadcastTransactionLikeSteemit(args, token);
+            return await BroadcastTransactionLikeSteemitAsync(args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,20 +112,20 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastOperationsSynchronousAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, operations, token).ConfigureAwait(false);
             var args = new BroadcastTransactionSynchronousArgs
             {
                 Trx = transaction
             };
-            return await BroadcastTransactionSynchronous(args, token);
+            return await BroadcastTransactionSynchronousAsync(args, token).ConfigureAwait(false);
         }
-        
+
         /// <summary>
         /// Create and Broadcast a transaction to the network
         /// 
@@ -136,18 +136,18 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastOperationsSynchronousLikeSteemit(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<BroadcastTransactionSynchronousReturn>> BroadcastOperationsSynchronousLikeSteemitAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<BroadcastTransactionSynchronousReturn>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, operations, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, operations, token).ConfigureAwait(false);
             var args = new BroadcastTransactionSynchronousArgs
             {
                 Trx = transaction
             };
-            return await BroadcastTransactionSynchronousLikeSteemit(args, token);
+            return await BroadcastTransactionSynchronousLikeSteemitAsync(args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -159,15 +159,15 @@ namespace Ditch.Steem
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<VerifyAuthorityReturn>> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
+        public async Task<JsonRpcResponse<VerifyAuthorityReturn>> VerifyAuthorityAsync(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
             var prop = DynamicGlobalPropertyApiObj.Default;
-            var transaction = await CreateTransaction(prop, userPrivateKeys, testOps, token);
+            var transaction = await CreateTransactionAsync(prop, userPrivateKeys, testOps, token).ConfigureAwait(false);
             var args = new VerifyAuthorityArgs
             {
                 Trx = transaction
             };
-            return await VerifyAuthority(args, token);
+            return await VerifyAuthorityAsync(args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomBroadcastRequest<T>(string api, string method, object data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomBroadcastRequestAsync<T>(string api, string method, object data, CancellationToken token)
         {
             var jsonRpc = JsonRpcRequest.Request(NewJsonSerializerSettings, api, method, data);
             return ConnectionManager.ExecuteAsync<T>(jsonRpc, NewJsonSerializerSettings, token);
@@ -196,7 +196,7 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, object data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequestAsync<T>(string api, string method, object data, CancellationToken token)
         {
             var jsonRpc = JsonRpcRequest.Request(NewJsonSerializerSettings, api, method, data);
             return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, NewJsonSerializerSettings, token);
@@ -210,7 +210,7 @@ namespace Ditch.Steem
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequestAsync<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = JsonRpcRequest.Request(api, method);
             return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, NewJsonSerializerSettings, token);
@@ -225,7 +225,7 @@ namespace Ditch.Steem
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public Task<SignedTransaction> CreateTransactionAsync(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
             return Task.Run(() =>
             {
@@ -254,14 +254,14 @@ namespace Ditch.Steem
             }, token);
         }
 
-        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
+        public Task<SignedTransaction> CreateTransactionAsync(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, BaseOperation operation, CancellationToken token)
         {
-            return CreateTransaction(propertyApiObj, userPrivateKeys, new[] { operation }, token);
+            return CreateTransactionAsync(propertyApiObj, userPrivateKeys, new[] { operation }, token);
         }
 
-        public async Task<byte[]> TryLoadChainId(string[] chainFieldName, CancellationToken token)
+        public async Task<byte[]> TryLoadChainIdAsync(string[] chainFieldName, CancellationToken token)
         {
-            var resp = await GetConfig<JObject>(token);
+            var resp = await GetConfigAsync<JObject>(token).ConfigureAwait(false);
             if (resp.IsError)
                 return new byte[0];
 
@@ -282,9 +282,9 @@ namespace Ditch.Steem
             return Hex.HexToBytes(str);
         }
 
-        public async Task<string> TryLoadBlockchainVersion(string[] fieldName, CancellationToken token)
+        public async Task<string> TryLoadBlockchainVersionAsync(string[] fieldName, CancellationToken token)
         {
-            var resp = await GetConfig<JObject>(token);
+            var resp = await GetConfigAsync<JObject>(token).ConfigureAwait(false);
             if (resp.IsError)
                 return string.Empty;
 

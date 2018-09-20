@@ -23,7 +23,7 @@ namespace Ditch.BitShares
 
         public byte[] ChainId
         {
-            get => _chainId ?? (_chainId = TryLoadChainId(CancellationToken.None).Result);
+            get => _chainId ?? (_chainId = TryLoadChainIdAsync(CancellationToken.None).Result);
             set => _chainId = value;
         }
 
@@ -46,9 +46,9 @@ namespace Ditch.BitShares
         #endregion Constructors
 
 
-        public Task<bool> ConnectTo(string endpoin, CancellationToken token)
+        public Task<bool> ConnectToAsync(string endpoin, CancellationToken token)
         {
-            return ConnectionManager.ConnectTo(endpoin, token);
+            return ConnectionManager.ConnectToAsync(endpoin, token);
         }
 
 
@@ -62,14 +62,14 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperations(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<VoidResponse>> BroadcastOperationsAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<VoidResponse>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return await BroadcastTransaction(transaction, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, token, operations).ConfigureAwait(false);
+            return await BroadcastTransactionAsync(transaction, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -82,14 +82,14 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<object>> BroadcastOperationsSynchronous(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
+        public async Task<JsonRpcResponse<object>> BroadcastOperationsSynchronousAsync(IList<byte[]> userPrivateKeys, BaseOperation[] operations, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<object>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, token, operations);
-            return await BroadcastTransactionSynchronous(transaction, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, token, operations).ConfigureAwait(false);
+            return await BroadcastTransactionSynchronousAsync(transaction, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -101,14 +101,14 @@ namespace Ditch.BitShares
         /// <param name="testOps"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public async Task<JsonRpcResponse<bool>> VerifyAuthority(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
+        public async Task<JsonRpcResponse<bool>> VerifyAuthorityAsync(IList<byte[]> userPrivateKeys, BaseOperation[] testOps, CancellationToken token)
         {
-            var prop = await GetDynamicGlobalProperties(token);
+            var prop = await GetDynamicGlobalPropertiesAsync(token).ConfigureAwait(false);
             if (prop.IsError)
                 return new JsonRpcResponse<bool>(prop);
 
-            var transaction = await CreateTransaction(prop.Result, userPrivateKeys, token, testOps);
-            return await VerifyAuthority(transaction, token);
+            var transaction = await CreateTransactionAsync(prop.Result, userPrivateKeys, token, testOps).ConfigureAwait(false);
+            return await VerifyAuthorityAsync(transaction, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,12 +121,12 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomBroadcastRequest<T>(string api, string method, object[] data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomBroadcastRequestAsync<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
             return ConnectionManager.ExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
         }
-        
+
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
@@ -137,13 +137,13 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, object[] data, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequestAsync<T>(string api, string method, object[] data, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(JsonSerializerSettings, api, method, data);
             return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
         }
-      
-      
+
+
         /// <summary>
         /// Create and execute custom json-rpc method
         /// </summary>
@@ -153,7 +153,7 @@ namespace Ditch.BitShares
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> CustomGetRequest<T>(string api, string method, CancellationToken token)
+        public Task<JsonRpcResponse<T>> CustomGetRequestAsync<T>(string api, string method, CancellationToken token)
         {
             var jsonRpc = new JsonRpcRequest(api, method);
             return ConnectionManager.RepeatExecuteAsync<T>(jsonRpc, JsonSerializerSettings, token);
@@ -168,7 +168,7 @@ namespace Ditch.BitShares
         /// <param name="operations"></param>
         /// <returns></returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<SignedTransaction> CreateTransaction(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
+        public Task<SignedTransaction> CreateTransactionAsync(DynamicGlobalPropertyObject propertyApiObj, IList<byte[]> userPrivateKeys, CancellationToken token, params BaseOperation[] operations)
         {
             return Task.Run(() =>
             {
@@ -197,9 +197,9 @@ namespace Ditch.BitShares
             }, token);
         }
 
-        public async Task<byte[]> TryLoadChainId(CancellationToken token)
+        public async Task<byte[]> TryLoadChainIdAsync(CancellationToken token)
         {
-            var resp = await GetChainId(token);
+            var resp = await GetChainIdAsync(token).ConfigureAwait(false);
             if (!resp.IsError)
             {
                 return Hex.HexToBytes(resp.Result);

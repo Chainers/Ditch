@@ -19,9 +19,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_trending_tags_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetTrendingTagsReturn>>GetTrendingTags(GetTrendingTagsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetTrendingTagsReturn>> GetTrendingTagsAsync(GetTrendingTagsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetTrendingTagsReturn>(KnownApiNames.TagsApi, "get_trending_tags", args, token);
+            return CustomGetRequestAsync<GetTrendingTagsReturn>(KnownApiNames.TagsApi, "get_trending_tags", args, token);
         }
 
         /// <summary>
@@ -32,9 +32,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_tags_used_by_author_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetTagsUsedByAuthorReturn>>GetTagsUsedByAuthor(GetTagsUsedByAuthorArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetTagsUsedByAuthorReturn>> GetTagsUsedByAuthorAsync(GetTagsUsedByAuthorArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetTagsUsedByAuthorReturn>(KnownApiNames.TagsApi, "get_tags_used_by_author", args, token);
+            return CustomGetRequestAsync<GetTagsUsedByAuthorReturn>(KnownApiNames.TagsApi, "get_tags_used_by_author", args, token);
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussion_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionReturn>>GetDiscussion(GetDiscussionArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionReturn>> GetDiscussionAsync(GetDiscussionArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionReturn>(KnownApiNames.TagsApi, "get_discussion", args, token);
+            return CustomGetRequestAsync<GetDiscussionReturn>(KnownApiNames.TagsApi, "get_discussion", args, token);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_content_replies_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetContentRepliesReturn>>GetContentReplies(GetContentRepliesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetContentRepliesReturn>> GetContentRepliesAsync(GetContentRepliesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetContentRepliesReturn>(KnownApiNames.TagsApi, "get_content_replies", args, token);
+            return CustomGetRequestAsync<GetContentRepliesReturn>(KnownApiNames.TagsApi, "get_content_replies", args, token);
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_post_discussions_by_payout_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetPostDiscussionsByPayoutReturn>>GetPostDiscussionsByPayout(GetPostDiscussionsByPayoutArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetPostDiscussionsByPayoutReturn>> GetPostDiscussionsByPayoutAsync(GetPostDiscussionsByPayoutArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetPostDiscussionsByPayoutReturn>(KnownApiNames.TagsApi, "get_post_discussions_by_payout", args, token);
+            return CustomGetRequestAsync<GetPostDiscussionsByPayoutReturn>(KnownApiNames.TagsApi, "get_post_discussions_by_payout", args, token);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_comment_discussions_by_payout_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetCommentDiscussionsByPayoutReturn>>GetCommentDiscussionsByPayout(GetCommentDiscussionsByPayoutArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetCommentDiscussionsByPayoutReturn>> GetCommentDiscussionsByPayoutAsync(GetCommentDiscussionsByPayoutArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetCommentDiscussionsByPayoutReturn>(KnownApiNames.TagsApi, "get_comment_discussions_by_payout", args, token);
+            return CustomGetRequestAsync<GetCommentDiscussionsByPayoutReturn>(KnownApiNames.TagsApi, "get_comment_discussions_by_payout", args, token);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_trending_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByTrendingReturn>>GetDiscussionsByTrending(GetDiscussionsByTrendingArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByTrendingReturn>> GetDiscussionsByTrendingAsync(GetDiscussionsByTrendingArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByTrendingReturn>(KnownApiNames.TagsApi, "get_discussions_by_trending", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByTrendingReturn>(KnownApiNames.TagsApi, "get_discussions_by_trending", args, token);
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_created_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByCreatedReturn>>GetDiscussionsByCreated(GetDiscussionsByCreatedArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByCreatedReturn>> GetDiscussionsByCreatedAsync(GetDiscussionsByCreatedArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByCreatedReturn>(KnownApiNames.TagsApi, "get_discussions_by_created", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByCreatedReturn>(KnownApiNames.TagsApi, "get_discussions_by_created", args, token);
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_active_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByActiveReturn>>GetDiscussionsByActive(GetDiscussionsByActiveArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByActiveReturn>> GetDiscussionsByActiveAsync(GetDiscussionsByActiveArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByActiveReturn>(KnownApiNames.TagsApi, "get_discussions_by_active", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByActiveReturn>(KnownApiNames.TagsApi, "get_discussions_by_active", args, token);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_cashout_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByCashoutReturn>>GetDiscussionsByCashout(GetDiscussionsByCashoutArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByCashoutReturn>> GetDiscussionsByCashoutAsync(GetDiscussionsByCashoutArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByCashoutReturn>(KnownApiNames.TagsApi, "get_discussions_by_cashout", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByCashoutReturn>(KnownApiNames.TagsApi, "get_discussions_by_cashout", args, token);
         }
 
         /// <summary>
@@ -149,9 +149,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_votes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByVotesReturn>>GetDiscussionsByVotes(GetDiscussionsByVotesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByVotesReturn>> GetDiscussionsByVotesAsync(GetDiscussionsByVotesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByVotesReturn>(KnownApiNames.TagsApi, "get_discussions_by_votes", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByVotesReturn>(KnownApiNames.TagsApi, "get_discussions_by_votes", args, token);
         }
 
         /// <summary>
@@ -162,9 +162,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_children_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByChildrenReturn>>GetDiscussionsByChildren(GetDiscussionsByChildrenArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByChildrenReturn>> GetDiscussionsByChildrenAsync(GetDiscussionsByChildrenArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByChildrenReturn>(KnownApiNames.TagsApi, "get_discussions_by_children", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByChildrenReturn>(KnownApiNames.TagsApi, "get_discussions_by_children", args, token);
         }
 
         /// <summary>
@@ -175,9 +175,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_hot_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByHotReturn>>GetDiscussionsByHot(GetDiscussionsByHotArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByHotReturn>> GetDiscussionsByHotAsync(GetDiscussionsByHotArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByHotReturn>(KnownApiNames.TagsApi, "get_discussions_by_hot", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByHotReturn>(KnownApiNames.TagsApi, "get_discussions_by_hot", args, token);
         }
 
         /// <summary>
@@ -188,9 +188,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_feed_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByFeedReturn>>GetDiscussionsByFeed(GetDiscussionsByFeedArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByFeedReturn>> GetDiscussionsByFeedAsync(GetDiscussionsByFeedArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByFeedReturn>(KnownApiNames.TagsApi, "get_discussions_by_feed", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByFeedReturn>(KnownApiNames.TagsApi, "get_discussions_by_feed", args, token);
         }
 
         /// <summary>
@@ -201,9 +201,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_blog_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByBlogReturn>>GetDiscussionsByBlog(GetDiscussionsByBlogArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByBlogReturn>> GetDiscussionsByBlogAsync(GetDiscussionsByBlogArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByBlogReturn>(KnownApiNames.TagsApi, "get_discussions_by_blog", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByBlogReturn>(KnownApiNames.TagsApi, "get_discussions_by_blog", args, token);
         }
 
         /// <summary>
@@ -214,9 +214,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_comments_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByCommentsReturn>>GetDiscussionsByComments(GetDiscussionsByCommentsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByCommentsReturn>> GetDiscussionsByCommentsAsync(GetDiscussionsByCommentsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByCommentsReturn>(KnownApiNames.TagsApi, "get_discussions_by_comments", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByCommentsReturn>(KnownApiNames.TagsApi, "get_discussions_by_comments", args, token);
         }
 
         /// <summary>
@@ -227,9 +227,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_promoted_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByPromotedReturn>>GetDiscussionsByPromoted(GetDiscussionsByPromotedArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByPromotedReturn>> GetDiscussionsByPromotedAsync(GetDiscussionsByPromotedArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByPromotedReturn>(KnownApiNames.TagsApi, "get_discussions_by_promoted", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByPromotedReturn>(KnownApiNames.TagsApi, "get_discussions_by_promoted", args, token);
         }
 
         /// <summary>
@@ -240,9 +240,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_replies_by_last_update_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetRepliesByLastUpdateReturn>>GetRepliesByLastUpdate(GetRepliesByLastUpdateArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetRepliesByLastUpdateReturn>> GetRepliesByLastUpdateAsync(GetRepliesByLastUpdateArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetRepliesByLastUpdateReturn>(KnownApiNames.TagsApi, "get_replies_by_last_update", args, token);
+            return CustomGetRequestAsync<GetRepliesByLastUpdateReturn>(KnownApiNames.TagsApi, "get_replies_by_last_update", args, token);
         }
 
         /// <summary>
@@ -253,9 +253,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_discussions_by_author_before_date_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDiscussionsByAuthorBeforeDateReturn>>GetDiscussionsByAuthorBeforeDate(GetDiscussionsByAuthorBeforeDateArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetDiscussionsByAuthorBeforeDateReturn>> GetDiscussionsByAuthorBeforeDateAsync(GetDiscussionsByAuthorBeforeDateArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetDiscussionsByAuthorBeforeDateReturn>(KnownApiNames.TagsApi, "get_discussions_by_author_before_date", args, token);
+            return CustomGetRequestAsync<GetDiscussionsByAuthorBeforeDateReturn>(KnownApiNames.TagsApi, "get_discussions_by_author_before_date", args, token);
         }
 
         /// <summary>
@@ -266,9 +266,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_active_votes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetActiveVotesReturn>>GetActiveVotes(GetActiveVotesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetActiveVotesReturn>> GetActiveVotesAsync(GetActiveVotesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetActiveVotesReturn>(KnownApiNames.TagsApi, "get_active_votes", args, token);
+            return CustomGetRequestAsync<GetActiveVotesReturn>(KnownApiNames.TagsApi, "get_active_votes", args, token);
         }
     }
 }

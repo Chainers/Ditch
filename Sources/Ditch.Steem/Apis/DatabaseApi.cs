@@ -33,9 +33,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_config_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<T>> GetConfig<T>(CancellationToken token)
+        public Task<JsonRpcResponse<T>> GetConfigAsync<T>(CancellationToken token)
         {
-            return CustomGetRequest<T>(KnownApiNames.DatabaseApi, "get_config", token);
+            return CustomGetRequestAsync<T>(KnownApiNames.DatabaseApi, "get_config", token);
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_dynamic_global_properties_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetDynamicGlobalPropertiesReturn>> GetDynamicGlobalProperties(CancellationToken token)
+        public Task<JsonRpcResponse<GetDynamicGlobalPropertiesReturn>> GetDynamicGlobalPropertiesAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetDynamicGlobalPropertiesReturn>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties", token);
+            return CustomGetRequestAsync<GetDynamicGlobalPropertiesReturn>(KnownApiNames.DatabaseApi, "get_dynamic_global_properties", token);
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_witness_schedule_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetWitnessScheduleReturn>> GetWitnessSchedule(CancellationToken token)
+        public Task<JsonRpcResponse<GetWitnessScheduleReturn>> GetWitnessScheduleAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetWitnessScheduleReturn>(KnownApiNames.DatabaseApi, "get_witness_schedule", token);
+            return CustomGetRequestAsync<GetWitnessScheduleReturn>(KnownApiNames.DatabaseApi, "get_witness_schedule", token);
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_hardfork_properties_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetHardforkPropertiesReturn>> GetHardforkProperties(CancellationToken token)
+        public Task<JsonRpcResponse<GetHardforkPropertiesReturn>> GetHardforkPropertiesAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetHardforkPropertiesReturn>(KnownApiNames.DatabaseApi, "get_hardfork_properties", token);
+            return CustomGetRequestAsync<GetHardforkPropertiesReturn>(KnownApiNames.DatabaseApi, "get_hardfork_properties", token);
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_reward_funds_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetRewardFundsReturn>> GetRewardFunds(CancellationToken token)
+        public Task<JsonRpcResponse<GetRewardFundsReturn>> GetRewardFundsAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetRewardFundsReturn>(KnownApiNames.DatabaseApi, "get_reward_funds", token);
+            return CustomGetRequestAsync<GetRewardFundsReturn>(KnownApiNames.DatabaseApi, "get_reward_funds", token);
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_current_price_feed_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetCurrentPriceFeedReturn>> GetCurrentPriceFeed(CancellationToken token)
+        public Task<JsonRpcResponse<GetCurrentPriceFeedReturn>> GetCurrentPriceFeedAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetCurrentPriceFeedReturn>(KnownApiNames.DatabaseApi, "get_current_price_feed", token);
+            return CustomGetRequestAsync<GetCurrentPriceFeedReturn>(KnownApiNames.DatabaseApi, "get_current_price_feed", token);
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_feed_history_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetFeedHistoryReturn>> GetFeedHistory(CancellationToken token)
+        public Task<JsonRpcResponse<GetFeedHistoryReturn>> GetFeedHistoryAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetFeedHistoryReturn>(KnownApiNames.DatabaseApi, "get_feed_history", token);
+            return CustomGetRequestAsync<GetFeedHistoryReturn>(KnownApiNames.DatabaseApi, "get_feed_history", token);
         }
 
 
@@ -125,9 +125,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_witnesses_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListWitnessesReturn>> ListWitnesses(ListWitnessesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListWitnessesReturn>> ListWitnessesAsync(ListWitnessesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListWitnessesReturn>(KnownApiNames.DatabaseApi, "list_witnesses", args, token);
+            return CustomGetRequestAsync<ListWitnessesReturn>(KnownApiNames.DatabaseApi, "list_witnesses", args, token);
         }
 
         /// <summary>
@@ -138,9 +138,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_witnesses_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindWitnessesReturn>> FindWitnesses(FindWitnessesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindWitnessesReturn>> FindWitnessesAsync(FindWitnessesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindWitnessesReturn>(KnownApiNames.DatabaseApi, "find_witnesses", args, token);
+            return CustomGetRequestAsync<FindWitnessesReturn>(KnownApiNames.DatabaseApi, "find_witnesses", args, token);
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_witness_votes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListWitnessVotesReturn>> ListWitnessVotes(ListWitnessVotesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListWitnessVotesReturn>> ListWitnessVotesAsync(ListWitnessVotesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListWitnessVotesReturn>(KnownApiNames.DatabaseApi, "list_witness_votes", args, token);
+            return CustomGetRequestAsync<ListWitnessVotesReturn>(KnownApiNames.DatabaseApi, "list_witness_votes", args, token);
         }
 
         /// <summary>
@@ -163,9 +163,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_active_witnesses_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetActiveWitnessesReturn>> GetActiveWitnesses(CancellationToken token)
+        public Task<JsonRpcResponse<GetActiveWitnessesReturn>> GetActiveWitnessesAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetActiveWitnessesReturn>(KnownApiNames.DatabaseApi, "get_active_witnesses", token);
+            return CustomGetRequestAsync<GetActiveWitnessesReturn>(KnownApiNames.DatabaseApi, "get_active_witnesses", token);
         }
 
         //////////////
@@ -182,9 +182,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_accounts_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListAccountsReturn>> ListAccounts(ListAccountsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListAccountsReturn>> ListAccountsAsync(ListAccountsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListAccountsReturn>(KnownApiNames.DatabaseApi, "list_accounts", args, token);
+            return CustomGetRequestAsync<ListAccountsReturn>(KnownApiNames.DatabaseApi, "list_accounts", args, token);
         }
 
         /// <summary>
@@ -197,9 +197,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_accounts_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindAccountsReturn>> FindAccounts(FindAccountsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindAccountsReturn>> FindAccountsAsync(FindAccountsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindAccountsReturn>(KnownApiNames.DatabaseApi, "find_accounts", args, token);
+            return CustomGetRequestAsync<FindAccountsReturn>(KnownApiNames.DatabaseApi, "find_accounts", args, token);
         }
 
         /// <summary>
@@ -210,9 +210,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_owner_histories_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListOwnerHistoriesReturn>> ListOwnerHistories(ListOwnerHistoriesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListOwnerHistoriesReturn>> ListOwnerHistoriesAsync(ListOwnerHistoriesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListOwnerHistoriesReturn>(KnownApiNames.DatabaseApi, "list_owner_histories", args, token);
+            return CustomGetRequestAsync<ListOwnerHistoriesReturn>(KnownApiNames.DatabaseApi, "list_owner_histories", args, token);
         }
 
         /// <summary>
@@ -223,9 +223,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_owner_histories_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindOwnerHistoriesReturn>> FindOwnerHistories(FindOwnerHistoriesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindOwnerHistoriesReturn>> FindOwnerHistoriesAsync(FindOwnerHistoriesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindOwnerHistoriesReturn>(KnownApiNames.DatabaseApi, "find_owner_histories", args, token);
+            return CustomGetRequestAsync<FindOwnerHistoriesReturn>(KnownApiNames.DatabaseApi, "find_owner_histories", args, token);
         }
 
         /// <summary>
@@ -236,9 +236,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_account_recovery_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListAccountRecoveryRequestsReturn>> ListAccountRecoveryRequests(ListAccountRecoveryRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListAccountRecoveryRequestsReturn>> ListAccountRecoveryRequestsAsync(ListAccountRecoveryRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListAccountRecoveryRequestsReturn>(KnownApiNames.DatabaseApi, "list_account_recovery_requests", args, token);
+            return CustomGetRequestAsync<ListAccountRecoveryRequestsReturn>(KnownApiNames.DatabaseApi, "list_account_recovery_requests", args, token);
         }
 
         /// <summary>
@@ -249,9 +249,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_account_recovery_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindAccountRecoveryRequestsReturn>> FindAccountRecoveryRequests(FindAccountRecoveryRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindAccountRecoveryRequestsReturn>> FindAccountRecoveryRequestsAsync(FindAccountRecoveryRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindAccountRecoveryRequestsReturn>(KnownApiNames.DatabaseApi, "find_account_recovery_requests", args, token);
+            return CustomGetRequestAsync<FindAccountRecoveryRequestsReturn>(KnownApiNames.DatabaseApi, "find_account_recovery_requests", args, token);
         }
 
         /// <summary>
@@ -262,9 +262,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_change_recovery_account_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListChangeRecoveryAccountRequestsReturn>> ListChangeRecoveryAccountRequests(ListChangeRecoveryAccountRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListChangeRecoveryAccountRequestsReturn>> ListChangeRecoveryAccountRequestsAsync(ListChangeRecoveryAccountRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListChangeRecoveryAccountRequestsReturn>(KnownApiNames.DatabaseApi, "list_change_recovery_account_requests", args, token);
+            return CustomGetRequestAsync<ListChangeRecoveryAccountRequestsReturn>(KnownApiNames.DatabaseApi, "list_change_recovery_account_requests", args, token);
         }
 
         /// <summary>
@@ -275,9 +275,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_change_recovery_account_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindChangeRecoveryAccountRequestsReturn>> FindChangeRecoveryAccountRequests(FindChangeRecoveryAccountRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindChangeRecoveryAccountRequestsReturn>> FindChangeRecoveryAccountRequestsAsync(FindChangeRecoveryAccountRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindChangeRecoveryAccountRequestsReturn>(KnownApiNames.DatabaseApi, "find_change_recovery_account_requests", args, token);
+            return CustomGetRequestAsync<FindChangeRecoveryAccountRequestsReturn>(KnownApiNames.DatabaseApi, "find_change_recovery_account_requests", args, token);
         }
 
         /// <summary>
@@ -288,9 +288,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_escrows_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListEscrowsReturn>> ListEscrows(ListEscrowsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListEscrowsReturn>> ListEscrowsAsync(ListEscrowsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListEscrowsReturn>(KnownApiNames.DatabaseApi, "list_escrows", args, token);
+            return CustomGetRequestAsync<ListEscrowsReturn>(KnownApiNames.DatabaseApi, "list_escrows", args, token);
         }
 
         /// <summary>
@@ -301,9 +301,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_escrows_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindEscrowsReturn>> FindEscrows(FindEscrowsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindEscrowsReturn>> FindEscrowsAsync(FindEscrowsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindEscrowsReturn>(KnownApiNames.DatabaseApi, "find_escrows", args, token);
+            return CustomGetRequestAsync<FindEscrowsReturn>(KnownApiNames.DatabaseApi, "find_escrows", args, token);
         }
 
         /// <summary>
@@ -314,9 +314,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_withdraw_vesting_routes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListWithdrawVestingRoutesReturn>> ListWithdrawVestingRoutes(ListWithdrawVestingRoutesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListWithdrawVestingRoutesReturn>> ListWithdrawVestingRoutesAsync(ListWithdrawVestingRoutesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListWithdrawVestingRoutesReturn>(KnownApiNames.DatabaseApi, "list_withdraw_vesting_routes", args, token);
+            return CustomGetRequestAsync<ListWithdrawVestingRoutesReturn>(KnownApiNames.DatabaseApi, "list_withdraw_vesting_routes", args, token);
         }
 
         /// <summary>
@@ -327,9 +327,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_withdraw_vesting_routes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindWithdrawVestingRoutesReturn>> FindWithdrawVestingRoutes(FindWithdrawVestingRoutesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindWithdrawVestingRoutesReturn>> FindWithdrawVestingRoutesAsync(FindWithdrawVestingRoutesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindWithdrawVestingRoutesReturn>(KnownApiNames.DatabaseApi, "find_withdraw_vesting_routes", args, token);
+            return CustomGetRequestAsync<FindWithdrawVestingRoutesReturn>(KnownApiNames.DatabaseApi, "find_withdraw_vesting_routes", args, token);
         }
 
         /// <summary>
@@ -340,9 +340,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_savings_withdrawals_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListSavingsWithdrawalsReturn>> ListSavingsWithdrawals(ListSavingsWithdrawalsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListSavingsWithdrawalsReturn>> ListSavingsWithdrawalsAsync(ListSavingsWithdrawalsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListSavingsWithdrawalsReturn>(KnownApiNames.DatabaseApi, "list_savings_withdrawals", args, token);
+            return CustomGetRequestAsync<ListSavingsWithdrawalsReturn>(KnownApiNames.DatabaseApi, "list_savings_withdrawals", args, token);
         }
 
         /// <summary>
@@ -353,9 +353,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_savings_withdrawals_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindSavingsWithdrawalsReturn>> FindSavingsWithdrawals(FindSavingsWithdrawalsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindSavingsWithdrawalsReturn>> FindSavingsWithdrawalsAsync(FindSavingsWithdrawalsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindSavingsWithdrawalsReturn>(KnownApiNames.DatabaseApi, "find_savings_withdrawals", args, token);
+            return CustomGetRequestAsync<FindSavingsWithdrawalsReturn>(KnownApiNames.DatabaseApi, "find_savings_withdrawals", args, token);
         }
 
         /// <summary>
@@ -366,9 +366,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_vesting_delegations_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListVestingDelegationsReturn>> ListVestingDelegations(ListVestingDelegationsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListVestingDelegationsReturn>> ListVestingDelegationsAsync(ListVestingDelegationsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListVestingDelegationsReturn>(KnownApiNames.DatabaseApi, "list_vesting_delegations", args, token);
+            return CustomGetRequestAsync<ListVestingDelegationsReturn>(KnownApiNames.DatabaseApi, "list_vesting_delegations", args, token);
         }
 
         /// <summary>
@@ -379,9 +379,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_vesting_delegations_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindVestingDelegationsReturn>> FindVestingDelegations(FindVestingDelegationsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindVestingDelegationsReturn>> FindVestingDelegationsAsync(FindVestingDelegationsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindVestingDelegationsReturn>(KnownApiNames.DatabaseApi, "find_vesting_delegations", args, token);
+            return CustomGetRequestAsync<FindVestingDelegationsReturn>(KnownApiNames.DatabaseApi, "find_vesting_delegations", args, token);
         }
 
         /// <summary>
@@ -392,9 +392,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_vesting_delegation_expirations_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListVestingDelegationExpirationsReturn>> ListVestingDelegationExpirations(ListVestingDelegationExpirationsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListVestingDelegationExpirationsReturn>> ListVestingDelegationExpirationsAsync(ListVestingDelegationExpirationsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListVestingDelegationExpirationsReturn>(KnownApiNames.DatabaseApi, "list_vesting_delegation_expirations", args, token);
+            return CustomGetRequestAsync<ListVestingDelegationExpirationsReturn>(KnownApiNames.DatabaseApi, "list_vesting_delegation_expirations", args, token);
         }
 
         /// <summary>
@@ -405,9 +405,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_vesting_delegation_expirations_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindVestingDelegationExpirationsReturn>> FindVestingDelegationExpirations(FindVestingDelegationExpirationsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindVestingDelegationExpirationsReturn>> FindVestingDelegationExpirationsAsync(FindVestingDelegationExpirationsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindVestingDelegationExpirationsReturn>(KnownApiNames.DatabaseApi, "find_vesting_delegation_expirations", args, token);
+            return CustomGetRequestAsync<FindVestingDelegationExpirationsReturn>(KnownApiNames.DatabaseApi, "find_vesting_delegation_expirations", args, token);
         }
 
         /// <summary>
@@ -418,9 +418,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_sbd_conversion_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListSbdConversionRequestsReturn>> ListSbdConversionRequests(ListSbdConversionRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListSbdConversionRequestsReturn>> ListSbdConversionRequestsAsync(ListSbdConversionRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListSbdConversionRequestsReturn>(KnownApiNames.DatabaseApi, "list_sbd_conversion_requests", args, token);
+            return CustomGetRequestAsync<ListSbdConversionRequestsReturn>(KnownApiNames.DatabaseApi, "list_sbd_conversion_requests", args, token);
         }
 
         /// <summary>
@@ -431,9 +431,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_sbd_conversion_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindSbdConversionRequestsReturn>> FindSbdConversionRequests(FindSbdConversionRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindSbdConversionRequestsReturn>> FindSbdConversionRequestsAsync(FindSbdConversionRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindSbdConversionRequestsReturn>(KnownApiNames.DatabaseApi, "find_sbd_conversion_requests", args, token);
+            return CustomGetRequestAsync<FindSbdConversionRequestsReturn>(KnownApiNames.DatabaseApi, "find_sbd_conversion_requests", args, token);
         }
 
         /// <summary>
@@ -444,9 +444,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_decline_voting_rights_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListDeclineVotingRightsRequestsReturn>> ListDeclineVotingRightsRequests(ListDeclineVotingRightsRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListDeclineVotingRightsRequestsReturn>> ListDeclineVotingRightsRequestsAsync(ListDeclineVotingRightsRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListDeclineVotingRightsRequestsReturn>(KnownApiNames.DatabaseApi, "list_decline_voting_rights_requests", args, token);
+            return CustomGetRequestAsync<ListDeclineVotingRightsRequestsReturn>(KnownApiNames.DatabaseApi, "list_decline_voting_rights_requests", args, token);
         }
 
         /// <summary>
@@ -457,9 +457,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_decline_voting_rights_requests_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindDeclineVotingRightsRequestsReturn>> FindDeclineVotingRightsRequests(FindDeclineVotingRightsRequestsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindDeclineVotingRightsRequestsReturn>> FindDeclineVotingRightsRequestsAsync(FindDeclineVotingRightsRequestsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindDeclineVotingRightsRequestsReturn>(KnownApiNames.DatabaseApi, "find_decline_voting_rights_requests", args, token);
+            return CustomGetRequestAsync<FindDeclineVotingRightsRequestsReturn>(KnownApiNames.DatabaseApi, "find_decline_voting_rights_requests", args, token);
         }
 
 
@@ -475,9 +475,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_comments_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListCommentsReturn>> ListComments(ListCommentsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListCommentsReturn>> ListCommentsAsync(ListCommentsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListCommentsReturn>(KnownApiNames.DatabaseApi, "list_comments", args, token);
+            return CustomGetRequestAsync<ListCommentsReturn>(KnownApiNames.DatabaseApi, "list_comments", args, token);
         }
 
         /// <summary>
@@ -488,9 +488,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_comments_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindCommentsReturn>> FindComments(FindCommentsArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindCommentsReturn>> FindCommentsAsync(FindCommentsArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindCommentsReturn>(KnownApiNames.DatabaseApi, "find_comments", args, token);
+            return CustomGetRequestAsync<FindCommentsReturn>(KnownApiNames.DatabaseApi, "find_comments", args, token);
         }
 
         /// <summary>
@@ -501,9 +501,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_votes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListVotesReturn>> ListVotes(ListVotesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListVotesReturn>> ListVotesAsync(ListVotesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListVotesReturn>(KnownApiNames.DatabaseApi, "list_votes", args, token);
+            return CustomGetRequestAsync<ListVotesReturn>(KnownApiNames.DatabaseApi, "list_votes", args, token);
         }
 
         /// <summary>
@@ -514,9 +514,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_votes_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindVotesReturn>> FindVotes(FindVotesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindVotesReturn>> FindVotesAsync(FindVotesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindVotesReturn>(KnownApiNames.DatabaseApi, "find_votes", args, token);
+            return CustomGetRequestAsync<FindVotesReturn>(KnownApiNames.DatabaseApi, "find_votes", args, token);
         }
 
 
@@ -532,9 +532,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: list_limit_orders_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<ListLimitOrdersReturn>> ListLimitOrders(ListLimitOrdersArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<ListLimitOrdersReturn>> ListLimitOrdersAsync(ListLimitOrdersArgs args, CancellationToken token)
         {
-            return CustomGetRequest<ListLimitOrdersReturn>(KnownApiNames.DatabaseApi, "list_limit_orders", args, token);
+            return CustomGetRequestAsync<ListLimitOrdersReturn>(KnownApiNames.DatabaseApi, "list_limit_orders", args, token);
         }
 
         /// <summary>
@@ -545,9 +545,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: find_limit_orders_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<FindLimitOrdersReturn>> FindLimitOrders(FindLimitOrdersArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<FindLimitOrdersReturn>> FindLimitOrdersAsync(FindLimitOrdersArgs args, CancellationToken token)
         {
-            return CustomGetRequest<FindLimitOrdersReturn>(KnownApiNames.DatabaseApi, "find_limit_orders", args, token);
+            return CustomGetRequestAsync<FindLimitOrdersReturn>(KnownApiNames.DatabaseApi, "find_limit_orders", args, token);
         }
 
         ////////////////////////////
@@ -566,9 +566,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_transaction_hex_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetTransactionHexReturn>> GetTransactionHex(GetTransactionHexArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetTransactionHexReturn>> GetTransactionHexAsync(GetTransactionHexArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetTransactionHexReturn>(KnownApiNames.DatabaseApi, "get_transaction_hex", args, token);
+            return CustomGetRequestAsync<GetTransactionHexReturn>(KnownApiNames.DatabaseApi, "get_transaction_hex", args, token);
         }
 
 
@@ -585,9 +585,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_required_signatures_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetRequiredSignaturesReturn>> GetRequiredSignatures(GetRequiredSignaturesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetRequiredSignaturesReturn>> GetRequiredSignaturesAsync(GetRequiredSignaturesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetRequiredSignaturesReturn>(KnownApiNames.DatabaseApi, "get_required_signatures", args, token);
+            return CustomGetRequestAsync<GetRequiredSignaturesReturn>(KnownApiNames.DatabaseApi, "get_required_signatures", args, token);
         }
 
 
@@ -605,9 +605,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_potential_signatures_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetPotentialSignaturesReturn>> GetPotentialSignatures(GetPotentialSignaturesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<GetPotentialSignaturesReturn>> GetPotentialSignaturesAsync(GetPotentialSignaturesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<GetPotentialSignaturesReturn>(KnownApiNames.DatabaseApi, "get_potential_signatures", args, token);
+            return CustomGetRequestAsync<GetPotentialSignaturesReturn>(KnownApiNames.DatabaseApi, "get_potential_signatures", args, token);
         }
 
         /// <summary>
@@ -618,9 +618,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: verify_authority_return true of the @ref trx has all of the required signatures, otherwise throws an exception</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VerifyAuthorityReturn>> VerifyAuthority(VerifyAuthorityArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VerifyAuthorityReturn>> VerifyAuthorityAsync(VerifyAuthorityArgs args, CancellationToken token)
         {
-            return CustomGetRequest<VerifyAuthorityReturn>(KnownApiNames.DatabaseApi, "verify_authority", args, token);
+            return CustomGetRequestAsync<VerifyAuthorityReturn>(KnownApiNames.DatabaseApi, "verify_authority", args, token);
         }
 
         /// <summary>
@@ -631,9 +631,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: verify_account_authority_return true if the signers have enough authority to authorize an account</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VerifyAccountAuthorityReturn>> VerifyAccountAuthority(VerifyAccountAuthorityArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VerifyAccountAuthorityReturn>> VerifyAccountAuthorityAsync(VerifyAccountAuthorityArgs args, CancellationToken token)
         {
-            return CustomGetRequest<VerifyAccountAuthorityReturn>(KnownApiNames.DatabaseApi, "verify_account_authority", args, token);
+            return CustomGetRequestAsync<VerifyAccountAuthorityReturn>(KnownApiNames.DatabaseApi, "verify_account_authority", args, token);
         }
 
 
@@ -650,9 +650,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: verify_signatures_return</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<VerifySignaturesReturn>> VerifySignatures(VerifySignaturesArgs args, CancellationToken token)
+        public Task<JsonRpcResponse<VerifySignaturesReturn>> VerifySignaturesAsync(VerifySignaturesArgs args, CancellationToken token)
         {
-            return CustomGetRequest<VerifySignaturesReturn>(KnownApiNames.DatabaseApi, "verify_signatures", args, token);
+            return CustomGetRequestAsync<VerifySignaturesReturn>(KnownApiNames.DatabaseApi, "verify_signatures", args, token);
         }
 
         /// <summary>
@@ -662,9 +662,9 @@ namespace Ditch.Steem
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>API type: get_smt_next_identifier_return array of Numeric Asset Identifier (NAI) available to be used for new SMT to be created.</returns>
         /// <exception cref="T:System.OperationCanceledException">The token has had cancellation requested.</exception>
-        public Task<JsonRpcResponse<GetSmtNextIdentifierReturn>> GetSmtNextIdentifier(CancellationToken token)
+        public Task<JsonRpcResponse<GetSmtNextIdentifierReturn>> GetSmtNextIdentifierAsync(CancellationToken token)
         {
-            return CustomGetRequest<GetSmtNextIdentifierReturn>(KnownApiNames.DatabaseApi, "get_smt_next_identifier", token);
+            return CustomGetRequestAsync<GetSmtNextIdentifierReturn>(KnownApiNames.DatabaseApi, "get_smt_next_identifier", token);
         }
     }
 }

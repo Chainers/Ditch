@@ -12,7 +12,7 @@ namespace Ditch.BitShares.Tests.Apis
         public async Task broadcast_transaction()
         {
             var args = new SignedTransaction();
-            var resp = await Api.BroadcastTransaction(args, CancellationToken.None);
+            var resp = await Api.BroadcastTransactionAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -21,7 +21,7 @@ namespace Ditch.BitShares.Tests.Apis
         public async Task broadcast_transaction_synchronous()
         {
             var args = new SignedTransaction();
-            var resp = await Api.BroadcastTransactionSynchronous(args, CancellationToken.None);
+            var resp = await Api.BroadcastTransactionSynchronousAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
 
@@ -30,7 +30,7 @@ namespace Ditch.BitShares.Tests.Apis
         public async Task broadcast_block()
         {
             var args = new SignedBlock();
-            var resp = await Api.BroadcastBlock(args, CancellationToken.None);
+            var resp = await Api.BroadcastBlockAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp);
         }
     }

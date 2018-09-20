@@ -14,9 +14,9 @@ namespace Ditch.Steem.Tests
         {
             JsonRpcResponse response;
             if (isNeedBroadcast)
-                response = await Api.BroadcastOperations(postingKeys, op, CancellationToken.None);
+                response = await Api.BroadcastOperationsAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
             else
-                response = await Api.VerifyAuthority(postingKeys, op, CancellationToken.None);
+                response = await Api.VerifyAuthorityAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
 
             WriteLine(response);
             Assert.IsFalse(response.IsError);

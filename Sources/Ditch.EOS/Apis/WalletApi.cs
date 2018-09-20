@@ -20,10 +20,10 @@ namespace Ditch.EOS
         /// <param name="name"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<string>> WalletCreate(string name, CancellationToken token)
+        public async Task<OperationResult<string>> WalletCreateAsync(string name, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/create";
-            return await CustomPostRequest<string>(endpoint, name, token);
+            return await CustomPostRequestAsync<string>(endpoint, name, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -34,10 +34,10 @@ namespace Ditch.EOS
         /// <param name="name"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletOpen(string name, CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> WalletOpenAsync(string name, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/open";
-            return await CustomPutRequest<VoidResponse>(endpoint, name, token);
+            return await CustomPutRequestAsync<VoidResponse>(endpoint, name, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Ditch.EOS
         /// <param name="name"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletLock(string name, CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> WalletLockAsync(string name, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/lock";
-            return await CustomPutRequest<VoidResponse>(endpoint, name, token);
+            return await CustomPutRequestAsync<VoidResponse>(endpoint, name, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -61,10 +61,10 @@ namespace Ditch.EOS
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletLockAll(CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> WalletLockAllAsync(CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/lock_all";
-            return await CustomGetRequest<VoidResponse>(endpoint, token);
+            return await CustomGetRequestAsync<VoidResponse>(endpoint, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace Ditch.EOS
         /// <param name="name"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletUnlock(string name, string password, CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> WalletUnlockAsync(string name, string password, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/unlock";
-            return await CustomPutRequest<VoidResponse>(endpoint, new[] { name, password }, token);
+            return await CustomPutRequestAsync<VoidResponse>(endpoint, new[] { name, password }, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,10 +91,10 @@ namespace Ditch.EOS
         /// <param name="name"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletImportKey(string name, string password, CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> WalletImportKeyAsync(string name, string password, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/import_key";
-            return await CustomPostRequest<VoidResponse>(endpoint, new[] { name, password }, token);
+            return await CustomPostRequestAsync<VoidResponse>(endpoint, new[] { name, password }, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,10 +104,10 @@ namespace Ditch.EOS
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<string[]>> WalletList(CancellationToken token)
+        public async Task<OperationResult<string[]>> WalletListAsync(CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/list_wallets";
-            return await CustomGetRequest<string[]>(endpoint, token);
+            return await CustomGetRequestAsync<string[]>(endpoint, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace Ditch.EOS
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<string[][]>> WalletListKeys(CancellationToken token)
+        public async Task<OperationResult<string[][]>> WalletListKeysAsync(CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/list_keys";
-            return await CustomGetRequest<string[][]>(endpoint, token);
+            return await CustomGetRequestAsync<string[][]>(endpoint, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -130,10 +130,10 @@ namespace Ditch.EOS
         /// </summary>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<string[]>> WalletGetPublicKeys(CancellationToken token)
+        public async Task<OperationResult<string[]>> WalletGetPublicKeysAsync(CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/get_public_keys";
-            return await CustomGetRequest<string[]>(endpoint, token);
+            return await CustomGetRequestAsync<string[]>(endpoint, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Ditch.EOS
         /// <param name="seconds"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<VoidResponse>> WalletSetTimeout(long seconds, CancellationToken token)
+        public async Task<OperationResult<VoidResponse>> WalletSetTimeoutAsync(long seconds, CancellationToken token)
         {
             var endpoint = $"{WalletUrl}/v1/wallet/set_timeout";
-            return await CustomPostRequest<VoidResponse>(endpoint, seconds, token);
+            return await CustomPostRequestAsync<VoidResponse>(endpoint, seconds, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,11 +158,11 @@ namespace Ditch.EOS
         /// <param name="chainId"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
-        public async Task<OperationResult<SignedTransaction>> WalletSignTransaction(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
+        public async Task<OperationResult<SignedTransaction>> WalletSignTransactionAsync(SignedTransaction trx, PublicKey[] keys, string chainId, CancellationToken token)
         {
             var args = new object[] { trx, keys, chainId };
             var endpoint = $"{WalletUrl}/v1/wallet/sign_transaction";
-            return await CustomPutRequest<SignedTransaction>(endpoint, args, token);
+            return await CustomPutRequestAsync<SignedTransaction>(endpoint, args, token).ConfigureAwait(false);
         }
 
        

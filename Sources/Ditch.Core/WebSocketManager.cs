@@ -49,7 +49,7 @@ namespace Ditch.Core
         /// <param name="url">The Uri the request is sent to.</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns>Url which will be used for data transfer (empty if none)</returns>
-        public Task<bool> ConnectTo(string url, CancellationToken token)
+        public Task<bool> ConnectToAsync(string url, CancellationToken token)
         {
             return Task.Run(() =>
             {

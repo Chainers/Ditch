@@ -31,7 +31,7 @@ namespace Ditch.Steem.Tests.Apis
                 Account = User.Login,
                 Type = BandwidthType.Forum
             };
-            var resp = await Api.CondenserGetAccountBandwidth(args, CancellationToken.None);
+            var resp = await Api.CondenserGetAccountBandwidthAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
 
@@ -39,7 +39,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_account_count()
         {
-            var resp = await Api.CondenserGetAccountCount(CancellationToken.None);
+            var resp = await Api.CondenserGetAccountCountAsync(CancellationToken.None).ConfigureAwait(false);
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
         }
@@ -54,7 +54,7 @@ namespace Ditch.Steem.Tests.Apis
                 Limit = 1,
                 Start = 1
             };
-            var resp = await Api.CondenserGetAccountHistory(args, CancellationToken.None);
+            var resp = await Api.CondenserGetAccountHistoryAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
 
@@ -68,7 +68,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_active_witnesses()
         {
-            var resp = await Api.CondenserGetActiveWitnesses(CancellationToken.None);
+            var resp = await Api.CondenserGetActiveWitnessesAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
 
@@ -80,7 +80,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 BlockNum = 22054347
             };
-            var resp = await Api.CondenserGetBlock(args, CancellationToken.None);
+            var resp = await Api.CondenserGetBlockAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
         //  "condenser_api.get_block_header",
@@ -111,7 +111,7 @@ namespace Ditch.Steem.Tests.Apis
         [Parallelizable]
         public async Task get_dynamic_global_properties()
         {
-            var resp = await Api.CondenserGetDynamicGlobalProperties(CancellationToken.None);
+            var resp = await Api.CondenserGetDynamicGlobalPropertiesAsync(CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
 
@@ -139,9 +139,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetPotentialSignaturesArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.CondenserGetPotentialSignatures(args, CancellationToken.None);
+            var resp = await Api.CondenserGetPotentialSignaturesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
         //  "condenser_api.get_reblogged_by",
@@ -157,7 +157,7 @@ namespace Ditch.Steem.Tests.Apis
             {
                 Accounts = new[] { User.Login }
             };
-            var accounts = await Api.FindAccounts(findAccountsArgs, CancellationToken.None);
+            var accounts = await Api.FindAccountsAsync(findAccountsArgs, CancellationToken.None).ConfigureAwait(false);
             if (accounts.IsError)
                 WriteLine(accounts);
             Assert.IsFalse(accounts.IsError);
@@ -165,10 +165,10 @@ namespace Ditch.Steem.Tests.Apis
 
             var args = new GetRequiredSignaturesArgs
             {
-                Trx = await GetSignedTransaction(),
+                Trx = await GetSignedTransaction().ConfigureAwait(false),
                 AvailableKeys = new[] { pKey }
             };
-            var resp = await Api.CondenserGetRequiredSignatures(args, CancellationToken.None);
+            var resp = await Api.CondenserGetRequiredSignaturesAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
 
@@ -187,9 +187,9 @@ namespace Ditch.Steem.Tests.Apis
         {
             var args = new GetTransactionHexArgs
             {
-                Trx = await GetSignedTransaction()
+                Trx = await GetSignedTransaction().ConfigureAwait(false)
             };
-            var resp = await Api.CondenserGetTransactionHex(args, CancellationToken.None);
+            var resp = await Api.CondenserGetTransactionHexAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
 
@@ -202,7 +202,7 @@ namespace Ditch.Steem.Tests.Apis
                 StartTag = string.Empty,
                 Limit = 1
             };
-            var resp = await Api.CondenserGetTrendingTags(args, CancellationToken.None);
+            var resp = await Api.CondenserGetTrendingTagsAsync(args, CancellationToken.None).ConfigureAwait(false);
             TestPropetries(resp, true);
         }
         //  "condenser_api.get_version",
