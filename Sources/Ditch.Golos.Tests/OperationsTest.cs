@@ -139,26 +139,34 @@ namespace Ditch.Golos.Tests
             };
 
             var privateKey = Secp256K1Manager.GenerateRandomKey();
-            var privateWif = "P" + Base58.EncodePrivateWif(privateKey);
+            var privateWif = "12345678"; //"P" + Base58.EncodePrivateWif(privateKey);
 
             var subWif = Base58.GetSubWif(name, privateWif, "owner");
+            Console.WriteLine(subWif);
             var pk = Base58.DecodePrivateWif(subWif);
             var subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            Console.WriteLine(Base58.EncodePublicWif(subPublicKey, Config.KeyPrefix));
             op.Owner.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
 
             subWif = Base58.GetSubWif(name, privateWif, "active");
+            Console.WriteLine(subWif);
             pk = Base58.DecodePrivateWif(subWif);
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            Console.WriteLine(Base58.EncodePublicWif(subPublicKey, Config.KeyPrefix));
             op.Active.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
 
             subWif = Base58.GetSubWif(name, privateWif, "posting");
+            Console.WriteLine(subWif);
             pk = Base58.DecodePrivateWif(subWif);
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            Console.WriteLine(Base58.EncodePublicWif(subPublicKey, Config.KeyPrefix));
             op.Posting.KeyAuths.Add(new KeyValuePair<PublicKeyType, ushort>(new PublicKeyType(subPublicKey), 1));
 
             subWif = Base58.GetSubWif(name, privateWif, "memo");
+            Console.WriteLine(subWif);
             pk = Base58.DecodePrivateWif(subWif);
             subPublicKey = Secp256K1Manager.GetPublicKey(pk, true);
+            Console.WriteLine(Base58.EncodePublicWif(subPublicKey, Config.KeyPrefix));
             op.MemoKey = new PublicKeyType(subPublicKey);
 
             await Post(User.ActiveKeys, false, op).ConfigureAwait(false);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace Ditch.Steem.Tests
     [TestFixture]
     public class CondenserOperationsTest : BaseTest
     {
+        protected const bool IsNeedBroadcast = false;
+
         [OneTimeSetUp]
         protected override void OneTimeSetUp()
         {
@@ -25,7 +28,7 @@ namespace Ditch.Steem.Tests
         protected virtual async Task Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
             JsonRpcResponse response;
-            if (isNeedBroadcast)
+            if (isNeedBroadcast | IsNeedBroadcast)
                 response = await Api.CondenserBroadcastOperationsSynchronousAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
             else
                 response = await Api.CondenserVerifyAuthorityAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
@@ -40,18 +43,18 @@ namespace Ditch.Steem.Tests
         public async Task VoteTest()
         {
             var user = User;
-            const string autor = "joseph.kalu";
-            const string permlink = "fkkl";
+            var autor = User.Login;
+            var permlink = "test-2018-09-26-12-55-19";
 
             var voteState = await GetVoteState(autor, permlink, user).ConfigureAwait(false);
 
             for (var i = 0; i < 3; i++)
             {
                 var op = voteState < 0
-                    ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote)
+                    ? new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote)
                     : voteState > 0
                         ? new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxFlagVote)
-                        : new VoteOperation(user.Login, autor, permlink, VoteOperation.NoneVote);
+                        : new VoteOperation(user.Login, autor, permlink, VoteOperation.MaxUpVote);
 
                 await Post(user.PostingKeys, false, op).ConfigureAwait(false);
 
@@ -155,7 +158,7 @@ namespace Ditch.Steem.Tests
         [Test]
         public async Task AccountCreateTest()
         {
-            const string name = "userlogin";
+            string name = User.Login + DateTime.Now.Ticks;
 
             var op = new AccountCreateOperation
             {
@@ -219,7 +222,7 @@ namespace Ditch.Steem.Tests
             var accountCreationFee = new Asset(1, Config.SteemAssetNumSteem);
             var fee = new Asset(1, Config.SteemAssetNumSteem);
 
-            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType(Config.SteemAddressPrefix + "1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
+            var op = new WitnessUpdateOperation(User.Login, string.Empty, new PublicKeyType(Config.KeyPrefix + "1111111111111111111111111111111114T1Anm"), new LegacyChainProperties(1000, accountCreationFee, 131072), fee);
             await Post(User.ActiveKeys, false, op).ConfigureAwait(false);
         }
 

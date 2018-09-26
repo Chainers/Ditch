@@ -11,7 +11,7 @@ namespace Ditch.Steem.Tests.Apis
         [Test][Parallelizable]
         public async Task get_key_references()
         {
-            var pubKey = new PublicKeyType(Config.SteemAddressPrefix + "6C8GjDBAHrfSqaNRn4FnLLUdCfw3WgjY3td1cC4T7CKpb32YM6");
+            var pubKey = new PublicKeyType(Config.KeyPrefix + "6C8GjDBAHrfSqaNRn4FnLLUdCfw3WgjY3td1cC4T7CKpb32YM6");
 
             var args = new GetKeyReferencesArgs
             {

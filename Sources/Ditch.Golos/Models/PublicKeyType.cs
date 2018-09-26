@@ -8,7 +8,7 @@ namespace Ditch.Golos.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class PublicKeyType : ICustomJson
     {
-        public const string Prefix = "GLS";
+        public string Prefix { get; set; } = Config.KeyPrefix;
 
         [MessageOrder(1)]
         public byte[] Data { get; set; }

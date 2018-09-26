@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
@@ -30,9 +31,16 @@ namespace Ditch.Steem.Tests
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
         {
+            // Used https://testnet.steem.vc for test
+
             if (User == null)
             {
-                User = new UserInfo { Login = ConfigurationManager.AppSettings["Login"], PostingWif = ConfigurationManager.AppSettings["PostingWif"], ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] };
+                User = new UserInfo
+                {
+                    Login = ConfigurationManager.AppSettings["Login"] ?? "ditch.test",
+                    PostingWif = ConfigurationManager.AppSettings["PostingWif"] ?? "5KX6QUwtxn2TvjxT7R6GXyjmHZpBFacCY9TV3T7Bg5YQ64V8bhy",
+                    ActiveWif = ConfigurationManager.AppSettings["ActiveWif"] ?? "5JTQgtzuRTfDniVP24WnFro8ucGD3cFbgfp1Q9qX47gEywp9BU3"
+                };
             }
             Assert.IsFalse(string.IsNullOrEmpty(User.PostingWif), "empty PostingWif");
 
@@ -43,7 +51,9 @@ namespace Ditch.Steem.Tests
                 Api = new OperationManager(HttpManager);
                 JsonSerializerSettings = Api.NewJsonSerializerSettings;
 
-                var url = ConfigurationManager.AppSettings["Url"];
+                Config.ChainId = Hex.HexToBytes(ConfigurationManager.AppSettings["ChainId"] ?? "79276aea5d4877d9a25892eaa01b0adf019d3e5cb12a97478df3298ccdd01673");
+                Config.KeyPrefix = ConfigurationManager.AppSettings["KeyPrefix"] ?? "STX";
+                var url = ConfigurationManager.AppSettings["Url"] ?? "https://testnet.steem.vc";
                 Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Enable connect to node");
             }
 

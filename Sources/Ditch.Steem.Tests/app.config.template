@@ -1,24 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <appSettings>
-    <add key="Login" value="***********" />
-    <add key="PostingWif" value="5**************************************************" />
-    <add key="ActiveWif" value="5**************************************************" />
-    <add key="Url" value="https://api.steemit.com" />
+    <add key="Login" value="ditch.test" />
+    <add key="PostingWif" value="5KX6QUwtxn2TvjxT7R6GXyjmHZpBFacCY9TV3T7Bg5YQ64V8bhy" />
+    <add key="ActiveWif" value="5JTQgtzuRTfDniVP24WnFro8ucGD3cFbgfp1Q9qX47gEywp9BU3" />
+    <add key="Url" value="https://testnet.steem.vc" />
+    <add key="ChainId" value="79276aea5d4877d9a25892eaa01b0adf019d3e5cb12a97478df3298ccdd01673" />
+    <add key="KeyPrefix" value="STX" />
   </appSettings>
-  <runtime>
-    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
-      <dependentAssembly>
-        <assemblyIdentity name="System.Diagnostics.DiagnosticSource" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-4.0.1.0" newVersion="4.0.1.0" />
-      </dependentAssembly>
-      <dependentAssembly>
-        <assemblyIdentity name="SuperSocket.ClientEngine" publicKeyToken="ee9af13f57f00acc" culture="neutral" />
-        <bindingRedirect oldVersion="0.0.0.0-0.9.0.0" newVersion="0.9.0.0" />
-      </dependentAssembly>
-    </assemblyBinding>
-  </runtime>
-  <startup>
-    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7" />
-  </startup>
 </configuration>

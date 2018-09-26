@@ -23,7 +23,7 @@ namespace Ditch.Steem
 
         public MessageSerializer MessageSerializer { get; }
         public IConnectionManager ConnectionManager { get; }
-        public byte[] ChainId { get; set; } = new byte[32];
+        public byte[] ChainId { get; set; } = Config.ChainId;
 
         public bool IsConnected => ConnectionManager.IsConnected;
 

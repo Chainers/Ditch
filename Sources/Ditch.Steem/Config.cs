@@ -1,13 +1,16 @@
-﻿namespace Ditch.Steem
+﻿using Cryptography.ECDSA;
+
+namespace Ditch.Steem
 {
     //TODO: move it to git like localization
     public class Config
     {
+        public static byte[] ChainId { get; set; } = new byte[32];
+        public static string KeyPrefix { get; set; } = "STM";
+
         public const string Steem = "STEEM";
         public const string Sbd = "SBD";
         public const string Vests = "VESTS";
-        public const string SteemAddressPrefix = "STM";
-
 
         public const int SteemAssetSymbolPrecisionBits = 4;
         public const uint SmtMaxNai = 99999999;

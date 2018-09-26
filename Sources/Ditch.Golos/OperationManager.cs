@@ -23,7 +23,7 @@ namespace Ditch.Golos
         public MessageSerializer MessageSerializer { get; }
         public IConnectionManager ConnectionManager { get; }
 
-        public byte[] ChainId { get; set; } = Hex.HexToBytes("782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12");
+        public byte[] ChainId { get; set; } = Config.ChainId;
 
         public bool IsConnected => ConnectionManager.IsConnected;
 

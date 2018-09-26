@@ -13,7 +13,7 @@ namespace Ditch.Steem.Tests
         protected override async Task Post(IList<byte[]> postingKeys, bool isNeedBroadcast, params BaseOperation[] op)
         {
             JsonRpcResponse response;
-            if (isNeedBroadcast)
+            if (isNeedBroadcast | IsNeedBroadcast)
                 response = await Api.BroadcastOperationsAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);
             else
                 response = await Api.VerifyAuthorityAsync(postingKeys, op, CancellationToken.None).ConfigureAwait(false);

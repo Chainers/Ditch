@@ -7,7 +7,7 @@ namespace Ditch.Steem.Models
 {
     public class PublicKeyType : ICustomJson
     {
-        public string Prefix { get; set; } = Config.SteemAddressPrefix;
+        public string Prefix { get; set; } = Config.KeyPrefix;
 
         [MessageOrder(1)]
         public byte[] Data { get; set; }
