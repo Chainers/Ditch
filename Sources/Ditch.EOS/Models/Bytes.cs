@@ -10,13 +10,23 @@ namespace Ditch.EOS.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class Bytes : ICustomSerializer, ICustomJson
     {
-        public string Value { get; set; } = string.Empty;
+        public byte[] Value { get; set; }
 
         public Bytes() { }
 
         public Bytes(string value)
         {
+            Value = Hex.HexToBytes(value);
+        }
+
+        public Bytes(byte[] value)
+        {
             Value = value;
+        }
+
+        public static implicit operator Bytes(byte[] bytes)
+        {
+            return new Bytes(bytes);
         }
 
 
@@ -24,12 +34,16 @@ namespace Ditch.EOS.Models
 
         public void ReadJson(JsonReader reader, JsonSerializer serializer)
         {
-            Value = serializer.Deserialize<string>(reader);
+            var str = serializer.Deserialize<string>(reader);
+            Value = Hex.HexToBytes(str);
         }
 
         public void WriteJson(JsonWriter writer, JsonSerializer serializer)
         {
-            writer.WriteValue(Value);
+            var str = string.Empty;
+            if (Value != null)
+                str = Hex.ToString(Value);
+            writer.WriteValue(str);
         }
 
         #endregion
@@ -38,10 +52,9 @@ namespace Ditch.EOS.Models
 
         public void Serializer(Stream stream, IMessageSerializer serializeHelper)
         {
-            var buf = Hex.HexToBytes(Value);
-            var len = new UnsignedInt((uint)buf.Length);
+            var len = new UnsignedInt((uint)Value.Length);
             len.Serializer(stream, serializeHelper);
-            stream.Write(buf, 0, buf.Length);
+            stream.Write(Value, 0, Value.Length);
         }
 
         #endregion

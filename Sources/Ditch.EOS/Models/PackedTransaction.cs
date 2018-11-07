@@ -24,7 +24,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: fc::enum_type&lt;uint8_t,compression_type></returns>
         [JsonProperty("compression")]
-        public string Compression { get; set; }
+        public CompressionType Compression { get; set; }
 
         /// <summary>
         /// API name: packed_context_free_data
@@ -32,7 +32,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: bytes</returns>
         [JsonProperty("packed_context_free_data")]
-        public string PackedContextFreeData { get; set; }
+        public Bytes PackedContextFreeData { get; set; }
 
         /// <summary>
         /// API name: packed_trx
@@ -40,7 +40,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: bytes</returns>
         [JsonProperty("packed_trx")]
-        public string PackedTrx { get; set; }
+        public Bytes PackedTrx { get; set; }
 
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Ditch.Core.JsonRpc;
 using Ditch.EOS.Models;
 
 namespace Ditch.EOS
@@ -85,6 +87,7 @@ namespace Ditch.EOS
         /// <param name="args"></param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
+        [Obsolete("Feature is currently unsupported. Use get_abi instead.")]
         public async Task<OperationResult<GetCodeResults>> GetCodeAsync(GetCodeParams args, CancellationToken token)
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_code";
@@ -116,6 +119,19 @@ namespace Ditch.EOS
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_table_rows";
             return await CustomPutRequestAsync<GetTableRowsResult>(endpoint, args, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// curl --request POST \ --url http://127.0.0.1:8888/v1/chain/get_currency_balance
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
+        /// <returns></returns>
+        public async Task<OperationResult<Asset[]>> GetCurrencyBalanceAsync(GetCurrencyBalanceParams args, CancellationToken token)
+        {
+            var endpoint = $"{ChainUrl}/v1/chain/get_currency_balance";
+            return await CustomPutRequestAsync<Asset[]>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -175,6 +191,19 @@ namespace Ditch.EOS
         {
             var endpoint = $"{ChainUrl}/v1/chain/get_producers";
             return await CustomPutRequestAsync<GetProducersResult>(endpoint, args, token).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// curl --request POST \--url http://127.0.0.1:8888/v1/chain/get_producers
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task<OperationResult<VoidResponse>> PushBlock(SignedBlock args, CancellationToken token)
+        {
+            var endpoint = $"{ChainUrl}/v1/chain/push_block";
+            return await CustomPostRequestAsync<VoidResponse>(endpoint, args, token).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -18,12 +18,12 @@ namespace Ditch.EOS
 
         public async Task GenerateAsync(OperationManager api, string contractName, string @namespace, string outDir, HashSet<string> actionFilter, CancellationToken token)
         {
-            var args = new GetCodeParams
+            var args = new GetAbiParams()
             {
                 AccountName = contractName
             };
 
-            var resp = await api.GetCodeAsync(args, token).ConfigureAwait(false);
+            var resp = await api.GetAbiAsync(args, token).ConfigureAwait(false);
             if (resp.IsError)
                 throw resp.Exception;
 

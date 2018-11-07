@@ -21,7 +21,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: enum_type</returns>
         [JsonProperty("status")]
-        public object Status { get; set; }
+        public StatusEnum Status { get; set; }
 
 
         /// <summary>

@@ -96,10 +96,10 @@ namespace Ditch.EOS
 
             var pack = new PackedTransaction
             {
-                PackedTrx = Hex.ToString(packedTrx),
+                PackedTrx = packedTrx,
                 Signatures = new string[privateKeys.Count],
-                PackedContextFreeData = "",
-                Compression = "none"
+                PackedContextFreeData = new Bytes(),
+                Compression = CompressionType.None
             };
 
             for (var i = 0; i < privateKeys.Count; i++)
@@ -156,9 +156,9 @@ namespace Ditch.EOS
 
             var pack = new PackedTransaction
             {
-                PackedTrx = Hex.ToString(packedTrx),
-                PackedContextFreeData = "",
-                Compression = "none",
+                PackedTrx = packedTrx,
+                PackedContextFreeData = new Bytes(),
+                Compression = CompressionType.None,
                 Signatures = strx.Result.Signatures
             };
 

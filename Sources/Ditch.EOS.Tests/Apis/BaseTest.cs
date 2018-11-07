@@ -50,6 +50,10 @@ namespace Ditch.EOS.Tests.Apis
         {
             WriteLine(resp);
             Assert.IsFalse(resp.IsError);
+
+            if (typeof(T).IsArray)
+                return; //TODO: addcompare
+
             var jResult = JsonConvert.DeserializeObject<JObject>(resp.RawResponse);
             Compare(typeof(T), jResult);
         }

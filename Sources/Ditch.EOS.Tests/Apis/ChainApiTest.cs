@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Ditch.EOS.Contracts.Eosio.Actions;
 using Ditch.EOS.Contracts.Eosio.Structs;
 using Ditch.EOS.Models;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Ditch.EOS.Tests.Apis
@@ -21,12 +23,9 @@ namespace Ditch.EOS.Tests.Apis
         [Test]
         public async Task GetBlockTest()
         {
-            var infoResp = await Api.GetInfoAsync(CancellationToken).ConfigureAwait(false);
-            var info = infoResp.Result;
-
             var args = new GetBlockParams
             {
-                BlockNumOrId = info.LastIrreversibleBlockId
+                BlockNumOrId = "4"
             };
 
             var resp = await Api.GetBlockAsync(args, CancellationToken).ConfigureAwait(false);
@@ -61,11 +60,12 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        public async Task GetAbiTest()
+        [TestCase("eosio.token")]
+        public async Task GetAbiTest(string accountName)
         {
             var args = new GetAbiParams
             {
-                AccountName = User.Login
+                AccountName = accountName
             };
 
             var resp = await Api.GetAbiAsync(args, CancellationToken).ConfigureAwait(false);
@@ -73,6 +73,7 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
+        [Ignore("Feature is currently unsupported. Use get_abi instead.")]
         [TestCase("eosio.token")]
         public async Task GetCodeTest(string accountName)
         {
@@ -82,7 +83,7 @@ namespace Ditch.EOS.Tests.Apis
             };
 
             var resp = await Api.GetCodeAsync(args, CancellationToken).ConfigureAwait(false);
-            Assert.IsFalse(resp.IsError);
+            Assert.IsFalse(resp.IsError, resp.Exception.ToString());
             WriteLine(resp.Result.Abi);
         }
 
@@ -120,6 +121,21 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
+        [TestCase("eosio.token", "exchange", "EOS")]
+        public async Task GetCurrencyBalanceTest(string code, string account, string symbol)
+        {
+            var args = new GetCurrencyBalanceParams()
+            {
+                Code = code,
+                Account = account,
+                Symbol = symbol,
+            };
+
+            var resp = await Api.GetCurrencyBalanceAsync(args, CancellationToken).ConfigureAwait(false);
+            TestPropetries(resp);
+        }
+
+        [Test]
         public async Task AbiJsonToBinTest()
         {
             var args = new AbiJsonToBinParams
@@ -129,7 +145,7 @@ namespace Ditch.EOS.Tests.Apis
                 Args = new Newaccount
                 {
                     Creator = "eosio",
-                    Name = "qwdfvbmfkrt",
+                    Newact = "qwdfvbmfkrt",
                     Owner = new Ditch.EOS.Contracts.Eosio.Structs.Authority
                     {
                         Threshold = 1,
@@ -204,7 +220,7 @@ namespace Ditch.EOS.Tests.Apis
         }
 
         [Test]
-        [TestCase("eosio", "EOS")]
+        [TestCase("eosio.token", "EOS")]
         public async Task GetCurrencyStatsTest(string contractName, string symbol)
         {
             var args = new GetCurrencyStatsParams()

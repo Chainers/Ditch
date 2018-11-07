@@ -17,7 +17,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: string</returns>
         [JsonProperty("server_version")]
-        public string ServerVersion {get; set;}
+        public string ServerVersion { get; set; }
 
         /// <summary>
         /// API name: chain_id
@@ -25,7 +25,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: chain_id_type</returns>
         [JsonProperty("chain_id")]
-        public string ChainId {get; set;}
+        public string ChainId { get; set; }
 
         /// <summary>
         /// API name: head_block_num
@@ -33,7 +33,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("head_block_num")]
-        public uint HeadBlockNum {get; set;}
+        public uint HeadBlockNum { get; set; }
 
         /// <summary>
         /// API name: last_irreversible_block_num
@@ -41,7 +41,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint32_t</returns>
         [JsonProperty("last_irreversible_block_num")]
-        public uint LastIrreversibleBlockNum {get; set;}
+        public uint LastIrreversibleBlockNum { get; set; }
 
         /// <summary>
         /// API name: last_irreversible_block_id
@@ -65,7 +65,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: time_point</returns>
         [JsonProperty("head_block_time")]
-        public TimePoint HeadBlockTime {get; set;}
+        public TimePoint HeadBlockTime { get; set; }
 
         /// <summary>
         /// API name: head_block_producer
@@ -73,7 +73,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: account_name</returns>
         [JsonProperty("head_block_producer")]
-        public string HeadBlockProducer {get; set;}
+        public AccountName HeadBlockProducer { get; set; }
 
         /// <summary>
         /// API name: virtual_block_cpu_limit
@@ -81,7 +81,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("virtual_block_cpu_limit")]
-        public ulong VirtualBlockCpuLimit {get; set;}
+        public ulong VirtualBlockCpuLimit { get; set; }
 
         /// <summary>
         /// API name: virtual_block_net_limit
@@ -89,7 +89,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("virtual_block_net_limit")]
-        public ulong VirtualBlockNetLimit {get; set;}
+        public ulong VirtualBlockNetLimit { get; set; }
 
         /// <summary>
         /// API name: block_cpu_limit
@@ -97,7 +97,7 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("block_cpu_limit")]
-        public ulong BlockCpuLimit {get; set;}
+        public ulong BlockCpuLimit { get; set; }
 
         /// <summary>
         /// API name: block_net_limit
@@ -105,6 +105,14 @@ namespace Ditch.EOS.Models
         /// </summary>
         /// <returns>API type: uint64_t</returns>
         [JsonProperty("block_net_limit")]
-        public ulong BlockNetLimit {get; set;}
+        public ulong BlockNetLimit { get; set; }
+
+        /// <summary>
+        /// API name: server_version_string
+        /// 
+        /// </summary>
+        /// <returns>API type: string</returns>
+        [JsonProperty("server_version_string", NullValueHandling = NullValueHandling.Ignore)]
+        public string ServerVersionString { get; set; }
     }
 }
