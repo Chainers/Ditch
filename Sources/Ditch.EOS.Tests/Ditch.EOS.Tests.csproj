@@ -216,6 +216,7 @@
     <Compile Include="KeyGenerator.cs" />
     <Compile Include="MessageSerializerTest.cs" />
     <Compile Include="ContractInfo.cs" />
+    <Compile Include="Models\BaseNameTest.cs" />
     <Compile Include="ScatterTest.cs" />
     <Compile Include="UserInfo.cs" />
     <Compile Include="Apis\WalletApiTest.cs" />

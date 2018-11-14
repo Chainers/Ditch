@@ -87,6 +87,27 @@ namespace Ditch.EOS.Models
             return 0;
         }
 
+        public static string UlongToString(ulong value)
+        {
+            const string charmap = ".12345abcdefghijklmnopqrstuvwxyz";
+
+            var str = new char[13];
+            ulong tmp = value;
+            var count = -1;
+            for (var i = 0; i <= 12; ++i)
+            {
+                var id = i == 0 ? tmp & 0x0f : tmp & 0x1f;
+                char c = charmap[(byte)id];
+                str[12 - i] = c;
+                tmp >>= (i == 0 ? 4 : 5);
+
+                if (id == 0 && count + 1 == i)
+                    count = i;
+            }
+
+            return new string(str, 0, 12 - count);
+        }
+
         #endregion
     }
 }
