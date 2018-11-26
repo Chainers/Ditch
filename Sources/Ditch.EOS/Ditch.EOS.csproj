@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>.net standard client for EOS blockchain (https://eosio.github.io/eos/group__eosiorpc.html)</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.1.0</Version>
-    <PackageReleaseNotes>Support Task-based Asynchronous Pattern (TAP) convention</PackageReleaseNotes>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <Version>4.1.1</Version>
+    <PackageReleaseNotes>fixes+refactoring</PackageReleaseNotes>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
