@@ -234,7 +234,7 @@ namespace Ditch.Core.Tests
             Assert.True(rez.Equals(exp), $"{rez} != {exp} ({exp} > {value})");
         }
 
-        [Theory]
+        [Test]
         [TestCase("academia", "academia")]
         [TestCase("anela", "anela")]
         [TestCase("api", "api")]

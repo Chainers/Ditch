@@ -219,7 +219,7 @@ namespace Ditch.Steem.Tests
             Console.WriteLine(JsonBeautify(r.RawResponse));
         }
 
-        private string JsonBeautify(string json)
+        protected string JsonBeautify(string json)
         {
             if (string.IsNullOrEmpty(json))
                 return json;

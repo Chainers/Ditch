@@ -10,7 +10,7 @@ namespace Ditch.Core
 {
     public class HttpManager : IConnectionManager
     {
-        public string UrlToConnect { get; private set; }
+        public string UrlToConnect { get; set; }
 
         public bool IsConnected => !string.IsNullOrEmpty(UrlToConnect);
 
@@ -91,7 +91,7 @@ namespace Ditch.Core
             {
                 var content = new StringContent(jsonRpc.Message);
                 var response = await HttpClient.PostAsync(UrlToConnect, content, loop, token).ConfigureAwait(false);
-                
+
                 var stringResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var prop = JsonConvert.DeserializeObject<JsonRpcResponse<T>>(stringResponse, jsonSerializerSettings);
                 prop.RawRequest = jsonRpc.Message;

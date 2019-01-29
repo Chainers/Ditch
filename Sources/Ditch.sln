@@ -19,9 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.EOS", "Ditch.EOS\Ditc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.EOS.Tests", "Ditch.EOS.Tests\Ditch.EOS.Tests.csproj", "{18D52367-9434-493C-928D-9755EDEEE97C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.BitShares", "Ditch.BitShares\Ditch.BitShares.csproj", "{8E5D2936-E2CA-4EBC-B866-5047A9D7041D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.BitShares", "Ditch.BitShares\Ditch.BitShares.csproj", "{8E5D2936-E2CA-4EBC-B866-5047A9D7041D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.BitShares.Tests", "Ditch.BitShares.Tests\Ditch.BitShares.Tests.csproj", "{921955DD-C35E-420D-992E-6A086185D598}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ditch.Ethereum", "Ditch.Ethereum\Ditch.Ethereum.csproj", "{146B9E08-3AF8-4E09-ADE9-6B7A4B2BA2DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditch.Ethereum.Tests", "Ditch.Ethereum.Tests\Ditch.Ethereum.Tests.csproj", "{BB1E513B-2345-4F60-B1C3-2A630F577A08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,10 @@ Global
 		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5CD29C9-11D2-45EC-B9CC-279AF7D0AD55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C54FEE-3749-43A8-8D57-88A075193A45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B060494D-D51A-4621-B315-F06FDC5200ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B060494D-D51A-4621-B315-F06FDC5200ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B060494D-D51A-4621-B315-F06FDC5200ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,10 +73,14 @@ Global
 		{921955DD-C35E-420D-992E-6A086185D598}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{921955DD-C35E-420D-992E-6A086185D598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{921955DD-C35E-420D-992E-6A086185D598}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56C54FEE-3749-43A8-8D57-88A075193A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56C54FEE-3749-43A8-8D57-88A075193A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56C54FEE-3749-43A8-8D57-88A075193A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56C54FEE-3749-43A8-8D57-88A075193A45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{146B9E08-3AF8-4E09-ADE9-6B7A4B2BA2DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{146B9E08-3AF8-4E09-ADE9-6B7A4B2BA2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{146B9E08-3AF8-4E09-ADE9-6B7A4B2BA2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{146B9E08-3AF8-4E09-ADE9-6B7A4B2BA2DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB1E513B-2345-4F60-B1C3-2A630F577A08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1E513B-2345-4F60-B1C3-2A630F577A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1E513B-2345-4F60-B1C3-2A630F577A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1E513B-2345-4F60-B1C3-2A630F577A08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

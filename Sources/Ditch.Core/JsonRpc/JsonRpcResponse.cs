@@ -16,7 +16,7 @@ namespace Ditch.Core.JsonRpc
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "error")]
         public JObject ResponseError { get; set; }
 
-        public Exception Exception { get; }
+        public Exception Exception { get; set; }
 
         public bool IsError => ResponseError != null || Exception != null;
 

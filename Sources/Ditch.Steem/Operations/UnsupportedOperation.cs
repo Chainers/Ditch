@@ -12,7 +12,7 @@ namespace Ditch.Steem.Operations
 
         public override string TypeName { get; }
 
-        private JObject Value { get; set; }
+        public JObject Value { get; internal set; }
 
 
         public UnsupportedOperation(string name, JObject value)
