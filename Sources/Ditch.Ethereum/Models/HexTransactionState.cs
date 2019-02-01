@@ -78,9 +78,11 @@ namespace Ditch.Ethereum.Models
 
         public enum TransactionStatus
         {
-            Failed = 0,
-            Successful = 1,
-            Unknown = 2,
+            Unknown = 0,
+
+            Failed = 1,
+            Successful = 2,
+            Null = 3
         }
     }
 }

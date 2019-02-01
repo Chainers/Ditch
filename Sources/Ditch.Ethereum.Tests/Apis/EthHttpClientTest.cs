@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Ditch.Core;
 using Ditch.Ethereum.Models;
 using NUnit.Framework;
 
@@ -19,15 +23,50 @@ namespace Ditch.Ethereum.Tests.Apis
             TestPropetries(resp);
         }
 
+        //18160ddd totalSupply() public view returns (uint256 totalSupply) [Get the total token supply]
+        //70a08231 balanceOf(address _owner) public view returns (uint256 balance) [Get the account balance of another account with address _owner]
+        //095ea7b3 approve(address _spender, uint256 _value) public returns (bool success) [Allow _spender to withdraw from your account, multiple times, up to the _value amount. If this function is called again it overwrites the current allowance with _value]
+        //dd62ed3e allowance(address _owner, address _spender) public view returns (uint256 remaining) [Returns the amount which _spender is still allowed to withdraw from _owner]
+        //313ce567 decimals ‭00110001001111001110010101100111‬
+        //06fdde03 name
+        //95d89b41 symbol   ‭10010101110110001001101101000001‬
+        //54fd4d50 version
+        [Test]
+        [Parallelizable]
+        [TestCase("0x5d00d312e171be5342067c09bae883f9bcb2003b", "0x313ce567", "latest")]
+        [TestCase("0x5d00d312e171be5342067c09bae883f9bcb2003b", "95d89b41", "latest")]
+        [TestCase("0xB8c77482e45F1F44dE1745F52C74426C631bDD52", "0x313ce567", "latest")]
+        [TestCase("0xB8c77482e45F1F44dE1745F52C74426C631bDD52", "95d89b41", "latest")]
+        public async Task eth_call(string contract, string data, string blockParam)
+        {
+            var bytes = new HexValue(data);
+
+            string result = System.Text.Encoding.Unicode.GetString(bytes.Bytes);
+
+            var args = new EthCallArgs
+            {
+                To = new HexValue(contract),
+                Data = new HexValue(data)
+            };
+
+            var resp = await Api.EthCall<HexValue>(args, blockParam, CancellationToken.None)
+                .ConfigureAwait(false);
+
+            Console.WriteLine(resp.Result);
+            TestPropetries(resp);
+        }
+        
         [Test]
         [Parallelizable]
         [TestCase(46147)]
         [TestCase(46169)]
         [TestCase(47205)]
-        [TestCase(6040059)]
+        [TestCase(4832686)]
+        [TestCase(4832685)]
         public async Task eth_getBlockByNumber(long blockNum)
         {
             var resp = await Api.GetBlockByNumberAsync(blockNum, true, CancellationToken.None).ConfigureAwait(false);
+            Console.WriteLine(resp.Result.Timestamp.Value);
             TestPropetries(resp);
         }
 
@@ -36,11 +75,238 @@ namespace Ditch.Ethereum.Tests.Apis
         [TestCase("0xbb3a336e3f823ec18197f1e13ee875700f08f03e2cab75f0d0b118dabb44cba0")]
         [TestCase("0x31ded263506ea36e6ea777efc2c39a999e6fba4f4d338c7313af6aac6d9bf3e3")]
         [TestCase("0xd327b2bfc0e703e3bc12e5b3f6272eaac2a7d6004a35688469d0e8d406b79483")]
+        [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
+        [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
+        [TestCase("0x0ec5bc927df001dafe6634826e41618a40b74a879ced2e93813a4ca2703bd952")]
+        public async Task eth_getTransactionByHash(string hash)
+        {
+            var resp = await Api.GetTransactionByHash(new HexValue(hash), CancellationToken.None)
+                .ConfigureAwait(false);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        [Parallelizable]
+        [TestCase("0xbb3a336e3f823ec18197f1e13ee875700f08f03e2cab75f0d0b118dabb44cba0")]
+        [TestCase("0x31ded263506ea36e6ea777efc2c39a999e6fba4f4d338c7313af6aac6d9bf3e3")]
+        [TestCase("0xd327b2bfc0e703e3bc12e5b3f6272eaac2a7d6004a35688469d0e8d406b79483")]
+        [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
+        [TestCase("0x7141570cd9169abdb99281074795874690c58be6655283b35d2480a782058232")]
+        [TestCase("0x0ec5bc927df001dafe6634826e41618a40b74a879ced2e93813a4ca2703bd952")]
         public async Task eth_getTransactionReceipt(string hash)
         {
             var resp = await Api.GetTransactionReceipt(new HexValue(hash), CancellationToken.None)
                 .ConfigureAwait(false);
             TestPropetries(resp);
         }
+
+        ////https://www.ethernodes.org/network/1/nodes
+        //[Test]
+        //[Parallelizable]
+        //[TestCase("185.243.112.83", 52960)]
+        //[TestCase("35.203.186.223", 52660)]
+        //[TestCase("151.236.217.113", 39608)]
+        //[TestCase("84.234.52.190", 30303)]
+        //[TestCase("47.244.62.15", 54212)]
+        //public void Test(string server, int port)
+        //{
+        //    var message = "{\"method\": \"eth_getBlockByNumber\",\"params\": [\"0xB443\",true],\"jsonrpc\": \"2.0\",\"id\": 1}";
+        //    // TestTcpClient(server, port, message);
+        //    TestSocket2(server, port, message);
+        //}
+
+        //private void TestSocket2(string ip, int port, string jsonrpc)
+        //{
+        //    var manager = new WebSocketManager();
+        //    Api = new OperationManager(manager);
+
+        //    var isConnected = Api.ConnectToAsync($"wss:\\{ip}:{port}", CancellationToken.None).Result;
+        //    Assert.IsTrue(isConnected);
+
+        //}
+
+        //private void TestTcpClient(string ip, int port, string msg)
+        //{
+        //    try
+        //    {
+        //        TcpClient client = new TcpClient(ip, port);
+
+        //        // Translate the passed message into ASCII and store it as a Byte array.
+        //        Byte[] data = System.Text.Encoding.ASCII.GetBytes(msg);
+
+        //        // Get a client stream for reading and writing.
+        //        //  Stream stream = client.GetStream();
+
+        //        NetworkStream stream = client.GetStream();
+
+        //        // Send the message to the connected TcpServer. 
+        //        stream.Write(data, 0, data.Length);
+
+        //        Console.WriteLine("Sent: {0}", msg);
+
+        //        // Receive the TcpServer.response.
+
+        //        // Buffer to store the response bytes.
+        //        data = new Byte[256];
+
+        //        // String to store the response ASCII representation.
+        //        String responseData = String.Empty;
+
+        //        // Read the first batch of the TcpServer response bytes.
+        //        Int32 bytes = stream.Read(data, 0, data.Length);
+        //        responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+        //        Console.WriteLine("Received: {0}", responseData);
+
+        //        // Close everything.
+        //        stream.Close();
+        //        client.Close();
+        //    }
+        //    catch (ArgumentNullException e)
+        //    {
+        //        Console.WriteLine("ArgumentNullException: {0}", e);
+        //    }
+        //    catch (SocketException e)
+        //    {
+        //        Console.WriteLine("SocketException: {0}", e);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine("Exception: {0}", e);
+        //    }
+        //}
+
+        //private void TestSocket(string ip, int port, string jsonrpc)
+        //{
+        //    var set = new string[][]
+        //    {
+        //        new[] {"Unspecified", "Dgram", "Udp"},
+        //        new[] {"Unspecified", "Raw", "Icmp"},
+        //        new[] {"Unspecified", "Raw", "IcmpV6"},
+        //        new[] {"InterNetwork", "Dgram", "Udp"},
+        //        new[] {"InterNetwork", "Dgram", "IPv6HopByHopOptions"},
+        //        new[] {"InterNetwork", "Dgram", "IP"},
+        //        new[] {"InterNetwork", "Dgram", "Unspecified"},
+        //        new[] {"InterNetwork", "Raw", "Icmp"},
+        //        new[] {"InterNetwork", "Raw", "IcmpV6"},
+        //        new[] {"InterNetworkV6", "Raw", "Icmp"},
+        //        new[] {"InterNetworkV6", "Raw", "IcmpV6"},
+        //    };
+
+        //    byte[] bytes = new byte[1024];
+
+
+        //    foreach (var itm in set)
+        //    {
+        //        try
+        //        {
+        //            var aft = (AddressFamily)Enum.Parse(typeof(AddressFamily), itm[0]);
+        //            var stt = (SocketType)Enum.Parse(typeof(SocketType), itm[1]);
+        //            var ptt = (ProtocolType)Enum.Parse(typeof(ProtocolType), itm[2]);
+
+
+        //            Socket sock = new Socket(aft, stt, ptt);
+        //            sock.ReceiveTimeout = 3000;
+        //            IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+        //            sock.Connect(endPoint);
+
+        //            // Encode the data string into a byte array.  
+        //            byte[] msg = Encoding.UTF8.GetBytes(jsonrpc);
+
+        //            // Send the data through the socket.  
+
+        //            int bytesSent = sock.Send(msg);
+        //            if (bytesSent != msg.Length)
+        //            {
+
+        //            }
+
+        //            // Receive the response from the remote device.  
+        //            do
+        //            {
+        //                int bytesRec = sock.Receive(bytes);
+        //                Console.WriteLine("Echoed test = {0}", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+        //                if (bytesRec < 1024)
+        //                    break;
+        //            } while (true);
+
+
+        //            // Release the socket.  
+        //            sock.Shutdown(SocketShutdown.Both);
+        //            sock.Close();
+
+        //            // code past this never hits because the line above fails
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            // Console.WriteLine("Exception: {0}", e);
+        //        }
+
+        //    }
+        //}
+
+        //private void TestSocketAll(string ip, int port, string jsonrpc)
+        //{
+        //    var afs = Enum.GetNames(typeof(AddressFamily));
+        //    var sts = Enum.GetNames(typeof(SocketType));
+        //    var pts = Enum.GetNames(typeof(ProtocolType));
+        //    byte[] bytes = new byte[1024];
+
+
+        //    foreach (var af in afs)
+        //    {
+        //        foreach (var st in sts)
+        //        {
+        //            foreach (var pt in pts)
+        //            {
+
+        //                try
+        //                {
+        //                    var aft = (AddressFamily)Enum.Parse(typeof(AddressFamily), af);
+        //                    var stt = (SocketType)Enum.Parse(typeof(SocketType), st);
+        //                    var ptt = (ProtocolType)Enum.Parse(typeof(ProtocolType), pt);
+
+
+        //                    Socket sock = new Socket(aft, stt, ptt);
+        //                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+        //                    sock.Connect(endPoint);
+
+        //                    Console.WriteLine($"!!! {af} {st} {pt}");
+
+        //                    // Encode the data string into a byte array.  
+        //                    byte[] msg = Encoding.UTF8.GetBytes(jsonrpc);
+
+        //                    // Send the data through the socket.  
+
+        //                    int bytesSent = sock.Send(msg);
+        //                    if (bytesSent != msg.Length)
+        //                    {
+
+        //                    }
+
+        //                    // Receive the response from the remote device.  
+        //                    do
+        //                    {
+        //                        int bytesRec = sock.Receive(bytes);
+        //                        Console.WriteLine("Echoed test = {0}", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+        //                        if (bytesRec < 1024)
+        //                            break;
+        //                    } while (true);
+
+
+        //                    // Release the socket.  
+        //                    sock.Shutdown(SocketShutdown.Both);
+        //                    sock.Close();
+
+        //                    // code past this never hits because the line above fails
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    // Console.WriteLine("Exception: {0}", e);
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

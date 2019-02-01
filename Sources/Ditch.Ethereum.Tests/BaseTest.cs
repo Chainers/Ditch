@@ -20,16 +20,28 @@ namespace Ditch.Ethereum.Tests
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
         {
+            //if (Api == null)
+            //{
+            //    var httpClient = new RepeatHttpClient();
+            //    var httpManager = new HttpManager(httpClient);
+            //    Api = new OperationManager(httpManager);
+
+            //    var infuraKey = ConfigurationManager.AppSettings["InfuraKey"];
+            //    var infuraMainnetHttps = ConfigurationManager.AppSettings["InfuraMainnetHttps"];
+            //    httpManager.UrlToConnect = infuraMainnetHttps + infuraKey;
+            //    //Assert.IsTrue(Api.ConnectToAsync(infuraMainnetHttps + infuraKey, CancellationToken.None).Result, "Сan`t connect to the node");
+            //}
+
             if (Api == null)
             {
-                var httpClient = new RepeatHttpClient();
-                var httpManager = new HttpManager(httpClient);
-                Api = new OperationManager(httpManager);
+                var manager = new WebSocketManager();
+                Api = new OperationManager(manager);
 
                 var infuraKey = ConfigurationManager.AppSettings["InfuraKey"];
-                var infuraMainnetHttps = ConfigurationManager.AppSettings["InfuraMainnetHttps"];
-                httpManager.UrlToConnect = infuraMainnetHttps + infuraKey;
+                var infuraMainnetWss = ConfigurationManager.AppSettings["InfuraMainnetWss"];
+                var isConnected = Api.ConnectToAsync(infuraMainnetWss + infuraKey, CancellationToken.None).Result;
                 //Assert.IsTrue(Api.ConnectToAsync(infuraMainnetHttps + infuraKey, CancellationToken.None).Result, "Сan`t connect to the node");
+                Assert.IsTrue(isConnected);
             }
 
             // Assert.IsTrue(Api.IsConnected, "Сan`t connect to the node");

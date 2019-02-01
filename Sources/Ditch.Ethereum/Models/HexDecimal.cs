@@ -69,12 +69,21 @@ namespace Ditch.Ethereum.Models
             if (IsNull)
                 return 0;
 
-            if (Bytes.Length > 12)
+            var skip = 0;
+            for (int i = 0; i < Bytes.Length; i++)
+            {
+                if (Bytes[i] > 0)
+                    break;
+                skip++;
+            }
+
+
+            if (Bytes.Length - skip > 12)
                 throw new InvalidCastException($"Unexpected array length {Hex.ToString(Bytes)}");
 
             var buf = new int[4];
             var bufBytes = Bytes.Reverse().ToArray();
-            Buffer.BlockCopy(bufBytes, 0, buf, 0, bufBytes.Length);
+            Buffer.BlockCopy(bufBytes, 0, buf, 0, bufBytes.Length - skip);
 
             return new decimal(buf);
         }

@@ -23,7 +23,7 @@ namespace Ditch.Ethereum.Models
                 Bytes = value;
         }
 
-        public HexValue(byte[] source, int start, int count)
+        public HexValue(byte[] source, int start, int count, bool trimZero = false)
         {
             if (source == null)
             {
@@ -31,8 +31,31 @@ namespace Ditch.Ethereum.Models
             }
             else
             {
-                Bytes = new byte[count];
-                Array.Copy(source, start, Bytes, 0, count);
+                if (trimZero)
+                {
+                    var skip = 0;
+                    for (int i = start; i < start + count && i < source.Length; i++)
+                    {
+                        if (source[i] > 0)
+                            break;
+                        skip++;
+                    }
+
+                    if (skip == source.Length)
+                    {
+                        Bytes = new byte[1];
+                    }
+                    else
+                    {
+                        Bytes = new byte[count - skip];
+                        Array.Copy(source, start + skip, Bytes, 0, count - skip);
+                    }
+                }
+                else
+                {
+                    Bytes = new byte[count];
+                    Array.Copy(source, start, Bytes, 0, count);
+                }
             }
         }
 
@@ -73,12 +96,9 @@ namespace Ditch.Ethereum.Models
                 if (str.StartsWith("0x"))
                 {
                     str = str.Remove(0, 2);
-                    Bytes = Hex.HexToBytes(str);
                 }
-                else
-                {
-                    throw new InvalidCastException($"Unexpected format: {str}");
-                }
+
+                Bytes = Hex.HexToBytes(str);
             }
         }
 

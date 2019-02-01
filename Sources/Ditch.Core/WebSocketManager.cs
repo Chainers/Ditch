@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.Interfaces;
@@ -55,7 +56,11 @@ namespace Ditch.Core
             {
                 Disconnect();
 
-                _webSocket = new WebSocket(url);
+                var sslProtocols = SslProtocols.None;
+                if (url.StartsWith("wss://"))
+                    sslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls;
+
+                _webSocket = new WebSocket(url, sslProtocols: sslProtocols);
                 _webSocket.Opened += WebSocketOpened;
                 _webSocket.Closed += WebSocketClosed;
                 _webSocket.MessageReceived += WebSocketMessageReceived;

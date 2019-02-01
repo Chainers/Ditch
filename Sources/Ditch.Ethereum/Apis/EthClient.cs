@@ -20,7 +20,14 @@ namespace Ditch.Ethereum
             return CustomGetRequestAsync<HexLong>("eth_blockNumber", token);
         }
 
-        //eth_call
+        /// <summary>
+        /// Executes a new message call immediately without creating a transaction on the block chain.
+        /// </summary>
+        /// <returns></returns>
+        public Task<JsonRpcResponse<T>> EthCall<T>(EthCallArgs args, string blockParam, CancellationToken token)
+        {
+            return CustomGetRequestAsync<T>("eth_call", new object[] { args, blockParam }, token);
+        }
         //    eth_estimateGas
         //eth_gasPrice
         //    eth_getBalance
@@ -46,7 +53,18 @@ namespace Ditch.Ethereum
         //eth_getStorageAt
         //    eth_getTransactionByBlockHashAndIndex
         //eth_getTransactionByBlockNumberAndIndex
-        //    eth_getTransactionByHash
+
+        /// <summary>
+        /// Returns information about a transaction for a given hash.
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public Task<JsonRpcResponse<Transaction>> GetTransactionByHash(HexValue hash, CancellationToken token)
+        {
+            return CustomGetRequestAsync<Transaction>("eth_getTransactionByHash", new object[] { hash }, token);
+        }
+
         //eth_getTransactionCount
 
         /// <summary>
