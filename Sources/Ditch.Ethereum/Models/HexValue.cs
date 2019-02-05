@@ -85,7 +85,7 @@ namespace Ditch.Ethereum.Models
         }
 
 
-        private void SetValue(string str)
+        protected virtual void SetValue(string str)
         {
             if (string.IsNullOrEmpty(str))
             {

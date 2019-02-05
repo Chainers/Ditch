@@ -1,4 +1,5 @@
 ﻿using System;
+using Cryptography.ECDSA;
 using Ditch.Ethereum.Models;
 using NUnit.Framework;
 
@@ -31,7 +32,7 @@ namespace Ditch.Ethereum.Tests
                 t++;
                 t *= 2;
                 var hl = new HexDecimal(t);
-                Console.WriteLine(hl.ToString());
+                Console.WriteLine($"{hl} | {Hex.ToString(hl.Bytes)}" );
                 var it = hl.Value;
                 Assert.IsTrue(t == it, $"{t} != {it}");
             }
@@ -42,10 +43,21 @@ namespace Ditch.Ethereum.Tests
         {
             var rand = new Random();
 
-            var buf = new byte[32];
+            var buf = new byte[12];
             rand.NextBytes(buf);
             var hl = new HexDecimal(buf, 0, buf.Length);
             var t = hl.Value;
+        }
+        
+        [Test]
+        public void ArrayToHexDecimalInvalidCast()
+        {
+            var rand = new Random();
+
+            var buf = new byte[32];
+            rand.NextBytes(buf);
+            var hl = new HexDecimal(buf, 0, buf.Length);
+            Assert.Catch<InvalidCastException>(() => hl.ToDecimal());
         }
     }
 }

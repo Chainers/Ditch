@@ -29,7 +29,7 @@ namespace Ditch.Ethereum.Models
 
         //Coinbase    common.Address `json:"miner"            gencodec:"required"`
         [JsonProperty("miner")]
-        public HexValue Coinbase { get; set; }
+        public HexAddress Coinbase { get; set; }
 
         //MixDigest   common.Hash    `json:"mixHash"`
         [JsonProperty("mixHash")]

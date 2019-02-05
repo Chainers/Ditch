@@ -11,7 +11,7 @@ namespace Ditch.Ethereum.Models
         public HexLong BlockNumber { get; set; }
 
         [JsonProperty("from")]
-        public HexValue From { get; set; }
+        public HexAddress From { get; set; }
 
         //GasLimit     uint64          `json:"gas"      gencodec:"required"`
         [JsonProperty("gas")]
@@ -43,7 +43,7 @@ namespace Ditch.Ethereum.Models
 
         //Recipient    *common.Address `json:"to"       rlp:"nil"` // nil means contract creation
         [JsonProperty("to")]
-        public HexValue To { get; set; }
+        public HexAddress To { get; set; }
 
         [JsonProperty("transactionIndex")]
         public HexULong TransactionIndex { get; set; }

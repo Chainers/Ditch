@@ -64,7 +64,7 @@ namespace Ditch.Ethereum.Models
 
 
 
-        private decimal ToDecimal()
+        public decimal ToDecimal()
         {
             if (IsNull)
                 return 0;

@@ -24,7 +24,7 @@ namespace Ditch.Ethereum
         /// Executes a new message call immediately without creating a transaction on the block chain.
         /// </summary>
         /// <returns></returns>
-        public Task<JsonRpcResponse<T>> EthCall<T>(EthCallArgs args, string blockParam, CancellationToken token)
+        public Task<JsonRpcResponse<T>> EthCallAsync<T>(EthCallArgs args, string blockParam, CancellationToken token)
         {
             return CustomGetRequestAsync<T>("eth_call", new object[] { args, blockParam }, token);
         }
@@ -60,7 +60,7 @@ namespace Ditch.Ethereum
         /// <param name="hash"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<JsonRpcResponse<Transaction>> GetTransactionByHash(HexValue hash, CancellationToken token)
+        public Task<JsonRpcResponse<Transaction>> GetTransactionByHashAsync(HexValue hash, CancellationToken token)
         {
             return CustomGetRequestAsync<Transaction>("eth_getTransactionByHash", new object[] { hash }, token);
         }
@@ -73,7 +73,7 @@ namespace Ditch.Ethereum
         /// <param name="hash"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public Task<JsonRpcResponse<GetTransactionReceiptResult>> GetTransactionReceipt(HexValue hash, CancellationToken token)
+        public Task<JsonRpcResponse<GetTransactionReceiptResult>> GetTransactionReceiptAsync(HexValue hash, CancellationToken token)
         {
             return CustomGetRequestAsync<GetTransactionReceiptResult>("eth_getTransactionReceipt", new object[] { hash }, token);
         }

@@ -11,13 +11,13 @@ namespace Ditch.Ethereum.Models
         public HexLong BlockNumber { get; set; }
 
         [JsonProperty("contractAddress")]
-        public HexValue ContractAddress { get; set; }
+        public HexAddress ContractAddress { get; set; }
 
         [JsonProperty("cumulativeGasUsed")]
         public HexULong CumulativeGasUsed { get; set; }
 
         [JsonProperty("from")]
-        public HexValue From { get; set; }
+        public HexAddress From { get; set; }
 
         [JsonProperty("gasUsed")]
         public HexULong GasUsed { get; set; }
@@ -35,7 +35,7 @@ namespace Ditch.Ethereum.Models
         public HexValue Root { get; set; }
 
         [JsonProperty("to")]
-        public HexValue To { get; set; }
+        public HexAddress To { get; set; }
 
         [JsonProperty("transactionHash")]
         public HexValue TransactionHash { get; set; }
@@ -47,13 +47,13 @@ namespace Ditch.Ethereum.Models
     public partial class Log
     {
         [JsonProperty("address")]
-        public HexValue Address { get; set; }
+        public HexAddress Address { get; set; }
 
         [JsonProperty("blockHash")]
         public HexValue BlockHash { get; set; }
 
         [JsonProperty("blockNumber")]
-        public HexValue BlockNumber { get; set; }
+        public HexLong BlockNumber { get; set; }
 
         [JsonProperty("data")]
         public HexValue Data { get; set; }

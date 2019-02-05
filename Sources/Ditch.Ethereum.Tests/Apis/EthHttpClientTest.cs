@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cryptography.ECDSA;
 using Ditch.Core;
 using Ditch.Ethereum.Models;
 using NUnit.Framework;
@@ -21,6 +22,14 @@ namespace Ditch.Ethereum.Tests.Apis
                 .ConfigureAwait(false);
             Console.WriteLine(resp.Result);
             TestPropetries(resp);
+        }
+
+        [Test]
+        public void Test()
+        {
+            var bytes = Hex.HexToBytes("2809c7e17bf978fbc7194c0a694b638c4215e9140cacc6c38ca36010b45697df");
+            var tt = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            Console.WriteLine(tt);
         }
 
         //18160ddd totalSupply() public view returns (uint256 totalSupply) [Get the total token supply]
@@ -45,17 +54,17 @@ namespace Ditch.Ethereum.Tests.Apis
 
             var args = new EthCallArgs
             {
-                To = new HexValue(contract),
+                To = new HexAddress(contract),
                 Data = new HexValue(data)
             };
 
-            var resp = await Api.EthCall<HexValue>(args, blockParam, CancellationToken.None)
+            var resp = await Api.EthCallAsync<HexValue>(args, blockParam, CancellationToken.None)
                 .ConfigureAwait(false);
 
             Console.WriteLine(resp.Result);
             TestPropetries(resp);
         }
-        
+
         [Test]
         [Parallelizable]
         [TestCase(46147)]
@@ -78,9 +87,10 @@ namespace Ditch.Ethereum.Tests.Apis
         [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
         [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
         [TestCase("0x0ec5bc927df001dafe6634826e41618a40b74a879ced2e93813a4ca2703bd952")]
+        [TestCase("0x54852d72eba983b3ca200d925211b6d9da4115ea34761163ec7a744558ff6b8f")] //721
         public async Task eth_getTransactionByHash(string hash)
         {
-            var resp = await Api.GetTransactionByHash(new HexValue(hash), CancellationToken.None)
+            var resp = await Api.GetTransactionByHashAsync(new HexValue(hash), CancellationToken.None)
                 .ConfigureAwait(false);
             TestPropetries(resp);
         }
@@ -93,9 +103,10 @@ namespace Ditch.Ethereum.Tests.Apis
         [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
         [TestCase("0x7141570cd9169abdb99281074795874690c58be6655283b35d2480a782058232")]
         [TestCase("0x0ec5bc927df001dafe6634826e41618a40b74a879ced2e93813a4ca2703bd952")]
+        [TestCase("0x54852d72eba983b3ca200d925211b6d9da4115ea34761163ec7a744558ff6b8f")] //721
         public async Task eth_getTransactionReceipt(string hash)
         {
-            var resp = await Api.GetTransactionReceipt(new HexValue(hash), CancellationToken.None)
+            var resp = await Api.GetTransactionReceiptAsync(new HexValue(hash), CancellationToken.None)
                 .ConfigureAwait(false);
             TestPropetries(resp);
         }

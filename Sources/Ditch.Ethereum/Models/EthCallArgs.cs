@@ -8,13 +8,13 @@ namespace Ditch.Ethereum.Models
         /// [optional] 20 Bytes - The address the transaction is sent from.
         /// </summary>
         [JsonProperty("from", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public HexValue From { get; set; }
+        public HexAddress From { get; set; }
 
         /// <summary>
         /// 20 Bytes - The address the transaction is directed to.
         /// </summary>
         [JsonProperty("to")]
-        public HexValue To { get; set; }
+        public HexAddress To { get; set; }
 
         /// <summary>
         /// [optional] Integer of the gas provided for the transaction execution.eth_call consumes zero gas, but this parameter may be needed by some executions.
