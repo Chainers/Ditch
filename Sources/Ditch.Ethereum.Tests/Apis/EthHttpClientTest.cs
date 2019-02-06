@@ -43,15 +43,13 @@ namespace Ditch.Ethereum.Tests.Apis
         [Test]
         [Parallelizable]
         [TestCase("0x5d00d312e171be5342067c09bae883f9bcb2003b", "0x313ce567", "latest")]
-        [TestCase("0x5d00d312e171be5342067c09bae883f9bcb2003b", "95d89b41", "latest")]
-        [TestCase("0xB8c77482e45F1F44dE1745F52C74426C631bDD52", "0x313ce567", "latest")]
-        [TestCase("0xB8c77482e45F1F44dE1745F52C74426C631bDD52", "95d89b41", "latest")]
+        [TestCase("0x5d00d312e171be5342067c09bae883f9bcb2003b", "0x95d89b41", "latest")]
+        [TestCase("0x80804eccd64b153572dcd0f6f494253a0d013492", "0x313ce567", "latest")]
+        [TestCase("0x80804eccd64b153572dcd0f6f494253a0d013492", "0x95d89b41", "latest")]
+        [TestCase("0xb8c77482e45f1f44de1745f52c74426c631bdd52", "0x313ce567", "latest")]
+        [TestCase("0xb8c77482e45f1f44de1745f52c74426c631bdd52", "0x95d89b41", "latest")]
         public async Task eth_call(string contract, string data, string blockParam)
         {
-            var bytes = new HexValue(data);
-
-            string result = System.Text.Encoding.Unicode.GetString(bytes.Bytes);
-
             var args = new EthCallArgs
             {
                 To = new HexAddress(contract),
@@ -63,13 +61,34 @@ namespace Ditch.Ethereum.Tests.Apis
 
             Console.WriteLine(resp.Result);
             TestPropetries(resp);
+            Bytes32ToString(resp.Result.Bytes);
+
+        }
+
+        public void Bytes32ToString(byte[] source)
+        {
+            if (source.Length == 32 + 32 + 32)
+            {
+                var len = new HexDecimal(source, 20, 12);
+                if (len.Value == 32)
+                {
+                    var count = new HexDecimal(source, 32 + 20, 12);
+                    string utf8 = System.Text.Encoding.UTF8.GetString(source, 64, 32);
+                    Console.WriteLine(utf8.Substring(0, (int)count.Value));
+                }
+                else
+                {
+                    Console.WriteLine(Hex.ToString(source));
+                    throw new NotImplementedException();
+                }
+            }
         }
 
         [Test]
         [Parallelizable]
         [TestCase(46147)]
         [TestCase(46169)]
-        [TestCase(47205)]
+        [TestCase(689170)]
         [TestCase(4832686)]
         [TestCase(4832685)]
         public async Task eth_getBlockByNumber(long blockNum)
@@ -93,6 +112,44 @@ namespace Ditch.Ethereum.Tests.Apis
             var resp = await Api.GetTransactionByHashAsync(new HexValue(hash), CancellationToken.None)
                 .ConfigureAwait(false);
             TestPropetries(resp);
+        }
+
+        [Test]
+        [Parallelizable]
+        public async Task TryGetLastTransactionReceipt()
+        {
+            var token = CancellationToken.None;
+            long prev = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                var lastBlockNum = await Api.BlockNumberAsync(token);
+                Assert.IsFalse(lastBlockNum.IsError);
+
+                if (prev == lastBlockNum.Result.Value)
+                {
+                    i--;
+                    await Task.Delay(300, token);
+                    continue;
+                }
+
+                prev = lastBlockNum.Result.Value;
+                var block = await Api.GetBlockByNumberAsync(lastBlockNum.Result.Value, true, token);
+                Assert.IsFalse(block.IsError);
+
+                Console.WriteLine($"[{prev}]");
+                foreach (var transaction in block.Result.Transactions)
+                {
+                    var resp = await Api.GetTransactionReceiptAsync(transaction.Hash, CancellationToken.None)
+                        .ConfigureAwait(false);
+
+                    //TestPropetries(resp, false);
+                    if (resp.Result == null)
+                    {
+
+                    }
+                    Console.WriteLine($"{transaction.Hash} {resp.Result?.Status}");
+                }
+            }
         }
 
         [Test]

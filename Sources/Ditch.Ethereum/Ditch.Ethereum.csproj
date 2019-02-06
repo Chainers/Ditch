@@ -1,17 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.1-alpha3</Version>
-    <AssemblyVersion>0.0.0.3</AssemblyVersion>
-    <FileVersion>0.0.0.3</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1-alpha4</Version>
+    <Authors>Chainers, KorzunAV</Authors>
+    <Company>ChainArtSoft</Company>
     <PackageLicenseUrl>https://github.com/Chainers/Ditch/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://chainers.github.io/Ditch</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
-    <Authors>Chainers, KorzunAV</Authors>
-    <Company>ChainArtSoft</Company>
+    <AssemblyVersion>0.0.0.4</AssemblyVersion>
+    <FileVersion>0.0.0.4</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

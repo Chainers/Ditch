@@ -32,7 +32,7 @@ namespace Ditch.Ethereum.Tests
                 t++;
                 t *= 2;
                 var hl = new HexDecimal(t);
-                Console.WriteLine($"{hl} | {Hex.ToString(hl.Bytes)}" );
+                Console.WriteLine($"{hl} | {Hex.ToString(hl.Bytes)}");
                 var it = hl.Value;
                 Assert.IsTrue(t == it, $"{t} != {it}");
             }
@@ -48,7 +48,7 @@ namespace Ditch.Ethereum.Tests
             var hl = new HexDecimal(buf, 0, buf.Length);
             var t = hl.Value;
         }
-        
+
         [Test]
         public void ArrayToHexDecimalInvalidCast()
         {
@@ -58,6 +58,15 @@ namespace Ditch.Ethereum.Tests
             rand.NextBytes(buf);
             var hl = new HexDecimal(buf, 0, buf.Length);
             Assert.Catch<InvalidCastException>(() => hl.ToDecimal());
+        }
+
+
+        [Test]
+        public void DateTimeToHexTimeStampCast()
+        {
+            var dt = DateTime.Now;
+            var hl = new HexTimeStamp(dt);
+            Assert.IsTrue(dt == hl.Value, $"{dt} != {hl.Value}");
         }
     }
 }

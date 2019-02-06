@@ -21,6 +21,16 @@ namespace Ditch.Ethereum.Models
             }
         }
 
+
+        public HexTimeStamp() { }
+
+        public HexTimeStamp(DateTime dateTime)
+        {
+            _value = dateTime;
+            var dto = new DateTimeOffset(dateTime);
+            FromUnixTime(dto.ToUnixTimeSeconds());
+        }
+
         public DateTimeOffset ToDateTime()
         {
             var ut = ToUnixTime();
@@ -48,6 +58,22 @@ namespace Ditch.Ethereum.Models
             return buf;
         }
 
+        private void FromUnixTime(long value)
+        {
+            ulong lbuf = (ulong)value;
+            var i = 8;
+            var buf = new byte[i];
+            do
+            {
+                var bt = (byte)(lbuf & 0xFF);
+                buf[--i] = bt;
+
+                lbuf >>= 8;
+            } while (lbuf > 0);
+
+            Bytes = new byte[8 - i];
+            Array.Copy(buf, i, Bytes, 0, Bytes.Length);
+        }
 
         public override string ToString()
         {
