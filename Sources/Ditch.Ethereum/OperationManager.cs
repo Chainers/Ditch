@@ -43,7 +43,6 @@ namespace Ditch.Ethereum
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
-        /// <param name="api">api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <returns></returns>
@@ -58,7 +57,6 @@ namespace Ditch.Ethereum
         /// Create and execute custom json-rpc method
         /// </summary>
         /// <typeparam name="T">Custom type. JsonConvert will try to convert json-response to you custom object</typeparam>
-        /// <param name="api">api name</param>
         /// <param name="method">Sets json-rpc "method" field</param>
         /// <param name="token">Throws a <see cref="T:System.OperationCanceledException" /> if this token has had cancellation requested.</param>
         /// <param name="data">Sets to json-rpc params field. JsonConvert use`s for convert array of data to string.</param>

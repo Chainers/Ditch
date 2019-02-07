@@ -8,7 +8,7 @@ namespace Ditch.Ethereum.Models
         public HexValue BlockHash { get; set; }
 
         [JsonProperty("blockNumber")]
-        public HexLong BlockNumber { get; set; }
+        public HexULong BlockNumber { get; set; }
 
         [JsonProperty("contractAddress")]
         public HexAddress ContractAddress { get; set; }
@@ -44,7 +44,7 @@ namespace Ditch.Ethereum.Models
         public HexULong TransactionIndex { get; set; }
     }
 
-    public partial class Log
+    public class Log
     {
         [JsonProperty("address")]
         public HexAddress Address { get; set; }

@@ -8,7 +8,7 @@ namespace Ditch.Ethereum.Models
         public HexValue BlockHash { get; set; }
 
         [JsonProperty("blockNumber")]
-        public HexLong BlockNumber { get; set; }
+        public HexULong BlockNumber { get; set; }
 
         [JsonProperty("from")]
         public HexAddress From { get; set; }

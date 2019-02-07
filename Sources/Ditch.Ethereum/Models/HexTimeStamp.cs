@@ -9,6 +9,7 @@ namespace Ditch.Ethereum.Models
     {
         private const int MinCount = 0;
         private const int MaxCount = 8;
+        private const bool IsTrimZero = true;
 
         protected override bool PrintZero => false;
 
@@ -30,16 +31,17 @@ namespace Ditch.Ethereum.Models
         {
             MinBytes = MinCount;
             MaxBytes = MaxCount;
+            TrimZero = IsTrimZero;
         }
 
         public HexTimeStamp(string value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
         public HexTimeStamp(byte[] value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
-        public HexTimeStamp(byte[] source, int start, int count, bool trimZero = true)
-            : base(source, start, count, MinCount, MaxCount, trimZero) { }
+        public HexTimeStamp(byte[] source, int start, int count)
+            : base(source, start, count, MinCount, MaxCount, IsTrimZero) { }
 
 
         public HexTimeStamp(DateTime dateTime)
@@ -72,7 +74,7 @@ namespace Ditch.Ethereum.Models
 
         private void FromUnixTime(long value)
         {
-            ulong lbuf = (ulong)value;
+            var lbuf = (ulong)value;
             var i = 8;
             var buf = new byte[i];
             do

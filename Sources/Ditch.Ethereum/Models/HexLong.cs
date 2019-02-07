@@ -10,7 +10,8 @@ namespace Ditch.Ethereum.Models
     {
         private const int MinCount = 0;
         private const int MaxCount = 8;
-        
+        private const bool IsTrimZero = true;
+
         protected override bool PrintZero => false;
 
         private long? _value;
@@ -29,20 +30,21 @@ namespace Ditch.Ethereum.Models
         {
             MinBytes = MinCount;
             MaxBytes = MaxCount;
+            TrimZero = IsTrimZero;
         }
 
         public HexLong(string value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
         public HexLong(byte[] value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
-        public HexLong(byte[] source, int start, int count, bool trimZero = true)
-            : base(source, start, count, MinCount, MaxCount, trimZero) { }
-        
+        public HexLong(byte[] source, int start, int count)
+            : base(source, start, count, MinCount, MaxCount, IsTrimZero) { }
+
         public HexLong(long value)
         {
-            ulong blockNum = (ulong)value;
+            var blockNum = (ulong)value;
             var i = MaxCount;
             var buf = new byte[MaxCount];
             do

@@ -9,6 +9,7 @@ namespace Ditch.Ethereum.Models
     {
         private const int MinCount = 0;
         private const int MaxCount = 1;
+        private const bool IsTrimZero = true;
 
         protected override bool PrintZero => false;
 
@@ -29,16 +30,17 @@ namespace Ditch.Ethereum.Models
         {
             MinBytes = MinCount;
             MaxBytes = MaxCount;
+            TrimZero = IsTrimZero;
         }
 
         public HexTransactionStatus(string value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
         public HexTransactionStatus(byte[] value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
-        public HexTransactionStatus(byte[] source, int start, int count, bool trimZero = true)
-            : base(source, start, count, MinCount, MaxCount, trimZero) { }
+        public HexTransactionStatus(byte[] source, int start, int count)
+            : base(source, start, count, MinCount, MaxCount, IsTrimZero) { }
 
 
         private TransactionStatus ToTransactionStatus()
@@ -52,9 +54,9 @@ namespace Ditch.Ethereum.Models
                     return TransactionStatus.Failed;
                 case 1:
                     return TransactionStatus.Successful;
+                default:
+                    throw new NotImplementedException($"ToTransactionStatus = {Bytes[0]}");
             }
-
-            throw new NotImplementedException($"ToTransactionStatus = {Bytes[0]}");
         }
 
 

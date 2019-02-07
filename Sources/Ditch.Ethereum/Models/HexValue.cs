@@ -10,49 +10,39 @@ namespace Ditch.Ethereum.Models
     {
         protected int MinBytes;
         protected int MaxBytes;
+        protected bool TrimZero;
 
         protected virtual bool PrintZero => true;
+
+        public byte[] Bytes { get; protected set; }
+
+        public bool IsNull { get; protected set; }
+
 
         public HexValue()
         {
             MinBytes = 0;
             MaxBytes = int.MaxValue;
+            TrimZero = false;
         }
 
-        public HexValue(string value, int minBytes = 0, int maxBytes = int.MaxValue)
+        public HexValue(string value, int minBytes = 0, int maxBytes = int.MaxValue, bool trimZero = false)
         {
             MinBytes = minBytes;
             MaxBytes = maxBytes;
+            TrimZero = trimZero;
 
             SetValue(value);
         }
 
-        public HexValue(byte[] value, int minBytes = 0, int maxBytes = int.MaxValue)
+        public HexValue(byte[] value, int minBytes = 0, int maxBytes = int.MaxValue, bool trimZero = false)
+            : this(value, 0, value.Length, minBytes, maxBytes, trimZero) { }
+
+        public HexValue(byte[] source, int start, int count, int minBytes = 0, int maxBytes = int.MaxValue, bool trimZero = false)
         {
             MinBytes = minBytes;
             MaxBytes = maxBytes;
-
-            if (value == null || value.Length == 0)
-            {
-                IsNull = true;
-            }
-            else
-            {
-                if (MinBytes > value.Length)
-                    throw new InvalidCastException($"expected min {MinBytes} byte but was { value.Length} {Hex.ToString(value)}");
-
-                if (MaxBytes < value.Length)
-                    throw new InvalidCastException($"expected max {MaxBytes} byte but was { value.Length} {Hex.ToString(value)}");
-            }
-
-            Bytes = value;
-        }
-
-        public HexValue(byte[] source, int start, int count, int minBytes = 0, int maxBytes = int.MaxValue,
-            bool trimZero = false)
-        {
-            MinBytes = minBytes;
-            MaxBytes = maxBytes;
+            TrimZero = trimZero;
 
             if (source == null || source.Length == 0 || count < 1)
             {
@@ -63,7 +53,7 @@ namespace Ditch.Ethereum.Models
                 if (trimZero)
                 {
                     var skip = 0;
-                    for (int i = start; i < start + count && i < source.Length; i++)
+                    for (var i = start; i < start + count && i < source.Length; i++)
                     {
                         if (source[i] > 0)
                             break;
@@ -102,10 +92,6 @@ namespace Ditch.Ethereum.Models
             }
         }
 
-        public byte[] Bytes { get; protected set; }
-
-        public bool IsNull { get; protected set; }
-
 
         #region ICustomJson
 
@@ -135,7 +121,6 @@ namespace Ditch.Ethereum.Models
             }
         }
 
-
         protected void SetValue(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -149,7 +134,15 @@ namespace Ditch.Ethereum.Models
                     str = str.Remove(0, 2);
                 }
 
-                var byteLen = str.Length >> 1;
+                if (TrimZero)
+                {
+                    str = str.TrimStart('0');
+                    if (string.IsNullOrEmpty(str))
+                        str = "00";
+                }
+
+                var lb = str.Length & 0x01;
+                var byteLen = lb + str.Length >> 1;
 
                 if (MinBytes > byteLen)
                     throw new InvalidCastException($"expected min {MinBytes} byte but was {byteLen} {str}");

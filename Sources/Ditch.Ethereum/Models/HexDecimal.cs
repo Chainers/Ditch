@@ -10,6 +10,7 @@ namespace Ditch.Ethereum.Models
     {
         private const int MinCount = 0;
         private const int MaxCount = 12;
+        private const bool IsTrimZero = true;
 
         protected override bool PrintZero => false;
 
@@ -30,16 +31,17 @@ namespace Ditch.Ethereum.Models
         {
             MinBytes = MinCount;
             MaxBytes = MaxCount;
+            TrimZero = IsTrimZero;
         }
 
         public HexDecimal(string value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
         public HexDecimal(byte[] value)
-            : base(value, MinCount, MaxCount) { }
+            : base(value, MinCount, MaxCount, IsTrimZero) { }
 
-        public HexDecimal(byte[] source, int start, int count, bool trimZero = true)
-            : base(source, start, count, MinCount, MaxCount, trimZero) { }
+        public HexDecimal(byte[] source, int start, int count)
+            : base(source, start, count, MinCount, MaxCount, IsTrimZero) { }
 
         public HexDecimal(decimal value)
         {
@@ -48,7 +50,7 @@ namespace Ditch.Ethereum.Models
             Buffer.BlockCopy(buf, 0, bufBytes, 0, bufBytes.Length);
 
             var zc = 0;
-            for (int i = MaxCount - 1; i >= 0; i--)
+            for (var i = MaxCount - 1; i >= 0; i--)
             {
                 if (bufBytes[i] > 0)
                     break;
