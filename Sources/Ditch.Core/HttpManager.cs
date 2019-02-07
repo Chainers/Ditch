@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Ditch.Core.Interfaces;
@@ -89,7 +90,7 @@ namespace Ditch.Core
 
             try
             {
-                var content = new StringContent(jsonRpc.Message);
+                var content = new StringContent(jsonRpc.Message, Encoding.UTF8, "application/json");
                 var response = await HttpClient.PostAsync(UrlToConnect, content, loop, token).ConfigureAwait(false);
 
                 var stringResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
