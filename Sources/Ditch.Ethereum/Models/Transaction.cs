@@ -54,7 +54,7 @@ namespace Ditch.Ethereum.Models
 
         // Amount       *big.Int        `json:"value"    gencodec:"required"`
         [JsonProperty("value")]
-        public HexDecimal Value { get; set; }
+        public HexBigInt Value { get; set; }
 
     }
 }

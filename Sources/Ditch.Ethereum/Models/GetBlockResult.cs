@@ -68,7 +68,7 @@ namespace Ditch.Ethereum.Models
         public HexTimeStamp Timestamp { get; set; }
 
         [JsonProperty("totalDifficulty")]
-        public HexLong TotalDifficulty { get; set; }
+        public HexBigInt TotalDifficulty { get; set; }
 
         [JsonProperty("transactions")]
         public Transaction[] Transactions { get; set; }

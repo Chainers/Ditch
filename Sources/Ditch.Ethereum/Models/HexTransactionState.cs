@@ -1,5 +1,4 @@
 ﻿using System;
-using Cryptography.ECDSA;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 
@@ -8,6 +7,11 @@ namespace Ditch.Ethereum.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class HexTransactionStatus : HexValue
     {
+        private const int MinCount = 0;
+        private const int MaxCount = 1;
+
+        protected override bool PrintZero => false;
+
         private TransactionStatus? _value;
         public TransactionStatus Value
         {
@@ -23,32 +27,24 @@ namespace Ditch.Ethereum.Models
 
         public HexTransactionStatus()
         {
+            MinBytes = MinCount;
+            MaxBytes = MaxCount;
         }
 
-        public HexTransactionStatus(ulong blockNum)
-        {
-            var i = 8;
-            var buf = new byte[i];
-            do
-            {
-                var bt = (byte)(blockNum & 0xFF);
-                buf[--i] = bt;
+        public HexTransactionStatus(string value)
+            : base(value, MinCount, MaxCount) { }
 
-                blockNum >>= 8;
-            } while (blockNum > 0);
+        public HexTransactionStatus(byte[] value)
+            : base(value, MinCount, MaxCount) { }
 
-            Bytes = new byte[8 - i];
-            Array.Copy(buf, i, Bytes, 0, Bytes.Length);
-        }
+        public HexTransactionStatus(byte[] source, int start, int count, bool trimZero = true)
+            : base(source, start, count, MinCount, MaxCount, trimZero) { }
 
 
         private TransactionStatus ToTransactionStatus()
         {
             if (IsNull)
                 return TransactionStatus.Unknown;
-
-            if (Bytes.Length > 1)
-                throw new InvalidCastException($"Unexpected array length {Hex.ToString(Bytes)}");
 
             switch (Bytes[0])
             {
@@ -65,15 +61,6 @@ namespace Ditch.Ethereum.Models
         public override string ToString()
         {
             return $"{Value}";
-        }
-
-        public override void WriteJson(JsonWriter writer, JsonSerializer serializer)
-        {
-            if (!IsNull)
-            {
-                var str = Hex.ToString(Bytes).TrimStart('0');
-                writer.WriteValue(string.IsNullOrEmpty(str) ? "0x0" : $"0x{str}");
-            }
         }
 
         public enum TransactionStatus

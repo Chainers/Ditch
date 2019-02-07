@@ -8,6 +8,11 @@ namespace Ditch.Ethereum.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class HexLong : HexValue, IComparable<HexLong>
     {
+        private const int MinCount = 0;
+        private const int MaxCount = 8;
+        
+        protected override bool PrintZero => false;
+
         private long? _value;
         public long Value
         {
@@ -20,14 +25,26 @@ namespace Ditch.Ethereum.Models
             }
         }
 
+        public HexLong()
+        {
+            MinBytes = MinCount;
+            MaxBytes = MaxCount;
+        }
 
-        public HexLong() { }
+        public HexLong(string value)
+            : base(value, MinCount, MaxCount) { }
 
+        public HexLong(byte[] value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexLong(byte[] source, int start, int count, bool trimZero = true)
+            : base(source, start, count, MinCount, MaxCount, trimZero) { }
+        
         public HexLong(long value)
         {
             ulong blockNum = (ulong)value;
-            var i = 8;
-            var buf = new byte[i];
+            var i = MaxCount;
+            var buf = new byte[MaxCount];
             do
             {
                 var bt = (byte)(blockNum & 0xFF);
@@ -39,9 +56,6 @@ namespace Ditch.Ethereum.Models
             Bytes = new byte[8 - i];
             Array.Copy(buf, i, Bytes, 0, Bytes.Length);
         }
-
-
-
 
 
         private long ToDecimal()
@@ -66,15 +80,6 @@ namespace Ditch.Ethereum.Models
         public override string ToString()
         {
             return $"{Value} | 0x{Hex.ToString(Bytes)}";
-        }
-
-        public override void WriteJson(JsonWriter writer, JsonSerializer serializer)
-        {
-            if (!IsNull)
-            {
-                var str = Hex.ToString(Bytes).TrimStart('0');
-                writer.WriteValue(string.IsNullOrEmpty(str) ? "0x0" : $"0x{str}");
-            }
         }
 
         public int CompareTo(HexLong other)

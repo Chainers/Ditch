@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
+using System.Configuration;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +13,25 @@ namespace Ditch.Ethereum.Tests.Apis
     [TestFixture]
     public class EthHttpClientTest : BaseTest
     {
+        protected OperationManager Api;
+
+        [OneTimeSetUp]
+        protected virtual void OneTimeSetUp()
+        {
+            if (Api == null)
+            {
+                var httpClient = new RepeatHttpClient();
+                var httpManager = new HttpManager(httpClient);
+                Api = new OperationManager(httpManager);
+                var url = ConfigurationManager.AppSettings["MainnetHttp"];
+                httpManager.UrlToConnect = url;
+                //Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Сan`t connect to the node");
+            }
+            // Assert.IsTrue(Api.IsConnected, "Сan`t connect to the node");
+        }
+
+
+
         [Test]
         [Parallelizable]
         public async Task eth_blockNumber()
@@ -73,7 +91,7 @@ namespace Ditch.Ethereum.Tests.Apis
                 if (len.Value == 32)
                 {
                     var count = new HexDecimal(source, 32 + 20, 12);
-                    string utf8 = System.Text.Encoding.UTF8.GetString(source, 64, 32);
+                    string utf8 = Encoding.UTF8.GetString(source, 64, 32);
                     Console.WriteLine(utf8.Substring(0, (int)count.Value));
                 }
                 else
@@ -115,6 +133,7 @@ namespace Ditch.Ethereum.Tests.Apis
         }
 
         [Test]
+        [Ignore("long running")]
         [Parallelizable]
         public async Task TryGetLastTransactionReceipt()
         {

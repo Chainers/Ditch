@@ -6,8 +6,13 @@ using Newtonsoft.Json;
 namespace Ditch.Ethereum.Models
 {
     [JsonConverter(typeof(CustomJsonConverter))]
-    public class HexULong : HexValue
+    public class HexULong : HexValue, IComparable<HexULong>
     {
+        private const int MinCount = 0;
+        private const int MaxCount = 8;
+
+        protected override bool PrintZero => false;
+
         private ulong? _value;
         public ulong Value
         {
@@ -20,15 +25,25 @@ namespace Ditch.Ethereum.Models
             }
         }
 
-
         public HexULong()
         {
+            MinBytes = MinCount;
+            MaxBytes = MaxCount;
         }
+
+        public HexULong(string value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexULong(byte[] value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexULong(byte[] source, int start, int count, bool trimZero = true)
+            : base(source, start, count, MinCount, MaxCount, trimZero) { }
 
         public HexULong(ulong blockNum)
         {
-            var i = 8;
-            var buf = new byte[i];
+            var i = MaxCount;
+            var buf = new byte[MaxCount];
             do
             {
                 var bt = (byte)(blockNum & 0xFF);
@@ -37,7 +52,7 @@ namespace Ditch.Ethereum.Models
                 blockNum >>= 8;
             } while (blockNum > 0);
 
-            Bytes = new byte[8 - i];
+            Bytes = new byte[MaxCount - i];
             Array.Copy(buf, i, Bytes, 0, Bytes.Length);
         }
 
@@ -46,9 +61,6 @@ namespace Ditch.Ethereum.Models
         {
             if (IsNull)
                 return 0;
-
-            if (Bytes.Length > 8)
-                throw new InvalidCastException($"Unexpected array length {Hex.ToString(Bytes)}");
 
             ulong buf = Bytes[0];
             for (var i = 1; i < Bytes.Length; i++)
@@ -59,20 +71,29 @@ namespace Ditch.Ethereum.Models
 
             return buf;
         }
-
-
+        
         public override string ToString()
         {
-            return $"{Value}";
+            return $"{Value} | 0x{Hex.ToString(Bytes)}";
         }
 
-        public override void WriteJson(JsonWriter writer, JsonSerializer serializer)
+        public int CompareTo(HexULong other)
         {
-            if (!IsNull)
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+
+
+            if (IsNull)
             {
-                var str = Hex.ToString(Bytes).TrimStart('0');
-                writer.WriteValue(string.IsNullOrEmpty(str) ? "0x0" : $"0x{str}");
+                if (other.IsNull)
+                    return 0;
+                return -1;
             }
+
+            if (other.IsNull)
+                return 1;
+
+            return Value.CompareTo(other.Value);
         }
     }
 }

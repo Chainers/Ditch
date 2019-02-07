@@ -13,12 +13,11 @@ namespace Ditch.Ethereum.Tests.Apis
         {
             if (Api == null)
             {
-                var webSocketManager = new WebSocketManager();
-                Api = new OperationManager(webSocketManager);
+                var manager = new WebSocketManager();
+                Api = new OperationManager(manager);
 
-                var infuraKey = ConfigurationManager.AppSettings["InfuraKey"];
-                var infuraMainnetWss = ConfigurationManager.AppSettings["InfuraMainnetWss"];
-                Assert.IsTrue(Api.ConnectToAsync(infuraMainnetWss + infuraKey, CancellationToken.None).Result, "Сan`t connect to the node");
+                var url = ConfigurationManager.AppSettings["MainnetWs"];
+                Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Сan`t connect to the node");
             }
 
             Assert.IsTrue(Api.IsConnected, "Сan`t connect to the node");

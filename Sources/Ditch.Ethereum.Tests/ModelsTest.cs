@@ -56,8 +56,16 @@ namespace Ditch.Ethereum.Tests
 
             var buf = new byte[32];
             rand.NextBytes(buf);
-            var hl = new HexDecimal(buf, 0, buf.Length);
-            Assert.Catch<InvalidCastException>(() => hl.ToDecimal());
+            try
+            {
+                var hl = new HexDecimal(buf, 0, buf.Length);
+            }
+            catch (InvalidCastException e)
+            {
+                Assert.Pass(e.Message);
+                return;
+            }
+            Assert.Fail("expected exception");
         }
 
 

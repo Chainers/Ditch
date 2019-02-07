@@ -8,24 +8,53 @@ namespace Ditch.Ethereum.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class HexValue : ICustomJson
     {
-        public HexValue() { }
+        protected int MinBytes;
+        protected int MaxBytes;
 
-        public HexValue(string value)
+        protected virtual bool PrintZero => true;
+
+        public HexValue()
         {
+            MinBytes = 0;
+            MaxBytes = int.MaxValue;
+        }
+
+        public HexValue(string value, int minBytes = 0, int maxBytes = int.MaxValue)
+        {
+            MinBytes = minBytes;
+            MaxBytes = maxBytes;
+
             SetValue(value);
         }
 
-        public HexValue(byte[] value)
+        public HexValue(byte[] value, int minBytes = 0, int maxBytes = int.MaxValue)
         {
-            if (value == null)
+            MinBytes = minBytes;
+            MaxBytes = maxBytes;
+
+            if (value == null || value.Length == 0)
+            {
                 IsNull = true;
+            }
             else
-                Bytes = value;
+            {
+                if (MinBytes > value.Length)
+                    throw new InvalidCastException($"expected min {MinBytes} byte but was { value.Length} {Hex.ToString(value)}");
+
+                if (MaxBytes < value.Length)
+                    throw new InvalidCastException($"expected max {MaxBytes} byte but was { value.Length} {Hex.ToString(value)}");
+            }
+
+            Bytes = value;
         }
 
-        public HexValue(byte[] source, int start, int count, bool trimZero = false)
+        public HexValue(byte[] source, int start, int count, int minBytes = 0, int maxBytes = int.MaxValue,
+            bool trimZero = false)
         {
-            if (source == null)
+            MinBytes = minBytes;
+            MaxBytes = maxBytes;
+
+            if (source == null || source.Length == 0 || count < 1)
             {
                 IsNull = true;
             }
@@ -41,18 +70,32 @@ namespace Ditch.Ethereum.Models
                         skip++;
                     }
 
-                    if (skip == source.Length)
+                    var byteCount = count - skip;
+                    if (MinBytes > byteCount)
+                        throw new InvalidCastException($"expected min {MinBytes} byte but was {byteCount}");
+
+                    if (MaxBytes < byteCount)
+                        throw new InvalidCastException($"expected max {MaxBytes} byte but was {byteCount}");
+
+                    if (byteCount == 0)
                     {
                         Bytes = new byte[1];
                     }
                     else
                     {
-                        Bytes = new byte[count - skip];
-                        Array.Copy(source, start + skip, Bytes, 0, count - skip);
+                        Bytes = new byte[byteCount];
+                        Array.Copy(source, start + skip, Bytes, 0, byteCount);
                     }
                 }
                 else
                 {
+                    if (MinBytes > count)
+                        throw new InvalidCastException($"expected min {MinBytes} byte but was {count}");
+
+                    if (MaxBytes < count)
+                        throw new InvalidCastException($"expected max {MaxBytes} byte but was {count}");
+
+
                     Bytes = new byte[count];
                     Array.Copy(source, start, Bytes, 0, count);
                 }
@@ -76,7 +119,15 @@ namespace Ditch.Ethereum.Models
         {
             if (!IsNull)
             {
-                writer.WriteValue($"0x{Hex.ToString(Bytes)}");
+                var str = Hex.ToString(Bytes);
+                if (!PrintZero)
+                {
+                    str = str.TrimStart('0');
+                    if (string.IsNullOrEmpty(str))
+                        str = "0";
+                }
+
+                writer.WriteValue($"0x{str}");
             }
             else
             {
@@ -85,7 +136,7 @@ namespace Ditch.Ethereum.Models
         }
 
 
-        protected virtual void SetValue(string str)
+        protected void SetValue(string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -98,6 +149,14 @@ namespace Ditch.Ethereum.Models
                     str = str.Remove(0, 2);
                 }
 
+                var byteLen = str.Length >> 1;
+
+                if (MinBytes > byteLen)
+                    throw new InvalidCastException($"expected min {MinBytes} byte but was {byteLen} {str}");
+
+                if (MaxBytes < byteLen)
+                    throw new InvalidCastException($"expected max {MaxBytes} byte but was {byteLen} {str}");
+
                 Bytes = Hex.HexToBytes(str);
             }
         }
@@ -108,7 +167,15 @@ namespace Ditch.Ethereum.Models
         {
             if (IsNull)
                 return "NULL";
-            return "0x" + Hex.ToString(Bytes);
+            var str = Hex.ToString(Bytes);
+
+            if (!PrintZero)
+                str = str.TrimStart('0');
+
+            if (string.IsNullOrEmpty(str))
+                str = "0";
+
+            return "0x" + str;
         }
     }
 }

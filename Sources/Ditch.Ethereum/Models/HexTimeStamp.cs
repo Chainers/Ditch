@@ -1,5 +1,4 @@
 ﻿using System;
-using Cryptography.ECDSA;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 
@@ -8,6 +7,11 @@ namespace Ditch.Ethereum.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class HexTimeStamp : HexValue
     {
+        private const int MinCount = 0;
+        private const int MaxCount = 8;
+
+        protected override bool PrintZero => false;
+
         private DateTime? _value;
 
         public DateTime Value
@@ -22,7 +26,21 @@ namespace Ditch.Ethereum.Models
         }
 
 
-        public HexTimeStamp() { }
+        public HexTimeStamp()
+        {
+            MinBytes = MinCount;
+            MaxBytes = MaxCount;
+        }
+
+        public HexTimeStamp(string value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexTimeStamp(byte[] value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexTimeStamp(byte[] source, int start, int count, bool trimZero = true)
+            : base(source, start, count, MinCount, MaxCount, trimZero) { }
+
 
         public HexTimeStamp(DateTime dateTime)
         {
@@ -41,12 +59,6 @@ namespace Ditch.Ethereum.Models
         {
             if (IsNull)
                 return 0;
-
-            if (Bytes.Length > 8)
-                throw new InvalidCastException($"Unexpected array length {Hex.ToString(Bytes)}");
-
-            if (Bytes.Length == 8)
-                return BitConverter.ToInt64(Bytes, 0);
 
             long buf = Bytes[0];
             for (var i = 1; i < Bytes.Length; i++)
@@ -78,15 +90,6 @@ namespace Ditch.Ethereum.Models
         public override string ToString()
         {
             return $"{Value}";
-        }
-
-        public override void WriteJson(JsonWriter writer, JsonSerializer serializer)
-        {
-            if (!IsNull)
-            {
-                var str = Hex.ToString(Bytes).TrimStart('0');
-                writer.WriteValue(string.IsNullOrEmpty(str) ? "0x0" : $"0x{str}");
-            }
         }
     }
 }

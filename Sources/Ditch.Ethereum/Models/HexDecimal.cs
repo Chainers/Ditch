@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Cryptography.ECDSA;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 
@@ -9,6 +8,11 @@ namespace Ditch.Ethereum.Models
     [JsonConverter(typeof(CustomJsonConverter))]
     public class HexDecimal : HexValue, IComparable<HexDecimal>
     {
+        private const int MinCount = 0;
+        private const int MaxCount = 12;
+
+        protected override bool PrintZero => false;
+
         private decimal? _value;
         public decimal Value
         {
@@ -22,46 +26,43 @@ namespace Ditch.Ethereum.Models
         }
 
 
-        public HexDecimal() { }
-
-        public HexDecimal(byte[] source, int start, int count)
+        public HexDecimal()
         {
-            if (source == null)
-            {
-                IsNull = true;
-            }
-            else
-            {
-                Bytes = new byte[count];
-                Array.Copy(source, start, Bytes, 0, count);
-            }
+            MinBytes = MinCount;
+            MaxBytes = MaxCount;
         }
 
+        public HexDecimal(string value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexDecimal(byte[] value)
+            : base(value, MinCount, MaxCount) { }
+
+        public HexDecimal(byte[] source, int start, int count, bool trimZero = true)
+            : base(source, start, count, MinCount, MaxCount, trimZero) { }
 
         public HexDecimal(decimal value)
         {
-            if (value < 0)
-                throw new NotImplementedException();
-
             var buf = decimal.GetBits(value);
-            var bufBytes = new byte[12];
+            var bufBytes = new byte[MaxCount];
             Buffer.BlockCopy(buf, 0, bufBytes, 0, bufBytes.Length);
 
             var zc = 0;
-            for (int i = bufBytes.Length - 1; i >= 0; i--)
+            for (int i = MaxCount - 1; i >= 0; i--)
             {
                 if (bufBytes[i] > 0)
                     break;
                 zc++;
             }
 
-            if (zc == bufBytes.Length)
+            if (zc == MaxCount)
                 zc--;
 
-            Bytes = bufBytes.Reverse().Skip(zc).ToArray();
+            Bytes = bufBytes
+                .Reverse()
+                .Skip(zc)
+                .ToArray();
         }
-
-
 
 
         public decimal ToDecimal()
@@ -69,39 +70,13 @@ namespace Ditch.Ethereum.Models
             if (IsNull)
                 return 0;
 
-            var skip = 0;
-            for (int i = 0; i < Bytes.Length; i++)
-            {
-                if (Bytes[i] > 0)
-                    break;
-                skip++;
-            }
-
-
-            if (Bytes.Length - skip > 12)
-                throw new InvalidCastException($"Unexpected array length {Hex.ToString(Bytes)}");
-
             var buf = new int[4];
             var bufBytes = Bytes.Reverse().ToArray();
-            Buffer.BlockCopy(bufBytes, 0, buf, 0, bufBytes.Length - skip);
+            Buffer.BlockCopy(bufBytes, 0, buf, 0, bufBytes.Length);
 
             return new decimal(buf);
         }
 
-
-        public override string ToString()
-        {
-            return $"{Value} | 0x{Hex.ToString(Bytes)}";
-        }
-
-        public override void WriteJson(JsonWriter writer, JsonSerializer serializer)
-        {
-            if (!IsNull)
-            {
-                var str = Hex.ToString(Bytes).TrimStart('0');
-                writer.WriteValue(string.IsNullOrEmpty(str) ? "0x0" : $"0x{str}");
-            }
-        }
 
         public int CompareTo(HexDecimal other)
         {
