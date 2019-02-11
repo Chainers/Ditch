@@ -43,6 +43,7 @@ namespace Ditch.Ethereum.Tests.Apis
         }
 
         [Test]
+        [Parallelizable]
         public void Test()
         {
             var bytes = Hex.HexToBytes("2809c7e17bf978fbc7194c0a694b638c4215e9140cacc6c38ca36010b45697df");
@@ -118,6 +119,20 @@ namespace Ditch.Ethereum.Tests.Apis
 
         [Test]
         [Parallelizable]
+        public async Task eth_getLogs()
+        {
+            var args = new GetLogsArgs
+            {
+                FromBlock = new HexULong(7192207),
+                ToBlock = new HexULong(7192207),
+            };
+
+            var resp = await Api.GetLogsAsync(args, CancellationToken.None).ConfigureAwait(false);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        [Parallelizable]
         [TestCase("0xbb3a336e3f823ec18197f1e13ee875700f08f03e2cab75f0d0b118dabb44cba0")]
         [TestCase("0x31ded263506ea36e6ea777efc2c39a999e6fba4f4d338c7313af6aac6d9bf3e3")]
         [TestCase("0xd327b2bfc0e703e3bc12e5b3f6272eaac2a7d6004a35688469d0e8d406b79483")]
@@ -129,6 +144,7 @@ namespace Ditch.Ethereum.Tests.Apis
         {
             var resp = await Api.GetTransactionByHashAsync(new HexValue(hash), CancellationToken.None)
                 .ConfigureAwait(false);
+
             TestPropetries(resp);
         }
 
@@ -179,10 +195,37 @@ namespace Ditch.Ethereum.Tests.Apis
         [TestCase("0x19f1df2c7ee6b464720ad28e903aeda1a5ad8780afc22f0b960827bd4fcf656d")]
         [TestCase("0x7141570cd9169abdb99281074795874690c58be6655283b35d2480a782058232")]
         [TestCase("0x0ec5bc927df001dafe6634826e41618a40b74a879ced2e93813a4ca2703bd952")]
-        [TestCase("0x54852d72eba983b3ca200d925211b6d9da4115ea34761163ec7a744558ff6b8f")] //721
+        [TestCase("0x54852d72eba983b3ca200d925211b6d9da4115ea34761163ec7a744558ff6b8f")]
         public async Task eth_getTransactionReceipt(string hash)
         {
             var resp = await Api.GetTransactionReceiptAsync(new HexValue(hash), CancellationToken.None)
+                .ConfigureAwait(false);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        [Parallelizable]
+        public async Task eth_protocolVersion()
+        {
+            var resp = await Api.ProtocolVersionAsync(CancellationToken.None)
+                .ConfigureAwait(false);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        [Parallelizable]
+        public async Task eth_syncing()
+        {
+            var resp = await Api.SyncingAsync(CancellationToken.None)
+                .ConfigureAwait(false);
+            TestPropetries(resp);
+        }
+
+        [Test]
+        [Parallelizable]
+        public async Task net_version()
+        {
+            var resp = await Api.NetVersionAsync(CancellationToken.None)
                 .ConfigureAwait(false);
             TestPropetries(resp);
         }

@@ -16,16 +16,12 @@ namespace Ditch.Ethereum.Tests
             WriteLine(resp, showResult);
             Assert.IsFalse(resp.IsError);
 
-            if (resp.RawResponse.Contains("\"result\":\""))
-            {
-                Console.WriteLine("ValueResult");
-            }
-            else if (resp.RawResponse.Contains("\"result\":{"))
+            if (resp.RawResponse.Contains("\"result\":{"))
             {
                 var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JObject>>(resp.RawResponse).Result;
                 Compare(typeof(T), jResult);
             }
-            else
+            else if (resp.RawResponse.Contains("\"result\":["))
             {
                 var jResult = JsonConvert.DeserializeObject<JsonRpcResponse<JArray>>(resp.RawResponse).Result;
 
@@ -68,6 +64,10 @@ namespace Ditch.Ethereum.Tests
                         Compare(t, jResult[i].Value<JObject>());
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("ValueResult");
             }
 
             var json = JsonConvert.SerializeObject(resp.Result);

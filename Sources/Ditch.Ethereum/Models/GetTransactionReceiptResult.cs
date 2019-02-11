@@ -71,6 +71,6 @@ namespace Ditch.Ethereum.Models
         public HexValue TransactionHash { get; set; }
 
         [JsonProperty("transactionIndex")]
-        public HexValue TransactionIndex { get; set; }
+        public HexULong TransactionIndex { get; set; }
     }
 }
