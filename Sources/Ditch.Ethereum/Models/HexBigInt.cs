@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Ditch.Core.Converters;
 using Newtonsoft.Json;
 using System.Numerics;
@@ -39,6 +38,9 @@ namespace Ditch.Ethereum.Models
         public HexBigInt(string value)
             : base(value, MinCount, MaxCount, IsTrimZero) { }
 
+        public HexBigInt(BigInteger value)
+            : base(FromValue(value), MinCount, MaxCount, IsTrimZero) { }
+
         public HexBigInt(byte[] value)
             : base(value, MinCount, MaxCount, IsTrimZero) { }
 
@@ -46,6 +48,12 @@ namespace Ditch.Ethereum.Models
             : base(source, start, count, MinCount, MaxCount, IsTrimZero) { }
 
 
+        private static byte[] FromValue(BigInteger value)
+        {
+            var buf = value.ToByteArray();
+            Array.Reverse(buf);
+            return buf;
+        }
 
         private BigInteger ToValue()
         {
