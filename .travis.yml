@@ -1,5 +1,9 @@
 language: csharp
-mono: none
-dotnet: 2.0.0
-script:
-  - dotnet build ./Sources/Ditch.sln
+solution: ./Sources/Ditch.sln
+before_script:
+- cp .\Sources\Ditch.BitShares.Tests\app.config.template .\Sources\Ditch.BitShares.Tests\app.config
+- cp .\Sources\Ditch.Core.Tests\app.config.template .\Sources\Ditch.Core.Tests\app.config
+- cp .\Sources\Ditch.EOS.Tests\app.config.template .\Sources\Ditch.EOS.Tests\app.config
+- cp .\Sources\Ditch.Ethereum.Tests\app.config.template .\Sources\Ditch.Ethereum.Tests\app.config
+- cp .\Sources\Ditch.Golos.Tests\app.config.template .\Sources\Ditch.Golos.Tests\app.config
+- cp .\Sources\Ditch.Steem.Tests\app.config.template .\Sources\Ditch.Steem.Tests\app.config
