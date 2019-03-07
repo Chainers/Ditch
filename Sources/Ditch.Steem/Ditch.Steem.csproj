@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
     <Authors>KorzunAV</Authors>
     <Company>ChainArtSoft</Company>
     <Description>The essence of the library is to generate a transaction according to the required operations (vote, comment, etc.), sign the transaction and broadcast to the Graphene-based blockchain (Golos/Steem). 
@@ -12,9 +12,9 @@
     <PackageProjectUrl>https://chainers.github.io/Ditch</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Chainers/Ditch</RepositoryUrl>
     <PackageTags>Graphene Ditch Golos Steem Steepshot</PackageTags>
-    <PackageReleaseNotes>Support Task-based Asynchronous Pattern (TAP) convention</PackageReleaseNotes>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
-    <FileVersion>4.1.0.0</FileVersion>
+    <PackageReleaseNotes>adds Config for test switch</PackageReleaseNotes>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <FileVersion>4.1.1.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
