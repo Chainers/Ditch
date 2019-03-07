@@ -1,2 +1,5 @@
 language: csharp
-solution: ./Sources/Ditch.sln
+mono: none
+dotnet: 2.1.0
+script:
+  - dotnet build ./Sources/Ditch.sln
