@@ -11,8 +11,8 @@ namespace Ditch.EOS.Contracts.Eosio.Structs
         [JsonProperty("creator")]
         public BaseName Creator {get; set;}
 
-        [JsonProperty("newact")]
-        public BaseName Newact {get; set;}
+        [JsonProperty("name")]
+        public BaseName Name { get; set; }
 
         [JsonProperty("owner")]
         public Authority Owner {get; set;}

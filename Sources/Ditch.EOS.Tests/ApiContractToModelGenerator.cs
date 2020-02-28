@@ -11,18 +11,19 @@ namespace Ditch.EOS.Tests
     public class ApiContractToModelGenerator : BaseTest
     {
         [Test]
-        [TestCase("eosio", @"..\..\Contracts\", new[] { "newaccount" })]
+        [TestCase("eosio", @"..\..\Contracts\", null)]
+        [TestCase("eosio.token", @"..\..\Contracts\", null)]
         public async Task Generate(string contractName, string outDir, string[] set)
         {
-            HashSet<string> hs = null;
+            HashSet<string> actionFilter = null;
             if (set != null)
-                hs = new HashSet<string>(set);
+                actionFilter = new HashSet<string>(set);
 
             var currentDir = AppContext.BaseDirectory;
             outDir = $"{currentDir}{outDir}";
 
             var generator = new ContractCodeGenerator();
-            await generator.GenerateAsync(Api, contractName, "Ditch.EOS.Contracts", outDir, hs, CancellationToken.None).ConfigureAwait(false);
+            await generator.GenerateAsync(Api, contractName, "Ditch.EOS.Contracts", outDir, actionFilter, CancellationToken.None).ConfigureAwait(false);
         }
     }
 }

@@ -136,6 +136,16 @@
     <Compile Include="Base58Test.cs" />
     <Compile Include="Apis\BaseTest.cs" />
     <Compile Include="Apis\HistoryApiTest.cs" />
+    <Compile Include="Contracts\EosioToken\Actions\CloseAction.cs" />
+    <Compile Include="Contracts\EosioToken\Actions\CreateAction.cs" />
+    <Compile Include="Contracts\EosioToken\Actions\IssueAction.cs" />
+    <Compile Include="Contracts\EosioToken\Actions\RetireAction.cs" />
+    <Compile Include="Contracts\EosioToken\Actions\TransferAction.cs" />
+    <Compile Include="Contracts\EosioToken\Structs\Close.cs" />
+    <Compile Include="Contracts\EosioToken\Structs\Create.cs" />
+    <Compile Include="Contracts\EosioToken\Structs\Issue.cs" />
+    <Compile Include="Contracts\EosioToken\Structs\Retire.cs" />
+    <Compile Include="Contracts\EosioToken\Structs\Transfer.cs" />
     <Compile Include="Contracts\Eosio\Actions\BidnameAction.cs" />
     <Compile Include="Contracts\Eosio\Actions\BuyramAction.cs" />
     <Compile Include="Contracts\Eosio\Actions\BuyrambytesAction.cs" />
@@ -213,6 +223,7 @@
     <Compile Include="Contracts\Eosio\Structs\Voteproducer.cs" />
     <Compile Include="Contracts\Eosio\Structs\VoterInfo.cs" />
     <Compile Include="Contracts\Eosio\Structs\WaitWeight.cs" />
+    <Compile Include="Examples\HowToRunCommandsFromContractTest.cs" />
     <Compile Include="KeyGenerator.cs" />
     <Compile Include="MessageSerializerTest.cs" />
     <Compile Include="ContractInfo.cs" />

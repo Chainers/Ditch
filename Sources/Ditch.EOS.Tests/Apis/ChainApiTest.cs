@@ -25,7 +25,7 @@ namespace Ditch.EOS.Tests.Apis
         {
             var args = new GetBlockParams
             {
-                BlockNumOrId = "4"
+                BlockNumOrId = "104089585"
             };
 
             var resp = await Api.GetBlockAsync(args, CancellationToken).ConfigureAwait(false);
@@ -145,7 +145,7 @@ namespace Ditch.EOS.Tests.Apis
                 Args = new Newaccount
                 {
                     Creator = "eosio",
-                    Newact = "qwdfvbmfkrt",
+                    Name = "qwdfvbmfkrt",
                     Owner = new Ditch.EOS.Contracts.Eosio.Structs.Authority
                     {
                         Threshold = 1,
@@ -246,65 +246,6 @@ namespace Ditch.EOS.Tests.Apis
 
             var resp = await Api.GetProducersAsync(args, CancellationToken).ConfigureAwait(false);
             TestPropetries(resp);
-        }
-
-        [Test]
-        public async Task BroadcastBuyramActionTest()
-        {
-            var op = new BuyramAction
-            {
-                Account = BuyramAction.ContractName,
-
-                Args = new Buyram
-                {
-                    Payer = User.Login,
-                    Receiver = User.Login,
-                    Quant = new Asset("100.0000 EOS")
-
-                },
-                Authorization = new[]
-                {
-                    new PermissionLevel
-                    {
-                        Actor = User.Login,
-                        Permission = "active"
-                    }
-                }
-            };
-
-            var resp = await Api.BroadcastActionsAsync(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken).ConfigureAwait(false);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
-        }
-
-        [Test]
-        public async Task BroadcastDelegatebwActionTest()
-        {
-            var op = new DelegatebwAction
-            {
-                Account = DelegatebwAction.ContractName,
-
-                Args = new Delegatebw
-                {
-                    From = User.Login,
-                    Receiver = User.Login,
-                    StakeCpuQuantity = new Asset("100.0000 EOS"),
-                    StakeNetQuantity = new Asset("100.0000 EOS"),
-                    Transfer = false
-                },
-                Authorization = new[]
-                {
-                    new PermissionLevel
-                    {
-                        Actor = User.Login,
-                        Permission = "active"
-                    }
-                }
-            };
-
-            var resp = await Api.BroadcastActionsAsync(new[] { op }, new List<byte[]> { User.PrivateActiveKey }, CancellationToken).ConfigureAwait(false);
-            WriteLine(resp);
-            Assert.IsFalse(resp.IsError);
         }
 
         //[Ignore("you need to put your own data")]
