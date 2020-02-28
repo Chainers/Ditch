@@ -57,35 +57,35 @@
         ClaimRewardBalance,
         DelegateVestingShares,
         AccountCreateWithDelegation,
-        WitnessSetProperties
+        WitnessSetProperties,
 
-        //# ifdef STEEM_ENABLE_SMT
-        //        /// SMT operations
-        //        ClaimRewardBalance2,
+#if STEEM_ENABLE_SMT
+                /// SMT operations
+                ClaimRewardBalance2,
 
-        //        SmtSetup,
-        //        SmtCapReveal,
-        //        SmtRefund,
-        //        SmtSetupEmissions,
-        //        SmtSetSetupParameters,
-        //        SmtSetRuntimeParameters,
-        //        SmtCreate,
-        //#endif
+                SmtSetup,
+                SmtCapReveal,
+                SmtRefund,
+                SmtSetupEmissions,
+                SmtSetSetupParameters,
+                SmtSetRuntimeParameters,
+                SmtCreate,
+#endif
         //// virtual operations below this point
-        //FillConvertRequest,
-        //AuthorReward,
-        //CurationReward,
-        //CommentReward,
-        //LiquidityReward,
-        //Interest,
-        //FillVestingWithdraw,
-        //FillOrder,
-        //ShutdownWitness,
-        //FillTransferFromSavings,
-        //Hardfork,
-        //CommentPayoutUpdate,
-        //ReturnVestingDelegation,
-        //CommentBenefactorReward,
-        //ProducerReward
+        FillConvertRequest,
+        AuthorReward,
+        CurationReward,
+        CommentReward,
+        LiquidityReward,
+        Interest,
+        FillVestingWithdraw,
+        FillOrder,
+        ShutdownWitness,
+        FillTransferFromSavings,
+        Hardfork,
+        CommentPayoutUpdate,
+        ReturnVestingDelegation,
+        CommentBenefactorReward,
+        ProducerReward
     }
 }

@@ -87,6 +87,35 @@ namespace Ditch.Steem.Models
         }
 
 
+        public override string ToString()
+        {
+            var dig = ToDoubleString(CultureInfo.CurrentCulture);
+
+            string currency;
+            switch (Symbol.AssetNum)
+            {
+                case Config.SteemAssetNumSbd:
+                    {
+                        currency = Config.Sbd;
+                        break;
+                    }
+                case Config.SteemAssetNumSteem:
+                    {
+                        currency = Config.Steem;
+                        break;
+                    }
+                case Config.SteemAssetNumVests:
+                    {
+                        currency = Config.Vests;
+                        break;
+                    }
+                default:
+                    return $"{Amount}{Symbol.ToNaiString()}";
+            }
+
+            return string.IsNullOrEmpty(currency) ? dig : $"{dig} {currency}";
+        }
+
         public string ToOldFormatString()
         {
             return ToOldFormatString(CultureInfo.InvariantCulture);

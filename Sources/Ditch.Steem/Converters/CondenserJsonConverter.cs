@@ -48,7 +48,7 @@ namespace Ditch.Steem.Converters
                     {nameof(VerifyAuthorityArgs), (ReadVerifyAuthorityArgs, WriteVerifyAuthorityArgs)},
                     {nameof(VerifyAuthorityReturn), (ReadVerifyAuthorityReturn, WriteVerifyAuthorityReturn)},
 
-                    
+
                     {nameof(GetRequiredSignaturesArgs), (ReadGetRequiredSignaturesArgs, WriteGetRequiredSignaturesArgs)},
                     {nameof(GetRequiredSignaturesReturn), (ReadGetRequiredSignaturesReturn, WriteGetRequiredSignaturesReturn)},
                     //{nameof(), (Read, Write)},
@@ -161,28 +161,33 @@ namespace Ditch.Steem.Converters
                     return serializer.Deserialize<TransferToVestingOperation>(reader);
                 case WithdrawVestingOperation.OperationName:
                     return serializer.Deserialize<WithdrawVestingOperation>(reader);
-
-                //LimitOrderCreate,
-                //LimitOrderCancel,
-
-                //FeedPublish,
-                //Convert,
-
+                case LimitOrderCreateOperation.OperationName:
+                    return serializer.Deserialize<LimitOrderCreateOperation>(reader);
+                case LimitOrderCancelOperation.OperationName:
+                    return serializer.Deserialize<LimitOrderCancelOperation>(reader);
+                //case FeedPublishOperation.OperationName:
+                //    return serializer.Deserialize<FeedPublishOperation>(reader);
+                case ConvertOperation.OperationName:
+                    return serializer.Deserialize<ConvertOperation>(reader);
                 case AccountCreateOperation.OperationName:
                     return serializer.Deserialize<AccountCreateOperation>(reader);
                 case AccountUpdateOperation.OperationName:
                     return serializer.Deserialize<AccountUpdateOperation>(reader);
-
                 case WitnessUpdateOperation.OperationName:
                     return serializer.Deserialize<WitnessUpdateOperation>(reader);
-                //AccountWitnessVote,
-                //AccountWitnessProxy,
+                case AccountWitnessVoteOperation.OperationName:
+                    return serializer.Deserialize<AccountWitnessVoteOperation>(reader);
+                //case AccountWitnessProxyOperation.OperationName:
+                //    return serializer.Deserialize<AccountWitnessProxyOperation>(reader);
 
-                //Pow,
+                //case PowOperation.OperationName:
+                //    return serializer.Deserialize<PowOperation>(reader);
 
-                //Custom,
+                //case CustomOperation.OperationName:
+                //    return serializer.Deserialize<CustomOperation>(reader);
 
-                //ReportOverProduction,
+                //case ReportOverProductionOperation.OperationName:
+                //    return serializer.Deserialize<ReportOverProductionOperation>(reader);
 
                 case DeleteCommentOperation.OperationName:
                     return serializer.Deserialize<DeleteCommentOperation>(reader);
@@ -190,60 +195,95 @@ namespace Ditch.Steem.Converters
                     return serializer.Deserialize<CustomJsonOperation>(reader);
                 case CommentOptionsOperation.OperationName:
                     return serializer.Deserialize<CommentOptionsOperation>(reader);
-                //SetWithdrawVestingRoute,
-                //LimitOrderCreate2,
-                //ClaimAccount,
-                //CreateClaimedAccount,
-                //RequestAccountRecovery,
-                //RecoverAccount,
-                //ChangeRecoveryAccount,
-                //EscrowTransfer,
-                //EscrowDispute,
-                //EscrowRelease,
-                //Pow2,
-                //EscrowApprove,
-                //TransferToSavings,
-                //TransferFromSavings,
-                //CancelTransferFromSavings,
-                //CustomBinary,
-                //DeclineVotingRights,
-                //ResetAccount,
-                //SetResetAccount,
+                //case SetWithdrawVestingRouteOperation.OperationName:
+                //    return serializer.Deserialize<SetWithdrawVestingRouteOperation>(reader);
+                //case LimitOrderCreate2Operation.OperationName:
+                //    return serializer.Deserialize<LimitOrderCreate2Operation>(reader);
+                //case ClaimAccountOperation.OperationName:
+                //    return serializer.Deserialize<ClaimAccountOperation>(reader);
+                //case CreateClaimedAccountOperation.OperationName:
+                //    return serializer.Deserialize<CreateClaimedAccountOperation>(reader);
+                //case RequestAccountRecoveryOperation.OperationName:
+                //    return serializer.Deserialize<RequestAccountRecoveryOperation>(reader);
+                //case RecoverAccountOperation.OperationName:
+                //    return serializer.Deserialize<RecoverAccountOperation>(reader);
+                //case ChangeRecoveryAccountOperation.OperationName:
+                //    return serializer.Deserialize<ChangeRecoveryAccountOperation>(reader);
+                //case EscrowTransferOperation.OperationName:
+                //    return serializer.Deserialize<EscrowTransferOperation>(reader);
+                //case EscrowDisputeOperation.OperationName:
+                //    return serializer.Deserialize<EscrowDisputeOperation>(reader);
+                //case EscrowReleaseOperation.OperationName:
+                //    return serializer.Deserialize<EscrowReleaseOperation>(reader);
+                //case Pow2Operation.OperationName:
+                //    return serializer.Deserialize<Pow2Operation>(reader);
+                //case EscrowApproveOperation.OperationName:
+                //    return serializer.Deserialize<EscrowApproveOperation>(reader);
+                //case TransferToSavingsOperation.OperationName:
+                //    return serializer.Deserialize<TransferToSavingsOperation>(reader);
+                //case TransferFromSavingsOperation.OperationName:
+                //    return serializer.Deserialize<TransferFromSavingsOperation>(reader);
+                //case CancelTransferFromSavingsOperation.OperationName:
+                //    return serializer.Deserialize<CancelTransferFromSavingsOperation>(reader);
+                //case CustomBinaryOperation.OperationName:
+                //    return serializer.Deserialize<CustomBinaryOperation>(reader);
+                //case DeclineVotingRightsOperation.OperationName:
+                //    return serializer.Deserialize<DeclineVotingRightsOperation>(reader);
+                //case ResetAccountOperation.OperationName:
+                //    return serializer.Deserialize<ResetAccountOperation>(reader);
+                //case SetResetAccountOperation.OperationName:
+                //    return serializer.Deserialize<SetResetAccountOperation>(reader);
                 case ClaimRewardBalanceOperation.OperationName:
                     return serializer.Deserialize<ClaimRewardBalanceOperation>(reader);
-                //DelegateVestingShares,
-                //AccountCreateWithDelegation,
-                //WitnessSetProperties,
-
-                //# ifdef STEEM_ENABLE_SMT
-                //        /// SMT operations
-                //        ClaimRewardBalance2,
-
-                //        SmtSetup,
-                //        SmtCapReveal,
-                //        SmtRefund,
-                //        SmtSetupEmissions,
-                //        SmtSetSetupParameters,
-                //        SmtSetRuntimeParameters,
-                //        SmtCreate,
-                //#endif
+                //case DelegateVestingSharesOperation.OperationName:
+                //    return serializer.Deserialize<DelegateVestingSharesOperation>(reader);
+                //case AccountCreateWithDelegationOperation.OperationName:
+                //    return serializer.Deserialize<AccountCreateWithDelegationOperation>(reader);
+                //case WitnessSetPropertiesOperation.OperationName:
+                //    return serializer.Deserialize<WitnessSetPropertiesOperation>(reader);
+#if STEEM_ENABLE_SMT
+                        /// SMT operations
+                       //ClaimRewardBalance2Operation,
+                       //
+                       //SmtSetupOperation,
+                       //SmtCapRevealOperation,
+                       //SmtRefundOperation,
+                       //SmtSetupEmissionsOperation,
+                       //SmtSetSetupParametersOperation,
+                       //SmtSetRuntimeParametersOperation,
+                       //SmtCreateOperation,
+#endif
                 //// virtual operations below this point
-                //FillConvertRequest,
-                //AuthorReward,
-                //CurationReward,
-                //CommentReward,
-                //LiquidityReward,
-                //Interest,
-                //FillVestingWithdraw,
-                //FillOrder,
-                //ShutdownWitness,
-                //FillTransferFromSavings,
-                //Hardfork,
-                //CommentPayoutUpdate,
-                //ReturnVestingDelegation,
-                //CommentBenefactorReward,
-                //ProducerReward
-
+                case FillConvertRequestOperation.OperationName:
+                    return serializer.Deserialize<FillConvertRequestOperation>(reader);
+                case AuthorRewardOperation.OperationName:
+                    return serializer.Deserialize<AuthorRewardOperation>(reader);
+                case CurationRewardOperation.OperationName:
+                    return serializer.Deserialize<CurationRewardOperation>(reader);
+                //case CommentRewardOperation.OperationName:
+                //    return serializer.Deserialize<CommentRewardOperation>(reader);
+                //case LiquidityRewardOperation.OperationName:
+                //    return serializer.Deserialize<LiquidityRewardOperation>(reader);
+                //case InterestOperation.OperationName:
+                //    return serializer.Deserialize<InterestOperation>(reader);
+                case FillVestingWithdrawOperation.OperationName:
+                    return serializer.Deserialize<FillVestingWithdrawOperation>(reader);
+                case FillOrderOperation.OperationName:
+                    return serializer.Deserialize<FillOrderOperation>(reader);
+                //case ShutdownWitnessOperation.OperationName:
+                //    return serializer.Deserialize<ShutdownWitnessOperation>(reader);
+                //case FillTransferFromSavingsOperation.OperationName:
+                //    return serializer.Deserialize<FillTransferFromSavingsOperation>(reader);
+                //case HardforkOperation.OperationName:
+                //    return serializer.Deserialize<HardforkOperation>(reader);
+                //case CommentPayoutUpdateOperation.OperationName:
+                //    return serializer.Deserialize<CommentPayoutUpdateOperation>(reader);
+                //case ReturnVestingDelegationOperation.OperationName:
+                //    return serializer.Deserialize<ReturnVestingDelegationOperation>(reader);
+                //case CommentBenefactorRewardOperation.OperationName:
+                //    return serializer.Deserialize<CommentBenefactorRewardOperation>(reader);
+                //case ProducerRewardOperation.OperationName:
+                //    return serializer.Deserialize<ProducerRewardOperation>(reader);
                 default:
                     return new UnsupportedOperation(opName, serializer.Deserialize<JObject>(reader));
             }
@@ -410,7 +450,7 @@ namespace Ditch.Steem.Converters
         }
 
         #endregion
-        
+
         #region GetRequiredSignaturesReturn
 
         protected virtual void WriteGetRequiredSignaturesReturn(JsonWriter writer, JsonSerializer serializer, object obj)
