@@ -4,8 +4,9 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Cryptography.ECDSA;
+using Ditch.BitShares.Models;
 using Ditch.Core;
-using Ditch.Core.Interfaces;
 using Ditch.Core.JsonRpc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,9 +18,7 @@ namespace Ditch.BitShares.Tests
     {
         protected static UserInfo User;
         protected static OperationManager Api;
-        protected HttpManager HttpManager;
-        protected IHttpClient HttpClient;
-        protected string SbdSymbol = "BTS";
+        protected string SbdSymbol = "TEST";//"BTS";
 
         [OneTimeSetUp]
         protected virtual void OneTimeSetUp()
@@ -37,9 +36,12 @@ namespace Ditch.BitShares.Tests
 
             if (Api == null)
             {
-                HttpClient = new RepeatHttpClient();
-                HttpManager = new HttpManager(HttpClient);
-                Api = new OperationManager(HttpManager);
+                //HttpClient = new RepeatHttpClient();
+                //HttpManager = new HttpManager(HttpClient);
+                //Api = new OperationManager(HttpManager);
+
+                var ws = new WebSocketManager();
+                Api = new OperationManager(ws);
 
                 var url = ConfigurationManager.AppSettings["Url"];
                 Assert.IsTrue(Api.ConnectToAsync(url, CancellationToken.None).Result, "Enable connect to node");
@@ -47,9 +49,17 @@ namespace Ditch.BitShares.Tests
                 var acc = Api.GetAccountByNameAsync(User.Login, CancellationToken.None).Result;
                 Assert.IsFalse(acc.IsError);
                 User.Account = acc.Result;
+                VerifyWif(User);
             }
 
             Assert.IsTrue(Api.IsConnected, "Enable connect to node");
+        }
+
+        private void VerifyWif(UserInfo user)
+        {
+            var pkBytes = Secp256K1Manager.GetPublicKey(user.ActiveKeys[0], true);
+            var pk = new PublicKeyType(pkBytes, SbdSymbol);
+            Assert.True(pk.Data.SequenceEqual(user.Account.Active.KeyAuths[0].Key.Data));
         }
 
         protected void TestPropetries<T>(JsonRpcResponse<T> resp)
