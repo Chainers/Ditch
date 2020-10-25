@@ -11,7 +11,7 @@ The essence of the library is to generate a transaction according to the require
  * Golos (v0.18.3)  [![NuGet version](https://badge.fury.io/nu/Ditch.Golos.svg)](https://badge.fury.io/nu/Ditch.Golos)
  * Steem (v0.19.10) [![NuGet version](https://badge.fury.io/nu/Ditch.Steem.svg)](https://badge.fury.io/nu/Ditch.Steem)
  * EOS   (v1.1.0)   [![NuGet version](https://badge.fury.io/nu/Ditch.EOS.svg)](https://badge.fury.io/nu/Ditch.EOS)
- * BitShares
+ * BitShares [![NuGet version](https://badge.fury.io/nu/Ditch.BitShares.svg)](https://badge.fury.io/nu/Ditch.BitShares)
   
 ## Additional features:
  * Transliteration (Cyrillic to Latin)
