@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ditch.Core" Version="4.1.1-alpha2" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>
